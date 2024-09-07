@@ -1,0 +1,2229 @@
+<div class="cofmain">
+
+  <!-- Version fiche -->
+  <input type="hidden" name="attr_verfdp" value="1.0.0">
+  <input type="hidden" name="attr_version" value="1.0.0">
+
+  <!-- Token -->
+  <input type="hidden" name="attr_token_url" value="">
+  <input type="hidden" name="attr_token_dsp" value="">
+  
+  <!-- Jets -->
+  <input type="hidden" name="attr_jnor" value="1d20">
+  <input type="hidden" name="attr_jsup" value="2d20">
+  <input type="hidden" name="attr_jsuph" value="{2d20kh1, 0d20+10}kh1">
+
+  <!-- Buffs PJ -->
+  <input type="hidden" name="attr_agi_buff" value="0">
+  <input type="hidden" name="attr_con_buff" value="0">
+  <input type="hidden" name="attr_for_buff" value="0">
+  <input type="hidden" name="attr_per_buff" value="0">
+  <input type="hidden" name="attr_cha_buff" value="0">
+  <input type="hidden" name="attr_int_buff" value="0">
+  <input type="hidden" name="attr_vol_buff" value="0">
+  <input type="hidden" name="attr_atkcac_buff" value="0">
+  <input type="hidden" name="attr_atktir_buff" value="0">
+  <input type="hidden" name="attr_atkmag_buff" value="0">
+  <input type="hidden" name="attr_init_buff" value="0">
+  <input type="hidden" name="attr_def_buff" value="0">
+  <input type="hidden" name="attr_pv_buff" value="0">
+  <input type="hidden" name="attr_armor_malus" value="0">
+
+  <!-- Entête : Logo, Avatar, Identité -->
+  <div class="heading">
+
+    <!-- Logo COF -->
+    <div>
+      <img
+        class="logo"
+        title="Version 1.0.0 - 10/2024"
+        src=""
+      />
+    </div>
+
+    <!-- Token -->
+    <div>
+      <img class="token"  name="attr_character_token">
+    </div>
+
+    <!-- Identité -->
+    <div class="bordered border-rounded identity">
+      <input type="hidden" class="cof-head-toggle" name="attr_sheet_type" value="pc"/> 
+
+      <!-- Identité PJ -->
+      <div class="identity-pc">
+
+        <div class="identity-row">
+          <div><strong>Nom</strong></div>
+          <div>
+            <input type="text" name="attr_character_name" title="@{character_name}" value="">
+          </div>
+          <div><strong>Sexe</strong></div>
+          <div>
+            <input type="text" name="attr_sex" title="@{sex}" value="">
+          </div>
+        </div>
+
+        <div class="identity-row">
+          <div><strong>Profil</strong></div>
+          <div>
+            <input type="text" name="attr_profile" title="@{profile}" value="">
+          </div>
+          <div><strong>Age</strong></div>
+          <div>
+            <input type="text" name="attr_age" title="@{age}" value="">
+          </div>
+        </div>
+
+        <div class="identity-row">
+          <div><strong>Famille</strong></div>
+          <div>
+            <input type="text" name="attr_family" title="@{family}" value="">
+          </div>
+          <div><strong>Taille</strong></div>
+          <div>
+            <input type="text" name="attr_size" title="@{size}" value="">
+          </div>
+        </div>
+
+        <div class="identity-row">
+          <div><strong>Origine</strong></div>
+          <div>
+            <input type="text" name="attr_origin" title="@{origin}" value="">
+          </div>
+          <div><strong>Poids</strong></div>
+          <div>
+            <input type="text" name="attr_weight" title="@{weight}" value="">
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Identité PNJ -->
+      <div class="identity-npc">
+
+        <div class="identity-row">
+          <div><strong>Nom</strong></div>
+          <div>
+            <input type="text" name="attr_character_name" title="@{character_name}" value="">
+          </div>
+        </div>
+
+        <div class="identity-row">
+          <div><strong>Profil</strong></div>
+          <div>
+            <input type="text" name="attr_profile" title="@{profile}" value="">
+          </div>
+        </div>
+
+        <div class="identity-row">
+          <div><strong>Taille</strong></div>
+          <div>
+            <input type="text" name="attr_size" title="@{size}" value="">
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Niveau & Type de fiche -->
+      <div class="level-type">
+        <strong>Niveau</strong>
+        <input type="number" name="attr_level" title="@{level}" value="1">
+        <div>
+          <strong>Type</strong>
+          <select class="select-md" name="attr_sheet_type">
+            <option value="pc" selected>PJ</option>
+            <option value="npc">PNJ</option>
+          </select>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <!-- Fiches -->
+  <div class="cofsheet">
+    <input type="hidden" class="cof-type-toggle" name="attr_sheet_type" value="pc"/> 
+
+    <!-- Fiche PJ -->
+    <div class="cof-pc">
+      <input type="hidden" class="tabs-toggle" name="attr_pc_tab" value="main" />
+      <div>
+        <button type="action" name="act_pc_main-btn" class="main-tab tab-btn pc-main-btn">CARACS</button>
+        <button type="action" name="act_pc_abilities-btn" class="main-tab tab-btn pc-abilities-btn">CAPACITES</button>
+        <button type="action" name="act_pc_gears-btn" class="main-tab tab-btn pc-gears-btn">EQUIPEMENT</button>
+        <button type="action" name="act_pc_config-btn" class="main-tab tab-btn pc-config-btn">CONFIGURATION</button>
+        <button type="action" name="act_pc_version-btn" class="main-tab tab-btn pc-version-btn">VERSION</button>
+      </div>
+
+      <!-- Fiche PJ, Onglet Caracs -->
+      <div class="pc-main-tab">
+
+        <div class="pc-attributes">
+  
+          <!-- Caractéristiques -->
+          <div class="traits">
+
+            <div class="trait">
+              <h4>Carac</h4>
+              <h4></h4>
+              <h4>Mod</h4>
+              <h4>Bonus</h4>
+              <h4>Test</h4>
+            </div>
+
+            <!-- AGI -->
+            <div class="trait">
+              <div class="block-title">
+                <button class="block-title" type="action" name="act_agi-btn">
+                  <span class="d20-btn">t</span>
+                  AGI
+                </button>
+              </div>
+              <div>
+                <select class="select-xs" name="dagi_sup">
+                  <option value="@{jnor}" selected>N Normale</option>
+                  <option value="@{jsup}">S Supérieure OU Héroïque</option>
+                  <option value="@{jsuph}">H Supérieure ET Héroïque</option>
+                </select>
+              </div>
+              <div class="bordered">
+                <input type="number" name="attr_agi" title="@{agi}" value="0">
+              </div>
+              <div class="centered bordered">
+                <span name="attr_agi_buff"></span>
+              </div>
+              <div class="centered bordered">
+                <input type="hidden" name="attr_agi_test" title="@{agi_test}" value="0">
+                <span name="attr_dagi_test"></span>
+              </div>
+            </div>
+
+            <!-- CON -->
+            <div class="trait">
+              <div class="block-title">
+                <button class="block-title" type="action" name="act_con-btn">
+                  <span class="d20-btn">t</span>
+                  CON
+                </button>
+              </div>
+              <div>
+                <select class="select-xs" name="con_sup">
+                  <option value="@{jnor}" selected>N Normale</option>
+                  <option value="@{jsup}">S Supérieure OU Héroïque</option>
+                  <option value="@{jsuph}">H Supérieure ET Héroïque</option>
+                </select>
+              </div>
+              <div class="bordered">
+                <input type="number" name="attr_con" title="@{con}" value="0">
+              </div>
+              <div class="centered bordered">
+                <span name="attr_con_buff"></span>
+              </div>
+              <div class="centered bordered">
+                <input type="hidden" name="attr_con_test" title="@{con_test}" value="0">
+                <span name="attr_con_test"></span>
+              </div>
+            </div>
+
+            <!-- FOR -->
+            <div class="trait">
+              <div class="block-title">
+                <button class="block-title" type="action" name="act_for-btn">
+                  <span class="d20-btn">t</span>
+                  FOR
+                </button>
+              </div>
+              <div>
+                <select class="select-xs" name="for_sup">
+                  <option value="@{jnor}" selected>N Normale</option>
+                  <option value="@{jsup}">S Supérieure OU Héroïque</option>
+                  <option value="@{jsuph}">H Supérieure ET Héroïque</option>
+                </select>
+              </div>
+              <div class="bordered">
+                <input type="number" name="attr_for" title="@{for}" value="0">
+              </div>
+              <div class="centered bordered">
+                <span name="attr_for_buff"></span>
+              </div>
+              <div class="centered bordered">
+                <input type="hidden" name="attr_for_test" title="@{for_test}" value="0">
+                <span name="attr_for_test"></span>
+              </div>
+            </div>
+
+            <!-- PER -->
+            <div class="trait">
+              <div class="block-title">
+                <button class="block-title" type="action" name="act_per-btn">
+                  <span class="d20-btn">t</span>
+                  PER
+                </button>
+              </div>
+              <div>
+                <select class="select-xs" name="per_sup">
+                  <option value="@{jnor}" selected>N Normale</option>
+                  <option value="@{jsup}">S Supérieure OU Héroïque</option>
+                  <option value="@{jsuph}">H Supérieure ET Héroïque</option>
+                </select>
+              </div>
+              <div class="bordered">
+                <input type="number" name="attr_per" title="@{per}" value="0">
+              </div>
+              <div class="centered bordered">
+                <span name="attr_per_buff"></span>
+              </div>
+              <div class="centered bordered">
+                <input type="hidden" name="attr_per_test" title="@{per_test}" value="0">
+                <span name="attr_per_test"></span>
+              </div>
+            </div>
+
+            <!-- CHA -->
+            <div class="trait">
+              <div class="block-title">
+                <button class="block-title" type="action" name="act_cha-btn">
+                  <span class="d20-btn">t</span>
+                  CHA
+                </button>
+              </div>
+              <div>
+                <select class="select-xs" name="cha_sup">
+                  <option value="@{jnor}" selected>N Normale</option>
+                  <option value="@{jsup}">S Supérieure OU Héroïque</option>
+                  <option value="@{jsuph}">H Supérieure ET Héroïque</option>
+                </select>
+              </div>
+              <div class="bordered">
+                <input type="number" name="attr_cha" title="@{cha}" value="0">
+              </div>
+              <div class="centered bordered">
+                <span name="attr_cha_buff"></span>
+              </div>
+              <div class="centered bordered">
+                <input type="hidden" name="attr_cha_test" title="@{cha_test}" value="0">
+                <span name="attr_cha_test"></span>
+              </div>
+            </div>
+
+            <!-- INT -->
+            <div class="trait">
+              <div class="block-title">
+                <button class="block-title" type="action" name="act_int-btn">
+                  <span class="d20-btn">t</span>
+                  INT
+                </button>
+              </div>
+              <div>
+                <select class="select-xs" name="int_sup">
+                  <option value="@{jnor}" selected>N Normale</option>
+                  <option value="@{jsup}">S Supérieure OU Héroïque</option>
+                  <option value="@{jsuph}">H Supérieure ET Héroïque</option>
+                </select>
+              </div>
+              <div class="bordered">
+                <input type="number" name="attr_int" title="@{int}" value="0">
+              </div>
+              <div class="centered bordered">
+                <span name="attr_int_buff"></span>
+              </div>
+              <div class="centered bordered">
+                <input type="hidden" name="attr_int_test" title="@{int_test}" value="0">
+                <span name="attr_int_test"></span>
+              </div>
+            </div>
+
+            <!-- VOL -->
+            <div class="trait">
+              <div class="block-title">
+                <button class="block-title" type="action" name="act_vol-btn">
+                  <span class="d20-btn">t</span>
+                  VOL
+                </button>
+              </div>
+              <div>
+                <select class="select-xs" name="vol_sup">
+                  <option value="@{jnor}" selected>N Normale</option>
+                  <option value="@{jsup}">S Supérieure OU Héroïque</option>
+                  <option value="@{jsuph}">H Supérieure ET Héroïque</option>
+                </select>
+              </div>
+              <div class="bordered">
+                <input type="number" name="attr_vol" title="@{vol}" value="0">
+              </div>
+              <div class="centered bordered">
+                <span name="attr_vol_buff"></span>
+              </div>
+              <div class="centered bordered">
+                <input type="hidden" name="attr_vol_test" title="@{vol_test}" value="0">
+                <span name="attr_vol_test"></span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Scores d'attaque -->
+          <div class="attacks">
+
+            <div class="attack">
+              <h4>Combat</h4>
+              <h4>Base</h4>
+              <h4>Mod.</h4>
+              <h4>Div.</h4>
+              <h4><strong>Score</strong></h4>
+            </div>
+
+            <div class="attack">
+              <div class="block-title">
+                <button class="block-title" type="action" name="act_init-btn">
+                  <span class="d20-btn">t</span>
+                  INITIATIVE
+                </button>
+              </div>
+              <div class="centered bordered">
+                10
+              </div>
+              <div class="centered bordered">
+                +
+                <span name="attr_dex"></span>
+                +
+                <span name="attr_per"></span>
+              </div>
+              <div class="centered bordered">
+                <span attr="attr_init_buff"></span>
+              </div>
+              <div class="centered bordered">
+                <input type="hidden" name="attr_init" value="0">
+                <span name="attr_init" title="@{init}"></span>
+              </div>
+            </div>
+
+            <div class="attack">
+              <div class="block-title">
+                <button class="block-title" type="action" name="act_atkcac-btn">
+                  <span class="d20-btn">t</span>
+                  AU CONTACT
+                </button>
+              </div>
+              <div class="centered bordered">
+                <input type="number" name="attr_atkcac_base" title="@{atkcac_base}" value="0">
+              </div>
+              <div class="centered bordered">
+                FOR : <span name="attr_for"></span>
+              </div>
+              <div class="centered bordered">
+                <span attr="attr_atkcac_buff"></span>
+              </div>
+              <div class="centered bordered">
+                <input type="hidden" name="attr_atkcac" value="0">
+                <span name="attr_atkcac" title="@{atkcac}"></span>
+              </div>
+            </div>
+
+            <div class="attack">
+              <div class="block-title">
+                <button class="block-title" type="action" name="act_atktir-btn">
+                  <span class="d20-btn">t</span>
+                  A DISTANCE
+                </button>
+              </div>
+              <div class="centered bordered">
+                <input type="number" name="attr_atktir_base" title="@{atktir_base}" value="0">
+              </div>
+              <div class="centered bordered">
+                DEX : <span name="attr_dex"></span>
+              </div>
+              <div class="centered bordered">
+                <span attr="attr_atktir_buff"></span>
+              </div>
+              <div class="centered bordered">
+                <input type="hidden" name="attr_atktir" value="0">
+                <span name="attr_atktir" title="@{atktir}"></span>
+              </div>
+            </div>
+
+            <div class="attack">
+              <div class="block-title">
+                <button class="block-title" type="action" name="act_psyint-btn">
+                  <span class="d20-btn">t</span>
+                  PSY Intuition
+                </button>
+              </div>
+              <div class="centered bordered">
+                <input type="hidden" name="attr_psyint_base", value="0">
+                <input type="number" name="attr_atkpsy_base" title="@{psyint_base}" value="0">
+              </div>
+              <div class="centered bordered">
+                PER : <span name="attr_per"></span>
+              </div>
+              <div class="centered bordered">
+                <span attr="attr_psyint_buff"></span>
+              </div>
+              <div class="centered bordered">
+                <input type="hidden" name="attr_psyint" value="0">
+                <span name="attr_psyint" title="@{psyint}"></span>
+              </div>
+            </div>
+
+            <div class="attack">
+              <div class="block-title">
+                <button class="block-title" type="action" name="act_psyinf-btn">
+                  <span class="d20-btn">t</span>
+                  PSY Influence
+                </button>
+              </div>
+              <div class="centered bordered">
+                <input type="hidden" name="attr_psyint_base", value="0">
+                <span name="attr_atkpsy_base" title="@{psyinf_base}" value="0">
+              </div>
+              <div class="centered bordered">
+                CHA : <span name="attr_cha"></span>
+              </div>
+              <div class="centered bordered">
+                <span attr="attr_psyinf_buff"></span>
+              </div>
+              <div class="centered bordered">
+                <input type="hidden" name="attr_psyinf" value="0">
+                <span name="attr_psyinf" title="@{psyinf}"></span>
+              </div>
+            </div>
+
+          </div>
+          
+          <!-- DV, PV, Blessures -->
+          <div class="vitality">
+
+            <div class="centered">
+              <h4>VITALITE</h4>
+            </div>
+
+            <div class="hits hit">
+
+              <div class="block-title">
+                <button class="block-title" type="action" name="act_dv-btn">
+                  <span class="d20-btn">t</span>
+                  DV
+                </button>
+              </div>
+
+              <div class="bordered centered">
+                <select class="select-sm" name="attr_dv" title="@{dv}">
+                  <option value="6">d6</option>
+                  <option value="8" selected>d8</option>
+                  <option value="10">d10</option>
+                </select>
+              </div>
+
+            </div>
+
+            <div class="hits hit">
+
+              <div class="block-title centered">
+                <button class="flat-btn img-btn img-btn-lg" type="action" name="act_hploss-btn">
+                  <span class="img-btn img-btn-lg">e</span>
+                </button>
+                PV
+                <button class="flat-btn img-btn img-btn-lg" type="action" name="act_hpheal-btn">
+                  <span class="img-btn img-btn-lg">k</span>
+                </button>
+              </div>
+
+              <div class="bordered centered">
+                <input type="number" name="attr_pv" title="@{pv}" value="0">
+                /
+                <input type="number" name="attr_pv_max" title="@{pv_max}" value="0">
+              </div>
+
+            </div>
+
+            <div class="bordered centered hit">
+              DM temporaires
+              <input type="number" name="attr_temp_dm" title="@{temp_dm}" value="">
+            </div>
+
+            <div class="block-title centered hit">
+              Blessures Graves
+            </div>
+
+            <div class="bordered centered">
+              Seuil : <span name="attr_seuilbg"></span>
+              <br>
+              <input type="checkbox" name="attr_bg1" title="@{bg1}" value="1">
+              <input type="checkbox" name="attr_bg2" title="@{bg2}" value="1">
+              <input type="checkbox" name="attr_bg3" title="@{bg3}" value="1">
+              <input type="checkbox" name="attr_bg4" title="@{bg4}" value="1">
+              <input type="checkbox" name="attr_bg5" title="@{bg5}" value="1">
+            </div>
+
+          </div>
+  
+        </div>
+  
+        <!-- Conditions & Défenses -->
+        <div class="pc-cond-def">
+  
+          <div class="conditions">
+            <div class="centered block-header">Etats préjudiciables</div>
+            <div class="bordered centered">
+              <details>
+                <summary title="Ajouter / Retirer des conditions">
+                  <input type="radio" name="attr_etatde" title="@{etatde}" value="20" checked>
+                  &nbsp;Normal&nbsp;
+                  <input type="radio" name="attr_etatde" title="@{etatde}" value="12">
+                  &nbsp;Affaibli&nbsp;
+                  <input type="checkbox" name="attr_poisse" title="@{poisse}" value="1">
+                  &nbsp;Poisse
+                  <br>
+                  <span name="attr_conditions" value=""></span>
+                </summary>
+                
+                <button
+                  type="action"
+                  class="flat-btn img-btn img-btn-lg"
+                  name="act_aveugle"
+                  title="Aveuglé"
+                ><img
+                  class="bubble-img"
+                  src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesGalactiques/cond_aveugle.png"
+                  />
+                </button>
+
+                <button
+                  type="action"
+                  class="flat-btn img-btn img-btn-lg"
+                  name="act_blesse"
+                  title="Blessé"
+                ><img
+                  class="bubble-img"
+                  src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesGalactiques/cond_blesse.png"
+                  />
+                </button>
+
+                <button
+                  type="action"
+                  class="flat-btn img-btn img-btn-lg"
+                  name="act_confus"
+                  title="Confus"
+                ><img
+                  class="bubble-img"
+                  src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesGalactiques/cond_confus.png"
+                  />
+                </button>
+
+                <button
+                  type="action"
+                  class="flat-btn img-btn img-btn-lg"
+                  name="act_effraye"
+                  title="Effrayé"
+                ><img
+                  class="bubble-img"
+                  src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesGalactiques/cond_effraye.png"
+                  />
+                </button>
+
+                <button
+                  type="action"
+                  class="flat-btn img-btn img-btn-lg"
+                  name="act_etourdi"
+                  title="Etourdi"
+                ><img
+                  class="bubble-img"
+                  src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesGalactiques/cond_etourdi.png"
+                  />
+                </button>
+
+                <br>
+
+                <button
+                  type="action"
+                  class="flat-btn img-btn img-btn-lg"
+                  name="act_immobilise"
+                  title="Immobilisé"
+                ><img
+                  class="bubble-img"
+                  src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesGalactiques/cond_immobilise.png"
+                  />
+                </button>
+
+                <button
+                  type="action"
+                  class="flat-btn img-btn img-btn-lg"
+                  name="act_panique"
+                  title="Paniqué"
+                ><img
+                  class="bubble-img"
+                  src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesGalactiques/cond_panique.png"
+                  />
+                </button>
+
+                <button
+                  type="action"
+                  class="flat-btn img-btn img-btn-lg"
+                  name="act_ralenti"
+                  title="Ralenti"
+                ><img
+                  class="bubble-img"
+                  src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesGalactiques/cond_ralenti.png"
+                  />
+                </button>
+
+                <button
+                  type="action"
+                  class="flat-btn img-btn img-btn-lg"
+                  name="act_renverse"
+                  title="Renversé"
+                ><img
+                  class="bubble-img"
+                  src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesGalactiques/cond_renverse.png"
+                  />
+                </button>                
+
+                <button
+                  type="action"
+                  class="flat-btn img-btn img-btn-lg"
+                  name="act_surpris"
+                  title="Surpris"
+                ><img
+                  class="bubble-img"
+                  src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesGalactiques/cond_surpris.png"
+                  />
+                </button>
+
+              </details>
+            </div>
+          </div>
+
+          <div class="defenses">
+
+            <div class="defense">
+              <div><strong>DEFENSES</strong></div>
+              <div></div>
+              <div class="centered">
+                Armure
+                <input type="checkbox" name="attr_armure_on" title="@{armure_on}" value="0">
+              </div>
+              <div class="centered">
+                Bouclier
+                <input type="checkbox" name="attr_bouclier_on" title="@{bouclier_on}" value="0">
+              </div>
+              <div class="centered">DEX</div>
+              <div class="centered">Div.</div>
+              <div class="centered">Action défensive</div>
+              <div class="centered"><strong>Score</strong></div>
+            </div>
+
+            <div class="defense">
+              <div class="block-title">DEF</div>
+              <div class="bordered centered">10+</div>
+              <div class="bordered centered">
+                <input type="number" name="attr_armure" title="@{armure}" value="0">
+              </div>
+              <div class="bordered centered">
+                <input type="number" name="attr_bouclier" title="@{bouclier}" value="0">
+              </div>
+              <div class="bordered centered">
+                <span name="attr_dex"></span>
+              </div>
+              <div class="bordered centered">
+                <span name="attr_def_buff"></span>
+              </div>
+              <div class="bordered centered">
+                <select class="select-md" name="attr_defact" title="@{defact}">
+                  <option value="">-</option>
+                  <option value="2">Simple</option>
+                  <option value="5">Totale (L)</option>
+                </select>
+              </div>
+              <div class="bordered centered">
+                <span name="attr_def"></span>
+              </div>
+            </div>
+
+            <div class="defense">
+              <div class="centered"><strong>Malus</strong></div>
+              <div></div>
+              <div class="bordered centered">
+                <input type="number" name="attr_armure_malus" title="@{armure_malus}" value="0">
+              </div>
+              <div></div>
+              <div class="centered">CHA</div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+
+            <div class="defense">
+              <div class="block-title">DEP</div>
+              <div class="bordered centered">10+</div>
+              <div></div>
+              <div></div>
+              <div class="bordered centered">
+                <span name="attr_cha"></span>
+              </div>
+              <div class="bordered centered">
+                <span name="attr_dep_buff"></span>
+              </div>
+              <div></div>
+              <div class="bordered centered">
+                <span name="attr_dep"></span>
+              </div>
+            </div>
+
+          </div>
+  
+        </div>
+
+        <!-- PC & RD -->
+        <div class="pc-luck-rd">
+
+          <div class="luck">
+            <div class="block-title">
+              <button class="block-title" type="action" name="act_luck-btn">
+                <span class="d20-btn">t</span>
+                PC
+              </button>
+            </div>
+            <div class="bordered">
+              <div class="d-flex d-flex-middle">
+                <input type="hidden" name="attr_pc_max" value="0">
+                <input type="number" name="attr_pc" title="@{pc}" value="0">
+                &nbsp;/&nbsp;
+                <span name="attr_pc_max"></span>
+                &nbsp;=&nbsp;
+                <input type="number" name="attr_pc_base" title="@{pc_base}" value="0">
+                &nbsp;+&nbsp;
+                <span name="attr_cha"></span>
+                &nbsp;+&nbsp;
+                <input type="number" name="attr_pc_buff" title="@{pc_buff}" value="0">
+              </div>
+            </div>
+          </div>
+
+          <div class="dmred">
+            <div class="block-title">RD</div>
+            <div class="bordered">
+              <input type="text" name="attr_rd" title="@{rd}" value="">
+            </div>
+          </div>
+
+        </div>
+
+        <hr>
+
+        <!-- Attaques & Armes -->
+        <div class="pc-attacks">
+          
+          <div class="weapon">
+            <div></div>
+            <h4>ARMES</h4>
+            <h4>ATTAQUE</h4>
+            <h4>CRIT.</h4>
+            <h4>DM</h4>
+            <h4>PORTEE</h4>
+            <h4>SPECIAL</h4>
+          </div>
+
+          <fieldset class="repeating_armes">
+
+            <div class="weapon">
+              
+              <div>
+                <button type="roll" class="flat-btn"></button>
+              </div>
+              <div class="bordered">
+                <input type="text" name="attr_arme-nom" title="@{arme-nom}" placeholder="Arme/attaque" value="">
+              </div>
+              <div class="bordered">
+                <input type="checkbox" name="attr_arme-att" title="@{arme-att} Faire un jet d'attaque pour toucher" value="1">
+                <select class="select-md" name="attr_arme-atk" title="@{arme-atk}">
+                  <option value="atkcac" selected>CONTACT</option>
+                  <option value="atktir">DISTANCE</option>
+                  <option value="psyinf">PSY Inf.</option>
+                  <option value="psyint">PSY Int.</option>
+                </select>
+                +<input type="number" name="attr_arme-atkdiv" title="@{arme-atkdiv}" value="">
+                <input type="hidden" name="attr_arme-buffatk" value="0">
+              </div>
+              <div class="bordered">
+                <input type="number" name="attr_arme-crit" title="@{arme-crit} Seuil de Critique" value="20" min="2" max="20">
+              </div>
+              <div class="bordered">
+                <input type="checkbox" name="attr_arme-dmg" title="@{arme-dmg} Faire un jet de dommages" value="1" checked>
+                <input type="number" name="attr_arme-nbde" title="@{arme-nbde}" value="1">
+                <select class="select-sm" name="attr_arme-typede" title="@{arme-typede} Dé de dommage">
+                  <optgroup label="Normaux">
+                    <option class="optgroup" value="" disabled>&nbsp;Normaux</option>
+                    <option value="3">d3</option>
+                    <option value="4">d4</option>
+                    <option value="6" selected>d6</option>
+                    <option value="8">d8</option>
+                    <option value="10">d10</option>
+                    <option value="12">d12</option>
+                  </optgroup>
+                  <optgroup label="Sans limite">
+                    <option class="optgroup" value="" disabled>&nbsp;Sans limite</option>
+                    <option value="3!">d3+</option>
+                    <option value="4!">d4+</option>
+                    <option value="6!">d6+</option>
+                    <option value="8!">d8+</option>
+                    <option value="10!">d10+</option>
+                    <option value="12!">d12+</option>
+                  </optgroup>
+                </select>
+                +
+                <select class="select-sm" name="attr_arme-bonus" title="@{arme-bonus} Bonus aux dommages">
+                  <option value="0">-</option>
+                  <optgroup label="MOD de base">
+                    <option class="optgroup" value="" disabled>&nbsp;MOD de base</option>
+                    <option value="for" selected>FOR</option>
+                    <option value="dex">DEX</option>
+                    <option value="int">INT</option>
+                    <option value="per">PER</option>
+                    <option value="cha">CHA</option>
+                  </optgroup>
+                  <optgroup label="MOD de test">
+                    <option class="optgroup" value="" disabled>&nbsp;MOD de test</option>
+                    <option value="for_test" selected>FOR</option>
+                    <option value="dex_test">DEX</option>
+                    <option value="int_test">INT</option>
+                    <option value="per_test">PER</option>
+                    <option value="cha_test">CHA</option>
+                  </optgroup>
+                </select>
+                +
+                <input type="number" name="attr_arme-dmdiv" title="@{arme-dmdiv} Bonus DM divers" value="0">
+                <input type="hidden" name="attr_arme-buffdm" value="0">
+              </div>
+              <div class="bordered">
+                <input type="text" name="attr_arme-portee" title="@{arme-portee}" value="">
+                <input type="hidden" name="attr_arme-portees" value="">
+              </div>
+              <div class="bordered">
+                <input type="text" name="attr_arme-special" title="@{arme-special}" placeholder="Effet, capacités spéciales ... " value="">
+              </div>
+              <button type="action" class="flat-btn img-btn" name="act_arme-opt-btn">
+                <span class="img-btn">y</span>
+              </button>
+
+            </div>
+
+            <input type="hidden" class="cof-wopt-toggle" name="attr_arme-opt" value="0"/>
+            <div class="weapon-opt">
+              <div class="weapon-option">
+                <div></div>
+                <div class="bordered">
+                  <input type="checkbox" name="attr_arme-al" title="@{arme-al} Action limitée (L)" value="1">
+                  <input type="text" name="attr_arme-atknom" title="@{arme-atknom} Nom de l'attaque" value="">
+                  <select class="select-xs" name="attr_arme-atkjet" title="@{arme-atkjet} Jet : Normal, Risqué = d12, Expert = meilleur de deux d20">
+                    <option value="jnor">N - Normal</option>
+                    <option value="jrisk">R - Risque (d12)</option>
+                    <option value="jsup">E - Export (2 d20)</option>
+                  </select>
+                </div>
+                <div class="bordered">
+                  <input type="number" name="attr_arme-inc" title="@{arme-inc} Seuil d'incident de tir" value="1" min="1" max="19">
+                </div>
+                <div class="bordered">
+                  <input type="text" name="attr_arme-typedm" title="@{arme-typedm} Type de DM" value="">
+                  <select class="select-xs" name="attr_arme-reroll" title="@{arme-reroll} Type de relance">
+                    <option value="" selected>-</option>
+                    <option value="r">R Relance</option>
+                    <option value="ro">R1 Relance UNE fois</option>
+                  </select>
+                  <input type="number" name="attr_arme-vreroll" title="@{arme-vreroll} Seuil de relance" value="">
+                </div>
+                <div class="bordered">
+                  <input type="text" name="attr_arme-dm2roll" title="@{arme-dm2roll}" placeholder="1d6" value="">
+                  <input type="text" name="attr_arme-dm2desc" title="@{arme-dm2desc}" placeholder="Electro-impact" value="">
+                </div>
+                <div>&nbsp;</div>
+              </div>
+            </div>
+
+          </fieldset>
+
+        </div>
+
+      </div>
+
+      <!-- Fiche PJ, Onglet Capacités -->
+      <div class="pc-abilities-tab">
+
+        <input type="checkbox" class="block-switch" name="attr_abilities_edit" value="1">
+        
+        <!-- Fiche PJ, Onglet Capacités, Mode Affichage -->
+        <div class="abilities-view">
+          <div class="d-flex d-flex-between">
+            <div>
+              <h3>CAPACITES</h3>
+            </div>
+            <div class="change-view">
+              Editer <input type="checkbox" name="attr_abilities_edit" value="1">
+            </div>
+          </div>
+
+          <!-- Fiche PJ, Onglet Capacités, Voies 1-3 -->
+          <div class="abilities">
+            <div class="path">
+              <div class="block-title">Voie culturelle</div>
+              <div class="path-title">
+                <input type="checkbox" name="attr_cp1mod" title="@{cp1mod}" value="1">
+                <span name="attr_voie1nom" title="@{voie1nom}"></span>
+              </div>
+              <div class="rank">Rang 1</div>
+              <div class="rank">Rang 2</div>
+              <div class="rank">Rang 3</div>
+              <div class="rank">Rang 4</div>
+              <div class="rank">Rang 5</div>
+            </div>
+            <div class="path">
+              <div class="block-title">Voie professionnelle</div>
+              <div class="path-title">
+                <input type="checkbox" name="attr_cp2mod" title="@{cp2mod}" value="1">
+                <span name="attr_voie2nom" title="@{voie2nom}"></span>
+              </div>
+              <div class="rank">Rang 1</div>
+              <div class="rank">Rang 2</div>
+              <div class="rank">Rang 3</div>
+              <div class="rank">Rang 4</div>
+              <div class="rank">Rang 5</div>
+            </div>
+            <div class="path">
+              <div class="block-title">Voie professionnelle</div>
+              <div class="path-title">
+                <input type="checkbox" name="attr_cp3mod" title="@{cp3mod}" value="1">
+                <span name="attr_voie3nom" title="@{voie3nom}"></span>
+              </div>
+              <div class="rank">Rang 1</div>
+              <div class="rank">Rang 2</div>
+              <div class="rank">Rang 3</div>
+              <div class="rank">Rang 4</div>
+              <div class="rank">Rang 5</div>
+            </div>
+          </div>
+  
+          <!-- Fiche PJ, Onglet Capacités, Voies 4-6 -->
+          <div class="abilities">
+            <div class="path">
+              <div class="block-title">Voie d'espèce</div>
+              <div class="path-title">
+                <input type="checkbox" name="attr_cp4mod" title="@{cp4mod}" value="1">
+                <span name="attr_voie4nom" title="@{voie4nom}"></span>
+              </div>
+              <div class="rank">Rang 1</div>
+              <div class="rank">Rang 2</div>
+              <div class="rank">Rang 3</div>
+              <div class="rank">Rang 4</div>
+              <div class="rank">Rang 5</div>
+            </div>
+            <div class="path">
+              <div class="block-title">Voie d'augmentation</div>
+              <div class="path-title">
+                <input type="checkbox" name="attr_cp5mod" title="@{cp5mod}" value="1">
+                <span name="attr_voie5nom" title="@{voie5nom}"></span>
+              </div>
+              <div class="rank">Rang 1</div>
+              <div class="rank">Rang 2</div>
+              <div class="rank">Rang 3</div>
+              <div class="rank">Rang 4</div>
+              <div class="rank">Rang 5</div>
+            </div>
+            <div class="path">
+              <div class="block-title">Voie d'augmentation</div>
+              <div class="path-title">
+                <input type="checkbox" name="attr_cp6mod" title="@{cp6mod}" value="1">
+                <span name="attr_voie6nom" title="@{voie6nom}"></span>
+              </div>
+              <div class="rank">Rang 1</div>
+              <div class="rank">Rang 2</div>
+              <div class="rank">Rang 3</div>
+              <div class="rank">Rang 4</div>
+              <div class="rank">Rang 5</div>
+            </div>
+          </div>
+
+          <!-- Fiche PJ, Onglet Capacités, Voies 7-9 -->
+          <div class="abilities">
+            <div class="path">
+              <div class="block-title">Voie n°7</div>
+              <div class="path-title">
+                <input type="checkbox" name="attr_cp7mod" title="@{cp7mod}" value="1">
+                <span name="attr_voie7nom" title="@{voie7nom}"></span>
+              </div>
+              <div class="rank">Rang 1</div>
+              <div class="rank">Rang 2</div>
+              <div class="rank">Rang 3</div>
+              <div class="rank">Rang 4</div>
+              <div class="rank">Rang 5</div>
+            </div>
+            <div class="path">
+              <div class="block-title">Voie n°8</div>
+              <div class="path-title">
+                <input type="checkbox" name="attr_cp8mod" title="@{cp8mod}" value="1">
+                <span name="attr_voie8nom" title="@{voie8nom}"></span>
+              </div>
+              <div class="rank">Rang 1</div>
+              <div class="rank">Rang 2</div>
+              <div class="rank">Rang 3</div>
+              <div class="rank">Rang 4</div>
+              <div class="rank">Rang 5</div>
+            </div>
+            <div class="path">
+              <div class="block-title">Voie n°9</div>
+              <div class="path-title">
+                <input type="checkbox" name="attr_cp9mod" title="@{cp9mod}" value="1">
+                <span name="attr_voie9nom" title="@{voie9nom}"></span>
+              </div>
+              <div class="rank">Rang 1</div>
+              <div class="rank">Rang 2</div>
+              <div class="rank">Rang 3</div>
+              <div class="rank">Rang 4</div>
+              <div class="rank">Rang 5</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Fiche PJ, Onglet Capacités, Mode Edition -->
+        <div class="abilities-edit">
+          <div class="d-flex d-flex-between">
+            <div>
+              <h3>CAPACITES</h3>
+            </div>
+            <div class="change-view">
+              Afficher <input type="checkbox" name="attr_abilities_edit" value="1">
+            </div>
+          </div>
+
+          <!-- Fiche PJ, Onglet Capacités, Voies 1-3 -->
+          <div class="abilities">
+            <div class="path bordered">
+              <div class="block-title">Voie culturelle</div>
+              <div class="path-title">
+                <input type="text" name="attr_voie1nom" title="@{voie1nom}" placeholder="Nom de la voie culturelle">
+              </div>
+              <div class="rank">Rang 1</div>
+              <div class="rank">Rang 2</div>
+              <div class="rank">Rang 3</div>
+              <div class="rank">Rang 4</div>
+              <div class="rank">Rang 5</div>
+            </div>
+            <div class="path bordered">
+              <div class="block-title">Voie professionnelle</div>
+              <div class="path-title">
+                <input type="text" name="attr_voie2nom" title="@{voie2nom}" placeholder="Nom de la voie professionnelle">
+              </div>
+              <div class="rank">Rang 1</div>
+              <div class="rank">Rang 2</div>
+              <div class="rank">Rang 3</div>
+              <div class="rank">Rang 4</div>
+              <div class="rank">Rang 5</div>
+            </div>
+            <div class="path bordered">
+              <div class="block-title">Voie professionnelle</div>
+              <div class="path-title">
+                <input type="text" name="attr_voie3nom" title="@{voie3nom}" placeholder="Nom de la voie professionnelle">
+              </div>
+              <div class="rank">Rang 1</div>
+              <div class="rank">Rang 2</div>
+              <div class="rank">Rang 3</div>
+              <div class="rank">Rang 4</div>
+              <div class="rank">Rang 5</div>
+            </div>
+          </div>
+
+          <!-- Fiche PJ, Onglet Capacités, Voies 4-6 -->
+          <div class="abilities">
+            <div class="path bordered">
+              <div class="block-title">Voie d'espèce</div>
+              <div class="path-title">
+                <input type="text" name="attr_voie4nom" title="@{voie4nom}" placeholder="Nom de la voie culturelle">
+              </div>
+              <div class="rank">Rang 1</div>
+              <div class="rank">Rang 2</div>
+              <div class="rank">Rang 3</div>
+              <div class="rank">Rang 4</div>
+              <div class="rank">Rang 5</div>
+            </div>
+            <div class="path bordered">
+              <div class="block-title">Voie d'augmentation</div>
+              <div class="path-title">
+                <input type="text" name="attr_voie5nom" title="@{voie5nom}" placeholder="Nom de la voie d'augmentation">
+              </div>
+              <div class="rank">Rang 1</div>
+              <div class="rank">Rang 2</div>
+              <div class="rank">Rang 3</div>
+              <div class="rank">Rang 4</div>
+              <div class="rank">Rang 5</div>
+            </div>
+            <div class="path bordered">
+              <div class="block-title">Voie d'augmentation</div>
+              <div class="path-title">
+                <input type="text" name="attr_voie6nom" title="@{voie6nom}" placeholder="Nom de la voie d'augmentation">
+              </div>
+              <div class="rank">Rang 1</div>
+              <div class="rank">Rang 2</div>
+              <div class="rank">Rang 3</div>
+              <div class="rank">Rang 4</div>
+              <div class="rank">Rang 5</div>
+            </div>
+          </div>
+
+          <!-- Fiche PJ, Onglet Capacités, Voies 7-9 -->
+          <div class="abilities">
+            <div class="path">
+              <div class="block-title">Voie n°7</div>
+              <div class="path-title">
+                <input type="text" name="attr_voie7nom" title="@{voie7nom}" placeholder="Nom de la voie">
+              </div>
+              <div class="rank">Rang 1</div>
+              <div class="rank">Rang 2</div>
+              <div class="rank">Rang 3</div>
+              <div class="rank">Rang 4</div>
+              <div class="rank">Rang 5</div>
+            </div>
+            <div class="path">
+              <div class="block-title">Voie n°8</div>
+              <div class="path-title">
+                <input type="text" name="attr_voie8nom" title="@{voie8nom}" placeholder="Nom de la voie">
+              </div>
+              <div class="rank">Rang 1</div>
+              <div class="rank">Rang 2</div>
+              <div class="rank">Rang 3</div>
+              <div class="rank">Rang 4</div>
+              <div class="rank">Rang 5</div>
+            </div>
+            <div class="path">
+              <div class="block-title">Voie n°9</div>
+              <div class="path-title">
+                <input type="text" name="attr_voie9nom" title="@{voie9nom}" placeholder="Nom de la voie">
+              </div>
+              <div class="rank">Rang 1</div>
+              <div class="rank">Rang 2</div>
+              <div class="rank">Rang 3</div>
+              <div class="rank">Rang 4</div>
+              <div class="rank">Rang 5</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Fiche PJ, Onglet Capacités, Sous-onglets -->
+        <input type="hidden" class="tabs-toggle" name="attr_pc_subtab" value="rolls" />
+        <div class="pc-subtabs">
+          <button type="action" name="act_pc_rolls-btn" class="sub-tab tab-btn pc-rolls-btn">JETS</button>
+          <button type="action" name="act_pc_traits-btn" class="sub-tab tab-btn pc-traits-btn">TRAITS/RELATIONS</button>
+          <button type="action" name="act_pc_sitmod-btn" class="sub-tab tab-btn pc-sitmod-btn">MODs SITUATION</button>
+          <button type="action" name="act_pc_buffs-btn" class="sub-tab tab-btn pc-buffs-btn">BUFFS</button>
+        </div>
+        
+        <hr>
+
+        <!-- Fiche PJ, Onglet CAPACITES, Sous-onglet Jets -->
+        <div class="pc-rolls-subtab">
+          
+          <h4>Jets de capacités</h4>
+
+          <fieldset class="repeating_rolls">
+
+            <div class="pc-roll-r1">
+
+              <div>
+                <button class="flat-btn" type="action" name="act_ability-roll-btn">
+                  <span class="d20-btn">t</span>
+                </button>
+              </div>
+
+              <div class="bordered">Nom</div>
+
+              <div class="bordered">Jet</div>
+
+              <div class="bordered">Vx Rx</div>
+
+            </div>
+
+            <div class="pc-roll-r2">
+
+              <div>
+
+              </div>
+
+              <div class="bordered">
+                Compétence (CAR)
+              </div>
+
+              <div class="bordered">
+                Description
+              </div>
+
+            </div>
+
+          </fieldset>
+
+        </div>
+
+        <!-- Fiche PJ, Onglet CAPACITES, Sous-onglet Traits -->
+        <div class="pc-traits-subtab">
+          
+          <h4>Traits, Avantages, Relations</h4>
+
+          <fieldset class="repeating_traits">
+
+            <div class="pc-traits-rel">
+
+              <div>
+                <button class="flat-btn img-btn">
+                  <span class="img-btn">w</span>
+                </button>
+              </div>
+
+              <div class="bordered d-flex">
+                <input type="text" name="attr_trait-name" title="@{trait-name}" placeholder="Nom..." value="">
+              </div>
+
+              <div class="bordered d-flex">
+                <select name="attr_trait-type" title="@{trait-type}">
+                  <option value="">Choisir...</option>
+                  <optgroup label="Traits">
+                    <option class="optgroup" value="" disabled>&nbsp;Trait</option>
+                    <option value="feat">Trait</option>
+                    <option value="adv">Avantage</option>
+                  </optgroup>
+                  <optgroup label="Relations">
+                    <option class="optgroup" value="" disabled>&nbsp;Relation</option>
+                    <option value="acq">Connaissance</option>
+                    <option value="ally">Allié</option>
+                    <option value="foe">Ennemi</option>
+                  </optgroup>
+                  <optgroup label="Autres">
+                    <option class="optgroup" value="" disabled>&nbsp;Autre</option>
+                    <option value="other">Divers</option>
+                  </optgroup>
+                </select>
+              </div>
+
+              <div class="bordered d-flex">
+                <input type="text" name="attr_trait-desc" title="@{trait-desc}" placeholder="Description..." value="">
+              </div>
+
+            </div>
+
+          </fieldset>
+
+        </div>
+
+        <!-- Fiche PJ, Onglet CAPACITES, Sous-onglet Mods Situation -->
+        <div class="pc-sitmod-subtab">
+          <h4>MODs Situation</h4>
+
+          <fieldset class="repeating_sitmod">
+
+            <div class="pc-sitmod">
+
+              <div class="bordered d-flex">
+                <select class="select-md" name="attr_sitmod-carac" title="@{sitmod-carac}">
+                  <option value="">Choisir...</option>
+                  <option value="for">FOR</option>
+                  <option value="dex">DEX</option>
+                  <option value="con">CON</option>
+                  <option value="int">INT</option>
+                  <option value="per">PER</option>
+                  <option value="CHA">CHA</option>
+                </select>
+              </div>
+
+              <div class="bordered align-right d-flex">
+                <input type="number" name="attr_sitmod-bonus" title="@{sitmod-bonus}" value="0">
+              </div>
+
+              <div class="bordered d-flex">
+                <input type="text" name="attr_sitmod-desc" title="@{sitmod-desc}" value="">
+              </div>
+
+            </div>
+
+          </fieldset>
+
+        </div>
+
+        <!-- Fiche PJ, Onglet CAPACITES, Sous-onglet Buffs -->
+        <div class="pc-buffs-subtab">
+          <h4>Buffs</h4>
+
+          <fieldset class="repeating_buffs">
+
+            <div class="pc-buffs">
+
+              <div class="bordered d-flex">
+  
+                <input type="checkbox" name="attr_buffon" title="@{buffon}" value="1">
+                <input type="text" name="attr_buffnom" title="@{buffnom}" placeholder="Nom du buff/debuff" value="">
+  
+              </div>
+  
+              <div class="bordered d-flex">
+  
+                <input type="text" name="attr_buffmods" title="@{buffmods}" placeholder="Attribut:Valeur; Attribut:Valeur; ..." value="">
+  
+              </div>
+
+            </div>
+
+
+          </fieldset>
+
+          <hr>
+
+          Détail par attribut
+        </div>
+      </div>
+
+      <!-- Fiche PJ, Onglet Equipement -->
+      <div class="pc-gears-tab">
+        
+        <div class="pc-gears">
+
+          <!-- Liste des équipements -->
+          <div class="gears">
+
+            <div class="block-title block-header">
+              Equipements
+            </div>
+
+            <div class="bordered">
+              <div class="d-flex d-flex-middle">
+                &nbsp;Crédits&nbsp;:&nbsp;<input type="text" name="attr_credits" title="@{credits}" value="">
+                &nbsp;Enc. Total&nbsp;:&nbsp;<span name="attr_total_enc" title="@{total_enc} Encombrement total"></span>
+                &nbsp;/&nbsp;<input type="number" name="attr_seuil_enc" title="@{seuil_enc}" value="0">
+              </div>
+            </div>
+
+            <div class="bordered">
+              
+              <fieldset class="repeating_equipement">
+
+                <details>
+                  <summary>
+
+                    <span>
+                      <input type="checkbox" name="attr_equip-util" title="@{equip-util}" value="1">
+                      <input type="text" class="equip-desc" name="attr_equip-desc" title="@{equip-desc}">
+                      Enc. <input type="number" name="attr_equip-enc" title="@{equip-enc}" value="0">
+                      Nbre <input type="number" name="attr_equip-qte" title="@{equip-qte}" value="1">
+                      <input type="checkbox" name="attr_equip-on" title="@{equip-on}" value="1">
+                    </span>
+
+                  </summary>
+
+                  <div class="d-flex">
+                    <input type="text" name="attr_equip-detail" title="@{equip-detail}" value="">
+                  </div>
+
+                  <div class="d-flex d-flex-middle">
+                    <input type="text" name="attr_equip-props" title="@{equip-props}" value="">
+                    <input type="checkbox" name="attr_equip-atk" title="@{equip-atk}" value="1">
+                    &nbsp;A une attaque
+                  </div>
+
+                </details>
+
+
+              </fieldset>
+
+            </div>
+          </div>
+
+          <!-- Liste des ressources -->
+          <div class="resources">
+            <div class="block-title block-header">
+              Ressources
+            </div>
+
+            <div class="bordered">
+
+              Niveau de vie :
+              <select class="select-md" name="attr_niveau_vie" title="@{niveau_vie}">
+                <option>Miséreux</option>
+                <option>Pauvre</option>
+                <option selected>Modeste</option>
+                <option>Aisé</option>
+                <option>Fortuné</option>
+                <option>Nanti</option>
+              </select>
+
+            </div>
+
+            <div class="bordered">
+              
+              <fieldset class="repeating_ressources">
+
+                <div class="d-flex">
+                  <input type="text" name="attr_res-desc" title="@{res-desc}" value="">
+                  Valeur :
+                  <input type="number" name="attr_res-val" title="@{res-val}" value="1">
+                </div>
+
+              </fieldset>
+
+            </div>
+          </div>
+
+        </div>
+
+        <div class="pc-gears">
+
+          <!-- Equipements divers (free-form) -->
+          <div class="misc-gears">
+            <div class="block-title block-header">
+              Equipement divers
+            </div>
+            <textarea name="attr_equip_divers" title="@{equip_divers}" value=""></textarea>
+          </div>
+
+          <!-- Notes -->
+          <div class="notes">
+            <div class="block-title block-header">
+              Notes
+            </div>
+            <textarea name="attr_notes" title="@{notes}" value=""></textarea>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Fiche PJ, Onglet Config -->
+      <div class="pc-config-tab">
+        <h3>Configuration</h3>
+
+      </div>
+
+      <!-- Fiche PJ, Onglet Version -->
+      <div class="pc-version-tab">
+        <h3>Version</h3>
+
+      </div>
+
+
+    </div>
+
+    <!-- Fiche PNJ -->
+    <div class="cof-npc">
+      <input type="hidden" class="tabs-toggle" name="attr_npc_tab" value="main" />
+      <div>
+        <button type="action" name="act_npc_main-btn" class="main-tab tab-btn npc-main-btn">CARACS</button>
+        <button type="action" name="act_npc_config-btn" class="main-tab tab-btn npc-config-btn">CONFIGURATION</button>
+      </div>
+
+      <div class="npc-main-tab">
+
+        <div class="npc-2colrow">
+  
+          <div>
+            <h4>Attributs</h4>
+  
+            <div class="npc-3colrow">
+              <div class="bordered">
+                FOR
+              </div>
+              <div class="bordered">
+                DEX
+              </div>
+              <div class="bordered">
+                CON
+              </div>
+            </div>
+  
+            <div class="npc-3colrow">
+              <div class="bordered">
+                INT
+              </div>
+              <div class="bordered">
+                PER
+              </div>
+              <div class="bordered">
+                CHA
+              </div>
+            </div>
+  
+            <div class="npc-3colrow">
+              <div class="bordered">
+                Init.
+              </div>
+              <div class="bordered">
+                DEF
+              </div>
+              <div class="bordered">
+                DEP
+              </div>
+            </div>
+  
+            <div class="npc-2colrow">
+              <div class="bordered">
+                PV
+              </div>
+            </div>
+  
+          </div>
+          
+          <div>
+            <h4>Bio</h4>
+            <textarea name="attr_pnj_bio" title="@{pnj_bio}" rows="4" value=""></textarea>
+  
+            <h4>Divers</h4>
+            <textarea name="attr_pnj_divers" title="@{pnj_divers}" rows="4" value=""></textarea>
+          </div>
+  
+        </div>
+
+        <hr>
+        <h4>Attaques</h4>
+
+        <hr>
+        <h4>Capacités</h4>
+
+      </div>
+
+      <div class="npc-config-tab">
+        CONFIG
+
+        <hr>
+
+        <details>
+          <summary>Importer un statblock</summary>
+          
+        </details>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<rolltemplate class="sheet-rolltemplate-co1">
+
+  <div class="sheet-rt-bordered sheet-rt-border-rounded">
+
+    {{^token}}
+    <div class="sheet-rt-bordered sheet-rt-title sheet-rt-header">
+      {{perso}}
+    </div>
+    {{/token}}
+    {{#token}}
+    <div class="sheet-2columns">
+      <div>{{token}}</div>
+      <div>{{perso}}</div>
+    </div>
+    {{/token}}
+    <div class="2columns">
+      <div>{{subtags}}</div>
+      <div>{{name}}</div>
+    </div>
+    {{#nd}}
+    <div class="2columns">
+      <div>ND</div>
+      <div>{{nd}}</div>
+    </div>
+    {{/nd}}
+    {{#def}}
+    <div class="2columns">
+      <div>DEF</div>
+      <div>{{def}}</div>
+    </div>
+    {{/def}}
+    {{#portee}}
+    <div>Portée : {{portee}}</div>
+    {{/portee}}
+    <hr>
+    {{#desc}}
+    <div>{{desc}}</div>
+    {{/desc}}
+    {{#recup}}
+    <div class="2columns">
+      <div>PV récupérés</div>
+      <div>{{recup}}</div>
+    </div>
+    {{/recup}}
+    {{#carac}}
+    <div class="2columns">
+      {{#jet}}
+      <div>{{jet}}</div>
+      {{/jet}}
+      {{^jet}}
+      <div>Jet</div>
+      {{/jet}}
+    </div>
+    {{/carac}}
+    {{#test}}
+    <div class="sheet-rt-hidden">{{test}}</div>
+    {{#rollWasCrit() test}}
+    <div class="sheet-rt-critical">{{test_crit}}</div>
+    {{/rollWasCrit() test}}
+    {{#rollWasFumble() test}}
+    <div class="sheet-rt-fumble">{{test_fumble}}</div>
+    {{/rollWasFumble() test}}
+    {{/test}}
+    {{#attaque}}
+      {{#rollWasCrit() attaque}}
+      <div class="sheet-rt-critical">Critique !</div>
+      {{/rollWasCrit() attaque}}
+      {{#rollWasFumble() attaque}}
+      {{/rollWasFumble() attaque}}
+      <div class="2columns">
+        <div>Jet</div>
+        <div>{{attaque}}</div>
+      </div>
+      {{#degats}}
+      <div class="2columns">
+        <div>Dégâts</div>
+        <div>
+          {{degats}} {{#rollWasCrit() attaque}}
+          <span class="sheet-rt-critical"> + {{degats}}</span>
+          {{/rollWasCrit() attaque}} {{dmtype}}
+        </div>
+      </div>
+      {{/degats}}
+      {{#degats2}}
+      <div>+</div>
+      <div class="sheet-rt-secondary">{{degats2}} {{dm2type}}</div>
+      {{/degats2}}
+    {{/attaque}}
+    {{^attaque}}
+      {{#degats}}
+      <div class="2columns">
+        <div>Dégats</div>
+        <div>{{degats}} {{dmtype}}</div>
+      </div>
+      {{/degats}}
+      {{#degats2}}
+      <div class="2columns">
+        <div>+</div>
+        <div class="sheet-rt-secondary">{{degats2}} {{dm2type}}</div>
+      </div>
+      {{/degats2}}
+    {{/attaque}}
+    {{#special}}
+    <div>{{special}}</div>
+    {{/special}}
+    {{#text}}
+    <div class="sheet-rt-small">{{text}}</div>
+    {{/text}}
+    {{#alert}}
+    <div class="sheet-rt-fumble">{{alert}}</div>
+    {{/alert}}
+    <hr>
+
+  </div>
+
+</rolltemplate>
+
+<script type="text/worker">
+
+/**
+ * COF2e Sheet Worker
+ */
+
+const SWData = {
+  settings: {
+    debugMode: false,
+    hiddenClass: "hidden",
+    visibleClass: "visible"
+  },
+  SHEET_TYPE: {
+    PC: "pc",
+    NPC: "npc"
+  },
+  PC: {
+    ABILITIES: [ "agilité", "constitution", "force", "perception", "charisme", "intelligence", "volonté" ],
+    COMBAT: {
+      init: [ "per", "init_buff" ],
+      attacks: [ 
+        [ "atkcac", "for", "Au Contact" ],
+        [ "atktir", "agi", "A Distance" ], 
+        [ "atkmag", "mag", "Magique" ]
+      ]
+    },
+    CONDITIONS: [ 
+      { 
+        code: "A", 
+        button: "aveugle",
+        label: "Aveuglé" 
+      }, 
+      { 
+        code: "B", 
+        button: "blesse",
+        label: "Blessé" 
+      }, 
+      { 
+        code: "C", 
+        button: "confus",
+        label: "confus" 
+      }, 
+      { 
+        code: "F", 
+        button: "effraye",
+        label: "Effrayé" 
+      }, 
+      { 
+        code: "E", 
+        button: "etourdi",
+        label: "Etourdi" 
+      }, 
+      { 
+        code: "I", 
+        button: "immobilise", 
+        label: "Immobilisé" 
+      }, 
+      { 
+        code: "P", 
+        button: "panique",
+        label: "Paniqué" 
+      }, 
+      { 
+        code: "L", 
+        button: "ralenti",
+        label: "Ralenti" 
+      }, 
+      { 
+        code: "R", 
+        button: "renverse",
+        label: "Renversé" 
+      }, 
+      { 
+        code: "S", 
+        button: "surpris",
+        label: "Surpris" 
+      }
+    ]
+  }
+}
+
+// =================
+// UTILITY FUNCTIONS
+// =================
+
+/**
+* Convert to integer
+* @param {string} value - value to cast
+* @param {int} onError - default value on error
+* @returns integer value
+*/
+function int(value, onError = 0) {
+  return parseInt(value) || onError;
+}
+
+/**
+* Convert to float
+* @param {string} value - value to cast
+* @param {float} onError - default value on error
+* @returns float value
+*/
+function float(value, onError = 0) {
+  return parseFloat(value) || onError;
+}
+
+
+/**
+* Get string or empty value
+* @param {string} value - value to cast
+* @param {string} onError - default value on null/undefined
+* @returns string value
+*/
+function stringOrDefault(value, onError = "") {
+  return value || onError;
+}
+
+/**
+* Capitalize string
+* @param {string} str - string to capitalize
+* @returns capitalized string
+*/
+function capitalize(str) {
+  if (str && str !== "")
+    return str.charAt(0).toUpperCase() + str.substring(1);
+}
+
+/**
+ * Return ability short name
+ * @param {string} ability - ability name
+ * @returns {string}
+ */
+function shorten(ability) {
+  return ability.substring(0, 3);
+}
+
+/**
+* Log to JS console with color & style
+* @param {any} data - data to log
+* @param {string} title - title of logged data
+* @param {string} color - color name for log line
+* @param {string} style - CSS style for log line
+* @param {string} headerStyle - CSS style for log title
+*/
+function clog(
+  data,
+  title = "",
+  color = { text: "green", back: "" },
+  style = "font-size:12px; font-weight:normal;",
+  headerStyle = "font-size:13px; font-weight:bold;"
+) {
+  if (!SWData.settings.debugMode)
+    return;
+
+  title = stringOrDefault(title, "");
+  if (title !== "") title = ` Sheet-Worker : ${title} `;
+  const titleStyle = `color:${color.text}; background-color:${color.back}; ${headerStyle} text-decoration:underline;`;
+  const textStyle = `color:${color.text}; background-color:${color.back}; ${style}`;
+
+  if (title) {
+    if (typeof data === "object") {
+      const output = `%c${title}`;
+      console.log(output, titleStyle, data);
+    } else {
+      const output = `%c${title} %c${data}`;
+      console.log(output, titleStyle, textStyle);
+    }
+  } else {
+    if (typeof data === "object") {
+      console.log(data);
+    } else {
+      const output = `%c${data}`;
+      console.log(output, textStyle);
+    }
+  }
+}
+
+/**
+* Generate a random number between 1 and max
+* @param {integer} max - Upper bound of range
+* @returns {integer} Generated random number
+*/
+function getRandom(max) {
+  const min = 1;
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+/**
+* Parse a chunk of data into name & value
+* @param {string} data - Chunk of data to parse
+* @param {string} delim - Delimiter (defaults to ':')
+* @returns an object with name and value properties
+*/
+function parseNameValue(data, delim) {
+  delim = stringOrDefault(delim, ":");
+  if (data.indexOf(delim) !== -1) {
+    let [ key, value ] = data.split(delim);
+    key = stringOrDefault(key).trim();
+    value = stringOrDefault(value).trim()
+  }
+  return { name: key, value };
+}
+
+/**
+ * Return a sequence of numbers as an array
+ * @param {number} count - Length of the sequence
+ * @param {number} base - Base number for the sequence (default 1)
+ * @returns {number[]}
+ */
+function seq(count, base = 1) {
+  return [ ...Array(count).keys() ].map(i => i += base);
+}
+
+/**
+ * Return a sequence of names
+ * @param {number} count - Length of the sequence
+ * @param {string} name - Name template (with | placeholder to insert the sequence)
+ * @param {number} base - Base number for the sequence (default 1)
+ * @returns {string[]}
+ */
+ function nameSeq(count, name, base = 1) {
+  const [ prepend, append ] = name.split("|");
+  return seq(count, base).map(s => `${prepend || ""}${s}${append || ""}`)
+}
+
+/**
+ * Return a list of event as array or as string
+ * @param {string} eventName - Name of the event
+ * @param {string[]} attributeList - List of attributes
+ * @param {string} joinChar - Character to use for joining the items
+ * @returns {string[]|string}
+ */
+function eventList(eventName, attributeList, joinChar = "") {
+  const result = attributeList.map(a => `${eventName}:${ a.toLowerCase() }`)
+  return joinChar !== "" ? result.join(joinChar) : result;
+}
+
+/**
+* Remove all rows for a repeating section
+* @param {string} sectionName Repeating section to clear
+*/
+function removeRepeatingAll(sectionName) {
+  getSectionIDs(sectionName, function (rowIds) {
+    rowIds.forEach(rowId => {
+      removeRepeatingRow(`repeating_${sectionName}_${rowId}`);
+    });
+  });
+}
+
+/** @typedef sendChatMsgOptions
+ * @property {string} title - Title of the message
+ * @property {string} template - Name of roll template
+ * @property {string} whisper - Target for whispered message
+ */
+
+/**
+ * Send a message to chat
+ * @param {string|string[]} msg - Message to send
+ * @param {sendChatMsgOptions} options - Options for the message
+ */
+ function sendChatMsg(msg, options = {}) {
+  let { title = "", template = "default", whisper = "@{togm}" } = options;
+  if (whisper.charAt(0) !== "@" && whisper !== "") whisper = "/w \"" + whisper + "\" ";
+  let chatMsg;
+  if (Array.isArray(msg)) {
+    chatMsg = msg.map(t => `{{${t} }}`).join(" ");
+  } else {
+    chatMsg = "{{" + msg + "}}";
+  }
+  const chatCmd = `${whisper}&{template:${template}} ${title ? (template === "default" ? `{{name=${title} }}` : `{{${title} }}`) : "" } ${chatMsg}`;
+  startRoll(chatCmd, roll => {
+      finishRoll(roll.rollId);
+  });
+}
+
+/**
+ * Return co1 rolltemplate
+ * @param {object} props - List of {{ }} sections as object properties
+ * @returns {string[]}
+ */
+function coRollTemplate(props) {
+  return [
+    "perso=@{character_name}",
+    ...Object.entries(props).map(e => {
+      let [ prop, value ] = e;
+      prop = prop === "leftsub" ? "subtags" : prop;
+      prop = prop === "rightsub" ? "name" : prop;
+      return `${prop}=${value} `;
+    })
+  ];
+}
+
+/**
+ * Send a single value roll query to chat and process response
+ * @param {string} prompt - Input box label
+ * @param {object} callback - Callback function to process input
+ */
+function askValue(prompt, callback) {
+  const askValue = `!{{ask=[[?{${prompt}}]]}}`;
+  startRoll(askValue, question => {
+    const query = question.results.ask.result;
+      if(query && callback) {
+          callback(query);
+      }
+  });
+}
+
+/**
+ * Send a drop-down roll query to chat and process response
+ * @param {string|array} askParams - Parameters of the roll query 
+ * @param {object} callback - Callback function to process input
+ */
+function ask(askParams, callback) {
+  if (!Array.isArray(askParams)) {
+    askParams = [ askParams, "Non", "Oui" ];
+  }
+  const [ prompt, ...choices ] = askParams;
+  const choice = choices.map((ch, ix) => `${ch},${ix}`).join("|");
+  const ask = `!{{ask=[[?{${prompt}|${choice}}]]}}`;
+  startRoll(ask, question => {
+      const query = question.results.ask.result;
+      if(query && callback) {
+          callback(query, choices);
+      }
+      //finishRoll(question.rollId);
+  });
+};
+
+/**
+ * Add numeric attributes values
+ * @param {object} values - getAttrs object with numeric values
+ * @returns - {number}
+ */
+function addValues(values) {
+  return Object.keys(values).reduce((result, attr) => {
+    return result + int(values[attr]);
+  }, 0);
+}
+
+/**
+ * Show a div area via Roll20 jQuery
+ * @param {string} div - Name of div area to show
+ */
+function showArea(div) {
+  $20(`.${div}`).removeClass(SWData.settings.hiddenClass);
+  $20(`.${div}`).addClass(SWData.settings.visibleClass);
+}
+
+/**
+ * Hide a div area via Roll20 jQuery
+ * @param {string} div - Name of div area to hide
+ */
+function hideArea(div) {
+  $20(`.${div}`).removeClass(SWData.settings.visibleClass);
+  $20(`.${div}`).addClass(SWData.settings.hiddenClass);
+}
+
+// ============
+// SHEET EVENTS
+// ============
+
+/**
+ * Change identity heading
+ */
+on("change:sheet_type", function() {
+  getAttrs([ "sheet_type" ], function(value) {
+    const sheet_type = stringOrDefault(value.sheet_type);
+    if (!sheet_type) return
+
+    Object.values(SWData.SHEET_TYPE).forEach(type => {
+      if (type === sheet_type) {
+        showArea(`identity-${type}`);
+      } else {
+        hideArea(`identity-${type}`);
+      }
+    })
+
+  });
+});
+
+/**
+ * Change tabs
+ */
+[ 
+  "pc_main", "pc_abilities", "pc_gears", "pc_config", "pc_version",
+  "npc_main", "npc_config"
+].forEach(button => {
+  on(`clicked:${button}-btn`, function() {
+    const [ type, value ] = button.split("_");
+    setAttrs({
+        [`${type}_tab`]: value
+    });
+  });
+});
+
+/**
+ * Change subtabs
+ */
+[ "rolls", "traits", "sitmod", "buffs" ].forEach(button => {
+  on(`clicked:pc_${button}-btn`, function() {
+      setAttrs({
+          pc_subtab: button
+      });
+  });
+});
+
+/**
+ * On ability components change
+ */
+SWData.PC.ABILITIES.forEach(ability => {
+  const attrs = [ 
+    shorten(ability), 
+    `${ shorten(ability) }_buff` 
+  ];
+  on(eventList("change", attrs, " "), function () {
+    getAttrs(attrs, function(values) {
+      const score = addValues(values);
+      setAttrs({ [`${ shorten(ability) }_test`]: score });
+    });
+  });
+});
+
+/**
+ * Update the init attribute
+ */
+function updateInit() {
+  getAttrs(SWData.PC.COMBAT.init, function(values) {
+    const init = 10 + addValues(values);
+    setAttrs({ init });
+  });
+}
+
+/**
+ * On init components change
+ */
+on(eventList("change", SWData.PC.COMBAT.init, " "), function() {
+  updateInit();
+});
+
+/**
+ * On attacks components change
+ */
+SWData.PC.COMBAT.attacks.forEach(attk => {
+  const [ attack, ability ] = attk;
+  const changed = [ `${attack}_base`, `${ability}` , `${attack}_buff` ];
+  on(eventList("change", changed, " "), function() {
+    getAttrs(changed, function(values) {
+      const score = addValues(values);
+      setAttrs({ [`${attack}`]: score });
+    });
+  });
+});
+
+/**
+ * On PSY attack base change, propagate value to PSY Int & PSY Inf
+ */
+on("change:atkpsy_base", function() {
+  getAttrs([ "atkpsy_base" ], function(value) {
+    const psy_base = int(value.atkpsy_base);
+    setAttrs( { psyint_base: psy_base, psyinf_base: psy_base });
+  });
+})
+
+/**
+ * On ability button click
+ */
+SWData.PC.ABILITIES.forEach(ability => {
+  on(`clicked:${ shorten(ability) }-btn`, function () {
+    const short = shorten(ability);
+    const armor_malus = short === "dex" ? " - [[@{armor_malus}]][Armure]" : "";
+    let carac = `[[@{${short}_sup}]][Dé] + [[@{${short}_test}]][Bonus ${short.toUpperCase()}]${armor_malus} @{rof4} + ([[@{modsit_${short}}]][Situation]) ]] `;
+    const chatMsg = coRollTemplate({
+      leftsub: "Test",
+      rightsub: capitalize(ability),
+      carac
+    });
+    console.log(chatMsg);
+  });
+});
+
+/**
+ * On attack button click
+ */
+SWData.PC.COMBAT.attacks.forEach(attk => {
+  const [ attack, , description ] = attk;
+  on(`clicked:${attack}-btn`, function () {
+    const attaque = `[[@{jnor}]]cs20cf1[Dé] + [[@{${attack}}]][Bonus] @{rof4} ]]`;
+    const chatMsg = coRollTemplate({
+      leftsub: "Attaque",
+      rightsub: description,
+      attaque
+    });
+    console.log(chatMsg);
+  });
+});
+
+/**
+ * Show weapons options
+ */
+on("clicked:repeating_weapons:weapon-opt-btn", function() {
+  getAttrs([ "repeating_weapons_weapon-opt" ], function(value) {
+    let [ option ] = Object.values(value);
+    option = 1 - int(option);
+    setAttrs( { ["repeating_weapons_weapon-opt"]: option });
+  });
+});
+
+</script>
