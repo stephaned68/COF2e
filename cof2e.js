@@ -363,7 +363,7 @@ function hideArea(div) {
 on("change:sheet_type", function() {
   getAttrs([ "sheet_type" ], function(value) {
     const sheet_type = stringOrDefault(value.sheet_type);
-    if (!sheet_type) return
+    if (!sheet_type) return;
 
     Object.values(SWData.SHEET_TYPE).forEach(type => {
       if (type === sheet_type) {
@@ -448,16 +448,6 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
     });
   });
 });
-
-/**
- * On PSY attack base change, propagate value to PSY Int & PSY Inf
- */
-on("change:atkpsy_base", function() {
-  getAttrs([ "atkpsy_base" ], function(value) {
-    const psy_base = int(value.atkpsy_base);
-    setAttrs( { psyint_base: psy_base, psyinf_base: psy_base });
-  });
-})
 
 /**
  * On ability button click

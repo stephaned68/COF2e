@@ -374,6 +374,7 @@
               <h4><strong>Score</strong></h4>
             </div>
 
+            <!-- Init -->
             <div class="attack">
               <div class="block-title">
                 <button class="block-title" type="action" name="act_init-btn">
@@ -399,6 +400,7 @@
               </div>
             </div>
 
+            <!-- CONTACT -->
             <div class="attack">
               <div class="block-title">
                 <button class="block-title" type="action" name="act_atkcac-btn">
@@ -421,6 +423,7 @@
               </div>
             </div>
 
+            <!-- DISTANCE -->
             <div class="attack">
               <div class="block-title">
                 <button class="block-title" type="action" name="act_atktir-btn">
@@ -443,88 +446,46 @@
               </div>
             </div>
 
+            <!-- MAGIE -->
             <div class="attack">
               <div class="block-title">
-                <button class="block-title" type="action" name="act_psyint-btn">
+                <button class="block-title" type="action" name="act_atkmag-btn">
                   <span class="d20-btn">t</span>
                   PSY Intuition
                 </button>
               </div>
               <div class="centered bordered">
-                <input type="hidden" name="attr_psyint_base", value="0">
-                <input type="number" name="attr_atkpsy_base" title="@{psyint_base}" value="0">
+                <input type="number" name="attr_atkmag_base" title="@{atkmag_base}" value="0">
               </div>
               <div class="centered bordered">
-                PER : <span name="attr_per"></span>
+                VOL : <span name="attr_vol"></span>
               </div>
               <div class="centered bordered">
-                <span attr="attr_psyint_buff"></span>
+                <span attr="attr_atkmag_buff"></span>
               </div>
               <div class="centered bordered">
-                <input type="hidden" name="attr_psyint" value="0">
-                <span name="attr_psyint" title="@{psyint}"></span>
-              </div>
-            </div>
-
-            <div class="attack">
-              <div class="block-title">
-                <button class="block-title" type="action" name="act_psyinf-btn">
-                  <span class="d20-btn">t</span>
-                  PSY Influence
-                </button>
-              </div>
-              <div class="centered bordered">
-                <input type="hidden" name="attr_psyint_base", value="0">
-                <span name="attr_atkpsy_base" title="@{psyinf_base}" value="0">
-              </div>
-              <div class="centered bordered">
-                CHA : <span name="attr_cha"></span>
-              </div>
-              <div class="centered bordered">
-                <span attr="attr_psyinf_buff"></span>
-              </div>
-              <div class="centered bordered">
-                <input type="hidden" name="attr_psyinf" value="0">
-                <span name="attr_psyinf" title="@{psyinf}"></span>
+                <input type="hidden" name="attr_atkmag" value="0">
+                <span name="attr_atkmag" title="@{atkmag}"></span>
               </div>
             </div>
 
           </div>
           
-          <!-- DV, PV, Blessures -->
+          <!-- VIGUEUR -->
           <div class="vitality">
 
             <div class="centered">
-              <h4>VITALITE</h4>
-            </div>
-
-            <div class="hits hit">
-
-              <div class="block-title">
-                <button class="block-title" type="action" name="act_dv-btn">
-                  <span class="d20-btn">t</span>
-                  DV
-                </button>
-              </div>
-
-              <div class="bordered centered">
-                <select class="select-sm" name="attr_dv" title="@{dv}">
-                  <option value="6">d6</option>
-                  <option value="8" selected>d8</option>
-                  <option value="10">d10</option>
-                </select>
-              </div>
-
+              <h4>VIGUEUR</h4>
             </div>
 
             <div class="hits hit">
 
               <div class="block-title centered">
-                <button class="flat-btn img-btn img-btn-lg" type="action" name="act_hploss-btn">
+                <button class="flat-btn img-btn img-btn-lg" type="action" name="act_vploss-btn">
                   <span class="img-btn img-btn-lg">e</span>
                 </button>
                 PV
-                <button class="flat-btn img-btn img-btn-lg" type="action" name="act_hpheal-btn">
+                <button class="flat-btn img-btn img-btn-lg" type="action" name="act_vpheal-btn">
                   <span class="img-btn img-btn-lg">k</span>
                 </button>
               </div>
@@ -537,23 +498,25 @@
 
             </div>
 
+            <div class="hits hit">
+
+              <div class="block-title centered">
+                <button class="flat-btn" type="action" name="act_drecup-btn">
+                  DR
+                </button>
+              </div>
+
+              <div class="bordered centered">
+                <input type="number" name="attr_dr" title="@{dr}" value="0">
+                /
+                <input type="number" name="attr_dr_max" title="@{dr_max}" value="0">
+              </div>
+
+            </div>
+
             <div class="bordered centered hit">
               DM temporaires
               <input type="number" name="attr_temp_dm" title="@{temp_dm}" value="">
-            </div>
-
-            <div class="block-title centered hit">
-              Blessures Graves
-            </div>
-
-            <div class="bordered centered">
-              Seuil : <span name="attr_seuilbg"></span>
-              <br>
-              <input type="checkbox" name="attr_bg1" title="@{bg1}" value="1">
-              <input type="checkbox" name="attr_bg2" title="@{bg2}" value="1">
-              <input type="checkbox" name="attr_bg3" title="@{bg3}" value="1">
-              <input type="checkbox" name="attr_bg4" title="@{bg4}" value="1">
-              <input type="checkbox" name="attr_bg5" title="@{bg5}" value="1">
             </div>
 
           </div>
@@ -2086,7 +2049,7 @@ function hideArea(div) {
 on("change:sheet_type", function() {
   getAttrs([ "sheet_type" ], function(value) {
     const sheet_type = stringOrDefault(value.sheet_type);
-    if (!sheet_type) return
+    if (!sheet_type) return;
 
     Object.values(SWData.SHEET_TYPE).forEach(type => {
       if (type === sheet_type) {
@@ -2171,16 +2134,6 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
     });
   });
 });
-
-/**
- * On PSY attack base change, propagate value to PSY Int & PSY Inf
- */
-on("change:atkpsy_base", function() {
-  getAttrs([ "atkpsy_base" ], function(value) {
-    const psy_base = int(value.atkpsy_base);
-    setAttrs( { psyint_base: psy_base, psyinf_base: psy_base });
-  });
-})
 
 /**
  * On ability button click
