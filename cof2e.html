@@ -37,7 +37,7 @@
       <img
         class="logo"
         title="Version 1.0.0 - 10/2024"
-        src=""
+        src="https://raw.githubusercontent.com/stephaned68/COF2e/main/cof2e_logo.jpg"
       />
     </div>
 
@@ -567,131 +567,142 @@
           <div class="conditions">
             <div class="centered block-header">Etats préjudiciables</div>
             <div class="bordered centered">
-              <details>
-                <summary title="Ajouter / Retirer des conditions">
-                  <input type="radio" name="attr_etatde" title="@{etatde}" value="20" checked>
-                  &nbsp;Normal&nbsp;
-                  <input type="radio" name="attr_etatde" title="@{etatde}" value="12">
-                  &nbsp;Affaibli&nbsp;
-                  <input type="checkbox" name="attr_poisse" title="@{poisse}" value="1">
-                  &nbsp;Poisse
-                  <br>
-                  <span name="attr_conditions" value=""></span>
-                </summary>
-                
-                <button
-                  type="action"
-                  class="flat-btn img-btn img-btn-lg"
-                  name="act_aveugle"
-                  title="Aveuglé"
-                ><img
-                  class="bubble-img"
-                  src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesGalactiques/cond_aveugle.png"
-                  />
-                </button>
+              <span name="attr_conditions" value=""></span>
+              
+              <button
+                type="action"
+                class="flat-btn img-btn img-btn-lg"
+                name="act_affaibli"
+                title="Affaibli"
+              ><img
+                class="bubble-img"
+                src="https://raw.githubusercontent.com/stephaned68/COF2e/main/cond_affaibli.png"
+                />
+              </button>
 
-                <button
-                  type="action"
-                  class="flat-btn img-btn img-btn-lg"
-                  name="act_blesse"
-                  title="Blessé"
-                ><img
-                  class="bubble-img"
-                  src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesGalactiques/cond_blesse.png"
-                  />
-                </button>
+              <button
+                type="action"
+                class="flat-btn img-btn img-btn-lg"
+                name="act_aveugle"
+                title="Aveuglé"
+              ><img
+                class="bubble-img"
+                src="https://raw.githubusercontent.com/stephaned68/COF2e/main/cond_aveugle.png"
+                />
+              </button>
+    
+              <button
+                type="action"
+                class="flat-btn img-btn img-btn-lg"
+                name="act_essoufle"
+                title="Essouflé"
+              ><img
+                class="bubble-img"
+                src="https://raw.githubusercontent.com/stephaned68/COF2e/main/cond_essoufle.png"
+                />
+              </button>
+<!-- 
+              <button
+                type="action"
+                class="flat-btn img-btn img-btn-lg"
+                name="act_effraye"
+                title="Effrayé"
+              ><img
+                class="bubble-img"
+                src="https://raw.githubusercontent.com/stephaned68/COF2e/main/cond_effraye.png"
+                />
+              </button>
+ -->    
+              <button
+                type="action"
+                class="flat-btn img-btn img-btn-lg"
+                name="act_etourdi"
+                title="Etourdi"
+              ><img
+                class="bubble-img"
+                src="https://raw.githubusercontent.com/stephaned68/COF2e/main/cond_etourdi.png"
+                />
+              </button>
+    
+              <br>
+    
+              <button
+                type="action"
+                class="flat-btn img-btn img-btn-lg"
+                name="act_immobilise"
+                title="Immobilisé"
+              ><img
+                class="bubble-img"
+                src="https://raw.githubusercontent.com/stephaned68/COF2e/main/cond_immobilise.png"
+                />
+              </button>
+<!-- 
+              <button
+                type="action"
+                class="flat-btn img-btn img-btn-lg"
+                name="act_panique"
+                title="Paniqué"
+              ><img
+                class="bubble-img"
+                src="https://raw.githubusercontent.com/stephaned68/COF2e/main/cond_panique.png"
+                />
+              </button> -->
+    
+              <button
+                type="action"
+                class="flat-btn img-btn img-btn-lg"
+                name="act_invalide"
+                title="Invalide"
+              ><img
+                class="bubble-img"
+                src="https://raw.githubusercontent.com/stephaned68/COF2e/main/cond_invalide.png"
+                />
+              </button>
+    
+              <button
+                type="action"
+                class="flat-btn img-btn img-btn-lg"
+                name="act_paralyse"
+                title="Paralysé"
+              ><img
+                class="bubble-img"
+                src="https://raw.githubusercontent.com/stephaned68/COF2e/main/cond_paralyse.png"
+                />
+              </button>
+    
+              <button
+                type="action"
+                class="flat-btn img-btn img-btn-lg"
+                name="act_ralenti"
+                title="Ralenti"
+              ><img
+                class="bubble-img"
+                src="https://raw.githubusercontent.com/stephaned68/COF2e/main/cond_ralenti.png"
+                />
+              </button>
+    
+              <button
+                type="action"
+                class="flat-btn img-btn img-btn-lg"
+                name="act_renverse"
+                title="Renversé"
+              ><img
+                class="bubble-img"
+                src="https://raw.githubusercontent.com/stephaned68/COF2e/main/cond_renverse.png"
+                />
+              </button>                
+    
+              <button
+                type="action"
+                class="flat-btn img-btn img-btn-lg"
+                name="act_surpris"
+                title="Surpris"
+              ><img
+                class="bubble-img"
+                src="https://raw.githubusercontent.com/stephaned68/COF2e/main/cond_surpris.png"
+                />
+              </button>
 
-                <button
-                  type="action"
-                  class="flat-btn img-btn img-btn-lg"
-                  name="act_confus"
-                  title="Confus"
-                ><img
-                  class="bubble-img"
-                  src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesGalactiques/cond_confus.png"
-                  />
-                </button>
-
-                <button
-                  type="action"
-                  class="flat-btn img-btn img-btn-lg"
-                  name="act_effraye"
-                  title="Effrayé"
-                ><img
-                  class="bubble-img"
-                  src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesGalactiques/cond_effraye.png"
-                  />
-                </button>
-
-                <button
-                  type="action"
-                  class="flat-btn img-btn img-btn-lg"
-                  name="act_etourdi"
-                  title="Etourdi"
-                ><img
-                  class="bubble-img"
-                  src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesGalactiques/cond_etourdi.png"
-                  />
-                </button>
-
-                <br>
-
-                <button
-                  type="action"
-                  class="flat-btn img-btn img-btn-lg"
-                  name="act_immobilise"
-                  title="Immobilisé"
-                ><img
-                  class="bubble-img"
-                  src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesGalactiques/cond_immobilise.png"
-                  />
-                </button>
-
-                <button
-                  type="action"
-                  class="flat-btn img-btn img-btn-lg"
-                  name="act_panique"
-                  title="Paniqué"
-                ><img
-                  class="bubble-img"
-                  src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesGalactiques/cond_panique.png"
-                  />
-                </button>
-
-                <button
-                  type="action"
-                  class="flat-btn img-btn img-btn-lg"
-                  name="act_ralenti"
-                  title="Ralenti"
-                ><img
-                  class="bubble-img"
-                  src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesGalactiques/cond_ralenti.png"
-                  />
-                </button>
-
-                <button
-                  type="action"
-                  class="flat-btn img-btn img-btn-lg"
-                  name="act_renverse"
-                  title="Renversé"
-                ><img
-                  class="bubble-img"
-                  src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesGalactiques/cond_renverse.png"
-                  />
-                </button>                
-
-                <button
-                  type="action"
-                  class="flat-btn img-btn img-btn-lg"
-                  name="act_surpris"
-                  title="Surpris"
-                ><img
-                  class="bubble-img"
-                  src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesGalactiques/cond_surpris.png"
-                  />
-                </button>
-
-              </details>
             </div>
           </div>
 
