@@ -65,9 +65,16 @@
         </div>
 
         <div class="identity-row">
-          <div><strong>Profil</strong></div>
-          <div>
-            <input type="text" name="attr_profile" title="@{profile}" value="">
+          <div><strong>Profil / Famille</strong></div>
+          <div class="d-flex">
+            <input type="text" name="attr_profil" placeholder="Profil" title="@{profil}" value="">
+            <input type="text" name="attr_famille" list="families" placeholder="Famille" title="@{famille}" value="">
+            <datalist id="families">
+              <option>Aventuriers</option>
+              <option>Combattants</option>
+              <option>Mages</option>
+              <option>Mystiques</option>
+            </datalist>
           </div>
           <div><strong>Age</strong></div>
           <div>
@@ -76,25 +83,34 @@
         </div>
 
         <div class="identity-row">
-          <div><strong>Famille</strong></div>
+          <div><strong>Peuple</strong></div>
           <div>
-            <input type="text" name="attr_family" title="@{family}" value="">
+            <input type="text" name="attr_peuple" title="@{peuple}" value="">
           </div>
           <div><strong>Taille</strong></div>
           <div>
-            <input type="text" name="attr_size" title="@{size}" value="">
+            <input type="text" name="attr_taille" title="@{taille}" value="">
           </div>
         </div>
 
         <div class="identity-row">
-          <div><strong>Origine</strong></div>
+          <div><strong>Idéal héroïque</strong></div>
           <div>
-            <input type="text" name="attr_origin" title="@{origin}" value="">
+            <input type="text" name="attr_ideal" title="@{ideal}" value="">
           </div>
           <div><strong>Poids</strong></div>
           <div>
-            <input type="text" name="attr_weight" title="@{weight}" value="">
+            <input type="text" name="attr_poids" title="@{poids}" value="">
           </div>
+        </div>
+
+        <div class="identity-row">
+          <div><strong>Travers</strong></div>
+          <div>
+            <input type="text" name="attr_travers" title="@{travers}" value="">
+          </div>
+          <div></div>
+          <div></div>
         </div>
 
       </div>
@@ -127,8 +143,12 @@
 
       <!-- Niveau & Type de fiche -->
       <div class="level-type">
-        <strong>Niveau</strong>
-        <input type="number" name="attr_level" title="@{level}" value="1">
+        <div class="d-flex d-flex-middle">
+          <strong>Niveau</strong>
+        </div>
+        <div class="d-flex d-flex-middle">
+          <input type="number" name="attr_niveau" title="@{niveau}" value="1">
+        </div>
         <div>
           <strong>Type</strong>
           <select class="select-md" name="attr_sheet_type">
@@ -181,7 +201,7 @@
                 </button>
               </div>
               <div>
-                <select class="select-xs" name="dagi_sup">
+                <select class="select-xxs" name="dagi_sup">
                   <option value="@{jnor}" selected>N Normale</option>
                   <option value="@{jsup}">S Supérieure OU Héroïque</option>
                   <option value="@{jsuph}">H Supérieure ET Héroïque</option>
@@ -195,7 +215,7 @@
               </div>
               <div class="centered bordered">
                 <input type="hidden" name="attr_agi_test" title="@{agi_test}" value="0">
-                <span name="attr_dagi_test"></span>
+                <span name="attr_agi_test"></span>
               </div>
             </div>
 
@@ -208,7 +228,7 @@
                 </button>
               </div>
               <div>
-                <select class="select-xs" name="con_sup">
+                <select class="select-xxs" name="con_sup">
                   <option value="@{jnor}" selected>N Normale</option>
                   <option value="@{jsup}">S Supérieure OU Héroïque</option>
                   <option value="@{jsuph}">H Supérieure ET Héroïque</option>
@@ -235,7 +255,7 @@
                 </button>
               </div>
               <div>
-                <select class="select-xs" name="for_sup">
+                <select class="select-xxs" name="for_sup">
                   <option value="@{jnor}" selected>N Normale</option>
                   <option value="@{jsup}">S Supérieure OU Héroïque</option>
                   <option value="@{jsuph}">H Supérieure ET Héroïque</option>
@@ -262,7 +282,7 @@
                 </button>
               </div>
               <div>
-                <select class="select-xs" name="per_sup">
+                <select class="select-xxs" name="per_sup">
                   <option value="@{jnor}" selected>N Normale</option>
                   <option value="@{jsup}">S Supérieure OU Héroïque</option>
                   <option value="@{jsuph}">H Supérieure ET Héroïque</option>
@@ -289,7 +309,7 @@
                 </button>
               </div>
               <div>
-                <select class="select-xs" name="cha_sup">
+                <select class="select-xxs" name="cha_sup">
                   <option value="@{jnor}" selected>N Normale</option>
                   <option value="@{jsup}">S Supérieure OU Héroïque</option>
                   <option value="@{jsuph}">H Supérieure ET Héroïque</option>
@@ -316,7 +336,7 @@
                 </button>
               </div>
               <div>
-                <select class="select-xs" name="int_sup">
+                <select class="select-xxs" name="int_sup">
                   <option value="@{jnor}" selected>N Normale</option>
                   <option value="@{jsup}">S Supérieure OU Héroïque</option>
                   <option value="@{jsuph}">H Supérieure ET Héroïque</option>
@@ -343,7 +363,7 @@
                 </button>
               </div>
               <div>
-                <select class="select-xs" name="vol_sup">
+                <select class="select-xxs" name="vol_sup">
                   <option value="@{jnor}" selected>N Normale</option>
                   <option value="@{jsup}">S Supérieure OU Héroïque</option>
                   <option value="@{jsuph}">H Supérieure ET Héroïque</option>
@@ -386,10 +406,7 @@
                 10
               </div>
               <div class="centered bordered">
-                +
-                <span name="attr_dex"></span>
-                +
-                <span name="attr_per"></span>
+                PER : <span name="attr_per"></span>
               </div>
               <div class="centered bordered">
                 <span attr="attr_init_buff"></span>
@@ -435,7 +452,7 @@
                 <input type="number" name="attr_atktir_base" title="@{atktir_base}" value="0">
               </div>
               <div class="centered bordered">
-                DEX : <span name="attr_dex"></span>
+                AGI : <span name="attr_agi"></span>
               </div>
               <div class="centered bordered">
                 <span attr="attr_atktir_buff"></span>
@@ -451,7 +468,7 @@
               <div class="block-title">
                 <button class="block-title" type="action" name="act_atkmag-btn">
                   <span class="d20-btn">t</span>
-                  PSY Intuition
+                  MAGIE
                 </button>
               </div>
               <div class="centered bordered">
@@ -475,7 +492,7 @@
           <div class="vitality">
 
             <div class="centered">
-              <h4>VIGUEUR</h4>
+              <h4>POINTS DE VIGUEUR</h4>
             </div>
 
             <div class="hits hit">
@@ -504,6 +521,11 @@
                 <button class="flat-btn" type="action" name="act_drecup-btn">
                   DR
                 </button>
+                <select name="attr_drecup" class="select-xs" title="@{drecup}">
+                  <option value="6">d6</option>
+                  <option value="8">d8</option>
+                  <option value="10">d10</option>
+                </select>
               </div>
 
               <div class="bordered centered">
@@ -517,6 +539,22 @@
             <div class="bordered centered hit">
               DM temporaires
               <input type="number" name="attr_temp_dm" title="@{temp_dm}" value="">
+            </div>
+
+            <div class="centered">
+              <h4>POINTS DE MANA</h4>
+            </div>
+
+            <div class="hits hit">
+
+              <div class="block-title centered">PM</div>
+
+              <div class="bordered centered">
+                <input type="number" name="attr_pm" title="@{pm}" value="0">
+                /
+                <input type="number" name="attr_pm_max" title="@{pm_max}" value="0">
+              </div>
+
             </div>
 
           </div>
@@ -660,7 +698,7 @@
           <div class="defenses">
 
             <div class="defense">
-              <div><strong>DEFENSES</strong></div>
+              <div><strong>DEFENSE</strong></div>
               <div></div>
               <div class="centered">
                 Armure
@@ -710,27 +748,10 @@
                 <input type="number" name="attr_armure_malus" title="@{armure_malus}" value="0">
               </div>
               <div></div>
-              <div class="centered">CHA</div>
               <div></div>
               <div></div>
               <div></div>
-            </div>
-
-            <div class="defense">
-              <div class="block-title">DEP</div>
-              <div class="bordered centered">10+</div>
               <div></div>
-              <div></div>
-              <div class="bordered centered">
-                <span name="attr_cha"></span>
-              </div>
-              <div class="bordered centered">
-                <span name="attr_dep_buff"></span>
-              </div>
-              <div></div>
-              <div class="bordered centered">
-                <span name="attr_dep"></span>
-              </div>
             </div>
 
           </div>
@@ -929,9 +950,8 @@
           <!-- Fiche PJ, Onglet Capacités, Voies 1-3 -->
           <div class="abilities">
             <div class="path">
-              <div class="block-title">Voie culturelle</div>
+              <div class="block-title">Voie n°1</div>
               <div class="path-title">
-                <input type="checkbox" name="attr_cp1mod" title="@{cp1mod}" value="1">
                 <span name="attr_voie1nom" title="@{voie1nom}"></span>
               </div>
               <div class="rank">Rang 1</div>
@@ -941,9 +961,8 @@
               <div class="rank">Rang 5</div>
             </div>
             <div class="path">
-              <div class="block-title">Voie professionnelle</div>
+              <div class="block-title">Voie n°2</div>
               <div class="path-title">
-                <input type="checkbox" name="attr_cp2mod" title="@{cp2mod}" value="1">
                 <span name="attr_voie2nom" title="@{voie2nom}"></span>
               </div>
               <div class="rank">Rang 1</div>
@@ -953,9 +972,8 @@
               <div class="rank">Rang 5</div>
             </div>
             <div class="path">
-              <div class="block-title">Voie professionnelle</div>
+              <div class="block-title">Voie n°3</div>
               <div class="path-title">
-                <input type="checkbox" name="attr_cp3mod" title="@{cp3mod}" value="1">
                 <span name="attr_voie3nom" title="@{voie3nom}"></span>
               </div>
               <div class="rank">Rang 1</div>
@@ -969,9 +987,8 @@
           <!-- Fiche PJ, Onglet Capacités, Voies 4-6 -->
           <div class="abilities">
             <div class="path">
-              <div class="block-title">Voie d'espèce</div>
+              <div class="block-title">Voie n°4</div>
               <div class="path-title">
-                <input type="checkbox" name="attr_cp4mod" title="@{cp4mod}" value="1">
                 <span name="attr_voie4nom" title="@{voie4nom}"></span>
               </div>
               <div class="rank">Rang 1</div>
@@ -981,9 +998,8 @@
               <div class="rank">Rang 5</div>
             </div>
             <div class="path">
-              <div class="block-title">Voie d'augmentation</div>
+              <div class="block-title">Voie n°5</div>
               <div class="path-title">
-                <input type="checkbox" name="attr_cp5mod" title="@{cp5mod}" value="1">
                 <span name="attr_voie5nom" title="@{voie5nom}"></span>
               </div>
               <div class="rank">Rang 1</div>
@@ -993,9 +1009,8 @@
               <div class="rank">Rang 5</div>
             </div>
             <div class="path">
-              <div class="block-title">Voie d'augmentation</div>
+              <div class="block-title">Voie n°6</div>
               <div class="path-title">
-                <input type="checkbox" name="attr_cp6mod" title="@{cp6mod}" value="1">
                 <span name="attr_voie6nom" title="@{voie6nom}"></span>
               </div>
               <div class="rank">Rang 1</div>
@@ -1011,7 +1026,6 @@
             <div class="path">
               <div class="block-title">Voie n°7</div>
               <div class="path-title">
-                <input type="checkbox" name="attr_cp7mod" title="@{cp7mod}" value="1">
                 <span name="attr_voie7nom" title="@{voie7nom}"></span>
               </div>
               <div class="rank">Rang 1</div>
@@ -1023,7 +1037,6 @@
             <div class="path">
               <div class="block-title">Voie n°8</div>
               <div class="path-title">
-                <input type="checkbox" name="attr_cp8mod" title="@{cp8mod}" value="1">
                 <span name="attr_voie8nom" title="@{voie8nom}"></span>
               </div>
               <div class="rank">Rang 1</div>
@@ -1035,7 +1048,6 @@
             <div class="path">
               <div class="block-title">Voie n°9</div>
               <div class="path-title">
-                <input type="checkbox" name="attr_cp9mod" title="@{cp9mod}" value="1">
                 <span name="attr_voie9nom" title="@{voie9nom}"></span>
               </div>
               <div class="rank">Rang 1</div>
@@ -1062,9 +1074,9 @@
           <!-- Fiche PJ, Onglet Capacités, Voies 1-3 -->
           <div class="abilities">
             <div class="path bordered">
-              <div class="block-title">Voie culturelle</div>
+              <div class="block-title">Voie n°1</div>
               <div class="path-title">
-                <input type="text" name="attr_voie1nom" title="@{voie1nom}" placeholder="Nom de la voie culturelle">
+                <input type="text" name="attr_voie1nom" title="@{voie1nom}" placeholder="Nom de la voie">
               </div>
               <div class="rank">Rang 1</div>
               <div class="rank">Rang 2</div>
@@ -1073,9 +1085,9 @@
               <div class="rank">Rang 5</div>
             </div>
             <div class="path bordered">
-              <div class="block-title">Voie professionnelle</div>
+              <div class="block-title">Voie n°2</div>
               <div class="path-title">
-                <input type="text" name="attr_voie2nom" title="@{voie2nom}" placeholder="Nom de la voie professionnelle">
+                <input type="text" name="attr_voie2nom" title="@{voie2nom}" placeholder="Nom de la voie">
               </div>
               <div class="rank">Rang 1</div>
               <div class="rank">Rang 2</div>
@@ -1084,9 +1096,9 @@
               <div class="rank">Rang 5</div>
             </div>
             <div class="path bordered">
-              <div class="block-title">Voie professionnelle</div>
+              <div class="block-title">Voie n°3</div>
               <div class="path-title">
-                <input type="text" name="attr_voie3nom" title="@{voie3nom}" placeholder="Nom de la voie professionnelle">
+                <input type="text" name="attr_voie3nom" title="@{voie3nom}" placeholder="Nom de la voie">
               </div>
               <div class="rank">Rang 1</div>
               <div class="rank">Rang 2</div>
@@ -1099,9 +1111,9 @@
           <!-- Fiche PJ, Onglet Capacités, Voies 4-6 -->
           <div class="abilities">
             <div class="path bordered">
-              <div class="block-title">Voie d'espèce</div>
+              <div class="block-title">Voie n°4</div>
               <div class="path-title">
-                <input type="text" name="attr_voie4nom" title="@{voie4nom}" placeholder="Nom de la voie culturelle">
+                <input type="text" name="attr_voie4nom" title="@{voie4nom}" placeholder="Nom de la voie">
               </div>
               <div class="rank">Rang 1</div>
               <div class="rank">Rang 2</div>
@@ -1110,9 +1122,9 @@
               <div class="rank">Rang 5</div>
             </div>
             <div class="path bordered">
-              <div class="block-title">Voie d'augmentation</div>
+              <div class="block-title">Voie n°5</div>
               <div class="path-title">
-                <input type="text" name="attr_voie5nom" title="@{voie5nom}" placeholder="Nom de la voie d'augmentation">
+                <input type="text" name="attr_voie5nom" title="@{voie5nom}" placeholder="Nom de la voie">
               </div>
               <div class="rank">Rang 1</div>
               <div class="rank">Rang 2</div>
@@ -1121,9 +1133,9 @@
               <div class="rank">Rang 5</div>
             </div>
             <div class="path bordered">
-              <div class="block-title">Voie d'augmentation</div>
+              <div class="block-title">Voie n°6</div>
               <div class="path-title">
-                <input type="text" name="attr_voie6nom" title="@{voie6nom}" placeholder="Nom de la voie d'augmentation">
+                <input type="text" name="attr_voie6nom" title="@{voie6nom}" placeholder="Nom de la voie">
               </div>
               <div class="rank">Rang 1</div>
               <div class="rank">Rang 2</div>
@@ -1176,8 +1188,6 @@
         <input type="hidden" class="tabs-toggle" name="attr_pc_subtab" value="rolls" />
         <div class="pc-subtabs">
           <button type="action" name="act_pc_rolls-btn" class="sub-tab tab-btn pc-rolls-btn">JETS</button>
-          <button type="action" name="act_pc_traits-btn" class="sub-tab tab-btn pc-traits-btn">TRAITS/RELATIONS</button>
-          <button type="action" name="act_pc_sitmod-btn" class="sub-tab tab-btn pc-sitmod-btn">MODs SITUATION</button>
           <button type="action" name="act_pc_buffs-btn" class="sub-tab tab-btn pc-buffs-btn">BUFFS</button>
         </div>
         
@@ -1218,90 +1228,6 @@
 
               <div class="bordered">
                 Description
-              </div>
-
-            </div>
-
-          </fieldset>
-
-        </div>
-
-        <!-- Fiche PJ, Onglet CAPACITES, Sous-onglet Traits -->
-        <div class="pc-traits-subtab">
-          
-          <h4>Traits, Avantages, Relations</h4>
-
-          <fieldset class="repeating_traits">
-
-            <div class="pc-traits-rel">
-
-              <div>
-                <button class="flat-btn img-btn">
-                  <span class="img-btn">w</span>
-                </button>
-              </div>
-
-              <div class="bordered d-flex">
-                <input type="text" name="attr_trait-name" title="@{trait-name}" placeholder="Nom..." value="">
-              </div>
-
-              <div class="bordered d-flex">
-                <select name="attr_trait-type" title="@{trait-type}">
-                  <option value="">Choisir...</option>
-                  <optgroup label="Traits">
-                    <option class="optgroup" value="" disabled>&nbsp;Trait</option>
-                    <option value="feat">Trait</option>
-                    <option value="adv">Avantage</option>
-                  </optgroup>
-                  <optgroup label="Relations">
-                    <option class="optgroup" value="" disabled>&nbsp;Relation</option>
-                    <option value="acq">Connaissance</option>
-                    <option value="ally">Allié</option>
-                    <option value="foe">Ennemi</option>
-                  </optgroup>
-                  <optgroup label="Autres">
-                    <option class="optgroup" value="" disabled>&nbsp;Autre</option>
-                    <option value="other">Divers</option>
-                  </optgroup>
-                </select>
-              </div>
-
-              <div class="bordered d-flex">
-                <input type="text" name="attr_trait-desc" title="@{trait-desc}" placeholder="Description..." value="">
-              </div>
-
-            </div>
-
-          </fieldset>
-
-        </div>
-
-        <!-- Fiche PJ, Onglet CAPACITES, Sous-onglet Mods Situation -->
-        <div class="pc-sitmod-subtab">
-          <h4>MODs Situation</h4>
-
-          <fieldset class="repeating_sitmod">
-
-            <div class="pc-sitmod">
-
-              <div class="bordered d-flex">
-                <select class="select-md" name="attr_sitmod-carac" title="@{sitmod-carac}">
-                  <option value="">Choisir...</option>
-                  <option value="for">FOR</option>
-                  <option value="dex">DEX</option>
-                  <option value="con">CON</option>
-                  <option value="int">INT</option>
-                  <option value="per">PER</option>
-                  <option value="CHA">CHA</option>
-                </select>
-              </div>
-
-              <div class="bordered align-right d-flex">
-                <input type="number" name="attr_sitmod-bonus" title="@{sitmod-bonus}" value="0">
-              </div>
-
-              <div class="bordered d-flex">
-                <input type="text" name="attr_sitmod-desc" title="@{sitmod-desc}" value="">
               </div>
 
             </div>
@@ -1584,99 +1510,6 @@
       <div>{{subtags}}</div>
       <div>{{name}}</div>
     </div>
-    {{#nd}}
-    <div class="2columns">
-      <div>ND</div>
-      <div>{{nd}}</div>
-    </div>
-    {{/nd}}
-    {{#def}}
-    <div class="2columns">
-      <div>DEF</div>
-      <div>{{def}}</div>
-    </div>
-    {{/def}}
-    {{#portee}}
-    <div>Portée : {{portee}}</div>
-    {{/portee}}
-    <hr>
-    {{#desc}}
-    <div>{{desc}}</div>
-    {{/desc}}
-    {{#recup}}
-    <div class="2columns">
-      <div>PV récupérés</div>
-      <div>{{recup}}</div>
-    </div>
-    {{/recup}}
-    {{#carac}}
-    <div class="2columns">
-      {{#jet}}
-      <div>{{jet}}</div>
-      {{/jet}}
-      {{^jet}}
-      <div>Jet</div>
-      {{/jet}}
-    </div>
-    {{/carac}}
-    {{#test}}
-    <div class="sheet-rt-hidden">{{test}}</div>
-    {{#rollWasCrit() test}}
-    <div class="sheet-rt-critical">{{test_crit}}</div>
-    {{/rollWasCrit() test}}
-    {{#rollWasFumble() test}}
-    <div class="sheet-rt-fumble">{{test_fumble}}</div>
-    {{/rollWasFumble() test}}
-    {{/test}}
-    {{#attaque}}
-      {{#rollWasCrit() attaque}}
-      <div class="sheet-rt-critical">Critique !</div>
-      {{/rollWasCrit() attaque}}
-      {{#rollWasFumble() attaque}}
-      {{/rollWasFumble() attaque}}
-      <div class="2columns">
-        <div>Jet</div>
-        <div>{{attaque}}</div>
-      </div>
-      {{#degats}}
-      <div class="2columns">
-        <div>Dégâts</div>
-        <div>
-          {{degats}} {{#rollWasCrit() attaque}}
-          <span class="sheet-rt-critical"> + {{degats}}</span>
-          {{/rollWasCrit() attaque}} {{dmtype}}
-        </div>
-      </div>
-      {{/degats}}
-      {{#degats2}}
-      <div>+</div>
-      <div class="sheet-rt-secondary">{{degats2}} {{dm2type}}</div>
-      {{/degats2}}
-    {{/attaque}}
-    {{^attaque}}
-      {{#degats}}
-      <div class="2columns">
-        <div>Dégats</div>
-        <div>{{degats}} {{dmtype}}</div>
-      </div>
-      {{/degats}}
-      {{#degats2}}
-      <div class="2columns">
-        <div>+</div>
-        <div class="sheet-rt-secondary">{{degats2}} {{dm2type}}</div>
-      </div>
-      {{/degats2}}
-    {{/attaque}}
-    {{#special}}
-    <div>{{special}}</div>
-    {{/special}}
-    {{#text}}
-    <div class="sheet-rt-small">{{text}}</div>
-    {{/text}}
-    {{#alert}}
-    <div class="sheet-rt-fumble">{{alert}}</div>
-    {{/alert}}
-    <hr>
 
   </div>
 

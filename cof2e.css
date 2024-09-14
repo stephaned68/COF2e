@@ -126,6 +126,11 @@ select.select-sm {
 }
 
 select.select-xs {
+  width: 2.5rem;
+  appearance: none;
+}
+
+select.select-xxs {
   width: 1.3rem;
   appearance: none;
 }
@@ -239,14 +244,12 @@ div.path div.block-title {
 
 .identity-pc .identity-row {
   display: grid;
-  grid-template-columns: 1fr 5fr 1fr 1fr;
+  grid-template-columns: 2fr 4fr 1fr 1fr;
   gap: 5px;
   margin: 2px;
 }
 
-.identity-npc .identity-row,
-.identity-ship .identity-row,
-.identity-mecha .identity-row {
+.identity-npc .identity-row {
   display: grid;
   grid-template-columns: 1fr 4fr 3fr;
   gap: 5px;
@@ -256,29 +259,23 @@ div.path div.block-title {
 .identity .level-type {
   display: grid;
   grid-template-columns: 1fr 1fr 6fr;
+  gap: 5px;
+  margin: 2px;
 }
 
 /* Sheet types */
 .identity-pc,
 .identity-npc,
-.identity-ship,
-.identity-mecha,
 .cof-pc,
 .cof-npc,
-.cof-starship,
-.cof-mecha,
 .weapon-opt {
   display: none;
 }
 
 .cof-head-toggle[value="pc"] ~ div.identity-pc,
 .cof-head-toggle[value="npc"] ~ div.identity-npc,
-.cof-head-toggle[value="ship"] ~ div.identity-ship,
-.cof-head-toggle[value="mecha"] ~ div.identity-mecha,
 .cof-type-toggle[value="pc"] ~ div.cof-pc,
 .cof-type-toggle[value="npc"] ~ div.cof-npc,
-.cof-type-toggle[value="ship"] ~ div.cof-starship,
-.cof-type-toggle[value="mecha"] ~ div.cof-mecha,
 .cof-wopt-toggle[value="1"] ~ div.weapon-opt {
     display: block;
 }
@@ -305,8 +302,6 @@ div.path div.block-title {
 .pc-config-tab,
 .pc-version-tab,
 .pc-rolls-subtab,
-.pc-traits-subtab,
-.pc-sitmod-subtab,
 .pc-buffs-subtab,
 .npc-main-tab,
 .npc-config-tab {
@@ -326,8 +321,6 @@ div.path div.block-title {
 }
 
 .tabs-toggle[value="rolls"] ~ div .pc-rolls-btn,
-.tabs-toggle[value="traits"] ~ div .pc-traits-btn,
-.tabs-toggle[value="sitmod"] ~ div .pc-sitmod-btn,
 .tabs-toggle[value="buffs"] ~ div .pc-buffs-btn {
   background-color: lightgray; 
 }
@@ -339,8 +332,6 @@ div.path div.block-title {
 .tabs-toggle[value="config"] ~ div.pc-config-tab,
 .tabs-toggle[value="version"] ~ div.pc-version-tab,
 .tabs-toggle[value="rolls"] ~ div.pc-rolls-subtab,
-.tabs-toggle[value="traits"] ~ div.pc-traits-subtab,
-.tabs-toggle[value="sitmod"] ~ div.pc-sitmod-subtab,
 .tabs-toggle[value="buffs"] ~ div.pc-buffs-subtab,
 .tabs-toggle[value="main"] ~ div.npc-main-tab, 
 .tabs-toggle[value="config"] ~ div.npc-config-tab {
@@ -371,7 +362,7 @@ div.change-view {
 /* PC sheet layout */ 
 .pc-main-tab .pc-attributes {
   display: grid;
-  grid-template-columns: 2fr 3.5fr 1.5fr;
+  grid-template-columns: 2fr 3fr 1.5fr;
 }
 
 .pc-attributes .traits,
@@ -393,7 +384,7 @@ div.change-view {
 
 .pc-attributes .attack {
   display: grid;
-  grid-template-columns: 4fr 1fr 2fr 1fr 1fr;
+  grid-template-columns: 3fr 1fr 2fr 1fr 1fr;
   gap: 2px;
   padding: 2px;
 }
