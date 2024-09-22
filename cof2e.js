@@ -24,39 +24,63 @@ const SWData = {
     },
     CONDITIONS: [ 
       { 
+        code: "F", 
+        button: "affaibli",
+        label: "Affaibli",
+        effects: {
+          droll: "dmalus"
+        }
+      },
+      { 
         code: "A", 
         button: "aveugle",
-        label: "Aveuglé" 
+        label: "Aveuglé",
+        effects: {
+          init: -5,
+          atkcac: -5,
+          def: -5,
+          atktir: -10
+        } 
       }, 
       { 
-        code: "B", 
-        button: "blesse",
-        label: "Blessé" 
-      }, 
-      { 
-        code: "C", 
-        button: "confus",
-        label: "confus" 
-      }, 
-      { 
-        code: "F", 
-        button: "effraye",
-        label: "Effrayé" 
+        code: "O", 
+        button: "essoufle",
+        label: "Essouflé",
+        effects: {
+          movement: 5
+        }
       }, 
       { 
         code: "E", 
         button: "etourdi",
-        label: "Etourdi" 
+        label: "Etourdi",
+        effects: {
+          def: -5
+        }
       }, 
       { 
         code: "I", 
         button: "immobilise", 
-        label: "Immobilisé" 
+        label: "Immobilisé",
+        effects: {
+          movement: 0,
+          atkcac: "dmalus",
+          atktir: "dmalus",
+          atkmag: "dmalus",
+        }
+      }, 
+      { 
+        code: "V", 
+        button: "invalide", 
+        label: "Invalide",
+        effects: {
+          movement: 5
+        }
       }, 
       { 
         code: "P", 
-        button: "panique",
-        label: "Paniqué" 
+        button: "paralyse", 
+        label: "Paralysé"
       }, 
       { 
         code: "L", 
@@ -66,12 +90,21 @@ const SWData = {
       { 
         code: "R", 
         button: "renverse",
-        label: "Renversé" 
+        label: "Renversé",
+        effects: {
+          atkcac: -5,
+          atktir: -5,
+          atkmag: -5,
+          def: -5
+        }
       }, 
       { 
         code: "S", 
         button: "surpris",
-        label: "Surpris" 
+        label: "Surpris",
+        effects: {
+          def: -5
+        }
       }
     ]
   }
@@ -394,7 +427,7 @@ on("change:sheet_type", function() {
 /**
  * Change subtabs
  */
-[ "rolls", "traits", "sitmod", "buffs" ].forEach(button => {
+[ "rolls", "buffs" ].forEach(button => {
   on(`clicked:pc_${button}-btn`, function() {
       setAttrs({
           pc_subtab: button
@@ -455,8 +488,8 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
 SWData.PC.ABILITIES.forEach(ability => {
   on(`clicked:${ shorten(ability) }-btn`, function () {
     const short = shorten(ability);
-    const armor_malus = short === "dex" ? " - [[@{armor_malus}]][Armure]" : "";
-    let carac = `[[@{${short}_sup}]][Dé] + [[@{${short}_test}]][Bonus ${short.toUpperCase()}]${armor_malus} @{rof4} + ([[@{modsit_${short}}]][Situation]) ]] `;
+    const armor_malus = short === "agi" ? " - [[@{armor_malus}]][Armure]" : "";
+    let carac = `[[@{${short}_sup}]][Dé] + [[@{${short}_test}]][Bonus ${short.toUpperCase()}]${armor_malus} ]] `;
     const chatMsg = coRollTemplate({
       leftsub: "Test",
       rightsub: capitalize(ability),
@@ -472,7 +505,7 @@ SWData.PC.ABILITIES.forEach(ability => {
 SWData.PC.COMBAT.attacks.forEach(attk => {
   const [ attack, , description ] = attk;
   on(`clicked:${attack}-btn`, function () {
-    const attaque = `[[@{jnor}]]cs20cf1[Dé] + [[@{${attack}}]][Bonus] @{rof4} ]]`;
+    const attaque = `[[@{jnor}]]cs20cf1[Dé] + [[@{${attack}}]][Bonus] ]]`;
     const chatMsg = coRollTemplate({
       leftsub: "Attaque",
       rightsub: description,
@@ -485,10 +518,10 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
 /**
  * Show weapons options
  */
-on("clicked:repeating_weapons:weapon-opt-btn", function() {
-  getAttrs([ "repeating_weapons_weapon-opt" ], function(value) {
+on("clicked:repeating_armes:arme-opt-btn", function() {
+  getAttrs([ "repeating_armes_arme-opt" ], function(value) {
     let [ option ] = Object.values(value);
     option = 1 - int(option);
-    setAttrs( { ["repeating_weapons_weapon-opt"]: option });
+    setAttrs( { ["repeating_armes_arme-opt"]: option });
   });
 });

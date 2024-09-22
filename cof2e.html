@@ -9,9 +9,13 @@
   <input type="hidden" name="attr_token_dsp" value="">
   
   <!-- Jets -->
+  <input type="hidden" name="attr_droll" value="1d20">
+  <input type="hidden" name="attr_dbonus" value="2d20kh1">
+  <input type="hidden" name="attr_dmalus" value="2d20kl1">
   <input type="hidden" name="attr_jnor" value="1d20">
-  <input type="hidden" name="attr_jsup" value="2d20">
+  <input type="hidden" name="attr_jsup" value="2d20kh1">
   <input type="hidden" name="attr_jsuph" value="{2d20kh1, 0d20+10}kh1">
+  <input type="hidden" name="attr_devol" value="d4">
 
   <!-- Buffs PJ -->
   <input type="hidden" name="attr_agi_buff" value="0">
@@ -488,9 +492,10 @@
 
           </div>
           
-          <!-- VIGUEUR -->
+          <!-- VIGUEUR & MISC -->
           <div class="vitality">
 
+            <!-- PV -->
             <div class="centered">
               <h4>POINTS DE VIGUEUR</h4>
             </div>
@@ -515,6 +520,7 @@
 
             </div>
 
+            <!-- DR -->
             <div class="hits hit">
 
               <div class="block-title centered">
@@ -541,6 +547,7 @@
               <input type="number" name="attr_temp_dm" title="@{temp_dm}" value="">
             </div>
 
+            <!-- PM -->
             <div class="centered">
               <h4>POINTS DE MANA</h4>
             </div>
@@ -553,6 +560,25 @@
                 <input type="number" name="attr_pm" title="@{pm}" value="0">
                 /
                 <input type="number" name="attr_pm_max" title="@{pm_max}" value="0">
+              </div>
+
+            </div>
+
+            <!-- D4° -->
+            <div class="centered">
+              <h4>DE EVOLUTIF</h4>
+            </div>
+
+            <div class="hits hit">
+
+              <div class="block-title centered">
+                <button class="flat-btn" type="action" name="act_devol-btn">
+                  D4°
+                </button>
+              </div>
+
+              <div class="bordered centered">
+                <span name="attr_devol"></span>
               </div>
 
             </div>
@@ -623,9 +649,7 @@
                 src="https://raw.githubusercontent.com/stephaned68/COF2e/main/cond_etourdi.png"
                 />
               </button>
-    
-              <br>
-    
+
               <button
                 type="action"
                 class="flat-btn img-btn img-btn-lg"
@@ -647,7 +671,9 @@
                 src="https://raw.githubusercontent.com/stephaned68/COF2e/main/cond_panique.png"
                 />
               </button> -->
-    
+
+              <br>
+              
               <button
                 type="action"
                 class="flat-btn img-btn img-btn-lg"
@@ -826,75 +852,50 @@
               <div>
                 <button type="roll" class="flat-btn"></button>
               </div>
-              <div class="bordered">
+              <div class="d-flex d-flex-middle bordered">
                 <input type="text" name="attr_arme-nom" title="@{arme-nom}" placeholder="Arme/attaque" value="">
               </div>
-              <div class="bordered">
-                <input type="checkbox" name="attr_arme-att" title="@{arme-att} Faire un jet d'attaque pour toucher" value="1">
+              <div class="d-flex d-flex-middle bordered">
                 <select class="select-md" name="attr_arme-atk" title="@{arme-atk}">
                   <option value="atkcac" selected>CONTACT</option>
                   <option value="atktir">DISTANCE</option>
-                  <option value="psyinf">PSY Inf.</option>
-                  <option value="psyint">PSY Int.</option>
+                  <option value="atkmag">MAGIE</option>
                 </select>
-                +<input type="number" name="attr_arme-atkdiv" title="@{arme-atkdiv}" value="">
+                <span>+</span>
+                <input type="number" name="attr_arme-atkdiv" title="@{arme-atkdiv}" value="">
                 <input type="hidden" name="attr_arme-buffatk" value="0">
               </div>
-              <div class="bordered">
+              <div class="d-flex d-flex-middle bordered">
                 <input type="number" name="attr_arme-crit" title="@{arme-crit} Seuil de Critique" value="20" min="2" max="20">
               </div>
-              <div class="bordered">
-                <input type="checkbox" name="attr_arme-dmg" title="@{arme-dmg} Faire un jet de dommages" value="1" checked>
+              <div class="d-flex d-flex-middle bordered">
                 <input type="number" name="attr_arme-nbde" title="@{arme-nbde}" value="1">
                 <select class="select-sm" name="attr_arme-typede" title="@{arme-typede} Dé de dommage">
-                  <optgroup label="Normaux">
-                    <option class="optgroup" value="" disabled>&nbsp;Normaux</option>
-                    <option value="3">d3</option>
-                    <option value="4">d4</option>
-                    <option value="6" selected>d6</option>
-                    <option value="8">d8</option>
-                    <option value="10">d10</option>
-                    <option value="12">d12</option>
-                  </optgroup>
-                  <optgroup label="Sans limite">
-                    <option class="optgroup" value="" disabled>&nbsp;Sans limite</option>
-                    <option value="3!">d3+</option>
-                    <option value="4!">d4+</option>
-                    <option value="6!">d6+</option>
-                    <option value="8!">d8+</option>
-                    <option value="10!">d10+</option>
-                    <option value="12!">d12+</option>
-                  </optgroup>
+                  <option value="3">d3</option>
+                  <option value="4">d4</option>
+                  <option value="6" selected>d6</option>
+                  <option value="8">d8</option>
+                  <option value="10">d10</option>
+                  <option value="12">d12</option>
                 </select>
-                +
+                <span>+</span>
                 <select class="select-sm" name="attr_arme-bonus" title="@{arme-bonus} Bonus aux dommages">
                   <option value="0">-</option>
-                  <optgroup label="MOD de base">
-                    <option class="optgroup" value="" disabled>&nbsp;MOD de base</option>
-                    <option value="for" selected>FOR</option>
-                    <option value="dex">DEX</option>
-                    <option value="int">INT</option>
-                    <option value="per">PER</option>
-                    <option value="cha">CHA</option>
-                  </optgroup>
-                  <optgroup label="MOD de test">
-                    <option class="optgroup" value="" disabled>&nbsp;MOD de test</option>
-                    <option value="for_test" selected>FOR</option>
-                    <option value="dex_test">DEX</option>
-                    <option value="int_test">INT</option>
-                    <option value="per_test">PER</option>
-                    <option value="cha_test">CHA</option>
-                  </optgroup>
+                  <option value="agi">AGI</option>
+                  <option value="for" selected>FOR</option>
+                  <option value="per">PER</option>
+                  <option value="int">INT</option>
+                  <option value="cha">CHA</option>
                 </select>
-                +
+                <span>+</span>
                 <input type="number" name="attr_arme-dmdiv" title="@{arme-dmdiv} Bonus DM divers" value="0">
                 <input type="hidden" name="attr_arme-buffdm" value="0">
               </div>
-              <div class="bordered">
+              <div class="d-flex d-flex-middle bordered">
                 <input type="text" name="attr_arme-portee" title="@{arme-portee}" value="">
                 <input type="hidden" name="attr_arme-portees" value="">
               </div>
-              <div class="bordered">
+              <div class="d-flex d-flex-middle bordered">
                 <input type="text" name="attr_arme-special" title="@{arme-special}" placeholder="Effet, capacités spéciales ... " value="">
               </div>
               <button type="action" class="flat-btn img-btn" name="act_arme-opt-btn">
@@ -908,31 +909,14 @@
               <div class="weapon-option">
                 <div></div>
                 <div class="bordered">
-                  <input type="checkbox" name="attr_arme-al" title="@{arme-al} Action limitée (L)" value="1">
-                  <input type="text" name="attr_arme-atknom" title="@{arme-atknom} Nom de l'attaque" value="">
-                  <select class="select-xs" name="attr_arme-atkjet" title="@{arme-atkjet} Jet : Normal, Risqué = d12, Expert = meilleur de deux d20">
-                    <option value="jnor">N - Normal</option>
-                    <option value="jrisk">R - Risque (d12)</option>
-                    <option value="jsup">E - Export (2 d20)</option>
-                  </select>
                 </div>
                 <div class="bordered">
-                  <input type="number" name="attr_arme-inc" title="@{arme-inc} Seuil d'incident de tir" value="1" min="1" max="19">
                 </div>
                 <div class="bordered">
-                  <input type="text" name="attr_arme-typedm" title="@{arme-typedm} Type de DM" value="">
-                  <select class="select-xs" name="attr_arme-reroll" title="@{arme-reroll} Type de relance">
-                    <option value="" selected>-</option>
-                    <option value="r">R Relance</option>
-                    <option value="ro">R1 Relance UNE fois</option>
-                  </select>
-                  <input type="number" name="attr_arme-vreroll" title="@{arme-vreroll} Seuil de relance" value="">
                 </div>
                 <div class="bordered">
-                  <input type="text" name="attr_arme-dm2roll" title="@{arme-dm2roll}" placeholder="1d6" value="">
-                  <input type="text" name="attr_arme-dm2desc" title="@{arme-dm2desc}" placeholder="Electro-impact" value="">
                 </div>
-                <div>&nbsp;</div>
+                <div></div>
               </div>
             </div>
 
@@ -960,112 +944,742 @@
 
           <!-- Fiche PJ, Onglet Capacités, Voies 1-3 -->
           <div class="abilities">
+            <!-- Voie 1 -->
             <div class="path">
-              <div class="block-title">Voie n°1</div>
-              <div class="path-title">
-                <span name="attr_voie1nom" title="@{voie1nom}"></span>
+              <div class="block-title">
+                <span name="attr_voie1nom"></span>
               </div>
-              <div class="rank">Rang 1</div>
-              <div class="rank">Rang 2</div>
-              <div class="rank">Rang 3</div>
-              <div class="rank">Rang 4</div>
-              <div class="rank">Rang 5</div>
+              <!-- Rang 1 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v1r1" title="@{v1r1}" value="1">
+                      <span name="attr_voie1-t1"></span>
+                      <button type="action" class="flat-btn" name="act_v1r1-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie1-1" title="@{voie1-1}"></span>
+                </details>
+              </div>
+              <!-- Rang 2 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v1r2" title="@{v1r2}" value="1">
+                      <span name="attr_voie1-t2"></span>
+                      <button type="action" class="flat-btn" name="act_v1r2-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie1-2" title="@{voie1-2}"></span>
+                </details>
+              </div>
+              <!-- Rang 3 -->  
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v1r3" title="@{v1r3}" value="1">
+                      <span name="attr_voie1-t3"></span>
+                      <button type="action" class="flat-btn" name="act_v1r3-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie1-3" title="@{voie1-3}"></span>
+                </details>
+              </div>
+              <!-- Rang 4 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v1r4" title="@{v1r4}" value="1">
+                      <span name="attr_voie1-t4"></span>
+                      <button type="action" class="flat-btn" name="act_v1r4-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie1-4" title="@{voie1-4}"></span>
+                </details>
+              </div>
+              <!-- Rang 5 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v1r5" title="@{v1r5}" value="1">
+                      <span name="attr_voie1-t5"></span>
+                      <button type="action" class="flat-btn" name="act_v1r5-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie1-5" title="@{voie1-5}"></span>
+                </details>
+              </div>
             </div>
+            <!-- Voie 2 -->
             <div class="path">
-              <div class="block-title">Voie n°2</div>
-              <div class="path-title">
-                <span name="attr_voie2nom" title="@{voie2nom}"></span>
+              <div class="block-title">
+                <span name="attr_voie2nom"></span>
               </div>
-              <div class="rank">Rang 1</div>
-              <div class="rank">Rang 2</div>
-              <div class="rank">Rang 3</div>
-              <div class="rank">Rang 4</div>
-              <div class="rank">Rang 5</div>
+              <!-- Rang 1 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v2r1" title="@{v2r1}" value="1">
+                      <span name="attr_voie2-t1"></span>
+                      <button type="action" class="flat-btn" name="act_v2r1-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie2-1" title="@{voie2-1}"></span>
+                </details>
+              </div>
+              <!-- Rang 2 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v2r2" title="@{v2r2}" value="1">
+                      <span name="attr_voie2-t2"></span>
+                      <button type="action" class="flat-btn" name="act_v2r2-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie2-2" title="@{voie2-2}"></span>
+                </details>
+              </div>
+              <!-- Rang 3 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v2r3" title="@{v2r3}" value="1">
+                      <span name="attr_voie2-t3"></span>
+                      <button type="action" class="flat-btn" name="act_v2r3-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie2-3" title="@{voie2-3}"></span>
+                </details>
+              </div>
+              <!-- Rang 4 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v2r4" title="@{v2r4}" value="1">
+                      <span name="attr_voie2-t4"></span>
+                      <button type="action" class="flat-btn" name="act_v2r4-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie2-4" title="@{voie2-4}"></span>
+                </details>
+              </div>
+              <!-- Rang 5 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v2r5" title="@{v2r5}" value="1">
+                      <span name="attr_voie2-t5"></span>
+                      <button type="action" class="flat-btn" name="act_v2r5-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie2-5" title="@{voie2-5}"></span>
+                </details>
+              </div>
             </div>
+            <!-- Voie 3 -->
             <div class="path">
-              <div class="block-title">Voie n°3</div>
-              <div class="path-title">
-                <span name="attr_voie3nom" title="@{voie3nom}"></span>
+              <div class="block-title">
+                <span name="attr_voie3nom"></span>
               </div>
-              <div class="rank">Rang 1</div>
-              <div class="rank">Rang 2</div>
-              <div class="rank">Rang 3</div>
-              <div class="rank">Rang 4</div>
-              <div class="rank">Rang 5</div>
+              <!-- Rang 1 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v3r1" title="@{v3r1}" value="1">
+                      <span name="attr_voie3-t1"></span>
+                      <button type="action" class="flat-btn" name="act_v3r1-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie3-1" title="@{voie3-1}"></span>
+                </details>
+              </div>
+              <!-- Rang 2 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v3r2" title="@{v3r2}" value="1">
+                      <span name="attr_voie3-t2"></span>
+                      <button type="action" class="flat-btn" name="act_v3r2-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie3-2" title="@{voie3-2}"></span>
+                </details>
+              </div>
+              <!-- Rang 3 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v3r3" title="@{v3r3}" value="1">
+                      <span name="attr_voie3-t3"></span>
+                      <button type="action" class="flat-btn" name="act_v3r3-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie3-3" title="@{voie3-3}"></span>
+                </details>
+              </div>
+              <!-- Rang 4 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v3r4" title="@{v3r4}" value="1">
+                      <span name="attr_voie3-t4"></span>
+                      <button type="action" class="flat-btn" name="act_v3r4-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie3-4" title="@{voie3-4}"></span>
+                </details>
+              </div>
+              <!-- Rang 5 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v3r5" title="@{v3r5}" value="1">
+                      <span name="attr_voie3-t5"></span>
+                      <button type="action" class="flat-btn" name="act_v3r5-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie3-5" title="@{voie3-5}"></span>
+                </details>
+              </div>
             </div>
           </div>
   
           <!-- Fiche PJ, Onglet Capacités, Voies 4-6 -->
           <div class="abilities">
+            <!-- Voie 4 -->
             <div class="path">
-              <div class="block-title">Voie n°4</div>
-              <div class="path-title">
+              <div class="block-title">
                 <span name="attr_voie4nom" title="@{voie4nom}"></span>
               </div>
-              <div class="rank">Rang 1</div>
-              <div class="rank">Rang 2</div>
-              <div class="rank">Rang 3</div>
-              <div class="rank">Rang 4</div>
-              <div class="rank">Rang 5</div>
+              <!-- Rang 1 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v4r1" title="@{v4r1}" value="1">
+                      <span name="attr_voie4-t1"></span>
+                      <button type="action" class="flat-btn" name="act_v4r1-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie4-1" title="@{voie4-1}"></span>
+                </details>
+              </div>
+              <!-- Rang 2 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v4r2" title="@{v4r2}" value="1">
+                      <span name="attr_voie4-t2"></span>
+                      <button type="action" class="flat-btn" name="act_v4r2-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie4-2" title="@{voie4-2}"></span>
+                </details>
+              </div>
+              <!-- Rang 3 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v4r3" title="@{v4r3}" value="1">
+                      <span name="attr_voie4-t3"></span>
+                      <button type="action" class="flat-btn" name="act_v4r3-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie4-3" title="@{voie4-3}"></span>
+                </details>
+              </div>
+              <!-- Rang 4 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v4r4" title="@{v4r4}" value="1">
+                      <span name="attr_voie4-t4"></span>
+                      <button type="action" class="flat-btn" name="act_v4r4-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie4-4" title="@{voie4-4}"></span>
+                </details>
+              </div>
+              <!-- Rang 5 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v4r5" title="@{v4r5}" value="1">
+                      <span name="attr_voie4-t5"></span>
+                      <button type="action" class="flat-btn" name="act_v4r5-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie4-5" title="@{voie4-5}"></span>
+                </details>
+              </div>
             </div>
+            <!-- Voie 5 -->
             <div class="path">
-              <div class="block-title">Voie n°5</div>
-              <div class="path-title">
+              <div class="block-title">
                 <span name="attr_voie5nom" title="@{voie5nom}"></span>
               </div>
-              <div class="rank">Rang 1</div>
-              <div class="rank">Rang 2</div>
-              <div class="rank">Rang 3</div>
-              <div class="rank">Rang 4</div>
-              <div class="rank">Rang 5</div>
+              <!-- Rang 1 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v5r1" title="@{v5r1}" value="1">
+                      <span name="attr_voie5-t1"></span>
+                      <button type="action" class="flat-btn" name="act_v5r1-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie5-1" title="@{voie5-1}"></span>
+                </details>
+              </div>
+              <!-- Rang 2 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v5r2" title="@{v5r2}" value="1">
+                      <span name="attr_voie5-t2"></span>
+                      <button type="action" class="flat-btn" name="act_v5r2-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie5-2" title="@{voie5-2}"></span>
+                </details>
+              </div>
+              <!-- Rang 3 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v5r3" title="@{v5r3}" value="1">
+                      <span name="attr_voie5-t3"></span>
+                      <button type="action" class="flat-btn" name="act_v5r3-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie5-3" title="@{voie5-3}"></span>
+                </details>
+              </div>
+              <!-- Rang 4 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v5r4" title="@{v5r4}" value="1">
+                      <span name="attr_voie5-t4"></span>
+                      <button type="action" class="flat-btn" name="act_v5r4-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie5-4" title="@{voie5-4}"></span>
+                </details>
+              </div>
+              <!-- Rang 5 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v5r5" title="@{v5r5}" value="1">
+                      <span name="attr_voie5-t5"></span>
+                      <button type="action" class="flat-btn" name="act_v5r5-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie5-5" title="@{voie5-5}"></span>
+                </details>
+              </div>
             </div>
+            <!-- Voie 6 -->
             <div class="path">
-              <div class="block-title">Voie n°6</div>
-              <div class="path-title">
+              <div class="block-title">
                 <span name="attr_voie6nom" title="@{voie6nom}"></span>
               </div>
-              <div class="rank">Rang 1</div>
-              <div class="rank">Rang 2</div>
-              <div class="rank">Rang 3</div>
-              <div class="rank">Rang 4</div>
-              <div class="rank">Rang 5</div>
+              <!-- Rang 1 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v6r1" title="@{v6r1}" value="1">
+                      <span name="attr_voie6-t1"></span>
+                      <button type="action" class="flat-btn" name="act_v6r1-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie6-1" title="@{voie6-1}"></span>
+                </details>
+              </div>
+              <!-- Rang 2 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v6r2" title="@{v6r2}" value="1">
+                      <span name="attr_voie6-t2"></span>
+                      <button type="action" class="flat-btn" name="act_v6r2-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie6-2" title="@{voie6-2}"></span>
+                </details>
+              </div>
+              <!-- Rang 3 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v6r3" title="@{v6r3}" value="1">
+                      <span name="attr_voie6-t3"></span>
+                      <button type="action" class="flat-btn" name="act_v6r3-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie6-3" title="@{voie6-3}"></span>
+                </details>
+              </div>
+              <!-- Rang 4 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v6r4" title="@{v6r4}" value="1">
+                      <span name="attr_voie6-t4"></span>
+                      <button type="action" class="flat-btn" name="act_v6r4-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie6-4" title="@{voie6-4}"></span>
+                </details>
+              </div>
+              <!-- Rang 5 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v6r5" title="@{v6r5}" value="1">
+                      <span name="attr_voie6-t5"></span>
+                      <button type="action" class="flat-btn" name="act_v6r5-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie6-5" title="@{voie6-5}"></span>
+                </details>
+              </div>
             </div>
           </div>
 
           <!-- Fiche PJ, Onglet Capacités, Voies 7-9 -->
           <div class="abilities">
+            <!-- Voie 7 -->
             <div class="path">
-              <div class="block-title">Voie n°7</div>
-              <div class="path-title">
+              <div class="block-title">
                 <span name="attr_voie7nom" title="@{voie7nom}"></span>
               </div>
-              <div class="rank">Rang 1</div>
-              <div class="rank">Rang 2</div>
-              <div class="rank">Rang 3</div>
-              <div class="rank">Rang 4</div>
-              <div class="rank">Rang 5</div>
+              <!-- Rang 1 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v7r1" title="@{v7r1}" value="1">
+                      <span name="attr_voie7-t1"></span>
+                      <button type="action" class="flat-btn" name="act_v7r1-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie7-1" title="@{voie7-1}"></span>
+                </details>
+              </div>
+              <!-- Rang 2 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v7r2" title="@{v7r2}" value="1">
+                      <span name="attr_voie7-t2"></span>
+                      <button type="action" class="flat-btn" name="act_v7r2-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie7-2" title="@{voie7-2}"></span>
+                </details>
+              </div>
+              <!-- Rang 3 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v7r3" title="@{v7r3}" value="1">
+                      <span name="attr_voie7-t3"></span>
+                      <button type="action" class="flat-btn" name="act_v7r3-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie7-3" title="@{voie7-3}"></span>
+                </details>
+              </div>
+              <!-- Rang 4 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v7r4" title="@{v7r4}" value="1">
+                      <span name="attr_voie7-t4"></span>
+                      <button type="action" class="flat-btn" name="act_v7r4-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie7-4" title="@{voie7-4}"></span>
+                </details>
+              </div>
+              <!-- Rang 5 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v7r5" title="@{v7r5}" value="1">
+                      <span name="attr_voie7-t5"></span>
+                      <button type="action" class="flat-btn" name="act_v7r5-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie7-5" title="@{voie7-5}"></span>
+                </details>
+              </div>
             </div>
+            <!-- Voie 8 -->
             <div class="path">
-              <div class="block-title">Voie n°8</div>
-              <div class="path-title">
+              <div class="block-title">
                 <span name="attr_voie8nom" title="@{voie8nom}"></span>
               </div>
-              <div class="rank">Rang 1</div>
-              <div class="rank">Rang 2</div>
-              <div class="rank">Rang 3</div>
-              <div class="rank">Rang 4</div>
-              <div class="rank">Rang 5</div>
+              <!-- Rang 1 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v8r1" title="@{v8r1}" value="1">
+                      <span name="attr_voie8-t1"></span>
+                      <button type="action" class="flat-btn" name="act_v8r1-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie8-1" title="@{voie8-1}"></span>
+                </details>
+              </div>
+              <!-- Rang 2 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v8r2" title="@{v8r2}" value="1">
+                      <span name="attr_voie8-t2"></span>
+                      <button type="action" class="flat-btn" name="act_v8r2-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie8-2" title="@{voie8-2}"></span>
+                </details>
+              </div>
+              <!-- Rang 3 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v8r3" title="@{v8r3}" value="1">
+                      <span name="attr_voie8-t3"></span>
+                      <button type="action" class="flat-btn" name="act_v8r3-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie8-3" title="@{voie8-3}"></span>
+                </details>
+              </div>
+              <!-- Rang 4 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v8r4" title="@{v8r4}" value="1">
+                      <span name="attr_voie8-t4"></span>
+                      <button type="action" class="flat-btn" name="act_v8r4-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie8-4" title="@{voie8-4}"></span>
+                </details>
+              </div>
+              <!-- Rang 5 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v8r5" title="@{v8r5}" value="1">
+                      <span name="attr_voie8-t5"></span>
+                      <button type="action" class="flat-btn" name="act_v8r5-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie8-5" title="@{voie8-5}"></span>
+                </details>
+              </div>
             </div>
+            <!-- Voie 9 -->
             <div class="path">
-              <div class="block-title">Voie n°9</div>
-              <div class="path-title">
+              <div class="block-title">
                 <span name="attr_voie9nom" title="@{voie9nom}"></span>
               </div>
-              <div class="rank">Rang 1</div>
-              <div class="rank">Rang 2</div>
-              <div class="rank">Rang 3</div>
-              <div class="rank">Rang 4</div>
-              <div class="rank">Rang 5</div>
+              <!-- Rang 1 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v9r1" title="@{v9r1}" value="1">
+                      <span name="attr_voie9-t1"></span>
+                      <button type="action" class="flat-btn" name="act_v9r1-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie9-1" title="@{voie9-1}"></span>
+                </details>
+              </div>
+              <!-- Rang 2 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v9r2" title="@{v9r2}" value="1">
+                      <span name="attr_voie9-t2"></span>
+                      <button type="action" class="flat-btn" name="act_v9r2-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie9-2" title="@{voie9-2}"></span>
+                </details>
+              </div>
+              <!-- Rang 3 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v9r3" title="@{v9r3}" value="1">
+                      <span name="attr_voie9-t3"></span>
+                      <button type="action" class="flat-btn" name="act_v9r3-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie9-3" title="@{voie9-3}"></span>
+                </details>
+              </div>
+              <!-- Rang 4 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v9r4" title="@{v9r4}" value="1">
+                      <span name="attr_voie9-t4"></span>
+                      <button type="action" class="flat-btn" name="act_v9r4-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie9-4" title="@{voie9-4}"></span>
+                </details>
+              </div>
+              <!-- Rang 5 -->
+              <div class="rank">
+                <details>
+                  <summary>
+                    <div class="rank-summary">
+                      <input type="checkbox" name="attr_v9r5" title="@{v9r5}" value="1">
+                      <span name="attr_voie9-t5"></span>
+                      <button type="action" class="flat-btn" name="act_v9r5-btn">
+                        <span class="img-btn">w</span>
+                      </button>
+                    </div>
+                  </summary>
+                  <span name="attr_voie9-5" title="@{voie9-5}"></span>
+                </details>
+              </div>
             </div>
           </div>
 
@@ -1087,35 +1701,80 @@
             <div class="path bordered">
               <div class="block-title">Voie n°1</div>
               <div class="path-title">
-                <input type="text" name="attr_voie1nom" title="@{voie1nom}" placeholder="Nom de la voie">
+                <input type="text" name="attr_voie1nom" title="@{voie1nom}" value="Voie n°1">
               </div>
-              <div class="rank">Rang 1</div>
-              <div class="rank">Rang 2</div>
-              <div class="rank">Rang 3</div>
-              <div class="rank">Rang 4</div>
-              <div class="rank">Rang 5</div>
+              <div class="rank">
+                <input type="text" name="attr_voie1-t1" title="@{voie1-t1}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie1-1" title="@{voie1-1}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie1-t2" title="@{voie1-t2}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie1-2" title="@{voie1-2}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie1-t3" title="@{voie1-t3}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie1-3" title="@{voie1-3}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie1-t4" title="@{voie1-t4}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie1-4" title="@{voie1-4}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie1-t5" title="@{voie1-t5}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie1-5" title="@{voie1-5}" placeholder="Description"></textarea>
+              </div>
             </div>
             <div class="path bordered">
               <div class="block-title">Voie n°2</div>
               <div class="path-title">
-                <input type="text" name="attr_voie2nom" title="@{voie2nom}" placeholder="Nom de la voie">
+                <input type="text" name="attr_voie2nom" title="@{voie2nom}" value="Voie n°2">
               </div>
-              <div class="rank">Rang 1</div>
-              <div class="rank">Rang 2</div>
-              <div class="rank">Rang 3</div>
-              <div class="rank">Rang 4</div>
-              <div class="rank">Rang 5</div>
+              <div class="rank">
+                <input type="text" name="attr_voie2-t1" title="@{voie2-t1}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie2-1" title="@{voie2-1}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie2-t2" title="@{voie2-t2}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie2-2" title="@{voie2-2}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie2-t3" title="@{voie2-t3}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie2-3" title="@{voie2-3}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie2-t4" title="@{voie2-t4}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie2-4" title="@{voie2-4}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie2-t5" title="@{voie2-t5}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie2-5" title="@{voie2-5}" placeholder="Description"></textarea>
+              </div>
             </div>
             <div class="path bordered">
               <div class="block-title">Voie n°3</div>
               <div class="path-title">
-                <input type="text" name="attr_voie3nom" title="@{voie3nom}" placeholder="Nom de la voie">
+                <input type="text" name="attr_voie3nom" title="@{voie3nom}" value="Voie n°3">
               </div>
-              <div class="rank">Rang 1</div>
-              <div class="rank">Rang 2</div>
-              <div class="rank">Rang 3</div>
-              <div class="rank">Rang 4</div>
-              <div class="rank">Rang 5</div>
+              <div class="rank">
+                <input type="text" name="attr_voie3-t1" title="@{voie3-t1}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie3-1" title="@{voie3-1}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie3-t2" title="@{voie3-t2}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie3-2" title="@{voie3-2}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie3-t3" title="@{voie3-t3}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie3-3" title="@{voie3-3}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie3-t4" title="@{voie3-t4}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie3-4" title="@{voie3-4}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie3-t5" title="@{voie3-t5}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie3-5" title="@{voie3-5}" placeholder="Description"></textarea>
+              </div>
             </div>
           </div>
 
@@ -1124,35 +1783,80 @@
             <div class="path bordered">
               <div class="block-title">Voie n°4</div>
               <div class="path-title">
-                <input type="text" name="attr_voie4nom" title="@{voie4nom}" placeholder="Nom de la voie">
+                <input type="text" name="attr_voie4nom" title="@{voie4nom}" value="Voie n°4">
               </div>
-              <div class="rank">Rang 1</div>
-              <div class="rank">Rang 2</div>
-              <div class="rank">Rang 3</div>
-              <div class="rank">Rang 4</div>
-              <div class="rank">Rang 5</div>
+              <div class="rank">
+                <input type="text" name="attr_voie4-t1" title="@{voie4-t1}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie4-1" title="@{voie4-1}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie4-t2" title="@{voie4-t2}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie4-2" title="@{voie4-2}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie4-t3" title="@{voie4-t3}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie4-3" title="@{voie4-3}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie4-t4" title="@{voie4-t4}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie4-4" title="@{voie4-4}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie4-t5" title="@{voie4-t5}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie4-5" title="@{voie4-5}" placeholder="Description"></textarea>
+              </div>
             </div>
             <div class="path bordered">
               <div class="block-title">Voie n°5</div>
               <div class="path-title">
-                <input type="text" name="attr_voie5nom" title="@{voie5nom}" placeholder="Nom de la voie">
+                <input type="text" name="attr_voie5nom" title="@{voie5nom}" value="Voie n°5">
               </div>
-              <div class="rank">Rang 1</div>
-              <div class="rank">Rang 2</div>
-              <div class="rank">Rang 3</div>
-              <div class="rank">Rang 4</div>
-              <div class="rank">Rang 5</div>
+              <div class="rank">
+                <input type="text" name="attr_voie5-t1" title="@{voie5-t1}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie5-1" title="@{voie5-1}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie5-t2" title="@{voie5-t2}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie5-2" title="@{voie5-2}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie5-t3" title="@{voie5-t3}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie5-3" title="@{voie5-3}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie5-t4" title="@{voie5-t4}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie5-4" title="@{voie5-4}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie5-t5" title="@{voie5-t5}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie5-5" title="@{voie5-5}" placeholder="Description"></textarea>
+              </div>
             </div>
             <div class="path bordered">
               <div class="block-title">Voie n°6</div>
               <div class="path-title">
-                <input type="text" name="attr_voie6nom" title="@{voie6nom}" placeholder="Nom de la voie">
+                <input type="text" name="attr_voie6nom" title="@{voie6nom}" value="Voie n°6">
               </div>
-              <div class="rank">Rang 1</div>
-              <div class="rank">Rang 2</div>
-              <div class="rank">Rang 3</div>
-              <div class="rank">Rang 4</div>
-              <div class="rank">Rang 5</div>
+              <div class="rank">
+                <input type="text" name="attr_voie6-t1" title="@{voie6-t1}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie6-1" title="@{voie6-1}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie6-t2" title="@{voie6-t2}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie6-2" title="@{voie6-2}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie6-t3" title="@{voie6-t3}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie6-3" title="@{voie6-3}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie6-t4" title="@{voie6-t4}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie6-4" title="@{voie6-4}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie6-t5" title="@{voie6-t5}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie6-5" title="@{voie6-5}" placeholder="Description"></textarea>
+              </div>
             </div>
           </div>
 
@@ -1161,35 +1865,80 @@
             <div class="path">
               <div class="block-title">Voie n°7</div>
               <div class="path-title">
-                <input type="text" name="attr_voie7nom" title="@{voie7nom}" placeholder="Nom de la voie">
+                <input type="text" name="attr_voie7nom" title="@{voie7nom}" value="Voie n°7">
               </div>
-              <div class="rank">Rang 1</div>
-              <div class="rank">Rang 2</div>
-              <div class="rank">Rang 3</div>
-              <div class="rank">Rang 4</div>
-              <div class="rank">Rang 5</div>
+              <div class="rank">
+                <input type="text" name="attr_voie7-t1" title="@{voie7-t1}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie7-1" title="@{voie7-1}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie7-t2" title="@{voie7-t2}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie7-2" title="@{voie7-2}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie7-t3" title="@{voie7-t3}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie7-3" title="@{voie7-3}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie7-t4" title="@{voie7-t4}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie7-4" title="@{voie7-4}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie7-t5" title="@{voie7-t5}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie7-5" title="@{voie7-5}" placeholder="Description"></textarea>
+              </div>
             </div>
             <div class="path">
               <div class="block-title">Voie n°8</div>
               <div class="path-title">
-                <input type="text" name="attr_voie8nom" title="@{voie8nom}" placeholder="Nom de la voie">
+                <input type="text" name="attr_voie8nom" title="@{voie8nom}" value="Voie n°8">
               </div>
-              <div class="rank">Rang 1</div>
-              <div class="rank">Rang 2</div>
-              <div class="rank">Rang 3</div>
-              <div class="rank">Rang 4</div>
-              <div class="rank">Rang 5</div>
+              <div class="rank">
+                <input type="text" name="attr_voie8-t1" title="@{voie8-t1}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie8-1" title="@{voie8-1}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie8-t2" title="@{voie8-t2}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie8-2" title="@{voie8-2}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie8-t3" title="@{voie8-t3}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie8-3" title="@{voie8-3}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie8-t4" title="@{voie8-t4}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie8-4" title="@{voie8-4}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie8-t5" title="@{voie8-t5}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie8-5" title="@{voie8-5}" placeholder="Description"></textarea>
+              </div>
             </div>
             <div class="path">
               <div class="block-title">Voie n°9</div>
               <div class="path-title">
-                <input type="text" name="attr_voie9nom" title="@{voie9nom}" placeholder="Nom de la voie">
+                <input type="text" name="attr_voie9nom" title="@{voie9nom}" value="Voie n°9">
               </div>
-              <div class="rank">Rang 1</div>
-              <div class="rank">Rang 2</div>
-              <div class="rank">Rang 3</div>
-              <div class="rank">Rang 4</div>
-              <div class="rank">Rang 5</div>
+              <div class="rank">
+                <input type="text" name="attr_voie9-t1" title="@{voie9-t1}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie9-1" title="@{voie9-1}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie9-t2" title="@{voie9-t2}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie9-2" title="@{voie9-2}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie9-t3" title="@{voie9-t3}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie9-3" title="@{voie9-3}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie9-t4" title="@{voie9-t4}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie9-4" title="@{voie9-4}" placeholder="Description"></textarea>
+              </div>
+              <div class="rank">
+                <input type="text" name="attr_voie9-t5" title="@{voie9-t5}" placeholder="Nom de la capacité">
+                <textarea name="attr_voie9-5" title="@{voie9-5}" placeholder="Description"></textarea>
+              </div>
             </div>
           </div>
 
@@ -1554,39 +2303,63 @@ const SWData = {
     },
     CONDITIONS: [ 
       { 
+        code: "F", 
+        button: "affaibli",
+        label: "Affaibli",
+        effects: {
+          droll: "dmalus"
+        }
+      },
+      { 
         code: "A", 
         button: "aveugle",
-        label: "Aveuglé" 
+        label: "Aveuglé",
+        effects: {
+          init: -5,
+          atkcac: -5,
+          def: -5,
+          atktir: -10
+        } 
       }, 
       { 
-        code: "B", 
-        button: "blesse",
-        label: "Blessé" 
-      }, 
-      { 
-        code: "C", 
-        button: "confus",
-        label: "confus" 
-      }, 
-      { 
-        code: "F", 
-        button: "effraye",
-        label: "Effrayé" 
+        code: "O", 
+        button: "essoufle",
+        label: "Essouflé",
+        effects: {
+          movement: 5
+        }
       }, 
       { 
         code: "E", 
         button: "etourdi",
-        label: "Etourdi" 
+        label: "Etourdi",
+        effects: {
+          def: -5
+        }
       }, 
       { 
         code: "I", 
         button: "immobilise", 
-        label: "Immobilisé" 
+        label: "Immobilisé",
+        effects: {
+          movement: 0,
+          atkcac: "dmalus",
+          atktir: "dmalus",
+          atkmag: "dmalus",
+        }
+      }, 
+      { 
+        code: "V", 
+        button: "invalide", 
+        label: "Invalide",
+        effects: {
+          movement: 5
+        }
       }, 
       { 
         code: "P", 
-        button: "panique",
-        label: "Paniqué" 
+        button: "paralyse", 
+        label: "Paralysé"
       }, 
       { 
         code: "L", 
@@ -1596,12 +2369,21 @@ const SWData = {
       { 
         code: "R", 
         button: "renverse",
-        label: "Renversé" 
+        label: "Renversé",
+        effects: {
+          atkcac: -5,
+          atktir: -5,
+          atkmag: -5,
+          def: -5
+        }
       }, 
       { 
         code: "S", 
         button: "surpris",
-        label: "Surpris" 
+        label: "Surpris",
+        effects: {
+          def: -5
+        }
       }
     ]
   }
@@ -1924,7 +2706,7 @@ on("change:sheet_type", function() {
 /**
  * Change subtabs
  */
-[ "rolls", "traits", "sitmod", "buffs" ].forEach(button => {
+[ "rolls", "buffs" ].forEach(button => {
   on(`clicked:pc_${button}-btn`, function() {
       setAttrs({
           pc_subtab: button
@@ -1985,8 +2767,8 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
 SWData.PC.ABILITIES.forEach(ability => {
   on(`clicked:${ shorten(ability) }-btn`, function () {
     const short = shorten(ability);
-    const armor_malus = short === "dex" ? " - [[@{armor_malus}]][Armure]" : "";
-    let carac = `[[@{${short}_sup}]][Dé] + [[@{${short}_test}]][Bonus ${short.toUpperCase()}]${armor_malus} @{rof4} + ([[@{modsit_${short}}]][Situation]) ]] `;
+    const armor_malus = short === "agi" ? " - [[@{armor_malus}]][Armure]" : "";
+    let carac = `[[@{${short}_sup}]][Dé] + [[@{${short}_test}]][Bonus ${short.toUpperCase()}]${armor_malus} ]] `;
     const chatMsg = coRollTemplate({
       leftsub: "Test",
       rightsub: capitalize(ability),
@@ -2002,7 +2784,7 @@ SWData.PC.ABILITIES.forEach(ability => {
 SWData.PC.COMBAT.attacks.forEach(attk => {
   const [ attack, , description ] = attk;
   on(`clicked:${attack}-btn`, function () {
-    const attaque = `[[@{jnor}]]cs20cf1[Dé] + [[@{${attack}}]][Bonus] @{rof4} ]]`;
+    const attaque = `[[@{jnor}]]cs20cf1[Dé] + [[@{${attack}}]][Bonus] ]]`;
     const chatMsg = coRollTemplate({
       leftsub: "Attaque",
       rightsub: description,
@@ -2015,11 +2797,11 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
 /**
  * Show weapons options
  */
-on("clicked:repeating_weapons:weapon-opt-btn", function() {
-  getAttrs([ "repeating_weapons_weapon-opt" ], function(value) {
+on("clicked:repeating_armes:arme-opt-btn", function() {
+  getAttrs([ "repeating_armes_arme-opt" ], function(value) {
     let [ option ] = Object.values(value);
     option = 1 - int(option);
-    setAttrs( { ["repeating_weapons_weapon-opt"]: option });
+    setAttrs( { ["repeating_armes_arme-opt"]: option });
   });
 });
 

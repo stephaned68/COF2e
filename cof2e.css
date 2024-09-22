@@ -217,8 +217,13 @@ div.path div.block-title {
   display: flex; 
 }
 
+.d-inline {
+  display: inline-block;
+}
+
 .d-flex-between {
-  align-content: space-between;
+  justify-content: space-between;
+  /*align-content: space-between;*/
 }
 
 .d-flex-middle {
@@ -481,6 +486,20 @@ div.change-view {
 
 .abilities .rank {
   border-top: 1px solid gray;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.abilities .rank .rank-summary {
+  display: inline-flex;
+  vertical-align: middle;
+  gap: 5px;
+}
+
+.abilities .rank textarea {
+  height: 4rem;
+  overflow: hidden;
 }
 
 .pc-rolls-subtab .pc-roll-r1 {
