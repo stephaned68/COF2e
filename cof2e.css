@@ -118,7 +118,7 @@ select.select-lg {
 }
 
 select.select-md {
-  width: 8rem;
+  width: 9rem;
 }
 
 select.select-sm {
@@ -214,7 +214,7 @@ div.path div.block-title {
 }
 
 .d-flex {
-  display: flex; 
+  display: flex;
 }
 
 .d-inline {
@@ -497,6 +497,10 @@ div.change-view {
   gap: 5px;
 }
 
+.abilities .rank .rank-summary span.rank-title {
+  width: 21rem;
+}
+
 .abilities .rank textarea {
   height: 4rem;
   overflow: hidden;
@@ -567,59 +571,65 @@ div.change-view {
 
 /* ROLL TEMPLATES */
 
-.sheet-rolltemplate-co1 {
-  --cog-font: "Maven Pro";
-  --cog-txcolor: #F1E05C;
-  --cog-bgcolor: #3E5082;
-  --cog-bgsecond: #7F989D;
+.sheet-rolltemplate-cof2 {
+  border: 1px solid gray;
+  border-radius: 5px;
+  background-color: whitesmoke;
+}
 
+.sheet-rolltemplate-cof2 .sheet-rt {
+  font-family: "Merriweather Sans";
+}
+
+.sheet-rolltemplate-cof2 .sheet-rt-header {
+  background-color: burlywood;
   padding: 5px;
 }
 
-.sheet-rolltemplate-co1 .sheet-rt-hidden {
+.sheet-rolltemplate-cof2 .sheet-rt-title {
+  font-size: large;
+}
+
+.sheet-rolltemplate-cof2 .sheet-rt-2cols {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2px;
+  padding: 5px;
+}
+
+.sheet-rolltemplate-cof2 .sheet-rt-roll {
+  text-align: center;
+  font-size: large;
+  padding: 5px;
+  margin: 5px;
+}
+
+.sheet-rolltemplate-cof2 .sheet-rt-text {
+  font-size: small;
+  padding: 5px;
+}
+
+.sheet-rolltemplate-cof2 .inlinerollresult {
+  background-color: white;
+  border: 2px burlywood solid;
+  border-radius: 25%;
+  font-weight: bold;
+}
+
+.sheet-rolltemplate-cof2 .sheet-rt-hidden {
   display: none;
 }
 
-.sheet-rolltemplate-co1 .sheet-rt-critical {
+.sheet-rolltemplate-cof2 .sheet-rt-critical {
   color: green;
   font-weight: bold;
 }
 
-.sheet-rolltemplate-co1 .sheet-rt-fumble {
+.sheet-rolltemplate-cof2 .sheet-rt-fumble {
   color: red;
   font-weight: bold;
 }
 
-.sheet-rolltemplate-co1 .sheet-rt-secondary {
+.sheet-rolltemplate-cof2 .sheet-rt-secondary {
   color: steelblue;
-}
-
-.sheet-rolltemplate-co1 .sheet-2columns {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 2px;
-}
-
-.sheet-rolltemplate-co1 .sheet-rt-bordered {
-  border: 1px solid gray;
-  padding: 2px;
-  border-radius: 5px;
-}
-
-.sheet-rolltemplate-co1 .sheet-rt-title {
-  background-color: var(--cog-bgcolor);
-  color: var(--cog-txcolor);
-  text-align: center;
-  padding-top: 2px;
-  padding-bottom: 2px;
-}
-
-.sheet-rolltemplate-co1 .sheet-rt-header {
-  font-size: large;
-  font-variant: small-caps;
-}
-
-.sheet-rolltemplate-co1 .sheet-rt-small {
-  font-size: smaller;
-  font-style: italic;
 }

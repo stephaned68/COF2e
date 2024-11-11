@@ -12,6 +12,9 @@ const SWData = {
     PC: "pc",
     NPC: "npc"
   },
+  RT_OPTIONS: {
+    template: "cof2"
+  },
   PC: {
     ABILITIES: [ "agilité", "constitution", "force", "perception", "charisme", "intelligence", "volonté" ],
     COMBAT: {
@@ -19,7 +22,7 @@ const SWData = {
       attacks: [ 
         [ "atkcac", "for", "Au Contact" ],
         [ "atktir", "agi", "A Distance" ], 
-        [ "atkmag", "mag", "Magique" ]
+        [ "atkmag", "vol", "Magique" ]
       ]
     },
     CONDITIONS: [ 
@@ -289,7 +292,7 @@ function removeRepeatingAll(sectionName) {
  * @param {string|string[]} msg - Message to send
  * @param {sendChatMsgOptions} options - Options for the message
  */
- function sendChatMsg(msg, options = {}) {
+function buildChatMsg(msg, options = {}) {
   let { title = "", template = "default", whisper = "@{togm}" } = options;
   if (whisper.charAt(0) !== "@" && whisper !== "") whisper = "/w \"" + whisper + "\" ";
   let chatMsg;
@@ -298,24 +301,31 @@ function removeRepeatingAll(sectionName) {
   } else {
     chatMsg = "{{" + msg + "}}";
   }
-  const chatCmd = `${whisper}&{template:${template}} ${title ? (template === "default" ? `{{name=${title} }}` : `{{${title} }}`) : "" } ${chatMsg}`;
+  return `${whisper}&{template:${template}} ${title ? (template === "default" ? `{{name=${title} }}` : `{{${title} }}`) : "" } ${chatMsg}`;
+}
+
+/**
+ * Send a message to chat
+ * @param {string|string[]} msg - Message to send
+ * @param {sendChatMsgOptions} options - Options for the message
+ */
+ function sendChatMsg(msg, options = {}) {
+  const chatCmd = buildChatMsg(msg, options);
   startRoll(chatCmd, roll => {
       finishRoll(roll.rollId);
   });
 }
 
 /**
- * Return co1 rolltemplate
+ * Return COF 2e rolltemplate
  * @param {object} props - List of {{ }} sections as object properties
  * @returns {string[]}
  */
-function coRollTemplate(props) {
+function cof2RollTemplate(props) {
   return [
     "perso=@{character_name}",
     ...Object.entries(props).map(e => {
-      let [ prop, value ] = e;
-      prop = prop === "leftsub" ? "subtags" : prop;
-      prop = prop === "rightsub" ? "name" : prop;
+      const [ prop, value ] = e;
       return `${prop}=${value} `;
     })
   ];
@@ -366,6 +376,17 @@ function addValues(values) {
   return Object.keys(values).reduce((result, attr) => {
     return result + int(values[attr]);
   }, 0);
+}
+
+/**
+ * Return the die roll formula for type
+ * @param {string} type - Type of d20 roll
+ * @returns - {string}
+ */
+function dieRoll(type) {
+  if (type === "S") return "2d20kh1";
+  if (type === "H") return "{2d20kh1, 0d20+10}kh1";
+  return "1d20";
 }
 
 /**
@@ -436,17 +457,38 @@ on("change:sheet_type", function() {
 });
 
 /**
+ * Update the base attack scores
+ */
+function updateAttacksBase() {
+  getAttrs([ "niveau" ], function(value) {
+    const level = int(value.niveau);
+    const atkBase = Math.min(level, 10);
+    setAttrs({
+      atkcac_base: atkBase,
+      atktir_base: atkBase,
+      atkmag_base: atkBase,
+    });
+  })
+}
+
+/**
+ * On level change
+ */
+on("change:niveau", updateAttacksBase);
+
+/**
  * On ability components change
  */
 SWData.PC.ABILITIES.forEach(ability => {
+  const short = shorten(ability);
   const attrs = [ 
-    shorten(ability), 
-    `${ shorten(ability) }_buff` 
+    short, 
+    `${short}_buff` 
   ];
   on(eventList("change", attrs, " "), function () {
     getAttrs(attrs, function(values) {
       const score = addValues(values);
-      setAttrs({ [`${ shorten(ability) }_test`]: score });
+      setAttrs({ [`${short}_test`]: score });
     });
   });
 });
@@ -464,9 +506,7 @@ function updateInit() {
 /**
  * On init components change
  */
-on(eventList("change", SWData.PC.COMBAT.init, " "), function() {
-  updateInit();
-});
+on(eventList("change", SWData.PC.COMBAT.init, " "), updateInit);
 
 /**
  * On attacks components change
@@ -483,19 +523,39 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
 });
 
 /**
+ * Compute max DR
+ */
+function updateDRMax() {
+  getAttrs([ "con" ], function(value) {
+    const dr_max = 2 + int(value.con);
+    setAttrs({ dr_max });
+  });
+}
+
+/**
+ * On CON change
+ */
+on("change:con", updateDRMax);
+
+/**
  * On ability button click
  */
 SWData.PC.ABILITIES.forEach(ability => {
-  on(`clicked:${ shorten(ability) }-btn`, function () {
-    const short = shorten(ability);
-    const armor_malus = short === "agi" ? " - [[@{armor_malus}]][Armure]" : "";
-    let carac = `[[@{${short}_sup}]][Dé] + [[@{${short}_test}]][Bonus ${short.toUpperCase()}]${armor_malus} ]] `;
-    const chatMsg = coRollTemplate({
-      leftsub: "Test",
-      rightsub: capitalize(ability),
-      carac
+  const short = shorten(ability);
+  on(`clicked:${short}-btn`, function () {
+    getAttrs([ `d${short}_sup` ], function(values) {
+      const [ dType ] = Object.keys(values);
+      const roll = dieRoll(values[dType]);
+      const armor_malus = short === "agi" ? " - @{armor_malus}[Armure]" : "";
+      const carac = `[[${roll}[Dé] + @{${short}_test}[Bonus ${short.toUpperCase()}]${armor_malus} ]] `;
+      const chatMsg = cof2RollTemplate({
+        lsub: "Test",
+        rsub: capitalize(ability),
+        roll: carac
+      });
+      sendChatMsg(chatMsg, SWData.RT_OPTIONS);
+      console.log(chatMsg);
     });
-    console.log(chatMsg);
   });
 });
 
@@ -505,13 +565,43 @@ SWData.PC.ABILITIES.forEach(ability => {
 SWData.PC.COMBAT.attacks.forEach(attk => {
   const [ attack, , description ] = attk;
   on(`clicked:${attack}-btn`, function () {
-    const attaque = `[[@{jnor}]]cs20cf1[Dé] + [[@{${attack}}]][Bonus] ]]`;
-    const chatMsg = coRollTemplate({
-      leftsub: "Attaque",
-      rightsub: description,
-      attaque
+    const attaque = `[[1d20cs20cf1[Dé] + @{${attack}}[Bonus] ]]`;
+    const chatMsg = cof2RollTemplate({
+      lsub: "Attaque",
+      rsub: description,
+      roll: attaque
     });
-    console.log(chatMsg);
+    sendChatMsg(chatMsg, SWData.RT_OPTIONS);
+  });
+});
+
+on("clicked:drecup-btn", function() {
+  getAttrs([ "dr", "drecup", "niveau" ], function(values) {
+    const dr = int(values.dr);
+    if (dr === 0) {
+      const chatMsg = cof2RollTemplate({
+        lsub: "Jet",
+        rsub: "Récupération Rapide",
+        text: "Plus de DR !",
+        text_style: "color: red;"
+      });
+      sendChatMsg(chatMsg, SWData.RT_OPTIONS);
+      return;
+    }
+
+    dr -= 1;
+    const dRecup = `d${values.drecup}`;
+    const bRecup = Math.ceil(int(values.niveau) / 2);
+    const recup = `[[${dRecup}[DR] + ${bRecup}[Niveau/2] ]] PV récupérés`;
+    const chatMsg = cof2RollTemplate({
+      lsub: "Jet",
+      rsub: "Récupération Rapide",
+      roll: recup,
+      text: `${dr} DR restants`
+    });
+    sendChatMsg(chatMsg, SWData.RT_OPTIONS);
+
+    setAttrs({ dr });
   });
 });
 
