@@ -292,7 +292,7 @@ function removeRepeatingAll(sectionName) {
  * @param {string|string[]} msg - Message to send
  * @param {sendChatMsgOptions} options - Options for the message
  */
-function buildChatMsg(msg, options = {}) {
+function buildChatMsg(msg, options = SWData.RT_OPTIONS) {
   let { title = "", template = "default", whisper = "@{togm}" } = options;
   if (whisper.charAt(0) !== "@" && whisper !== "") whisper = "/w \"" + whisper + "\" ";
   let chatMsg;
@@ -309,7 +309,7 @@ function buildChatMsg(msg, options = {}) {
  * @param {string|string[]} msg - Message to send
  * @param {sendChatMsgOptions} options - Options for the message
  */
- function sendChatMsg(msg, options = {}) {
+ function sendChatMsg(msg, options = SWData.RT_OPTIONS) {
   const chatCmd = buildChatMsg(msg, options);
   startRoll(chatCmd, roll => {
       finishRoll(roll.rollId);
@@ -575,6 +575,95 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
   });
 });
 
+/**
+ * Update PV & DR
+ * @param {number} vp - Number of PV lost or gained
+ * @param {number} lossOrGain - Type of change (-1 = loss, +1 = gain)
+ * @param {boolean} [buttonClicked=true] - Updated via button
+ */
+function updatePVDR(vp, lossOrGain, buttonClicked = true) {
+  getAttrs([ "sheet_type", "pv", "pv_max", "dr" ], function (values) {
+    //const type = stringOrDefault(values.sheet_type);
+    let pv = int(values.pv);
+    const pvMax = int(values.pv_max);
+    let dr = int(values.dr);
+    let effect = "";
+    const updateAttrs = new Map;
+
+    // already up-to-date if not via button
+    if (buttonClicked) {
+      pv += vp * lossOrGain;
+      updateAttrs.set("pv", pv);
+    }
+
+    if (pv > pvMax) {
+      pv = pvMax;
+      updateAttrs.set("pv", pv);
+    }
+    if (pv < 0) {
+      pv = 0;
+      updateAttrs.set("pv", pv);
+    }
+
+    if (pv > 1) {
+      // TODO: remove weakened condition
+    } else if (pv === 1) {
+      effect = " et subit la condition Affaibli-e (PV = 1)";
+      // TODO: apply weakened condition
+    } else if (pv === 0) {
+      dr = Math.max(dr - 1, 0);
+      updateAttrs.set("dr", dr);
+      effect = ", perd un DR et tombe au sol inconscient (PV = 0)"
+    }
+    
+    const chatMsg = cof2RollTemplate({
+        lsub: "PV",
+        rsub: `${ lossOrGain === -1 ? "Blessure" : "Soins" } `,
+        text : `@{character_name} ${ lossOrGain === -1 ? "perd" : "gagne" } ${vp} PV${effect} `
+    });
+    sendChatMsg(chatMsg);
+
+    if (updateAttrs.size > 0)
+      setAttrs(Object.fromEntries(updateAttrs));
+  });
+}
+
+/**
+ * Handle PV change buttons
+ * @param {string} button Name of action button
+ */
+function changeVP(button) {
+  let prompt = (button === "vigloss-btn") ? "PV perdus ?" : "PV soignés ?";
+  let lossOrGain = (button === "vigloss-btn") ? -1 : +1;
+  //const ask = `!{{ask=[[?{${prompt}}]]}}`;
+  askValue(prompt, function(vp) {
+    if (vp <= 0) return;
+    updatePVDR(vp, lossOrGain);
+  });
+}
+
+/**
+ * On PV change action buttons
+ */
+on("clicked:vigloss-btn clicked:vigheal-btn", function (eventInfo) {
+  const [ , button ] = eventInfo.triggerName.split(":");
+  changeVP(button);
+});
+
+/**
+ * On PV value change
+ */
+on("change:pv", function (eventInfo) {
+  const oldPV = int(eventInfo.previousValue);
+  const newPV = int(eventInfo.newValue);
+  const vp = oldPV > newPV ? oldPV - newPV : newPV - oldPV;
+  const lossOrGain = oldPV > newPV ? -1 : +1;
+  updatePVDR(vp, lossOrGain, false);
+});
+
+/**
+ * On Recup button click
+ */
 on("clicked:drecup-btn", function() {
   getAttrs([ "dr", "drecup", "niveau" ], function(values) {
     const dr = int(values.dr);
@@ -585,7 +674,7 @@ on("clicked:drecup-btn", function() {
         text: "Plus de DR !",
         text_style: "color: red;"
       });
-      sendChatMsg(chatMsg, SWData.RT_OPTIONS);
+      sendChatMsg(chatMsg);
       return;
     }
 
@@ -599,7 +688,7 @@ on("clicked:drecup-btn", function() {
       roll: recup,
       text: `${dr} DR restants`
     });
-    sendChatMsg(chatMsg, SWData.RT_OPTIONS);
+    sendChatMsg(chatMsg);
 
     setAttrs({ dr });
   });
