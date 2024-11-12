@@ -2271,7 +2271,7 @@
   {{/dm}}
   {{#text}}
   <div class="sheet-rt sheet-rt-text">
-    <span style="{{textcss}}">{{text}}</span>
+    <span class="sheet-rt-{{textclass}}">{{text}}</span>
   </div>
   {{/text}}
 
@@ -2953,7 +2953,7 @@ on("clicked:drecup-btn", function() {
         lsub: "Jet",
         rsub: "Récupération Rapide",
         text: "Plus de DR !",
-        text_style: "color: red;"
+        textclass: "fumble"
       });
       sendChatMsg(chatMsg);
       return;

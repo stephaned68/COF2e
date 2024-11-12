@@ -672,7 +672,7 @@ on("clicked:drecup-btn", function() {
         lsub: "Jet",
         rsub: "Récupération Rapide",
         text: "Plus de DR !",
-        text_style: "color: red;"
+        textclass: "fumble"
       });
       sendChatMsg(chatMsg);
       return;
