@@ -2863,7 +2863,6 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
  * @param {boolean} [buttonClicked=true] - Updated via button
  */
 function updatePVDR(vp, lossOrGain, buttonClicked = true) {
-  console.log({ vp, lossOrGain, buttonClicked })
   getAttrs([ "sheet_type", "pv", "pv_max", "dr" ], function (values) {
     //const type = stringOrDefault(values.sheet_type);
     let pv = int(values.pv);
@@ -2947,14 +2946,26 @@ on("change:pv", function (eventInfo) {
  * On Recup button click
  */
 on("clicked:drecup-btn", function() {
-  getAttrs([ "dr", "drecup", "niveau" ], function(values) {
-    const dr = int(values.dr);
+  getAttrs([ "dr", "drecup", "niveau", "pv", "pv_max" ], function(values) {
+    let dr = int(values.dr);
     if (dr === 0) {
       const chatMsg = cof2RollTemplate({
         lsub: "Jet",
         rsub: "Récupération Rapide",
         text: "Plus de DR !",
         text_style: "color: red;"
+      });
+      sendChatMsg(chatMsg);
+      return;
+    }
+
+    const pvMax = int(values.pv_max);
+    let pv = int(values.pv);
+    if (pv === pvMax) {
+      const chatMsg = cof2RollTemplate({
+        lsub: "Jet",
+        rsub: "Récupération Rapide",
+        text: "@{character_name} est déjà à son maximum de PV !",
       });
       sendChatMsg(chatMsg);
       return;
@@ -2970,9 +2981,14 @@ on("clicked:drecup-btn", function() {
       roll: recup,
       text: `${dr} DR restants`
     });
-    sendChatMsg(chatMsg);
+    const chatCmd = buildChatMsg(chatMsg);
+    startRoll(chatCmd, roll => {
+      pv += roll.results.roll.result;
+      pv = Math.min(pv, pvMax);
+      finishRoll(roll.rollId);
 
-    setAttrs({ dr });
+      setAttrs({ dr, pv });
+    });
   });
 });
 

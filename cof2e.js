@@ -613,7 +613,7 @@ function updatePVDR(vp, lossOrGain, buttonClicked = true) {
     } else if (pv === 0) {
       dr = Math.max(dr - 1, 0);
       updateAttrs.set("dr", dr);
-      effect = ", perd un DR et tombe au sol inconscient (PV = 0)"
+      effect = ", perd un DR et tombe au sol inconscient-e (PV = 0)"
     }
     
     const chatMsg = cof2RollTemplate({
@@ -665,14 +665,26 @@ on("change:pv", function (eventInfo) {
  * On Recup button click
  */
 on("clicked:drecup-btn", function() {
-  getAttrs([ "dr", "drecup", "niveau" ], function(values) {
-    const dr = int(values.dr);
+  getAttrs([ "dr", "drecup", "niveau", "pv", "pv_max" ], function(values) {
+    let dr = int(values.dr);
     if (dr === 0) {
       const chatMsg = cof2RollTemplate({
         lsub: "Jet",
         rsub: "Récupération Rapide",
         text: "Plus de DR !",
         text_style: "color: red;"
+      });
+      sendChatMsg(chatMsg);
+      return;
+    }
+
+    const pvMax = int(values.pv_max);
+    let pv = int(values.pv);
+    if (pv === pvMax) {
+      const chatMsg = cof2RollTemplate({
+        lsub: "Jet",
+        rsub: "Récupération Rapide",
+        text: "@{character_name} est déjà à son maximum de PV !",
       });
       sendChatMsg(chatMsg);
       return;
@@ -688,9 +700,14 @@ on("clicked:drecup-btn", function() {
       roll: recup,
       text: `${dr} DR restants`
     });
-    sendChatMsg(chatMsg);
-
-    setAttrs({ dr });
+    const chatCmd = buildChatMsg(chatMsg);
+    startRoll(chatCmd, roll => {
+      pv += roll.results.roll.result;
+      pv = Math.min(pv, pvMax);
+      finishRoll(roll.rollId);
+      
+      setAttrs({ dr, pv });
+    });
   });
 });
 
