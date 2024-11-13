@@ -9,12 +9,6 @@
   <input type="hidden" name="attr_token_dsp" value="">
   
   <!-- Jets -->
-  <input type="hidden" name="attr_droll" value="1d20">
-  <input type="hidden" name="attr_dbonus" value="2d20kh1">
-  <input type="hidden" name="attr_dmalus" value="2d20kl1">
-  <input type="hidden" name="attr_jnor" value="1d20">
-  <input type="hidden" name="attr_jsup" value="2d20kh1">
-  <input type="hidden" name="attr_jsuph" value="{2d20kh1, 0d20+10}kh1">
   <input type="hidden" name="attr_devol" value="d4">
 
   <!-- Buffs PJ -->
@@ -40,7 +34,7 @@
     <div>
       <img
         class="logo"
-        title="Version 1.0.0 - 10/2024"
+        title="Version 1.0.0 - jj/12/2024"
         src="https://raw.githubusercontent.com/stephaned68/COF2e/main/cof2e_logo.jpg"
       />
     </div>
@@ -739,11 +733,11 @@
               <div></div>
               <div class="centered">
                 Armure
-                <input type="checkbox" name="attr_armure_on" title="@{armure_on}" value="0">
+                <input type="checkbox" name="attr_armure_eqp" title="@{armure_eqp}" value="1">
               </div>
               <div class="centered">
                 Bouclier
-                <input type="checkbox" name="attr_bouclier_on" title="@{bouclier_on}" value="0">
+                <input type="checkbox" name="attr_bouclier_eqp" title="@{bouclier_eqp}" value="1">
               </div>
               <div class="centered">AGI</div>
               <div class="centered">Div.</div>
@@ -767,7 +761,7 @@
                 <span name="attr_def_buff"></span>
               </div>
               <div class="bordered centered">
-                <select class="select-md" name="attr_defact" title="@{defact}">
+                <select class="select-md" name="attr_def_action" title="@{def_action}">
                   <option value="">-</option>
                   <option value="2">Simple</option>
                   <option value="5">Totale (L)</option>
@@ -861,7 +855,7 @@
                   <option value="atktir">DISTANCE</option>
                   <option value="atkmag">MAGIE</option>
                 </select>
-                <span>+</span>
+                &nbsp;+&nbsp;
                 <input type="number" name="attr_arme-atkdiv" title="@{arme-atkdiv}" value="">
                 <input type="hidden" name="attr_arme-buffatk" value="0">
               </div>
@@ -870,7 +864,7 @@
               </div>
               <div class="d-flex d-flex-middle bordered">
                 <input type="text" name="attr_arme-dm" title="@{arme-dm}" placeholder="1d8, 2d6..." value="">
-                <span>+</span>
+                &nbsp;+&nbsp;
                 <select class="select-md" name="attr_arme-bonus" title="@{arme-bonus} Bonus aux dommages">
                   <option value="0">-</option>
                   <option value="agi">AGI</option>
@@ -879,7 +873,7 @@
                   <option value="int">INT</option>
                   <option value="cha">CHA</option>
                 </select>
-                <span>+</span>
+                &nbsp;+&nbsp;
                 <input type="number" name="attr_arme-dmdiv" title="@{arme-dmdiv} Bonus DM divers" value="0">
                 <input type="hidden" name="attr_arme-buffdm" value="0">
               </div>
@@ -2304,7 +2298,8 @@
         [ "atkcac", "for", "Au Contact" ],
         [ "atktir", "agi", "A Distance" ], 
         [ "atkmag", "vol", "Magique" ]
-      ]
+      ],
+      def: [ "armure", "armure_eqp", "bouclier", "bouclier_eqp", "agi", "def_buff", "def_action" ]
     },
     CONDITIONS: [ 
       { 
@@ -2824,10 +2819,12 @@ on("change:con", updateDRMax);
 SWData.PC.ABILITIES.forEach(ability => {
   const short = shorten(ability);
   on(`clicked:${short}-btn`, function () {
-    getAttrs([ `d${short}_sup` ], function(values) {
+    getAttrs([ `d${short}_sup`, "armure_malus", "armure_eqp" ], function(values) {
       const [ dType ] = Object.keys(values);
       const roll = dieRoll(values[dType]);
-      const armor_malus = short === "agi" ? " - @{armor_malus}[Armure]" : "";
+      const armure_eqp = int(values.armure_eqp);
+      const armure_malus = int(values.armure_malus) * armure_eqp;
+      const armor_malus = short === "agi" ? ` - ${armure_malus}[Malus armure]` : "";
       const carac = `[[${roll}[Dé] + @{${short}_test}[Bonus ${short.toUpperCase()}]${armor_malus} ]] `;
       const chatMsg = cof2RollTemplate({
         lsub: "Test",
@@ -2850,7 +2847,8 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
     const chatMsg = cof2RollTemplate({
       lsub: "Attaque",
       rsub: description,
-      roll: attaque
+      roll: attaque,
+      rollbm: attaque
     });
     sendChatMsg(chatMsg, SWData.RT_OPTIONS);
   });
@@ -2986,9 +2984,57 @@ on("clicked:drecup-btn", function() {
       pv += roll.results.roll.result;
       pv = Math.min(pv, pvMax);
       finishRoll(roll.rollId);
-
+      
       setAttrs({ dr, pv });
     });
+  });
+});
+
+/**
+ * Update the defense attribute
+ */
+function updateDef() {
+  getAttrs(SWData.PC.COMBAT.def, function(values) {
+    console.log(values)
+    let def = 10;
+    def += int(values.armure) * int(values.armure_eqp);
+    def += int(values.bouclier) * int(values.bouclier_eqp);
+    def += int(values.agi);
+    def += int(values.def_buff);
+    def += int(values.def_action);
+    setAttrs({ def });
+  });
+}
+
+/**
+ * On defense components change
+ */
+on(eventList("change", SWData.PC.COMBAT.def, " "), updateDef);
+
+on("clicked:luck-btn", function() {
+  getAttrs([ "pc", "pc_max" ], function(values) {
+    const pcMax = int(values.pc_max);
+    let pc = int(values.pc);
+    if (pc === 0) {
+      const chatMsg = cof2RollTemplate({
+        lsub: "Jet",
+        rsub: "Chance",
+        text: "Plus de PC !",
+        textclass: "fumble"
+      });
+      sendChatMsg(chatMsg);
+      return;
+    }
+
+    pc -= 1;
+    const chatMsg = cof2RollTemplate({
+      lsub: "Jet",
+      rsub: "Chance",
+      roll: "[[10]]",
+      text: `${pc} PC restants`
+    });
+    sendChatMsg(chatMsg);
+    setAttrs({ pc });
   });
 });
 
@@ -3002,6 +3048,5 @@ on("clicked:repeating_armes:arme-opt-btn", function() {
     setAttrs( { ["repeating_armes_arme-opt"]: option });
   });
 });
-
 
 </script>
