@@ -23,7 +23,8 @@ const SWData = {
         [ "atkcac", "for", "Au Contact" ],
         [ "atktir", "agi", "A Distance" ], 
         [ "atkmag", "vol", "Magique" ]
-      ]
+      ],
+      def: [ "armure", "armure_eqp", "bouclier", "bouclier_eqp", "agi", "def_buff", "def_action" ]
     },
     CONDITIONS: [ 
       { 
@@ -543,10 +544,12 @@ on("change:con", updateDRMax);
 SWData.PC.ABILITIES.forEach(ability => {
   const short = shorten(ability);
   on(`clicked:${short}-btn`, function () {
-    getAttrs([ `d${short}_sup` ], function(values) {
+    getAttrs([ `d${short}_sup`, "armure_malus", "armure_eqp" ], function(values) {
       const [ dType ] = Object.keys(values);
       const roll = dieRoll(values[dType]);
-      const armor_malus = short === "agi" ? " - @{armor_malus}[Armure]" : "";
+      const armure_eqp = int(values.armure_eqp);
+      const armure_malus = int(values.armure_malus) * armure_eqp;
+      const armor_malus = short === "agi" ? ` - ${armure_malus}[Malus armure]` : "";
       const carac = `[[${roll}[Dé] + @{${short}_test}[Bonus ${short.toUpperCase()}]${armor_malus} ]] `;
       const chatMsg = cof2RollTemplate({
         lsub: "Test",
@@ -554,7 +557,6 @@ SWData.PC.ABILITIES.forEach(ability => {
         roll: carac
       });
       sendChatMsg(chatMsg, SWData.RT_OPTIONS);
-      console.log(chatMsg);
     });
   });
 });
@@ -569,7 +571,8 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
     const chatMsg = cof2RollTemplate({
       lsub: "Attaque",
       rsub: description,
-      roll: attaque
+      roll: attaque,
+      rollbm: attaque
     });
     sendChatMsg(chatMsg, SWData.RT_OPTIONS);
   });
@@ -671,7 +674,7 @@ on("clicked:drecup-btn", function() {
       const chatMsg = cof2RollTemplate({
         lsub: "Jet",
         rsub: "Récupération Rapide",
-        text: "Plus de DR !",
+        text: "Plus de Dé de Récupération !",
         textclass: "fumble"
       });
       sendChatMsg(chatMsg);
@@ -705,9 +708,55 @@ on("clicked:drecup-btn", function() {
       pv += roll.results.roll.result;
       pv = Math.min(pv, pvMax);
       finishRoll(roll.rollId);
-      
       setAttrs({ dr, pv });
     });
+  });
+});
+
+/**
+ * Update the def attribute
+ */
+function updateDef() {
+  getAttrs(SWData.PC.COMBAT.def, function(values) {
+    let def = 10;
+    def += int(values.armure) * int(values.armure_eqp);
+    def += int(values.bouclier) * int(values.bouclier_eqp);
+    def += int(values.agi);
+    def += int(values.def_buff);
+    def += int(values.def_action);
+    setAttrs({ def });
+  });
+}
+
+/**
+ * On init components change
+ */
+on(eventList("change", SWData.PC.COMBAT.def, " "), updateDef);
+
+on("clicked:luck-btn", function() {
+  getAttrs([ "pc", "pc_max" ], function(values) {
+    const pcMax = int(values.pc_max);
+    let pc = int(values.pc);
+    if (pc === 0) {
+      const chatMsg = cof2RollTemplate({
+        lsub: "Jet",
+        rsub: "Chance",
+        text: "Plus de Points de Chance !",
+        textclass: "fumble"
+      });
+      sendChatMsg(chatMsg);
+      return;
+    }
+
+    pc -= 1;
+    const chatMsg = cof2RollTemplate({
+      lsub: "Jet",
+      rsub: "Chance",
+      roll: "[[10]]",
+      text: `${pc} PC restants`
+    });
+    sendChatMsg(chatMsg);
+    setAttrs({ pc });
   });
 });
 
