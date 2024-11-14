@@ -56,7 +56,6 @@ summary {
   height: 6rem;
 }
 
-
 .cofmain hr {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -443,6 +442,21 @@ div.change-view {
   display: grid;
   grid-template-columns: 2fr 1fr 2fr 2fr 1fr 1fr 3fr 1fr;
   gap: 2px;
+}
+
+.conditions input[value="1"].condition-affaibli ~ button img.condition-affaibli,
+.conditions input[value="1"].condition-aveugle ~ button img.condition-aveugle,
+.conditions input[value="1"].condition-essoufle ~ button img.condition-essoufle,
+.conditions input[value="1"].condition-etourdi ~ button img.condition-etourdi,
+.conditions input[value="1"].condition-immobilise ~ button img.condition-immobilise,
+.conditions input[value="1"].condition-invalide ~ button img.condition-invalide,
+.conditions input[value="1"].condition-paralyse ~ button img.condition-paralyse,
+.conditions input[value="1"].condition-ralenti ~ button img.condition-ralenti,
+.conditions input[value="1"].condition-renverse ~ button img.condition-renverse,
+.conditions input[value="1"].condition-surpris ~ button img.condition-surpris {
+  width: 22px;
+  border-radius: 100%;
+  background-color: tan;
 }
 
 .pc-luck-rd .luck {

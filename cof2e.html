@@ -587,37 +587,36 @@
           <div class="conditions">
             <div class="centered block-header">Etats préjudiciables</div>
             <div class="bordered centered">
-              <span name="attr_conditions" value=""></span>
-              
+              <input type="hidden" class="condition-affaibli" name="attr_condition_affaibli" value="0">
               <button
                 type="action"
                 class="flat-btn img-btn img-btn-lg"
-                name="act_affaibli"
+                name="act_affaibli-icon"
                 title="Affaibli"
               ><img
-                class="bubble-img"
+                class="bubble-img condition-affaibli"
                 src="https://raw.githubusercontent.com/stephaned68/COF2e/main/cond_affaibli.png"
                 />
               </button>
-
+              <input type="hidden" class="condition-aveugle" name="attr_condition_aveugle" value="0">
               <button
                 type="action"
                 class="flat-btn img-btn img-btn-lg"
-                name="act_aveugle"
+                name="act_aveugle-icon"
                 title="Aveuglé"
               ><img
-                class="bubble-img"
+                class="bubble-img condition-aveugle"
                 src="https://raw.githubusercontent.com/stephaned68/COF2e/main/cond_aveugle.png"
                 />
               </button>
-    
+              <input type="hidden" class="condition-essoufle" name="attr_condition_essoufle" value="0">
               <button
                 type="action"
                 class="flat-btn img-btn img-btn-lg"
-                name="act_essoufle"
+                name="act_essoufle-icon"
                 title="Essouflé"
               ><img
-                class="bubble-img"
+                class="bubble-img condition-essoufle"
                 src="https://raw.githubusercontent.com/stephaned68/COF2e/main/cond_essoufle.png"
                 />
               </button>
@@ -632,25 +631,25 @@
                 src="https://raw.githubusercontent.com/stephaned68/COF2e/main/cond_effraye.png"
                 />
               </button>
- -->    
+ -->          <input type="hidden" class="condition-etourdi" name="attr_condition_etourdi" value="0">
               <button
                 type="action"
                 class="flat-btn img-btn img-btn-lg"
-                name="act_etourdi"
+                name="act_etourdi-icon"
                 title="Etourdi"
               ><img
-                class="bubble-img"
+                class="bubble-img condition-etourdi"
                 src="https://raw.githubusercontent.com/stephaned68/COF2e/main/cond_etourdi.png"
                 />
               </button>
-
+              <input type="hidden" class="condition-immobilise" name="attr_condition_immobilise" value="0">
               <button
                 type="action"
                 class="flat-btn img-btn img-btn-lg"
-                name="act_immobilise"
+                name="act_immobilise-icon"
                 title="Immobilisé"
               ><img
-                class="bubble-img"
+                class="bubble-img condition-immobilise" 
                 src="https://raw.githubusercontent.com/stephaned68/COF2e/main/cond_immobilise.png"
                 />
               </button>
@@ -668,57 +667,58 @@
 
               <br>
               
+              <input type="hidden" class="condition-invalide" name="attr_condition_invalide" value="0">
               <button
                 type="action"
                 class="flat-btn img-btn img-btn-lg"
-                name="act_invalide"
+                name="act_invalide-icon"
                 title="Invalide"
               ><img
-                class="bubble-img"
+                class="bubble-img condition-invalide"
                 src="https://raw.githubusercontent.com/stephaned68/COF2e/main/cond_invalide.png"
                 />
               </button>
-    
+              <input type="hidden" class="condition-paralyse" name="attr_condition_paralyse" value="0">
               <button
                 type="action"
                 class="flat-btn img-btn img-btn-lg"
-                name="act_paralyse"
+                name="act_paralyse-icon"
                 title="Paralysé"
               ><img
-                class="bubble-img"
+                class="bubble-img condition-paralyse"
                 src="https://raw.githubusercontent.com/stephaned68/COF2e/main/cond_paralyse.png"
                 />
               </button>
-    
+              <input type="hidden" class="condition-ralenti" name="attr_condition_ralenti" value="0">
               <button
                 type="action"
                 class="flat-btn img-btn img-btn-lg"
-                name="act_ralenti"
+                name="act_ralenti-icon"
                 title="Ralenti"
               ><img
-                class="bubble-img"
+                class="bubble-img condition-ralenti"
                 src="https://raw.githubusercontent.com/stephaned68/COF2e/main/cond_ralenti.png"
                 />
               </button>
-    
+              <input type="hidden" class="condition-renverse" name="attr_condition_renverse" value="0">
               <button
                 type="action"
                 class="flat-btn img-btn img-btn-lg"
-                name="act_renverse"
+                name="act_renverse-icon"
                 title="Renversé"
               ><img
-                class="bubble-img"
+                class="bubble-img condition-renverse"
                 src="https://raw.githubusercontent.com/stephaned68/COF2e/main/cond_renverse.png"
                 />
               </button>                
-    
+              <input type="hidden" class="condition-surpris" name="attr_condition_surpris" value="0">
               <button
                 type="action"
                 class="flat-btn img-btn img-btn-lg"
-                name="act_surpris"
+                name="act_surpris-icon"
                 title="Surpris"
               ><img
-                class="bubble-img"
+                class="bubble-img condition-surpris"
                 src="https://raw.githubusercontent.com/stephaned68/COF2e/main/cond_surpris.png"
                 />
               </button>
@@ -802,15 +802,15 @@
             <div class="bordered">
               <div class="d-flex d-flex-middle">
                 <input type="hidden" name="attr_pc_max" value="0">
-                <input type="number" name="attr_pc" title="@{pc}" value="0">
+                <input type="number" name="attr_pc" title="@{pc} PC courants" value="0">
                 &nbsp;/&nbsp;
-                <span name="attr_pc_max"></span>
+                <span name="attr_pc_max" title="@{pc_max} PC maximum"></span>
                 &nbsp;=&nbsp;
-                <input type="number" name="attr_pc_base" title="@{pc_base}" value="0">
+                <input type="number" name="attr_pc_base" title="@{pc_base} Base" value="0">
                 &nbsp;+&nbsp;
-                <span name="attr_cha"></span>
+                <span name="attr_cha" title="Score de CHArisme"></span>
                 &nbsp;+&nbsp;
-                <input type="number" name="attr_pc_buff" title="@{pc_buff}" value="0">
+                <input type="number" name="attr_pc_buff" title="@{pc_buff} Bonus divers" value="0">
               </div>
             </div>
           </div>
@@ -2304,7 +2304,7 @@
     CONDITIONS: [ 
       { 
         code: "F", 
-        button: "affaibli",
+        action: "affaibli",
         label: "Affaibli",
         effects: {
           droll: "dmalus"
@@ -2312,7 +2312,7 @@
       },
       { 
         code: "A", 
-        button: "aveugle",
+        action: "aveugle",
         label: "Aveuglé",
         effects: {
           init: -5,
@@ -2323,7 +2323,7 @@
       }, 
       { 
         code: "O", 
-        button: "essoufle",
+        action: "essoufle",
         label: "Essouflé",
         effects: {
           movement: 5
@@ -2331,7 +2331,7 @@
       }, 
       { 
         code: "E", 
-        button: "etourdi",
+        action: "etourdi",
         label: "Etourdi",
         effects: {
           def: -5
@@ -2339,7 +2339,7 @@
       }, 
       { 
         code: "I", 
-        button: "immobilise", 
+        action: "immobilise", 
         label: "Immobilisé",
         effects: {
           movement: 0,
@@ -2350,7 +2350,7 @@
       }, 
       { 
         code: "V", 
-        button: "invalide", 
+        action: "invalide", 
         label: "Invalide",
         effects: {
           movement: 5
@@ -2358,17 +2358,17 @@
       }, 
       { 
         code: "P", 
-        button: "paralyse", 
+        action: "paralyse", 
         label: "Paralysé"
       }, 
       { 
         code: "L", 
-        button: "ralenti",
+        action: "ralenti",
         label: "Ralenti" 
       }, 
       { 
         code: "R", 
-        button: "renverse",
+        action: "renverse",
         label: "Renversé",
         effects: {
           atkcac: -5,
@@ -2379,7 +2379,7 @@
       }, 
       { 
         code: "S", 
-        button: "surpris",
+        action: "surpris",
         label: "Surpris",
         effects: {
           def: -5
@@ -3079,14 +3079,28 @@ on("clicked:devol-btn", function() {
 });
 
 /**
- * Show weapons options
+ * Update condition attributes
  */
+SWData.PC.CONDITIONS.forEach(condition => {
+  const { action } = condition;
+  on(`clicked:${action}-icon`, function () {
+    getAttrs([ `condition_${action}` ], function(value) {
+      const name = `condition_${action}`;
+      let hasCondition = int(value[name]);
+      hasCondition = 1 - hasCondition;
+      setAttrs({ [name]: hasCondition });
+    });
+  })
+});
+
+/**
+ * Show weapons options
 on("clicked:repeating_armes:arme-opt-btn", function() {
   getAttrs([ "repeating_armes_arme-opt" ], function(value) {
     let [ option ] = Object.values(value);
     option = 1 - int(option);
     setAttrs( { ["repeating_armes_arme-opt"]: option });
   });
-});
+}); */
 
 </script>

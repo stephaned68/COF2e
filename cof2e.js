@@ -29,7 +29,7 @@ const SWData = {
     CONDITIONS: [ 
       { 
         code: "F", 
-        button: "affaibli",
+        action: "affaibli",
         label: "Affaibli",
         effects: {
           droll: "dmalus"
@@ -37,7 +37,7 @@ const SWData = {
       },
       { 
         code: "A", 
-        button: "aveugle",
+        action: "aveugle",
         label: "Aveuglé",
         effects: {
           init: -5,
@@ -48,7 +48,7 @@ const SWData = {
       }, 
       { 
         code: "O", 
-        button: "essoufle",
+        action: "essoufle",
         label: "Essouflé",
         effects: {
           movement: 5
@@ -56,7 +56,7 @@ const SWData = {
       }, 
       { 
         code: "E", 
-        button: "etourdi",
+        action: "etourdi",
         label: "Etourdi",
         effects: {
           def: -5
@@ -64,7 +64,7 @@ const SWData = {
       }, 
       { 
         code: "I", 
-        button: "immobilise", 
+        action: "immobilise", 
         label: "Immobilisé",
         effects: {
           movement: 0,
@@ -75,7 +75,7 @@ const SWData = {
       }, 
       { 
         code: "V", 
-        button: "invalide", 
+        action: "invalide", 
         label: "Invalide",
         effects: {
           movement: 5
@@ -83,17 +83,17 @@ const SWData = {
       }, 
       { 
         code: "P", 
-        button: "paralyse", 
+        action: "paralyse", 
         label: "Paralysé"
       }, 
       { 
         code: "L", 
-        button: "ralenti",
+        action: "ralenti",
         label: "Ralenti" 
       }, 
       { 
         code: "R", 
-        button: "renverse",
+        action: "renverse",
         label: "Renversé",
         effects: {
           atkcac: -5,
@@ -104,7 +104,7 @@ const SWData = {
       }, 
       { 
         code: "S", 
-        button: "surpris",
+        action: "surpris",
         label: "Surpris",
         effects: {
           def: -5
@@ -801,6 +801,21 @@ on("clicked:devol-btn", function() {
     });
     sendChatMsg(chatMsg);
   });
+});
+
+/**
+ * Update condition attributes
+ */
+SWData.PC.CONDITIONS.forEach(condition => {
+  const { action } = condition;
+  on(`clicked:${action}-icon`, function () {
+    getAttrs([ `condition_${action}` ], function(value) {
+      const name = `condition_${action}`;
+      let hasCondition = int(value[name]);
+      hasCondition = 1 - hasCondition;
+      setAttrs({ [name]: hasCondition });
+    });
+  })
 });
 
 /**
