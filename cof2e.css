@@ -39,6 +39,11 @@ button
   text-align: right;
 }
 
+.cofmain .cofsheet input[type='number'].two-digits {
+  width: 4rem;
+  text-align: right;
+}
+
 summary {
   display: list-item;
 }
