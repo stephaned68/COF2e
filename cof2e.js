@@ -460,22 +460,48 @@ on("change:sheet_type", function() {
 /**
  * Update the base attack scores
  */
-function updateAttacksBase() {
-  getAttrs([ "niveau" ], function(value) {
-    const level = int(value.niveau);
-    const atkBase = Math.min(level, 10);
-    setAttrs({
-      atkcac_base: atkBase,
-      atktir_base: atkBase,
-      atkmag_base: atkBase,
-    });
-  })
+function updateAttacksBase(level, attributes) {
+  const atkBase = Math.min(level, 10);
+  attributes.set("atkcac_base", atkBase);
+  attributes.set("atktir_base", atkBase);
+  attributes.set("atkmag_base", atkBase);
+  return attributes;
+}
+
+function updateDEvol(level, attributes) {
+  let devol;
+  switch (true) {
+    case level >= 15:
+      devol = "d12";
+      break;
+    case level >= 12:
+      devol = "d10";
+      break;
+    case level >= 9:
+      devol = "d8";
+      break;
+    case level >= 6:
+      devol = "d6";
+      break;
+    default:
+      devol = "d4";
+  }
+  attributes.set("devol", devol);
+  return attributes;
 }
 
 /**
  * On level change
  */
-on("change:niveau", updateAttacksBase);
+on("change:niveau", function() {
+  getAttrs([ "niveau" ], function(value) {
+    const level = int(value.niveau);
+    let updateAttrs = new Map;
+    updateAttrs = updateAttacksBase(level, updateAttrs);
+    updateAttrs = updateDEvol(level, updateAttrs);
+    setAttrs(Object.fromEntries(updateAttrs))
+  });
+});
 
 /**
  * On ability components change
@@ -556,7 +582,7 @@ SWData.PC.ABILITIES.forEach(ability => {
         rsub: capitalize(ability),
         roll: carac
       });
-      sendChatMsg(chatMsg, SWData.RT_OPTIONS);
+      sendChatMsg(chatMsg);
     });
   });
 });
@@ -574,7 +600,7 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
       roll: attaque,
       rollbm: attaque
     });
-    sendChatMsg(chatMsg, SWData.RT_OPTIONS);
+    sendChatMsg(chatMsg);
   });
 });
 
@@ -729,10 +755,13 @@ function updateDef() {
 }
 
 /**
- * On init components change
+ * On Init components change
  */
 on(eventList("change", SWData.PC.COMBAT.def, " "), updateDef);
 
+/**
+ * On Luck button click
+ */
 on("clicked:luck-btn", function() {
   getAttrs([ "pc", "pc_max" ], function(values) {
     const pcMax = int(values.pc_max);
@@ -753,7 +782,7 @@ on("clicked:luck-btn", function() {
       lsub: "Jet",
       rsub: "Chance",
       roll: "[[10]]",
-      text: `${pc} PC restants`
+      text: `${pc} Points de Chance restants`
     });
     sendChatMsg(chatMsg);
     setAttrs({ pc });
@@ -761,12 +790,26 @@ on("clicked:luck-btn", function() {
 });
 
 /**
- * Show weapons options
+ * Roll evolutive die
  */
+on("clicked:devol-btn", function() {
+    askValue("Nombre de dés ?", function(dice) {
+    const chatMsg = cof2RollTemplate({
+      lsub: "Jet",
+      rsub: "Dé évolutif",
+      roll: `[[${dice}@{devol}]]`
+    });
+    sendChatMsg(chatMsg);
+  });
+});
+
+/**
+ * Show weapons options
+ * 
 on("clicked:repeating_armes:arme-opt-btn", function() {
   getAttrs([ "repeating_armes_arme-opt" ], function(value) {
     let [ option ] = Object.values(value);
     option = 1 - int(option);
     setAttrs( { ["repeating_armes_arme-opt"]: option });
   });
-});
+}); */
