@@ -835,6 +835,25 @@ function setCondition(hasCondition, effects, buffs, values) {
   return attributes;
 }
 
+/**
+ * Return attack name given attribute name
+ * @param {string} attribute - attack score attribute
+ * @returns {string}
+ */
+function getAttackName(attribute) {
+  const [ , , name ] = SWData.PC.COMBAT.attacks.find(attack => {
+    const [ atkAttr ] = attack;
+    return atkAttr === attribute;
+  });
+  return name;
+}
+
+/**
+ * Display a chat message with a condition effects
+ * @param {string} label - Condition name
+ * @param {object} effects - key/value pairs of attributes and mods
+ * @param {string[]} description - list of additional effects
+ */
 function displayCondition(label, effects, description) {
   const malus = [];
   Object.keys(effects).forEach(attribute => {
@@ -847,11 +866,7 @@ function displayCondition(label, effects, description) {
         name = "Défense";
         break;
       default:
-        [ , , name ] = SWData.PC.COMBAT.attacks.find(attack => {
-          const [ atkAttr ] = attack;
-          return atkAttr === attribute;
-        });
-        name = "Attaque " + name;
+        name = "Attaque " + getAttackName(attribute);
         break;
     }
     malus.push(`${effects[attribute]} en ${name}`);
@@ -902,11 +917,12 @@ on("clicked:repeating_armes:attack-btn", function() {
     "special"
   ];
   getAttrs(attackAttrs.map(attribute => `${section}${attribute}`), function (values) {
-    const name = capitalize(strval(values[section + "nom"], "attaque"));
-    
-    const crit = intval(values[section + "crit"], 20);
     const atk = strval(values[section + "atk"]);
     const atkdiv = intval(values[section + "atkdiv"]);
+    const nom = capitalize(strval(values[section + "nom"], getAttackName(atk)));
+    const range = strval(values[section + "portee"]);
+    const portee = (atk === "atktir" && range !== "") ? " (" + range + ")" : "";
+    const crit = intval(values[section + "crit"], 20);
     let attaque = "";
     if (atk !== "")
       attaque = `[[1d20cs>${crit}cf1[Dé] + @{${atk}}[Bonus] + ${atkdiv}[Divers] ]]`;
@@ -916,10 +932,10 @@ on("clicked:repeating_armes:attack-btn", function() {
     const dmdiv = strval(values[section + "dmdiv"]);
     let dm = "";
     if (dmroll !== "" || dmdiv !== "")
-      dm = `[[[[${dmroll}]][Dés DM] + @{${dmbonus}}[Bonus] + ${dmdiv}[Divers] ]]`;
+      dm = `[[[[${dmroll}]][Dés DM] + ${dmbonus}[Bonus] + ${dmdiv}[Divers] ]]`;
     const chatMsg = cof2RollTemplate({
       lsub: "Attaque",
-      rsub: name,
+      rsub: nom + portee,
       roll: attaque,
       broll: attaque,
       dm
