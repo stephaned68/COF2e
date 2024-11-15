@@ -28,87 +28,100 @@ const SWData = {
     },
     CONDITIONS: [ 
       { 
-        code: "F", 
-        action: "affaibli",
+        name: "affaibli",
         label: "Affaibli",
-        effects: {
-          droll: "dmalus"
-        }
+        effects: { },
+        description: [
+          "Dé malus à toutes les attaques"
+        ]
       },
       { 
-        code: "A", 
-        action: "aveugle",
+        name: "aveugle",
         label: "Aveuglé",
         effects: {
           init: -5,
           atkcac: -5,
           def: -5,
           atktir: -10
-        } 
+        },
+        description: [
+          "Pas d'attaque magique nécessitant de voir la cible"
+        ]
       }, 
       { 
-        code: "O", 
-        action: "essoufle",
+        name: "essoufle",
         label: "Essouflé",
-        effects: {
-          movement: 5
-        }
+        effects: { },
+        description: [
+          "Déplacement limité à 5 m par action de mouvement"
+        ]
       }, 
       { 
-        code: "E", 
-        action: "etourdi",
+        name: "etourdi",
         label: "Etourdi",
         effects: {
           def: -5
-        }
+        },
+        description: [
+          "Aucune action possible"
+        ]
       }, 
       { 
-        code: "I", 
-        action: "immobilise", 
+        name: "immobilise", 
         label: "Immobilisé",
-        effects: {
-          movement: 0,
-          atkcac: "dmalus",
-          atktir: "dmalus",
-          atkmag: "dmalus",
-        }
+        effects: { },
+        description: [
+          "Pas de déplacement",
+          "Dé malus aux tests d'attaque"
+        ]
       }, 
       { 
-        code: "V", 
-        action: "invalide", 
+        name: "invalide", 
         label: "Invalide",
-        effects: {
-          movement: 5
-        }
+        effects: { },
+        description: [
+          "Déplacement limité à 5 m par action de mouvement"
+        ]
       }, 
       { 
-        code: "P", 
-        action: "paralyse", 
-        label: "Paralysé"
+        name: "paralyse", 
+        label: "Paralysé",
+        effects: { },
+        description: [
+          "Aucune action possible",
+          "Touché et critique automatique en cas d'attaque"
+        ]
       }, 
       { 
-        code: "L", 
-        action: "ralenti",
-        label: "Ralenti" 
+        name: "ralenti",
+        label: "Ralenti",
+        effects: { },
+        description: [
+          "Une seule action par round (attaque ou mouvement)"
+        ]
       }, 
       { 
-        code: "R", 
-        action: "renverse",
+        name: "renverse",
         label: "Renversé",
         effects: {
           atkcac: -5,
           atktir: -5,
           atkmag: -5,
           def: -5
-        }
+        },
+        description: [
+          "Nécessite une action d'attaque pour se relever"
+        ]
       }, 
       { 
-        code: "S", 
-        action: "surpris",
+        name: "surpris",
         label: "Surpris",
         effects: {
           def: -5
-        }
+        },
+        description: [
+          "Pas d'action au premier round de combat"
+        ]
       }
     ]
   }
@@ -124,7 +137,7 @@ const SWData = {
 * @param {int} onError - default value on error
 * @returns integer value
 */
-function int(value, onError = 0) {
+function intval(value, onError = 0) {
   return parseInt(value) || onError;
 }
 
@@ -134,7 +147,7 @@ function int(value, onError = 0) {
 * @param {float} onError - default value on error
 * @returns float value
 */
-function float(value, onError = 0) {
+function numval(value, onError = 0) {
   return parseFloat(value) || onError;
 }
 
@@ -145,7 +158,7 @@ function float(value, onError = 0) {
 * @param {string} onError - default value on null/undefined
 * @returns string value
 */
-function stringOrDefault(value, onError = "") {
+function strval(value, onError = "") {
   return value || onError;
 }
 
@@ -186,7 +199,7 @@ function clog(
   if (!SWData.settings.debugMode)
     return;
 
-  title = stringOrDefault(title, "");
+  title = strval(title, "");
   if (title !== "") title = ` Sheet-Worker : ${title} `;
   const titleStyle = `color:${color.text}; background-color:${color.back}; ${headerStyle} text-decoration:underline;`;
   const textStyle = `color:${color.text}; background-color:${color.back}; ${style}`;
@@ -227,11 +240,11 @@ function getRandom(max) {
 * @returns an object with name and value properties
 */
 function parseNameValue(data, delim) {
-  delim = stringOrDefault(delim, ":");
+  delim = strval(delim, ":");
   if (data.indexOf(delim) !== -1) {
     let [ key, value ] = data.split(delim);
-    key = stringOrDefault(key).trim();
-    value = stringOrDefault(value).trim()
+    key = strval(key).trim();
+    value = strval(value).trim()
   }
   return { name: key, value };
 }
@@ -375,7 +388,7 @@ function ask(askParams, callback) {
  */
 function addValues(values) {
   return Object.keys(values).reduce((result, attr) => {
-    return result + int(values[attr]);
+    return result + intval(values[attr]);
   }, 0);
 }
 
@@ -417,7 +430,7 @@ function hideArea(div) {
  */
 on("change:sheet_type", function() {
   getAttrs([ "sheet_type" ], function(value) {
-    const sheet_type = stringOrDefault(value.sheet_type);
+    const sheet_type = strval(value.sheet_type);
     if (!sheet_type) return;
 
     Object.values(SWData.SHEET_TYPE).forEach(type => {
@@ -495,7 +508,7 @@ function updateDEvol(level, attributes) {
  */
 on("change:niveau", function() {
   getAttrs([ "niveau" ], function(value) {
-    const level = int(value.niveau);
+    const level = intval(value.niveau);
     let updateAttrs = new Map;
     updateAttrs = updateAttacksBase(level, updateAttrs);
     updateAttrs = updateDEvol(level, updateAttrs);
@@ -554,7 +567,7 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
  */
 function updateDRMax() {
   getAttrs([ "con" ], function(value) {
-    const dr_max = 2 + int(value.con);
+    const dr_max = 2 + intval(value.con);
     setAttrs({ dr_max });
   });
 }
@@ -573,8 +586,8 @@ SWData.PC.ABILITIES.forEach(ability => {
     getAttrs([ `d${short}_sup`, "armure_malus", "armure_eqp" ], function(values) {
       const [ dType ] = Object.keys(values);
       const roll = dieRoll(values[dType]);
-      const armure_eqp = int(values.armure_eqp);
-      const armure_malus = int(values.armure_malus) * armure_eqp;
+      const armure_eqp = intval(values.armure_eqp);
+      const armure_malus = intval(values.armure_malus) * armure_eqp;
       const armor_malus = short === "agi" ? ` - ${armure_malus}[Malus armure]` : "";
       const carac = `[[${roll}[Dé] + @{${short}_test}[Bonus ${short.toUpperCase()}]${armor_malus} ]] `;
       const chatMsg = cof2RollTemplate({
@@ -598,7 +611,7 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
       lsub: "Attaque",
       rsub: description,
       roll: attaque,
-      rollbm: attaque
+      broll: attaque
     });
     sendChatMsg(chatMsg);
   });
@@ -613,9 +626,9 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
 function updatePVDR(vp, lossOrGain, buttonClicked = true) {
   getAttrs([ "sheet_type", "pv", "pv_max", "dr" ], function (values) {
     //const type = stringOrDefault(values.sheet_type);
-    let pv = int(values.pv);
-    const pvMax = int(values.pv_max);
-    let dr = int(values.dr);
+    let pv = intval(values.pv);
+    const pvMax = intval(values.pv_max);
+    let dr = intval(values.dr);
     let effect = "";
     const updateAttrs = new Map;
 
@@ -683,8 +696,8 @@ on("clicked:vigloss-btn clicked:vigheal-btn", function (eventInfo) {
  * On PV value change
  */
 on("change:pv", function (eventInfo) {
-  const oldPV = int(eventInfo.previousValue);
-  const newPV = int(eventInfo.newValue);
+  const oldPV = intval(eventInfo.previousValue);
+  const newPV = intval(eventInfo.newValue);
   const vp = oldPV > newPV ? oldPV - newPV : newPV - oldPV;
   const lossOrGain = oldPV > newPV ? -1 : +1;
   updatePVDR(vp, lossOrGain, false);
@@ -695,7 +708,7 @@ on("change:pv", function (eventInfo) {
  */
 on("clicked:drecup-btn", function() {
   getAttrs([ "dr", "drecup", "niveau", "pv", "pv_max" ], function(values) {
-    let dr = int(values.dr);
+    let dr = intval(values.dr);
     if (dr === 0) {
       const chatMsg = cof2RollTemplate({
         lsub: "Jet",
@@ -707,8 +720,8 @@ on("clicked:drecup-btn", function() {
       return;
     }
 
-    const pvMax = int(values.pv_max);
-    let pv = int(values.pv);
+    const pvMax = intval(values.pv_max);
+    let pv = intval(values.pv);
     if (pv === pvMax) {
       const chatMsg = cof2RollTemplate({
         lsub: "Jet",
@@ -721,7 +734,7 @@ on("clicked:drecup-btn", function() {
 
     dr -= 1;
     const dRecup = `d${values.drecup}`;
-    const bRecup = Math.ceil(int(values.niveau) / 2);
+    const bRecup = Math.ceil(intval(values.niveau) / 2);
     const recup = `[[${dRecup}[DR] + ${bRecup}[Niveau/2] ]] PV récupérés`;
     const chatMsg = cof2RollTemplate({
       lsub: "Jet",
@@ -745,11 +758,11 @@ on("clicked:drecup-btn", function() {
 function updateDef() {
   getAttrs(SWData.PC.COMBAT.def, function(values) {
     let def = 10;
-    def += int(values.armure) * int(values.armure_eqp);
-    def += int(values.bouclier) * int(values.bouclier_eqp);
-    def += int(values.agi);
-    def += int(values.def_buff);
-    def += int(values.def_action);
+    def += intval(values.armure) * intval(values.armure_eqp);
+    def += intval(values.bouclier) * intval(values.bouclier_eqp);
+    def += intval(values.agi);
+    def += intval(values.def_buff);
+    def += intval(values.def_action);
     setAttrs({ def });
   });
 }
@@ -764,8 +777,8 @@ on(eventList("change", SWData.PC.COMBAT.def, " "), updateDef);
  */
 on("clicked:luck-btn", function() {
   getAttrs([ "pc", "pc_max" ], function(values) {
-    const pcMax = int(values.pc_max);
-    let pc = int(values.pc);
+    const pcMax = intval(values.pc_max);
+    let pc = intval(values.pc);
     if (pc === 0) {
       const chatMsg = cof2RollTemplate({
         lsub: "Jet",
@@ -804,17 +817,114 @@ on("clicked:devol-btn", function() {
 });
 
 /**
- * Update condition attributes
+ * Return a Map of attribute buffs values
+ * @param {number} hasCondition - set/unset condition flag
+ * @param {object} effects - key/value pairs of attributes and debuffs
+ * @param {string[]} buffs - list of attribute names
+ * @param {object} values - list of attribute values as returned by getAttrs()
+ * @returns {Map}
+ */
+function setCondition(hasCondition, effects, buffs, values) {
+  const attributes = new Map();
+  const toggle = hasCondition === 1 ? +1 : -1;
+  buffs.forEach(buff => {
+    const [ attribute ] = buff.split("_");
+    const newValue = intval(values[buff]) + toggle * effects[attribute];
+    attributes.set(buff, newValue);
+  });
+  return attributes;
+}
+
+function displayCondition(label, effects, description) {
+  const malus = [];
+  Object.keys(effects).forEach(attribute => {
+    let name = "";
+    switch (attribute) {
+      case "init":
+        name = "Initiative";
+        break;
+      case "def":
+        name = "Défense";
+        break;
+      default:
+        [ , , name ] = SWData.PC.COMBAT.attacks.find(attack => {
+          const [ atkAttr ] = attack;
+          return atkAttr === attribute;
+        });
+        name = "Attaque " + name;
+        break;
+    }
+    malus.push(`${effects[attribute]} en ${name}`);
+  });
+  text = [ "@{character_name} subit les effets suivants :", ...malus, ...description ].join("\n");
+  const chatMsg = cof2RollTemplate({
+    lsub: "Condition",
+    rsub: label,
+    text
+  });
+  sendChatMsg(chatMsg);
+}
+
+/**
+ * Update condition attributes & buffs
  */
 SWData.PC.CONDITIONS.forEach(condition => {
-  const { action } = condition;
-  on(`clicked:${action}-icon`, function () {
-    getAttrs([ `condition_${action}` ], function(value) {
-      const name = `condition_${action}`;
-      let hasCondition = int(value[name]);
+  const { name, label, effects, description } = condition;
+  on(`clicked:${name}-icon`, function () {
+    const buffs = Object.entries(effects).map(([ attribute ]) => `${attribute}_buff`);
+    getAttrs([ `condition_${name}`, ...buffs ], function(values) {
+      const [ attribute, ...buffs ] = Object.keys(values);
+      let hasCondition = intval(values[attribute]);
       hasCondition = 1 - hasCondition;
-      setAttrs({ [name]: hasCondition });
+      const updateAttrs = setCondition(hasCondition, effects, buffs, values);
+      updateAttrs.set(attribute, hasCondition);
+      setAttrs(Object.fromEntries(updateAttrs));
+      if (hasCondition === 1) 
+        displayCondition(label, effects, description);
     });
+  })
+});
+
+/**
+ * Roll an attack in chat
+ */
+on("clicked:repeating_armes:attack-btn", function() {
+  const section = "repeating_armes_arme-"
+  const attackAttrs = [
+    "nom",
+    "atk",
+    "atkdiv",
+    "crit",
+    "dm",
+    "bonus",
+    "dmdiv",
+    "portee",
+    "special"
+  ];
+  getAttrs(attackAttrs.map(attribute => `${section}${attribute}`), function (values) {
+    const name = capitalize(strval(values[section + "nom"], "attaque"));
+    
+    const crit = intval(values[section + "crit"], 20);
+    const atk = strval(values[section + "atk"]);
+    const atkdiv = intval(values[section + "atkdiv"]);
+    let attaque = "";
+    if (atk !== "")
+      attaque = `[[1d20cs>${crit}cf1[Dé] + @{${atk}}[Bonus] + ${atkdiv}[Divers] ]]`;
+    
+    const dmroll = strval(values[section + "dm"]);
+    const dmbonus = strval(values[section + "bonus"]);
+    const dmdiv = strval(values[section + "dmdiv"]);
+    let dm = "";
+    if (dmroll !== "" || dmdiv !== "")
+      dm = `[[[[${dmroll}]][Dés DM] + @{${dmbonus}}[Bonus] + ${dmdiv}[Divers] ]]`;
+    const chatMsg = cof2RollTemplate({
+      lsub: "Attaque",
+      rsub: name,
+      roll: attaque,
+      broll: attaque,
+      dm
+    });
+    sendChatMsg(chatMsg);
   })
 });
 
