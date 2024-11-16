@@ -326,7 +326,18 @@ function buildChatMsg(msg, options = SWData.RT_OPTIONS) {
  function sendChatMsg(msg, options = SWData.RT_OPTIONS) {
   const chatCmd = buildChatMsg(msg, options);
   startRoll(chatCmd, roll => {
-      finishRoll(roll.rollId);
+    let save = 1;
+    if (roll.results.save) 
+      save = roll.results.save.result;
+    console.log(save)
+    let last_rolls = "";
+    if (roll.results.roll)
+      last_rolls += roll.results.roll.result;
+    if (roll.results.broll)
+      last_rolls += "|" + roll.results.broll.result;
+    if (last_rolls !== "" && save)
+      setAttrs({ last_rolls });
+    finishRoll(roll.rollId);
   });
 }
 
@@ -597,7 +608,6 @@ SWData.PC.ABILITIES.forEach(ability => {
         roll: carac
       });
       sendChatMsg(chatMsg);
-      setAttrs({ last_roll: carac });
     });
   });
 });
@@ -616,7 +626,6 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
       broll: attack
     });
     sendChatMsg(chatMsg);
-    setAttrs({ last_roll: carac });
   });
 });
 
@@ -779,7 +788,7 @@ on(eventList("change", SWData.PC.COMBAT.def, " "), updateDef);
  * On Luck button click
  */
 on("clicked:luck-btn", function() {
-  getAttrs([ "pc", "last_roll" ], function(values) {
+  getAttrs([ "pc", "last_rolls" ], function(values) {
     let pc = intval(values.pc);
     if (pc === 0) {
       const chatMsg = cof2RollTemplate({
@@ -793,13 +802,16 @@ on("clicked:luck-btn", function() {
     }
 
     pc -= 1;
-    const last_roll = strval(values.last_roll);
-    const roll = "[[10" + (last_roll !== "" ? ` + ${last_roll} ` : "" ) + "]]";
+    const [ last_roll, last_broll ] = strval(values.last_rolls).split("|");
+    let roll = "[[10" + (last_roll !== "" ? ` + ${last_roll} ` : "" ) + "]]";
+    if (last_broll)
+      roll += " | [[10" + ` + ${last_broll} ` + "]]";
     const chatMsg = cof2RollTemplate({
       lsub: "Jet",
       rsub: "Chance",
       roll,
-      text: `${pc} Points de Chance restants`
+      text: `${pc} Points de Chance restants`,
+      save: "[[0]]"
     });
     sendChatMsg(chatMsg);
     setAttrs({ pc });
@@ -1004,8 +1016,6 @@ on("clicked:repeating_armes:attack-btn", function() {
       text: special
     });
     sendChatMsg(chatMsg);
-    if (attack !== "")
-      setAttrs({ last_roll: attack });
   })
 });
 

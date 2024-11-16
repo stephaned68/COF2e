@@ -10,7 +10,7 @@
   
   <!-- Jets -->
   <input type="hidden" name="attr_devol" value="d4">
-  <input type="hidden" name="attr_last_roll" value="">
+  <input type="hidden" name="attr_last_rolls" value="">
 
   <!-- Buffs PJ -->
   <input type="hidden" name="attr_agi_buff" value="0">
@@ -2613,7 +2613,18 @@ function buildChatMsg(msg, options = SWData.RT_OPTIONS) {
  function sendChatMsg(msg, options = SWData.RT_OPTIONS) {
   const chatCmd = buildChatMsg(msg, options);
   startRoll(chatCmd, roll => {
-      finishRoll(roll.rollId);
+    let save = 1;
+    if (roll.results.save) 
+      save = roll.results.save.result;
+    console.log(save)
+    let last_rolls = "";
+    if (roll.results.roll)
+      last_rolls += roll.results.roll.result;
+    if (roll.results.broll)
+      last_rolls += "|" + roll.results.broll.result;
+    if (last_rolls !== "" && save)
+      setAttrs({ last_rolls });
+    finishRoll(roll.rollId);
   });
 }
 
@@ -2627,7 +2638,7 @@ function cof2RollTemplate(props) {
     "perso=@{character_name}",
     ...Object.entries(props).map(e => {
       const [ prop, value ] = e;
-      const space = value !== "" ? " " : "";
+      const space = (value !== "") ? " " : ""
       return `${prop}=${value}${space}`;
     })
   ];
@@ -2884,7 +2895,6 @@ SWData.PC.ABILITIES.forEach(ability => {
         roll: carac
       });
       sendChatMsg(chatMsg);
-      setAttrs({ last_roll: carac });
     });
   });
 });
@@ -2903,7 +2913,6 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
       broll: attack
     });
     sendChatMsg(chatMsg);
-    setAttrs({ last_roll: carac });
   });
 });
 
@@ -3065,8 +3074,8 @@ on(eventList("change", SWData.PC.COMBAT.def, " "), updateDef);
 /**
  * On Luck button click
  */
- on("clicked:luck-btn", function() {
-  getAttrs([ "pc", "last_roll" ], function(values) {
+on("clicked:luck-btn", function() {
+  getAttrs([ "pc", "last_rolls" ], function(values) {
     let pc = intval(values.pc);
     if (pc === 0) {
       const chatMsg = cof2RollTemplate({
@@ -3080,13 +3089,16 @@ on(eventList("change", SWData.PC.COMBAT.def, " "), updateDef);
     }
 
     pc -= 1;
-    const last_roll = ""; //strval(values.last_roll);
-    const roll = "[[10" + (last_roll !== "" ? ` + ${last_roll} ` : "" ) + "]]";
+    const [ last_roll, last_broll ] = strval(values.last_rolls).split("|");
+    let roll = "[[10" + (last_roll !== "" ? ` + ${last_roll} ` : "" ) + "]]";
+    if (last_broll)
+      roll += " | [[10" + ` + ${last_broll} ` + "]]";
     const chatMsg = cof2RollTemplate({
       lsub: "Jet",
       rsub: "Chance",
       roll,
-      text: `${pc} Points de Chance restants`
+      text: `${pc} Points de Chance restants`,
+      save: "[[0]]"
     });
     sendChatMsg(chatMsg);
     setAttrs({ pc });
@@ -3203,6 +3215,12 @@ SWData.PC.CONDITIONS.forEach(condition => {
   });
 });
 
+/**
+ * Return matches for pattern in text
+ * @param {string} text - text to match
+ * @param {RegExp} pattern - regular expression
+ * @returns {string[]}
+ */
 function matchRegExp(text, pattern) {
   return [ ...text.matchAll(pattern) ];
 }
@@ -3266,7 +3284,7 @@ on("clicked:repeating_armes:attack-btn", function() {
     let attack = "";
     if (atk !== "0")
       attack = `[[1d20cs>${crit}cf1[Dé] + @{${atk}}[Bonus] + ${atkdiv}[Divers] ]]`;
-    console.log(attack)
+    
     const dmroll = strval(values[section + "dm"]);
     const dmbonus = strval(values[section + "bonus"]);
     const dmdiv = strval(values[section + "dmdiv"]);
@@ -3285,8 +3303,6 @@ on("clicked:repeating_armes:attack-btn", function() {
       text: special
     });
     sendChatMsg(chatMsg);
-    if (attack !== "")
-      setAttrs({ last_roll: attack });
   })
 });
 
