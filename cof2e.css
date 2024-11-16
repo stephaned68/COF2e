@@ -166,7 +166,7 @@ span.img-btn-lg {
 }
 
 img.bubble-img {
-  width: 16px;
+  width: 18px;
 }
 
 img.bubble-img:hover {
@@ -178,6 +178,7 @@ img.bubble-img:hover {
 /* Action button as Roll button */
 span.d20-btn {
   font-family: dicefontd20;
+  font-size: large;
   vertical-align: middle;
 }
 
