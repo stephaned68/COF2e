@@ -311,7 +311,7 @@ function buildChatMsg(msg, options = SWData.RT_OPTIONS) {
   if (whisper.charAt(0) !== "@" && whisper !== "") whisper = "/w \"" + whisper + "\" ";
   let chatMsg;
   if (Array.isArray(msg)) {
-    chatMsg = msg.map(t => `{{${t} }}`).join(" ");
+    chatMsg = msg.map(t => `{{${t}}}`).join(" ");
   } else {
     chatMsg = "{{" + msg + "}}";
   }
@@ -340,7 +340,8 @@ function cof2RollTemplate(props) {
     "perso=@{character_name}",
     ...Object.entries(props).map(e => {
       const [ prop, value ] = e;
-      return `${prop}=${value} `;
+      const space = (value !== "") ? " " : ""
+      return `${prop}=${value}${space}`;
     })
   ];
 }
@@ -596,6 +597,7 @@ SWData.PC.ABILITIES.forEach(ability => {
         roll: carac
       });
       sendChatMsg(chatMsg);
+      setAttrs({ last_roll: carac });
     });
   });
 });
@@ -606,14 +608,15 @@ SWData.PC.ABILITIES.forEach(ability => {
 SWData.PC.COMBAT.attacks.forEach(attk => {
   const [ attack, , description ] = attk;
   on(`clicked:${attack}-btn`, function () {
-    const attaque = `[[1d20cs20cf1[Dé] + @{${attack}}[Bonus] ]]`;
+    const attack = `[[1d20cs20cf1[Dé] + @{${attack}}[Bonus] ]]`;
     const chatMsg = cof2RollTemplate({
       lsub: "Attaque",
       rsub: description,
-      roll: attaque,
-      broll: attaque
+      roll: attack,
+      broll: attack
     });
     sendChatMsg(chatMsg);
+    setAttrs({ last_roll: carac });
   });
 });
 
@@ -648,10 +651,10 @@ function updatePVDR(vp, lossOrGain, buttonClicked = true) {
     }
 
     if (pv > 1) {
-      // TODO: remove weakened condition
+      updateAttrs.set("condition_affaibli", 0);
     } else if (pv === 1) {
       effect = " et subit la condition Affaibli-e (PV = 1)";
-      // TODO: apply weakened condition
+      updateAttrs.set("condition_affaibli", 1);
     } else if (pv === 0) {
       dr = Math.max(dr - 1, 0);
       updateAttrs.set("dr", dr);
@@ -776,8 +779,7 @@ on(eventList("change", SWData.PC.COMBAT.def, " "), updateDef);
  * On Luck button click
  */
 on("clicked:luck-btn", function() {
-  getAttrs([ "pc", "pc_max" ], function(values) {
-    const pcMax = intval(values.pc_max);
+  getAttrs([ "pc", "last_roll" ], function(values) {
     let pc = intval(values.pc);
     if (pc === 0) {
       const chatMsg = cof2RollTemplate({
@@ -791,10 +793,12 @@ on("clicked:luck-btn", function() {
     }
 
     pc -= 1;
+    const last_roll = strval(values.last_roll);
+    const roll = "[[10" + (last_roll !== "" ? ` + ${last_roll} ` : "" ) + "]]";
     const chatMsg = cof2RollTemplate({
       lsub: "Jet",
       rsub: "Chance",
-      roll: "[[10]]",
+      roll,
       text: `${pc} Points de Chance restants`
     });
     sendChatMsg(chatMsg);
@@ -841,10 +845,13 @@ function setCondition(hasCondition, effects, buffs, values) {
  * @returns {string}
  */
 function getAttackName(attribute) {
-  const [ , , name ] = SWData.PC.COMBAT.attacks.find(attack => {
+  const found = SWData.PC.COMBAT.attacks.find(attack => {
     const [ atkAttr ] = attack;
     return atkAttr === attribute;
   });
+  if (!found)
+    return "";
+  const [ , , name ] = found;
   return name;
 }
 
@@ -885,20 +892,72 @@ function displayCondition(label, effects, description) {
  */
 SWData.PC.CONDITIONS.forEach(condition => {
   const { name, label, effects, description } = condition;
+
+  // Set/Unset conditions
   on(`clicked:${name}-icon`, function () {
     const buffs = Object.entries(effects).map(([ attribute ]) => `${attribute}_buff`);
     getAttrs([ `condition_${name}`, ...buffs ], function(values) {
       const [ attribute, ...buffs ] = Object.keys(values);
-      let hasCondition = intval(values[attribute]);
-      hasCondition = 1 - hasCondition;
+      const hasCondition = 1 - intval(values[attribute]);
       const updateAttrs = setCondition(hasCondition, effects, buffs, values);
       updateAttrs.set(attribute, hasCondition);
       setAttrs(Object.fromEntries(updateAttrs));
+    });
+  });
+
+  // Display enabled condition
+  on(`change:condition_${name}`, function() {
+    getAttrs([ `condition_${name}` ], function(value) {
+      const [ attribute ] = Object.keys(value);
+      const hasCondition = intval(value[attribute]);
       if (hasCondition === 1) 
         displayCondition(label, effects, description);
     });
-  })
+  });
 });
+
+/**
+ * Return matches for pattern in text
+ * @param {string} text - text to match
+ * @param {RegExp} pattern - regular expression
+ * @returns {string[]}
+ */
+function matchRegExp(text, pattern) {
+  return [ ...text.matchAll(pattern) ];
+}
+
+/**
+ * Substitute expressions with in-line rolls
+ * @param {string} text - text to process
+ * @returns {string}
+ */
+function insertRolls(text) {
+  if (!text)
+    return "";
+  
+  // Search for " [#d4° + XXX] "
+  matchRegExp(text, /([ ]*)\[([1-9])d4°[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL)\]([ ]*)/gm).forEach(result => {
+    const [ matched, sb, dice, ability, sa ] = result;
+    const replace = `${sb}[[${dice}@{devol} + @{${ability.toLowerCase()}}[${ability}] ]]${sa}`;
+    text = text.replace(matched, replace)
+  });
+
+  // Search for "... #d4° ..."
+  matchRegExp(text, /([ ]*)([1-9])d4°([ ])*/gm).forEach(result => {
+    const [ matched, sb, dice, sa ] = result;
+    const replace = `${sb}[[${dice}@{devol}]]${sa}`;
+    text = text.replace(matched, replace)
+  });
+
+  // Search for " [# + XXX] "
+  matchRegExp(text, /([ ]*)\[([0-9]+)[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL)\]([ ]*)/gm).forEach(result => {
+    const [ matched, sb, value, ability, sa ] = result;
+    const replace = `${sb}[[${value} + @{${ability.toLowerCase()}}]]${sb}`;
+    text = text.replace(matched, replace)
+  });
+
+  return text;
+}
 
 /**
  * Roll an attack in chat
@@ -919,13 +978,13 @@ on("clicked:repeating_armes:attack-btn", function() {
   getAttrs(attackAttrs.map(attribute => `${section}${attribute}`), function (values) {
     const atk = strval(values[section + "atk"]);
     const atkdiv = intval(values[section + "atkdiv"]);
-    const nom = capitalize(strval(values[section + "nom"], getAttackName(atk)));
-    const range = strval(values[section + "portee"]);
-    const portee = (atk === "atktir" && range !== "") ? " (" + range + ")" : "";
+    const name = capitalize(strval(values[section + "nom"], getAttackName(atk)));
+    const portee = strval(values[section + "portee"]);
+    const range = (portee !== "") ? ` (${portee})` : "";
     const crit = intval(values[section + "crit"], 20);
-    let attaque = "";
-    if (atk !== "")
-      attaque = `[[1d20cs>${crit}cf1[Dé] + @{${atk}}[Bonus] + ${atkdiv}[Divers] ]]`;
+    let attack = "";
+    if (atk !== "0")
+      attack = `[[1d20cs>${crit}cf1[Dé] + @{${atk}}[Bonus] + ${atkdiv}[Divers] ]]`;
     
     const dmroll = strval(values[section + "dm"]);
     const dmbonus = strval(values[section + "bonus"]);
@@ -933,14 +992,20 @@ on("clicked:repeating_armes:attack-btn", function() {
     let dm = "";
     if (dmroll !== "" || dmdiv !== "")
       dm = `[[[[${dmroll}]][Dés DM] + ${dmbonus}[Bonus] + ${dmdiv}[Divers] ]]`;
+    
+    const special = insertRolls(strval(values[section + "special"]));
+
     const chatMsg = cof2RollTemplate({
       lsub: "Attaque",
-      rsub: nom + portee,
-      roll: attaque,
-      broll: attaque,
-      dm
+      rsub: name + range,
+      roll: attack,
+      broll: attack,
+      dm,
+      text: special
     });
     sendChatMsg(chatMsg);
+    if (attack !== "")
+      setAttrs({ last_roll: attack });
   })
 });
 
