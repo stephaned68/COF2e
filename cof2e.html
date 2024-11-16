@@ -868,6 +868,16 @@
               </div>
               <div class="d-flex d-flex-middle bordered">
                 <input type="text" name="attr_arme-dm" title="@{arme-dm}" placeholder="1d8, 2d6..." value="">
+                <select class="select-xxs" name="attr_arme-dmtype" title="@{arme-dmtype} Type de dommages">
+                  <option value="contondants">C - Contondants</option>
+                  <option value="perforants">P - Perforants</option>
+                  <option value="tranchants" selected>T - Tranchants</option>
+                  <option value="acide">A - Acide</option>
+                  <option value="électricité">E - Electricité</option>
+                  <option value="feu">F - Feu</option>
+                  <option value="froid">R - Froid</option>
+                  <option value="magiques">M - Magique</option>
+                </select>
                 &nbsp;+&nbsp;
                 <select class="select-md" name="attr_arme-bonus" title="@{arme-bonus} Bonus aux dommages">
                   <option value="0">-</option>
@@ -2271,7 +2281,7 @@
       {{#^rollWasCrit() roll}} {{#rollWasCrit() broll}}
       ( + <span class="sheet-rt-critical">{{dm}}</span> si dé bonus)
       {{/rollWasCrit() broll}}
-      {{/^rollWasCrit() roll}}
+      {{/^rollWasCrit() roll}} {{typedm}}
     </div>
   </div>
   {{/dm}}
@@ -3269,6 +3279,7 @@ on("clicked:repeating_armes:attack-btn", function() {
     "atkdiv",
     "crit",
     "dm",
+    "dmtype",
     "bonus",
     "dmdiv",
     "portee",
@@ -3285,12 +3296,13 @@ on("clicked:repeating_armes:attack-btn", function() {
     if (atk !== "0")
       attack = `[[1d20cs>${crit}cf1[Dé] + @{${atk}}[Bonus] + ${atkdiv}[Divers] ]]`;
     
-    const dmroll = strval(values[section + "dm"]);
+    const dm = strval(values[section + "dm"]);
+    const dmtype = strval(values[section + "dmtype"]);
     const dmbonus = strval(values[section + "bonus"]);
     const dmdiv = strval(values[section + "dmdiv"]);
-    let dm = "";
-    if (dmroll !== "" || dmdiv !== "")
-      dm = `[[[[${dmroll}]][Dés DM] + ${dmbonus}[Bonus] + ${dmdiv}[Divers] ]]`;
+    let dmroll = "";
+    if (dm !== "" || dmdiv !== "")
+      dmroll = `[[[[${dm}]][Dés DM] + ${dmbonus}[Bonus] + ${dmdiv}[Divers] ]]`;
     
     const special = insertRolls(strval(values[section + "special"]));
 
@@ -3299,7 +3311,8 @@ on("clicked:repeating_armes:attack-btn", function() {
       rsub: name + range,
       roll: attack,
       broll: attack,
-      dm,
+      dm: dmroll,
+      typedm: dmtype,
       text: special
     });
     sendChatMsg(chatMsg);

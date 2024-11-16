@@ -982,6 +982,7 @@ on("clicked:repeating_armes:attack-btn", function() {
     "atkdiv",
     "crit",
     "dm",
+    "dmtype",
     "bonus",
     "dmdiv",
     "portee",
@@ -998,12 +999,13 @@ on("clicked:repeating_armes:attack-btn", function() {
     if (atk !== "0")
       attack = `[[1d20cs>${crit}cf1[Dé] + @{${atk}}[Bonus] + ${atkdiv}[Divers] ]]`;
     
-    const dmroll = strval(values[section + "dm"]);
+    const dm = strval(values[section + "dm"]);
+    const dmtype = strval(values[section + "dmtype"]);
     const dmbonus = strval(values[section + "bonus"]);
     const dmdiv = strval(values[section + "dmdiv"]);
-    let dm = "";
-    if (dmroll !== "" || dmdiv !== "")
-      dm = `[[[[${dmroll}]][Dés DM] + ${dmbonus}[Bonus] + ${dmdiv}[Divers] ]]`;
+    let dmroll = "";
+    if (dm !== "" || dmdiv !== "")
+      dmroll = `[[[[${dm}]][Dés DM] + ${dmbonus}[Bonus] + ${dmdiv}[Divers] ]]`;
     
     const special = insertRolls(strval(values[section + "special"]));
 
@@ -1012,7 +1014,8 @@ on("clicked:repeating_armes:attack-btn", function() {
       rsub: name + range,
       roll: attack,
       broll: attack,
-      dm,
+      dm: dmroll,
+      typedm: dmtype,
       text: special
     });
     sendChatMsg(chatMsg);
