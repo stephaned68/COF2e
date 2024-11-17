@@ -82,7 +82,7 @@ button[type="roll"]:hover {
 }
 
 option.optgroup {
-  background: gray;
+  background: var(--cof-hilite);
   font-weight: bold;
   color: white;
 }
@@ -141,8 +141,13 @@ select.select-xs {
 }
 
 select.select-xxs {
+  font-size: smaller;
   width: 1.3rem;
   appearance: none;
+}
+
+select.select-xxs option {
+  font-size: small;
 }
 
 /* Icon buttons & images */
@@ -239,6 +244,10 @@ div.path div.block-title {
 
 .d-flex-middle {
   vertical-align: middle;
+}
+
+.align-self-center {
+  align-self: center;
 }
 
 /* Identity layout */
@@ -373,10 +382,6 @@ div.change-view {
   width: 100%; 
   text-align: right;
   margin-bottom: 5px;
-}
-
-input[value="0"].show-paths-789 ~ div.abilities {
-  display: none;
 }
 
 /* PC sheet layout */ 
@@ -536,6 +541,10 @@ input[value="0"].show-paths-789 ~ div.abilities {
   overflow: hidden;
 }
 
+input[value="0"].show-paths-789 ~ div.abilities {
+  display: none;
+}
+
 .pc-rolls-subtab .pc-roll-r1 {
   display: grid;
   grid-template-columns: .1fr 5fr 12fr 3fr;
@@ -564,7 +573,7 @@ input[value="0"].show-paths-789 ~ div.abilities {
 
 .pc-buffs-subtab .pc-buffs {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 2px;
 }
 
