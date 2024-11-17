@@ -375,6 +375,10 @@ div.change-view {
   margin-bottom: 5px;
 }
 
+input[value="0"].show-paths-789 ~ div.abilities {
+  display: none;
+}
+
 /* PC sheet layout */ 
 .pc-main-tab .pc-attributes {
   display: grid;
