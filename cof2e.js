@@ -636,11 +636,11 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
  * @param {boolean} [buttonClicked=true] - Updated via button
  */
 function updatePVDR(vp, lossOrGain, buttonClicked = true) {
-  getAttrs([ "sheet_type", "pv", "pv_max", "dr" ], function (values) {
-    //const type = stringOrDefault(values.sheet_type);
+  getAttrs([ "sheet_type", "pv", "pv_max", "dr", "rd" ], function (values) {
     let pv = intval(values.pv);
     const pvMax = intval(values.pv_max);
     let dr = intval(values.dr);
+    const rd = (lossOrGain === -1 ) ? "\n" + "RD " + strval(values.rd) : "";
     let effect = "";
     const updateAttrs = new Map;
 
@@ -673,9 +673,12 @@ function updatePVDR(vp, lossOrGain, buttonClicked = true) {
     const chatMsg = cof2RollTemplate({
         lsub: "PV",
         rsub: `${ lossOrGain === -1 ? "Blessure" : "Soins" } `,
-        text : `@{character_name} ${ lossOrGain === -1 ? "perd" : "gagne" } ${vp} PV${effect} `
+        text : `@{character_name} ${ lossOrGain === -1 ? "perd" : "gagne" } ${vp} PV${effect}${rd} `
     });
-    sendChatMsg(chatMsg);
+    sendChatMsg(chatMsg, {
+      whisper: "gm",
+      ...SWData.RT_OPTIONS
+    });
 
     if (updateAttrs.size > 0)
       setAttrs(Object.fromEntries(updateAttrs));
@@ -708,11 +711,14 @@ on("clicked:vigloss-btn clicked:vigheal-btn", function (eventInfo) {
  * On PV value change
  */
 on("change:pv", function (eventInfo) {
+  if (eventInfo.sourceType === "sheetworker")
+    return;
+
   const oldPV = intval(eventInfo.previousValue);
   const newPV = intval(eventInfo.newValue);
   const vp = oldPV > newPV ? oldPV - newPV : newPV - oldPV;
   const lossOrGain = oldPV > newPV ? -1 : +1;
-  updatePVDR(vp, lossOrGain, false);
+  //updatePVDR(vp, lossOrGain, false);
 });
 
 /**
@@ -999,13 +1005,15 @@ on("clicked:repeating_armes:attack-btn", function() {
     if (atk !== "0")
       attack = `[[1d20cs>${crit}cf1[Dé] + @{${atk}}[Bonus] + ${atkdiv}[Divers] ]]`;
     
-    const dm = strval(values[section + "dm"]);
+    let [ dm, ...dmextra ] = strval(values[section + "dm"]).split(" ");
+    dm = dm.replace("d4°", "@{devol}");
     const dmtype = strval(values[section + "dmtype"]);
+    const dmdesc = [ dmtype, ...dmextra ].join(" ").trim();
     const dmbonus = strval(values[section + "bonus"]);
     const dmdiv = strval(values[section + "dmdiv"]);
     let dmroll = "";
-    if (dm !== "" || dmdiv !== "")
-      dmroll = `[[[[${dm}]][Dés DM] + ${dmbonus}[Bonus] + ${dmdiv}[Divers] ]]`;
+    if (dm !== "" )
+      dmroll = `[[[[${dm}]][DM] + ${dmbonus}[Bonus] + ${dmdiv}[Divers] ]]`;
     
     const special = insertRolls(strval(values[section + "special"]));
 
@@ -1015,10 +1023,81 @@ on("clicked:repeating_armes:attack-btn", function() {
       roll: attack,
       broll: attack,
       dm: dmroll,
-      typedm: dmtype,
+      dmdesc,
       text: special
     });
     sendChatMsg(chatMsg);
+  })
+});
+
+/**
+ * Display ability text with alert on usage
+ * @param {number} path - Path #
+ * @param {number} rank - Rank #
+ */
+function actionAbility(path, rank) {
+  const abilityAttrs = [
+    `voie${path}nom`,
+    `voie${path}-t${rank}`,
+    `voie${path}-${rank}`,
+    `v${path}r${rank}`,
+    `v${path}r${rank}_use`,
+    `v${path}r${rank}_use_max`,
+    `v${path}r${rank}_freq`
+  ];
+  getAttrs(abilityAttrs, function(values) {
+    const [ path, ability, desc, owned, used, uses, freq ] = Object.keys(values);
+    const pathName = strval(values[path]);
+    const abilityName = strval(values[ability]);
+    const abilityOwned = intval(values[owned]);
+    let description = strval(values[desc]);
+    if (abilityName === "")
+      return;
+
+    const nbUsed = intval(values[used]) + 1;
+    const maxUses = intval(values[uses]);
+    const usage = strval(values[freq]);
+    let textclass = "";
+
+    // alert on usage
+    let alert = "";
+    if (maxUses !== 0) {
+      if (nbUsed > maxUses) {
+        alert = `Déjà utilisée ${maxUses} fois / ${usage.toLowerCase()}`;
+        description = "";
+        textclass = "critical";
+      } else {
+        alert = `Utilisée ${nbUsed} fois`;
+      }
+    }
+
+    // build text
+    let text = insertRolls(description);
+    if (alert !== "")
+      text += "\n" + alert
+
+    // send to chat
+    const chatMsg = cof2RollTemplate({
+      lsub: pathName,
+      rsub: `${rank} - ${abilityName}`,
+      text,
+      textclass
+    });
+    sendChatMsg(chatMsg);
+    
+    // Update usages
+    if (nbUsed <= maxUses)
+      setAttrs({ [used]: nbUsed });
+  });
+}
+/**
+ * Handle ability buttons roll
+ */
+seq(9).forEach(path => {
+  seq(5).forEach(rank => {
+    on(`clicked:v${path}r${rank}-btn`, function() {
+      actionAbility(path, rank);
+    });
   })
 });
 
