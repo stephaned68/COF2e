@@ -1090,15 +1090,73 @@ function actionAbility(path, rank) {
       setAttrs({ [used]: nbUsed });
   });
 }
+
 /**
- * Handle ability buttons roll
+ * Update rank in path
+ * @param {number} path - Path #
+ */
+function setRank(path) {
+  rankAttrs = seq(5).map(rank => `v${path}r${rank}`);
+  getAttrs(rankAttrs, function (values) {
+    let rank = 0;
+    Object.keys(values).forEach(ability => {
+      const owned = intval(values[ability]);
+      const hasRank = intval(ability.charAt(ability.length - 1)) * owned;
+      if (hasRank > rank)
+        rank = hasRank;
+    });
+    setAttrs({ [`rang_voie${path}`]: rank });
+  });
+}
+
+/**
+ * Abilities
  */
 seq(9).forEach(path => {
   seq(5).forEach(rank => {
+    
+    // Handle ability buttons click
     on(`clicked:v${path}r${rank}-btn`, function() {
       actionAbility(path, rank);
     });
+
+    // Update rank in path
+    on(`change:v${path}r${rank}`, function() {
+      setRank(path);
+    });
   })
+});
+
+function rebuildBuffs() {
+  getSectionIDs("buffs", function (rowIds) {
+    rowIds.forEach(id => {
+      const rowId = `repeating_buffs_${id}_`;
+      const buffAttribs = [
+        ...[ 
+          "buff-on",
+          "buff-nom",
+          "buff-attrib",
+          "buff-value"
+        ].map(attr => `${rowId}${attr}`),
+        ...SWData.PC.ABILITIES.map(ability => shorten(ability)),
+        ...seq(9).map(v => `rang_voie${v}`),
+      ];
+      getAttrs(buffAttribs, function(values) {
+        const [ checked, name, attribute, value] = Object.keys(values);
+        const buff = {
+          enabled: intval(values[checked]),
+          name: strval(values[name]),
+          attribute: strval(values[attribute]),
+          value: intval(values[value])
+        }
+        console.log(buff)
+      });
+    });
+  });
+}
+
+on("change:repeating_buffs remove:repeating_buffs", function () {
+  rebuildBuffs();
 });
 
 /**

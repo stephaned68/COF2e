@@ -859,7 +859,7 @@
                   <option value="atktir">DISTANCE</option>
                   <option value="atkmag">MAGIE</option>
                 </select>
-                &nbsp;+&nbsp;
+                &nbsp;<span class="align-self-center">+</span>&nbsp;
                 <input type="number" name="attr_arme-atkdiv" title="@{arme-atkdiv}" value="">
                 <input type="hidden" name="attr_arme-buffatk" value="0">
               </div>
@@ -869,16 +869,32 @@
               <div class="d-flex d-flex-middle bordered">
                 <input type="text" name="attr_arme-dm" title="@{arme-dm}" placeholder="1d8, 2d6..." value="">
                 <select class="select-xxs" name="attr_arme-dmtype" title="@{arme-dmtype} Type de dommages">
-                  <option value="contondants">C - Contondants</option>
-                  <option value="perforants">P - Perforants</option>
-                  <option value="tranchants" selected>T - Tranchants</option>
-                  <option value="acide">A - Acide</option>
-                  <option value="électricité">E - Electricité</option>
-                  <option value="feu">F - Feu</option>
-                  <option value="froid">R - Froid</option>
-                  <option value="magiques">M - Magiques</option>
+                  <optgroup label="Physiques">
+                    <option disabled class="optgroup">
+                      &nbsp;Physiques
+                    </option>
+                    <option value="contondants">C - Contondants</option>
+                    <option value="perforants">P - Perforants</option>
+                    <option value="poison">Po - Poison</option>
+                    <option value="tranchants" selected>T - Tranchants</option>
+                  </optgroup>
+                  <optgroup label="Elementaires">
+                    <option disabled class="optgroup">
+                      &nbsp;Elémentaires
+                    </option>
+                    <option value="acide">A - Acide</option>
+                    <option value="électricité">E - Electricité</option>
+                    <option value="feu">Fe - Feu</option>
+                    <option value="froid">Fr - Froid</option>
+                  </optgroup>
+                  <optgroup label="Autres">
+                    <option disabled class="optgroup">
+                      &nbsp;Autres
+                    </option>
+                    <option value="magiques">M - Magiques</option>
+                  </optgroup>
                 </select>
-                &nbsp;+&nbsp;
+                &nbsp;<span class="align-self-center">+</span>&nbsp;
                 <select class="select-md" name="attr_arme-bonus" title="@{arme-bonus} Bonus aux dommages">
                   <option value="0">-</option>
                   <option value="@{agi}">AGI</option>
@@ -887,7 +903,7 @@
                   <option value="@{int}">INT</option>
                   <option value="@{cha}">CHA</option>
                 </select>
-                &nbsp;+&nbsp;
+                &nbsp;<span class="align-self-center">+</span>&nbsp;
                 <input type="number" name="attr_arme-dmdiv" title="@{arme-dmdiv} Bonus DM divers" value="0">
                 <input type="hidden" name="attr_arme-buffdm" value="0">
               </div>
@@ -2007,14 +2023,49 @@
 
               <div class="bordered d-flex">
   
-                <input type="checkbox" name="attr_buffon" title="@{buffon}" value="1">
-                <input type="text" name="attr_buffnom" title="@{buffnom}" placeholder="Nom du buff/debuff" value="">
+                <input type="checkbox" name="attr_buff-on" title="@{buff-on}" value="1">
+                <input type="text" name="attr_buff-nom" title="@{buff-nom}" placeholder="Nom du buff/debuff" value="">
   
+              </div>
+
+              <div class="bordered d-flex">
+                <span class="align-self-center">Attribut :</span>&nbsp;
+                <select class="select-lg" name="attr_buff-attrib" title="@{buff-attrib}">
+                  <optgroup label="Caractéristiques">
+                    <option disabled class="optgroup">
+                      &nbsp;Caractéristiques
+                    </option>
+                    <option value="agi">AGI</option>
+                    <option value="con">CON</option>
+                    <option value="for">FOR</option>
+                    <option value="per">PER</option>
+                    <option value="cha">CHA</option>
+                    <option value="int">INT</option>
+                    <option value="vol">VOL</option>
+                  </optgroup>
+                  <optgroup label="Attaques">
+                    <option disabled class="optgroup">
+                      &nbsp;Attaques
+                    </option>
+                    <option value="atkcac">Contact</option>
+                    <option value="atktir">Distance</option>
+                    <option value="atkmag">Magique</option>
+                  </optgroup>
+                  <optgroup label="Ressources">
+                    <option disabled class="optgroup">
+                      &nbsp;Ressources
+                    </option>
+                    <option value="pv">Points de Vigueur</option>
+                    <option value="dr">Dés de Récup</option>
+                    <option value="pm">Points de Mana</option>
+                    <option value="pc">Points de Chance</option>
+                  </optgroup>
+                </select>
               </div>
   
               <div class="bordered d-flex">
   
-                <input type="text" name="attr_buffmods" title="@{buffmods}" placeholder="Attribut:Valeur; Attribut:Valeur; ..." value="">
+                <input type="text" name="attr_buff-value" title="@{buff-value}" placeholder="Valeur ou CARactéristique ou Rang_Voie" value="">
   
               </div>
 
@@ -3394,15 +3445,72 @@ on("clicked:repeating_armes:attack-btn", function() {
 }
 
 /**
- * Handle ability buttons roll
+ * Update rank in path
+ * @param {number} path - Path #
+ */
+ function setRank(path) {
+  rankAttrs = seq(5).map(rank => `v${path}r${rank}`);
+  getAttrs(rankAttrs, function (values) {
+    let rank = 0;
+    Object.keys(values).forEach(ability => {
+      const owned = intval(values[ability]);
+      const hasRank = intval(ability.charAt(ability.length - 1)) * owned;
+      if (hasRank > rank)
+        rank = hasRank;
+    });
+    setAttrs({ [`rang_voie${path}`]: rank });
+  });
+}
+
+/**
+ * Abilities
  */
 seq(9).forEach(path => {
   seq(5).forEach(rank => {
+    
+    // Handle ability buttons click
     on(`clicked:v${path}r${rank}-btn`, function() {
       actionAbility(path, rank);
     });
+
+    // Update rank in path
+    on(`change:v${path}r${rank}`, function() {
+      setRank(path);
+    });
   })
 });
+
+function rebuildBuffs() {
+  getSectionIDs("buffs", function (rowIds) {
+    rowIds.forEach(id => {
+      const rowId = `repeating_buffs_${id}_`;
+      const buffAttribs = [
+        ...[ 
+          "buff-on",
+          "buff-nom",
+          "buff-attrib",
+          "buff-value"
+        ].map(attr => `${rowId}${attr}`),
+        ...SWData.PC.ABILITIES.map(ability => shorten(ability)),
+        ...seq(9).map(v => `rang_voie${v}`),
+      ];
+      getAttrs(buffAttribs, function(values) {
+        const [ checked, name, attribute, value] = Object.keys(values);
+        const buff = {
+          enabled: intval(values[checked]),
+          name: strval(values[name]),
+          attribute: strval(values[attribute]),
+          value: intval(values[value])
+        }
+        console.log(buff)
+      });
+    });
+  });
+}
+
+/* on("change:repeating_buffs remove:repeating_buffs", function () {
+  rebuildBuffs();
+}); */
 
 /**
  * Show weapons options
