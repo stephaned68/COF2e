@@ -2047,6 +2047,7 @@
                     <option disabled class="optgroup">
                       &nbsp;Attaques
                     </option>
+                    <option value="init">Initiative</option>
                     <option value="atkcac">Contact</option>
                     <option value="atktir">Distance</option>
                     <option value="atkmag">Magique</option>
@@ -2065,7 +2066,7 @@
   
               <div class="bordered d-flex">
   
-                <input type="text" name="attr_buff-value" title="@{buff-value}" placeholder="Valeur ou CARactéristique ou Rang_Voie" value="">
+                <input type="text" name="attr_buff-value" title="@{buff-value}" placeholder="Valeur fixe ou [CAR] ou [rang voie N]" value="">
   
               </div>
 
@@ -2369,7 +2370,15 @@
     template: "cof2"
   },
   PC: {
-    ABILITIES: [ "agilité", "constitution", "force", "perception", "charisme", "intelligence", "volonté" ],
+    ABILITIES: [ 
+      "agilité",
+      "constitution",
+      "force",
+      "perception",
+      "charisme",
+      "intelligence",
+      "volonté"
+    ],
     COMBAT: {
       init: [ "per", "init_buff" ],
       attacks: [ 
@@ -2378,6 +2387,37 @@
         [ "atkmag", "vol", "Magique" ]
       ],
       def: [ "armure", "armure_eqp", "bouclier", "bouclier_eqp", "agi", "def_buff", "def_action" ]
+    },
+    BUFFS: {
+      To: [ 
+        "agi",
+        "con",
+        "for",
+        "per",
+        "cha",
+        "int",
+        "vol",
+        "init",
+        "atkcac",
+        "atktir",
+        "atkmag",
+        "def",
+        "pv",
+        "dr",
+        "pm",
+        "pc",
+      ],
+      From: [
+        "agi",
+        "con",
+        "for",
+        "per",
+        "cha",
+        "int",
+        "vol",
+        "rangs_voies",
+        "niveau",
+      ]
     },
     CONDITIONS: [ 
       { 
@@ -3066,12 +3106,12 @@ on("clicked:vigloss-btn clicked:vigheal-btn", function (eventInfo) {
 on("change:pv", function (eventInfo) {
   if (eventInfo.sourceType === "sheetworker")
     return;
-  
+
   const oldPV = intval(eventInfo.previousValue);
   const newPV = intval(eventInfo.newValue);
   const vp = oldPV > newPV ? oldPV - newPV : newPV - oldPV;
   const lossOrGain = oldPV > newPV ? -1 : +1;
-  // updatePVDR(vp, lossOrGain, false);
+  //updatePVDR(vp, lossOrGain, false);
 });
 
 /**
@@ -3365,8 +3405,8 @@ on("clicked:repeating_armes:attack-btn", function() {
     const dmbonus = strval(values[section + "bonus"]);
     const dmdiv = strval(values[section + "dmdiv"]);
     let dmroll = "";
-    if (dm !== "" || dmdiv !== "")
-      dmroll = `[[[[${dm}]][Dés DM] + ${dmbonus}[Bonus] + ${dmdiv}[Divers] ]]`;
+    if (dm !== "" )
+      dmroll = `[[[[${dm}]][DM] + ${dmbonus}[Bonus] + ${dmdiv}[Divers] ]]`;
     
     const special = insertRolls(strval(values[section + "special"]));
 
@@ -3388,7 +3428,7 @@ on("clicked:repeating_armes:attack-btn", function() {
  * @param {number} path - Path #
  * @param {number} rank - Rank #
  */
- function actionAbility(path, rank) {
+function actionAbility(path, rank) {
   const abilityAttrs = [
     `voie${path}nom`,
     `voie${path}-t${rank}`,
@@ -3406,7 +3446,7 @@ on("clicked:repeating_armes:attack-btn", function() {
     let description = strval(values[desc]);
     if (abilityName === "")
       return;
-    
+
     const nbUsed = intval(values[used]) + 1;
     const maxUses = intval(values[uses]);
     const usage = strval(values[freq]);
@@ -3448,7 +3488,7 @@ on("clicked:repeating_armes:attack-btn", function() {
  * Update rank in path
  * @param {number} path - Path #
  */
- function setRank(path) {
+function setRank(path) {
   rankAttrs = seq(5).map(rank => `v${path}r${rank}`);
   getAttrs(rankAttrs, function (values) {
     let rank = 0;
@@ -3459,6 +3499,23 @@ on("clicked:repeating_armes:attack-btn", function() {
         rank = hasRank;
     });
     setAttrs({ [`rang_voie${path}`]: rank });
+  });
+}
+
+/**
+ * Update the all ranks attribute
+ * @param {number} path - path number changed
+ */
+function updateAllRanks(path) {
+  getAttrs([ `rang_voie${path}`, "rangs_voies" ], function(values) {
+    const [ rankPath ] = Object.keys(values);
+    const rank = intval(values[rankPath]);
+    const ranks = strval(values.rangs_voies);
+    let allRanks = Array(9);
+    if (ranks !== "")
+      allRanks = ranks.split(",").map(r => intval(r));
+    allRanks[path - 1] = rank;
+    setAttrs({ rangs_voies: allRanks.join(",") });
   });
 }
 
@@ -3477,40 +3534,109 @@ seq(9).forEach(path => {
     on(`change:v${path}r${rank}`, function() {
       setRank(path);
     });
-  })
+  });
+
+  // Update all ranks attribute
+  on(`change:rang_voie${path}`, function () {
+    updateAllRanks(path);
+  });
 });
 
-function rebuildBuffs() {
+/**
+ * Rebuild buffable attributes xxx_buff_list
+ */
+function rebuildBuffLists() {
   getSectionIDs("buffs", function (rowIds) {
+    const buffs = new Map(
+      SWData.PC.BUFFS.To.map(attr => [ `${attr}_buff_list`, "" ])
+    );
     rowIds.forEach(id => {
       const rowId = `repeating_buffs_${id}_`;
-      const buffAttribs = [
-        ...[ 
-          "buff-on",
-          "buff-nom",
-          "buff-attrib",
-          "buff-value"
-        ].map(attr => `${rowId}${attr}`),
-        ...SWData.PC.ABILITIES.map(ability => shorten(ability)),
-        ...seq(9).map(v => `rang_voie${v}`),
-      ];
+      const buffAttribs = [ 
+        "buff-on",
+        "buff-nom",
+        "buff-attrib",
+        "buff-value"
+      ].map(attr => `${rowId}${attr}`);
       getAttrs(buffAttribs, function(values) {
         const [ checked, name, attribute, value] = Object.keys(values);
         const buff = {
           enabled: intval(values[checked]),
           name: strval(values[name]),
-          attribute: strval(values[attribute]),
-          value: intval(values[value])
+          attribute: `${strval(values[attribute])}_buff_list`,
+          value: strval(values[value])
+        };
+        if (buff.enabled === 1) {
+          const buffList = buffs.get(buff.attribute) + `${buff.name} : ${buff.value}; `;
+          buffs.set(buff.attribute, buffList);
         }
-        console.log(buff)
+        console.log(Object.fromEntries(buffs))
+        setAttrs(Object.fromEntries(buffs));
       });
     });
   });
 }
 
-/* on("change:repeating_buffs remove:repeating_buffs", function () {
-  rebuildBuffs();
-}); */
+/**
+ * On change of repeating buffs
+ */
+on("change:repeating_buffs remove:repeating_buffs", function () {
+  rebuildBuffLists();
+});
+
+/**
+ * Parse an attribute's list of buffs (stored in xxx_buff_list)
+ * @param {string} attribute - attribute name 
+ */
+function parseBuffList(attribute) {
+  console.log(attribute)
+  getAttrs([ `${attribute}_buff_list`, ...SWData.PC.BUFFS.From ], function(values) {
+    console.log(values)
+    const [ buff ] = Object.keys(values);
+    const buffList = strval(values[buff]).split(";");
+    const allRanks = values.rangs_voies.split(",");
+    let buffTotal = 0;
+    console.log(buffList)
+    buffList.forEach(buff => {
+      if (buff.trim() === "")
+        return;
+      let value = 0;
+      const [ , expression ] = buff.split(":").map(e => e.trim());
+      const attrBuff = SWData.PC.BUFFS.From.find(a => `[${a}]` === expression.toLowerCase());
+      if (attrBuff) {
+        value = intval(values[attrBuff]);
+      } else {
+        const result = expression.match(/rang[ ]*voie[ ]*([1-9])/i);
+        if (result) {
+          const [ matched, path ] = result;
+          if (matched && intval(path) > 0)
+            value = allRanks[intval(path) - 1]; 
+        } else {
+          if (expression.startsWith("!")) {
+            try {
+              value = intval(eval(expression.slice(1)));
+            } catch (ex) {
+              clog("Erreur JS");
+            }
+          } else {
+            value = intval(expression);
+          }
+        }
+      }
+      buffTotal += value;
+    });
+    setAttrs({ [`${attribute}_buff`]: buffTotal });
+  });
+}
+
+/**
+ * On change of a list of buffs
+ */
+SWData.PC.BUFFS.To.forEach(attribute => {
+  on(`change:${attribute}_buff_list`, function() {
+    parseBuffList(attribute);
+  });
+});
 
 /**
  * Show weapons options
@@ -3518,7 +3644,7 @@ function rebuildBuffs() {
 on("clicked:repeating_armes:arme-opt-btn", function() {
   getAttrs([ "repeating_armes_arme-opt" ], function(value) {
     let [ option ] = Object.values(value);
-    option = 1 - int(option);
+    option = 1 - intval(option);
     setAttrs( { ["repeating_armes_arme-opt"]: option });
   });
 }); */

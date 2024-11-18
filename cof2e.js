@@ -16,7 +16,15 @@ const SWData = {
     template: "cof2"
   },
   PC: {
-    ABILITIES: [ "agilité", "constitution", "force", "perception", "charisme", "intelligence", "volonté" ],
+    ABILITIES: [ 
+      "agilité",
+      "constitution",
+      "force",
+      "perception",
+      "charisme",
+      "intelligence",
+      "volonté"
+    ],
     COMBAT: {
       init: [ "per", "init_buff" ],
       attacks: [ 
@@ -25,6 +33,37 @@ const SWData = {
         [ "atkmag", "vol", "Magique" ]
       ],
       def: [ "armure", "armure_eqp", "bouclier", "bouclier_eqp", "agi", "def_buff", "def_action" ]
+    },
+    BUFFS: {
+      To: [ 
+        "agi",
+        "con",
+        "for",
+        "per",
+        "cha",
+        "int",
+        "vol",
+        "init",
+        "atkcac",
+        "atktir",
+        "atkmag",
+        "def",
+        "pv",
+        "dr",
+        "pm",
+        "pc",
+      ],
+      From: [
+        "agi",
+        "con",
+        "for",
+        "per",
+        "cha",
+        "int",
+        "vol",
+        "rangs_voies",
+        "niveau",
+      ]
     },
     CONDITIONS: [ 
       { 
@@ -1110,6 +1149,23 @@ function setRank(path) {
 }
 
 /**
+ * Update the all ranks attribute
+ * @param {number} path - path number changed
+ */
+function updateAllRanks(path) {
+  getAttrs([ `rang_voie${path}`, "rangs_voies" ], function(values) {
+    const [ rankPath ] = Object.keys(values);
+    const rank = intval(values[rankPath]);
+    const ranks = strval(values.rangs_voies);
+    let allRanks = Array(9);
+    if (ranks !== "")
+      allRanks = ranks.split(",").map(r => intval(r));
+    allRanks[path - 1] = rank;
+    setAttrs({ rangs_voies: allRanks.join(",") });
+  });
+}
+
+/**
  * Abilities
  */
 seq(9).forEach(path => {
@@ -1124,11 +1180,22 @@ seq(9).forEach(path => {
     on(`change:v${path}r${rank}`, function() {
       setRank(path);
     });
-  })
+  });
+
+  // Update all ranks attribute
+  on(`change:rang_voie${path}`, function () {
+    updateAllRanks(path);
+  });
 });
 
-function rebuildBuffs() {
+/**
+ * Rebuild buffable attributes xxx_buff_list
+ */
+function rebuildBuffLists() {
   getSectionIDs("buffs", function (rowIds) {
+    const buffs = new Map(
+      SWData.PC.BUFFS.To.map(attr => [ `${attr}_buff_list`, "" ])
+    );
     rowIds.forEach(id => {
       const rowId = `repeating_buffs_${id}_`;
       const buffAttribs = [
@@ -1138,26 +1205,81 @@ function rebuildBuffs() {
           "buff-attrib",
           "buff-value"
         ].map(attr => `${rowId}${attr}`),
-        ...SWData.PC.ABILITIES.map(ability => shorten(ability)),
-        ...seq(9).map(v => `rang_voie${v}`),
       ];
       getAttrs(buffAttribs, function(values) {
         const [ checked, name, attribute, value] = Object.keys(values);
         const buff = {
           enabled: intval(values[checked]),
           name: strval(values[name]),
-          attribute: strval(values[attribute]),
-          value: intval(values[value])
+          attribute: `${strval(values[attribute])}_buff_list`,
+          value: strval(values[value])
+        };
+        if (buff.enabled === 1) {
+          const buffList = buffs.get(buff.attribute) + `${buff.name} : ${buff.value}; `;
+          buffs.set(buff.attribute, buffList);
         }
-        console.log(buff)
+        setAttrs(Object.fromEntries(buffs));
       });
     });
   });
 }
 
+/**
+ * On change of repeating buffs
+ */
 on("change:repeating_buffs remove:repeating_buffs", function () {
-  rebuildBuffs();
+  rebuildBuffLists();
 });
+
+/**
+ * Parse an attribute's list of buffs (stored in xxx_buff_list)
+ * @param {string} attribute - attribute name 
+ */
+function parseBuffList(attribute) {
+  getAttrs([ `${attribute}_buff_list`, ...SWData.PC.BUFFS.From ], function(values) {
+    const [ buff ] = Object.keys(values);
+    const buffList = strval(values[buff]).split(" ; ");
+    const allRanks = values.rangs_voies.split(",");
+    let buffTotal = 0;
+    buffList.forEach(buff => {
+      if (buff.trim() === "")
+        return;
+      let value = 0;
+      const [ , expression ] = buff.split(":").map(e => e.trim());
+      const attrBuff = SWData.PC.BUFFS.From.find(a => `[${a}]` === expression.toLowerCase());
+      if (attrBuff) {
+        value = intval(values[attrBuff]);
+      } else {
+        const [ matched, path ] = expression.match(/rang[ ]*voie[ ]*([1-9])/i);
+        if (matched && intval(path) > 0) {
+          value = allRanks[intval(path) - 1]; 
+        } else {
+          if (expression.startsWith("!")) {
+            try {
+              value = intval(eval(expression.slice(1)));
+            } catch (ex) {
+              clog("Erreur JS");
+            }
+          } else {
+            value = intval(expression);
+          }
+        }
+      } 
+      buffTotal += value;
+    });
+    setAttrs({ [`${attribute}_buff`]: buffTotal });
+  });
+}
+
+/**
+ * On change of a list of buffs
+ */
+SWData.PC.BUFFS.To.forEach(attribute => {
+  on(`change:${attribute}_buff_list`, function() {
+    parseBuffList(attribute);
+  });
+});
+
 
 /**
  * Show weapons options
@@ -1165,7 +1287,7 @@ on("change:repeating_buffs remove:repeating_buffs", function () {
 on("clicked:repeating_armes:arme-opt-btn", function() {
   getAttrs([ "repeating_armes_arme-opt" ], function(value) {
     let [ option ] = Object.values(value);
-    option = 1 - int(option);
+    option = 1 - intval(option);
     setAttrs( { ["repeating_armes_arme-opt"]: option });
   });
 }); */
