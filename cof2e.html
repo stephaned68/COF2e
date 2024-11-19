@@ -21,11 +21,19 @@
   <input type="hidden" name="attr_int_buff" value="0">
   <input type="hidden" name="attr_vol_buff" value="0">
   <input type="hidden" name="attr_atkcac_buff" value="0">
+  <input type="hidden" name="attr_atkcac_cond" value="0">
   <input type="hidden" name="attr_atktir_buff" value="0">
+  <input type="hidden" name="attr_atktir_cond" value="0">
   <input type="hidden" name="attr_atkmag_buff" value="0">
+  <input type="hidden" name="attr_atkmag_cond" value="0">
   <input type="hidden" name="attr_init_buff" value="0">
+  <input type="hidden" name="attr_init_cond" value="0">
   <input type="hidden" name="attr_def_buff" value="0">
+  <input type="hidden" name="attr_def_cond" value="0">
   <input type="hidden" name="attr_pv_buff" value="0">
+  <input type="hidden" name="attr_dr_buff" value="0">
+  <input type="hidden" name="attr_pm_buff" value="0">
+  <input type="hidden" name="attr_pc_buff" value="0">
 
   <input type="hidden" name="attr_armor_malus" value="0">
 
@@ -1722,23 +1730,38 @@
                 <input type="text" name="attr_voie1nom" title="@{voie1nom}" value="Voie n°1">
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie1-t1" title="@{voie1-t1}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie1-t1" title="@{voie1-t1}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v1r1_spell" title="@{v1r1_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie1-1" title="@{voie1-1}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie1-t2" title="@{voie1-t2}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie1-t2" title="@{voie1-t2}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v1r2_spell" title="@{v1r2_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie1-2" title="@{voie1-2}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie1-t3" title="@{voie1-t3}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie1-t3" title="@{voie1-t3}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v1r3_spell" title="@{v1r3_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie1-3" title="@{voie1-3}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie1-t4" title="@{voie1-t4}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie1-t4" title="@{voie1-t4}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v1r4_spell" title="@{v1r4_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie1-4" title="@{voie1-4}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie1-t5" title="@{voie1-t5}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie1-t5" title="@{voie1-t5}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v1r5_spell" title="@{v1r5_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie1-5" title="@{voie1-5}" placeholder="Description"></textarea>
               </div>
             </div>
@@ -1748,23 +1771,38 @@
                 <input type="text" name="attr_voie2nom" title="@{voie2nom}" value="Voie n°2">
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie2-t1" title="@{voie2-t1}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie2-t1" title="@{voie2-t1}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v2r1_spell" title="@{v2r1_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie2-1" title="@{voie2-1}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie2-t2" title="@{voie2-t2}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie2-t2" title="@{voie2-t2}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v2r2_spell" title="@{v2r2_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie2-2" title="@{voie2-2}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie2-t3" title="@{voie2-t3}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie2-t3" title="@{voie2-t3}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v2r3_spell" title="@{v2r3_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie2-3" title="@{voie2-3}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie2-t4" title="@{voie2-t4}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie2-t4" title="@{voie2-t4}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v2r4_spell" title="@{v2r4_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie2-4" title="@{voie2-4}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie2-t5" title="@{voie2-t5}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie2-t5" title="@{voie2-t5}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v2r5_spell" title="@{v2r5_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie2-5" title="@{voie2-5}" placeholder="Description"></textarea>
               </div>
             </div>
@@ -1774,23 +1812,38 @@
                 <input type="text" name="attr_voie3nom" title="@{voie3nom}" value="Voie n°3">
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie3-t1" title="@{voie3-t1}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie3-t1" title="@{voie3-t1}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v3r1_spell" title="@{v3r1_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie3-1" title="@{voie3-1}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie3-t2" title="@{voie3-t2}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie3-t2" title="@{voie3-t2}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v3r2_spell" title="@{v3r2_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie3-2" title="@{voie3-2}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie3-t3" title="@{voie3-t3}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie3-t3" title="@{voie3-t3}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v3r3_spell" title="@{v3r3_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie3-3" title="@{voie3-3}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie3-t4" title="@{voie3-t4}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie3-t4" title="@{voie3-t4}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v3r4_spell" title="@{v3r4_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie3-4" title="@{voie3-4}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie3-t5" title="@{voie3-t5}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie3-t5" title="@{voie3-t5}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v3r5_spell" title="@{v3r5_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie3-5" title="@{voie3-5}" placeholder="Description"></textarea>
               </div>
             </div>
@@ -1804,23 +1857,38 @@
                 <input type="text" name="attr_voie4nom" title="@{voie4nom}" value="Voie n°4">
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie4-t1" title="@{voie4-t1}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie4-t1" title="@{voie4-t1}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v4r1_spell" title="@{v4r1_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie4-1" title="@{voie4-1}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie4-t2" title="@{voie4-t2}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie4-t2" title="@{voie4-t2}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v4r2_spell" title="@{v4r2_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie4-2" title="@{voie4-2}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie4-t3" title="@{voie4-t3}" placeholder="Nom de la capacité">
+                <div class="d-fle">
+                  <input type="text" name="attr_voie4-t3" title="@{voie4-t3}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v4r3_spell" title="@{v4r3_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie4-3" title="@{voie4-3}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie4-t4" title="@{voie4-t4}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie4-t4" title="@{voie4-t4}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v4r4_spell" title="@{v4r4_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie4-4" title="@{voie4-4}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie4-t5" title="@{voie4-t5}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie4-t5" title="@{voie4-t5}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v4r5_spell" title="@{v4r5_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie4-5" title="@{voie4-5}" placeholder="Description"></textarea>
               </div>
             </div>
@@ -1830,23 +1898,38 @@
                 <input type="text" name="attr_voie5nom" title="@{voie5nom}" value="Voie n°5">
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie5-t1" title="@{voie5-t1}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie5-t1" title="@{voie5-t1}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v5r1_spell" title="@{v5r1_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie5-1" title="@{voie5-1}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie5-t2" title="@{voie5-t2}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie5-t2" title="@{voie5-t2}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v5r2_spell" title="@{v5r2_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie5-2" title="@{voie5-2}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie5-t3" title="@{voie5-t3}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie5-t3" title="@{voie5-t3}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v5r3_spell" title="@{v5r3_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie5-3" title="@{voie5-3}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie5-t4" title="@{voie5-t4}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie5-t4" title="@{voie5-t4}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v5r4_spell" title="@{v5r4_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie5-4" title="@{voie5-4}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie5-t5" title="@{voie5-t5}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie5-t5" title="@{voie5-t5}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v5r5_spell" title="@{v5r5_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie5-5" title="@{voie5-5}" placeholder="Description"></textarea>
               </div>
             </div>
@@ -1856,23 +1939,38 @@
                 <input type="text" name="attr_voie6nom" title="@{voie6nom}" value="Voie n°6">
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie6-t1" title="@{voie6-t1}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie6-t1" title="@{voie6-t1}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v6r1_spell" title="@{v6r1_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie6-1" title="@{voie6-1}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie6-t2" title="@{voie6-t2}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie6-t2" title="@{voie6-t2}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v6r2_spell" title="@{v6r2_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie6-2" title="@{voie6-2}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie6-t3" title="@{voie6-t3}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie6-t3" title="@{voie6-t3}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v6r3_spell" title="@{v6r3_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie6-3" title="@{voie6-3}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie6-t4" title="@{voie6-t4}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie6-t4" title="@{voie6-t4}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v6r4_spell" title="@{v6r4_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie6-4" title="@{voie6-4}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie6-t5" title="@{voie6-t5}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie6-t5" title="@{voie6-t5}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v6r5_spell" title="@{v6r5_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie6-5" title="@{voie6-5}" placeholder="Description"></textarea>
               </div>
             </div>
@@ -1886,23 +1984,38 @@
                 <input type="text" name="attr_voie7nom" title="@{voie7nom}" value="Voie n°7">
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie7-t1" title="@{voie7-t1}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie7-t1" title="@{voie7-t1}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v7r1_spell" title="@{v7r1_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie7-1" title="@{voie7-1}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie7-t2" title="@{voie7-t2}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie7-t2" title="@{voie7-t2}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v7r2_spell" title="@{v7r2_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie7-2" title="@{voie7-2}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie7-t3" title="@{voie7-t3}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie7-t3" title="@{voie7-t3}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v7r3_spell" title="@{v7r3_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie7-3" title="@{voie7-3}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie7-t4" title="@{voie7-t4}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie7-t4" title="@{voie7-t4}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v7r4_spell" title="@{v7r4_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie7-4" title="@{voie7-4}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie7-t5" title="@{voie7-t5}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie7-t5" title="@{voie7-t5}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v7r5_spell" title="@{v7r5_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie7-5" title="@{voie7-5}" placeholder="Description"></textarea>
               </div>
             </div>
@@ -1912,23 +2025,38 @@
                 <input type="text" name="attr_voie8nom" title="@{voie8nom}" value="Voie n°8">
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie8-t1" title="@{voie8-t1}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie8-t1" title="@{voie8-t1}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v8r1_spell" title="@{v8r1_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie8-1" title="@{voie8-1}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie8-t2" title="@{voie8-t2}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie8-t2" title="@{voie8-t2}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v8r2_spell" title="@{v8r2_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie8-2" title="@{voie8-2}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie8-t3" title="@{voie8-t3}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie8-t3" title="@{voie8-t3}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v8r3_spell" title="@{v8r3_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie8-3" title="@{voie8-3}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie8-t4" title="@{voie8-t4}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie8-t4" title="@{voie8-t4}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v8r4_spell" title="@{v8r4_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie8-4" title="@{voie8-4}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie8-t5" title="@{voie8-t5}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie8-t5" title="@{voie8-t5}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v8r5_spell" title="@{v8r5_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie8-5" title="@{voie8-5}" placeholder="Description"></textarea>
               </div>
             </div>
@@ -1938,23 +2066,38 @@
                 <input type="text" name="attr_voie9nom" title="@{voie9nom}" value="Voie n°9">
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie9-t1" title="@{voie9-t1}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie9-t1" title="@{voie9-t1}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v9r1_spell" title="@{v9r1_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie9-1" title="@{voie9-1}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie9-t2" title="@{voie9-t2}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie9-t2" title="@{voie9-t2}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v9r2_spell" title="@{v9r2_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie9-2" title="@{voie9-2}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie9-t3" title="@{voie9-t3}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie9-t3" title="@{voie9-t3}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v9r3_spell" title="@{v9r3_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie9-3" title="@{voie9-3}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie9-t4" title="@{voie9-t4}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie9-t4" title="@{voie9-t4}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v9r4_spell" title="@{v9r4_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie9-4" title="@{voie9-4}" placeholder="Description"></textarea>
               </div>
               <div class="rank">
-                <input type="text" name="attr_voie9-t5" title="@{voie9-t5}" placeholder="Nom de la capacité">
+                <div class="d-flex">
+                  <input type="text" name="attr_voie9-t5" title="@{voie9-t5}" placeholder="Nom de la capacité">
+                  <input type="checkbox" name="attr_v9r5_spell" title="@{v9r5_spell} Est un sort" value="1">
+                </div>
                 <textarea name="attr_voie9-5" title="@{voie9-5}" placeholder="Description"></textarea>
               </div>
             </div>
@@ -3088,9 +3231,9 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
 /**
  * Compute max DR
  */
-function updateDRMax() {
-  getAttrs([ "con" ], function(value) {
-    const dr_max = 2 + intval(value.con);
+ function updateDRMax() {
+  getAttrs([ "con", "dr_buff" ], function(values) {
+    const dr_max = 2 + intval(values.con) + intval(values.dr_buff);
     setAttrs({ dr_max });
   });
 }
@@ -3098,7 +3241,43 @@ function updateDRMax() {
 /**
  * On CON change
  */
-on("change:con", updateDRMax);
+ on("change:con", updateDRMax);
+
+/**
+ * Compute max PM
+ */
+ function updatePMMax() {
+  const owned = [];
+  const spells = [];
+  seq(9).forEach(p => {
+    seq(9).forEach(r => {
+      owned.push(`v${p}r${r}`);
+      spells.push(`v${p}r${r}_spell`);
+    });
+  });
+  getAttrs([ "vol", "pm_buff", ...spells, ...owned ], function(values) {
+    const spellPM = spells.reduce((pm, spell) => {
+      const [ ability ] = spell.split("_");
+      return pm + (intval(values[ability]) * intval(values[spell]));
+    }, 0);
+    const pm_max = intval(values.vol) + spellPM + intval(values.pm_buff);
+    setAttrs({ pm_max });
+  });
+}
+
+/**
+ * On VOL change
+ */
+on("change:vol", updatePMMax);
+
+/**
+ * On change of an ability spell
+ */
+seq(9).forEach(p => {
+  seq(5).forEach(r => {
+    on(`change:v${p}r${r} change:v${p}r${r}_spell`, updatePMMax)
+  });
+});
 
 /**
  * On ability button click

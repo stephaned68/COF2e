@@ -533,7 +533,11 @@ div.change-view {
 }
 
 .abilities .rank .rank-summary span.rank-title {
+  display: block;
   width: 21rem;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .abilities .rank textarea {

@@ -617,8 +617,8 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
  * Compute max DR
  */
 function updateDRMax() {
-  getAttrs([ "con" ], function(value) {
-    const dr_max = 2 + intval(value.con);
+  getAttrs([ "con", "dr_buff" ], function(values) {
+    const dr_max = 2 + intval(values.con) + intval(values.dr_buff);
     setAttrs({ dr_max });
   });
 }
@@ -627,6 +627,42 @@ function updateDRMax() {
  * On CON change
  */
 on("change:con", updateDRMax);
+
+/**
+ * Compute max PM
+ */
+function updatePMMax() {
+  const owned = [];
+  const spells = [];
+  seq(9).forEach(p => {
+    seq(9).forEach(r => {
+      owned.push(`v${p}r${r}`);
+      spells.push(`v${p}r${r}_spell`);
+    });
+  });
+  getAttrs([ "vol", "pm_buff", ...spells, ...owned ], function(values) {
+    const spellPM = spells.reduce((pm, spell) => {
+      const [ ability ] = spell.split("_");
+      return pm + (intval(values[ability]) * intval(values[spell]));
+    }, 0);
+    const pm_max = intval(values.vol) + spellPM + intval(values.pm_buff);
+    setAttrs({ pm_max });
+  });
+}
+
+/**
+ * On VOL change
+ */
+on("change:vol", updatePMMax);
+
+/**
+ * On change of an ability spell
+ */
+seq(9).forEach(p => {
+  seq(5).forEach(r => {
+    on(`change:v${p}r${r} change:v${p}r${r}_spell`, updatePMMax)
+  });
+});
 
 /**
  * On ability button click
@@ -1088,7 +1124,7 @@ function actionAbility(path, rank) {
     const [ path, ability, desc, owned, used, uses, freq ] = Object.keys(values);
     const pathName = strval(values[path]);
     const abilityName = strval(values[ability]);
-    const abilityOwned = intval(values[owned]);
+    //const abilityOwned = intval(values[owned]);
     let description = strval(values[desc]);
     if (abilityName === "")
       return;
@@ -1211,7 +1247,7 @@ function rebuildBuffLists() {
         const name = strval(values[`${rowId}nom`]);
         const attribute = `${strval(values[`${rowId}attrib`])}_buff_list`;
         const value = strval(values[`${rowId}value`]);
-        if (enabled === 1) {
+        if (enabled === 1 && name !== "" && value !== "") {
           const buffList = buffs[attribute] + `${name} : ${value}; `;
           buffs[attribute] = buffList;
         }
