@@ -1193,33 +1193,30 @@ seq(9).forEach(path => {
  */
 function rebuildBuffLists() {
   getSectionIDs("buffs", function (rowIds) {
-    const buffs = new Map(
+    const buffs = Object.fromEntries(new Map(
       SWData.PC.BUFFS.To.map(attr => [ `${attr}_buff_list`, "" ])
-    );
+    ));
+    const allBuffs = [];
     rowIds.forEach(id => {
-      const rowId = `repeating_buffs_${id}_`;
-      const buffAttribs = [
-        ...[ 
-          "buff-on",
-          "buff-nom",
-          "buff-attrib",
-          "buff-value"
-        ].map(attr => `${rowId}${attr}`),
-      ];
-      getAttrs(buffAttribs, function(values) {
-        const [ checked, name, attribute, value] = Object.keys(values);
-        const buff = {
-          enabled: intval(values[checked]),
-          name: strval(values[name]),
-          attribute: `${strval(values[attribute])}_buff_list`,
-          value: strval(values[value])
-        };
-        if (buff.enabled === 1) {
-          const buffList = buffs.get(buff.attribute) + `${buff.name} : ${buff.value}; `;
-          buffs.set(buff.attribute, buffList);
-        }
-        setAttrs(Object.fromEntries(buffs));
+      [ "on", "nom", "attrib", "value" ]
+        .map(attr => `repeating_buffs_${id}_buff-${attr}`)
+        .forEach(a => {
+        allBuffs.push(a);
       });
+    });
+    getAttrs(allBuffs, function(values) {
+      rowIds.forEach(id => {
+        const rowId = `repeating_buffs_${id}_buff-`;
+        const enabled = intval(values[`${rowId}on`]);
+        const name = strval(values[`${rowId}nom`]);
+        const attribute = `${strval(values[`${rowId}attrib`])}_buff_list`;
+        const value = strval(values[`${rowId}value`]);
+        if (enabled === 1) {
+          const buffList = buffs[attribute] + `${name} : ${value}; `;
+          buffs[attribute] = buffList;
+        }
+      });
+      setAttrs(buffs);
     });
   });
 }
@@ -1238,7 +1235,7 @@ on("change:repeating_buffs remove:repeating_buffs", function () {
 function parseBuffList(attribute) {
   getAttrs([ `${attribute}_buff_list`, ...SWData.PC.BUFFS.From ], function(values) {
     const [ buff ] = Object.keys(values);
-    const buffList = strval(values[buff]).split(" ; ");
+    const buffList = strval(values[buff]).split("; ");
     const allRanks = values.rangs_voies.split(",");
     let buffTotal = 0;
     buffList.forEach(buff => {
@@ -1252,7 +1249,7 @@ function parseBuffList(attribute) {
       } else {
         const [ matched, path ] = expression.match(/rang[ ]*voie[ ]*([1-9])/i);
         if (matched && intval(path) > 0) {
-          value = allRanks[intval(path) - 1]; 
+          value = intval(allRanks[intval(path) - 1]); 
         } else {
           if (expression.startsWith("!")) {
             try {
@@ -1280,6 +1277,14 @@ SWData.PC.BUFFS.To.forEach(attribute => {
   });
 });
 
+/**
+ * On opening the sheet
+ */
+on("sheet:opened", function() {
+  getAttrs(["agi_buff_list"], function(v) {
+    console.log(v);
+  });
+});
 
 /**
  * Show weapons options

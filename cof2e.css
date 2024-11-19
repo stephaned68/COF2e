@@ -559,6 +559,17 @@ input[value="0"].show-paths-789 ~ div.abilities {
   margin-bottom: 2px;
 }
 
+.pc-buffs-subtab div.buff-detail {
+  display: grid;
+  grid-template-columns: 5% auto 5%;
+  gap: 5px;
+  margin: 2px;
+}
+
+.pc-rolls-subtab .buff-list {
+  width: auto;
+}
+
 .pc-traits-subtab .pc-traits-rel {
   display: grid;
   grid-template-columns: .1fr 5fr 3fr 10fr;

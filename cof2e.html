@@ -26,6 +26,7 @@
   <input type="hidden" name="attr_init_buff" value="0">
   <input type="hidden" name="attr_def_buff" value="0">
   <input type="hidden" name="attr_pv_buff" value="0">
+
   <input type="hidden" name="attr_armor_malus" value="0">
 
   <!-- Entête : Logo, Avatar, Identité -->
@@ -2077,7 +2078,124 @@
 
           <hr>
 
-          Détail par attribut
+          <input type="hidden" name="attr_agi_buff_list" value="">
+          <input type="hidden" name="attr_con_buff_list" value="">
+          <input type="hidden" name="attr_for_buff_list" value="">
+          <input type="hidden" name="attr_per_buff_list" value="">
+          <input type="hidden" name="attr_cha_buff_list" value="">
+          <input type="hidden" name="attr_int_buff_list" value="">
+          <input type="hidden" name="attr_vol_buff_list" value="">
+          <input type="hidden" name="attr_atkcac_buff_list" value="">
+          <input type="hidden" name="attr_atktir_buff_list" value="">
+          <input type="hidden" name="attr_atkmag_buff_list" value="">
+          <input type="hidden" name="attr_init_buff_list" value="">
+          <input type="hidden" name="attr_def_buff_list" value="">
+          <input type="hidden" name="attr_pv_buff_list" value="">
+
+          <details>
+            <summary>
+              Détail par attribut
+            </summary>
+
+            <div class="buff-detail">
+              <div class="bordered">AGI</div>
+              <div class="bordered"><span name="attr_agi_buff_list"></span></div>
+              <div class="bordered"><span name="attr_agi_buff"></span></div>
+            </div>
+
+            <div class="buff-detail">
+              <div class="bordered">CON</div>
+              <div class="bordered"><span name="attr_con_buff_list"></span></div>
+              <div class="bordered"><span name="attr_con_buff"></span></div>
+            </div>
+
+            
+            <div class="buff-detail">
+              <div class="bordered">FOR</div>
+              <div class="bordered"><span name="attr_for_buff_list"></span></div>
+              <div class="bordered"><span name="attr_for_buff"></span></div>
+            </div>
+            
+            <div class="buff-detail">
+              <div class="bordered">PER</div>
+              <div class="bordered"><span name="attr_per_buff_list"></span></div>
+              <div class="bordered"><span name="attr_per_buff"></span></div>
+            </div>
+
+            <div class="buff-detail">
+              <div class="bordered">CHA</div>
+              <div class="bordered"><span name="attr_cha_buff_list"></span></div>
+              <div class="bordered"><span name="attr_cha_buff"></span></div>
+            </div>
+            
+            <div class="buff-detail">
+              <div class="bordered">INT</div>
+              <div class="bordered"><span name="attr_int_buff_list"></span></div>
+              <div class="bordered"><span name="attr_int_buff"></span></div>
+            </div>
+            
+            <div class="buff-detail">
+              <div class="bordered">VOL</div>
+              <div class="bordered"><span name="attr_vol_buff_list"></span></div>
+              <div class="bordered"><span name="attr_vol_buff"></span></div>
+            </div>
+
+            <div class="buff-detail">
+              <div class="bordered">INIT</div>
+              <div class="bordered"><span name="attr_init_buff_list"></span></div>
+              <div class="bordered"><span name="attr_init_buff"></span></div>
+            </div>
+
+            <div class="buff-detail">
+              <div class="bordered">ATC</div>
+              <div class="bordered"><span name="attr_atkcac_buff_list"></span></div>
+              <div class="bordered"><span name="attr_atkcac_buff"></span></div>
+            </div>
+
+            <div class="buff-detail">
+              <div class="bordered">ATD</div>
+              <div class="bordered"><span name="attr_atktir_buff_list"></span></div>
+              <div class="bordered"><span name="attr_atktir_buff"></span></div>
+            </div>
+
+            <div class="buff-detail">
+              <div class="bordered">MAG</div>
+              <div class="bordered"><span name="attr_atkmag_buff_list"></span></div>
+              <div class="bordered"><span name="attr_atkmag_buff"></span></div>
+            </div>
+
+            <div class="buff-detail">
+              <div class="bordered">DEF</div>
+              <div class="bordered"><span name="attr_def_buff_list"></span></div>
+              <div class="bordered"><span name="attr_def_buff"></span></div>
+            </div>
+            
+            <div class="buff-detail">
+              <div class="bordered">PV</div>
+              <div class="bordered"><span name="attr_pv_buff_list"></span></div>
+              <div class="bordered"><span name="attr_pv_buff"></span></div>
+            </div>
+            
+            <div class="buff-detail">
+              <div class="bordered">DR</div>
+              <div class="bordered"><span name="attr_dr_buff_list"></span></div>
+              <div class="bordered"><span name="attr_dr_buff"></span></div>
+            </div>
+            
+            <div class="buff-detail">
+              <div class="bordered">PM</div>
+              <div class="bordered"><span name="attr_pm_buff_list"></span></div>
+              <div class="bordered"><span name="attr_pm_buff"></span></div>
+            </div>
+            
+            <div class="buff-detail">
+              <div class="bordered">PC</div>
+              <div class="bordered"><span name="attr_pc_buff_list"></span></div>
+              <div class="bordered"><span name="attr_pc_buff"></span></div>
+            </div>
+
+          </details>
+
         </div>
       </div>
 
@@ -3547,32 +3665,32 @@ seq(9).forEach(path => {
  */
 function rebuildBuffLists() {
   getSectionIDs("buffs", function (rowIds) {
-    const buffs = new Map(
+    const buffs = Object.fromEntries(new Map(
       SWData.PC.BUFFS.To.map(attr => [ `${attr}_buff_list`, "" ])
-    );
+    ));
+    console.log(buffs)
+    const allBuffs = [];
     rowIds.forEach(id => {
-      const rowId = `repeating_buffs_${id}_`;
-      const buffAttribs = [ 
-        "buff-on",
-        "buff-nom",
-        "buff-attrib",
-        "buff-value"
-      ].map(attr => `${rowId}${attr}`);
-      getAttrs(buffAttribs, function(values) {
-        const [ checked, name, attribute, value] = Object.keys(values);
-        const buff = {
-          enabled: intval(values[checked]),
-          name: strval(values[name]),
-          attribute: `${strval(values[attribute])}_buff_list`,
-          value: strval(values[value])
-        };
-        if (buff.enabled === 1) {
-          const buffList = buffs.get(buff.attribute) + `${buff.name} : ${buff.value}; `;
-          buffs.set(buff.attribute, buffList);
-        }
-        console.log(Object.fromEntries(buffs))
-        setAttrs(Object.fromEntries(buffs));
+      [ "on", "nom", "attrib", "value" ]
+        .map(attr => `repeating_buffs_${id}_buff-${attr}`)
+        .forEach(a => {
+        allBuffs.push(a);
       });
+    });
+    getAttrs(allBuffs, function(values) {
+      rowIds.forEach(id => {
+        const rowId = `repeating_buffs_${id}_buff-`;
+        const enabled = intval(values[`${rowId}on`]);
+        const name = strval(values[`${rowId}nom`]);
+        const attribute = `${strval(values[`${rowId}attrib`])}_buff_list`;
+        const value = strval(values[`${rowId}value`]);
+        if (enabled === 1) {
+          const buffList = buffs[attribute] + `${name} : ${value}; `;
+          buffs[attribute] = buffList;
+        }
+      });
+      console.log(buffs)
+      setAttrs(buffs);
     });
   });
 }
@@ -3589,14 +3707,11 @@ on("change:repeating_buffs remove:repeating_buffs", function () {
  * @param {string} attribute - attribute name 
  */
 function parseBuffList(attribute) {
-  console.log(attribute)
   getAttrs([ `${attribute}_buff_list`, ...SWData.PC.BUFFS.From ], function(values) {
-    console.log(values)
     const [ buff ] = Object.keys(values);
-    const buffList = strval(values[buff]).split(";");
+    const buffList = strval(values[buff]).split("; ");
     const allRanks = values.rangs_voies.split(",");
     let buffTotal = 0;
-    console.log(buffList)
     buffList.forEach(buff => {
       if (buff.trim() === "")
         return;
@@ -3610,7 +3725,7 @@ function parseBuffList(attribute) {
         if (result) {
           const [ matched, path ] = result;
           if (matched && intval(path) > 0)
-            value = allRanks[intval(path) - 1]; 
+            value = intval(allRanks[intval(path) - 1]); 
         } else {
           if (expression.startsWith("!")) {
             try {
@@ -3637,6 +3752,13 @@ SWData.PC.BUFFS.To.forEach(attribute => {
     parseBuffList(attribute);
   });
 });
+
+
+/**
+ * On opening the sheet
+ 
+on("sheet:opened", function() {
+});*/
 
 /**
  * Show weapons options
