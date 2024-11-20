@@ -13,7 +13,7 @@ watch(cof2ejs, (event, filename) => {
     fsWait = setTimeout(() => {
       fsWait = false;
     }, 100);
-    console.log(`${filename} file Changed`);
+    console.log(`\n${new Date().toISOString()} - ${filename} file Changed`);
   }
   const js = readFileSync(filename).toString().split("\r\n");
 
