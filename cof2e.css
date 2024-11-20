@@ -333,21 +333,18 @@ div.path div.block-title {
   display: none;
 }
 
-/* Style the active button */
+/* Style the active (sub-)tab button */
 .tabs-toggle[value="main"] ~ div .pc-main-btn,
 .tabs-toggle[value="abilities"] ~ div .pc-abilities-btn,
 .tabs-toggle[value="gears"] ~ div .pc-gears-btn,
 .tabs-toggle[value="config"] ~ div .pc-config-btn,
 .tabs-toggle[value="version"] ~ div .pc-version-btn,
 .tabs-toggle[value="main"] ~ div .npc-main-btn, 
-.tabs-toggle[value="config"] ~ div .npc-config-btn { 
-  color: white; 
-  background-color: gray; 
-}
-
+.tabs-toggle[value="config"] ~ div .npc-config-btn,
 .tabs-toggle[value="rolls"] ~ div .pc-rolls-btn,
 .tabs-toggle[value="buffs"] ~ div .pc-buffs-btn {
-  background-color: lightgray; 
+  color: white; 
+  background-color: var(--cof-hilite); 
 }
 
 /* Show the selected tab */

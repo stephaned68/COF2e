@@ -26,13 +26,24 @@ const SWData = {
       "volonté"
     ],
     COMBAT: {
-      init: [ "per", "init_buff" ],
+      init: [
+        "per",
+        "init_cond",
+        "init_buff" 
+      ],
       attacks: [ 
         [ "atkcac", "for", "Au Contact" ],
         [ "atktir", "agi", "A Distance" ], 
         [ "atkmag", "vol", "Magique" ]
       ],
-      def: [ "armure", "armure_eqp", "bouclier", "bouclier_eqp", "agi", "def_buff", "def_action" ]
+      def: [
+        "armure", "armure_eqp",
+        "bouclier", "bouclier_eqp",
+        "agi",
+        "def_cond",
+        "def_buff",
+        "def_action"
+      ]
     },
     BUFFS: {
       To: [ 
@@ -221,24 +232,30 @@ function shorten(ability) {
 }
 
 /**
+ * @typedef clogOptions
+ * @property {string} title - title of logged data
+ * @property {string} color - color name for log line
+ * @property {string} style - CSS style for log line
+ * @property {string} headerStyle - CSS style for log title
+ */
+
+/**
 * Log to JS console with color & style
 * @param {any} data - data to log
-* @param {string} title - title of logged data
-* @param {string} color - color name for log line
-* @param {string} style - CSS style for log line
-* @param {string} headerStyle - CSS style for log title
+* @param {clogOptions} options - console display options
 */
-function clog(
-  data,
-  title = "",
-  color = { text: "green", back: "" },
-  style = "font-size:12px; font-weight:normal;",
-  headerStyle = "font-size:13px; font-weight:bold;"
-) {
+function clog(data, options) {
   if (!SWData.settings.debugMode)
     return;
 
-  title = strval(title, "");
+  let { 
+    title = "",
+    color = { text: "green", back: "" },
+    style = "font-size:12px; font-weight:normal;",
+    headerStyle = "font-size:13px; font-weight:bold;"
+  } = options;
+
+  title = strval(title);
   if (title !== "") title = ` Sheet-Worker : ${title} `;
   const titleStyle = `color:${color.text}; background-color:${color.back}; ${headerStyle} text-decoration:underline;`;
   const textStyle = `color:${color.text}; background-color:${color.back}; ${style}`;
@@ -368,7 +385,6 @@ function buildChatMsg(msg, options = SWData.RT_OPTIONS) {
     let save = 1;
     if (roll.results.save) 
       save = roll.results.save.result;
-    console.log(save)
     let last_rolls = "";
     if (roll.results.roll)
       last_rolls += roll.results.roll.result;
@@ -438,8 +454,8 @@ function ask(askParams, callback) {
  * @returns - {number}
  */
 function addValues(values) {
-  return Object.keys(values).reduce((result, attr) => {
-    return result + intval(values[attr]);
+  return Object.keys(values).reduce((sum, attr) => {
+    return sum + intval(values[attr]);
   }, 0);
 }
 
@@ -604,7 +620,12 @@ on(eventList("change", SWData.PC.COMBAT.init, " "), updateInit);
  */
 SWData.PC.COMBAT.attacks.forEach(attk => {
   const [ attack, ability ] = attk;
-  const changed = [ `${attack}_base`, `${ability}` , `${attack}_buff` ];
+  const changed = [
+    `${attack}_base`,
+    `${ability}`,
+    `${attack}_cond`,
+    `${attack}_buff`
+  ];
   on(eventList("change", changed, " "), function() {
     getAttrs(changed, function(values) {
       const score = addValues(values);
@@ -854,6 +875,7 @@ function updateDef() {
     def += intval(values.armure) * intval(values.armure_eqp);
     def += intval(values.bouclier) * intval(values.bouclier_eqp);
     def += intval(values.agi);
+    def += intval(values.def_cond);
     def += intval(values.def_buff);
     def += intval(values.def_action);
     setAttrs({ def });
@@ -988,7 +1010,7 @@ SWData.PC.CONDITIONS.forEach(condition => {
 
   // Set/Unset conditions
   on(`clicked:${name}-icon`, function () {
-    const buffs = Object.entries(effects).map(([ attribute ]) => `${attribute}_buff`);
+    const buffs = Object.entries(effects).map(([ attribute ]) => `${attribute}_cond`);
     getAttrs([ `condition_${name}`, ...buffs ], function(values) {
       const [ attribute, ...buffs ] = Object.keys(values);
       const hasCondition = 1 - intval(values[attribute]);
@@ -1116,15 +1138,18 @@ function actionAbility(path, rank) {
     `voie${path}-t${rank}`,
     `voie${path}-${rank}`,
     `v${path}r${rank}`,
+    `v${path}r${rank}_spell`,
     `v${path}r${rank}_use`,
     `v${path}r${rank}_use_max`,
-    `v${path}r${rank}_freq`
+    `v${path}r${rank}_freq`,
+    "pm"
   ];
   getAttrs(abilityAttrs, function(values) {
-    const [ path, ability, desc, owned, used, uses, freq ] = Object.keys(values);
+    const [ path, ability, desc, owned, spell, used, uses, freq ] = Object.keys(values);
     const pathName = strval(values[path]);
     const abilityName = strval(values[ability]);
-    //const abilityOwned = intval(values[owned]);
+    const abilityOwned = intval(values[owned]);
+    const abilitySpell = intval(values[spell]);
     let description = strval(values[desc]);
     if (abilityName === "")
       return;
@@ -1132,17 +1157,34 @@ function actionAbility(path, rank) {
     const nbUsed = intval(values[used]) + 1;
     const maxUses = intval(values[uses]);
     const usage = strval(values[freq]);
-    let textclass = "";
 
+    const updates = new Map();
+    
     // alert on usage
     let alert = "";
+    let textclass = "";
     if (maxUses !== 0) {
       if (nbUsed > maxUses) {
         alert = `Déjà utilisée ${maxUses} fois / ${usage.toLowerCase()}`;
         description = "";
-        textclass = "critical";
+        textclass = "fumble";
       } else {
         alert = `Utilisée ${nbUsed} fois`;
+      }
+    }
+
+    // alert on spells & PM
+    if (abilityOwned === 1 && abilitySpell === 1) {
+      let pm = intval(values.pm);
+      if (rank > pm) {
+        alert = "Plus assez de Points de Mana\n";
+        alert = `${pm} restants pour ${rank} nécessaires\n`;
+        alert += `Brûlure de Mana : [[${rank - pm}d@{drecup}]] PV perdus\n`
+        textclass = "fumble";
+      } else {
+        pm -= rank;
+        alert = `${pm} Points de Mana restants`;
+        updates.set("pm", pm);
       }
     }
 
@@ -1153,16 +1195,20 @@ function actionAbility(path, rank) {
 
     // send to chat
     const chatMsg = cof2RollTemplate({
-      lsub: pathName,
-      rsub: `${rank} - ${abilityName}`,
+      lsub: `${pathName} - ${rank}`,
+      rsub: abilityName,
       text,
       textclass
     });
     sendChatMsg(chatMsg);
     
     // Update usages
-    if (nbUsed <= maxUses)
-      setAttrs({ [used]: nbUsed });
+    if (maxUses > 0 && nbUsed <= maxUses)
+      updates.set(used, nbUsed);
+    
+    // Update attributes
+    if (updates.size > 0)
+      setAttrs(Object.fromEntries(updates));
   });
 }
 
@@ -1313,12 +1359,57 @@ SWData.PC.BUFFS.To.forEach(attribute => {
   });
 });
 
+// ====================
+// SHEET INIT & UPDATES
+// ====================
+
+/**
+ * Apply sheet migrations
+ * @param {object} curVer - current version
+ * @param {object} newVer - new version
+ * @returns {void}
+ */
+function migrateSheet(curVer, newVer) {
+  return;
+}
+
+/**
+* Parse semantic version label
+* @param {string} version
+* @returns version object
+*/
+function parseSemVer(version) {
+  version += ".0.0";
+  if (version.toLowerCase().startsWith("v")) version = version.slice(1);
+  const [ major, minor, patch ] = version.split(".");
+  return { 
+    major: intval(major),
+    minor: intval(minor),
+    patch: intval(patch),
+  };
+}
+
 /**
  * On opening the sheet
  */
 on("sheet:opened", function() {
-  getAttrs(["agi_buff_list"], function(v) {
-    console.log(v);
+  getAttrs(["version", "verfdp", "debug_mode"], function (values) {
+    const debug_mode = intval(values.debug_mode);
+    SWData.settings.debugMode = (debug_mode === 1);
+    const updates = new Map();
+
+    const newVer = parseSemVer(values.verfdp);
+    const curVer = parseSemVer(values.version);
+    if (
+      curVer.major < newVer.major ||
+      curVer.minor < newVer.minor ||
+      curVer.patch < newVer.patch
+    ) {
+      //migrateSheet(curVer, newVer);
+    }
+
+    updates.set("version", values.verfdp);
+    setAttrs(Object.fromEntries(updates));
   });
 });
 
