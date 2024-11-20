@@ -1,7 +1,8 @@
 import { watch, readFileSync, writeFileSync } from 'fs';
 
-const cof2ehtml = "./cof2e.html";
-const cof2edist = "./cof2e-dist.html";
+const lsep = "\r\n";
+const cof2esrc = "./cof2e-src.html";
+const cof2edist = "./cof2e.html";
 const cof2ejs = "./cof2e.js";
 
 console.log(`Watching for file changes on ${cof2ejs}`);
@@ -15,12 +16,12 @@ watch(cof2ejs, (event, filename) => {
     }, 100);
     console.log(`\n${new Date().toISOString()} - ${filename} file Changed`);
   }
-  const js = readFileSync(filename).toString().split("\r\n");
+  const jsRows = readFileSync(filename).toString().split(lsep);
 
   let foundSW = false;
-  const htmlRows = readFileSync(cof2ehtml)
+  const htmlRows = readFileSync(cof2esrc)
     .toString()
-    .split("\r\n")
+    .split(lsep)
     .filter(hrow => {
       if (hrow.startsWith("<script"))
         foundSW = true;
@@ -29,11 +30,11 @@ watch(cof2ejs, (event, filename) => {
   
     htmlRows.push("<script type=\"text/worker\">");
     htmlRows.push("");
-    js.forEach(jsRow => {
+    jsRows.forEach(jsRow => {
       htmlRows.push(jsRow);
     });
     htmlRows.push("</script>");
 
-    writeFileSync(cof2edist, htmlRows.join("\r\n"));
+    writeFileSync(cof2edist, htmlRows.join(lsep));
     console.log(`${cof2edist} updated`);
 });
