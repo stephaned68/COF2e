@@ -5,18 +5,11 @@ const cof2esrc = "./cof2e-src.html";
 const cof2edist = "./cof2e.html";
 const cof2ejs = "./cof2e.js";
 
-console.log(`Watching for file changes on ${cof2ejs}`);
+console.log(`Watching for file changes on ${cof2ejs} & ${cof2esrc}`);
 
-let fsWait = false;
-watch(cof2ejs, (event, filename) => {
-  if (filename) {
-    if (fsWait) return;
-    fsWait = setTimeout(() => {
-      fsWait = false;
-    }, 100);
-    console.log(`\n${new Date().toISOString()} - ${filename} file Changed`);
-  }
-  const jsRows = readFileSync(filename).toString().split(lsep);
+const mergeSources = () => {
+
+  const jsRows = readFileSync(cof2ejs).toString().split(lsep);
 
   let foundSW = false;
   const htmlRows = readFileSync(cof2esrc)
@@ -37,4 +30,31 @@ watch(cof2ejs, (event, filename) => {
 
     writeFileSync(cof2edist, htmlRows.join(lsep));
     console.log(`${cof2edist} updated`);
+}
+
+let fsWait = false;
+watch(cof2ejs, (event, filename) => {
+  if (filename) {
+    if (fsWait) return;
+    fsWait = setTimeout(() => {
+      fsWait = false;
+    }, 100);
+    console.log(`\n${new Date().toISOString()} - ${filename} file Changed`);
+  }
+
+  mergeSources()
+
+});
+
+watch(cof2esrc, (event, filename) => {
+  if (filename) {
+    if (fsWait) return;
+    fsWait = setTimeout(() => {
+      fsWait = false;
+    }, 100);
+    console.log(`\n${new Date().toISOString()} - ${filename} file Changed`);
+  }
+  
+  mergeSources()
+  
 });
