@@ -27,7 +27,9 @@ const SWData = {
     ],
     COMBAT: {
       init: [
+        "cfg_init_agi",
         "per",
+        "agi",
         "init_cond",
         "init_buff" 
       ],
@@ -520,9 +522,7 @@ on("change:sheet_type", function() {
 ].forEach(button => {
   on(`clicked:${button}-btn`, function() {
     const [ type, value ] = button.split("_");
-    setAttrs({
-        [`${type}_tab`]: value
-    });
+    setAttrs({ [`${type}_tab`]: value });
   });
 });
 
@@ -531,9 +531,7 @@ on("change:sheet_type", function() {
  */
 [ "rolls", "buffs" ].forEach(button => {
   on(`clicked:pc_${button}-btn`, function() {
-      setAttrs({
-          pc_subtab: button
-      });
+      setAttrs({ pc_subtab: button });
   });
 });
 
@@ -604,7 +602,9 @@ SWData.PC.ABILITIES.forEach(ability => {
  * Update the init attribute
  */
 function updateInit() {
-  getAttrs(SWData.PC.COMBAT.init, function(values) {
+  getAttrs([ ...SWData.PC.COMBAT.init ], function(values) {
+    values.agi *= intval(values.cfg_init_agi);
+    delete values.cfg_init_agi;
     const init = 10 + addValues(values);
     setAttrs({ init });
   });
@@ -706,6 +706,16 @@ SWData.PC.ABILITIES.forEach(ability => {
       sendChatMsg(chatMsg);
     });
   });
+});
+
+on("clicked:init-btn", function () {
+  const init = `[[@{init}[Initiative] + @{cfg_init_variable}[Dé(s)] &{tracker} ]]`;
+  const chatMsg = cof2RollTemplate({
+    lsub: "Jet",
+    rsub: "Initiative",
+    roll: init
+  });
+  sendChatMsg(chatMsg);
 });
 
 /**
@@ -1359,6 +1369,17 @@ SWData.PC.BUFFS.To.forEach(attribute => {
   });
 });
 
+/**
+ * Show weapons options
+ * 
+on("clicked:repeating_armes:arme-opt-btn", function() {
+  getAttrs([ "repeating_armes_arme-opt" ], function(value) {
+    let [ option ] = Object.values(value);
+    option = 1 - intval(option);
+    setAttrs( { ["repeating_armes_arme-opt"]: option });
+  });
+}); */
+
 // ====================
 // SHEET INIT & UPDATES
 // ====================
@@ -1412,14 +1433,3 @@ on("sheet:opened", function() {
     setAttrs(Object.fromEntries(updates));
   });
 });
-
-/**
- * Show weapons options
- * 
-on("clicked:repeating_armes:arme-opt-btn", function() {
-  getAttrs([ "repeating_armes_arme-opt" ], function(value) {
-    let [ option ] = Object.values(value);
-    option = 1 - intval(option);
-    setAttrs( { ["repeating_armes_arme-opt"]: option });
-  });
-}); */

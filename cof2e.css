@@ -375,6 +375,14 @@ input.block-switch {
   display: none;
 }
 
+input[value="0"].init-agi ~ div.init-agi {
+  display: none;
+}
+
+input[value="1"].init-agi ~ div.init-agi {
+  display: inline;
+}
+
 div.change-view {
   width: 100%; 
   text-align: right;
@@ -406,7 +414,7 @@ div.change-view {
 
 .pc-attributes .attack {
   display: grid;
-  grid-template-columns: 3fr 1fr 2fr 1fr 1fr;
+  grid-template-columns: 3fr 1fr 2.5fr 1fr 1fr;
   gap: 2px;
   padding: 2px;
 }
@@ -571,18 +579,6 @@ input[value="0"].show-paths-789 ~ div.abilities {
   width: auto;
 }
 
-.pc-traits-subtab .pc-traits-rel {
-  display: grid;
-  grid-template-columns: .1fr 5fr 3fr 10fr;
-  gap: 2px;
-}
-
-.pc-sitmod-subtab .pc-sitmod {
-  display: grid;
-  grid-template-columns: 1fr 1fr 12fr;
-  gap: 2px;
-}
-
 .pc-buffs-subtab .pc-buffs {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -600,6 +596,10 @@ input[value="0"].show-paths-789 ~ div.abilities {
 .pc-gears .misc-gears,
 .pc-gears .notes {
   margin-top: 10px;
+}
+
+.pc-config-tab li {
+  margin-top: 2px;
 }
 
 /* NPC LAYOUT */
