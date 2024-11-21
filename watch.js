@@ -1,9 +1,9 @@
 import { watch, readFileSync, writeFileSync } from 'fs';
 
 const lsep = "\r\n";
-const cof2esrc = "./cof2e-src.html";
+const cof2esrc = "./src/cof2e.html";
+const cof2ejs = "./src/cof2e.js";
 const cof2edist = "./cof2e.html";
-const cof2ejs = "./cof2e.js";
 
 console.log(`Watching for file changes on ${cof2ejs} & ${cof2esrc}`);
 
