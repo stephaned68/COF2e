@@ -36,6 +36,8 @@
   <input type="hidden" name="attr_pm_buff" value="0">
   <input type="hidden" name="attr_pc_buff" value="0">
 
+  <input type="hidden" name="attr_rangs_voies" value="">
+  <input type="hidden" name="attr_noms_voies" value="">
   <input type="hidden" name="attr_armor_malus" value="0">
 
   <!-- Entête : Logo, Avatar, Identité -->
@@ -67,9 +69,9 @@
           <div>
             <input type="text" name="attr_character_name" title="@{character_name}" value="">
           </div>
-          <div><strong>Sexe</strong></div>
+          <div><strong>Genre</strong></div>
           <div>
-            <input type="text" name="attr_sex" title="@{sex}" value="">
+            <input type="text" name="attr_genre" title="@{genre}" value="">
           </div>
         </div>
 
@@ -924,7 +926,7 @@
                 <input type="hidden" name="attr_arme-portees" value="">
               </div>
               <div class="d-flex d-flex-middle bordered">
-                <input type="text" name="attr_arme-special" title="@{arme-special}" placeholder="Effet, capacités spéciales ... " value="">
+                <input type="text" name="attr_arme-special" title="@{arme-special}" placeholder="Effet, capacités spéciales..." value="">
               </div>
               <!-- <button type="action" class="flat-btn img-btn" name="act_arme-opt-btn">
                 <span class="img-btn">y</span>
@@ -2127,19 +2129,56 @@
             <div class="pc-roll-r1">
 
               <div>
-                <button class="flat-btn" type="action" name="act_ability-roll-btn">
+                <button class="flat-btn" type="action" name="act_roll-btn">
                   <span class="d20-btn">t</span>
                 </button>
               </div>
 
-              <div class="bordered">Nom</div>
+              <div class="d-flex d-flex-middle bordered">
+                <input type="text" name="attr_roll-nom" title="@{roll-nom} Nom du jet ou compétence" placeholder="Nom du jet" value="">
+              </div>
 
-              <div class="bordered">Jet</div>
-
-              <div class="bordered">Vx Rx</div>
+              <div class="d-flex d-flex-middle bordered">
+                <input type="text" name="attr_roll-cmd" title="@{roll-cmd} Jet de dés" placeholder="Jet (1d20, 3d6, 2d4°...)" value="">
+                <select class="select-md" name="attr_roll-special" title="@{roll-special} Jet spécial">
+                  <option value="" selected>Normal</option>
+                  <option value="kh1">Dé bonus</option>
+                  <option value="kl1">Dé malus</option>
+                </select>
+                <span class="align-self-center">&nbsp;+&nbsp;</span>
+                <select class="select-md" name="attr_roll-carac" title="@{roll-carac} Bonus de caractéristique">
+                  <option value="0" selected>-</option>
+                  <option value="@{agi}">AGI</option>
+                  <option value="@{con}">CON</option>
+                  <option value="@{for}">FOR</option>
+                  <option value="@{per}">PER</option>
+                  <option value="@{cha}">CHA</option>
+                  <option value="@{int}">INT</option>
+                  <option value="@{vol}">VOL</option>
+                </select>
+              </div>
+              
+              <div class="d-flex d-flex-middle bordered">
+                <span class="align-self-center">Rang</span>
+                <select class="select-md" name="attr_roll-voie" title="@{roll-voie} Rang dans la voie">
+                  <option value="0" selected>-</option>
+                  <option value="1">Voie 1</option>
+                  <option value="2">Voie 2</option>
+                  <option value="3">Voie 3</option>
+                  <option value="4">Voie 4</option>
+                  <option value="5">Voie 5</option>
+                  <option value="6">Voie 6</option>
+                  <option value="7">Voie 7</option>
+                  <option value="8">Voie 8</option>
+                  <option value="9">Voie 9</option>
+                </select>
+                <span class="align-self-center">&nbsp;+&nbsp;</span>
+                <input type="number" name="attr_roll-bonus" title="@{roll-bonus} Bonus de compétence" value="0">
+              </div>
 
             </div>
 
+            <!--
             <div class="pc-roll-r2">
 
               <div>
@@ -2155,7 +2194,8 @@
               </div>
 
             </div>
-
+            -->
+            
           </fieldset>
 
         </div>
@@ -3695,21 +3735,21 @@ function insertRolls(text) {
   matchRegExp(text, /([ ]*)\[([1-9])d4°[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL)\]([ ]*)/gm).forEach(result => {
     const [ matched, sb, dice, ability, sa ] = result;
     const replace = `${sb}[[${dice}@{devol} + @{${ability.toLowerCase()}}[${ability}] ]]${sa}`;
-    text = text.replace(matched, replace)
+    text = text.replace(matched, replace);
   });
 
   // Search for "... #d4° ..."
   matchRegExp(text, /([ ]*)([1-9])d4°([ ])*/gm).forEach(result => {
     const [ matched, sb, dice, sa ] = result;
     const replace = `${sb}[[${dice}@{devol}]]${sa}`;
-    text = text.replace(matched, replace)
+    text = text.replace(matched, replace);
   });
 
   // Search for " [# + XXX] "
   matchRegExp(text, /([ ]*)\[([0-9]+)[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL)\]([ ]*)/gm).forEach(result => {
     const [ matched, sb, value, ability, sa ] = result;
     const replace = `${sb}[[${value} + @{${ability.toLowerCase()}}]]${sb}`;
-    text = text.replace(matched, replace)
+    text = text.replace(matched, replace);
   });
 
   return text;
@@ -3889,6 +3929,26 @@ function updateAllRanks(path) {
 }
 
 /**
+ * Update the all names attribute
+ * @param {number} path - path number changed
+ */
+function updateAllPathNames(path) {
+  getAttrs([ `voie${path}nom`, "noms_voies" ], function(values) {
+    const [ pathName ] = Object.keys(values);
+    const name = strval(values[pathName]);
+    const names = strval(values.noms_voies);
+    let allNames;
+    if (names !== "") {
+      allNames = names.split("|").map(n => strval(n));
+    } else {
+      allNames = Array(9).fill("");
+    }
+    allNames[path - 1] = name;
+    setAttrs({ noms_voies: allNames.join("|") });
+  });
+}
+
+/**
  * Abilities
  */
 seq(9).forEach(path => {
@@ -3909,7 +3969,61 @@ seq(9).forEach(path => {
   on(`change:rang_voie${path}`, function () {
     updateAllRanks(path);
   });
+
+  // Update all path names attribute
+  on(`change:voie${path}nom`, function () {
+    updateAllPathNames(path);
+  });
 });
+
+on("clicked:repeating_rolls:roll-btn", function() {
+  const section = "repeating_rolls_roll-";
+  const rollAttrs = [
+    "nom",
+    "cmd",
+    "special",
+    "carac",
+    "voie",
+    "bonus"
+  ].map(attribute => `${section}${attribute}`);
+  getAttrs([ "rangs_voies", "noms_voies", ...rollAttrs ], function (values) {
+    const rollName = strval(values[section + "nom"]);
+    let rollCmd = strval(values[section + "cmd"]);
+    const special = strval(values[section + "special"]);
+    const carac = strval(values[section + "carac"]);
+    let path = intval(values[section + "voie"]);
+    const bonus = intval(values[section + "bonus"]);
+
+    const ranks = values.rangs_voies.split(",").map(r => intval(r));
+    const names = values.noms_voies.split("|").map(r => strval(r));
+
+    if (special !== "") {
+      matchRegExp(rollCmd, /([ ]*1?[Dd]20[ ]*)/gm).forEach(result => {
+        const [ matched ] = result;
+        const replace = `2d20${special}`;
+        rollCmd = rollCmd.replace(matched, replace);
+      });
+    }
+    rollCmd = `${rollCmd}[Dés]`;
+
+    if (carac !== "")
+      rollCmd += ` + (${carac})[${ carac.substring(2,2+3).toUpperCase() }]`
+
+    if (path > 0)
+      rollCmd += ` + (${ranks[path - 1]})[Rang ${names[path - 1]}]`;
+
+    if (bonus !== 0)
+      rollCmd += ` + (${bonus})[Bonus]`;
+
+    // Send to chat
+    const chatMsg = cof2RollTemplate({
+      lsub: "Jet",
+      rsub: rollName,
+      roll: "[[" + rollCmd + " ]]"
+    });
+    sendChatMsg(chatMsg);
+  });
+})
 
 /**
  * Rebuild buffable attributes xxx_buff_list
@@ -4026,6 +4140,25 @@ function migrateSheet(curVer, newVer) {
 }
 
 /**
+ * Rebuild storage attributes
+ */
+function rebuildAll() {
+  const pathAttrs = [
+    ...seq(9).map(p => `rang_voie${p}`),
+    ...seq(9).map(p => `voie${p}nom`),
+  ];
+  getAttrs(pathAttrs, function (values) {
+    const allRanks = [];
+    const allNames = [];
+    seq(9).forEach(p => {
+      allRanks.push(values[`rang_voie${p}`]);
+      allNames.push(values[`voie${p}nom`]);
+    });
+    setAttrs({ rangs_voies: allRanks.join(","), noms_voies: allNames.join("|") });
+  });
+}
+
+/**
 * Parse semantic version label
 * @param {string} version
 * @returns version object
@@ -4059,6 +4192,8 @@ on("sheet:opened", function() {
     ) {
       //migrateSheet(curVer, newVer);
     }
+
+    rebuildAll();
 
     updates.set("version", values.verfdp);
     setAttrs(Object.fromEntries(updates));

@@ -500,7 +500,7 @@ div.change-view {
 
 .pc-attacks .weapon {
   display: grid;
-  grid-template-columns: .5fr 3fr 3fr 1fr 4.5fr 1fr 3.5fr .2fr;
+  grid-template-columns: .5fr 3fr 3fr 1fr 4.5fr 1fr 3.5fr;
   gap: 2px;
   margin-bottom: 2px;
 }
@@ -556,7 +556,7 @@ input[value="0"].show-paths-789 ~ div.abilities {
 
 .pc-rolls-subtab .pc-roll-r1 {
   display: grid;
-  grid-template-columns: .1fr 5fr 12fr 3fr;
+  grid-template-columns: .1fr 5fr 8fr 4fr;
   gap: 2px;
   margin-bottom: 2px;
 }
