@@ -28,10 +28,10 @@ button
   margin: 2px;
 }
 
-.cofmain .pc-gears input.equip-desc {
+/*.cofmain .pc-gears input.equip-desc {
   width: 20rem;
   margin: 2px;
-}
+}*/
 
 .cofmain .heading input[type='number'],
 .cofmain .cofsheet input[type='number'] {
@@ -434,7 +434,8 @@ div.change-view {
 .centered,
 .pc-attributes .trait h4,
 .pc-attributes .attack h4,
-.pc-attacks .weapon h4 {
+.pc-attacks .weapon h4,
+.pc-roll-r1 h4 {
   text-align: center;
 }
 
@@ -556,7 +557,7 @@ input[value="0"].show-paths-789 ~ div.abilities {
 
 .pc-rolls-subtab .pc-roll-r1 {
   display: grid;
-  grid-template-columns: .1fr 5fr 8fr 4fr;
+  grid-template-columns: .1fr 4fr 8fr 5fr;
   gap: 2px;
   margin-bottom: 2px;
 }

@@ -4,6 +4,8 @@
   <input type="hidden" name="attr_verfdp" value="1.0.0">
   <!-- Version courante fiche -->
   <input type="hidden" name="attr_version" value="1.0.0">
+  <!-- Mode debug -->
+  <input type="hidden" name="attr_debug_mode" value="0">
 
   <!-- Token -->
   <input type="hidden" name="attr_token_url" value="">
@@ -2122,7 +2124,12 @@
         <!-- Fiche PJ, Onglet CAPACITES, Sous-onglet Jets -->
         <div class="pc-rolls-subtab">
           
-          <h4>Jets de capacités</h4>
+          <div class="pc-roll-r1">
+            <div>&nbsp;</div>
+            <h4>Nom</h4>
+            <h4>Capacité / Compétence</h4>
+            <h4>Description</h4>
+          </div>
 
           <fieldset class="repeating_rolls">
 
@@ -2139,14 +2146,14 @@
               </div>
 
               <div class="d-flex d-flex-middle bordered">
-                <input type="text" name="attr_roll-cmd" title="@{roll-cmd} Jet de dés" placeholder="Jet (1d20, 3d6, 2d4°...)" value="">
-                <select class="select-md" name="attr_roll-special" title="@{roll-special} Jet spécial">
-                  <option value="" selected>Normal</option>
-                  <option value="kh1">Dé bonus</option>
-                  <option value="kl1">Dé malus</option>
+                <select class="select-md" name="attr_roll-type" title="@{roll-type} Type de jet">
+                  <option value="1d20" selected>Normal</option>
+                  <option value="2d20kh1">Dé bonus</option>
+                  <option value="2d20kl1">Dé malus</option>
+                  <option value="0">Autre jet</option>
                 </select>
                 <span class="align-self-center">&nbsp;+&nbsp;</span>
-                <select class="select-md" name="attr_roll-carac" title="@{roll-carac} Bonus de caractéristique">
+                <select class="select-sm" name="attr_roll-carac" title="@{roll-carac} Bonus de caractéristique">
                   <option value="0" selected>-</option>
                   <option value="@{agi}">AGI</option>
                   <option value="@{con}">CON</option>
@@ -2155,11 +2162,9 @@
                   <option value="@{cha}">CHA</option>
                   <option value="@{int}">INT</option>
                   <option value="@{vol}">VOL</option>
+                  <option value="?">Demander</option>
                 </select>
-              </div>
-              
-              <div class="d-flex d-flex-middle bordered">
-                <span class="align-self-center">Rang</span>
+                <span class="align-self-center">+ Rang</span>
                 <select class="select-md" name="attr_roll-voie" title="@{roll-voie} Rang dans la voie">
                   <option value="0" selected>-</option>
                   <option value="1">Voie 1</option>
@@ -2173,7 +2178,11 @@
                   <option value="9">Voie 9</option>
                 </select>
                 <span class="align-self-center">&nbsp;+&nbsp;</span>
-                <input type="number" name="attr_roll-bonus" title="@{roll-bonus} Bonus de compétence" value="0">
+                <input type="number" class="two-digits" name="attr_roll-bonus" title="@{roll-bonus} Bonus de compétence" value="0">
+              </div>
+              
+              <div class="d-flex d-flex-middle bordered">
+                <input type="text" name="attr_roll-cmd" title="@{roll-cmd} Autre jet de dés" placeholder="Jet (1d20, 3d6, 2d4°...)" value="">
               </div>
 
             </div>
@@ -2230,14 +2239,15 @@
                     <option value="int">INT</option>
                     <option value="vol">VOL</option>
                   </optgroup>
-                  <optgroup label="Attaques">
+                  <optgroup label="Combat">
                     <option disabled class="optgroup">
-                      &nbsp;Attaques
+                      &nbsp;Combat
                     </option>
                     <option value="init">Initiative</option>
                     <option value="atkcac">Contact</option>
                     <option value="atktir">Distance</option>
                     <option value="atkmag">Magique</option>
+                    <option value="def">Défense</option>
                   </optgroup>
                   <optgroup label="Ressources">
                     <option disabled class="optgroup">
@@ -2277,6 +2287,9 @@
           <input type="hidden" name="attr_init_buff_list" value="">
           <input type="hidden" name="attr_def_buff_list" value="">
           <input type="hidden" name="attr_pv_buff_list" value="">
+          <input type="hidden" name="attr_dr_buff_list" value="">
+          <input type="hidden" name="attr_pm_buff_list" value="">
+          <input type="hidden" name="attr_pc_buff_list" value="">
 
           <details>
             <summary>
@@ -2400,8 +2413,8 @@
             <div class="bordered">
               <div class="d-flex d-flex-middle">
                 &nbsp;Trésor&nbsp;:&nbsp;<input type="text" name="attr_tresor" title="@{tresor}" value="">
-                &nbsp;Enc. Total&nbsp;:&nbsp;<span name="attr_total_enc" title="@{total_enc} Encombrement total"></span>
-                &nbsp;/&nbsp;<input type="number" name="attr_seuil_enc" title="@{seuil_enc}" value="0">
+                &nbsp;Encombrement&nbsp;:&nbsp;<span name="attr_total_enc" title="@{total_enc} Encombrement total"></span>
+                &nbsp;/&nbsp;<input type="number" name="attr_limite_enc" title="@{limite_enc} Seuil d'encombrement" value="0">
               </div>
             </div>
 
@@ -2413,22 +2426,21 @@
                   <summary>
 
                     <span>
-                      <input type="checkbox" name="attr_equip-util" title="@{equip-util}" value="1">
-                      <input type="text" class="equip-desc" name="attr_equip-desc" title="@{equip-desc}">
-                      Enc. <input type="number" name="attr_equip-enc" title="@{equip-enc}" value="0">
-                      Nbre <input type="number" name="attr_equip-qte" title="@{equip-qte}" value="1">
-                      <input type="checkbox" name="attr_equip-on" title="@{equip-on}" value="1">
+                      <input type="text" name="attr_equip-nom" title="@{equip-nom}" placeholder="Nom de l'équipement">
+                      Enc. <input type="number" name="attr_equip-enc" title="@{equip-enc} Encombrement (0,1,2)" value="0">
+                      Nbre <input type="number" name="attr_equip-qte" title="@{equip-qte} Quantité possédée" value="1">
+                      <input type="checkbox" name="attr_equip-on" title="@{equip-on} Equipement porté" value="1">
                     </span>
 
                   </summary>
 
                   <div class="d-flex">
-                    <input type="text" name="attr_equip-detail" title="@{equip-detail}" value="">
+                    <input type="text" name="attr_equip-detail" title="@{equip-detail}" placeholder="Description" value="">
                   </div>
 
                   <div class="d-flex d-flex-middle">
-                    <input type="text" name="attr_equip-props" title="@{equip-props}" value="">
-                    <input type="checkbox" name="attr_equip-atk" title="@{equip-atk}" value="1">
+                    <input type="text" name="attr_equip-props" title="@{equip-props} Propriétés" value="">
+                    <input type="checkbox" name="attr_equip-atk" title="@{equip-atk} A une attaque" value="1">
                     &nbsp;A une attaque
                   </div>
 
@@ -3321,6 +3333,21 @@ function updateDRMax() {
 on("change:con", updateDRMax);
 
 /**
+ * Compute load threshold
+ */
+function updateLoadLimit() {
+  getAttrs([ "for" ], function(value) {
+    const limite_enc = 10 + 2 * intval(value.for);
+    setAttrs({ limite_enc });
+  });
+}
+
+/**
+ * On FOR change
+ */
+on("change:for", updateLoadLimit);
+
+/**
  * Compute max PM
  */
 function updatePMMax() {
@@ -3732,8 +3759,10 @@ function insertRolls(text) {
     return "";
   
   // Search for " [#d4° + XXX] "
-  matchRegExp(text, /([ ]*)\[([1-9])d4°[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL)\]([ ]*)/gm).forEach(result => {
-    const [ matched, sb, dice, ability, sa ] = result;
+  matchRegExp(text, /([ ]*)\[([1-9])d4°[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL|rang voie [1-9])\]([ ]*)/gm).forEach(result => {
+    let [ matched, sb, dice, ability, sa ] = result;
+    if (ability.startsWith("rang voie "))
+      ability = "rang_voie" + ability.split(" ")[2];
     const replace = `${sb}[[${dice}@{devol} + @{${ability.toLowerCase()}}[${ability}] ]]${sa}`;
     text = text.replace(matched, replace);
   });
@@ -3746,9 +3775,11 @@ function insertRolls(text) {
   });
 
   // Search for " [# + XXX] "
-  matchRegExp(text, /([ ]*)\[([0-9]+)[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL)\]([ ]*)/gm).forEach(result => {
-    const [ matched, sb, value, ability, sa ] = result;
-    const replace = `${sb}[[${value} + @{${ability.toLowerCase()}}]]${sb}`;
+  matchRegExp(text, /([ ]*)\[([0-9]+)[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL|rang voie [1-9])\]([ ]*)/gm).forEach(result => {
+    let [ matched, sb, value, ability, sa ] = result;
+    if (ability.startsWith("rang voie "))
+      ability = "rang_voie" + ability.split(" ")[2];
+    const replace = `${sb}[[${value} + @{${ability.toLowerCase()}}]]${sa}`;
     text = text.replace(matched, replace);
   });
 
@@ -3981,45 +4012,63 @@ on("clicked:repeating_rolls:roll-btn", function() {
   const rollAttrs = [
     "nom",
     "cmd",
-    "special",
+    "type",
     "carac",
     "voie",
     "bonus"
   ].map(attribute => `${section}${attribute}`);
   getAttrs([ "rangs_voies", "noms_voies", ...rollAttrs ], function (values) {
     const rollName = strval(values[section + "nom"]);
-    let rollCmd = strval(values[section + "cmd"]);
-    const special = strval(values[section + "special"]);
-    const carac = strval(values[section + "carac"]);
+    const type = strval(values[section + "type"]);
+    let carac = strval(values[section + "carac"]);
     let path = intval(values[section + "voie"]);
     const bonus = intval(values[section + "bonus"]);
+    let rollCmd = strval(values[section + "cmd"]);
 
     const ranks = values.rangs_voies.split(",").map(r => intval(r));
     const names = values.noms_voies.split("|").map(r => strval(r));
 
-    if (special !== "") {
-      matchRegExp(rollCmd, /([ ]*1?[Dd]20[ ]*)/gm).forEach(result => {
-        const [ matched ] = result;
-        const replace = `2d20${special}`;
-        rollCmd = rollCmd.replace(matched, replace);
-      });
+    let lsub = "Compétence";
+    let text = "";
+
+    if (type !== "0") {
+      text = insertRolls(rollCmd);
+      let carTip = "";
+      // d20
+      rollCmd = `${type}[Dés]`;
+      // + Carac
+      if (carac !== "") {
+        if (carac === "?") {
+          const query = SWData.PC.ABILITIES
+            .map(a => `${ a.substring(0,3).toUpperCase() },@{${ a.substring(0,3) }}`)
+            .join("|");
+          carac = `?{Carac ?|${query}}`;
+        } else {
+          carTip = `[${ carac.substring(2,2+3).toUpperCase() }]`;
+        }
+        rollCmd += ` + (${carac})${carTip}`
+      }
+      // + Rang
+      if (path > 0) {
+        rollCmd += ` + (${ranks[path - 1]})[Rang ${names[path - 1]}]`;
+        lsub = "Capacité";
+      }
+      // + Bonus
+      if (bonus !== 0)
+        rollCmd += ` + (${bonus})[Bonus]`;
+      // in-line
+      rollCmd = "[[" + rollCmd + " ]]"
+    } else {
+      lsub = "Jet";
+      rollCmd = insertRolls(rollCmd);
     }
-    rollCmd = `${rollCmd}[Dés]`;
-
-    if (carac !== "")
-      rollCmd += ` + (${carac})[${ carac.substring(2,2+3).toUpperCase() }]`
-
-    if (path > 0)
-      rollCmd += ` + (${ranks[path - 1]})[Rang ${names[path - 1]}]`;
-
-    if (bonus !== 0)
-      rollCmd += ` + (${bonus})[Bonus]`;
 
     // Send to chat
     const chatMsg = cof2RollTemplate({
-      lsub: "Jet",
+      lsub,
       rsub: rollName,
-      roll: "[[" + rollCmd + " ]]"
+      roll: rollCmd,
+      text
     });
     sendChatMsg(chatMsg);
   });
@@ -4029,6 +4078,7 @@ on("clicked:repeating_rolls:roll-btn", function() {
  * Rebuild buffable attributes xxx_buff_list
  */
 function rebuildBuffLists() {
+  const section = "repeating_buffs";
   getSectionIDs("buffs", function (rowIds) {
     const buffs = Object.fromEntries(new Map(
       SWData.PC.BUFFS.To.map(attr => [ `${attr}_buff_list`, "" ])
@@ -4036,14 +4086,14 @@ function rebuildBuffLists() {
     const allBuffs = [];
     rowIds.forEach(id => {
       [ "on", "nom", "attrib", "value" ]
-        .map(attr => `repeating_buffs_${id}_buff-${attr}`)
+        .map(attr => `${section}_${id}_buff-${attr}`)
         .forEach(a => {
         allBuffs.push(a);
       });
     });
     getAttrs(allBuffs, function(values) {
       rowIds.forEach(id => {
-        const rowId = `repeating_buffs_${id}_buff-`;
+        const rowId = `${section}_${id}_buff-`;
         const enabled = intval(values[`${rowId}on`]);
         const name = strval(values[`${rowId}nom`]);
         const attribute = `${strval(values[`${rowId}attrib`])}_buff_list`;
@@ -4084,9 +4134,11 @@ function parseBuffList(attribute) {
       if (attrBuff) {
         value = intval(values[attrBuff]);
       } else {
-        const [ matched, path ] = expression.match(/rang[ ]*voie[ ]*([1-9])/i);
-        if (matched && intval(path) > 0) {
-          value = intval(allRanks[intval(path) - 1]); 
+        const result = expression.match(/rang[ ]*voie[ ]*([1-9])/i);
+        if (result) {
+          const [ matched, path ] = result;
+          if (matched && intval(path) > 0)
+            value = intval(allRanks[intval(path) - 1]); 
         } else {
           if (expression.startsWith("!")) {
             try {
@@ -4115,6 +4167,79 @@ SWData.PC.BUFFS.To.forEach(attribute => {
 });
 
 /**
+ * Recalculate total encumbrance
+ */
+function encumbrance() {
+  const section = "repeating_equipement";
+  getSectionIDs("equipement", function (rowIds) {
+    const allEquip = [];
+    rowIds.forEach(id => {
+      [ "on", "qte", "enc" ]
+        .map(attr => `${section}_${id}_equip-${attr}`)
+        .forEach(a => {
+        allEquip.push(a);
+        });
+    });
+    getAttrs([ 
+      "armure_malus",
+      "armure_eqp",
+      "limite_enc",
+      ...allEquip
+    ], function(values) {
+      const armor_enc = intval(values.armure_malus) * intval(values.armure_eqp);
+      const limite_enc = intval(values.limite_enc);
+      let total_enc = armor_enc;
+      let zero_val = 0;
+      rowIds.forEach(id => {
+        const rowId = `${section}_${id}_equip-`;
+        const used = intval(values[`${rowId}on`]);
+        const count = intval(values[`${rowId}qte`]);
+        const hasEnc = strval(values[`${rowId}enc`]);
+        if (used === 0 || hasEnc === "")
+          return;
+
+        const value = intval(hasEnc);
+        if (value > 0) {
+          total_enc += count * value;
+        } else {
+          zero_val += count;
+          if (zero_val > 3) {
+            total_enc += Math.floor(zero_val / 3);
+            zero_val %= 3;
+          }
+        }
+      });
+
+      let text = "";
+      if (total_enc > limite_enc )
+        text += "\nEssouflé-e et dé malus aux tests d'AGI";
+      if (total_enc > 2 * limite_enc )
+        text = "- "+ text + "\n- Ralenti";
+      if (total_enc > 3* limite_enc )
+        text += "\n- Immobilisé";
+      if (text !== "") {
+        text = "@{character_name} est encombré-e et subit les effets suivants :" + text;
+        const chatMsg = cof2RollTemplate({
+          lsub: "Encombrement",
+          rsub: "Limite dépassée",
+          text
+        });
+        sendChatMsg(chatMsg);
+      }
+
+      setAttrs({ total_enc });
+    });
+  });
+}
+
+/**
+ * On change in equipement list
+ */
+on("change:repeating_equipement remove:repeating_equipement", function() {
+  encumbrance();
+});
+
+/**
  * Show weapons options
  * 
 on("clicked:repeating_armes:arme-opt-btn", function() {
@@ -4132,30 +4257,31 @@ on("clicked:repeating_armes:arme-opt-btn", function() {
 /**
  * Apply sheet migrations
  * @param {object} curVer - current version
- * @param {object} newVer - new version
  * @returns {void}
  */
-function migrateSheet(curVer, newVer) {
+function migrateSheet(curVer) {
+  if (curVer.major === 1 && curVer.minor < 1)
+    // migrateSheetV1_1(); // version 1.0 > 1.1
+  
   return;
 }
 
 /**
- * Rebuild storage attributes
+ * Rebuild all path info
+ * @param {Map} updates - Map of attributes to update
+ * @param {object} values - attributes names/values pairs
+ * @returns {Map} updated Map of attributes
  */
-function rebuildAll() {
-  const pathAttrs = [
-    ...seq(9).map(p => `rang_voie${p}`),
-    ...seq(9).map(p => `voie${p}nom`),
-  ];
-  getAttrs(pathAttrs, function (values) {
-    const allRanks = [];
-    const allNames = [];
-    seq(9).forEach(p => {
-      allRanks.push(values[`rang_voie${p}`]);
-      allNames.push(values[`voie${p}nom`]);
-    });
-    setAttrs({ rangs_voies: allRanks.join(","), noms_voies: allNames.join("|") });
+function rebuildPathAll(updates, values) {
+  const allRanks = [];
+  const allNames = [];
+  seq(9).forEach(p => {
+    allRanks.push(values[`rang_voie${p}`]);
+    allNames.push(values[`voie${p}nom`]);
   });
+  updates.set("rangs_voies", allRanks.join(","));
+  updates.set("noms_voies", allNames.join("|"));
+  return updates;
 }
 
 /**
@@ -4178,11 +4304,19 @@ function parseSemVer(version) {
  * On opening the sheet
  */
 on("sheet:opened", function() {
-  getAttrs(["version", "verfdp", "debug_mode"], function (values) {
+  const pathAttrs = [
+    ...seq(9).map(p => `rang_voie${p}`),
+    ...seq(9).map(p => `voie${p}nom`),
+  ];
+  getAttrs([
+    "version",
+    "verfdp",
+    "debug_mode",
+    ...pathAttrs
+  ], function (values) {
     const debug_mode = intval(values.debug_mode);
     SWData.settings.debugMode = (debug_mode === 1);
-    const updates = new Map();
-
+    
     const newVer = parseSemVer(values.verfdp);
     const curVer = parseSemVer(values.version);
     if (
@@ -4190,10 +4324,11 @@ on("sheet:opened", function() {
       curVer.minor < newVer.minor ||
       curVer.patch < newVer.patch
     ) {
-      //migrateSheet(curVer, newVer);
+      migrateSheet(curVer);
     }
 
-    rebuildAll();
+    let updates = new Map();
+    updates = rebuildPathAll(updates, values);
 
     updates.set("version", values.verfdp);
     setAttrs(Object.fromEntries(updates));
