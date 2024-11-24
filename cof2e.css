@@ -28,11 +28,6 @@ button
   margin: 2px;
 }
 
-/*.cofmain .pc-gears input.equip-desc {
-  width: 20rem;
-  margin: 2px;
-}*/
-
 .cofmain .heading input[type='number'],
 .cofmain .cofsheet input[type='number'] {
   width: 3rem;
@@ -421,7 +416,7 @@ div.change-view {
 
 .pc-attributes .hits {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 3fr 5fr;
   gap: 2px;
   padding: 2px;
 }
@@ -435,6 +430,7 @@ div.change-view {
 .pc-attributes .trait h4,
 .pc-attributes .attack h4,
 .pc-attacks .weapon h4,
+.pc-buffs h4,
 .pc-roll-r1 h4 {
   text-align: center;
 }
@@ -647,6 +643,11 @@ input[value="0"].show-paths-789 ~ div.abilities {
   grid-template-columns: 1fr 2fr;
   gap: 2px;
   padding: 5px;
+}
+
+.sheet-rolltemplate-cof2 .sheet-rt-token {
+  width: 64px;
+  height: 64px;
 }
 
 .sheet-rolltemplate-cof2 .sheet-rt-roll {

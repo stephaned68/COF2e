@@ -29,8 +29,10 @@
   <input type="hidden" name="attr_atktir_cond" value="0">
   <input type="hidden" name="attr_atkmag_buff" value="0">
   <input type="hidden" name="attr_atkmag_cond" value="0">
+  <input type="hidden" name="attr_init_base" value="10">
   <input type="hidden" name="attr_init_buff" value="0">
   <input type="hidden" name="attr_init_cond" value="0">
+  <input type="hidden" name="attr_def_base" value="10">
   <input type="hidden" name="attr_def_buff" value="0">
   <input type="hidden" name="attr_def_cond" value="0">
   <input type="hidden" name="attr_pv_buff" value="0">
@@ -80,9 +82,10 @@
         <div class="identity-row">
           <div><strong>Profil / Famille</strong></div>
           <div class="d-flex">
-            <input type="text" name="attr_profil" placeholder="Profil" title="@{profil}" value="">
-            <input type="text" name="attr_famille" list="families" placeholder="Famille" title="@{famille}" value="">
-            <datalist id="families">
+            <input type="text" name="attr_profil" list="pc-profiles" placeholder="Profil" title="@{profil}" value="">
+            <datalist id="pc-profiles"></datalist>
+            <input type="text" name="attr_famille" list="pc-families" placeholder="Famille" title="@{famille}" value="">
+            <datalist id="pc-families">
               <option>Aventuriers</option>
               <option>Combattants</option>
               <option>Mages</option>
@@ -416,18 +419,18 @@
                 </button>
               </div>
               <div class="centered bordered">
-                10
+                <span name="attr_init_base"></span>
               </div>
               <div class="centered bordered">
                 PER: <span name="attr_per"></span>
-                <input type="hidden" name="attr_cfg_init_agi" class="init-agi">
+                <input type="hidden" name="attr_cfg_init_agi" class="init-agi" value="0">
                 <div class="init-agi">+AGI: <span name="attr_agi"></span></div>
               </div>
               <div class="centered bordered">
                 <span name="attr_init_buff"></span>
               </div>
               <div class="centered bordered">
-                <input type="hidden" name="attr_init" value="0">
+                <input type="hidden" name="attr_init" value="10">
                 <span name="attr_init" title="@{init}"></span>
               </div>
             </div>
@@ -450,7 +453,7 @@
                 <span name="attr_atkcac_buff"></span>
               </div>
               <div class="centered bordered">
-                <input type="hidden" name="attr_atkcac" value="0">
+                <input type="hidden" name="attr_atkcac" value="1">
                 <span name="attr_atkcac" title="@{atkcac}"></span>
               </div>
             </div>
@@ -473,7 +476,7 @@
                 <span name="attr_atktir_buff"></span>
               </div>
               <div class="centered bordered">
-                <input type="hidden" name="attr_atktir" value="0">
+                <input type="hidden" name="attr_atktir" value="1">
                 <span name="attr_atktir" title="@{atktir}"></span>
               </div>
             </div>
@@ -496,7 +499,7 @@
                 <span name="attr_atkmag_buff"></span>
               </div>
               <div class="centered bordered">
-                <input type="hidden" name="attr_atkmag" value="0">
+                <input type="hidden" name="attr_atkmag" value="1">
                 <span name="attr_atkmag" title="@{atkmag}"></span>
               </div>
             </div>
@@ -515,18 +518,18 @@
 
               <div class="block-title centered">
                 <button class="flat-btn img-btn img-btn-lg" type="action" name="act_vigloss-btn">
-                  <span class="img-btn img-btn-lg">e</span>
+                  <span class="img-btn">e</span>
                 </button>
                 PV
                 <button class="flat-btn img-btn img-btn-lg" type="action" name="act_vigheal-btn">
-                  <span class="img-btn img-btn-lg">k</span>
+                  <span class="img-btn">k</span>
                 </button>
               </div>
 
               <div class="bordered centered">
-                <input type="number" name="attr_pv" title="@{pv}" value="0">
+                <input type="number" class="two-digits" name="attr_pv" title="@{pv} PV courants" value="0">
                 /
-                <input type="number" name="attr_pv_max" title="@{pv_max}" value="0">
+                <input type="number" class="two-digits" name="attr_pv_max" title="@{pv_max} PV maximum" value="0">
               </div>
 
             </div>
@@ -546,9 +549,9 @@
               </div>
 
               <div class="bordered centered">
-                <input type="number" name="attr_dr" title="@{dr}" value="0">
+                <input type="number" name="attr_dr" title="@{dr}" value="2">
                 /
-                <input type="number" name="attr_dr_max" title="@{dr_max}" value="0">
+                <input type="number" name="attr_dr_max" title="@{dr_max}" value="2">
               </div>
 
             </div>
@@ -568,9 +571,9 @@
               <div class="block-title centered">PM</div>
 
               <div class="bordered centered">
-                <input type="number" name="attr_pm" title="@{pm}" value="0">
+                <input type="number" name="attr_pm" title="@{pm}" value="2">
                 /
-                <input type="number" name="attr_pm_max" title="@{pm_max}" value="0">
+                <input type="number" name="attr_pm_max" title="@{pm_max}" value="2">
               </div>
 
             </div>
@@ -648,7 +651,8 @@
                 src="https://raw.githubusercontent.com/stephaned68/COF2e/main/cond_effraye.png"
                 />
               </button>
- -->          <input type="hidden" class="condition-etourdi" name="attr_condition_etourdi" value="0">
+-->
+              <input type="hidden" class="condition-etourdi" name="attr_condition_etourdi" value="0">
               <button
                 type="action"
                 class="flat-btn img-btn img-btn-lg"
@@ -680,8 +684,8 @@
                 class="bubble-img"
                 src="https://raw.githubusercontent.com/stephaned68/COF2e/main/cond_panique.png"
                 />
-              </button> -->
-
+              </button>
+-->
               <br>
               
               <input type="hidden" class="condition-invalide" name="attr_condition_invalide" value="0">
@@ -764,7 +768,7 @@
 
             <div class="defense">
               <div class="block-title">DEF</div>
-              <div class="bordered centered">10+</div>
+              <div class="bordered centered"><span name="attr_def_base"></span>+</div>
               <div class="bordered centered">
                 <input type="number" name="attr_armure" title="@{armure}" value="0">
               </div>
@@ -785,7 +789,8 @@
                 </select>
               </div>
               <div class="bordered centered">
-                <span name="attr_def"></span>
+                <input type="hidden" name="attr_def" value="10">
+                <span name="attr_def" title="@{def} Défense"></span>
               </div>
             </div>
 
@@ -1732,9 +1737,9 @@
           <!-- Fiche PJ, Onglet Capacités, Voies 1-3 -->
           <div class="abilities">
             <div class="path bordered">
-              <div class="block-title">Voie n°1</div>
+              <div class="block-title">1 - Voie de peuple</div>
               <div class="path-title">
-                <input type="text" name="attr_voie1nom" title="@{voie1nom}" value="Voie n°1">
+                <input type="text" name="attr_voie1nom" title="@{voie1nom}" value="1 - Voie de peuple">
               </div>
               <div class="rank">
                 <div class="d-flex">
@@ -1773,9 +1778,9 @@
               </div>
             </div>
             <div class="path bordered">
-              <div class="block-title">Voie n°2</div>
+              <div class="block-title">2 - Voie de profil</div>
               <div class="path-title">
-                <input type="text" name="attr_voie2nom" title="@{voie2nom}" value="Voie n°2">
+                <input type="text" name="attr_voie2nom" title="@{voie2nom}" value="2 - Voie de profil">
               </div>
               <div class="rank">
                 <div class="d-flex">
@@ -1814,9 +1819,9 @@
               </div>
             </div>
             <div class="path bordered">
-              <div class="block-title">Voie n°3</div>
+              <div class="block-title">3 - Voie de profil</div>
               <div class="path-title">
-                <input type="text" name="attr_voie3nom" title="@{voie3nom}" value="Voie n°3">
+                <input type="text" name="attr_voie3nom" title="@{voie3nom}" value="3 - Voie de profil">
               </div>
               <div class="rank">
                 <div class="d-flex">
@@ -1859,9 +1864,9 @@
           <!-- Fiche PJ, Onglet Capacités, Voies 4-6 -->
           <div class="abilities">
             <div class="path bordered">
-              <div class="block-title">Voie n°4</div>
+              <div class="block-title">4 - Voie de profil</div>
               <div class="path-title">
-                <input type="text" name="attr_voie4nom" title="@{voie4nom}" value="Voie n°4">
+                <input type="text" name="attr_voie4nom" title="@{voie4nom}" value="4 - Voie de profil">
               </div>
               <div class="rank">
                 <div class="d-flex">
@@ -1900,9 +1905,9 @@
               </div>
             </div>
             <div class="path bordered">
-              <div class="block-title">Voie n°5</div>
+              <div class="block-title">5 - Voie de profil</div>
               <div class="path-title">
-                <input type="text" name="attr_voie5nom" title="@{voie5nom}" value="Voie n°5">
+                <input type="text" name="attr_voie5nom" title="@{voie5nom}" value="5 - Voie de profil">
               </div>
               <div class="rank">
                 <div class="d-flex">
@@ -1941,9 +1946,9 @@
               </div>
             </div>
             <div class="path bordered">
-              <div class="block-title">Voie n°6</div>
+              <div class="block-title">6 - Voie de profil</div>
               <div class="path-title">
-                <input type="text" name="attr_voie6nom" title="@{voie6nom}" value="Voie n°6">
+                <input type="text" name="attr_voie6nom" title="@{voie6nom}" value="6 - Voie de profil">
               </div>
               <div class="rank">
                 <div class="d-flex">
@@ -1986,9 +1991,9 @@
           <!-- Fiche PJ, Onglet Capacités, Voies 7-9 -->
           <div class="abilities">
             <div class="path">
-              <div class="block-title">Voie n°7</div>
+              <div class="block-title">7 - Voie de prestige 1</div>
               <div class="path-title">
-                <input type="text" name="attr_voie7nom" title="@{voie7nom}" value="Voie n°7">
+                <input type="text" name="attr_voie7nom" title="@{voie7nom}" value="7 - Voie de prestige 1">
               </div>
               <div class="rank">
                 <div class="d-flex">
@@ -2027,9 +2032,9 @@
               </div>
             </div>
             <div class="path">
-              <div class="block-title">Voie n°8</div>
+              <div class="block-title">8 - Voie de prestige 2</div>
               <div class="path-title">
-                <input type="text" name="attr_voie8nom" title="@{voie8nom}" value="Voie n°8">
+                <input type="text" name="attr_voie8nom" title="@{voie8nom}" value="8 - Voie de prestige 2">
               </div>
               <div class="rank">
                 <div class="d-flex">
@@ -2128,7 +2133,7 @@
             <div>&nbsp;</div>
             <h4>Nom</h4>
             <h4>Capacité / Compétence</h4>
-            <h4>Description</h4>
+            <h4>Description / Jet spécial</h4>
           </div>
 
           <fieldset class="repeating_rolls">
@@ -2182,7 +2187,7 @@
               </div>
               
               <div class="d-flex d-flex-middle bordered">
-                <input type="text" name="attr_roll-cmd" title="@{roll-cmd} Autre jet de dés" placeholder="Jet (1d20, 3d6, 2d4°...)" value="">
+                <input type="text" name="attr_roll-cmd" title="@{roll-cmd} Autre jet de dés" placeholder="Jet spécial ou description" value="">
               </div>
 
             </div>
@@ -2211,7 +2216,11 @@
 
         <!-- Fiche PJ, Onglet CAPACITES, Sous-onglet Buffs -->
         <div class="pc-buffs-subtab">
-          <h4>Buffs</h4>
+          <div class="pc-buffs">
+            <h4>Nom</h4>
+            <h4>Attribut affecté</h4>
+            <h4>Valeur</h4>
+          </div>
 
           <fieldset class="repeating_buffs">
 
@@ -2412,9 +2421,11 @@
 
             <div class="bordered">
               <div class="d-flex d-flex-middle">
+                <input type="hidden" name="attr_total_enc" value="0">
+                <input type="hidden" name="attr_limite_enc" value="10">
                 &nbsp;Trésor&nbsp;:&nbsp;<input type="text" name="attr_tresor" title="@{tresor}" value="">
-                &nbsp;Encombrement&nbsp;:&nbsp;<span name="attr_total_enc" title="@{total_enc} Encombrement total"></span>
-                &nbsp;/&nbsp;<input type="number" name="attr_limite_enc" title="@{limite_enc} Seuil d'encombrement" value="0">
+                &nbsp;Encombrement&nbsp;:&nbsp;<span class="align-self-center" name="attr_total_enc" title="@{total_enc} Encombrement total"></span>
+                &nbsp;/&nbsp;<span class="align-self-center" name="attr_limite_enc" title="@{limite_enc} Seuil d'encombrement"></span>
               </div>
             </div>
 
@@ -2463,7 +2474,7 @@
               <fieldset class="repeating_ressources">
 
                 <div class="d-flex">
-                  <input type="text" name="attr_res-desc" title="@{res-desc}" value="">
+                  <input type="text" name="attr_res-desc" title="@{res-desc}" placeholder="Nom de la ressource" value="">
                   Valeur :
                   <input type="number" name="attr_res-val" title="@{res-val}" value="1">
                 </div>
@@ -2508,6 +2519,8 @@
               <option value="" selected>Publics</option>
               <option value="/w gm ">Chuchotés au MJ</option>
             </select>
+            <input type="checkbox" name="attr_token_dsp" title="@{token_dsp}" value=" {{token=[x](@{token_url}) }} ">
+            <span>Avec token</span>
           </li>
           <li>
             <span>Afficher voies 7-8-9&nbsp;</span>
@@ -2524,9 +2537,73 @@
                 <span>Initiative + AGI&nbsp;</span>
                 <input type="checkbox" name="attr_cfg_init_agi" value="1">
               </li>
+              <li>
+                <span>Encombrement&nbsp;</span>
+                <input type="checkbox" name="attr_cfg_use_encmb" value="1">
+              </li>
+              <li>
+                <span>Critiques différenciés&nbsp;</span>
+                <input type="checkbox" name="attr_cfg_crit_diff" value="1">
+              </li>
             </ul>
           </li>
+          <li>
+            <strong>High fantasy</strong>
+            <ul>
+              <li>
+                <span>Progression épique&nbsp;</span>
+                <input type="checkbox" name="attr_cfg_use_epic" value="1">
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Low fantasy</strong>
+          </li>
         </ul>
+
+        <details>
+          <summary>
+            <strong>Premiers rangs</strong>
+          </summary>
+          <ul>
+            <li>
+              <span name="attr_voie1nom"></span>
+              <input type="number" name="attr_v1br" title="@{v1br}" value="1">
+            </li>
+            <li>
+              <span name="attr_voie2nom"></span>
+              <input type="number" name="attr_v2br" title="@{v2br}" value="1">
+            </li>
+            <li>
+              <span name="attr_voie3nom"></span>
+              <input type="number" name="attr_v3br" title="@{v3br}" value="1">
+            </li>
+            <li>
+              <span name="attr_voie4nom"></span>
+              <input type="number" name="attr_v4br" title="@{v4br}" value="1">
+            </li>
+            <li>
+              <span name="attr_voie5nom"></span>
+              <input type="number" name="attr_v5br" title="@{v5br}" value="1">
+            </li>
+            <li>
+              <span name="attr_voie6nom"></span>
+              <input type="number" name="attr_v6br" title="@{v6br}" value="1">
+            </li>
+            <li>
+              <span name="attr_voie7nom"></span>
+              <input type="number" name="attr_v7br" title="@{v7br}" value="1">
+            </li>
+            <li>
+              <span name="attr_voie8nom"></span>
+              <input type="number" name="attr_v8br" title="@{v8br}" value="1">
+            </li>
+            <li>
+              <span name="attr_voie9nom"></span>
+              <input type="number" name="attr_v9br" title="@{v9br}" value="1">
+            </li>
+          </ul>
+        </details>
       </div>
 
       <!-- Fiche PJ, Onglet Version -->
@@ -2641,7 +2718,7 @@
   {{/token}}
   {{#token}}
   <div class="sheet-rt sheet-rt-2cols sheet-rt-header sheet-rt-title">
-    <div>{{token}}</div>
+    <div class="sheet-rt-token">{{token}}</div>
     <div>{{perso}}</div>
   </div>
   {{/token}}
@@ -2662,15 +2739,37 @@
     <div>Dommages</div>
     <div>
       {{dm}} {{#rollWasCrit() roll}}
+      {{#rollTotal() critdiff 0}}
       <span class="sheet-rt-critical"> + {{dm}} CRITIQUE !</span>
+      {{/rollTotal() critdiff 0}}
       {{/rollWasCrit() roll}}
       {{#^rollWasCrit() roll}} {{#rollWasCrit() broll}}
+      {{#rollTotal() critdiff 0}}
       ( + <span class="sheet-rt-critical">{{dm}}</span> si dé bonus)
+      {{/rollTotal() critdiff 0}}
       {{/rollWasCrit() broll}}
       {{/^rollWasCrit() roll}} {{dmdesc}}
     </div>
   </div>
   {{/dm}}
+  {{#dmcrit}}
+  {{#rollWasCrit() roll}}
+  <div class="sheet-rt sheet-rt-2cols">
+    <div><span class="sheet-rt-critical">CRITIQUE !</span></div>
+    <div>
+      {{dmcrit}}
+    </div>
+  </div>
+  {{/rollWasCrit() roll}}
+  {{#rollWasCrit() broll}}
+  <div class="sheet-rt sheet-rt-2cols">
+    <div><span class="sheet-rt-critical">CRITIQUE (si dé bonus)</span></div>
+    <div>
+      {{dmcrit}}
+    </div>
+  </div>
+  {{/rollWasCrit() broll}}
+  {{/dmcrit}}
   {{#text}}
   <div class="sheet-rt sheet-rt-text">
     <span class="sheet-rt-{{textclass}}">{{text}}</span>
@@ -2699,6 +2798,30 @@ const SWData = {
     template: "cof2"
   },
   PC: {
+    PROFILES: {
+      Aventuriers: [
+        { value: "Arquebusier" },
+        { value: "Barde" },
+        { value: "Rôdeur" },
+        { value: "Voleur" },
+      ],
+      Combattants: [
+        { value: "Barbare" },
+        { value: "Chevalier" },
+        { value: "Guerrier" },
+      ],
+      Mages: [
+        { value: "Ensorceleur" },
+        { value: "Forgesort" },
+        { value: "Magicien" },
+        { value: "Sorcier" },
+      ],
+      Mystiques: [
+        { value: "Druide" },
+        { value: "Moine" },
+        { value: "Prêtre" },
+      ],
+    },
     ABILITIES: [ 
       "agilité",
       "constitution",
@@ -2711,6 +2834,7 @@ const SWData = {
     COMBAT: {
       init: [
         "cfg_init_agi",
+        "init_base",
         "per",
         "agi",
         "init_cond",
@@ -2722,6 +2846,7 @@ const SWData = {
         [ "atkmag", "vol", "Magique" ]
       ],
       def: [
+        "def_base",
         "armure", "armure_eqp",
         "bouclier", "bouclier_eqp",
         "agi",
@@ -2919,6 +3044,7 @@ function shorten(ability) {
 /**
  * @typedef clogOptions
  * @property {string} title - title of logged data
+ * @property {boolean} debug - display only if debug_mode attribute enabled
  * @property {string} color - color name for log line
  * @property {string} style - CSS style for log line
  * @property {string} headerStyle - CSS style for log title
@@ -2930,20 +3056,22 @@ function shorten(ability) {
 * @param {clogOptions} options - console display options
 */
 function clog(data, options) {
-  if (!SWData.settings.debugMode)
-    return;
-
   let { 
     title = "",
-    color = { text: "green", back: "" },
+    debug = true,
+    textColor = "green",
+    backColor = "",
     style = "font-size:12px; font-weight:normal;",
     headerStyle = "font-size:13px; font-weight:bold;"
   } = options;
 
+  if (debug && !SWData.settings.debugMode)
+    return;
+
   title = strval(title);
   if (title !== "") title = ` Sheet-Worker : ${title} `;
-  const titleStyle = `color:${color.text}; background-color:${color.back}; ${headerStyle} text-decoration:underline;`;
-  const textStyle = `color:${color.text}; background-color:${color.back}; ${style}`;
+  const titleStyle = `color:${textColor}; background-color:${backColor}; ${headerStyle} text-decoration:underline;`;
+  const textStyle = `color:${textColor}; background-color:${backColor}; ${style}`;
 
   if (title) {
     if (typeof data === "object") {
@@ -3056,6 +3184,7 @@ function buildChatMsg(msg, options = SWData.RT_OPTIONS) {
   } else {
     chatMsg = "{{" + msg + "}}";
   }
+  chatMsg += " @{token_dsp}";
   return `${whisper}&{template:${template}} ${title ? (template === "default" ? `{{name=${title} }}` : `{{${title} }}`) : "" } ${chatMsg}`;
 }
 
@@ -3219,10 +3348,29 @@ on("change:sheet_type", function() {
 });
 
 /**
- * Update the base attack scores
+ * On change of family, set the list of profiles
  */
-function updateAttacksBase(level, attributes) {
-  const atkBase = Math.min(level, 10);
+on("change:famille", function() {
+  getAttrs([ "famille" ], function(value) {
+    const family = strval(value.famille);
+    const profiles = SWData.PC.PROFILES[family] || [];
+    if (profiles.length > 0) {
+      populateListOptions({
+        elemSelector: "#pc-profiles",
+        optionsArray: profiles
+      });
+    }
+  });
+});
+
+/**
+ * Update the base attack scores
+ * @param {number} level - PC's level
+ * @param {Map} attributes - Map of attributes to update
+ * @returns {Map} updated Map object
+ */
+function updateAttacksBase(level, level_cap, attributes) {
+  let atkBase = Math.min(level, level_cap);
   attributes.set("atkcac_base", atkBase);
   attributes.set("atktir_base", atkBase);
   attributes.set("atkmag_base", atkBase);
@@ -3255,11 +3403,24 @@ function updateDEvol(level, attributes) {
  * On level change
  */
 on("change:niveau", function() {
-  getAttrs([ "niveau" ], function(value) {
-    const level = intval(value.niveau);
+  getAttrs([ "niveau", "cfg_use_epic" ], function(values) {
+    // base progression
+    const level_cap = 10;
+    const level = intval(values.niveau);
     let updateAttrs = new Map;
-    updateAttrs = updateAttacksBase(level, updateAttrs);
+    updateAttrs = updateAttacksBase(level, level_cap, updateAttrs);
     updateAttrs = updateDEvol(level, updateAttrs);
+    updateAttrs.set("def_base", 10);
+    // epic progression
+    const use_epic = intval(values.cfg_use_epic);
+    if (level > level_cap && use_epic === 1) {
+      const oddLevel = (level %2 === 1) ? level : level -1;
+      const epicBase = level_cap + Math.ceil((oddLevel - level_cap) / 2);
+      updateAttrs.set("atkcac_base", epicBase);
+      updateAttrs.set("atktir_base", epicBase);
+      updateAttrs.set("atkmag_base", epicBase);
+      updateAttrs.set("def_base", epicBase);
+    }
     setAttrs(Object.fromEntries(updateAttrs))
   });
 });
@@ -3288,7 +3449,7 @@ function updateInit() {
   getAttrs([ ...SWData.PC.COMBAT.init ], function(values) {
     values.agi *= intval(values.cfg_init_agi);
     delete values.cfg_init_agi;
-    const init = 10 + addValues(values);
+    const init = addValues(values);
     setAttrs({ init });
   });
 }
@@ -3370,9 +3531,9 @@ function updatePMMax() {
 }
 
 /**
- * On VOL change
+ * On VOL & PM buff change
  */
-on("change:vol", updatePMMax);
+on("change:vol change:pm_buff", updatePMMax);
 
 /**
  * On change of an ability spell
@@ -3382,6 +3543,21 @@ seq(9).forEach(p => {
     on(`change:v${p}r${r} change:v${p}r${r}_spell`, updatePMMax)
   });
 });
+
+/**
+ * Compute max PC
+ */
+function updatePCMax() {
+  getAttrs([ "cha", "pc_base", "pc_buff" ], function(values) {
+    const pc_max = addValues(values);
+    setAttrs({ pc_max });
+  });
+}
+
+/**
+ * On PC components change
+ */
+on("change:cha change:pc_base change:pc_buff", updatePCMax);
 
 /**
  * On ability button click
@@ -3579,13 +3755,11 @@ on("clicked:drecup-btn", function() {
  */
 function updateDef() {
   getAttrs(SWData.PC.COMBAT.def, function(values) {
-    let def = 10;
-    def += intval(values.armure) * intval(values.armure_eqp);
-    def += intval(values.bouclier) * intval(values.bouclier_eqp);
-    def += intval(values.agi);
-    def += intval(values.def_cond);
-    def += intval(values.def_buff);
-    def += intval(values.def_action);
+    values.armure = intval(values.armure) * intval(values.armure_eqp);
+    delete values.armure_eqp;
+    values.bouclier = intval(values.bouclier) * intval(values.bouclier_eqp);
+    delete values.bouclier_eqp;
+    def = addValues(values);
     setAttrs({ def });
   });
 }
@@ -3803,7 +3977,8 @@ on("clicked:repeating_armes:attack-btn", function() {
     "portee",
     "special"
   ];
-  getAttrs(attackAttrs.map(attribute => `${section}${attribute}`), function (values) {
+  getAttrs([ "cfg_crit_diff", ...attackAttrs.map(attribute => `${section}${attribute}`) ], function (values) {
+    const use_crit_diff = intval(values["cfg_crit_diff"]);
     const atk = strval(values[section + "atk"]);
     const atkdiv = intval(values[section + "atkdiv"]);
     const name = capitalize(strval(values[section + "nom"], getAttackName(atk)));
@@ -3826,6 +4001,36 @@ on("clicked:repeating_armes:attack-btn", function() {
     
     const special = insertRolls(strval(values[section + "special"]));
 
+    let dmMax = 0;
+    const result = dm.match(/([0-9]*)[dD]([0-9]*)/);
+    if (result) {
+      let [ matched, dice, faces ] = result;
+      if (matched) {
+        if (!dice)
+          dice = 1;
+        dmMax = intval(dice) * intval(faces);
+      }
+    }
+
+    let dmcrit = "";
+    if (use_crit_diff === 1) {
+      switch (dmtype) {
+        case "contondants":
+          dmcrit = `[[${dmMax}]] DM et cible étourdie au prochain round`;
+          break;
+        case "perforants":
+          if (dice && faces)
+            dmcrit = `[[${dice * 2}d${faces}]] DM + hémorragie : [[1@{devol}]] DM/round pendant 4 rounds`;
+          break;
+        case "tranchants":
+          dmcrit = `[[${dmMax}]] DM et hémorragie : [[1@{devol}]] DM/round pendant 4 rounds`;
+          break;
+        default:
+          break;
+      }
+    }
+    console.log(dmcrit)
+
     const chatMsg = cof2RollTemplate({
       lsub: "Attaque",
       rsub: name + range,
@@ -3833,6 +4038,8 @@ on("clicked:repeating_armes:attack-btn", function() {
       broll: attack,
       dm: dmroll,
       dmdesc,
+      critdiff: `[[${use_crit_diff}]]`,
+      dmcrit,
       text: special
     });
     sendChatMsg(chatMsg);
@@ -3947,13 +4154,16 @@ function setRank(path) {
  * @param {number} path - path number changed
  */
 function updateAllRanks(path) {
-  getAttrs([ `rang_voie${path}`, "rangs_voies" ], function(values) {
-    const [ rankPath ] = Object.keys(values);
-    const rank = intval(values[rankPath]);
+  getAttrs([ `rang_voie${path}`, `v${path}br`, "rangs_voies" ], function(values) {
+    const [ rankPath, rankBase ] = Object.keys(values);
+    let rank = intval(values[rankPath]);
+    const base = intval(values[rankBase]);
     const ranks = strval(values.rangs_voies);
     let allRanks = Array(9);
     if (ranks !== "")
       allRanks = ranks.split(",").map(r => intval(r));
+    if (rank > 0 && base > 1)
+      rank += base - 1;
     allRanks[path - 1] = rank;
     setAttrs({ rangs_voies: allRanks.join(",") });
   });
@@ -3997,7 +4207,7 @@ seq(9).forEach(path => {
   });
 
   // Update all ranks attribute
-  on(`change:rang_voie${path}`, function () {
+  on(`change:rang_voie${path} change:v${path}br`, function () {
     updateAllRanks(path);
   });
 
@@ -4181,11 +4391,13 @@ function encumbrance() {
         });
     });
     getAttrs([ 
+      "cfg_use_encmb",
       "armure_malus",
       "armure_eqp",
       "limite_enc",
       ...allEquip
     ], function(values) {
+      const useEncumbrance = intval(values.cfg_use_encmb);
       const armor_enc = intval(values.armure_malus) * intval(values.armure_eqp);
       const limite_enc = intval(values.limite_enc);
       let total_enc = armor_enc;
@@ -4210,15 +4422,17 @@ function encumbrance() {
         }
       });
 
-      let text = "";
-      if (total_enc > limite_enc )
-        text += "\nEssouflé-e et dé malus aux tests d'AGI";
-      if (total_enc > 2 * limite_enc )
-        text = "- "+ text + "\n- Ralenti";
-      if (total_enc > 3* limite_enc )
-        text += "\n- Immobilisé";
-      if (text !== "") {
-        text = "@{character_name} est encombré-e et subit les effets suivants :" + text;
+      const effects = [];
+      if (total_enc * useEncumbrance > limite_enc )
+        effects.push("Essouflé-e et dé malus aux tests d'AGI");
+      if (total_enc * useEncumbrance > 2 * limite_enc )
+        effects.push("Ralenti");
+      if (total_enc * useEncumbrance > 3 * limite_enc )
+        effects.push("Immobilisé");
+      if (effects.length > 0) {
+        const text = "@{character_name} est encombré-e et subit les effets suivants :\n" 
+        + (effects.length > 1 ? "- " : "")
+        + effects.join("\n- ");
         const chatMsg = cof2RollTemplate({
           lsub: "Encombrement",
           rsub: "Limite dépassée",
@@ -4235,7 +4449,13 @@ function encumbrance() {
 /**
  * On change in equipement list
  */
-on("change:repeating_equipement remove:repeating_equipement", function() {
+on(
+  eventList("change", [ 
+    "armure_malus", 
+    "armure_eqp" , 
+    "repeating_equipement" 
+  ], " ") 
+  + " remove:repeating_equipement", function() {
   encumbrance();
 });
 
@@ -4264,6 +4484,22 @@ function migrateSheet(curVer) {
     // migrateSheetV1_1(); // version 1.0 > 1.1
   
   return;
+}
+
+/**
+ * Process character token
+ * @param {Map} updates - Map of attributes to update
+ * @param {object} values - attributes names/values pairs
+ * @returns {Map} updated Map of attributes
+ */
+function getTokenURL(updates, values) {
+  const url = strval(values.character_token);
+  if (url !== "") {
+    [ token_url ] = url.split("?");
+    if (token_url)
+      updates.set("token_url", token_url);
+  }
+  return updates;
 }
 
 /**
@@ -4312,10 +4548,20 @@ on("sheet:opened", function() {
     "version",
     "verfdp",
     "debug_mode",
+    "character_token",
     ...pathAttrs
   ], function (values) {
+
     const debug_mode = intval(values.debug_mode);
     SWData.settings.debugMode = (debug_mode === 1);
+    clog(
+      ` Running sheetworker... ${ debug_mode === 1 ? "DEBUG" : "PROD" } `,
+      { 
+        debug: false,
+        textColor: "white",
+        backColor: "brown"
+      }
+    );
     
     const newVer = parseSemVer(values.verfdp);
     const curVer = parseSemVer(values.version);
@@ -4328,6 +4574,7 @@ on("sheet:opened", function() {
     }
 
     let updates = new Map();
+    updates = getTokenURL(updates, values);
     updates = rebuildPathAll(updates, values);
 
     updates.set("version", values.verfdp);
