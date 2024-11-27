@@ -431,7 +431,9 @@ div.change-view {
 .pc-attributes .attack h4,
 .pc-attacks .weapon h4,
 .pc-buffs h4,
-.pc-roll-r1 h4 {
+.pc-roll-r1 h4,
+.npc-attacks .weapon h4,
+.npc-abilities .npc-ability h4 {
   text-align: center;
 }
 
@@ -601,10 +603,18 @@ input[value="0"].show-paths-789 ~ div.abilities {
 
 /* NPC LAYOUT */
 
-.cof-npc .npc-3colrow {
+.cof-npc .npc-main {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 10px;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.cof-npc .npc-4colrow {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 2px;
   margin-top: 10px;
   margin-bottom: 10px;
 }
@@ -612,9 +622,49 @@ input[value="0"].show-paths-789 ~ div.abilities {
 .cof-npc .npc-2colrow {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 2px;
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+.cof-npc .npc-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.cof-npc .npc-trait {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.npc-attacks .weapon {
+  display: grid;
+  grid-template-columns: .5fr 3.5fr 1.5fr 1fr 4.5fr 1fr 4fr;
+  gap: 2px;
+  margin-bottom: 2px;
+}
+
+.npc-abilities .npc-ability {
+  display: grid;
+  grid-template-columns: .5fr 4fr 8fr;
+  gap: 2px;
+  margin-bottom: 2px;
+}
+
+textarea.stat-block {
+  border: 1px dashed;
+  height: 12em;
+  word-break: break-all;
+}
+
+textarea.import-result {
+  border: none; 
+  background-color: transparent;
+  height: 10em;
+  resize: none;
 }
 
 /* ROLL TEMPLATES */

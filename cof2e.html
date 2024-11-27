@@ -142,16 +142,16 @@
         </div>
 
         <div class="identity-row">
-          <div><strong>Profil</strong></div>
+          <div><strong>Type</strong></div>
           <div>
-            <input type="text" name="attr_profile" title="@{profile}" value="">
+            <input type="text" name="attr_creature" title="@{creature}" value="">
           </div>
         </div>
 
         <div class="identity-row">
           <div><strong>Taille</strong></div>
           <div>
-            <input type="text" name="attr_size" title="@{size}" value="">
+            <input type="text" name="attr_taille" title="@{taille}" value="">
           </div>
         </div>
 
@@ -2625,81 +2625,351 @@
 
       <div class="npc-main-tab">
 
-        <div class="npc-2colrow">
+        <div class="npc-main">
   
           <div>
             <h4>Attributs</h4>
   
-            <div class="npc-3colrow">
-              <div class="bordered">
-                FOR
+            <div class="npc-4colrow">
+              
+              <div class="npc-trait">
+                <div class="block-title">
+                  <button class="block-title" type="action" name="act_pnj_agi-btn">
+                    <span class="d20-btn">t</span>
+                    AGI
+                  </button>
+                </div>
+                <div class="bordered">
+                  <input type="number" name="attr_pnj_agi" title="@{pnj_agi}" value="0">
+                  <input type="checkbox" name="attr_pnj_agi_sup" title="@{pnj_agi_sup} Caractéristique supérieure" value="1">
+                </div>
               </div>
-              <div class="bordered">
-                DEX
+
+              <div class="npc-trait">
+                <div class="block-title">
+                  <button class="block-title" type="action" name="act_pnj_con-btn">
+                    <span class="d20-btn">t</span>
+                    CON
+                  </button>
+                </div>
+                <div class="bordered">
+                  <input type="number" name="attr_pnj_con" title="@{pnj_con}" value="0">
+                  <input type="checkbox" name="attr_pnj_con_sup" title="@{pnj_con_sup} Caractéristique supérieure" value="1">
+                </div>
               </div>
-              <div class="bordered">
-                CON
+
+              <div class="npc-trait">
+                <div class="block-title">
+                  <button class="block-title" type="action" name="act_pnj_for-btn">
+                    <span class="d20-btn">t</span>
+                    FOR
+                  </button>
+                </div>
+                <div class="bordered">
+                  <input type="number" name="attr_pnj_for" title="@{pnj_for}" value="0">
+                  <input type="checkbox" name="attr_pnj_for_sup" title="@{pnj_for_sup} Caractéristique supérieure" value="1">
+                </div>
               </div>
+
+              <div class="npc-trait">
+                <div class="block-title">
+                  <button class="block-title" type="action" name="act_pnj_per-btn">
+                    <span class="d20-btn">t</span>
+                    PER
+                  </button>
+                </div>
+                <div class="bordered">
+                  <input type="number" name="attr_pnj_per" title="@{pnj_per}" value="0">
+                  <input type="checkbox" name="attr_pnj_per_sup" title="@{pnj_per_sup} Caractéristique supérieure" value="1">
+                </div>
+              </div>
+
             </div>
   
-            <div class="npc-3colrow">
-              <div class="bordered">
-                INT
+            <div class="npc-4colrow">
+              
+              <div class="npc-trait">
+                <div class="block-title">
+                  <button class="block-title" type="action" name="act_pnj_cha-btn">
+                    <span class="d20-btn">t</span>
+                    CHA
+                  </button>
+                </div>
+                <div class="bordered">
+                  <input type="number" name="attr_pnj_cha" title="@{pnj_cha}" value="0">
+                  <input type="checkbox" name="attr_pnj_cha_sup" title="@{pnj_cha_sup} Caractéristique supérieure" value="1">
+                </div>
               </div>
-              <div class="bordered">
-                PER
+              
+              <div class="npc-trait">
+                <div class="block-title">
+                  <button class="block-title" type="action" name="act_pnj_int-btn">
+                    <span class="d20-btn">t</span>
+                    INT
+                  </button>
+                </div>
+                <div class="bordered">
+                  <input type="number" name="attr_pnj_int" title="@{pnj_int}" value="0">
+                  <input type="checkbox" name="attr_pnj_int_sup" title="@{pnj_int_sup} Caractéristique supérieure" value="1">
+                </div>
               </div>
-              <div class="bordered">
-                CHA
+
+              <div class="npc-trait">
+                <div class="block-title">
+                  <button class="block-title" type="action" name="act_pnj_vol-btn">
+                    <span class="d20-btn">t</span>
+                    VOL
+                  </button>
+                </div>
+                <div class="bordered">
+                  <input type="number" name="attr_pnj_vol" title="@{pnj_vol}" value="0">
+                  <input type="checkbox" name="attr_pnj_vol_sup" title="@{pnj_vol_sup} Caractéristique supérieure" value="1">
+                </div>
               </div>
+
             </div>
-  
-            <div class="npc-3colrow">
-              <div class="bordered">
-                Init.
-              </div>
-              <div class="bordered">
-                DEF
-              </div>
-              <div class="bordered">
-                DEP
-              </div>
-            </div>
-  
-            <div class="npc-2colrow">
-              <div class="bordered">
-                PV
-              </div>
-            </div>
-  
-          </div>
+
           
+            <div class="npc-2colrow">
+              
+              <div class="npc-row">
+
+                <div class="npc-trait">
+                  <div class="block-title">
+                    <span>PV</span>
+                    (RD <input type="number" name="attr_rd" title="@{rd}" value="">)
+                  </div>
+                  <div class="bordered">
+                    <input type="number" class="two-digits" name="attr_pv" title="@{pv}" value="0">
+                    /
+                    <input type="number" class="two-digits" name="attr_pv_max" title="@{pv}" value="0">
+                  </div>
+                </div>
+                
+              </div>
+
+              <div class="npc-2colrow">
+
+                <div class="npc-trait">
+                  <div class="block-title">
+                    <button class="block-title" type="action" name="act_pnj_init-btn">
+                      <span class="d20-btn">t</span>
+                      Init.
+                    </button>
+                  </div>
+                  <div class="bordered">
+                    <input type="number" class="two-digits" name="attr_pnj_init" title="@{pnj_init}" value="0">
+                  </div>
+                </div>
+                
+                <div class="npc-trait">
+                  <div class="block-title">
+                    Défense
+                  </div>
+                  <div class="bordered">
+                    <input type="number" class="two-digits" name="attr_pnj_def" title="@{pnj_def}" value="0">
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
           <div>
-            <h4>Bio</h4>
-            <textarea name="attr_pnj_bio" title="@{pnj_bio}" rows="4" value=""></textarea>
-  
-            <h4>Divers</h4>
-            <textarea name="attr_pnj_divers" title="@{pnj_divers}" rows="4" value=""></textarea>
+            <h4>Description</h4>
+            <textarea name="attr_pnj_desc" title="@{pnj_desc}" rows="8" value=""></textarea>  
           </div>
   
         </div>
 
         <hr>
-        <h4>Attaques</h4>
+
+        <div class="npc-attacks">
+          
+          <div class="weapon">
+            <div></div>
+            <h4>ARME / SORT</h4>
+            <h4>ATTAQUE</h4>
+            <h4>CRIT.</h4>
+            <h4>DM</h4>
+            <h4>PORTEE</h4>
+            <h4>SPECIAL</h4>
+          </div>
+
+          <fieldset class="repeating_npcarmes">
+
+            <div class="weapon">
+              
+              <div>
+                <button type="action" class="flat-btn" name="act_npcatk-btn">
+                  <span class="d20-btn">t</span>
+                </button>
+              </div>
+              <div class="d-flex d-flex-middle bordered">
+                <input type="text" name="attr_arme-nom" title="@{arme-nom}" placeholder="Arme/attaque" value="">
+              </div>
+              <div class="d-flex d-flex-middle bordered">
+                <select class="select-xs" name="attr_arme-roll" title="@{arme-roll} Type de jet">
+                  <option value="1d20" selected>No - Normal</option>
+                  <option value="2d20kh1">Db - Dé bonus</option>
+                  <option value="2d20kl1">Dm - Dé malus</option>
+                </select>
+                <input type="number" class="two-digits" name="attr_arme-atk" title="@{arme-atk}" value="">
+              </div>
+              <div class="d-flex d-flex-middle bordered">
+                <input type="number" class="two-digits" name="attr_arme-crit" title="@{arme-crit} Seuil de Critique" value="20" min="2" max="20">
+              </div>
+              <div class="d-flex d-flex-middle bordered">
+                <input type="text" name="attr_arme-dm" title="@{arme-dm}" placeholder="1d8, 2d6..." value="">
+                <select class="select-xxs" name="attr_arme-dmtype" title="@{arme-dmtype} Type de dommages">
+                  <optgroup label="Physiques">
+                    <option disabled class="optgroup">
+                      &nbsp;Physiques
+                    </option>
+                    <option value="contondants">C - Contondants</option>
+                    <option value="perforants">P - Perforants</option>
+                    <option value="poison">Po - Poison</option>
+                    <option value="tranchants" selected>T - Tranchants</option>
+                  </optgroup>
+                  <optgroup label="Naturels">
+                    <option disabled class="optgroup">
+                      &nbsp;Naturels
+                    </option>
+                    <option value="coup">Co - Coup</option>
+                    <option value="morsure">M - Morsure</option>
+                    <option value="griffes">G - Griffes</option>
+                  </optgroup>
+                  <optgroup label="Elementaires">
+                    <option disabled class="optgroup">
+                      &nbsp;Elémentaires
+                    </option>
+                    <option value="acide">A - Acide</option>
+                    <option value="électricité">E - Electricité</option>
+                    <option value="feu">Fe - Feu</option>
+                    <option value="froid">Fr - Froid</option>
+                  </optgroup>
+                  <optgroup label="Autres">
+                    <option disabled class="optgroup">
+                      &nbsp;Autres
+                    </option>
+                    <option value="magiques">M - Magiques</option>
+                  </optgroup>
+                </select>
+                &nbsp;<span class="align-self-center">+</span>&nbsp;
+                <input type="number" class="two-digits" name="attr_arme-dmdiv" title="@{arme-dmdiv} Bonus DM" value="0">
+              </div>
+              <div class="d-flex d-flex-middle bordered">
+                <input type="text" name="attr_arme-portee" title="@{arme-portee}" value="">
+              </div>
+              <div class="d-flex d-flex-middle bordered">
+                <input type="text" name="attr_arme-special" title="@{arme-special}" placeholder="Effet, capacités spéciales..." value="">
+              </div>
+              <!-- <button type="action" class="flat-btn img-btn" name="act_arme-opt-btn">
+                <span class="img-btn">y</span>
+              </button> -->
+
+            </div>
+
+            <input type="hidden" class="cof-wopt-toggle" name="attr_arme-opt" value="0"/>
+            <div class="weapon-opt">
+              <div class="weapon-option">
+                <div></div>
+                <div class="bordered">
+                </div>
+                <div class="bordered">
+                </div>
+                <div class="bordered">
+                </div>
+                <div class="bordered">
+                </div>
+                <div></div>
+              </div>
+            </div>
+
+          </fieldset>
+
+        </div>
 
         <hr>
-        <h4>Capacités</h4>
+        
+        <div class="npc-abilities">
+
+          <div class="npc-ability">
+            <div></div>
+            <h4>CAPACIT&Eacute;</h4>
+            <h4>DESCRIPTION</h4>
+          </div>
+
+          <fieldset class="repeating_npcrolls">
+            
+            <div class="npc-ability">
+
+              <div>
+                <button type="action" class="flat-btn" name="act_npcroll-btn">
+                  <span class="d20-btn">t</span>
+                </button>
+              </div>
+
+              <div class="bordered">
+                <input type="text" name="attr_npcroll-name" title="@{npcroll-name}" placeholder="Nom de la capacité" value="">
+              </div>
+
+              <div class="bordered">
+                <input type="text" name="attr_npcroll-desc" title="@{npcroll-desc}" placeholder="Description de la capacité" value="">
+              </div>
+
+            </div>
+
+          </fieldset>
+
+        </div>
 
       </div>
 
       <div class="npc-config-tab">
-        CONFIG
+
+        <ul>
+          <li>
+            Jets&nbsp;:&nbsp;
+            <select class="select-md" name="attr_togm" title="@{togm}">
+              <option value="" selected>Publics</option>
+              <option value="/w gm ">Chuchotés au MJ</option>
+            </select>
+            <input type="checkbox" name="attr_token_dsp" title="@{token_dsp}" value=" {{token=[x](@{token_url}) }} ">
+            <span>Avec token</span>
+          </li>
+          <li>
+            <strong>Règles optionnelles : </strong>
+            <ul>
+              <li>
+                <span>Initiative variable&nbsp;</span>
+                <input type="checkbox" name="attr_cfg_init_variable" value="1d6!">
+              </li>
+              <li>
+                <span>Critiques différenciés&nbsp;</span>
+                <input type="checkbox" name="attr_cfg_crit_diff" value="1">
+              </li>
+            </ul>
+          </li>
+        </ul>
 
         <hr>
 
         <details>
           <summary>Importer un statblock</summary>
-          
+          <div class="npc-2colrow">
+            <div>
+              <textarea name="attr_statblock" class="stat-block" placeholder="Coller ici un statblock copié depuis le PDF"></textarea>
+            </div>
+            <div>
+              <button type="action" name="act_importsb-btn" class="flat-btn img-btn" title="Importer le statblock">
+                <span class="img-btn">W</span>&nbsp;Import
+              </button>
+              <textarea class="import-result" name="attr_resultsb"></textarea>
+            </div>
+          </div>
         </details>
 
       </div>
@@ -3302,9 +3572,9 @@ function hideArea(div) {
   $20(`.${div}`).addClass(SWData.settings.hiddenClass);
 }
 
-// ============
-// SHEET EVENTS
-// ============
+// ===============
+// PC SHEET EVENTS
+// ===============
 
 /**
  * Change identity heading
@@ -3473,7 +3743,7 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
   on(eventList("change", changed, " "), function() {
     getAttrs(changed, function(values) {
       const score = addValues(values);
-      setAttrs({ [`${attack}`]: score });
+      setAttrs({ [attack]: score });
     });
   });
 });
@@ -3706,11 +3976,13 @@ on("change:pv", function (eventInfo) {
  */
 on("clicked:drecup-btn", function() {
   getAttrs([ "dr", "drecup", "niveau", "pv", "pv_max" ], function(values) {
+    const lsub = "Jet";
+    const rsub = "Récupération Rapide";
     let dr = intval(values.dr);
     if (dr === 0) {
       const chatMsg = cof2RollTemplate({
-        lsub: "Jet",
-        rsub: "Récupération Rapide",
+        lsub,
+        rsub,
         text: "Plus de Dé de Récupération !",
         textclass: "fumble"
       });
@@ -3722,8 +3994,8 @@ on("clicked:drecup-btn", function() {
     let pv = intval(values.pv);
     if (pv === pvMax) {
       const chatMsg = cof2RollTemplate({
-        lsub: "Jet",
-        rsub: "Récupération Rapide",
+        lsub,
+        rsub,
         text: "@{character_name} est déjà à son maximum de PV !",
       });
       sendChatMsg(chatMsg);
@@ -3735,8 +4007,8 @@ on("clicked:drecup-btn", function() {
     const bRecup = Math.ceil(intval(values.niveau) / 2);
     const recup = `[[${dRecup}[DR] + ${bRecup}[Niveau/2] ]] PV récupérés`;
     const chatMsg = cof2RollTemplate({
-      lsub: "Jet",
-      rsub: "Récupération Rapide",
+      lsub,
+      rsub,
       roll: recup,
       text: `${dr} DR restants`
     });
@@ -3774,11 +4046,13 @@ on(eventList("change", SWData.PC.COMBAT.def, " "), updateDef);
  */
 on("clicked:luck-btn", function() {
   getAttrs([ "pc", "last_rolls" ], function(values) {
+    const lsub = "Jet";
+    const rsub = "Chance";
     let pc = intval(values.pc);
     if (pc === 0) {
       const chatMsg = cof2RollTemplate({
-        lsub: "Jet",
-        rsub: "Chance",
+        lsub,
+        rsub,
         text: "Plus de Points de Chance !",
         textclass: "fumble"
       });
@@ -3792,8 +4066,8 @@ on("clicked:luck-btn", function() {
     if (last_broll)
       roll += " | [[10" + ` + ${last_broll} ` + "]]";
     const chatMsg = cof2RollTemplate({
-      lsub: "Jet",
-      rsub: "Chance",
+      lsub,
+      rsub,
       roll,
       text: `${pc} Points de Chance restants`,
       save: "[[0]]"
@@ -3926,18 +4200,21 @@ function matchRegExp(text, pattern) {
 /**
  * Substitute expressions with in-line rolls
  * @param {string} text - text to process
+ * @param {boolean} [useNPC=false] - use NPC prefixed attributes
  * @returns {string}
  */
-function insertRolls(text) {
+function insertRolls(text, useNPC = false) {
   if (!text)
     return "";
   
+  const npc = useNPC ? "pnj_" : "";
+
   // Search for " [#d4° + XXX] "
   matchRegExp(text, /([ ]*)\[([1-9])d4°[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL|rang voie [1-9])\]([ ]*)/gm).forEach(result => {
     let [ matched, sb, dice, ability, sa ] = result;
     if (ability.startsWith("rang voie "))
       ability = "rang_voie" + ability.split(" ")[2];
-    const replace = `${sb}[[${dice}@{devol} + @{${ability.toLowerCase()}}[${ability}] ]]${sa}`;
+    const replace = `${sb}[[${dice}@{devol} + @{${npc}${ability.toLowerCase()}}[${ability}] ]]${sa}`;
     text = text.replace(matched, replace);
   });
 
@@ -3953,10 +4230,24 @@ function insertRolls(text) {
     let [ matched, sb, value, ability, sa ] = result;
     if (ability.startsWith("rang voie "))
       ability = "rang_voie" + ability.split(" ")[2];
-    const replace = `${sb}[[${value} + @{${ability.toLowerCase()}}]]${sa}`;
+    const replace = `${sb}[[${value} + @{${npc}${ability.toLowerCase()}}]]${sa}`;
     text = text.replace(matched, replace);
   });
 
+  // Search for " [XXX] "
+  matchRegExp(text, /([ ]*)\[(AGI|CON|FOR|PER|CHA|INT|VOL)\]([ ]*)/gm).forEach(result => {
+    let [ matched, sb, ability, sa ] = result;
+    const replace = `${sb}[[${value} + @{${npc}${ability.toLowerCase()}}]]${sa}`;
+    text = text.replace(matched, replace);
+  });
+
+  // Search for "... #d# ..."
+  matchRegExp(text, /([0-9]+[dD][0-9]+)([ ]*[\+\-]*[ ]*[0-9]*)?/gm).forEach(result => {
+    const [ matched, dice, mod ] = result;
+    const replace = `[[${dice}${mod || ""}]]`;
+    text = text.replace(matched, replace);
+  });
+  
   return text;
 }
 
@@ -4024,8 +4315,6 @@ on("clicked:repeating_armes:attack-btn", function() {
           break;
         case "tranchants":
           dmcrit = `[[${dmMax}]] DM et hémorragie : [[1@{devol}]] DM/round pendant 4 rounds`;
-          break;
-        default:
           break;
       }
     }
@@ -4391,15 +4680,12 @@ function encumbrance() {
     });
     getAttrs([ 
       "cfg_use_encmb",
-      "armure_malus",
-      "armure_eqp",
       "limite_enc",
       ...allEquip
     ], function(values) {
       const useEncumbrance = intval(values.cfg_use_encmb);
-      const armor_enc = intval(values.armure_malus) * intval(values.armure_eqp);
       const limite_enc = intval(values.limite_enc);
-      let total_enc = armor_enc;
+      let total_enc = 0;
       let zero_val = 0;
       rowIds.forEach(id => {
         const rowId = `${section}_${id}_equip-`;
@@ -4448,13 +4734,7 @@ function encumbrance() {
 /**
  * On change in equipement list
  */
-on(
-  eventList("change", [ 
-    "armure_malus", 
-    "armure_eqp" , 
-    "repeating_equipement" 
-  ], " ") 
-  + " remove:repeating_equipement", function() {
+on("change:repeating_equipement remove:repeating_equipement", function() {
   encumbrance();
 });
 
@@ -4469,16 +4749,293 @@ on("clicked:repeating_armes:arme-opt-btn", function() {
   });
 }); */
 
+
+// ================
+// NPC SHEET EVENTS
+// ================
+
+/**
+ * On NPC ability button click
+ */
+SWData.PC.ABILITIES.forEach(ability => {
+  const short = shorten(ability);
+  on(`clicked:pnj_${short}-btn`, function () {
+    getAttrs([ `pnj_${short}_sup` ], function (value) {
+      const [ dType ] = Object.keys(value);
+      const roll = intval(value[dType]) === 1 ? "2d20kh1" : "1d20";
+      const carac = `[[${roll}[Dé] + (@{pnj_${short}})[Bonus ${short.toUpperCase()}] ]] `;      
+      const chatMsg = cof2RollTemplate({
+        lsub: "Test",
+        rsub: capitalize(ability),
+        roll: carac
+      });
+      sendChatMsg(chatMsg);
+    });
+  });
+});
+
+/**
+ * On NPC init button click
+ */
+on("clicked:pnj_init-btn", function () {
+  const init = `[[@{pnj_init}[Initiative] + @{cfg_init_variable}[Dé(s)] &{tracker} ]]`;
+  const chatMsg = cof2RollTemplate({
+    lsub: "Jet",
+    rsub: "Initiative",
+    roll: init
+  });
+  sendChatMsg(chatMsg);
+});
+
+/**
+ * Roll an NPC attack in chat
+ */
+on("clicked:repeating_npcarmes:npcatk-btn", function() {
+  const section = "repeating_npcarmes_arme-"
+  const attackAttrs = [
+    "nom",
+    "roll",
+    "atk",
+    "crit",
+    "dm",
+    "dmtype",
+    "dmdiv",
+    "portee",
+    "special"
+  ];
+  getAttrs([ "cfg_crit_diff", ...attackAttrs.map(attribute => `${section}${attribute}`) ], function (values) {
+    const use_crit_diff = intval(values["cfg_crit_diff"]);
+    const name = capitalize(strval(values[section + "nom"], "Attaque"));
+    const roll = strval(values[section + "roll"]);
+    const atk = strval(values[section + "atk"]);
+    const portee = strval(values[section + "portee"]);
+    const range = (portee !== "") ? ` (${portee})` : "";
+    const crit = intval(values[section + "crit"], 20);
+    let attack = "";
+    if (atk !== "0")
+      attack = `[[${roll}cs>${crit}cf1[Dé] + ${atk}[Bonus] ]]`;
+    
+    let [ dm, ...dmextra ] = strval(values[section + "dm"]).split(" ");
+    const dmtype = strval(values[section + "dmtype"]);
+    const dmdesc = [ dmtype, ...dmextra ].join(" ").trim();
+    const dmdiv = strval(values[section + "dmdiv"]);
+    let dmroll = "";
+    if (dm !== "" )
+      dmroll = `[[[[${dm}]][DM] + ${dmdiv}[Divers] ]]`;
+    
+    const special = insertRolls(strval(values[section + "special"]), true);
+
+    let dmMax = 0;
+    const result = dm.match(/([0-9]*)[dD]([0-9]*)/);
+    if (result) {
+      let [ matched, dice, faces ] = result;
+      if (matched) {
+        if (!dice)
+          dice = 1;
+        dmMax = intval(dice) * intval(faces);
+      }
+    }
+
+    let dmcrit = "";
+    if (use_crit_diff === 1) {
+      switch (dmtype) {
+        case "contondants":
+        case "coup":
+          dmcrit = `[[${dmMax}]] DM et cible étourdie au prochain round`;
+          break;
+        case "perforants":
+        case "morsure":
+          if (dice && faces)
+            dmcrit = `[[${dice * 2}d${faces}]] DM + hémorragie : [[1@{devol}]] DM/round pendant 4 rounds`;
+          break;
+        case "tranchants":
+        case "griffes":
+          dmcrit = `[[${dmMax}]] DM et hémorragie : [[1@{devol}]] DM/round pendant 4 rounds`;
+          break;
+      }
+    }
+
+    const chatMsg = cof2RollTemplate({
+      lsub: "Attaque",
+      rsub: name + range,
+      roll: attack,
+      broll: attack,
+      dm: dmroll,
+      dmdesc,
+      critdiff: `[[${use_crit_diff}]]`,
+      dmcrit,
+      text: special
+    });
+    sendChatMsg(chatMsg);
+  })
+});
+
+/**
+ * Roll an NPC ability in chat
+ */
+on("clicked:repeating_npcrolls:npcroll-btn", function() {
+  const section = "repeating_npcrolls_npcroll-";
+  getAttrs([ `${section}name`, `${section}desc` ], function (values) {
+    const name = capitalize(strval(values[section + "name"], "Capacité"));
+    const text = insertRolls(strval(values[section + "desc"]), true);
+    const chatMsg = cof2RollTemplate({
+      lsub: "Capacité",
+      rsub: name,
+      text
+    });
+    sendChatMsg(chatMsg);
+  });
+});
+
+/**
+ * Search abilities values in statblock text
+ * @param {string} sbLine - line of text
+ * @param {Map} npcAttrs - Map of attributes to update
+ * @returns {Map} updated Map
+ */
+function importNPCAbilities(sbLine, npcAttrs) {
+  SWData.PC.ABILITIES.forEach(ability => {
+    const short = shorten(ability);
+    const rx = new RegExp(` ${short.toUpperCase()} (.)([0-9]*)(\\*)? `);
+    const match = sbLine.match(rx);
+    if (!match) 
+      return;
+    let [ , sign, value, sup ] = match;
+    value = intval(value);
+    if (sign !== "+")
+      value *= -1;
+    sup = sup === "*" ? "1" : "0"
+    npcAttrs.set("pnj_" + short, value)
+    npcAttrs.set("pnj_" + short + "_sup", sup)
+  });
+  return npcAttrs;
+}
+
+/**
+ * Parse an attack from a statblock line
+ * @param {string} sbLine - line of text
+ * @param {Map} npcAttrs - Map of attributes to update
+ * @returns {Map} updated Map 
+ */
+function importNPCAttack(sbLine, npcAttrs) {
+  const [ latk, ratk ] = sbLine.split(" DM ");
+  
+  let name = "";
+  let bonus = "";
+  lmatch = latk.match(/(.*?) ([\+\-][0-9]*)/);
+  if (lmatch) {
+    [ , name, bonus ] = lmatch;
+    bonus = intval(bonus);
+  }
+
+  let dm = "";
+  let dmdiv = "";
+  let [ dmexpr, special ] = ratk.split(" + ");
+  if (dmexpr) {
+    dmatch = dmexpr.match(/([0-9]*[dD][0-9]*)[\-\+]([0-9]*)/);
+    if (dmatch) {
+      [ , dm, dmdiv ] = dmatch;
+    }
+  }
+
+  special = strval(special);
+  if (special !== "")
+    special = " + " + special;
+  
+  const rowId = `repeating_npcarmes_${generateRowID()}_arme-`;
+  npcAttrs.set(rowId + "nom", name);
+  npcAttrs.set(rowId + "roll", "1d20");
+  npcAttrs.set(rowId + "atk", bonus);
+  npcAttrs.set(rowId + "crit", "20");
+  npcAttrs.set(rowId + "dm", dm);
+  npcAttrs.set(rowId + "dmtype", "tranchants");
+  npcAttrs.set(rowId + "dmdiv", dmdiv);
+  npcAttrs.set(rowId + "special", special);
+  
+  return npcAttrs
+}
+
+on("clicked:importsb-btn", function() {
+  getAttrs(["statblock"], function (value) {
+    const statblock = strval(value.statblock).split("\n");
+    if (statblock.length === 0)
+      return;
+
+    let npcAttrs = new Map();
+    const abilities = [];
+    let ability = "";
+
+    let foundAttacks = false;
+    let foundAbilities = false;
+    
+    statblock.forEach((sbLine, lineNum) => {
+      
+      // attacks
+      if (sbLine.includes(" DM ") && !foundAbilities) {
+        npcAttrs = importNPCAttack(sbLine, npcAttrs);
+        foundAttacks = true;
+        return;
+      }
+      
+      if (foundAttacks) {
+        // abilities
+        if (sbLine.toUpperCase() === sbLine) {
+          foundAbilities = true;
+          if (ability !== "") {
+            const [ name, description ] = ability.split("~");
+            abilities.push({ name, description });
+            ability = "";
+          }
+          ability = sbLine + "~";
+        } else {
+          ability += sbLine + " ";
+        }
+      } else {
+        // name & nc
+        if (lineNum === 0) {
+          match = sbLine.match(/(.*) \| NC ([0-9]*)/);
+          if (match) {
+            const [ , character_name, nc ] = match;
+            npcAttrs.set("character_name", character_name);
+            npcAttrs.set("niveau", nc);
+          }
+          return;
+        }
+        // creature type & size
+        match = sbLine.match(/(CRÉATURE .*) .* TAILLE (.*)/);
+        if (match) {
+          const [ , creature, taille ] = match;
+          if (creature)
+            npcAttrs.set("creature", creature);
+          if (taille)
+            npcAttrs.set("taille", taille);
+          return;
+        }
+
+        npcAttrs = importNPCAbilities(sbLine, npcAttrs);
+      }
+    });
+    if (ability !== "") {
+      const [ name, description ] = ability.split("~");
+      abilities.push({ name, description });
+    }
+
+    console.log(npcAttrs);
+    console.log(abilities);
+  });
+});
+
 // ====================
 // SHEET INIT & UPDATES
 // ====================
 
 /**
  * Apply sheet migrations
+ * @param {string} sheetType - character sheet type
  * @param {object} curVer - current version
  * @returns {void}
  */
-function migrateSheet(curVer) {
+function migrateSheet(sheetType, curVer) {
   if (curVer.major === 1 && curVer.minor < 1)
     // migrateSheetV1_1(); // version 1.0 > 1.1
   
@@ -4548,6 +5105,7 @@ on("sheet:opened", function() {
     "verfdp",
     "debug_mode",
     "character_token",
+    "sheet_type",
     ...pathAttrs
   ], function (values) {
 
@@ -4561,6 +5119,8 @@ on("sheet:opened", function() {
         backColor: "brown"
       }
     );
+
+    const sheetType = strval(values.sheet_type);
     
     const newVer = parseSemVer(values.verfdp);
     const curVer = parseSemVer(values.version);
@@ -4569,12 +5129,15 @@ on("sheet:opened", function() {
       curVer.minor < newVer.minor ||
       curVer.patch < newVer.patch
     ) {
-      migrateSheet(curVer);
+      migrateSheet(sheetType, curVer);
     }
 
     let updates = new Map();
     updates = getTokenURL(updates, values);
-    updates = rebuildPathAll(updates, values);
+
+    if (sheetType === SWData.SHEET_TYPE.PC) {
+      updates = rebuildPathAll(updates, values);
+    }
 
     updates.set("version", values.verfdp);
     setAttrs(Object.fromEntries(updates));
