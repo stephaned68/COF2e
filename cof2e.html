@@ -40,6 +40,7 @@
   <input type="hidden" name="attr_pm_buff" value="0">
   <input type="hidden" name="attr_pc_buff" value="0">
 
+  <!-- Other hidden attributes -->
   <input type="hidden" name="attr_rangs_voies" value="">
   <input type="hidden" name="attr_noms_voies" value="">
   <input type="hidden" name="attr_armor_malus" value="0">
@@ -4198,22 +4199,56 @@ function matchRegExp(text, pattern) {
 }
 
 /**
+ * Get the path number from the path name
+ * @param {string} name - ability qualifier ('rang voie 1', 'rang voie <name>', 'rang <name>')
+ * @param {string} pathNames - noms_voies attribute value (| delimited)
+ * @returns {number}
+ */
+function findPathByName(name, pathNames) {
+  const q = name.split(" ").slice(1) || [];
+  if (q.length === 0)
+    return 0;
+
+  const qualifier = q.slice(1).join(" ");
+  if (qualifier === "")
+    return 0
+
+  if (q[0].toLowerCase() === "voie") {
+    if (Number.isInteger(intval(qualifier)) && intval(qualifier) > 0) {
+      return intval(qualifier);
+    }
+  }
+
+  const pathNumber = pathNames.split("|").findIndex(pathName => pathName.toLowerCase() === qualifier.toLowerCase());
+
+  return pathNumber + 1;
+}
+
+/**
+ * @typedef insertRollsOptions
+ * @property {string} pathNames - comma-separated list of path names
+ * @property {boolean} useNPC - prepend attribute names with npc_
+ */
+
+/**
  * Substitute expressions with in-line rolls
  * @param {string} text - text to process
- * @param {boolean} [useNPC=false] - use NPC prefixed attributes
+ * @param {insertRollsOptions} [options={}] - options
  * @returns {string}
  */
-function insertRolls(text, useNPC = false) {
+function insertRolls(text, options = {}) {
   if (!text)
     return "";
   
+  const { pathNames = "", useNPC = false } = options;
+
   const npc = useNPC ? "pnj_" : "";
 
   // Search for " [#d4° + XXX] "
   matchRegExp(text, /([ ]*)\[([1-9])d4°[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL|rang voie [1-9])\]([ ]*)/gm).forEach(result => {
     let [ matched, sb, dice, ability, sa ] = result;
-    if (ability.startsWith("rang voie "))
-      ability = "rang_voie" + ability.split(" ")[2];
+    if (ability.startsWith("rang "))
+      ability = `rang_voie${ findPathByName(ability, pathNames) }`;
     const replace = `${sb}[[${dice}@{devol} + @{${npc}${ability.toLowerCase()}}[${ability}] ]]${sa}`;
     text = text.replace(matched, replace);
   });
@@ -4228,8 +4263,9 @@ function insertRolls(text, useNPC = false) {
   // Search for " [# + XXX] "
   matchRegExp(text, /([ ]*)\[([0-9]+)[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL|rang voie [1-9])\]([ ]*)/gm).forEach(result => {
     let [ matched, sb, value, ability, sa ] = result;
-    if (ability.startsWith("rang voie "))
-      ability = "rang_voie" + ability.split(" ")[2];
+    if (ability.startsWith("rang ")) {
+      ability = `rang_voie${ findPathByName(ability, pathNames) }`;
+    }
     const replace = `${sb}[[${value} + @{${npc}${ability.toLowerCase()}}]]${sa}`;
     text = text.replace(matched, replace);
   });
@@ -4268,8 +4304,13 @@ on("clicked:repeating_armes:attack-btn", function() {
     "portee",
     "special"
   ];
-  getAttrs([ "cfg_crit_diff", ...attackAttrs.map(attribute => `${section}${attribute}`) ], function (values) {
-    const use_crit_diff = intval(values["cfg_crit_diff"]);
+  getAttrs([ 
+    "cfg_crit_diff", 
+    "noms_voies", 
+    ...attackAttrs.map(attribute => `${section}${attribute}`) 
+  ], function (values) {
+    const use_crit_diff = intval(values.cfg_crit_diff);
+    const pathNames = strval(values.noms_voies);
     const atk = strval(values[section + "atk"]);
     const atkdiv = intval(values[section + "atkdiv"]);
     const name = capitalize(strval(values[section + "nom"], getAttackName(atk)));
@@ -4290,7 +4331,7 @@ on("clicked:repeating_armes:attack-btn", function() {
     if (dm !== "" )
       dmroll = `[[[[${dm}]][DM] + ${dmbonus}[Bonus] + ${dmdiv}[Divers] ]]`;
     
-    const special = insertRolls(strval(values[section + "special"]));
+    const special = insertRolls(strval(values[section + "special"]), { pathNames });
 
     let dmMax = 0;
     const result = dm.match(/([0-9]*)[dD]([0-9]*)/);
@@ -4530,7 +4571,7 @@ on("clicked:repeating_rolls:roll-btn", function() {
     let text = "";
 
     if (type !== "0") {
-      text = insertRolls(rollCmd);
+      text = insertRolls(rollCmd, { pathNames: names });
       let carTip = "";
       // d20
       rollCmd = `${type}[Dés]`;
@@ -4558,7 +4599,7 @@ on("clicked:repeating_rolls:roll-btn", function() {
       rollCmd = "[[" + rollCmd + " ]]"
     } else {
       lsub = "Jet";
-      rollCmd = insertRolls(rollCmd);
+      rollCmd = insertRolls(rollCmd, { pathNames: names });
     }
 
     // Send to chat
@@ -4823,7 +4864,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     if (dm !== "" )
       dmroll = `[[[[${dm}]][DM] + ${dmdiv}[Divers] ]]`;
     
-    const special = insertRolls(strval(values[section + "special"]), true);
+    const special = insertRolls(strval(values[section + "special"]), { useNPC: true });
 
     let dmMax = 0;
     const result = dm.match(/([0-9]*)[dD]([0-9]*)/);
@@ -4877,7 +4918,7 @@ on("clicked:repeating_npcrolls:npcroll-btn", function() {
   const section = "repeating_npcrolls_npcroll-";
   getAttrs([ `${section}name`, `${section}desc` ], function (values) {
     const name = capitalize(strval(values[section + "name"], "Capacité"));
-    const text = insertRolls(strval(values[section + "desc"]), true);
+    const text = insertRolls(strval(values[section + "desc"]), { useNPC: true });
     const chatMsg = cof2RollTemplate({
       lsub: "Capacité",
       rsub: name,
@@ -4952,7 +4993,7 @@ function importNPCAttack(sbLine, npcAttrs) {
   npcAttrs.set(rowId + "dmdiv", dmdiv);
   npcAttrs.set(rowId + "special", special);
   
-  return npcAttrs
+  return npcAttrs;
 }
 
 on("clicked:importsb-btn", function() {
@@ -4982,11 +5023,19 @@ on("clicked:importsb-btn", function() {
         if (sbLine.toUpperCase() === sbLine) {
           foundAbilities = true;
           if (ability !== "") {
-            const [ name, description ] = ability.split("~");
-            abilities.push({ name, description });
+            const [ name, action, description ] = ability.split("~");
+            abilities.push({ name, action, description });
             ability = "";
           }
-          ability = sbLine + "~";
+          let action = "";
+          const match = sbLine.match(/ \(([GMAL])\)/);
+          if (match) {
+            let matched;
+            [ matched , action ] = match;
+            sbLine = sbLine.replace(matched, "");
+          }
+          sbLine = sbLine.split(":")[0].trim().toLowerCase();
+          ability = capitalize(sbLine) + "~" + action + "~";
         } else {
           ability += sbLine + " ";
         }
@@ -5012,16 +5061,43 @@ on("clicked:importsb-btn", function() {
           return;
         }
 
+        // défense
+        match = sbLine.match(/\(S\) Défense ([0-9]*)/);
+        if (match) {
+          const [ , def ] = match;
+          npcAttrs.set("def", def);
+        }
+        
+        // pv
+        match = sbLine.match(/\(V\) Points de vigueur ([0-9]*)/);
+        if (match) {
+          const [ , pv ] = match;
+          npcAttrs.set("pv", pv);
+          npcAttrs.set("pv_max", pv);
+        }
+
+        // initiative
+        match = sbLine.match(/\(I\) Initiative ([0-9]*)/);
+        if (match) {
+          const [ , init ] = match;
+          npcAttrs.set("init", init);
+        }
+
         npcAttrs = importNPCAbilities(sbLine, npcAttrs);
       }
     });
     if (ability !== "") {
-      const [ name, description ] = ability.split("~");
-      abilities.push({ name, description });
+      const [ name, action, description ] = ability.split("~");
+      abilities.push({ name, action, description });
     }
 
-    console.log(npcAttrs);
-    console.log(abilities);
+    abilities.forEach(ability => {
+      const rowId = `repeating_npcrolls_${generateRowID()}_npcroll-`;
+      npcAttrs.set(rowId + "name", `${ability.name}${ ability.action !== "" ? " (" + ability.action + ")" : "" }`);
+      npcAttrs.set(rowId + "desc", ability.description);
+    });
+
+    setAttrs(Object.fromEntries(npcAttrs));
   });
 });
 
