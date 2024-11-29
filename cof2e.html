@@ -2641,8 +2641,8 @@
                   </button>
                 </div>
                 <div class="bordered">
-                  <input type="number" name="attr_pnj_agi" title="@{pnj_agi}" value="0">
-                  <input type="checkbox" name="attr_pnj_agi_sup" title="@{pnj_agi_sup} Caractéristique supérieure" value="1">
+                  <input type="number" name="attr_agi" title="@{agi}" value="0">
+                  <input type="checkbox" name="attr_agi_sup" title="@{agi_sup} Caractéristique supérieure" value="1">
                 </div>
               </div>
 
@@ -2654,8 +2654,8 @@
                   </button>
                 </div>
                 <div class="bordered">
-                  <input type="number" name="attr_pnj_con" title="@{pnj_con}" value="0">
-                  <input type="checkbox" name="attr_pnj_con_sup" title="@{pnj_con_sup} Caractéristique supérieure" value="1">
+                  <input type="number" name="attr_con" title="@{con}" value="0">
+                  <input type="checkbox" name="attr_con_sup" title="@{con_sup} Caractéristique supérieure" value="1">
                 </div>
               </div>
 
@@ -2667,8 +2667,8 @@
                   </button>
                 </div>
                 <div class="bordered">
-                  <input type="number" name="attr_pnj_for" title="@{pnj_for}" value="0">
-                  <input type="checkbox" name="attr_pnj_for_sup" title="@{pnj_for_sup} Caractéristique supérieure" value="1">
+                  <input type="number" name="attr_for" title="@{for}" value="0">
+                  <input type="checkbox" name="attr_for_sup" title="@{for_sup} Caractéristique supérieure" value="1">
                 </div>
               </div>
 
@@ -2680,8 +2680,8 @@
                   </button>
                 </div>
                 <div class="bordered">
-                  <input type="number" name="attr_pnj_per" title="@{pnj_per}" value="0">
-                  <input type="checkbox" name="attr_pnj_per_sup" title="@{pnj_per_sup} Caractéristique supérieure" value="1">
+                  <input type="number" name="attr_per" title="@{per}" value="0">
+                  <input type="checkbox" name="attr_per_sup" title="@{per_sup} Caractéristique supérieure" value="1">
                 </div>
               </div>
 
@@ -2697,8 +2697,8 @@
                   </button>
                 </div>
                 <div class="bordered">
-                  <input type="number" name="attr_pnj_cha" title="@{pnj_cha}" value="0">
-                  <input type="checkbox" name="attr_pnj_cha_sup" title="@{pnj_cha_sup} Caractéristique supérieure" value="1">
+                  <input type="number" name="attr_cha" title="@{cha}" value="0">
+                  <input type="checkbox" name="attr_cha_sup" title="@{cha_sup} Caractéristique supérieure" value="1">
                 </div>
               </div>
               
@@ -2710,8 +2710,8 @@
                   </button>
                 </div>
                 <div class="bordered">
-                  <input type="number" name="attr_pnj_int" title="@{pnj_int}" value="0">
-                  <input type="checkbox" name="attr_pnj_int_sup" title="@{pnj_int_sup} Caractéristique supérieure" value="1">
+                  <input type="number" name="attr_int" title="@{int}" value="0">
+                  <input type="checkbox" name="attr_int_sup" title="@{int_sup} Caractéristique supérieure" value="1">
                 </div>
               </div>
 
@@ -2723,8 +2723,8 @@
                   </button>
                 </div>
                 <div class="bordered">
-                  <input type="number" name="attr_pnj_vol" title="@{pnj_vol}" value="0">
-                  <input type="checkbox" name="attr_pnj_vol_sup" title="@{pnj_vol_sup} Caractéristique supérieure" value="1">
+                  <input type="number" name="attr_vol" title="@{vol}" value="0">
+                  <input type="checkbox" name="attr_vol_sup" title="@{vol_sup} Caractéristique supérieure" value="1">
                 </div>
               </div>
 
@@ -2759,7 +2759,7 @@
                     </button>
                   </div>
                   <div class="bordered">
-                    <input type="number" class="two-digits" name="attr_pnj_init" title="@{pnj_init}" value="0">
+                    <input type="number" class="two-digits" name="attr_init" title="@{init}" value="0">
                   </div>
                 </div>
                 
@@ -2768,7 +2768,7 @@
                     Défense
                   </div>
                   <div class="bordered">
-                    <input type="number" class="two-digits" name="attr_pnj_def" title="@{pnj_def}" value="0">
+                    <input type="number" class="two-digits" name="attr_def" title="@{def}" value="0">
                   </div>
                 </div>
 
@@ -2812,11 +2812,12 @@
                 <input type="text" name="attr_arme-nom" title="@{arme-nom}" placeholder="Arme/attaque" value="">
               </div>
               <div class="d-flex d-flex-middle bordered">
+                <input type="checkbox" name="attr_arme-multi" title="@{arme-multi}" value="1">&nbsp;
                 <select class="select-xs" name="attr_arme-roll" title="@{arme-roll} Type de jet">
                   <option value="1d20" selected>No - Normal</option>
                   <option value="2d20kh1">Db - Dé bonus</option>
                   <option value="2d20kl1">Dm - Dé malus</option>
-                </select>
+                </select>&nbsp;
                 <input type="number" class="two-digits" name="attr_arme-atk" title="@{arme-atk}" value="">
               </div>
               <div class="d-flex d-flex-middle bordered">
@@ -2931,6 +2932,8 @@
 
       <div class="npc-config-tab">
 
+        <hr>
+        
         <ul>
           <li>
             Jets&nbsp;:&nbsp;
@@ -4241,22 +4244,22 @@ function insertRolls(text, options = {}) {
     return "";
   
   const { pathNames = "", useNPC = false } = options;
+  const devol = `@{${ useNPC ? "target|" : "" }devol}` ;
 
-  const npc = useNPC ? "pnj_" : "";
 
   // Search for " [#d4° + XXX] "
   matchRegExp(text, /([ ]*)\[([1-9])d4°[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL|rang voie [1-9])\]([ ]*)/gm).forEach(result => {
     let [ matched, sb, dice, ability, sa ] = result;
     if (ability.startsWith("rang "))
       ability = `rang_voie${ findPathByName(ability, pathNames) }`;
-    const replace = `${sb}[[${dice}@{devol} + @{${npc}${ability.toLowerCase()}}[${ability}] ]]${sa}`;
+    const replace = `${sb}[[${dice}${devol} + @{${ability.toLowerCase()}}[${ability}] ]]${sa}`;
     text = text.replace(matched, replace);
   });
 
   // Search for "... #d4° ..."
   matchRegExp(text, /([ ]*)([1-9])d4°([ ])*/gm).forEach(result => {
     const [ matched, sb, dice, sa ] = result;
-    const replace = `${sb}[[${dice}@{devol}]]${sa}`;
+    const replace = `${sb}[[${dice}${devol}]]${sa}`;
     text = text.replace(matched, replace);
   });
 
@@ -4266,14 +4269,14 @@ function insertRolls(text, options = {}) {
     if (ability.startsWith("rang ")) {
       ability = `rang_voie${ findPathByName(ability, pathNames) }`;
     }
-    const replace = `${sb}[[${value} + @{${npc}${ability.toLowerCase()}}]]${sa}`;
+    const replace = `${sb}[[${value} + @{${ability.toLowerCase()}}]]${sa}`;
     text = text.replace(matched, replace);
   });
 
   // Search for " [XXX] "
   matchRegExp(text, /([ ]*)\[(AGI|CON|FOR|PER|CHA|INT|VOL)\]([ ]*)/gm).forEach(result => {
     let [ matched, sb, ability, sa ] = result;
-    const replace = `${sb}[[${value} + @{${npc}${ability.toLowerCase()}}]]${sa}`;
+    const replace = `${sb}[[${value} + @{${ability.toLowerCase()}}]]${sa}`;
     text = text.replace(matched, replace);
   });
 
@@ -4801,10 +4804,10 @@ on("clicked:repeating_armes:arme-opt-btn", function() {
 SWData.PC.ABILITIES.forEach(ability => {
   const short = shorten(ability);
   on(`clicked:pnj_${short}-btn`, function () {
-    getAttrs([ `pnj_${short}_sup` ], function (value) {
+    getAttrs([ `${short}_sup` ], function (value) {
       const [ dType ] = Object.keys(value);
       const roll = intval(value[dType]) === 1 ? "2d20kh1" : "1d20";
-      const carac = `[[${roll}[Dé] + (@{pnj_${short}})[Bonus ${short.toUpperCase()}] ]] `;      
+      const carac = `[[${roll}[Dé] + (@{${short}})[Bonus ${short.toUpperCase()}] ]] `;      
       const chatMsg = cof2RollTemplate({
         lsub: "Test",
         rsub: capitalize(ability),
@@ -4819,7 +4822,7 @@ SWData.PC.ABILITIES.forEach(ability => {
  * On NPC init button click
  */
 on("clicked:pnj_init-btn", function () {
-  const init = `[[@{pnj_init}[Initiative] + @{cfg_init_variable}[Dé(s)] &{tracker} ]]`;
+  const init = `[[@{init}[Initiative] + @{cfg_init_variable}[Dé(s)] &{tracker} ]]`;
   const chatMsg = cof2RollTemplate({
     lsub: "Jet",
     rsub: "Initiative",
@@ -4835,6 +4838,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
   const section = "repeating_npcarmes_arme-"
   const attackAttrs = [
     "nom",
+    "multi",
     "roll",
     "atk",
     "crit",
@@ -4847,11 +4851,23 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
   getAttrs([ "cfg_crit_diff", ...attackAttrs.map(attribute => `${section}${attribute}`) ], function (values) {
     const use_crit_diff = intval(values["cfg_crit_diff"]);
     const name = capitalize(strval(values[section + "nom"], "Attaque"));
+    const use_multi = intval(values[section + "multi"]);
     const roll = strval(values[section + "roll"]);
     const atk = strval(values[section + "atk"]);
     const portee = strval(values[section + "portee"]);
     const range = (portee !== "") ? ` (${portee})` : "";
     const crit = intval(values[section + "crit"], 20);
+
+    let multiAttacks = 1;
+    if (use_multi === 1) {
+      const result = name.match(/\(([0-9]*)[ ]*attaques\)/);
+      if (result) {
+        [ , multiAttacks ] = result;
+      }
+      if (intval(multiAttacks) <= 0 )
+        multiAttacks = 1;
+    }
+
     let attack = "";
     if (atk !== "0")
       attack = `[[${roll}cs>${crit}cf1[Dé] + ${atk}[Bonus] ]]`;
@@ -4896,7 +4912,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
       }
     }
 
-    const chatMsg = cof2RollTemplate({
+    let chatAtk = {
       lsub: "Attaque",
       rsub: name + range,
       roll: attack,
@@ -4906,8 +4922,14 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
       critdiff: `[[${use_crit_diff}]]`,
       dmcrit,
       text: special
-    });
-    sendChatMsg(chatMsg);
+    };
+
+    for (let atk = 1; atk <= multiAttacks; atk++) {
+      if (use_multi === 1)
+        chatAtk = { ...chatAtk, lsub: `${atk}${ atk > 1 ? "ème" : "ère" } attaque` };
+      const chatMsg = cof2RollTemplate(chatAtk);
+      sendChatMsg(chatMsg);
+    }
   })
 });
 
@@ -4946,8 +4968,8 @@ function importNPCAbilities(sbLine, npcAttrs) {
     if (sign !== "+")
       value *= -1;
     sup = sup === "*" ? "1" : "0"
-    npcAttrs.set("pnj_" + short, value)
-    npcAttrs.set("pnj_" + short + "_sup", sup)
+    npcAttrs.set(short, value)
+    npcAttrs.set(short + "_sup", sup)
   });
   return npcAttrs;
 }
@@ -4996,7 +5018,16 @@ function importNPCAttack(sbLine, npcAttrs) {
   return npcAttrs;
 }
 
+/**
+ * 
+ */
 on("clicked:importsb-btn", function() {
+  
+  // remove olds
+  removeRepeatingAll("npcarmes");
+  removeRepeatingAll("npcrolls");
+
+  // add new
   getAttrs(["statblock"], function (value) {
     const statblock = strval(value.statblock).split("\n");
     if (statblock.length === 0)
@@ -5069,11 +5100,13 @@ on("clicked:importsb-btn", function() {
         }
         
         // pv
-        match = sbLine.match(/\(V\) Points de vigueur ([0-9]*)/);
+        match = sbLine.match(/\(V\) Points de vigueur ([0-9]*)([ ]\(RD ([0-9]*)\))?/);
         if (match) {
-          const [ , pv ] = match;
+          const [ , pv, rd, rdValue ] = match;
           npcAttrs.set("pv", pv);
           npcAttrs.set("pv_max", pv);
+          if (rd)
+            npcAttrs.set("rd", rdValue);
         }
 
         // initiative
@@ -5097,6 +5130,7 @@ on("clicked:importsb-btn", function() {
       npcAttrs.set(rowId + "desc", ability.description);
     });
 
+    npcAttrs.set("statblock", "");
     setAttrs(Object.fromEntries(npcAttrs));
   });
 });

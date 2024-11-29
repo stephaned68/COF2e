@@ -642,7 +642,7 @@ input[value="0"].show-paths-789 ~ div.abilities {
 
 .npc-attacks .weapon {
   display: grid;
-  grid-template-columns: .5fr 3.5fr 1.5fr 1fr 4.5fr 1fr 4fr;
+  grid-template-columns: .5fr 3.5fr 2fr 1fr 4fr 1fr 4fr;
   gap: 2px;
   margin-bottom: 2px;
 }
@@ -690,7 +690,7 @@ textarea.import-result {
 
 .sheet-rolltemplate-cof2 .sheet-rt-2cols {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 2fr 3fr;
   gap: 2px;
   padding: 5px;
 }
