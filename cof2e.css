@@ -499,7 +499,7 @@ div.change-view {
 
 .pc-attacks .weapon {
   display: grid;
-  grid-template-columns: .5fr 3fr 3fr 1fr 4.5fr 1fr 3.5fr;
+  grid-template-columns: 25px 3fr 3fr 1fr 4.5fr 1fr 3.5fr;
   gap: 2px;
   margin-bottom: 2px;
 }
@@ -555,7 +555,7 @@ input[value="0"].show-paths-789 ~ div.abilities {
 
 .pc-rolls-subtab .pc-roll-r1 {
   display: grid;
-  grid-template-columns: .1fr 4fr 8fr 5fr;
+  grid-template-columns: 25px 4fr 6.5fr 6.5fr;
   gap: 2px;
   margin-bottom: 2px;
 }
@@ -642,14 +642,14 @@ input[value="0"].show-paths-789 ~ div.abilities {
 
 .npc-attacks .weapon {
   display: grid;
-  grid-template-columns: .5fr 3.5fr 2fr 1fr 4fr 1fr 4fr;
+  grid-template-columns: 25px 3.5fr 2fr 1fr 4fr 1fr 4fr;
   gap: 2px;
   margin-bottom: 2px;
 }
 
 .npc-abilities .npc-ability {
   display: grid;
-  grid-template-columns: .5fr 4fr 8fr;
+  grid-template-columns: 25px 4fr 8fr;
   gap: 2px;
   margin-bottom: 2px;
 }
@@ -690,7 +690,7 @@ textarea.import-result {
 
 .sheet-rolltemplate-cof2 .sheet-rt-2cols {
   display: grid;
-  grid-template-columns: 2fr 3fr;
+  grid-template-columns: 40% 60%;
   gap: 2px;
   padding: 5px;
 }

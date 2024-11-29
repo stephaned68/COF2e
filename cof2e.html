@@ -2152,11 +2152,11 @@
               </div>
 
               <div class="d-flex d-flex-middle bordered">
-                <select class="select-md" name="attr_roll-type" title="@{roll-type} Type de jet">
-                  <option value="1d20" selected>Normal</option>
-                  <option value="2d20kh1">Dé bonus</option>
-                  <option value="2d20kl1">Dé malus</option>
-                  <option value="0">Autre jet</option>
+                <select class="select-xs" name="attr_roll-type" title="@{roll-type} Type de jet">
+                  <option value="1d20" selected>No - Normal</option>
+                  <option value="2d20kh1">Db - Dé bonus</option>
+                  <option value="2d20kl1">Dm - Dé malus</option>
+                  <option value="0">Jet - Autre</option>
                 </select>
                 <span class="align-self-center">&nbsp;+&nbsp;</span>
                 <select class="select-sm" name="attr_roll-carac" title="@{roll-carac} Bonus de caractéristique">
@@ -2511,8 +2511,9 @@
 
       <!-- Fiche PJ, Onglet Config -->
       <div class="pc-config-tab">
-        <h3>Configuration</h3>
 
+        <hr>
+        
         <ul>
           <li>
             Jets&nbsp;:&nbsp;
@@ -4246,7 +4247,6 @@ function insertRolls(text, options = {}) {
   const { pathNames = "", useNPC = false } = options;
   const devol = `@{${ useNPC ? "target|" : "" }devol}` ;
 
-
   // Search for " [#d4° + XXX] "
   matchRegExp(text, /([ ]*)\[([1-9])d4°[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL|rang voie [1-9])\]([ ]*)/gm).forEach(result => {
     let [ matched, sb, dice, ability, sa ] = result;
@@ -4276,7 +4276,7 @@ function insertRolls(text, options = {}) {
   // Search for " [XXX] "
   matchRegExp(text, /([ ]*)\[(AGI|CON|FOR|PER|CHA|INT|VOL)\]([ ]*)/gm).forEach(result => {
     let [ matched, sb, ability, sa ] = result;
-    const replace = `${sb}[[${value} + @{${ability.toLowerCase()}}]]${sa}`;
+    const replace = `${sb}[[@{${ability.toLowerCase()}}]]${sa}`;
     text = text.replace(matched, replace);
   });
 
