@@ -2454,6 +2454,7 @@
                     <input type="text" name="attr_equip-props" title="@{equip-props} Propriétés" value="">
                     <input type="checkbox" name="attr_equip-atk" title="@{equip-atk} A une attaque" value="1">
                     &nbsp;A une attaque
+                    <input type="hidden" name="attr_atkid" value="">
                   </div>
 
                 </details>
@@ -2606,6 +2607,37 @@
             </li>
           </ul>
         </details>
+
+        <hr>
+
+        <details>
+
+          <summary>Importer profil & équipement</summary>
+
+          <div class="sheet-2colrow">
+
+            <div class="sheet-col">
+              <textarea class="statblock" name="attr_json_profile"></textarea>
+            </div>
+
+            <div class="sheet-col">
+              <button type="action" class="flat-btn img-btn" name="act_comob_export-btn" title="Exporter le profil">
+                <span class="img-btn">c</span>&nbsp;Export Chroniques Mobiles
+              </button>
+              <br>
+              Composez votre profil avec l'application Export Chroniques Mobiles et insérez le code JSON dans le champ ci-contre
+              <br>
+              <button type="action" class="flat-btn img-btn" name="act_import_json-btn" title="Importer le profil">
+                <span class="img-btn">W</span>&nbsp;Importer
+              </button>
+              <input type="checkbox" name="attr_reset_gears" value="1">
+              <span>Réinitialiser les listes armes & équipement</span>
+            </div>
+
+          </div>
+
+        </details>
+
       </div>
 
       <!-- Fiche PJ, Onglet Version -->
@@ -3259,6 +3291,16 @@ const SWData = {
         ]
       }
     ]
+  },
+  GEARS: {
+    props: [
+      "dm-1m",
+      "dm-2m",
+      "type-dm",
+      "portee",
+      "critique",
+      "bonus-def"
+    ]
   }
 }
 
@@ -3379,18 +3421,19 @@ function getRandom(max) {
 
 /**
 * Parse a chunk of data into name & value
-* @param {string} data - Chunk of data to parse
-* @param {string} delim - Delimiter (defaults to ':')
+* @param {string} data - chunk of data to parse
+* @param {string} [delim=":"] - delimiter, defaults to ":"
 * @returns an object with name and value properties
 */
-function parseNameValue(data, delim) {
+function parseNameValue(data, delim = ":") {
   delim = strval(delim, ":");
+  let name = "", value = "";
   if (data.indexOf(delim) !== -1) {
-    let [ key, value ] = data.split(delim);
-    key = strval(key).trim();
-    value = strval(value).trim()
+    [ name, value ] = data.split(delim);
+    name = strval(name).trim();
+    value = strval(value).trim();
   }
-  return { name: key, value };
+  return { name, value };
 }
 
 /**
@@ -3460,7 +3503,10 @@ function buildChatMsg(msg, options = SWData.RT_OPTIONS) {
     chatMsg = "{{" + msg + "}}";
   }
   chatMsg += " @{token_dsp}";
-  return `${whisper}&{template:${template}} ${title ? (template === "default" ? `{{name=${title} }}` : `{{${title} }}`) : "" } ${chatMsg}`;
+  if (template !== "")
+    return `${whisper}&{template:${template}} ${title ? (template === "default" ? `{{name=${title} }}` : `{{${title} }}`) : "" } ${chatMsg}`;
+  else
+    return msg;
 }
 
 /**
@@ -4782,6 +4828,71 @@ on("change:repeating_equipement remove:repeating_equipement", function() {
   encumbrance();
 });
 
+on(eventList("change", [ 
+  "on",
+  "props",
+  "atk"
+].map(a => `repeating_equipement:equip-${a}`), " "), function (eventInfo) {
+  getAttrs([
+    "on",
+    "nom",
+    "props",
+    "atk",
+    "atkid"
+  ].map(a => `repeating_equipement_equip-${a}`), function(values) {
+    const [ on, name, props, atk, atkid ] = Object.keys(values);
+    //const equiped = intval(values[on]);
+    const equipment = strval(values[name]);
+    const properties = strval(values[props]);
+    const hasAttack = intval(values[atk]);
+    let attackId = strval(values[atkid]);
+
+    const attributes = new Map();
+    const attackRow = new Map();
+
+    if (eventInfo.sourceAttribute.endsWith("equip-atk") && !hasAttack) {
+      if (attackId) {
+        removeRepeatingRow(`repeating_armes_${attackId}`);
+        setAttrs({ ["repeating_equipement_equip-atkid"]: "" })
+      }
+      return;
+    }
+
+    properties.split(",").forEach(prop => {
+      const { name, value } = parseNameValue(prop);
+
+      if (name === "bonus-def") {
+        attributes.set("armure", value);
+        attributes.set("armure-malus", value);
+        return;
+      }
+      
+      attackRow.set(name, value);
+    });
+
+    if (eventInfo.sourceAttribute.endsWith("equip-atk") && hasAttack) {
+      if (!attackId)
+        attackId = generateRowID();
+
+      attributes.set("repeating_equipement_equip-atkid", attackId);
+      const rowId = "repeating_armes_" + attackId + "_arme-";
+      attributes.set(rowId + "nom", equipment);
+      const atk = attackRow.has("portee") ? "atktir" : "atkcac";
+      attributes.set(rowId + "atk", atk);
+      attributes.set(rowId + "crit", strval(attackRow.get("critique")));
+      const dm = attackRow.has("dm-2m") ? "dm-2m" : "dm-1m";
+      attributes.set(rowId + "dm", strval(attackRow.get(dm)));
+      attributes.set(rowId + "dmtype", strval(attackRow.get("dm-type")));
+      attributes.set(rowId + "portee", strval(attackRow.get("portee")));
+      attributes.set(rowId + "special", "");
+    }
+
+    if (attributes.size > 0)
+      //console.log(Object.fromEntries(attributes));
+      setAttrs(Object.fromEntries(attributes));
+  });
+});
+
 /**
  * Show weapons options
  * 
@@ -4793,6 +4904,127 @@ on("clicked:repeating_armes:arme-opt-btn", function() {
   });
 }); */
 
+/**
+ * Return an updated Map of attributes
+ * @param {object} charData - character data
+ * @param {Map} attributes - Map of attributes to update
+ * @returns {Map}
+ */
+function importProfile(charData, attributes) {
+  if (charData.profile)
+    attributes.set("profil", charData.profile);
+  if (charData.family)
+    attributes.set("famille", charData.family);
+  
+  let buff = [];
+  switch (charData.familyId) {
+    case "aventuriers":
+      attributes.set("drecup", 8);
+      buff = [ "Profil d'aventurier", "pc" ];
+      break;
+    
+    case "combattants":
+      attributes.set("drecup", 10);
+      break;
+
+    case "mages":
+      attributes.set("drecup", 6);
+      break;
+
+    case "mystiques":
+      attributes.set("drecup", 8);
+      buff = [ "Profil de mystique", "dr" ];
+      break;
+  
+    default:
+      break;
+  }
+
+  if (buff.length > 0) {
+    const rowId = `repeating_buffs_${ generateRowID() }_`;
+    const [ name, attrib ] = buff;
+    attributes.set(rowId + "buff-on", "1");
+    attributes.set(rowId + "buff-nom", name);
+    attributes.set(rowId + "buff-attrib", attrib);
+    attributes.set(rowId + "buff-value", "1");
+  }
+
+  if (charData.paths[0].name !== "")
+    attributes.set("peuple", charData.paths[0].name);
+
+  charData.paths.forEach((path, ix) => {
+    const pathNum = ix + 1
+    attributes.set(`voie${ pathNum }nom`, path.name);
+    path.abilities.forEach((rank, ix) => {
+      rankNum = ix + 1;
+      const type = rank.limitedUse !== "" ? rank.limitedUse : rank.actionType;
+      attributes.set(`voie${pathNum}-t${rankNum}`, rank.name + type);
+      attributes.set(`voie${pathNum}-${rankNum}`, rank.description);
+      attributes.set(`v${pathNum}r${rankNum}_spell`, (rank.spell === "*" ? "1" : "0"));
+    });
+  });
+
+  return attributes;
+}
+
+function importGears(gearData, attributes) {
+
+  gearData.forEach(gear => {
+    const rowId = `repeating_equipement_${ generateRowID() }_`;
+
+    attributes.set(rowId + "equip-nom", gear.designation);
+    
+    attributes.set(rowId + "equip-qte", gear.nombre);
+    if (gear.special !== "") 
+      attributes.set(rowId + "equip-detail", gear.special);
+    
+    const props = gear.props
+      .filter(prop => SWData.GEARS.props.includes(prop.id))
+      .map(prop => `${prop.id}: ${prop.valeur}`);
+    if (props.length > 0)
+      attributes.set(rowId + "equip-props", props.join(","));
+  })
+
+  return attributes;
+}
+
+/**
+ * Click on button to display link to COMob Export in chat
+ */
+on("clicked:comob_export-btn", function () {
+  sendChatMsg("[Export Chroniques Mobiles](https://comob-data.rpgapps.net)", { template: "" });
+});
+
+/**
+ * On import JSON data button click
+ */
+on("clicked:import_json-btn", function () {
+  getAttrs([ "json_profile", "reset_gears" ], function (values) {
+    const jsonData = strval(values.json_profile).trim();
+    if (jsonData === "")
+      return;
+
+    let attributes = new Map();
+
+    const profileData = JSON.parse(jsonData);
+
+    if (profileData.character)
+      attributes = importProfile(profileData.character, attributes);
+
+    if (profileData.gears) {
+      const resetGears = intval(values.reset_gears);
+      if (resetGears === 1)
+        removeRepeatingAll("equipement");
+      attributes = importGears(profileData.gears, attributes);
+    }
+
+    if (attributes.size > 0) {
+      attributes.set("json_profile", "");
+      setAttrs(Object.fromEntries(attributes));
+      console.log(attributes)
+    }
+  });
+});
 
 // ================
 // NPC SHEET EVENTS
