@@ -785,7 +785,7 @@
               <div class="bordered centered">
                 <select class="select-md" name="attr_def_action" title="@{def_action}">
                   <option value="">-</option>
-                  <option value="2">Simple</option>
+                  <option value="3">Partielle (A)</option>
                   <option value="5">Totale (L)</option>
                 </select>
               </div>
@@ -959,6 +959,98 @@
             </div>
 
           </fieldset>
+
+          <hr>
+          
+          <div class="sheet-2colrow">
+            
+            <div class="sheet-col">
+              <h4>Options Tactiques</h4>
+
+              <div class="pc-tactic">
+                <div>
+                  <input type="radio" name="attr_tactique" value="0">
+                  Aucune
+                </div>
+                <div>
+                </div>
+              </div>
+
+              <div class="pc-tactic">
+                <div>
+                  <input type="radio" name="attr_tactique" value="1">
+                  Assurée
+                </div>
+                <div>
+                  +5 en attaque et DM divisés par 2
+                </div>
+              </div>
+
+              <div class="pc-tactic">
+                <div>
+                  <input type="radio" name="attr_tactique" value="2">
+                  Précise/Violente
+                </div>
+                <div>
+                  -3 en attaque et +1d4° DM
+                </div>
+              </div>
+
+              <div class="pc-tactic">
+                <div>
+                  <input type="radio" name="attr_tactique" value="3">
+                  Précise/Violente
+                </div>
+                <div>
+                  -7 en attaque et +2d4° DM
+                </div>
+              </div>
+
+            </div>
+
+            <div class="sheet-col">
+              <h4>Modificateurs de situation</h4>
+
+              <div class="pc-tactic">
+                <div>Cible à couvert</div>
+                <div>
+                  <select class="select-md" name="attr_modsit_couvert">
+                    <option value="0">Aucun</option>
+                    <option value="2" title="Végétation">Faible (-2)</option>
+                    <option value="5" title="Muraille">Fort (-5)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="pc-tactic">
+                <div>Cible en pleine mêlée</div>
+                <div>
+                  <select class="select-md" name="attr_modsit_melee">
+                    <option value="0">Non</option>
+                    <option value="2" title="">Oui (-2)</option>
+                    <option value="5" title="Masquée par un allié">Masquée (-5)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="pc-tactic">
+                <div>Tireur</div>
+                <div>
+                  <input type="checkbox" name="attr_modsit_contact" value="1">
+                  <span>&nbsp;Au contact d'un adversaire</span>
+                </div>
+              </div>
+
+              <div class="pc-tactic">
+                <div>Visibilité</div>
+                <div>
+                  <input type="checkbox" name="attr_modsit_visibilite" value="5">
+                  <span>&nbsp;Brouillard / Pénombre</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
 
         </div>
 
@@ -2529,38 +2621,44 @@
             <span>Afficher voies 7-8-9&nbsp;</span>
             <input type="checkbox" name="attr_voies_789" value="1">
           </li>
+        </ul>
+        <h4>Règles optionnelles :</h4>
+        <ul>
           <li>
-            <strong>Règles optionnelles : </strong>
-            <ul>
-              <li>
-                <span>Initiative variable&nbsp;</span>
-                <input type="checkbox" name="attr_cfg_init_variable" value="1d6!">
-              </li>
-              <li>
-                <span>Initiative + AGI&nbsp;</span>
-                <input type="checkbox" name="attr_cfg_init_agi" value="1">
-              </li>
-              <li>
-                <span>Encombrement&nbsp;</span>
-                <input type="checkbox" name="attr_cfg_use_encmb" value="1">
-              </li>
-              <li>
-                <span>Critiques différenciés&nbsp;</span>
-                <input type="checkbox" name="attr_cfg_crit_diff" value="1">
-              </li>
-            </ul>
+            <span>Initiative variable</span>
+            <input type="checkbox" name="attr_cfg_init_variable" value="1d6!">
           </li>
           <li>
-            <strong>High fantasy</strong>
-            <ul>
-              <li>
-                <span>Progression épique&nbsp;</span>
-                <input type="checkbox" name="attr_cfg_use_epic" value="1">
-              </li>
-            </ul>
+            <span>Initiative + AGI</span>
+            <input type="checkbox" name="attr_cfg_init_agi" value="1">
           </li>
           <li>
-            <strong>Low fantasy</strong>
+            <span>Encombrement&nbsp;</span>
+            <input type="checkbox" name="attr_cfg_use_encmb" value="1">
+          </li>
+          <li>
+            <span>Critiques différenciés&nbsp;</span>
+            <input type="checkbox" name="attr_cfg_crit_diff" value="1">
+          </li>
+        </ul>
+        <h4>High fantasy</h4>
+        <ul>
+          <li>
+            <span>Progression épique&nbsp;</span>
+            <input type="checkbox" name="attr_cfg_use_epic" value="1">
+          </li>
+          <li>
+            <span>Récupération + niveau&nbsp;</span>
+            <input type="checkbox" name="attr_cfg_use_drniv" value="1">
+          </li>
+          <li>
+            <span>Plus de Mana&nbsp;</span>
+            <input type="checkbox" name="attr_cfg_use_mana" value="1">
+          </li>
+        </ul>
+        <h4>Low Fantasy</h4>
+        <ul>
+          <li>
           </li>
         </ul>
 
@@ -2570,40 +2668,58 @@
           </summary>
           <ul>
             <li>
-              <span name="attr_voie1nom"></span>
-              <input type="number" name="attr_v1br" title="@{v1br}" value="1">
+              <div class="pc-configs">
+                <span name="attr_voie1nom"></span>
+                <input type="number" name="attr_v1br" title="@{v1br}" value="1">
+              </div>
             </li>
             <li>
-              <span name="attr_voie2nom"></span>
-              <input type="number" name="attr_v2br" title="@{v2br}" value="1">
+              <div class="pc-configs">
+                <span name="attr_voie2nom"></span>
+                <input type="number" name="attr_v2br" title="@{v2br}" value="1">
+              </div>
             </li>
             <li>
-              <span name="attr_voie3nom"></span>
-              <input type="number" name="attr_v3br" title="@{v3br}" value="1">
+              <div class="pc-configs">
+                <span name="attr_voie3nom"></span>
+                <input type="number" name="attr_v3br" title="@{v3br}" value="1">
+              </div>
             </li>
             <li>
-              <span name="attr_voie4nom"></span>
-              <input type="number" name="attr_v4br" title="@{v4br}" value="1">
+              <div class="pc-configs">
+                <span name="attr_voie4nom"></span>
+                <input type="number" name="attr_v4br" title="@{v4br}" value="1">
+              </div>
             </li>
             <li>
-              <span name="attr_voie5nom"></span>
-              <input type="number" name="attr_v5br" title="@{v5br}" value="1">
+              <div class="pc-configs">
+                <span name="attr_voie5nom"></span>
+                <input type="number" name="attr_v5br" title="@{v5br}" value="1">
+              </div>
             </li>
             <li>
-              <span name="attr_voie6nom"></span>
-              <input type="number" name="attr_v6br" title="@{v6br}" value="1">
+              <div class="pc-configs">
+                <span name="attr_voie6nom"></span>
+                <input type="number" name="attr_v6br" title="@{v6br}" value="1">
+              </div>
             </li>
             <li>
-              <span name="attr_voie7nom"></span>
-              <input type="number" name="attr_v7br" title="@{v7br}" value="1">
+              <div class="pc-configs">
+                <span name="attr_voie7nom"></span>
+                <input type="number" name="attr_v7br" title="@{v7br}" value="1">
+              </div>
             </li>
             <li>
-              <span name="attr_voie8nom"></span>
-              <input type="number" name="attr_v8br" title="@{v8br}" value="1">
+              <div class="pc-configs">
+                <span name="attr_voie8nom"></span>
+                <input type="number" name="attr_v8br" title="@{v8br}" value="1">
+              </div>
             </li>
             <li>
-              <span name="attr_voie9nom"></span>
-              <input type="number" name="attr_v9br" title="@{v9br}" value="1">
+              <div class="pc-configs">
+                <span name="attr_voie9nom"></span>
+                <input type="number" name="attr_v9br" title="@{v9br}" value="1">
+              </div>
             </li>
           </ul>
         </details>
@@ -3597,12 +3713,23 @@ function addValues(values) {
 /**
  * Return the die roll formula for type
  * @param {string} type - Type of d20 roll
+ * @param {number} [weakened=0] - Has weakened condition
  * @returns - {string}
  */
-function dieRoll(type) {
-  if (type === "S") return "2d20kh1";
-  if (type === "H") return "{2d20kh1, 0d20+10}kh1";
-  return "1d20";
+function dieRoll(type, weakened = 0) {
+  let roll = "";
+  switch (type) {
+    case "S":
+      roll = (weakened === 1) ? "1d20" : "2d20kh1";
+      break;
+    case "H":
+      roll = (weakened === 1) ? "1d20" : "{2d20kh1, 0d20+10}kh1";
+      break;
+    default:
+      roll = (weakened === 1) ? "2d20kl1" : "1d20";
+      break;
+  }
+  return roll;
 }
 
 /**
@@ -3835,16 +3962,24 @@ on("change:for", updateLoadLimit);
 function updatePMMax() {
   const owned = [];
   const spells = [];
+  const bRanks = [];
   seq(9).forEach(p => {
-    seq(9).forEach(r => {
+    bRanks.push(`v${p}br`)
+    seq(5).forEach(r => {
       owned.push(`v${p}r${r}`);
       spells.push(`v${p}r${r}_spell`);
     });
   });
-  getAttrs([ "vol", "pm_buff", ...spells, ...owned ], function(values) {
+  getAttrs([ "cfg_use_mana", "vol", "pm_buff", ...spells, ...owned, ...bRanks ], function(values) {
+    const useMorePM = intval(values.cfg_use_mana);
     const spellPM = spells.reduce((pm, spell) => {
       const [ ability ] = spell.split("_");
-      return pm + (intval(values[ability]) * intval(values[spell]));
+      const baseRank = intval(values[`v${ability.charAt(1)}br`]);
+      const rank = intval(ability.charAt(3));
+      let pmGain = 1;
+      if (useMorePM === 1 && (baseRank + rank -1) >= 3)
+        pmGain = 2;
+      return pm + (intval(values[ability]) * intval(values[spell]) * pmGain);
     }, 0);
     const pm_max = intval(values.vol) + spellPM + intval(values.pm_buff);
     setAttrs({ pm_max });
@@ -3886,9 +4021,10 @@ on("change:cha change:pc_base change:pc_buff", updatePCMax);
 SWData.PC.ABILITIES.forEach(ability => {
   const short = shorten(ability);
   on(`clicked:${short}-btn`, function () {
-    getAttrs([ `d${short}_sup`, "armure_malus", "armure_eqp" ], function(values) {
+    getAttrs([ `d${short}_sup`, "condition_affaibli", "armure_malus", "armure_eqp" ], function(values) {
       const [ dType ] = Object.keys(values);
-      const roll = dieRoll(values[dType]);
+      const weakened = intval(values.condition_affaibli);
+      let roll = dieRoll(values[dType], weakened);
       const armure_eqp = intval(values.armure_eqp);
       const armure_malus = intval(values.armure_malus) * armure_eqp;
       const armor_malus = short === "agi" ? ` - ${armure_malus}[Malus armure]` : "";
@@ -3919,14 +4055,20 @@ on("clicked:init-btn", function () {
 SWData.PC.COMBAT.attacks.forEach(attk => {
   const [ attack, , description ] = attk;
   on(`clicked:${attack}-btn`, function () {
-    const attack = `[[1d20cs20cf1[Dé] + @{${attack}}[Bonus] ]]`;
-    const chatMsg = cof2RollTemplate({
-      lsub: "Attaque",
-      rsub: description,
-      roll: attack,
-      broll: attack
+    getAttrs([ "condition_affaibli" ], function (value) {
+      const roll = (intval(value.condition_affaibli) === 1) ? "2d20kl1" : "1d20";
+      const atkRoll = `[[${roll}cs20cf1[Dé] + @{${attack}}[Bonus] ]]`;
+      const atkProps = {
+        lsub: "Attaque",
+        rsub: description,
+        roll: atkRoll,
+        broll: ""
+      };
+      if (roll === "1d20")
+        atkProps.broll = atkRoll;
+      const chatMsg = cof2RollTemplate(atkProps);
+      sendChatMsg(chatMsg);
     });
-    sendChatMsg(chatMsg);
   });
 });
 
@@ -4026,7 +4168,7 @@ on("change:pv", function (eventInfo) {
  * On Recup button click
  */
 on("clicked:drecup-btn", function() {
-  getAttrs([ "dr", "drecup", "niveau", "pv", "pv_max" ], function(values) {
+  getAttrs([ "dr", "drecup", "niveau", "pv", "pv_max", "cfg_use_drniv" ], function(values) {
     const lsub = "Jet";
     const rsub = "Récupération Rapide";
     let dr = intval(values.dr);
@@ -4055,8 +4197,10 @@ on("clicked:drecup-btn", function() {
 
     dr -= 1;
     const dRecup = `d${values.drecup}`;
-    const bRecup = Math.ceil(intval(values.niveau) / 2);
-    const recup = `[[${dRecup}[DR] + ${bRecup}[Niveau/2] ]] PV récupérés`;
+    const level = intval(values.niveau);
+    const addLevel = intval(values.cfg_use_drniv);
+    const bRecup = (addLevel === 1) ? level : Math.ceil(level / 2);
+    const recup = `[[${dRecup}[DR] + ${bRecup}[Niveau${ addLevel === 1 ? "" : "/2" }] ]] PV récupérés`;
     const chatMsg = cof2RollTemplate({
       lsub,
       rsub,
@@ -4353,23 +4497,75 @@ on("clicked:repeating_armes:attack-btn", function() {
     "portee",
     "special"
   ];
+  const sitModAttrs = [
+    "couvert",
+    "melee",
+    "contact",
+    "visibilite"
+  ];
   getAttrs([ 
     "cfg_crit_diff", 
+    "tactique",
+    "condition_affaibli",
     "noms_voies", 
-    ...attackAttrs.map(attribute => `${section}${attribute}`) 
+    ...sitModAttrs.map(a => `modsit_${a}`),
+    ...attackAttrs.map(a => `${section}${a}`) 
   ], function (values) {
+    
+    // general options
     const use_crit_diff = intval(values.cfg_crit_diff);
+    const tactics = intval(values["tactique"]);
+    const weakened = intval(values["condition_affaibli"]);
     const pathNames = strval(values.noms_voies);
+    
+    // situational modifiers
+    const modCover = intval(values.modsit_couvert) * -1;
+    const modMelee = intval(values.modsit_melee) * -1;
+    const modContact = intval(values.modsit_contact);
+    const modVisible = intval(values.modsit_visibilite) * -1;
+    
+    // attack parameters
     const atk = strval(values[section + "atk"]);
     const atkdiv = intval(values[section + "atkdiv"]);
     const name = capitalize(strval(values[section + "nom"], getAttackName(atk)));
     const portee = strval(values[section + "portee"]);
     const range = (portee !== "") ? ` (${portee})` : "";
     const crit = intval(values[section + "crit"], 20);
+
+    // Special tactics
+    let tacticBonus = "";
+    let tacticDM = "";
+    switch (tactics) {
+      case 1:
+        tacticBonus = " +5[Attaque assurée]";
+        break;
+      case 2:
+        tacticBonus = " -3[Att. précise/violente]";
+        tacticDM = " +1@{devol}[Att. précise/violente]";
+        break;
+      case 3:
+        tacticBonus = " -7[Att. précise/violente]";
+        tacticDM = " +2@{devol}[Att. précise/violente]";
+        break;
+    }
+
+    // Build situational modifiers
+    let modSit = "";
+    modSit += modCover !== 0 ? ` ${modCover}[Cible à ouvert]` : "";
+    modSit += modMelee !== 0 ? ` ${modMelee}[Cible en mêlée]` : "";
+    modSit += modVisible !== 0 ? ` ${modVisible}[Visibilité]` : "";
+
+    // Determine normal or malus die roll
+    let roll = weakened === 1 ? "2d20kl1" : "1d20";
+    if (atk === "atktir" && modContact === 1)
+      roll = "2d20kl1";
+
+    // Attack roll
     let attack = "";
     if (atk !== "0")
-      attack = `[[1d20cs>${crit}cf1[Dé] + @{${atk}}[Bonus] + ${atkdiv}[Divers] ]]`;
+      attack = `[[${roll}cs>${crit}cf1[Dé] + @{${atk}}[Bonus] + ${atkdiv}[Divers]${tacticBonus}${modSit} ]]`;
     
+    // Damage roll
     let [ dm, ...dmextra ] = strval(values[section + "dm"]).split(" ");
     dm = dm.replace("d4°", "@{devol}");
     const dmtype = strval(values[section + "dmtype"]);
@@ -4378,10 +4574,15 @@ on("clicked:repeating_armes:attack-btn", function() {
     const dmdiv = strval(values[section + "dmdiv"]);
     let dmroll = "";
     if (dm !== "" )
-      dmroll = `[[[[${dm}]][DM] + ${dmbonus}[Bonus] + ${dmdiv}[Divers] ]]`;
-    
+      dmroll = `[[${dm}]][DM] + ${dmbonus}[Bonus] + ${dmdiv}[Divers]${tacticDM}`;
+    if (dmroll !== "" && tactics === 1)
+      dmroll = `floor((${dmroll})/2)`;
+    if (dmroll !== "")
+      dmroll = `[[${dmroll} ]]`;
+
     const special = insertRolls(strval(values[section + "special"]), { pathNames });
 
+    // Determine Max DMs
     let dmMax = 0;
     const result = dm.match(/([0-9]*)[dD]([0-9]*)/);
     if (result) {
@@ -4393,6 +4594,7 @@ on("clicked:repeating_armes:attack-btn", function() {
       }
     }
 
+    // Special critical success
     let dmcrit = "";
     if (use_crit_diff === 1) {
       switch (dmtype) {
@@ -4409,17 +4611,21 @@ on("clicked:repeating_armes:attack-btn", function() {
       }
     }
 
-    const chatMsg = cof2RollTemplate({
+    // Roll attack !
+    const atkProps = {
       lsub: "Attaque",
       rsub: name + range,
       roll: attack,
-      broll: attack,
+      broll: "",
       dm: dmroll,
       dmdesc,
       critdiff: `[[${use_crit_diff}]]`,
       dmcrit,
       text: special
-    });
+    };
+    if (roll === "1d20")
+      atkProps.broll = attack;
+    const chatMsg = cof2RollTemplate(atkProps);
     sendChatMsg(chatMsg);
   })
 });
