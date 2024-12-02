@@ -2606,123 +2606,157 @@
       <div class="pc-config-tab">
 
         <hr>
-        
-        <ul>
-          <li>
-            Jets&nbsp;:&nbsp;
-            <select class="select-md" name="attr_togm" title="@{togm}">
-              <option value="" selected>Publics</option>
-              <option value="/w gm ">Chuchotés au MJ</option>
-            </select>
-            <input type="checkbox" name="attr_token_dsp" title="@{token_dsp}" value=" {{token=[x](@{token_url}) }} ">
-            <span>Avec token</span>
-          </li>
-          <li>
-            <span>Afficher voies 7-8-9&nbsp;</span>
-            <input type="checkbox" name="attr_voies_789" value="1">
-          </li>
-        </ul>
-        <h4>Règles optionnelles :</h4>
-        <ul>
-          <li>
-            <span>Initiative variable</span>
-            <input type="checkbox" name="attr_cfg_init_variable" value="1d6!">
-          </li>
-          <li>
-            <span>Initiative + AGI</span>
-            <input type="checkbox" name="attr_cfg_init_agi" value="1">
-          </li>
-          <li>
-            <span>Encombrement&nbsp;</span>
-            <input type="checkbox" name="attr_cfg_use_encmb" value="1">
-          </li>
-          <li>
-            <span>Critiques différenciés&nbsp;</span>
-            <input type="checkbox" name="attr_cfg_crit_diff" value="1">
-          </li>
-        </ul>
-        <h4>High fantasy</h4>
-        <ul>
-          <li>
-            <span>Progression épique&nbsp;</span>
-            <input type="checkbox" name="attr_cfg_use_epic" value="1">
-          </li>
-          <li>
-            <span>Récupération + niveau&nbsp;</span>
-            <input type="checkbox" name="attr_cfg_use_drniv" value="1">
-          </li>
-          <li>
-            <span>Plus de Mana&nbsp;</span>
-            <input type="checkbox" name="attr_cfg_use_mana" value="1">
-          </li>
-        </ul>
-        <h4>Low Fantasy</h4>
-        <ul>
-          <li>
-          </li>
-        </ul>
 
-        <details>
-          <summary>
-            <strong>Premiers rangs</strong>
-          </summary>
-          <ul>
-            <li>
-              <div class="pc-configs">
-                <span name="attr_voie1nom"></span>
-                <input type="number" name="attr_v1br" title="@{v1br}" value="1">
-              </div>
-            </li>
-            <li>
-              <div class="pc-configs">
-                <span name="attr_voie2nom"></span>
-                <input type="number" name="attr_v2br" title="@{v2br}" value="1">
-              </div>
-            </li>
-            <li>
-              <div class="pc-configs">
-                <span name="attr_voie3nom"></span>
-                <input type="number" name="attr_v3br" title="@{v3br}" value="1">
-              </div>
-            </li>
-            <li>
-              <div class="pc-configs">
-                <span name="attr_voie4nom"></span>
-                <input type="number" name="attr_v4br" title="@{v4br}" value="1">
-              </div>
-            </li>
-            <li>
-              <div class="pc-configs">
-                <span name="attr_voie5nom"></span>
-                <input type="number" name="attr_v5br" title="@{v5br}" value="1">
-              </div>
-            </li>
-            <li>
-              <div class="pc-configs">
-                <span name="attr_voie6nom"></span>
-                <input type="number" name="attr_v6br" title="@{v6br}" value="1">
-              </div>
-            </li>
-            <li>
-              <div class="pc-configs">
-                <span name="attr_voie7nom"></span>
-                <input type="number" name="attr_v7br" title="@{v7br}" value="1">
-              </div>
-            </li>
-            <li>
-              <div class="pc-configs">
-                <span name="attr_voie8nom"></span>
-                <input type="number" name="attr_v8br" title="@{v8br}" value="1">
-              </div>
-            </li>
-            <li>
-              <div class="pc-configs">
-                <span name="attr_voie9nom"></span>
-                <input type="number" name="attr_v9br" title="@{v9br}" value="1">
-              </div>
-            </li>
-          </ul>
-        </details>
+        <div class="sheet-2colrow">
+
+          <div class="sheet-col">
+
+            <ul>
+              <li>
+                Jets&nbsp;:&nbsp;
+                <select class="select-md" name="attr_togm" title="@{togm}">
+                  <option value="" selected>Publics</option>
+                  <option value="/w gm ">Chuchotés au MJ</option>
+                </select>
+                <input type="checkbox" name="attr_token_dsp" title="@{token_dsp}" value=" {{token=[x](@{token_url}) }} ">
+                <span>Avec token</span>
+              </li>
+              <li>
+                <span>Afficher voies 7-8-9&nbsp;</span>
+                <input type="checkbox" name="attr_voies_789" value="1">
+              </li>
+            </ul>
+
+            <h4>Règles optionnelles</h4>
+            <ul>
+              <li class="config-check" title="Atlas & règles optionnelles, p. 160">
+                <input type="checkbox" name="attr_cfg_init_variable" value="1d6!">
+                <span>Initiative variable</span>
+              </li>
+              <li class="config-check" title="Atlas & règles optionnelles, p. 153">
+                <input type="checkbox" name="attr_cfg_init_agi" value="1">
+                <span>Initiative + AGI</span>
+              </li>
+              <li class="config-check" title="Atlas & règles optionnelles, p. 157">
+                <input type="checkbox" name="attr_cfg_use_encmb" value="1">
+                <span>Encombrement&nbsp;</span>
+              </li>
+              <li class="config-check" title="Atlas & règles optionnelles, p. 161">
+                <input type="checkbox" name="attr_cfg_crit_diff" value="1">
+                <span>Critiques différenciés&nbsp;</span>
+              </li>
+            </ul>
+
+            <h4><input type="checkbox" name="attr_cfg_highfan" value="1">&nbsp;High fantasy</h4>
+            <ul>
+              <li class="config-check" title="Atlas & règles optionnelles, p. 184">
+                <input type="checkbox" name="attr_cfg_use_epic" value="1">
+                <span>Progression épique&nbsp;</span>
+              </li>
+              <li class="config-check" title="Atlas & règles optionnelles, p. 183">
+                <input type="checkbox" name="attr_cfg_use_drniv" value="1">
+                <span>Récupération + niveau&nbsp;</span>
+              </li>
+              <li class="config-check" title="Atlas & règles optionnelles, p. 191">
+                <input type="checkbox" name="attr_cfg_use_mana" value="1">
+                <span>Plus de Mana&nbsp;</span>
+              </li>
+            </ul>
+  
+            <h4><input type="checkbox" name="attr_cfg_lowfan" value="1">&nbsp;Low Fantasy</h4>
+            <ul>
+              <li class="config-check" title="Atlas & règles optionnelles, p. 193">
+                <input type="checkbox" name="attr_cfg_use_capped6" value="1">
+                <span>Progression limitée&nbsp;</span>
+              </li>
+              <li class="config-check" title="Atlas & règles optionnelles, p. 193">
+                <input type="checkbox" name="attr_cfg_use_dronly" value="1">
+                <span>Récupération - niveau&nbsp;</span>
+              </li>
+            </ul>
+
+          </div>
+
+
+          <div class="sheet-col">
+
+            <h4>Notifications</h4>
+            <ul>
+              <li class="config-check" title="">
+                <input type="checkbox" name="attr_notif_conditions" value="1" checked>
+                <span>Conditions&nbsp;</span>
+              </li>
+              <li class="config-check" title="">
+                <input type="checkbox" name="attr_notif_pv" value="1" checked>
+                <span>Gain/Perte de PV&nbsp;</span>
+              </li>
+            </ul>
+    
+            <details>
+              <summary>
+                <strong>Premiers rangs</strong>
+              </summary>
+              <ul>
+                <li>
+                  <div class="pc-configs">
+                    <span name="attr_voie1nom"></span>
+                    <input type="number" name="attr_v1br" title="@{v1br}" value="1">
+                  </div>
+                </li>
+                <li>
+                  <div class="pc-configs">
+                    <span name="attr_voie2nom"></span>
+                    <input type="number" name="attr_v2br" title="@{v2br}" value="1">
+                  </div>
+                </li>
+                <li>
+                  <div class="pc-configs">
+                    <span name="attr_voie3nom"></span>
+                    <input type="number" name="attr_v3br" title="@{v3br}" value="1">
+                  </div>
+                </li>
+                <li>
+                  <div class="pc-configs">
+                    <span name="attr_voie4nom"></span>
+                    <input type="number" name="attr_v4br" title="@{v4br}" value="1">
+                  </div>
+                </li>
+                <li>
+                  <div class="pc-configs">
+                    <span name="attr_voie5nom"></span>
+                    <input type="number" name="attr_v5br" title="@{v5br}" value="1">
+                  </div>
+                </li>
+                <li>
+                  <div class="pc-configs">
+                    <span name="attr_voie6nom"></span>
+                    <input type="number" name="attr_v6br" title="@{v6br}" value="1">
+                  </div>
+                </li>
+                <li>
+                  <div class="pc-configs">
+                    <span name="attr_voie7nom"></span>
+                    <input type="number" name="attr_v7br" title="@{v7br}" value="1">
+                  </div>
+                </li>
+                <li>
+                  <div class="pc-configs">
+                    <span name="attr_voie8nom"></span>
+                    <input type="number" name="attr_v8br" title="@{v8br}" value="1">
+                  </div>
+                </li>
+                <li>
+                  <div class="pc-configs">
+                    <span name="attr_voie9nom"></span>
+                    <input type="number" name="attr_v9br" title="@{v9br}" value="1">
+                  </div>
+                </li>
+              </ul>
+            </details>
+
+          </div>
+
+        </div>
 
         <hr>
 
@@ -3427,11 +3461,20 @@ const SWData = {
 /**
 * Convert to integer
 * @param {string} value - value to cast
-* @param {int} onError - default value on error
-* @returns integer value
+* @param {number} onError - default value on error
+* @returns {number}
 */
 function intval(value, onError = 0) {
   return parseInt(value) || onError;
+}
+
+/**
+ * Convert 0/1 value to boolean
+ * @param {string} value - value
+ * @returns {boolean}
+ */
+function boolval(value) {
+  return (intval(value) === 1);
 }
 
 /**
@@ -3814,17 +3857,24 @@ on("change:famille", function() {
 /**
  * Update the base attack scores
  * @param {number} level - PC's level
+ * @param {number} levelCap - level cap (6 or 10)
  * @param {Map} attributes - Map of attributes to update
  * @returns {Map} updated Map object
  */
-function updateAttacksBase(level, level_cap, attributes) {
-  let atkBase = Math.min(level, level_cap);
+function updateAttacksBase(level, levelCap, attributes) {
+  let atkBase = Math.min(level, levelCap);
   attributes.set("atkcac_base", atkBase);
   attributes.set("atktir_base", atkBase);
   attributes.set("atkmag_base", atkBase);
   return attributes;
 }
 
+/**
+ * Update the evolutive die
+ * @param {number} level - PC's level
+ * @param {Map} attributes - Map of attributes to update
+ * @returns {Map} updated Map object
+ */
 function updateDEvol(level, attributes) {
   let devol;
   switch (true) {
@@ -3851,19 +3901,20 @@ function updateDEvol(level, attributes) {
  * On level change
  */
 on("change:niveau", function() {
-  getAttrs([ "niveau", "cfg_use_epic" ], function(values) {
+  getAttrs([ "niveau", "cfg_use_epic", "cfg_use_capped6" ], function(values) {
+    const cappedAt6 = boolval(values.cfg_use_capped6);
     // base progression
-    const level_cap = 10;
+    const levelCap = cappedAt6 ? 6 : 10;
     const level = intval(values.niveau);
     let updateAttrs = new Map;
-    updateAttrs = updateAttacksBase(level, level_cap, updateAttrs);
+    updateAttrs = updateAttacksBase(level, levelCap, updateAttrs);
     updateAttrs = updateDEvol(level, updateAttrs);
     updateAttrs.set("def_base", 10);
     // epic progression
-    const use_epic = intval(values.cfg_use_epic);
-    if (level > level_cap && use_epic === 1) {
+    const useEpic = boolval(values.cfg_use_epic);
+    if (level > levelCap && useEpic) {
       const oddLevel = (level %2 === 1) ? level : level -1;
-      const epicBase = level_cap + Math.ceil((oddLevel - level_cap) / 2);
+      const epicBase = levelCap + Math.ceil((oddLevel - levelCap) / 2);
       updateAttrs.set("atkcac_base", epicBase);
       updateAttrs.set("atktir_base", epicBase);
       updateAttrs.set("atkmag_base", epicBase);
@@ -3971,13 +4022,13 @@ function updatePMMax() {
     });
   });
   getAttrs([ "cfg_use_mana", "vol", "pm_buff", ...spells, ...owned, ...bRanks ], function(values) {
-    const useMorePM = intval(values.cfg_use_mana);
+    const useMorePM = boolval(values.cfg_use_mana);
     const spellPM = spells.reduce((pm, spell) => {
       const [ ability ] = spell.split("_");
       const baseRank = intval(values[`v${ability.charAt(1)}br`]);
       const rank = intval(ability.charAt(3));
       let pmGain = 1;
-      if (useMorePM === 1 && (baseRank + rank -1) >= 3)
+      if (useMorePM && (baseRank + rank -1) >= 3)
         pmGain = 2;
       return pm + (intval(values[ability]) * intval(values[spell]) * pmGain);
     }, 0);
@@ -4039,6 +4090,9 @@ SWData.PC.ABILITIES.forEach(ability => {
   });
 });
 
+/**
+ * On initiative button click
+ */
 on("clicked:init-btn", function () {
   const init = `[[@{init}[Initiative] + @{cfg_init_variable}[Dé(s)] &{tracker} ]]`;
   const chatMsg = cof2RollTemplate({
@@ -4079,11 +4133,13 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
  * @param {boolean} [buttonClicked=true] - Updated via button
  */
 function updatePVDR(vp, lossOrGain, buttonClicked = true) {
-  getAttrs([ "sheet_type", "pv", "pv_max", "dr", "rd" ], function (values) {
+  getAttrs([ "sheet_type", "pv", "pv_max", "dr", "rd", "notif_pv" ], function (values) {
     let pv = intval(values.pv);
     const pvMax = intval(values.pv_max);
     let dr = intval(values.dr);
     const rd = (lossOrGain === -1 ) ? "\n" + "RD " + strval(values.rd) : "";
+    const notify = boolval(values.notif_pv);
+
     let effect = "";
     const updateAttrs = new Map;
 
@@ -4113,15 +4169,17 @@ function updatePVDR(vp, lossOrGain, buttonClicked = true) {
       effect = ", perd un DR et tombe au sol inconscient-e (PV = 0)"
     }
     
-    const chatMsg = cof2RollTemplate({
-        lsub: "PV",
-        rsub: `${ lossOrGain === -1 ? "Blessure" : "Soins" } `,
-        text : `@{character_name} ${ lossOrGain === -1 ? "perd" : "gagne" } ${vp} PV${effect}${rd} `
-    });
-    sendChatMsg(chatMsg, {
-      whisper: "gm",
-      ...SWData.RT_OPTIONS
-    });
+    if (notify) {
+      const chatMsg = cof2RollTemplate({
+          lsub: "PV",
+          rsub: `${ lossOrGain === -1 ? "Blessure" : "Soins" } `,
+          text : `@{character_name} ${ lossOrGain === -1 ? "perd" : "gagne" } ${vp} PV${effect}${rd} `
+      });
+      sendChatMsg(chatMsg, {
+        whisper: "gm",
+        ...SWData.RT_OPTIONS
+      });
+    }
 
     if (updateAttrs.size > 0)
       setAttrs(Object.fromEntries(updateAttrs));
@@ -4168,7 +4226,16 @@ on("change:pv", function (eventInfo) {
  * On Recup button click
  */
 on("clicked:drecup-btn", function() {
-  getAttrs([ "dr", "drecup", "niveau", "pv", "pv_max", "cfg_use_drniv" ], function(values) {
+  const recupAttrs = [ 
+    "dr",
+    "drecup",
+    "niveau",
+    "pv",               
+    "pv_max",
+    "cfg_use_drniv",
+    "cfg_use_dronly" 
+  ];
+  getAttrs(recupAttrs, function(values) {
     const lsub = "Jet";
     const rsub = "Récupération Rapide";
     let dr = intval(values.dr);
@@ -4198,9 +4265,14 @@ on("clicked:drecup-btn", function() {
     dr -= 1;
     const dRecup = `d${values.drecup}`;
     const level = intval(values.niveau);
-    const addLevel = intval(values.cfg_use_drniv);
-    const bRecup = (addLevel === 1) ? level : Math.ceil(level / 2);
-    const recup = `[[${dRecup}[DR] + ${bRecup}[Niveau${ addLevel === 1 ? "" : "/2" }] ]] PV récupérés`;
+    const addLevel = boolval(values.cfg_use_drniv);
+    const drOnly = boolval(values.cfg_use_dronly);
+    let bRecup = "", bLevel = 0;
+    if (drOnly) {
+      bLevel = addLevel ? level : Math.ceil(level / 2);
+      bRecup = `+ ${bLevel}[Niveau${ addLevel ? "" : "/2" }] `;
+    }
+    const recup = `[[${dRecup}[DR] ${bRecup}]] PV récupérés`;
     const chatMsg = cof2RollTemplate({
       lsub,
       rsub,
@@ -4373,10 +4445,11 @@ SWData.PC.CONDITIONS.forEach(condition => {
 
   // Display enabled condition
   on(`change:condition_${name}`, function() {
-    getAttrs([ `condition_${name}` ], function(value) {
-      const [ attribute ] = Object.keys(value);
-      const hasCondition = intval(value[attribute]);
-      if (hasCondition === 1) 
+    getAttrs([ `condition_${name}`, "notif_conditions" ], function(values) {
+      const [ attribute ] = Object.keys(values);
+      const hasCondition = intval(values[attribute]);
+      const notify = intval(values.notif_conditions);
+      if (hasCondition === 1 && notify === 1)
         displayCondition(label, effects, description);
     });
   });
@@ -4513,7 +4586,7 @@ on("clicked:repeating_armes:attack-btn", function() {
   ], function (values) {
     
     // general options
-    const use_crit_diff = intval(values.cfg_crit_diff);
+    const useCritDiff = intval(values.cfg_crit_diff);
     const tactics = intval(values["tactique"]);
     const weakened = intval(values["condition_affaibli"]);
     const pathNames = strval(values.noms_voies);
@@ -4596,7 +4669,7 @@ on("clicked:repeating_armes:attack-btn", function() {
 
     // Special critical success
     let dmcrit = "";
-    if (use_crit_diff === 1) {
+    if (useCritDiff === 1) {
       switch (dmtype) {
         case "contondants":
           dmcrit = `[[${dmMax}]] DM et cible étourdie au prochain round`;
@@ -4619,7 +4692,7 @@ on("clicked:repeating_armes:attack-btn", function() {
       broll: "",
       dm: dmroll,
       dmdesc,
-      critdiff: `[[${use_crit_diff}]]`,
+      critdiff: `[[${useCritDiff}]]`,
       dmcrit,
       text: special
     };
@@ -5110,6 +5183,24 @@ on("clicked:repeating_armes:arme-opt-btn", function() {
   });
 }); */
 
+on("change:cfg_highfan change:cfg_lowfan", function (eventInfo) {
+  const { sourceAttribute } = eventInfo;
+  getAttrs([ "cfg_highfan", "cfg_lowfan" ], function (values) {
+    const checked = intval(values[sourceAttribute]);
+    let options;
+    switch (sourceAttribute) {
+      case "cfg_highfan":
+        options = [ "use_epic", "use_drniv", "use_mana" ];
+        break;
+      case "cfg_lowfan":
+        options = [ "use_capped6", "use_dronly" ];
+        break;
+    }
+    const subOptions = new Map(options.map(o => [ `cfg_${o}`, checked]));
+    setAttrs(Object.fromEntries(subOptions));
+  });
+});
+
 /**
  * Return an updated Map of attributes
  * @param {object} charData - character data
@@ -5173,6 +5264,12 @@ function importProfile(charData, attributes) {
   return attributes;
 }
 
+/**
+ * Process gears property of JSON blob
+ * @param {object} gearData - gears property of PC data
+ * @param {Map} attributes - Map of attributes to update
+ * @returns {Map} updated Map object
+ */
 function importGears(gearData, attributes) {
 
   gearData.forEach(gear => {
@@ -5287,7 +5384,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     "special"
   ];
   getAttrs([ "cfg_crit_diff", ...attackAttrs.map(attribute => `${section}${attribute}`) ], function (values) {
-    const use_crit_diff = intval(values["cfg_crit_diff"]);
+    const useCritDiff = intval(values["cfg_crit_diff"]);
     const name = capitalize(strval(values[section + "nom"], "Attaque"));
     const use_multi = intval(values[section + "multi"]);
     const roll = strval(values[section + "roll"]);
@@ -5332,7 +5429,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     }
 
     let dmcrit = "";
-    if (use_crit_diff === 1) {
+    if (useCritDiff === 1) {
       switch (dmtype) {
         case "contondants":
         case "coup":
@@ -5357,7 +5454,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
       broll: attack,
       dm: dmroll,
       dmdesc,
-      critdiff: `[[${use_crit_diff}]]`,
+      critdiff: `[[${useCritDiff}]]`,
       dmcrit,
       text: special
     };

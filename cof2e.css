@@ -607,10 +607,14 @@ input[value="0"].show-paths-789 ~ div.abilities {
 .pc-config-tab li {
   margin-top: 2px;
 }
+.pc-config-tab li.config-check {
+  list-style: none;
+}
+  
 
 .pc-config-tab .pc-configs {
   display: grid;
-  grid-template-columns: 25% 5%;
+  grid-template-columns: 60% 40%;
   gap: 2px;
 }
 
