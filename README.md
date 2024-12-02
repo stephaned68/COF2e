@@ -15,4 +15,4 @@ Consultez la [documentation](https://stephaned68.github.io/COF2e/)
 
 ## Notes de version
 
-[Release Notes](https://github.com/stephaned68/COF2e/CHANGELOG.md)
+[Release Notes](https://github.com/stephaned68/COF2e/blob/main/CHANGELOG.md)
