@@ -979,7 +979,7 @@
               <div class="pc-tactic">
                 <div>
                   <input type="radio" name="attr_tactique" value="1">
-                  Assurée
+                  Attaque assurée
                 </div>
                 <div>
                   +5 en attaque et DM divisés par 2
@@ -989,7 +989,7 @@
               <div class="pc-tactic">
                 <div>
                   <input type="radio" name="attr_tactique" value="2">
-                  Précise/Violente
+                  Att. précise/violente
                 </div>
                 <div>
                   -3 en attaque et +1d4° DM
@@ -999,7 +999,7 @@
               <div class="pc-tactic">
                 <div>
                   <input type="radio" name="attr_tactique" value="3">
-                  Précise/Violente
+                  Att. précise/violente
                 </div>
                 <div>
                   -7 en attaque et +2d4° DM
@@ -2214,6 +2214,8 @@
         <input type="hidden" class="tabs-toggle" name="attr_pc_subtab" value="rolls" />
         <div class="pc-subtabs">
           <button type="action" name="act_pc_rolls-btn" class="sub-tab tab-btn pc-rolls-btn">JETS</button>
+          <input type="hidden" class="pc-skills-btn" name="attr_use_skills" value="0">
+          <button type="action" name="act_pc_skills-btn" class="sub-tab tab-btn pc-skills-btn">COMPETENCES</button>
           <button type="action" name="act_pc_buffs-btn" class="sub-tab tab-btn pc-buffs-btn">BUFFS</button>
         </div>
         
@@ -2305,6 +2307,482 @@
             
           </fieldset>
 
+        </div>
+
+        <!-- Fiche PJ, Onglet CAPACITES, Sous-onglet Compétences -->
+        <div class="pc-skills-subtab">
+          <div class="sheet-2colrow">
+
+            <div class="sheet-col">
+
+              <div class="d-flex d-flex-between">
+                <button type="action" class="flat-btn img-btn" name="act_skill-acrobaties">
+                  <span class="img-btn"></span>Acrobaties
+                </button>
+                <div>
+                  <select class="select-md" name="attr_acrobaties_carac" title="@{acrobaties_carac} Bonus de caractéristique">
+                    <option value="0">-</option>
+                    <option value="@{agi}" selected>AGI</option>
+                    <option value="@{con}">CON</option>
+                    <option value="@{for}">FOR</option>
+                    <option value="@{per}">PER</option>
+                    <option value="@{cha}">CHA</option>
+                    <option value="@{int}">INT</option>
+                    <option value="@{vol}">VOL</option>
+                    <option value="?">Demander</option>
+                  </select>
+                  <span>+</span>
+                  <input type="number" class="two-digits" name="attr_acrobaties_bonus" value="0">
+                </div>
+              </div>
+
+              <div class="d-flex d-flex-between">
+                <button type="action" class="flat-btn img-btn" name="act_skill-artisanat">
+                  <span class="img-btn"></span>Artisanat
+                </button>
+                <div>
+                  <select class="select-md" name="attr_artisanat_carac" title="@{artisanat_carac} Bonus de caractéristique">
+                    <option value="0">-</option>
+                    <option value="@{agi}">AGI</option>
+                    <option value="@{con}">CON</option>
+                    <option value="@{for}">FOR</option>
+                    <option value="@{per}">PER</option>
+                    <option value="@{cha}">CHA</option>
+                    <option value="@{int}" selected>INT</option>
+                    <option value="@{vol}">VOL</option>
+                    <option value="?">Demander</option>
+                  </select>
+                  <span>+</span>
+                  <input type="number" class="two-digits" name="attr_artisanat_bonus" value="0">
+                </div>
+              </div>
+
+              <div class="d-flex d-flex-between">
+                <button type="action" class="flat-btn img-btn" name="act_skill-athletisme">
+                  <span class="img-btn"></span>Athlétisme
+                </button>
+                <div>
+                  <select class="select-md" name="attr_athletisme_carac" title="@{athletisme_carac} Bonus de caractéristique">
+                    <option value="0">-</option>
+                    <option value="@{agi}">AGI</option>
+                    <option value="@{con}">CON</option>
+                    <option value="@{for}">FOR</option>
+                    <option value="@{per}">PER</option>
+                    <option value="@{cha}">CHA</option>
+                    <option value="@{int}">INT</option>
+                    <option value="@{vol}">VOL</option>
+                    <option value="?" selected>Demander</option>
+                  </select>
+                  <span>+</span>
+                  <input type="number" class="two-digits" name="attr_athletisme_bonus" value="0">
+                </div>
+              </div>
+
+              <div class="d-flex d-flex-between">
+                <button type="action" class="flat-btn img-btn" name="act_skill-commerce">
+                  <span class="img-btn"></span>Commerce
+                </button>
+                <div>
+                  <select class="select-md" name="attr_commerce_carac" title="@{commerce_carac} Bonus de caractéristique">
+                    <option value="0">-</option>
+                    <option value="@{agi}">AGI</option>
+                    <option value="@{con}">CON</option>
+                    <option value="@{for}">FOR</option>
+                    <option value="@{per}">PER</option>
+                    <option value="@{cha}" selected>CHA</option>
+                    <option value="@{int}">INT</option>
+                    <option value="@{vol}">VOL</option>
+                    <option value="?">Demander</option>
+                  </select>
+                  <span>+</span>
+                  <input type="number" class="two-digits" name="attr_commerce_bonus" value="0">
+                </div>
+              </div>
+
+              <div class="d-flex d-flex-between">
+                <button type="action" class="flat-btn img-btn" name="act_skill-connaissance">
+                  <span class="img-btn"></span>Connaissance
+                </button>
+                <div>
+                  <select class="select-md" name="attr_connaissance_carac" title="@{connaissance_carac} Bonus de caractéristique">
+                    <option value="0">-</option>
+                    <option value="@{agi}">AGI</option>
+                    <option value="@{con}">CON</option>
+                    <option value="@{for}">FOR</option>
+                    <option value="@{per}">PER</option>
+                    <option value="@{cha}">CHA</option>
+                    <option value="@{int}" selected>INT</option>
+                    <option value="@{vol}">VOL</option>
+                    <option value="?">Demander</option>
+                  </select>
+                  <span>+</span>
+                  <input type="number" class="two-digits" name="attr_connaissance_bonus" value="0">
+                </div>
+              </div>
+
+              <div class="d-flex d-flex-between">
+                <button type="action" class="flat-btn img-btn" name="act_skill-discretion">
+                  <span class="img-btn"></span>Discrétion
+                </button>
+                <div>
+                  <select class="select-md" name="attr_discretion_carac" title="@{discretion_carac} Bonus de caractéristique">
+                    <option value="0">-</option>
+                    <option value="@{agi}" selected>AGI</option>
+                    <option value="@{con}">CON</option>
+                    <option value="@{for}">FOR</option>
+                    <option value="@{per}">PER</option>
+                    <option value="@{cha}">CHA</option>
+                    <option value="@{int}">INT</option>
+                    <option value="@{vol}">VOL</option>
+                    <option value="?">Demander</option>
+                  </select>
+                  <span>+</span>
+                  <input type="number" class="two-digits" name="attr_discretion_bonus" value="0">
+                </div>
+              </div>
+
+              <div class="d-flex d-flex-between">
+                <button type="action" class="flat-btn img-btn" name="act_skill-divertissement">
+                  <span class="img-btn"></span>Divertissement
+                </button>
+                <div>
+                  <select class="select-md" name="attr_divertissement_carac" title="@{divertissement_carac} Bonus de caractéristique">
+                    <option value="0">-</option>
+                    <option value="@{agi}">AGI</option>
+                    <option value="@{con}">CON</option>
+                    <option value="@{for}">FOR</option>
+                    <option value="@{per}">PER</option>
+                    <option value="@{cha}" selected>CHA</option>
+                    <option value="@{int}">INT</option>
+                    <option value="@{vol}">VOL</option>
+                    <option value="?">Demander</option>
+                  </select>
+                  <span>+</span>
+                  <input type="number" class="two-digits" name="attr_divertissement_bonus" value="0">
+                </div>
+              </div>
+
+              <div class="d-flex d-flex-between">
+                <button type="action" class="flat-btn img-btn" name="act_skill-equitation">
+                  <span class="img-btn"></span>Equitation
+                </button>
+                <div>
+                  <select class="select-md" name="attr_equitation_carac" title="@{equitation_carac} Bonus de caractéristique">
+                    <option value="0">-</option>
+                    <option value="@{agi}">AGI</option>
+                    <option value="@{con}">CON</option>
+                    <option value="@{for}">FOR</option>
+                    <option value="@{per}">PER</option>
+                    <option value="@{cha}">CHA</option>
+                    <option value="@{int}">INT</option>
+                    <option value="@{vol}">VOL</option>
+                    <option value="?" selected>Demander</option>
+                  </select>
+                  <span>+</span>
+                  <input type="number" class="two-digits" name="attr_equitation_bonus" value="0">
+                </div>
+              </div>
+
+              <div class="d-flex d-flex-between">
+                <button type="action" class="flat-btn img-btn" name="act_skill-escalade">
+                  <span class="img-btn"></span>Escalade
+                </button>
+                <div>
+                  <select class="select-md" name="attr_escalade_carac" title="@{escalade_carac} Bonus de caractéristique">
+                    <option value="0">-</option>
+                    <option value="@{agi}" selected>AGI</option>
+                    <option value="@{con}">CON</option>
+                    <option value="@{for}">FOR</option>
+                    <option value="@{per}">PER</option>
+                    <option value="@{cha}">CHA</option>
+                    <option value="@{int}">INT</option>
+                    <option value="@{vol}">VOL</option>
+                    <option value="?">Demander</option>
+                  </select>
+                  <span>+</span>
+                  <input type="number" class="two-digits" name="attr_escalade_bonus" value="0">
+                </div>
+              </div>
+
+              <div class="d-flex d-flex-between">
+                <button type="action" class="flat-btn img-btn" name="act_skill-effraction">
+                  <span class="img-btn"></span>Effraction
+                </button>
+                <div>
+                  <select class="select-md" name="attr_effraction_carac" title="@{effraction_carac} Bonus de caractéristique">
+                    <option value="0">-</option>
+                    <option value="@{agi}" selected>AGI</option>
+                    <option value="@{con}">CON</option>
+                    <option value="@{for}">FOR</option>
+                    <option value="@{per}">PER</option>
+                    <option value="@{cha}">CHA</option>
+                    <option value="@{int}">INT</option>
+                    <option value="@{vol}">VOL</option>
+                    <option value="?">Demander</option>
+                  </select>
+                  <span>+</span>
+                  <input type="number" class="two-digits" name="attr_effraction_bonus" value="0">
+                </div>
+              </div>
+
+              <div class="d-flex d-flex-between">
+                <button type="action" class="flat-btn img-btn" name="act_skill-empathie">
+                  <span class="img-btn"></span>Empathie
+                </button>
+                <div>
+                  <select class="select-md" name="attr_empathie_carac" title="@{empathie_carac} Bonus de caractéristique">
+                    <option value="0">-</option>
+                    <option value="@{agi}">AGI</option>
+                    <option value="@{con}">CON</option>
+                    <option value="@{for}">FOR</option>
+                    <option value="@{per}" selected>PER</option>
+                    <option value="@{cha}">CHA</option>
+                    <option value="@{int}">INT</option>
+                    <option value="@{vol}">VOL</option>
+                    <option value="?">Demander</option>
+                  </select>
+                  <span>+</span>
+                  <input type="number" class="two-digits" name="attr_empathie_bonus" value="0">
+                </div>
+              </div>
+
+            </div>
+
+            <div class="sheet-col">
+              
+              <div class="d-flex d-flex-between">
+                <button type="action" class="flat-btn img-btn" name="act_skill-intimidation">
+                  <span class="img-btn"></span>Intimidation
+                </button>
+                <div>
+                  <select class="select-md" name="attr_intimidation_carac" title="@{intimidation_carac} Bonus de caractéristique">
+                    <option value="0">-</option>
+                    <option value="@{agi}">AGI</option>
+                    <option value="@{con}">CON</option>
+                    <option value="@{for}">FOR</option>
+                    <option value="@{per}">PER</option>
+                    <option value="@{cha}" selected>CHA</option>
+                    <option value="@{int}">INT</option>
+                    <option value="@{vol}">VOL</option>
+                    <option value="?">Demander</option>
+                  </select>
+                  <span>+</span>
+                  <input type="number" class="two-digits" name="attr_intimidation_bonus" value="0">
+                </div>
+              </div>
+              
+              <div class="d-flex d-flex-between">
+                <button type="action" class="flat-btn img-btn" name="act_skill-medecine">
+                  <span class="img-btn"></span>Médecine
+                </button>
+                <div>
+                  <select class="select-md" name="attr_medecine_carac" title="@{medecine_carac} Bonus de caractéristique">
+                    <option value="0">-</option>
+                    <option value="@{agi}">AGI</option>
+                    <option value="@{con}">CON</option>
+                    <option value="@{for}">FOR</option>
+                    <option value="@{per}" selected>PER</option>
+                    <option value="@{cha}">CHA</option>
+                    <option value="@{int}">INT</option>
+                    <option value="@{vol}">VOL</option>
+                    <option value="?">Demander</option>
+                  </select>
+                  <span>+</span>
+                  <input type="number" class="two-digits" name="attr_medecine_bonus" value="0">
+                </div>
+              </div>
+              
+              <div class="d-flex d-flex-between">
+                <button type="action" class="flat-btn img-btn" name="act_skill-natation">
+                  <span class="img-btn"></span>Natation
+                </button>
+                <div>
+                  <select class="select-md" name="attr_natation_carac" title="@{natation_carac} Bonus de caractéristique">
+                    <option value="0">-</option>
+                    <option value="@{agi}">AGI</option>
+                    <option value="@{con}" selected>CON</option>
+                    <option value="@{for}">FOR</option>
+                    <option value="@{per}">PER</option>
+                    <option value="@{cha}">CHA</option>
+                    <option value="@{int}">INT</option>
+                    <option value="@{vol}">VOL</option>
+                    <option value="?">Demander</option>
+                  </select>
+                  <span>+</span>
+                  <input type="number" class="two-digits" name="attr_natation_bonus" value="0">
+                </div>
+              </div>
+              
+              <div class="d-flex d-flex-between">
+                <button type="action" class="flat-btn img-btn" name="act_skill-occultisme">
+                  <span class="img-btn"></span>Occultisme
+                </button>
+                <div>
+                  <select class="select-md" name="attr_occultisme_carac" title="@{occultisme_carac} Bonus de caractéristique">
+                    <option value="0">-</option>
+                    <option value="@{agi}">AGI</option>
+                    <option value="@{con}">CON</option>
+                    <option value="@{for}">FOR</option>
+                    <option value="@{per}">PER</option>
+                    <option value="@{cha}">CHA</option>
+                    <option value="@{int}" selected>INT</option>
+                    <option value="@{vol}">VOL</option>
+                    <option value="?">Demander</option>
+                  </select>
+                  <span>+</span>
+                  <input type="number" class="two-digits" name="attr_occultisme_bonus" value="0">
+                </div>
+              </div>
+              
+              <div class="d-flex d-flex-between">
+                <button type="action" class="flat-btn img-btn" name="act_skill-persuasion">
+                  <span class="img-btn"></span>Persuasion
+                </button>
+                <div>
+                  <select class="select-md" name="attr_persuasion_carac" title="@{persuasion_carac} Bonus de caractéristique">
+                    <option value="0">-</option>
+                    <option value="@{agi}">AGI</option>
+                    <option value="@{con}">CON</option>
+                    <option value="@{for}">FOR</option>
+                    <option value="@{per}">PER</option>
+                    <option value="@{cha}" selected>CHA</option>
+                    <option value="@{int}">INT</option>
+                    <option value="@{vol}">VOL</option>
+                    <option value="?">Demander</option>
+                  </select>
+                  <span>+</span>
+                  <input type="number" class="two-digits" name="attr_persuasion_bonus" value="0">
+                </div>
+              </div>
+              
+              <div class="d-flex d-flex-between">
+                <button type="action" class="flat-btn img-btn" name="act_skill-religion">
+                  <span class="img-btn"></span>Religion
+                </button>
+                <div>
+                  <select class="select-md" name="attr_religion_carac" title="@{religion_carac} Bonus de caractéristique">
+                    <option value="0">-</option>
+                    <option value="@{agi}">AGI</option>
+                    <option value="@{con}">CON</option>
+                    <option value="@{for}">FOR</option>
+                    <option value="@{per}">PER</option>
+                    <option value="@{cha}">CHA</option>
+                    <option value="@{int}" selected>INT</option>
+                    <option value="@{vol}">VOL</option>
+                    <option value="?">Demander</option>
+                  </select>
+                  <span>+</span>
+                  <input type="number" class="two-digits" name="attr_religion_bonus" value="0">
+                </div>
+              </div>
+              
+              <div class="d-flex d-flex-between">
+                <button type="action" class="flat-btn img-btn" name="act_skill-renseignement">
+                  <span class="img-btn"></span>Renseignement
+                </button>
+                <div>
+                  <select class="select-md" name="attr_renseignement_carac" title="@{renseignement_carac} Bonus de caractéristique">
+                    <option value="0">-</option>
+                    <option value="@{agi}">AGI</option>
+                    <option value="@{con}">CON</option>
+                    <option value="@{for}">FOR</option>
+                    <option value="@{per}">PER</option>
+                    <option value="@{cha}" selected>CHA</option>
+                    <option value="@{int}">INT</option>
+                    <option value="@{vol}">VOL</option>
+                    <option value="?">Demander</option>
+                  </select>
+                  <span>+</span>
+                  <input type="number" class="two-digits" name="attr_renseignement_bonus" value="0">
+                </div>
+              </div>
+              
+              <div class="d-flex d-flex-between">
+                <button type="action" class="flat-btn img-btn" name="act_skill-sciences">
+                  <span class="img-btn"></span>Sciences
+                </button>
+                <div>
+                  <select class="select-md" name="attr_sciences_carac" title="@{sciences_carac} Bonus de caractéristique">
+                    <option value="0">-</option>
+                    <option value="@{agi}">AGI</option>
+                    <option value="@{con}">CON</option>
+                    <option value="@{for}">FOR</option>
+                    <option value="@{per}">PER</option>
+                    <option value="@{cha}">CHA</option>
+                    <option value="@{int}" selected>INT</option>
+                    <option value="@{vol}">VOL</option>
+                    <option value="?">Demander</option>
+                  </select>
+                  <span>+</span>
+                  <input type="number" class="two-digits" name="attr_sciences_bonus" value="0">
+                </div>
+              </div>
+              
+              <div class="d-flex d-flex-between">
+                <button type="action" class="flat-btn img-btn" name="act_skill-tromperie">
+                  <span class="img-btn"></span>Tromperie
+                </button>
+                <div>
+                  <select class="select-md" name="attr_tromperie_carac" title="@{tromperie_carac} Bonus de caractéristique">
+                    <option value="0">-</option>
+                    <option value="@{agi}">AGI</option>
+                    <option value="@{con}">CON</option>
+                    <option value="@{for}">FOR</option>
+                    <option value="@{per}">PER</option>
+                    <option value="@{cha}" selected>CHA</option>
+                    <option value="@{int}">INT</option>
+                    <option value="@{vol}">VOL</option>
+                    <option value="?">Demander</option>
+                  </select>
+                  <span>+</span>
+                  <input type="number" class="two-digits" name="attr_tromperie_bonus" value="0">
+                </div>
+              </div>
+              
+              <div class="d-flex d-flex-between">
+                <button type="action" class="flat-btn img-btn" name="act_skill-survie">
+                  <span class="img-btn"></span>Survie
+                </button>
+                <div>
+                  <select class="select-md" name="attr_survie_carac" title="@{survie_carac} Bonus de caractéristique">
+                    <option value="0">-</option>
+                    <option value="@{agi}">AGI</option>
+                    <option value="@{con}">CON</option>
+                    <option value="@{for}">FOR</option>
+                    <option value="@{per}" selected>PER</option>
+                    <option value="@{cha}">CHA</option>
+                    <option value="@{int}">INT</option>
+                    <option value="@{vol}">VOL</option>
+                    <option value="?">Demander</option>
+                  </select>
+                  <span>+</span>
+                  <input type="number" class="two-digits" name="attr_survie_bonus" value="0">
+                </div>
+              </div>
+              
+              <div class="d-flex d-flex-between">
+                <button type="action" class="flat-btn img-btn" name="act_skill-vigilance">
+                  <span class="img-btn"></span>Vigilance
+                </button>
+                <div>
+                  <select class="select-md" name="attr_vigilance_carac" title="@{vigilance_carac} Bonus de caractéristique">
+                    <option value="0">-</option>
+                    <option value="@{agi}">AGI</option>
+                    <option value="@{con}">CON</option>
+                    <option value="@{for}">FOR</option>
+                    <option value="@{per}" selected>PER</option>
+                    <option value="@{cha}">CHA</option>
+                    <option value="@{int}">INT</option>
+                    <option value="@{vol}">VOL</option>
+                    <option value="?">Demander</option>
+                  </select>
+                  <span>+</span>
+                  <input type="number" class="two-digits" name="attr_vigilance_bonus" value="0">
+                </div>
+              </div>
+
+            </div>
+          </div>
         </div>
 
         <!-- Fiche PJ, Onglet CAPACITES, Sous-onglet Buffs -->
@@ -2624,6 +3102,10 @@
               <li>
                 <span>Afficher voies 7-8-9&nbsp;</span>
                 <input type="checkbox" name="attr_voies_789" value="1">
+              </li>
+              <li>
+                <span>Afficher compétences&nbsp;</span>
+                <input type="checkbox" name="attr_use_skills" value="1">
               </li>
             </ul>
 
@@ -3440,6 +3922,118 @@ const SWData = {
           "Pas d'action au premier round de combat"
         ]
       }
+    ],
+    SKILLS: [
+      {
+        name: "acrobaties",
+        label: "",
+        ability: "agi"
+      },
+      {
+        name: "artisanat",
+        label: "",
+        ability: "int"
+      },
+      {
+        name: "athletisme",
+        label: "Athlétisme",
+        ability: "?"
+      },
+      {
+        name: "commerce",
+        label: "",
+        ability: "cha"
+      },
+      {
+        name: "connaissance",
+        label: "",
+        ability: "int"
+      },
+      {
+        name: "discretion",
+        label: "Discrétion",
+        ability: "agi"
+      },
+      {
+        name: "divertissement",
+        label: "",
+        ability: "cha"
+      },
+      {
+        name: "equitation",
+        label: "",
+        ability: "?"
+      },
+      {
+        name: "escalade",
+        label: "",
+        ability: "agi"
+      },
+      {
+        name: "effraction",
+        label: "",
+        ability: "agi"
+      },
+      {
+        name: "empathie",
+        label: "",
+        ability: "per"
+      },
+      {
+        name: "intimidation",
+        label: "",
+        ability: "cha"
+      },
+      {
+        name: "medecine",
+        label: "Médecine",
+        ability: "per"
+      },
+      {
+        name: "natation",
+        label: "",
+        ability: "con"
+      },
+      {
+        name: "occultisme",
+        label: "",
+        ability: "int"
+      },
+      {
+        name: "persuasion",
+        label: "",
+        ability: "cha"
+      },
+      {
+        name: "religion",
+        label: "",
+        ability: "int"
+      },
+      {
+        name: "renseignement",
+        label: "",
+        ability: "cha"
+      },
+      {
+        name: "Sciences",
+        label: "",
+        ability: "int"
+      },
+      {
+        name: "tromperie",
+        label: "",
+        ability: "cha"
+      },
+      {
+        name: "survie",
+        label: "",
+        ability: "per"
+      },
+      {
+        name: "vigilance",
+        label: "",
+        ability: "per"
+      },
     ]
   },
   GEARS: {
@@ -3832,7 +4426,7 @@ on("change:sheet_type", function() {
 /**
  * Change subtabs
  */
-[ "rolls", "buffs" ].forEach(button => {
+[ "rolls", "skills", "buffs" ].forEach(button => {
   on(`clicked:pc_${button}-btn`, function() {
       setAttrs({ pc_subtab: button });
   });
@@ -4604,6 +5198,7 @@ on("clicked:repeating_armes:attack-btn", function() {
     const portee = strval(values[section + "portee"]);
     const range = (portee !== "") ? ` (${portee})` : "";
     const crit = intval(values[section + "crit"], 20);
+    const isRanged = (atk === "atktir" && portee !== "");
 
     // Special tactics
     let tacticBonus = "";
@@ -4624,13 +5219,15 @@ on("clicked:repeating_armes:attack-btn", function() {
 
     // Build situational modifiers
     let modSit = "";
-    modSit += modCover !== 0 ? ` ${modCover}[Cible à ouvert]` : "";
-    modSit += modMelee !== 0 ? ` ${modMelee}[Cible en mêlée]` : "";
-    modSit += modVisible !== 0 ? ` ${modVisible}[Visibilité]` : "";
+    if (isRanged) {
+      modSit += modCover !== 0 ? ` ${modCover}[Cible à ouvert]` : "";
+      modSit += modMelee !== 0 ? ` ${modMelee}[Cible en mêlée]` : "";
+      modSit += modVisible !== 0 ? ` ${modVisible}[Visibilité]` : "";
+    }
 
     // Determine normal or malus die roll
     let roll = weakened === 1 ? "2d20kl1" : "1d20";
-    if (atk === "atktir" && modContact === 1)
+    if (isRanged && modContact === 1)
       roll = "2d20kl1";
 
     // Attack roll
@@ -4874,6 +5471,21 @@ seq(9).forEach(path => {
   });
 });
 
+/**
+ * Build a roll query for ability selection
+ * @returns {string}
+ */
+function abilityRollQuery() {
+  return "?{Carac ?|" 
+  + SWData.PC.ABILITIES
+  .map(a => `${ a.substring(0,3).toUpperCase() },@{${ a.substring(0,3) }}`)
+  .join("|")
+  + "}";
+}
+
+/**
+ * On ability roll button click
+ */
 on("clicked:repeating_rolls:roll-btn", function() {
   const section = "repeating_rolls_roll-";
   const rollAttrs = [
@@ -4906,10 +5518,7 @@ on("clicked:repeating_rolls:roll-btn", function() {
       // + Carac
       if (carac !== "") {
         if (carac === "?") {
-          const query = SWData.PC.ABILITIES
-            .map(a => `${ a.substring(0,3).toUpperCase() },@{${ a.substring(0,3) }}`)
-            .join("|");
-          carac = `?{Carac ?|${query}}`;
+          carac = abilityRollQuery();
         } else {
           carTip = `[${ carac.substring(2,2+3).toUpperCase() }]`;
         }
@@ -4940,6 +5549,45 @@ on("clicked:repeating_rolls:roll-btn", function() {
     sendChatMsg(chatMsg);
   });
 })
+
+/**
+ * On skill 'button' click
+ */
+SWData.PC.SKILLS.forEach(skill => {
+  on(`clicked:skill-${skill.name}`, function () {
+    const skillName = (skill.label !== "") ? skill.label : capitalize(skill.name);
+    const skillAttrs = [ "carac", "bonus" ].map(a => `${skill.name}_${a}`);
+    getAttrs(skillAttrs, function (values) {
+      const [ carac, bonus ] = Object.keys(values);
+      let caracBonus = strval(values[carac]);
+      const skillBonus = intval(values[bonus]);
+
+      let rollCmd = "1d20cs20cf1[Dés]";
+
+      let carTip = "";
+      if (caracBonus === "?") {
+        caracBonus = abilityRollQuery();
+      } else {
+        carTip = `[${ caracBonus.substring(2,2+3).toUpperCase() }]`;
+      }
+      rollCmd += ` + (${caracBonus})${carTip}`
+
+      if (skillBonus !== 0)
+        rollCmd += ` + (${skillBonus})[Bonus ${skillName}]`;
+
+      rollCmd = "[[" + rollCmd + " ]]";
+
+      // Send to chat
+      const chatMsg = cof2RollTemplate({
+        lsub: "Compétence",
+        rsub: skillName,
+        roll: rollCmd,
+        broll: rollCmd
+      });
+      sendChatMsg(chatMsg);
+    });
+  });
+});
 
 /**
  * Rebuild buffable attributes xxx_buff_list

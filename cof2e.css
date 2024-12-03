@@ -315,6 +315,10 @@ div.path div.block-title {
   font-size: small;
 }
 
+input[value="0"].pc-skills-btn ~ button.pc-skills-btn {
+  display: none;
+}
+
 /* Hide all tabs */
 .pc-main-tab,
 .pc-abilities-tab,
@@ -322,6 +326,7 @@ div.path div.block-title {
 .pc-config-tab,
 .pc-version-tab,
 .pc-rolls-subtab,
+.pc-skills-subtab,
 .pc-buffs-subtab,
 .npc-main-tab,
 .npc-config-tab {
@@ -337,6 +342,7 @@ div.path div.block-title {
 .tabs-toggle[value="main"] ~ div .npc-main-btn, 
 .tabs-toggle[value="config"] ~ div .npc-config-btn,
 .tabs-toggle[value="rolls"] ~ div .pc-rolls-btn,
+.tabs-toggle[value="skills"] ~ div .pc-skills-btn,
 .tabs-toggle[value="buffs"] ~ div .pc-buffs-btn {
   color: white; 
   background-color: var(--cof-hilite); 
@@ -349,6 +355,7 @@ div.path div.block-title {
 .tabs-toggle[value="config"] ~ div.pc-config-tab,
 .tabs-toggle[value="version"] ~ div.pc-version-tab,
 .tabs-toggle[value="rolls"] ~ div.pc-rolls-subtab,
+.tabs-toggle[value="skills"] ~ div.pc-skills-subtab,
 .tabs-toggle[value="buffs"] ~ div.pc-buffs-subtab,
 .tabs-toggle[value="main"] ~ div.npc-main-tab, 
 .tabs-toggle[value="config"] ~ div.npc-config-tab {
