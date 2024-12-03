@@ -1,31 +1,5 @@
-# Onglet Attributs
+# CO Fantasy 2ème édition
 
-## Caractéristiques
+[Fiche de personnage]({{ site.baseurl }}/pc-main)
 
-## Combat
-
-## Vigueur
-
-## Points de Mana
-
-## Etats préjudiciables
-
-## Défense
-
-## Points de Chance
-
-## Réduction des dommages
-
-## Armes & attaques
-
-## Options tactiques
-
-# Onglet Capacités
-
-## Voies de peuple et de profil
-
-## Voies de prestige
-
-# Onglet Equipement
-
-# Onglet Configuration
+[Fiche de PNJ]({{ site.baseurl }}/npc-main)
