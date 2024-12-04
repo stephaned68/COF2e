@@ -6,4 +6,4 @@
 
 [Onglet Equipement]({{ site.baseurl }}/pc-gears)
 
-[Onglet COnfigugation]({{ site.baseurl }}/pc-config)
+[Onglet Configugation]({{ site.baseurl }}/pc-config)
