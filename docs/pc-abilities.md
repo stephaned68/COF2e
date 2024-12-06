@@ -67,11 +67,11 @@ Plusieurs buffs peuvent s'appliquer au même attribut du PJ. Si c'est le cas, le
 
 Une section dépliable _Détail par attribut_ permet de consulter la liste des buffs actuellement appliqués à chaque attribut et leur somme.
 
-# Jets en ligne (inline-Rolls)
+# Jets en ligne (Inline-Rolls)
 
 Avant d'être envoyé dans le chat, les descriptions des capacités sont analysées et des cartains motifs de texte sont remplacés par des jets en ligne (_in-line rolls_) :
 - <kbd>[AGI]</kbd>, <kbd>[CON]</kbd>, <kbd>[FOR]</kbd>, etc... sont remplacés par le score de la caractéristique correspondante.
-- <kbd>[{nombre} +/- XXX]</kbd>, où <kbd>XXX</kbd> est un nom de  caractéristique, sont remplacés par le résultat du calcul.
+- <kbd>[nombre +/- XXX]</kbd>, où <kbd>XXX</kbd> est un nom de caractéristique, sont remplacés par le résultat du calcul.
 - <kbd>[rang n]</kbd>, <kbd>[rang voie n]</kbd> et <kbd>[rang Nom De La Voie]</kbd> sont remplacés par la valeur du rang dans la voie correspondante.
 - <kbd>Nd4°</kbd> est remplacé par un jet du nombre <kbd>N</kbd> de dés évolutifs.
 - <kbd>[Nd4° + XXX]</kbd> est remplacé par un jet du nombre <kbd>N</kbd> de dés évolutifs auquel le score de la caractéristique <kbd>XXX</kbd> (_AGI_, _CHA_ etc...) est ajouté.

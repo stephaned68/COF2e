@@ -65,11 +65,12 @@ Cette zone de texte libre permet d'indiquer la ou les réductions et résistance
 
 # Armes & attaques
 
-Cette section permet d'indiquer les armes et attaques à la disposition du PJ. Pour chacune, on indique :
+Cette section permet d'indiquer les armes et attaques à la disposition du PJ. Pour chacune, vous indiquez :
 - Le nom de l'attaque,
 - Le type d'attaque (contact, distance ou magique),
 - Un éventuel bonus pour toucher propre à cette attaque,
 - Le score de critique du jet (_20_ par défaut),
+- Si l'arme est maniée à deux mains uniquement,
 - Les dés de DM (ex : <kbd>1d8</kbd>, <kbd>2d6</kbd>),
 - Le type de DM (_ex : contondants, perforants_)
 - La caractéristique ajoutée aux DM,
@@ -78,6 +79,8 @@ Cette section permet d'indiquer les armes et attaques à la disposition du PJ. P
 - Un effet spécial ou une description affichée dans le chat Roll20.
 
 Un clic sur le bouton d20 permet de lancer le jet d'attaque et de DM dans le chat en tenant compte des divers paramètres. Deux jets distincts d'attaque sont effectués, sauf si le PJ est _Affaibli_.
+
+Si l'arme est maniée à deux mains et que le bouclier est équipé, le jet d'attaque n'est pas effectué, un message d'avertissement s'affiche à la place.
 
 Si l'arme peut être maniée à une main ou à deux mains, les dés de DM peuvent être indiqués sous la forme <kbd>1d8/1d12</kbd>. Un popup Roll20 s'affiche pour demander comment l'arme est maniée, à moins que le bouclier soit équipé, auquel cas ce sont les DM à une main qui sont pris en compte.
 
@@ -89,4 +92,4 @@ Cette section permet de prendre en compte les options tactiques des attaques. Ap
 
 # Modificateurs situationnels
 
-Cette section permet de modifier les jets d'attaque à distance en fonction des circonstances choisies. Est considérée comme _à distance_ une attaque utilisant le score d'attaque à distance et ayant une portée indiquée. _Cela évite d'appliquer ces modificateurs à une attaque au contact utilisant l'AGI (ex : barde, voleur)_.
+Cette section permet de modifier les jets d'attaque à distance en fonction des circonstances sélectionnées. Est considérée comme _à distance_ une attaque utilisant le score d'attaque à distance et ayant une portée indiquée. _Cela évite d'appliquer ces modificateurs à une attaque au contact utilisant l'AGI (ex : barde, voleur)_.
