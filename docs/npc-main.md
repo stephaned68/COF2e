@@ -1,5 +1,5 @@
 # Fiche de PNJ CO Fantasy 2ème édition
 
-[Onglet Attributs]({{ site.baseurl }}/npc-attribs)
+[Onglet Traits]({{ site.baseurl }}/npc-traits)
 
-[Onglet COnfigugation]({{ site.baseurl }}/npc-config)
+[Onglet Configugation]({{ site.baseurl }}/npc-config)
