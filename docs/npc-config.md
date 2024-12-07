@@ -4,7 +4,7 @@ Les préférence et réglages possibles de la fiche sont configurés dans cet on
 - Jets
   - Public : Tous les joueurs voient les jets du PJ dans le chat.
   - Chuchotés au MJ : Seul le joueur et le MJ voient les jets (uniquement le MJ pour une fiche de PNJ non partagées aux joueurs).
-  - Avec token : Le token par défaut du personnage apparaît dans tous les messages envoyés dans le chat par la fiche.
+  - Avec token : Le token par défaut du PNJ apparaît dans tous les messages envoyés dans le chat par la fiche.
 
 ## Règles optionnelles :
 

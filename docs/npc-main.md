@@ -2,4 +2,4 @@
 
 [Onglet Traits]({{ site.baseurl }}/npc-traits)
 
-[Onglet Configugation]({{ site.baseurl }}/npc-config)
+[Onglet Configuration]({{ site.baseurl }}/npc-config)

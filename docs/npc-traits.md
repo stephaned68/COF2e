@@ -2,7 +2,7 @@
 
 Pour chacune des 7 caractéristiques, vous indiquez :
 - Son score,
-- Si la caractéristique est _supérieure_ (les jets de d20 sont effectués avec un _dé bonus_).
+- S'il s'agit d'une caractéristique _supérieure_ (les jets de d20 sont effectués avec un _dé bonus_).
 
 Vous indiquez également :
 - Les PV courants et maximum ainsi qu'une éventuelle RD,
@@ -35,8 +35,6 @@ Le texte d'effet spécial est traité par la fiche pour substituer les jets en l
 
 # Capacités
 
-Cette liste contient les capacités spéciales du PNJ. Pour chacune, vous indiquez :
-- Son nom,
-- Sa description.
+Cette liste contient les capacités spéciales du PNJ. Pour chacune, vous indiquez son nom et sa description.
 
 Un clic sur le bouton d20 envoie un message dans le chat Roll20 avec le nom et la description. Le texte de la description est traité par la fiche pour substituer les jets en ligne comme décrit pour la description des [capacités des PJs]({{ site.baseurl }}/pc-abilities).
