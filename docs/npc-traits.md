@@ -38,3 +38,7 @@ Le texte d'effet spécial est traité par la fiche pour substituer les jets en l
 Cette liste contient les capacités spéciales du PNJ. Pour chacune, vous indiquez son nom et sa description.
 
 Un clic sur le bouton d20 envoie un message dans le chat Roll20 avec le nom et la description. Le texte de la description est traité par la fiche pour substituer les jets en ligne comme décrit pour la description des [capacités des PJs]({{ site.baseurl }}/pc-abilities).
+
+---
+
+[Retour]({{ site.baseurl }}/npc-main)

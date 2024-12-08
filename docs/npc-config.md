@@ -15,5 +15,6 @@ Les préférence et réglages possibles de la fiche sont configurés dans cet on
 
 Cette section dépliable permet d'importer les données techniques du PNJ en copiant un statblock depuis un document PDF. Le bouton <kbd>Importer</kbd> analyse le texte collé dans le champ de texte, et en extrait les données utilisables.
 
+---
 
-
+[Retour]({{ site.baseurl }}/npc-main)

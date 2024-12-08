@@ -86,3 +86,7 @@ Exemples :
 <kbd>[[1d@{drecup} + floor(@{niveau}/2)]]</kbd> pour lancer un dé de récupération et ajouter la moitié du niveau du PJ arrondi à l'entier inférieur.
 
 <kbd>[[?{Nombre de dés ?}@{devol}]]</kbd> pour demander un nombre de dés évolutifs à lancer.
+
+---
+
+[Retour]({{ site.baseurl }}/pc-main)

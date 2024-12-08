@@ -48,3 +48,7 @@ La fiche de personnage est automatiquement remplie :
 - L'équipement de base est ajouté dans l'inventaire. Celui-ci est d'abord effacé si vous cochez la case correspondante.
 
 Il est ensuite possible de cocher les cases <kbd>A une attaque</kbd> des armes insérées dans l'équipement pour générer automatique les lignes d'attaques dans l'onglet _Attributs_ de la fiche.
+
+---
+
+[Retour]({{ site.baseurl }}/pc-main)

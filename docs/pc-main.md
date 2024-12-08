@@ -6,4 +6,8 @@
 
 [Onglet Equipement]({{ site.baseurl }}/pc-gears)
 
-[Onglet Configugation]({{ site.baseurl }}/pc-config)
+[Onglet Configuration]({{ site.baseurl }}/pc-config)
+
+---
+
+[Retour]({{ site.baseurl }}/index)

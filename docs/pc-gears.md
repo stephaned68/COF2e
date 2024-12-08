@@ -46,3 +46,7 @@ Pour chaque élément de la liste, vous indiquez :
 # Equipement divers et notes
 
 Ces deux zones de saisie libre permettent d'enregistrer des détails supplémentaires sur le PJ.
+
+---
+
+[Retour]({{ site.baseurl }}/pc-main)
