@@ -572,9 +572,9 @@
               <div class="block-title centered">PM</div>
 
               <div class="bordered centered">
-                <input type="number" name="attr_pm" title="@{pm}" value="2">
+                <input type="number" name="attr_pm" title="@{pm}" value="0">
                 /
-                <input type="number" name="attr_pm_max" title="@{pm_max}" value="2">
+                <input type="number" name="attr_pm_max" title="@{pm_max}" value="0">
               </div>
 
             </div>
@@ -829,11 +829,11 @@
                 &nbsp;/&nbsp;
                 <span name="attr_pc_max" title="@{pc_max} PC maximum"></span>
                 &nbsp;=&nbsp;
-                <input type="number" name="attr_pc_base" title="@{pc_base} Base" value="0">
+                <input type="number" name="attr_pc_base" title="@{pc_base} Base" value="2">
                 &nbsp;+&nbsp;
                 <span name="attr_cha" title="Score de CHArisme"></span>
                 &nbsp;+&nbsp;
-                <input type="number" name="attr_pc_buff" title="@{pc_buff} Bonus divers" value="0">
+                <span name="attr_pc_buff" title="@{pc_buff} Bonus divers"></span>
               </div>
             </div>
           </div>
@@ -889,6 +889,7 @@
                 <input type="number" class="two-digits" name="attr_arme-crit" title="@{arme-crit} Seuil de Critique" value="20" min="2" max="20">
               </div>
               <div class="d-flex d-flex-middle bordered">
+                <input type="checkbox" name="attr_arme-2m" title="@{arme-2m} Arme à deux mains" value="1">
                 <input type="text" name="attr_arme-dm" title="@{arme-dm}" placeholder="1d8, 2d6..." value="">
                 <select class="select-xxs" name="attr_arme-dmtype" title="@{arme-dmtype} Type de dommages">
                   <optgroup label="Physiques">
@@ -2210,6 +2211,61 @@
 
         </div>
 
+        <hr>
+
+        <details>
+          <summary>Langues maîtrisées, Autres capacités</summary>
+          <div class="sheet-3colrow">
+            <div class="sheet-col">
+              <div>
+                <input type="checkbox" name="attr_lang_abyssal">
+                <span title="Démons, élémentaires du feu">Abyssal</span>
+              </div>
+              <div>
+                <input type="checkbox" name="attr_lang_aquarien">
+                <span title="Créatures sous-marines, élementaires de l'eau">Aquarien</span>
+              </div>
+              <div>
+                <input type="checkbox" name="attr_lang_argotien">
+                <span title="Argot des voleurs et langue des signes">Argotien</span>
+              </div>
+              <div>
+                <input type="checkbox" name="attr_lang_Runique">
+                <span title="Anges, créatures des plans supérieurs, élémentaires de l'air">Célestien</span>
+              </div>
+              <div>
+                <input type="checkbox" name="attr_lang_commun">
+                <span title="Humains, halfelins">Commun</span>
+              </div>
+            </div>
+            <div class="sheet-col">
+              <div>
+                <input type="checkbox" name="attr_lang_draconique">
+                <span title="Dragons, kobolds, hommes-lézards">Draconique</span>
+              </div>
+              <div>
+                <input type="checkbox" name="attr_lang_noirparle">
+                <span title="Goblinoïdes, orcs, ogres, trolls, créatures maléfiques">Noir parlé</span>
+              </div>
+              <div>
+                <input type="checkbox" name="attr_lang_profond">
+                <span title="Créatures souterraines (elfes des profondeurs)">Profond</span>
+              </div>
+              <div>
+                <input type="checkbox" name="attr_lang_runique">
+                <span title="Gnomes, nains, géants, élémentaires de la terre">Runique</span>
+              </div>
+              <div>
+                <input type="checkbox" name="attr_lang_sylvestre">
+                <span title="Elfes, fées, dryandes, sylvaniens">Sylvestre</span>
+              </div>
+            </div>
+            <div class="sheet-col">
+              <textarea name="attr_autres" class="medium" placeholder="Autres capacités"></textarea>
+            </div>
+          </div>
+        </details>
+
         <!-- Fiche PJ, Onglet Capacités, Sous-onglets -->
         <input type="hidden" class="tabs-toggle" name="attr_pc_subtab" value="rolls" />
         <div class="pc-subtabs">
@@ -2316,9 +2372,12 @@
             <div class="sheet-col">
 
               <div class="d-flex d-flex-between">
-                <button type="action" class="flat-btn img-btn" name="act_skill-acrobaties">
-                  <span class="img-btn"></span>Acrobaties
-                </button>
+                <div>
+                  <input type="checkbox" name="attr_acrobaties_prof" value="1">
+                  <button type="action" class="flat-btn img-btn" name="act_skill-acrobaties">
+                    <span class="img-btn"></span>Acrobaties
+                  </button>
+                </div>
                 <div>
                   <select class="select-md" name="attr_acrobaties_carac" title="@{acrobaties_carac} Bonus de caractéristique">
                     <option value="0">-</option>
@@ -2337,9 +2396,12 @@
               </div>
 
               <div class="d-flex d-flex-between">
-                <button type="action" class="flat-btn img-btn" name="act_skill-artisanat">
-                  <span class="img-btn"></span>Artisanat
-                </button>
+                <div>
+                  <input type="checkbox" name="attr_artisanat_prof" value="1">
+                  <button type="action" class="flat-btn img-btn" name="act_skill-artisanat">
+                    <span class="img-btn"></span>Artisanat
+                  </button>
+                </div>
                 <div>
                   <select class="select-md" name="attr_artisanat_carac" title="@{artisanat_carac} Bonus de caractéristique">
                     <option value="0">-</option>
@@ -2358,9 +2420,12 @@
               </div>
 
               <div class="d-flex d-flex-between">
-                <button type="action" class="flat-btn img-btn" name="act_skill-athletisme">
-                  <span class="img-btn"></span>Athlétisme
-                </button>
+                <div>
+                  <input type="checkbox" name="attr_athletisme_prof" value="1">
+                  <button type="action" class="flat-btn img-btn" name="act_skill-athletisme">
+                    <span class="img-btn"></span>Athlétisme
+                  </button>
+                </div>
                 <div>
                   <select class="select-md" name="attr_athletisme_carac" title="@{athletisme_carac} Bonus de caractéristique">
                     <option value="0">-</option>
@@ -2379,9 +2444,12 @@
               </div>
 
               <div class="d-flex d-flex-between">
-                <button type="action" class="flat-btn img-btn" name="act_skill-commerce">
-                  <span class="img-btn"></span>Commerce
-                </button>
+                <div>
+                  <input type="checkbox" name="attr_commerce_prof" value="1">
+                  <button type="action" class="flat-btn img-btn" name="act_skill-commerce">
+                    <span class="img-btn"></span>Commerce
+                  </button>
+                </div>
                 <div>
                   <select class="select-md" name="attr_commerce_carac" title="@{commerce_carac} Bonus de caractéristique">
                     <option value="0">-</option>
@@ -2400,9 +2468,12 @@
               </div>
 
               <div class="d-flex d-flex-between">
-                <button type="action" class="flat-btn img-btn" name="act_skill-connaissance">
-                  <span class="img-btn"></span>Connaissance
-                </button>
+                <div>
+                  <input type="checkbox" name="attr_connaissance_prof" value="1">
+                  <button type="action" class="flat-btn img-btn" name="act_skill-connaissance">
+                    <span class="img-btn"></span>Connaissance
+                  </button>
+                </div>
                 <div>
                   <select class="select-md" name="attr_connaissance_carac" title="@{connaissance_carac} Bonus de caractéristique">
                     <option value="0">-</option>
@@ -2421,9 +2492,12 @@
               </div>
 
               <div class="d-flex d-flex-between">
-                <button type="action" class="flat-btn img-btn" name="act_skill-discretion">
-                  <span class="img-btn"></span>Discrétion
-                </button>
+                <div>
+                  <input type="checkbox" name="attr_discretion_prof" value="1">
+                  <button type="action" class="flat-btn img-btn" name="act_skill-discretion">
+                    <span class="img-btn"></span>Discrétion
+                  </button>
+                </div>
                 <div>
                   <select class="select-md" name="attr_discretion_carac" title="@{discretion_carac} Bonus de caractéristique">
                     <option value="0">-</option>
@@ -2442,9 +2516,12 @@
               </div>
 
               <div class="d-flex d-flex-between">
-                <button type="action" class="flat-btn img-btn" name="act_skill-divertissement">
-                  <span class="img-btn"></span>Divertissement
-                </button>
+                <div>
+                  <input type="checkbox" name="attr_divertissement_prof" value="1">
+                  <button type="action" class="flat-btn img-btn" name="act_skill-divertissement">
+                    <span class="img-btn"></span>Divertissement
+                  </button>
+                </div>
                 <div>
                   <select class="select-md" name="attr_divertissement_carac" title="@{divertissement_carac} Bonus de caractéristique">
                     <option value="0">-</option>
@@ -2463,9 +2540,12 @@
               </div>
 
               <div class="d-flex d-flex-between">
-                <button type="action" class="flat-btn img-btn" name="act_skill-equitation">
-                  <span class="img-btn"></span>Equitation
-                </button>
+                <div>
+                  <input type="checkbox" name="attr_equitation_prof" value="1">
+                  <button type="action" class="flat-btn img-btn" name="act_skill-equitation">
+                    <span class="img-btn"></span>Equitation
+                  </button>
+                </div>
                 <div>
                   <select class="select-md" name="attr_equitation_carac" title="@{equitation_carac} Bonus de caractéristique">
                     <option value="0">-</option>
@@ -2484,9 +2564,12 @@
               </div>
 
               <div class="d-flex d-flex-between">
-                <button type="action" class="flat-btn img-btn" name="act_skill-escalade">
-                  <span class="img-btn"></span>Escalade
-                </button>
+                <div>
+                  <input type="checkbox" name="attr_escalade_prof" value="1">
+                  <button type="action" class="flat-btn img-btn" name="act_skill-escalade">
+                    <span class="img-btn"></span>Escalade
+                  </button>
+                </div>
                 <div>
                   <select class="select-md" name="attr_escalade_carac" title="@{escalade_carac} Bonus de caractéristique">
                     <option value="0">-</option>
@@ -2505,9 +2588,12 @@
               </div>
 
               <div class="d-flex d-flex-between">
-                <button type="action" class="flat-btn img-btn" name="act_skill-effraction">
-                  <span class="img-btn"></span>Effraction
-                </button>
+                <div>
+                  <input type="checkbox" name="attr_effraction_prof" value="1">
+                  <button type="action" class="flat-btn img-btn" name="act_skill-effraction">
+                    <span class="img-btn"></span>Effraction
+                  </button>
+                </div>
                 <div>
                   <select class="select-md" name="attr_effraction_carac" title="@{effraction_carac} Bonus de caractéristique">
                     <option value="0">-</option>
@@ -2526,9 +2612,12 @@
               </div>
 
               <div class="d-flex d-flex-between">
-                <button type="action" class="flat-btn img-btn" name="act_skill-empathie">
-                  <span class="img-btn"></span>Empathie
-                </button>
+                <div>
+                  <input type="checkbox" name="attr_empathie_prof" value="1">
+                  <button type="action" class="flat-btn img-btn" name="act_skill-empathie">
+                    <span class="img-btn"></span>Empathie
+                  </button>
+                </div>
                 <div>
                   <select class="select-md" name="attr_empathie_carac" title="@{empathie_carac} Bonus de caractéristique">
                     <option value="0">-</option>
@@ -2551,9 +2640,12 @@
             <div class="sheet-col">
               
               <div class="d-flex d-flex-between">
-                <button type="action" class="flat-btn img-btn" name="act_skill-intimidation">
-                  <span class="img-btn"></span>Intimidation
-                </button>
+                <div>
+                  <input type="checkbox" name="attr_intimidation_prof" value="1">
+                  <button type="action" class="flat-btn img-btn" name="act_skill-intimidation">
+                    <span class="img-btn"></span>Intimidation
+                  </button>
+                </div>
                 <div>
                   <select class="select-md" name="attr_intimidation_carac" title="@{intimidation_carac} Bonus de caractéristique">
                     <option value="0">-</option>
@@ -2572,9 +2664,12 @@
               </div>
               
               <div class="d-flex d-flex-between">
-                <button type="action" class="flat-btn img-btn" name="act_skill-medecine">
-                  <span class="img-btn"></span>Médecine
-                </button>
+                <div>
+                  <input type="checkbox" name="attr_medecine_prof" value="1">
+                  <button type="action" class="flat-btn img-btn" name="act_skill-medecine">
+                    <span class="img-btn"></span>Médecine
+                  </button>
+                </div>
                 <div>
                   <select class="select-md" name="attr_medecine_carac" title="@{medecine_carac} Bonus de caractéristique">
                     <option value="0">-</option>
@@ -2593,9 +2688,12 @@
               </div>
               
               <div class="d-flex d-flex-between">
-                <button type="action" class="flat-btn img-btn" name="act_skill-natation">
-                  <span class="img-btn"></span>Natation
-                </button>
+                <div>
+                  <input type="checkbox" name="attr_natation_prof" value="1">
+                  <button type="action" class="flat-btn img-btn" name="act_skill-natation">
+                    <span class="img-btn"></span>Natation
+                  </button>
+                </div>
                 <div>
                   <select class="select-md" name="attr_natation_carac" title="@{natation_carac} Bonus de caractéristique">
                     <option value="0">-</option>
@@ -2614,9 +2712,12 @@
               </div>
               
               <div class="d-flex d-flex-between">
-                <button type="action" class="flat-btn img-btn" name="act_skill-occultisme">
-                  <span class="img-btn"></span>Occultisme
-                </button>
+                <div>
+                  <input type="checkbox" name="attr_occultisme_prof" value="1">
+                  <button type="action" class="flat-btn img-btn" name="act_skill-occultisme">
+                    <span class="img-btn"></span>Occultisme
+                  </button>
+                </div>
                 <div>
                   <select class="select-md" name="attr_occultisme_carac" title="@{occultisme_carac} Bonus de caractéristique">
                     <option value="0">-</option>
@@ -2635,9 +2736,12 @@
               </div>
               
               <div class="d-flex d-flex-between">
-                <button type="action" class="flat-btn img-btn" name="act_skill-persuasion">
-                  <span class="img-btn"></span>Persuasion
-                </button>
+                <div>
+                  <input type="checkbox" name="attr_persuasion_prof" value="1">
+                  <button type="action" class="flat-btn img-btn" name="act_skill-persuasion">
+                    <span class="img-btn"></span>Persuasion
+                  </button>
+                </div>
                 <div>
                   <select class="select-md" name="attr_persuasion_carac" title="@{persuasion_carac} Bonus de caractéristique">
                     <option value="0">-</option>
@@ -2656,9 +2760,12 @@
               </div>
               
               <div class="d-flex d-flex-between">
-                <button type="action" class="flat-btn img-btn" name="act_skill-religion">
-                  <span class="img-btn"></span>Religion
-                </button>
+                <div>
+                  <input type="checkbox" name="attr_religion_prof" value="1">
+                  <button type="action" class="flat-btn img-btn" name="act_skill-religion">
+                    <span class="img-btn"></span>Religion
+                  </button>
+                </div>
                 <div>
                   <select class="select-md" name="attr_religion_carac" title="@{religion_carac} Bonus de caractéristique">
                     <option value="0">-</option>
@@ -2677,9 +2784,12 @@
               </div>
               
               <div class="d-flex d-flex-between">
-                <button type="action" class="flat-btn img-btn" name="act_skill-renseignement">
-                  <span class="img-btn"></span>Renseignement
-                </button>
+                <div>
+                  <input type="checkbox" name="attr_renseignement_prof" value="1">
+                  <button type="action" class="flat-btn img-btn" name="act_skill-renseignement">
+                    <span class="img-btn"></span>Renseignement
+                  </button>
+                </div>
                 <div>
                   <select class="select-md" name="attr_renseignement_carac" title="@{renseignement_carac} Bonus de caractéristique">
                     <option value="0">-</option>
@@ -2698,9 +2808,12 @@
               </div>
               
               <div class="d-flex d-flex-between">
-                <button type="action" class="flat-btn img-btn" name="act_skill-sciences">
-                  <span class="img-btn"></span>Sciences
-                </button>
+                <div>
+                  <input type="checkbox" name="attr_sciences_prof" value="1">
+                  <button type="action" class="flat-btn img-btn" name="act_skill-sciences">
+                    <span class="img-btn"></span>Sciences
+                  </button>
+                </div>
                 <div>
                   <select class="select-md" name="attr_sciences_carac" title="@{sciences_carac} Bonus de caractéristique">
                     <option value="0">-</option>
@@ -2719,9 +2832,12 @@
               </div>
               
               <div class="d-flex d-flex-between">
-                <button type="action" class="flat-btn img-btn" name="act_skill-tromperie">
-                  <span class="img-btn"></span>Tromperie
-                </button>
+                <div>
+                  <input type="checkbox" name="attr_tromperie_prof" value="1">
+                  <button type="action" class="flat-btn img-btn" name="act_skill-tromperie">
+                    <span class="img-btn"></span>Tromperie
+                  </button>
+                </div>
                 <div>
                   <select class="select-md" name="attr_tromperie_carac" title="@{tromperie_carac} Bonus de caractéristique">
                     <option value="0">-</option>
@@ -2740,9 +2856,12 @@
               </div>
               
               <div class="d-flex d-flex-between">
-                <button type="action" class="flat-btn img-btn" name="act_skill-survie">
-                  <span class="img-btn"></span>Survie
-                </button>
+                <div>
+                  <input type="checkbox" name="attr_survie_prof" value="1">
+                  <button type="action" class="flat-btn img-btn" name="act_skill-survie">
+                    <span class="img-btn"></span>Survie
+                  </button>
+                </div>
                 <div>
                   <select class="select-md" name="attr_survie_carac" title="@{survie_carac} Bonus de caractéristique">
                     <option value="0">-</option>
@@ -2761,9 +2880,12 @@
               </div>
               
               <div class="d-flex d-flex-between">
-                <button type="action" class="flat-btn img-btn" name="act_skill-vigilance">
-                  <span class="img-btn"></span>Vigilance
-                </button>
+                <div>
+                  <input type="checkbox" name="attr_vigilance_prof" value="1">
+                  <button type="action" class="flat-btn img-btn" name="act_skill-vigilance">
+                    <span class="img-btn"></span>Vigilance
+                  </button>
+                </div>
                 <div>
                   <select class="select-md" name="attr_vigilance_carac" title="@{vigilance_carac} Bonus de caractéristique">
                     <option value="0">-</option>
@@ -3285,7 +3407,7 @@
     <div class="cof-npc">
       <input type="hidden" class="tabs-toggle" name="attr_npc_tab" value="main" />
       <div>
-        <button type="action" name="act_npc_main-btn" class="main-tab tab-btn npc-main-btn">CARACS</button>
+        <button type="action" name="act_npc_main-btn" class="main-tab tab-btn npc-main-btn">TRAITS</button>
         <button type="action" name="act_npc_config-btn" class="main-tab tab-btn npc-config-btn">CONFIGURATION</button>
       </div>
 
@@ -3294,7 +3416,7 @@
         <div class="npc-main">
   
           <div>
-            <h4>Attributs</h4>
+            <h4>Caractéristiques</h4>
   
             <div class="npc-4colrow">
               
@@ -3408,7 +3530,7 @@
                   <div class="bordered">
                     <input type="number" class="two-digits" name="attr_pv" title="@{pv}" value="0">
                     /
-                    <input type="number" class="two-digits" name="attr_pv_max" title="@{pv}" value="0">
+                    <input type="number" class="two-digits" name="attr_pv_max" title="@{pv_max}" value="0">
                   </div>
                 </div>
                 
@@ -3598,32 +3720,43 @@
       <div class="npc-config-tab">
 
         <hr>
-        
-        <ul>
-          <li>
-            Jets&nbsp;:&nbsp;
-            <select class="select-md" name="attr_togm" title="@{togm}">
-              <option value="" selected>Publics</option>
-              <option value="/w gm ">Chuchotés au MJ</option>
-            </select>
-            <input type="checkbox" name="attr_token_dsp" title="@{token_dsp}" value=" {{token=[x](@{token_url}) }} ">
-            <span>Avec token</span>
-          </li>
-          <li>
-            <strong>Règles optionnelles : </strong>
-            <ul>
-              <li>
-                <span>Initiative variable&nbsp;</span>
-                <input type="checkbox" name="attr_cfg_init_variable" value="1d6!">
-              </li>
-              <li>
-                <span>Critiques différenciés&nbsp;</span>
-                <input type="checkbox" name="attr_cfg_crit_diff" value="1">
-              </li>
-            </ul>
-          </li>
-        </ul>
 
+        <div class="sheet-2colrow">
+
+          <div class="sheet-col">
+
+            <ul>
+
+              <li>
+                Jets&nbsp;:&nbsp;
+                <select class="select-md" name="attr_togm" title="@{togm}">
+                  <option value="" selected>Publics</option>
+                  <option value="/w gm ">Chuchotés au MJ</option>
+                </select>
+                <input type="checkbox" name="attr_token_dsp" title="@{token_dsp}" value=" {{token=[x](@{token_url}) }} ">
+                <span>Avec token</span>
+              </li>
+
+              <li>
+                <strong>Règles optionnelles : </strong>
+                <ul>
+                  <li>
+                    <span>Initiative variable&nbsp;</span>
+                    <input type="checkbox" name="attr_cfg_init_variable" value="1d6!">
+                  </li>
+                  <li>
+                    <span>Critiques différenciés&nbsp;</span>
+                    <input type="checkbox" name="attr_cfg_crit_diff" value="1">
+                  </li>
+                </ul>
+              </li>
+              
+            </ul>
+
+          </div>
+
+        </div>
+        
         <hr>
 
         <details>
@@ -3717,6 +3850,24 @@
 
 </rolltemplate>
 
+<rolltemplate class="sheet-rolltemplate-custom">
+
+  <div class="sheet-container sheet-color-{{color}}">
+    <div class="sheet-header">
+      {{#title}}<div class="sheet-title">{{title}}</div>{{/title}}
+      {{#subtitle}}<div class="sheet-subtitle">{{subtitle}}</div>{{/subtitle}}
+    </div>
+    <div class="sheet-content">
+      {{#allprops() title subtitle desc color}}
+      <div class="sheet-key">{{key}}</div>
+      <div class="sheet-value">{{value}}</div>
+      {{/allprops() title subtitle desc color}}
+      {{#desc}}<div class="sheet-desc">{{desc}}</div>{{/desc}}
+    </div>
+  </div>
+
+</rolltemplate>
+
 <script type="text/worker">
 
 /**
@@ -3739,26 +3890,82 @@ const SWData = {
   PC: {
     PROFILES: {
       Aventuriers: [
-        { value: "Arquebusier" },
-        { value: "Barde" },
-        { value: "Rôdeur" },
-        { value: "Voleur" },
+        { 
+          value: "Arquebusier",
+          pv: 4,
+          skills: "artisanat,athletisme,equitation,intimidation,natation,sciences,vigilance"
+        },
+        { 
+          value: "Barde",
+          pv: 4,
+          skills: "acrobaties,artisanat,athletisme,commerce,connaissances,divertissement,empathie,equitation,intimidation,natation, persuasion, religion, renseignement,tromperie"
+        },
+        { 
+          value: "Rôdeur",
+          pv: 4,
+          skills: "acrobaties,artisanat,athletisme,discretion,equitation,escalade,medecine,natation,survie,vigilance"
+        },
+        { 
+          value: "Voleur",
+          pv: 4, 
+          skills: "acrobaties,artisanat,athletisme,commerce,discrétion,escalade,effraction,intimidation,natation,persuasion,renseignement,tromperie,vigilance"
+        },
       ],
       Combattants: [
-        { value: "Barbare" },
-        { value: "Chevalier" },
-        { value: "Guerrier" },
+        { 
+          value: "Barbare",
+          pv: 5,
+          skills: "artisanat,athletisme,equitation,escalade,intimidation,natation,survie,vigilance"
+        },
+        { 
+          value: "Chevalier",
+          pv: 5,
+          skills: "athlétisme,connaissance,equitation,intimidation,natation,persuasion,religion"
+        },
+        { 
+          value: "Guerrier",
+          pv: 5,
+          skills: "artisanat,athletisme,equitation,intimidation,natation"
+        },
       ],
       Mages: [
-        { value: "Ensorceleur" },
-        { value: "Forgesort" },
-        { value: "Magicien" },
-        { value: "Sorcier" },
+        { 
+          value: "Ensorceleur",
+          pv: 3,
+          skills: "artisanat,connaissance,occultisme,sciences"
+        },
+        { 
+          value: "Forgesort",
+          pv: 3,
+          skills: "artisanat,connaissance,occultisme,sciences"
+        },
+        { 
+          value: "Magicien",
+          pv: 3,
+          skills: "artisanat,connaissance,occultisme,sciences"
+        },
+        { 
+          value: "Sorcier",
+          pv: 3,
+          skills: "artisanat,connaissance,occultisme,sciences"
+        },
       ],
       Mystiques: [
-        { value: "Druide" },
-        { value: "Moine" },
-        { value: "Prêtre" },
+        { 
+          value: "Druide",
+          pv: 4,
+          skills: "artisanat,athletisme,connaissance,discretion,equitation,empathie,medecine,natation,religion,survie,vigilance"
+        },
+        { 
+          value: "Moine",
+          pv: 4,
+          skills: "acrobaties,artisanat,athletisme,connaissance,discretion,empathie,escalade,medecine,natation,religion,survie,vigilance"
+        },
+        { 
+          value: "Prêtre",
+          pv: 4,
+          skills: "artisanat,athletisme,connaissance,empathie,equitation,intimidation,medecine,persuasion,religion,survie"
+        },
       ],
     },
     ABILITIES: [ 
@@ -4015,7 +4222,7 @@ const SWData = {
         ability: "cha"
       },
       {
-        name: "Sciences",
+        name: "sciences",
         label: "",
         ability: "int"
       },
@@ -4360,7 +4567,7 @@ function dieRoll(type, weakened = 0) {
       roll = (weakened === 1) ? "1d20" : "2d20kh1";
       break;
     case "H":
-      roll = (weakened === 1) ? "1d20" : "{2d20kh1, 0d20+10}kh1";
+      roll = (weakened === 1) ? "2d20kh1" : "{2d20kh1, 0d20+10}kh1";
       break;
     default:
       roll = (weakened === 1) ? "2d20kl1" : "1d20";
@@ -4433,11 +4640,13 @@ on("change:sheet_type", function() {
 });
 
 /**
- * On change of family, set the list of profiles
+ * On change of family
+ * - set the list of profiles
+ * - compute level 1 PV
  */
 on("change:famille", function() {
-  getAttrs([ "famille" ], function(value) {
-    const family = strval(value.famille);
+  getAttrs([ "famille", "niveau", "pv_max", "con" ], function(values) {
+    const family = strval(values.famille);
     const profiles = SWData.PC.PROFILES[family] || [];
     if (profiles.length > 0) {
       populateListOptions({
@@ -4445,6 +4654,51 @@ on("change:famille", function() {
         optionsArray: profiles
       });
     }
+    const level = intval(values.niveau);
+    let pvMax = intval(values.pv_max);
+    if (level === 1 && pvMax === 0) {
+      const con = intval(values.con);
+      switch (family) {
+        case "Combattants":
+          pvMax = 10 + con;
+          break;
+        case "Mages":
+          pvMax = 6 + con;
+          break;
+        default:
+          pvMax = 8 + con;
+      }
+      setAttrs({ pv: pvMax, pv_max: pvMax });
+    }
+  });
+});
+
+/**
+ * On change of profile, check skill proficiencies
+ */
+on("change:profil", function() {
+  getAttrs([ "profil", "famille", "use_skills" ], function(values) {
+    const useSkills = boolval(values.use_skills);
+    if (!useSkills)
+      return;
+
+    const family = strval(values.famille);
+    if (!SWData.PC.PROFILES[family])
+      return;
+
+    const profile = strval(SWData.PC.PROFILES[family].find(p => p.value === strval(values.profil)));
+    if (!profile)
+      return;
+
+    const skillList = profile.skills.split(",");
+    const proficiencies = new Map();
+    SWData.PC.SKILLS.forEach(skill => {
+      const proficient = skillList.includes(skill.name) ? 1 : 0;
+      proficiencies.set(skill.name + "_prof", proficient);
+    });
+        
+    if (proficiencies.size > 0)
+      setAttrs(Object.fromEntries(proficiencies));
   });
 });
 
@@ -5137,7 +5391,7 @@ function insertRolls(text, options = {}) {
     text = text.replace(matched, replace);
   });
 
-  // Search for "... #d# ..."
+  // Search for "... #d# +/- M..."
   matchRegExp(text, /([0-9]+[dD][0-9]+)([ ]*[\+\-]*[ ]*[0-9]*)?/gm).forEach(result => {
     const [ matched, dice, mod ] = result;
     const replace = `[[${dice}${mod || ""}]]`;
@@ -5157,6 +5411,7 @@ on("clicked:repeating_armes:attack-btn", function() {
     "atk",
     "atkdiv",
     "crit",
+    "2m",
     "dm",
     "dmtype",
     "bonus",
@@ -5170,19 +5425,21 @@ on("clicked:repeating_armes:attack-btn", function() {
     "contact",
     "visibilite"
   ];
-  getAttrs([ 
+  getAttrs([
     "cfg_crit_diff", 
-    "tactique",
+    "bouclier_eqp",
     "condition_affaibli",
-    "noms_voies", 
+    "tactique",
+    "noms_voies",
     ...sitModAttrs.map(a => `modsit_${a}`),
     ...attackAttrs.map(a => `${section}${a}`) 
   ], function (values) {
     
     // general options
     const useCritDiff = intval(values.cfg_crit_diff);
-    const tactics = intval(values["tactique"]);
-    const weakened = intval(values["condition_affaibli"]);
+    const shieldUsed = boolval(values.bouclier_eqp);
+    const tactics = intval(values.tactique);
+    const weakened = intval(values.condition_affaibli);
     const pathNames = strval(values.noms_voies);
     
     // situational modifiers
@@ -5199,6 +5456,18 @@ on("clicked:repeating_armes:attack-btn", function() {
     const range = (portee !== "") ? ` (${portee})` : "";
     const crit = intval(values[section + "crit"], 20);
     const isRanged = (atk === "atktir" && portee !== "");
+
+    // 2 mains & bouclier 
+    const twoHanded = boolval(values[section + "2m"]);
+    if (twoHanded && shieldUsed) {
+      sendChatMsg(cof2RollTemplate({
+        lsub: "Attaque",
+        rsub: name + range,
+        text: `@{character_name} ne peut pas manier ${name} avec son bouclier équipé !`,
+        textclass: "fumble"
+      }));
+      return;
+    }
 
     // Special tactics
     let tacticBonus = "";
@@ -5238,6 +5507,10 @@ on("clicked:repeating_armes:attack-btn", function() {
     // Damage roll
     let [ dm, ...dmextra ] = strval(values[section + "dm"]).split(" ");
     dm = dm.replace("d4°", "@{devol}");
+    if (dm.includes("/")) {
+      const [ dm1m, dm2m ] = dm.split("/");
+      dm = shieldUsed ? dm1m : `?{Maniée à|Une main,${dm1m}|Deux mains,${dm2m}}`;
+    }
     const dmtype = strval(values[section + "dmtype"]);
     const dmdesc = [ dmtype, ...dmextra ].join(" ").trim();
     const dmbonus = strval(values[section + "bonus"]);
@@ -5763,13 +6036,15 @@ on(eventList("change", [
   getAttrs([
     "on",
     "nom",
+    "detail",
     "props",
     "atk",
     "atkid"
   ].map(a => `repeating_equipement_equip-${a}`), function(values) {
-    const [ on, name, props, atk, atkid ] = Object.keys(values);
+    const [ on, name, detail, props, atk, atkid ] = Object.keys(values);
     //const equiped = intval(values[on]);
     const equipment = strval(values[name]);
+    const description = strval(values[detail]);
     const properties = strval(values[props]);
     const hasAttack = intval(values[atk]);
     let attackId = strval(values[atkid]);
@@ -5790,7 +6065,7 @@ on(eventList("change", [
 
       if (name === "bonus-def") {
         attributes.set("armure", value);
-        attributes.set("armure-malus", value);
+        attributes.set("armure_malus", value);
         return;
       }
       
@@ -5807,15 +6082,22 @@ on(eventList("change", [
       const atk = attackRow.has("portee") ? "atktir" : "atkcac";
       attributes.set(rowId + "atk", atk);
       attributes.set(rowId + "crit", strval(attackRow.get("critique")));
-      const dm = attackRow.has("dm-2m") ? "dm-2m" : "dm-1m";
-      attributes.set(rowId + "dm", strval(attackRow.get(dm)));
+      const dm1m = attackRow.has("dm-1m") ? strval(attackRow.get("dm-1m")) : "";
+      const dm2m = attackRow.has("dm-2m") ? strval(attackRow.get("dm-2m")) : "";
+      const dm = (dm1m !== "" && dm2m !== "") 
+        ? dm1m + "/" + dm2m
+        : (dm2m !== "") 
+          ? dm2m
+          : dm1m;
+      if (dm === dm2m)
+        attributes.set(rowId + "2m", 1);
+      attributes.set(rowId + "dm", dm);
       attributes.set(rowId + "dmtype", strval(attackRow.get("dm-type")));
       attributes.set(rowId + "portee", strval(attackRow.get("portee")));
-      attributes.set(rowId + "special", "");
+      attributes.set(rowId + "special", description);
     }
 
     if (attributes.size > 0)
-      //console.log(Object.fromEntries(attributes));
       setAttrs(Object.fromEntries(attributes));
   });
 });
@@ -6426,6 +6708,7 @@ on("sheet:opened", function() {
     }
 
     let updates = new Map();
+
     updates = getTokenURL(updates, values);
 
     if (sheetType === SWData.SHEET_TYPE.PC) {

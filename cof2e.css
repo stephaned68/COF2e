@@ -22,7 +22,8 @@ button
   width: 100%;
 }
 
-.cofmain .pc-gears input[type="text"] {
+.cofmain .pc-gears input[type="text"],
+.cofmain input[type="text"].w-auto {
   width: auto;
   flex-grow: 1;
   margin: 2px;
@@ -45,6 +46,10 @@ summary {
 
 .cofmain textarea {
   height: 12rem;
+}
+
+.cofmain textarea.medium {
+  height: 9rem;
 }
 
 .cofmain textarea.small {
@@ -511,6 +516,16 @@ div.change-view {
   margin-bottom: 2px;
 }
 
+.pc-attacks .weapon div,
+.pc-attacks .weapon input,
+.pc-attacks .weapon select,
+.npc-attacks .weapon div,
+.npc-attacks .weapon input,
+.npc-attacks .weapon select {
+  padding: 0;
+  margin: 2px;
+}
+
 .pc-attacks .weapon-option {
   display: grid;
   grid-template-columns: 2.7rem 6fr 1fr 4.5fr 4.5fr .1fr .1fr .1fr;
@@ -759,4 +774,87 @@ textarea.import-result {
 
 .sheet-rolltemplate-cof2 .sheet-rt-secondary {
   color: steelblue;
+}
+
+/* Jakob's better default roll template for Roll20
+/* https://gist.github.com/joesinghaus/28173990b3235365f6e13fb9f834aa5d */
+
+/* Smaller margins - remove these if you want the huge default left margin */
+.sheet-rolltemplate-custom {
+  margin-left: -37px;
+}
+.withoutavatars .sheet-rolltemplate-custom {
+  margin-left: -7px;
+}
+.sheet-rolltemplate-custom .sheet-container {
+  border: 1px solid;
+  /* by default, the border is the same color as the header. You can change this here, e.g. to black */
+  border-color: var(--header-bg-color);
+}
+
+/* Header formatting - title and subtitle */
+.sheet-rolltemplate-custom .sheet-header {
+  background-color: var(--header-bg-color);
+  /* change text-align to center to center the header text */
+  text-align: center;
+  color: var(--header-text-color);
+  padding: 5px;
+}
+.sheet-rolltemplate-custom .sheet-title {
+  font-size:1.1em;
+}
+.sheet-rolltemplate-custom .sheet-subtitle {
+  font-size:.9em;
+}
+
+/* example colors */
+.sheet-rolltemplate-custom .sheet-container {
+  /* this is the default color */
+  --header-bg-color: rgba(112,32,130,1);
+  --header-text-color: #FFF;
+}
+.sheet-rolltemplate-custom .sheet-container.sheet-color-red {
+  --header-bg-color: #F00;
+}
+.sheet-rolltemplate-custom .sheet-container.sheet-color-green {
+  --header-bg-color: #0F0;
+  --header-text-color: #000;
+}
+
+/* All props part */
+.sheet-rolltemplate-custom .sheet-content {
+  display: grid;
+  background: #FFF;
+  /* Header formatting - modify the column layout below */
+  grid-template-columns: auto auto;
+  /* Line height to match default roll template */
+  line-height:1.4em;
+}
+.sheet-rolltemplate-custom .sheet-content > div {
+  padding: 5px;
+}
+
+/* Left column */
+.sheet-rolltemplate-custom .sheet-content .sheet-key {
+  font-weight: bold;
+  padding-right: 10px;
+  text-align: right;
+}
+
+/* Empty rule, use this if you want to change the right column 
+.sheet-rolltemplate-custom .sheet-value {
+}
+*/
+
+/* Make even-numbered rows grey */
+.sheet-rolltemplate-custom .sheet-content :nth-child(4n+3),
+.sheet-rolltemplate-custom .sheet-content :nth-child(4n) {
+  background:#EEE;
+}
+
+/* Description field */
+.sheet-rolltemplate-custom .sheet-desc {
+  grid-column: span 2;
+  padding: 5px;
+  text-align: center;
 }
