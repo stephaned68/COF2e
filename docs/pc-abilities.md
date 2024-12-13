@@ -61,7 +61,8 @@ Pour chaque élément de la liste, vous pouvez indiquer :
 - La valeur du buff, qui peut s'exprimer :
   - Comme une valeur fixe, par exemple <kbd>+1</kbd>, <kbd>-2</kbd>
   - Comme le score d'un autre attribut, en référençant celui-ci entre crochets, par exemple <kbd>[CHA]</kbd>
-  - Comme un rang dans une voie, en référençant celle-ci par son n° ou son nom, sous la forme <kbd>[rang n]</kbd> ou <kbd>[rang voie n]</kbd> ou <kbd>[rang Nom De La Voie]</kbd>
+  - Comme le niveau du personnage, en le référençant sous la forme <kbd>[niveau]</kbd>
+  - Comme un rang dans une voie, en référençant celle-ci sous la forme <kbd>[rang voie n]</kbd> ou <kbd>[rang_voieN]</kbd>
 
 Plusieurs buffs peuvent s'appliquer au même attribut du PJ. Si c'est le cas, le total des buffs actuellement actifs (cochés) est calculé.
 

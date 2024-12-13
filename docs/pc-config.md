@@ -28,8 +28,14 @@ Les préférence et réglages possibles de la fiche sont configurés dans cet on
 
 ## Notifications
 
+Pour chaque type de notification, le joueur peut choisir entre aucun affichage, un affichage pour tous les joueurs, ou un affichage privé pour lui et le MJ.
+
 - Conditions : Les effets des états préjudiciables sont affichés ou pas dans le chat Roll20.
 - Gain/Perte de PV : Les effets des gains ou des pertes de PV lors du clic sur les deux icones sont affichés ou pas dans le chat Roll20.
+
+## Apparence des messages
+
+Le joueur peut sélectionner une couleur spécifique pour les messages de chat de son personnage.
 
 ## Premiers rangs
 
