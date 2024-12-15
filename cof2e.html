@@ -7130,8 +7130,8 @@ on("clicked:skills_menu-btn", function () {
       return `${skillLabel}${proficient},${ix + 1}`;
     });
     ask([ "Compétence ?", ...skillSelect ], (skill, skills) => {
-      const [ skillName ] = skills[skill - 1].split(",");
-      const action = "%{" + charName + "|skill-" + skillName.replace("*", "").toLowerCase() + "}";
+      const skillName = SWData.PC.SKILLS[skill -1].name;
+      const action = "%{" + charName + "|skill-" + skillName + "}";
       startRoll(action, roll => {
         finishRoll(roll.rollId);
       });
