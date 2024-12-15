@@ -14,7 +14,9 @@ Pour chaque voie, vous indiquez :
 - Pour chacun des 5 rangs :
   - Le nom de la capacité,
   - S'il s'agit d'un sort (pour le calcul des PM maximum du PJ),
-  - La description de la capacité.
+  - La description de la capacité,
+  - Le nombre d'utilisation maximum s'il y a lieu,
+  - La fréquence à laquelle ce nombre d'utilisation se renouvelle.
 
 ## Mode Affichage
 
@@ -23,6 +25,9 @@ Les informations saisies en mode _Edition_ sont reprises mais non modifiables da
 Pour chaque rang :
 - Une case à cocher permet d'indiquer si la capacité est possédée ou non (permet le calcul du rang du PJ dans ses voies),
 - Une icone permet d'afficher le texte de la capacité dans le chat Roll20.
+  - Si cette capacité a un nombre d'utilisation maximum de configuré, cliquer sur ce bouton en consomme une.
+  - Si le nombre d'utilisations est dépassé, une alerte s'affiche dans le chat plutôt que le texte de la capacité.
+- Le nombre de fois où cette capacité a été utilisée et la fréquence de renouvellement s'il y a lieu
 
 Le texte de la capacité est transformé par insertion de jets en ligne s'il y a lieu (voir paragraphe _Jets en ligne_ ci-dessous).
 

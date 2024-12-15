@@ -8,6 +8,8 @@
 
 [Onglet Configuration]({{ site.baseurl }}/pc-config)
 
+[Menus]({{ site.baseurl }}/pc-menus)
+
 ---
 
 [Retour]({{ site.baseurl }}/index)
