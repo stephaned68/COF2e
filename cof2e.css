@@ -260,14 +260,14 @@ div.path div.block-title {
 
 /* Identity layout */
 
-.heading {
+.cofmain .heading {
   display: grid;
   grid-template-columns: 4fr 1.2fr 6fr;
   gap: 5px;
 }
 
-.heading .logo,
-.heading .token {
+.cofmain .heading .logo,
+.cofmain .heading .token {
   width: 100%;
 }
 
@@ -717,6 +717,11 @@ textarea.import-result {
   border: 1px solid gray;
   border-radius: 5px;
   background-color: whitesmoke;
+  margin-left: -37px;
+}
+
+.withoutavatars .sheet-rolltemplate-cof2 {
+  margin-left: -7px;
 }
 
 .sheet-rolltemplate-cof2 .sheet-rt {
@@ -769,7 +774,7 @@ textarea.import-result {
   background-color: #6c757d;
   color: #fff;
 }
-.sheet-rolltemplate-cof2 .sheet-rt-header.sheet-color-gray-dark {
+.sheet-rolltemplate-cof2 .sheet-rt-header.sheet-color-dark {
   background-color: #343a40;
   color: #fff;
 }
@@ -786,8 +791,8 @@ textarea.import-result {
 }
 
 .sheet-rolltemplate-cof2 .sheet-rt-token {
-  width: 64px;
-  height: 64px;
+  width: 48px;
+  height: 48px;
 }
 
 .sheet-rolltemplate-cof2 .sheet-rt-roll {
@@ -907,7 +912,7 @@ textarea.import-result {
   --header-bg-color: #6c757d;
   --header-text-color: #fff;
 }
-.sheet-rolltemplate-custom .sheet-container.sheet-color-gray-dark {
+.sheet-rolltemplate-custom .sheet-container.sheet-color-dark {
   --header-bg-color: #343a40;
   --header-text-color: #fff;
 }

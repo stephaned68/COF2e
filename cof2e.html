@@ -52,7 +52,7 @@
     <div>
       <img
         class="logo"
-        title="Version 1.0.0 - jj/12/2024"
+        title="Version 1.0.0 - 20/12/2024"
         src="https://raw.githubusercontent.com/stephaned68/COF2e/main/cof2e_logo.jpg"
       />
     </div>
@@ -181,8 +181,9 @@
   <!-- Fiches -->
   <div class="cofsheet">
     <input type="hidden" class="cof-type-toggle" name="attr_sheet_type" value="pc"/> 
-
-    <!-- Fiche PJ -->
+    <button type="action" class="hidden" name="act_pc_menus-btn"></button>
+    
+      <!-- Fiche PJ -->
     <div class="cof-pc">
       <input type="hidden" class="tabs-toggle" name="attr_pc_tab" value="main" />
       <div>
@@ -202,12 +203,18 @@
           <div class="traits">
 
             <div class="trait">
-              <h4>Carac</h4>
+              <h4>
+                Carac
+                <button type="action" class="flat-btn img-btn" name="act_caract_menu-btn" title="%{caract_menu-btn} Menu des jets de caractéristiques">
+                  <span class="img-btn">l</span>
+                </button>
+              </h4>
               <h4></h4>
               <h4>Mod</h4>
               <h4>Bonus</h4>
               <h4>Test</h4>
             </div>
+
 
             <!-- AGI -->
             <div class="trait">
@@ -859,7 +866,12 @@
           
           <div class="weapon">
             <div></div>
-            <h4>ARME / SORT</h4>
+            <h4>
+              ARME / SORT
+              <button type="action" class="flat-btn img-btn" name="act_attacks_menu-btn" title="%{attacks_menu-btn} Menu des jets d'attaques">
+                <span class="img-btn">l</span>
+              </button>
+            </h4>
             <h4>ATTAQUE</h4>
             <h4>CRIT.</h4>
             <h4>DM</h4>
@@ -1083,9 +1095,14 @@
         <div class="abilities-view">
           <div class="d-flex d-flex-between">
             <div>
-              <h3>CAPACITES</h3>
+              <h3>
+                CAPACITES
+              </h3>
             </div>
             <div class="change-view">
+              <button type="action" class="flat-btn img-btn" name="act_abilities_menu-btn" title="%{abilities_menu-btn} Menu des voies et capacités">
+                <span class="img-btn">l</span>
+              </button>
               <button type="action" class="flat-btn img-btn" name="act_reset_uses-btn" title="Ré-initialiser l'usage des capacités">
                 <span class="img-btn">t</span>
               </button>
@@ -1100,6 +1117,7 @@
               <div class="block-title">
                 <span name="attr_voie1nom"></span>
               </div>
+              <button type="action" class="hidden" name="act_voie1_menu-btn"></button>
               <!-- Rang 1 -->
               <div class="rank">
                 <details>
@@ -1196,6 +1214,7 @@
               <div class="block-title">
                 <span name="attr_voie2nom"></span>
               </div>
+              <button type="action" class="hidden" name="act_voie2_menu-btn"></button>
               <!-- Rang 1 -->
               <div class="rank">
                 <details>
@@ -1292,6 +1311,7 @@
               <div class="block-title">
                 <span name="attr_voie3nom"></span>
               </div>
+              <button type="action" class="hidden" name="act_voie3_menu-btn"></button>
               <!-- Rang 1 -->
               <div class="rank">
                 <details>
@@ -1392,6 +1412,7 @@
               <div class="block-title">
                 <span name="attr_voie4nom" title="@{voie4nom}"></span>
               </div>
+              <button type="action" class="hidden" name="act_voie4_menu-btn"></button>
               <!-- Rang 1 -->
               <div class="rank">
                 <details>
@@ -1488,6 +1509,7 @@
               <div class="block-title">
                 <span name="attr_voie5nom" title="@{voie5nom}"></span>
               </div>
+              <button type="action" class="hidden" name="act_voie5_menu-btn"></button>
               <!-- Rang 1 -->
               <div class="rank">
                 <details>
@@ -1584,6 +1606,7 @@
               <div class="block-title">
                 <span name="attr_voie6nom" title="@{voie6nom}"></span>
               </div>
+              <button type="action" class="hidden" name="act_voie6_menu-btn"></button>
               <!-- Rang 1 -->
               <div class="rank">
                 <details>
@@ -1685,6 +1708,7 @@
               <div class="block-title">
                 <span name="attr_voie7nom" title="@{voie7nom}"></span>
               </div>
+              <button type="action" class="hidden" name="act_voie7_menu-btn"></button>
               <!-- Rang 1 -->
               <div class="rank">
                 <details>
@@ -1781,6 +1805,7 @@
               <div class="block-title">
                 <span name="attr_voie8nom" title="@{voie8nom}"></span>
               </div>
+              <button type="action" class="hidden" name="act_voie8_menu-btn"></button>
               <!-- Rang 1 -->
               <div class="rank">
                 <details>
@@ -1877,6 +1902,7 @@
               <div class="block-title">
                 <span name="attr_voie9nom" title="@{voie9nom}"></span>
               </div>
+              <button type="action" class="hidden" name="act_voie9_menu-btn"></button>
               <!-- Rang 1 -->
               <div class="rank">
                 <details>
@@ -2617,7 +2643,12 @@
           
           <div class="pc-roll-r1">
             <div>&nbsp;</div>
-            <h4>Nom</h4>
+            <h4>
+              Nom
+              <button type="action" class="flat-btn img-btn" name="act_rolls_menu-btn" title="%{rolls_menu-btn} Menu des jets de capacités">
+                <span class="img-btn">l</span>
+              </button>
+            </h4>
             <h4>Capacité / Compétence</h4>
             <h4>Description / Jet spécial</h4>
           </div>
@@ -2702,6 +2733,7 @@
 
         <!-- Fiche PJ, Onglet CAPACITES, Sous-onglet Compétences -->
         <div class="pc-skills-subtab">
+          <button type="action" class="hidden" name="act_skills_menu-btn"></button>
           <div class="sheet-2colrow">
 
             <div class="sheet-col">
@@ -3665,7 +3697,7 @@
                   <option value="teal">Sarcelle</option>
                   <option value="cyan">Cyan</option>
                   <option value="gray">Gris</option>
-                  <option value="gray-dark">Gris foncé</option>
+                  <option value="dark">Sombre</option>
                 </select>
               </li>
             </ul>
@@ -4261,10 +4293,10 @@
       {{#subtitle}}<div class="sheet-subtitle">{{subtitle}}</div>{{/subtitle}}
     </div>
     <div class="sheet-content">
-      {{#allprops() title subtitle desc color}}
+      {{#allprops() title subtitle desc color token}}
       <div class="sheet-key">{{key}}</div>
       <div class="sheet-value">{{value}}</div>
-      {{/allprops() title subtitle desc color}}
+      {{/allprops() title subtitle desc color token}}
       {{#desc}}<div class="sheet-desc">{{desc}}</div>{{/desc}}
     </div>
   </div>
@@ -4289,6 +4321,21 @@ const SWData = {
   },
   RT_OPTIONS: {
     template: "cof2"
+  },
+  COLORS: {
+    default:  [ "burlywood", "#000" ],
+    blue:     [ "#0d6efd", "#fff" ],
+    indigo:   [ "#6610f2", "#fff" ],
+    purple:   [ "#6f42c1", "#fff" ],
+    pink:     [ "#d63384", "#fff" ],
+    red:      [ "#dc3545", "#fff" ],
+    orange:   [ "#fd7e14", "#000" ],
+    yellow:   [ "#ffc107", "#000" ],
+    green:    [ "#198754", "#fff" ],
+    teal:     [ "#20c997", "#fff" ],
+    cyan:     [ "#0dcaf0", "#fff" ],
+    gray:     [ "#6c757d", "#fff" ],
+    dark:     [ "#343a40", "#fff" ],
   },
   PC: {
     PROFILES: {
@@ -6236,11 +6283,18 @@ on("clicked:reset_uses-btn", function() {
     ask([ "Capacités ?", ...freqs ], function(selected, choices) {
       const freq = choices[selected];
       const titles = abilities[freq].map(a => `voie${ a.charAt(1) }-t${ a.charAt(3) }`);
-      getAttrs(titles, function(values) {
+      const usages = abilities[freq].map(a => `v${ a.charAt(1) }r${ a.charAt(3) }_use_max`);
+      getAttrs([ ...titles, ...usages ], function(values) {
+        let text = "";
+        Object.keys(values).filter(k => k.endsWith("_use_max")).forEach(k => {
+          const title = values[`voie${ k.charAt(1) }-t${ k.charAt(3) }`];
+          const usage = intval(values[k]);
+          text += title + " : " + usage + ` utilisation${ usage > 1 ? "s" : ""}\n`;
+        });
         const chatMsg = cof2RollTemplate({
           lsub: "Capacités",
           rsub: `Par ${freq}`,
-          text: Object.values(values).map(v => `${v}\n`).join("")
+          text
         });
         sendChatMsg(chatMsg);
         const reset = {};
@@ -6293,7 +6347,6 @@ function abilityUsages() {
     });
     if (updateAbilities.size > 0)
       setAttrs(Object.fromEntries(updateAbilities));
-    //clog(updatedAbilities, "ABILITY USAGE");
   }); 
 }
 
@@ -6722,28 +6775,16 @@ function rebuildRanks() {
 * On clicking the Reset button
 */
 on("clicked:reset_all-btn", function() {
-  clog("=== DEBUT RESET ===");
   updateDRMax();
-  clog("DR max");
   updatePMMax();
-  clog("PM max");
   updatePCMax();
-  clog("PC max");
   updateInit();
-  clog("Initiative");
   updateDef();
-  clog("Défense");
   abilityUsages();
-  clog("Usage Capacités");
   encumbrance();
-  clog("Encombrement");
   rebuildRanks();
-  clog("Rangs Voies");
   rebuildBuffLists();
-  clog("Listes Buffs");
   rebuildBuffValues();
-  clog("Valeurs Buffs");
-  clog("=== FIN RESET ===");
 });
 
 /**
@@ -6913,9 +6954,216 @@ on("change:debug_mode", function() {
   });
 });
 
+/**
+ * On help doc button click
+ */
 on("clicked:helpdoc-btn", function() {
   sendChatMsg("[Documentation](https://stephaned68.github.io/COF2e/)", { template: "" });
-})
+});
+
+/**
+ * Return CSS style for chat menu buttons
+ * @param {string} color - PC color name
+ * @returns {string}
+ */
+function menuButton(color) {
+  color = color || "default";
+  const [ backColor, textColor ] = SWData.COLORS[color];
+  return "\" style=\"" + [
+    "border: none",
+    "border-radius: 3px",
+    `background-color: ${backColor}`,
+    `color: ${textColor}`,
+    "padding: 2px",
+    "margin: 1px",
+    "font-size: 0.9em",
+    "font-weight: bold"
+  ].join("; ");
+}
+
+/**
+ * Display stats rolls menu
+ */
+on("clicked:caract_menu-btn", function () {
+  getAttrs([ "character_name", "couleur_pj" ], function (values) {
+    const charName = strval(values.character_name);
+    const color = strval(values.couleur_pj);
+    const chatMsg = SWData.PC.ABILITIES.map(ability => {
+      const short = shorten(ability);
+      return `${capitalize(ability)}=[${short.toUpperCase()}](~${charName}|${short}-btn${menuButton(color)})`
+    });
+    sendChatMsg([
+      `title=${charName}`,
+      "subtitle=Jets de caractéristiques",
+      "color=" + color,
+      ...chatMsg
+    ], {
+      template: "custom",
+      whisper: "gm"
+    });
+  });
+});
+
+/**
+ * Display attack rolls menu
+ */
+on("clicked:attacks_menu-btn", function () {
+  getSectionIDs("armes", function (rowIds) {
+    const section = "repeating_armes_"
+    const attackNames = rowIds.map(rowId => `${section}${rowId}_arme-nom`);
+    getAttrs([ "character_name", "couleur_pj", ...attackNames ], function (values) {
+      const charName = strval(values.character_name);
+      const color = strval(values.couleur_pj);
+      const chatMsg = rowIds.map((rowId, ix) => `${ix + 1}. ${values[`${section}${rowId}_arme-nom`]}=[Jet](~${charName}|${section}${rowId}_attack-btn${menuButton(color)})`);
+      if (chatMsg === 0)
+        return;
+      sendChatMsg([
+        `title=${charName}`,
+        "subtitle=Jets d'attaque",
+        "color=" + color,
+        ...chatMsg
+      ], {
+        template: "custom",
+        whisper: "gm"
+      });
+    });
+  });
+});
+
+/**
+ * Paths menu
+ */
+on("clicked:abilities_menu-btn", function () {
+  getAttrs([ "character_name", "couleur_pj", "rangs_voies", "noms_voies" ], function (values) {
+    const charName = strval(values.character_name);
+    const color = strval(values.couleur_pj);
+    const pathRanks = strval(values.rangs_voies).split(",");
+    const pathNames = strval(values.noms_voies).split("|");
+    const chatMsg = pathRanks.reduce((result, rank, ix) => {
+      if (intval(rank) > 0)
+        result.push(`${pathNames[ix]}=[Capacités](~${charName}|voie${ix + 1}_menu-btn${menuButton(color)})`);
+      return result;
+    }, []);
+    if (chatMsg === 0)
+      return;
+    sendChatMsg([
+      `title=${charName}`,
+      "subtitle=Voies",
+      "color=" + color,
+      ...chatMsg
+    ], {
+      template: "custom",
+      whisper: "gm"
+    });
+  });
+});
+
+/**
+ * Abilities menu
+ */
+seq(9).forEach(path => {
+  on(`clicked:voie${path}_menu-btn`, function () {
+    const abilities = seq(5).map(rank => `voie${path}-t${rank}`);
+    getAttrs([ "character_name", "couleur_pj", "rangs_voies", "noms_voies", ...abilities ], function (values) {
+      const charName = strval(values.character_name);
+      const color = strval(values.couleur_pj);
+      const pathRank = intval(strval(values.rangs_voies).split(",")[path - 1]);
+      const pathName = strval(strval(values.noms_voies).split("|")[path -1]);
+      const chatMsg = seq(5).reduce((result, rank) => {
+        if (rank <= pathRank) {
+          const abilityName = values[`voie${path}-t${rank}`];
+          result.push(`${abilityName}=[Jet](~${charName}|v${path}r${rank}-btn${menuButton(color)})`);
+        }
+        return result;
+      }, []);
+      if (chatMsg === 0)
+        return;
+      sendChatMsg([
+        `title=${charName}`,
+        "subtitle=Voie : " + pathName,
+        "color=" + color,
+        ...chatMsg
+      ], {
+        template: "custom",
+        whisper: "gm"
+      });
+    });
+  });
+});
+
+/**
+ * Ability rolls menu
+ */
+on("clicked:rolls_menu-btn", function () {
+  getSectionIDs("rolls", function (rowIds) {
+    const section = "repeating_rolls_"
+    const rollNames = rowIds.map(rowId => `${section}${rowId}_roll-nom`);
+    getAttrs([ "character_name", "couleur_pj", ...rollNames ], function (values) {
+      const charName = strval(values.character_name);
+      const color = strval(values.couleur_pj);
+      const chatMsg = rowIds.map((rowId, ix) => `${ix + 1}. ${values[`${section}${rowId}_roll-nom`]}=[Jet](~${charName}|${section}${rowId}_roll-btn${menuButton(color)})`);
+      if (chatMsg.length === 0)
+        return;
+      sendChatMsg([
+        `title=${charName}`,
+        "subtitle=Jets de Capacités",
+        "color=" + color,
+        ...chatMsg
+      ], {
+        template: "custom",
+        whisper: "gm"
+      });
+    });
+  });
+});
+
+/**
+ * Skill rolls popup
+ */
+on("clicked:skills_menu-btn", function () {
+  const skillProfs = SWData.PC.SKILLS.map((skill) => `${skill.name}_prof`);
+  getAttrs([ "character_name", ...skillProfs ], function (values) {
+    const charName = strval(values.character_name);
+    const skillSelect = SWData.PC.SKILLS.map((skill, ix) => {
+      const skillLabel = skill.label !== "" ? skill.label : capitalize(skill.name);
+      const proficient = boolval(values[`${skill.name}_prof`]) ? "*" : "";
+      return `${skillLabel}${proficient},${ix + 1}`;
+    });
+    ask([ "Compétence ?", ...skillSelect ], (skill, skills) => {
+      const [ skillName ] = skills[skill - 1].split(",");
+      const action = "%{" + charName + "|skill-" + skillName.replace("*", "").toLowerCase() + "}";
+      startRoll(action, roll => {
+        finishRoll(roll.rollId);
+      });
+    });
+  });
+});
+
+/**
+ * All rolls menu
+ */
+on("clicked:pc_menus-btn", function () {
+  getAttrs([ "character_name", "couleur_pj", "use_skills" ], function (values) {
+    const charName = strval(values.character_name);
+    const color = strval(values.couleur_pj);
+    const menus = [ "caract:Caractéristiques", "attacks:Attaques", "abilities:Capacités", "rolls:Jets de Capacités" ];
+    if (boolval(values.use_skills))
+      menus.push("skills:Jets de Compétences");
+    const chatMsg = menus.map(m => {
+      const [ button, label ] = m.split(":");
+      return `${label}=[Menu](~${charName}|${button}_menu-btn}${menuButton(color)})`;
+    });
+    sendChatMsg([
+      `title=${charName}`,
+      "subtitle=Menus",
+      "color=" + color,
+      ...chatMsg
+    ], {
+      template: "custom",
+      whisper: "gm"
+    });
+  });
+});
 
 // ================
 // NPC SHEET EVENTS
