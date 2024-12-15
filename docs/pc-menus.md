@@ -7,4 +7,5 @@ Les boutons disponibles à configurer en macros sont les suivants :
 - <kbd>%{selected|caract_menu-btn}</kbd> affiche un menu pour les jets de caractéristiques
 - <kbd>%{selected|attacks_menu-btn}</kbd> affiche un menu pour les jets d'attaque
 - <kbd>%{selected|abilities_menu-btn}</kbd> affiche un menu des voies dans lesquelles le personnage possède des capacités
+- <kbd>%{selected|rolls_menu-btn}</kbd> affiche un menu des jets de capacités
 - <kbd>%{selected|skills_menu-btn}</kbd> affiche un popup Roll20 permettant de sélectionner la compétence à utiliser (si cette option est activée dans la configuration de la fiche)
