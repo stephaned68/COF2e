@@ -27,20 +27,22 @@ ou héroïque, H = supérieure et héroïque)
 ## Vigueur
 
 - <kbd>pv</kbd> : PV courants
+- <kbd>pv_buff</kbd> : buffs au maximum de PV
 - <kbd>pv_max</kbd> : PV maximums
 - <kbd>drecup</kbd> : valeur du dé de récupération (6/8/10)
 - <kbd>dr</kbd> : nombre courant de dés de récupération
+- <kbd>dr_buff</kbd> : buffs au maximum de DR
 - <kbd>dr_max</kbd> : nombre maximum de dés de récupération
 - <kbd>temp_dm</kbd> : dommages temporaires
 
 ## Mana, Dé écolutif, Chance
 
-- <kbd>pm_buff</kbd> : buffs aux Points de Mana
 - <kbd>pm</kbd> : PM courants
+- <kbd>pm_buff</kbd> : buffs au maximum de PM
 - <kbd>pm_max</kbd> : PM maximums
 - <kbd>devol</kbd> : dé évolutif (d4/d6/d8/d10/d12)
-- <kbd>pc_buff</kbd> : buffs aux Points de Chance
 - <kbd>pc</kbd> : PC courants
+- <kbd>pc_buff</kbd> : buffs au maximum de PC
 - <kbd>pc_max</kbd> : PC maximums
 
 ## Défense
