@@ -8,7 +8,7 @@
 
 [Onglet Configuration]({{ site.baseurl }}/pc-config)
 
-[Menus]({{ site.baseurl }}/pc-menus)
+[Informations Techniques]({{ site.baseurl }}/pc-tech)
 
 ---
 

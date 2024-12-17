@@ -31,6 +31,10 @@ Pour chaque rang :
 
 Le texte de la capacité est transformé par insertion de jets en ligne s'il y a lieu (voir paragraphe _Jets en ligne_ ci-dessous).
 
+Deux icônes sont situées à côté de **Editer** :
+- L'icône _Horloge_ permet de ré-initialiser le nombre d'utilisation des capacités pour un type de fréquence
+- L'icône _Options_ permet d'afficher un menu d'action dans le chat avec un bouton pour chaque voie. Chacun de ces boutons affiche ensuite un sous-menu d'action avec un bouton d'action pour chaque capacité possédée dans cette voie.
+
 # Jets de capacités
 
 Ce sous-onglet permet de lister des jets liés aux capacités du PJ. Pour chaque jet, vous pouvez indiquer :
@@ -42,6 +46,8 @@ Ce sous-onglet permet de lister des jets liés aux capacités du PJ. Pour chaque
   - Un bonus fixe (_+2 pour les voies de profil, +3 pour les voies de peuple, +5 pour les voies de prestige_).
 - Une description ou un jet spécial
   - Avant envoi dans le chat, cette description est transformée par insertion de jets en ligne s'il y a lieu (voir paragraphe _Jets en ligne_ ci-dessous).
+
+L'icone située à côté de **Nom** permet d'afficher un menu d'action dans le chat avec un bouton pour chaque jet de capacité.
 
 # Jets de compétences
 

@@ -1,3 +1,7 @@
+# Identité 
+
+Vous pouvez indiquer pour votre PNJ un nom "connu" mais aussi son vrai nom dans le champ Alias. En cliquant sur le label Alias, ce dernier vient remplacer son nom connu. Un message de notification s'affiche dans le chat Roll20.
+
 # Caractéristiques
 
 Pour chacune des 7 caractéristiques, vous indiquez :

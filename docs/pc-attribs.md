@@ -1,3 +1,8 @@
+# Identité 
+
+- Vous pouvez indiquer pour votre PJ un nom "connu" mais aussi son vrai nom dans le champ Alias. En cliquant sur le label Alias, ce dernier vient remplacer son nom connu. Un message de notification s'affiche dans le chat Roll20.
+- Lorsque vous sélectionnez une famille, une liste des profils correspondants est disponible. Si un profil est indiqué, vous devez l'effacer pour voir de nouveau la liste. Vous pouvez indiquer votre profile primaire suivi de / et d'un second profil si votre PJ dispose d'un profil hybride.
+
 # Caractéristiques
 
 Pour chaque caractéristique, vous pouvez indiquer :
@@ -10,6 +15,8 @@ Un clic sur le bouton permet de lancer un jet "sec" de caractéristique. Le type
 - Un d20 de base, avec _dé malus_ si le PJ subit l'état préjudiciable _Affaibli_,
 - Un d20 avec _dé bonus_ en cas de caractéristique supérieure/héroïque, sans dé bonus si le PJ est _Affaibli_.
 - Un d20 avec _dé bonus_ avec un résultat minimum de 10 en cas de caractéristique supérieure+héroïque, pas de minimum si le PJ est _Affaibli_.
+
+L'icone située à côté de **Carac** permet d'afficher un menu d'action dans le chat avec un bouton pour chaque jet de caractéristique.
 
 # Combat
 
@@ -85,6 +92,8 @@ Si l'arme est maniée à deux mains et que le bouclier est équipé, le jet d'at
 Si l'arme peut être maniée à une main ou à deux mains, les dés de DM peuvent être indiqués sous la forme <kbd>1d8/1d12</kbd>. Un popup Roll20 s'affiche pour demander comment l'arme est maniée, à moins que le bouclier soit équipé, auquel cas ce sont les DM à une main qui sont pris en compte.
 
 Le texte d'effet spécial est traité par la fiche pour substituer les jets en ligne comme décrit pour la description des [capacités]({{ site.baseurl }}/pc-abilities).
+
+L'icone située à côté de **ARME/SORT** permet d'afficher un menu d'action dans le chat avec un bouton pour chaque jet d'attaque.
 
 # Options tactiques
 
