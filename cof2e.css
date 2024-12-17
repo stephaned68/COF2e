@@ -291,7 +291,7 @@ div.path div.block-title {
 
 .identity .level-type {
   display: grid;
-  grid-template-columns: 1fr 1fr 6fr;
+  grid-template-columns: 1fr 1fr 3fr 1fr auto;
   gap: 5px;
   margin: 2px;
 }

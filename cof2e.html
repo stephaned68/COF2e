@@ -85,13 +85,13 @@
           <div class="d-flex">
             <input type="text" name="attr_profil" list="pc-profiles" placeholder="Profil" title="@{profil} Profil" value="">
             <datalist id="pc-profiles"></datalist>
-            <input type="text" name="attr_famille" list="pc-families" placeholder="Famille" title="@{famille} Famille de profil" value="">
-            <datalist id="pc-families">
+            <select class="select-lg" name="attr_famille" title="@{famille} Famille de profil">
+              <option value="">Choisir...</option>
               <option>Aventuriers</option>
               <option>Combattants</option>
               <option>Mages</option>
               <option>Mystiques</option>
-            </datalist>
+            </select>
           </div>
           <div><strong>Age</strong></div>
           <div>
@@ -173,6 +173,14 @@
             <option value="npc">PNJ</option>
           </select>
         </div>
+        <div class="d-flex d-flex-middle">
+          <button type="action" class="flat-btn img-btn" name="act_alias-toggle">
+            <span class="img-btn"></span><strong>Alias</strong>
+          </button>
+        </div>
+        <div class="d-flex d-flex-middle">
+          <input type="text" name="attr_alias" title="@{alias} Alias du personnage" value="">
+        </div>
       </div>
       
     </div>
@@ -225,7 +233,7 @@
                 </button>
               </div>
               <div>
-                <select class="select-xxs" name="attr_dagi_sup">
+                <select class="select-xxs" name="attr_agi_sup">
                   <option value="N" selected>N Normale</option>
                   <option value="S">S Supérieure OU Héroïque</option>
                   <option value="H">H Supérieure ET Héroïque</option>
@@ -5092,36 +5100,53 @@ on("change:sheet_type", function() {
 });
 
 /**
+ * Populate the profiles datalist
+ * @param {string} family - name of profiles family
+ * @param {string} profile - name of current profile
+ * @returns 
+ */
+function setProfilesList(family, profile) {
+  const profiles = SWData.PC.PROFILES[family] || [];
+  if (profiles.length === 0)
+    return;
+  populateListOptions({
+    elemSelector: "#pc-profiles",
+    optionsArray: profiles.map(prof => ({ value: prof.value, selected: (prof.value === profile)}))
+  });
+}
+
+/**
  * On change of family
- * - set the list of profiles
+ * - set list of profiles
+ * - set DR
  * - compute level 1 PV
  */
 on("change:famille", function() {
-  getAttrs([ "famille", "niveau", "pv_max", "con" ], function(values) {
+  getAttrs([ "profil", "famille", "niveau", "con" ], function(values) {
+    
     const family = strval(values.famille);
-    const profiles = SWData.PC.PROFILES[family] || [];
-    if (profiles.length > 0) {
-      populateListOptions({
-        elemSelector: "#pc-profiles",
-        optionsArray: profiles
-      });
-    }
+    const profile = strval(values.profil);
+    setProfilesList(family, profile);
+
     const level = intval(values.niveau);
-    let pvMax = intval(values.pv_max);
-    if (level === 1 && pvMax === 0) {
-      const con = intval(values.con);
+    const con = intval(values.con);
+    let drMax = 8;
+    const updates = new Map();
+    if (level === 1) {
       switch (family) {
         case "Combattants":
-          pvMax = 10 + con;
+          drMax = 10;
           break;
         case "Mages":
-          pvMax = 6 + con;
+          drMax = 6
           break;
-        default:
-          pvMax = 8 + con;
       }
-      setAttrs({ pv: pvMax, pv_max: pvMax });
+      const pvMax = drMax + con;
+      updates.set("pv", pvMax);
+      updates.set("pv_max", pvMax);
     }
+    updates.set("drecup", drMax);
+    setAttrs(Object.fromEntries(updates));
   });
 });
 
@@ -5138,7 +5163,8 @@ on("change:profil", function() {
     if (!SWData.PC.PROFILES[family])
       return;
 
-    const profile = strval(SWData.PC.PROFILES[family].find(p => p.value === strval(values.profil)));
+    const [ primary ] = strval(values.profil).split("/");
+    const profile = strval(SWData.PC.PROFILES[family].find(p => p.value === primary));
     if (!profile)
       return;
 
@@ -5223,6 +5249,22 @@ on("change:niveau", function() {
     setAttrs(Object.fromEntries(updateAttrs))
   });
 });
+
+/**
+ * Change character name to true name
+ */
+on("clicked:alias-toggle", function() {
+  getAttrs([ "character_name", "alias" ], function(values) {
+    const name = strval(values.character_name);
+    const trueName = strval(values.alias);
+    if (trueName !== "") {
+      setAttrs({ character_name: trueName, alias: "" });
+      sendChatMsg(cof2RollTemplate({
+        text: `${name} s'appelle réellement ${trueName}`
+      }));
+    }
+  });
+})
 
 /**
  * On ability components change
@@ -5832,8 +5874,8 @@ function insertRolls(text, options = {}) {
   const devol = `@{${ useNPC ? "target|" : "" }devol}` ;
 
   // Search for " [#d4° + XXX] "
-  matchRegExp(text, /([ ]*)\[([1-9])d4°[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL|rang voie [1-9])\]([ ]*)/gm).forEach(result => {
-    let [ matched, sb, dice, ability, sa ] = result;
+  matchRegExp(text, /([ ]*)\[([1-9])d(4°|E)[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL|rang voie [1-9])\]([ ]*)/gm).forEach(result => {
+    let [ matched, sb, dice, , ability, sa ] = result;
     if (ability.startsWith("rang "))
       ability = `rang_voie${ findPathByName(ability, pathNames) }`;
     const replace = `${sb}[[${dice}${devol} + @{${ability.toLowerCase()}}[${ability}] ]]${sa}`;
@@ -5841,8 +5883,8 @@ function insertRolls(text, options = {}) {
   });
 
   // Search for "... #d4° ..."
-  matchRegExp(text, /([ ]*)([1-9])d4°([ ])*/gm).forEach(result => {
-    const [ matched, sb, dice, sa ] = result;
+  matchRegExp(text, /([ ]*)([1-9])d(4°|E)([ ])*/gm).forEach(result => {
+    const [ matched, sb, dice, , sa ] = result;
     const replace = `${sb}[[${dice}${devol}]]${sa}`;
     text = text.replace(matched, replace);
   });
@@ -7603,13 +7645,14 @@ on("sheet:opened", function() {
     "debug_mode",
     "character_token",
     "sheet_type",
+    "profil",
+    "famille",
     ...pathAttrs
   ], function (values) {
 
     setDebugMode(values.debug_mode);
 
     const sheetType = strval(values.sheet_type);
-    
     const newVer = parseSemVer(values.verfdp);
     const curVer = parseSemVer(values.version);
     if (
@@ -7619,12 +7662,15 @@ on("sheet:opened", function() {
     ) {
       migrateSheet(sheetType, curVer);
     }
-
+    
     let updates = new Map();
-
+    
     updates = getTokenURL(updates, values);
-
+    
     if (sheetType === SWData.SHEET_TYPE.PC) {
+      const family = strval(values.famille);
+      const profile = strval(values.profil);
+      setProfilesList(family, profile);
       updates = rebuildPathAll(updates, values);
       rebuildBuffValues();
     }
