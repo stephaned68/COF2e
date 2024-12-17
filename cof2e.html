@@ -45,6 +45,9 @@
   <input type="hidden" name="attr_noms_voies" value="">
   <input type="hidden" name="attr_armor_malus" value="0">
 
+  <!-- COFantasy MOD interaction -->
+  <input type="hidden" name="attr_cofantasy" value="">
+
   <!-- Entête : Logo, Avatar, Identité -->
   <div class="heading">
 
@@ -5254,13 +5257,15 @@ on("change:niveau", function() {
  * Change character name to true name
  */
 on("clicked:alias-toggle", function() {
-  getAttrs([ "character_name", "alias" ], function(values) {
+  getAttrs([ "character_name", "character_id", "alias" ], function(values) {
     const name = strval(values.character_name);
-    const trueName = strval(values.alias);
-    if (trueName !== "") {
-      setAttrs({ character_name: trueName, alias: "" });
+    const charId = strval(values.character_id);
+    const alias = strval(values.alias);
+    if (alias !== "") {
+      const cofantasy = `alias|${charId}|${alias}`;
+      setAttrs({ character_name: alias, alias: "", cofantasy });
       sendChatMsg(cof2RollTemplate({
-        text: `${name} s'appelle réellement ${trueName}`
+        text: `${name} s'appelle réellement ${alias}`
       }));
     }
   });
@@ -5873,7 +5878,7 @@ function insertRolls(text, options = {}) {
   const { pathNames = "", useNPC = false } = options;
   const devol = `@{${ useNPC ? "target|" : "" }devol}` ;
 
-  // Search for " [#d4° + XXX] "
+  // Search for " [#d4° + XXX] " or " [#dE + XXX] "
   matchRegExp(text, /([ ]*)\[([1-9])d(4°|E)[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL|rang voie [1-9])\]([ ]*)/gm).forEach(result => {
     let [ matched, sb, dice, , ability, sa ] = result;
     if (ability.startsWith("rang "))
@@ -5882,7 +5887,7 @@ function insertRolls(text, options = {}) {
     text = text.replace(matched, replace);
   });
 
-  // Search for "... #d4° ..."
+  // Search for "... #d4° ..." or "... #dE ..."
   matchRegExp(text, /([ ]*)([1-9])d(4°|E)([ ])*/gm).forEach(result => {
     const [ matched, sb, dice, , sa ] = result;
     const replace = `${sb}[[${dice}${devol}]]${sa}`;
