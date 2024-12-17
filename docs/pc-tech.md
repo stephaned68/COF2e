@@ -5,7 +5,9 @@ Les noms d'attributs Roll20 utilisables dans des macros s'affichent dans des bul
 ## Caractéristiques
 
 - <kbd>agi</kbd>, <kbd>con</kbd>, <kbd>for</kbd>, <kbd>per</kbd>, <kbd>cha</kbd>, <kbd>int</kbd>, <kbd>vol</kbd> : scores de caractéristiques de base
-- <kbd>xxx_sup</kbd> : type de jet (N = normal, S = supérieure ou héroïque, H = supérieure et héroïque)
+- <kbd>xxx_sup</kbd> : type de jet (N = normal, S = supérieure 
+ou héroïque, H = supérieure et héroïque)
+- <kbd>xxx_buff</kbd> : buffs/debuffs aux caractéristiques
 - <kbd>xxx_test</kbd> : scores de caractéristiques avec buffs
 
 ## Combat
@@ -78,31 +80,36 @@ Les noms d'attributs Roll20 utilisables dans des macros s'affichent dans des bul
 - <kbd>v1r1_use_max</kbd> : nombre d'utilisations maximum de la capacité s'il y a lieu
 - <kbd>v1r1_freq</kbd> : fréquence de renouvellement des utilisations de la capacité s'il y a lieu
 - <kbd>v1r1_use</kbd> : nombre d'utilisations de la capacité
+- <kbd>v1br</kbd> : rang de base de la voie n°1 (*)
 
-Les voies sont numérotées de 1 à 9 et les rangs 1 à 5.
+Ces attributs existent pour toutes les voies (1 à 9) et tous les rangs (1 à 5).
 
-- <kbd>noms_voies</kbd> : liste des noms de voies, séparés par des |
+- <kbd>noms_voies</kbd> : liste des noms de voies, séparés par des \|
 - <kbd>rangs_voies</kbd> : liste des rangs dans les voies, séparés par des ,
 
 ## Buffs / Debuffs
 
-- <kbd>agi_buff_list</kbd>, <kbd>agi_buff</kbd> : liste des buffs d'AGI et valeur totale
-- <kbd>con_buff_list</kbd>, <kbd>con_buff</kbd> : liste des buffs de CON et valeur totale
-- <kbd>for_buff_list</kbd>, <kbd>for_buff</kbd> : liste des buffs de FOR et valeur totale
-- <kbd>per_buff_list</kbd>, <kbd>per_buff</kbd> : liste des buffs de PER et valeur totale
-- <kbd>cha_buff_list</kbd>, <kbd>cha_buff</kbd> : liste des buffs de CHA et valeur totale
-- <kbd>int_buff_list</kbd>, <kbd>int_buff</kbd> : liste des buffs d'INT et valeur totale
-- <kbd>vol_buff_list</kbd>, <kbd>vol_buff</kbd> : liste des buffs de VOL et valeur totale
-- <kbd>init_buff_list</kbd>, <kbd>init_buff</kbd> : liste des buffs d'Initiative et valeur totale
+- <kbd>agi_buff_list</kbd> : liste des buffs/debuffs d'AGI 
+- <kbd>con_buff_list</kbd> : liste des buffs/debuffs de CON 
+- <kbd>for_buff_list</kbd> : liste des buffs/debuffs de FOR
+- <kbd>per_buff_list</kbd> : liste des buffs/debuffs de PER
+- <kbd>cha_buff_list</kbd> : liste des buffs/debuffs de CHA
+- <kbd>int_buff_list</kbd> : liste des buffs/debuffs d'INT
+- <kbd>vol_buff_list</kbd> : liste des buffs/debuffs de VOL
+- <kbd>init_buff_list</kbd> : liste des buffs/debuffs d'Initiative
 - <kbd>init_cond</kbd> : total des debuffs à l'Initiative dus aux états préjudiciables
-- <kbd>atkcac_buff_list</kbd>, <kbd>atkcac_buff</kbd> : liste des buffs d'attaque au contact et valeur totale
+- <kbd>atkcac_buff_list</kbd> : liste des buffs/debuffs d'attaque au contact
 - <kbd>atkcac_cond</kbd> : total des debuffs à l'attaque au contact dus aux états préjudiciables
-- <kbd>atktir_buff_list</kbd>, <kbd>atktir_buff</kbd> : liste des buffs d'attaque à distance et valeur totale
+- <kbd>atktir_buff_list</kbd> : liste des buffs/debuffs d'attaque à distance
 - <kbd>atktir_cond</kbd> : total des debuffs à l'attaque à distance dus aux états préjudiciables
-- <kbd>atkmag_buff_list</kbd>, <kbd>atkmag_buff</kbd> : liste des buffs d'attaque magique et valeur totale
+- <kbd>atkmag_buff_list</kbd> : liste des buffs/debuffs d'attaque magique
 - <kbd>atkmag_cond</kbd> : total des debuffs à l'attaque magique dus aux états préjudiciables
-- <kbd>def_buff_list</kbd>, <kbd>def_buff</kbd> : liste des buffs de Défense et valeur totale
+- <kbd>def_buff_list</kbd> : liste des buffs/debuffs de Défense
 - <kbd>def_cond</kbd> : total des debuffs à la Défense dus aux états préjudiciables
+- <kbd>pv_buff_list</kbd> : liste des buffs/debuffs aux PV
+- <kbd>dr_buff_list</kbd> : liste des buffs/debuffs aux DR
+- <kbd>pm_buff_list</kbd> : liste des buffs/debuffs aux PM
+- <kbd>pc_buff_list</kbd> : liste des buffs/debuffs aux PC
 
 # Menus et macros
 
@@ -115,6 +122,10 @@ Les macros à configurer sont les suivantes :
 - <kbd>%{selected|abilities_menu-btn}</kbd> affiche un menu des voies dans lesquelles le personnage possède des capacités
 - <kbd>%{selected|rolls_menu-btn}</kbd> affiche un menu des jets de capacités
 - <kbd>%{selected|skills_menu-btn}</kbd> affiche un popup Roll20 permettant de sélectionner la compétence à utiliser (si cette option est activée dans la configuration de la fiche)
+
+---
+
+_(*) : les rangs de base sont de 1 pour les voies de profil, 4 pour les voies de prestige (3 pour la Voie du familier fantastique)_
 
 ---
 
