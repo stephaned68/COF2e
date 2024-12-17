@@ -5257,15 +5257,16 @@ on("change:niveau", function() {
  * Change character name to true name
  */
 on("clicked:alias-toggle", function() {
-  getAttrs([ "character_name", "character_id", "alias" ], function(values) {
+  getAttrs([ "character_name", "alias", "notes" ], function(values) {
     const name = strval(values.character_name);
-    const charId = strval(values.character_id);
     const alias = strval(values.alias);
+    const text = `Le vrai nom de ${name} est ${alias}`;
+    const notes = strval(values.notes) + "\n=====\n" + text;
     if (alias !== "") {
-      const cofantasy = `alias|${charId}|${alias}`;
-      setAttrs({ character_name: alias, alias: "", cofantasy });
+      const cofantasy = `alias|${alias}`;
+      setAttrs({ character_name: alias, alias: "", notes, cofantasy });
       sendChatMsg(cof2RollTemplate({
-        text: `${name} s'appelle réellement ${alias}`
+        text
       }));
     }
   });
