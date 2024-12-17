@@ -5263,7 +5263,7 @@ on("clicked:alias-toggle", function() {
     const text = `Le vrai nom de ${name} est ${alias}`;
     const notes = strval(values.notes) + "\n=====\n" + text;
     if (alias !== "") {
-      const cofantasy = `alias|${alias}`;
+      const cofantasy = `alias|${alias}|${name}`;
       setAttrs({ character_name: alias, alias: "", notes, cofantasy });
       sendChatMsg(cof2RollTemplate({
         text
