@@ -33,6 +33,8 @@
   <input type="hidden" name="attr_init_buff" value="0">
   <input type="hidden" name="attr_init_cond" value="0">
   <input type="hidden" name="attr_def_base" value="10">
+  <input type="hidden" name="attr_def_car" value="AGI">
+  <input type="hidden" name="attr_def_car_bonus" value="0">
   <input type="hidden" name="attr_def_buff" value="0">
   <input type="hidden" name="attr_def_cond" value="0">
   <input type="hidden" name="attr_pv_buff" value="0">
@@ -46,6 +48,7 @@
   <input type="hidden" name="attr_armor_malus" value="0">
 
   <!-- COFantasy MOD interaction -->
+  <input type="hidden" name="attr_script_title" value="">
   <input type="hidden" name="attr_cofantasy" value="">
 
   <!-- Entête : Logo, Avatar, Identité -->
@@ -202,6 +205,7 @@
         <button type="action" name="act_pc_abilities-btn" class="main-tab tab-btn pc-abilities-btn">CAPACITES</button>
         <button type="action" name="act_pc_gears-btn" class="main-tab tab-btn pc-gears-btn">EQUIPEMENT</button>
         <button type="action" name="act_pc_config-btn" class="main-tab tab-btn pc-config-btn">CONFIGURATION</button>
+        <button type="action" name="act_pc_script-btn" class="main-tab tab-btn pc-script-btn">SCRIPT</button>
         <button type="action" name="act_pc_version-btn" class="main-tab tab-btn pc-version-btn">VERSION</button>
       </div>
 
@@ -779,7 +783,7 @@
                 Bouclier
                 <input type="checkbox" name="attr_bouclier_eqp" title="@{bouclier_eqp} Bouclier équipé" value="1">
               </div>
-              <div class="centered"></div>
+              <div class="centered"><span name="attr_def_car" title="@{def_car} Caractéristique"></span></div>
               <div class="centered">Div.</div>
               <div class="centered">Action défensive</div>
               <div class="centered"><strong>Score</strong></div>
@@ -795,10 +799,11 @@
                 <input type="number" name="attr_bouclier" title="@{bouclier} Bonus de bouclier" value="0">
               </div>
               <div class="bordered centered">
+                <span name="attr_def_car_bonus" title="@{def_car_bonus} Bonus de caractéristique"></span> <!--
                 <select class="select-sm" name="attr_def_car" title="@{def_car} AGI/CON">
                   <option value="agi" selected>AGI</option>
                   <option value="con">CON</option>
-                </select>
+                </select> -->
               </div>
               <div class="bordered centered">
                 <span name="attr_def_buff" title="@{def_buff} Bonus divers"></span>
@@ -900,6 +905,7 @@
                 </button>
               </div>
               <div class="d-flex d-flex-middle bordered">
+                <span class="align-self-center" name="attr_arme-label"></span>&nbsp;
                 <input type="text" name="attr_arme-nom" title="@{arme-nom}" placeholder="Arme/attaque" value="">
               </div>
               <div class="d-flex d-flex-middle bordered">
@@ -965,13 +971,13 @@
               <div class="d-flex d-flex-middle bordered">
                 <input type="text" name="attr_arme-special" title="@{arme-special}" placeholder="Effet, capacités spéciales..." value="">
               </div>
-              <!-- <button type="action" class="flat-btn img-btn" name="act_arme-opt-btn">
+              <!-- <button type="action" class="flat-btn img-btn" name="act_armeopt-btn">
                 <span class="img-btn">y</span>
               </button> -->
 
             </div>
 
-            <input type="hidden" class="cof-wopt-toggle" name="attr_arme-opt" value="0"/>
+            <input type="hidden" class="cof-wopt-toggle" name="attr_armeopt" value="0"/>
             <div class="weapon-opt">
               <div class="weapon-option">
                 <div></div>
@@ -3811,6 +3817,28 @@
 
       </div>
 
+      <div class="pc-script-tab">
+        <h3><span name="attr_script_title"></span></h3>
+
+        <input class="show-script" type="hidden" name="attr_script_show" value="0">
+        <div class="show-script">
+
+          <div class="sheet-2colrow">
+  
+            <div class="sheet-col">
+  
+            </div>
+  
+            <div class="sheet-col">
+              <h4>Prédicats</h4>
+              <textarea name="attr_predicats_script" title="@{predicats_script} Prédicats" value=""></textarea>
+            </div>
+  
+          </div>
+
+        </div>
+      </div>
+
       <!-- Fiche PJ, Onglet Version -->
       <div class="pc-version-tab">
         <h3>
@@ -4456,7 +4484,7 @@ const SWData = {
         "def_base",
         "armure", "armure_eqp",
         "bouclier", "bouclier_eqp",
-        "def_car", "agi", "con",
+        "agi", "con", "def_car_bonus", "capabilities",
         "def_cond",
         "def_buff",
         "def_action"
@@ -4591,6 +4619,9 @@ const SWData = {
           "Pas d'action au premier round de combat"
         ]
       }
+    ],
+    CAPABILITIES: [
+      "peaudepierre"
     ],
     SKILLS: [
       {
@@ -4894,7 +4925,7 @@ function eventList(eventName, attributeList, joinChar = "") {
 
 /**
 * Remove all rows for a repeating section
-* @param {string} sectionName Repeating section to clear
+* @param {string} sectionName repeating section to clear
 */
 function removeRepeatingAll(sectionName) {
   getSectionIDs(sectionName, function (rowIds) {
@@ -4903,6 +4934,21 @@ function removeRepeatingAll(sectionName) {
     });
   });
 }
+
+/**
+ * Process repeating section rows in order
+ * @param {string} sectionName - repeating section to process
+ * @param {object} callback - callback function
+ */
+function getSectionIDsOrdered(sectionName, callback) {
+  getAttrs([`_reporder_${sectionName}`], function (v) {
+    getSectionIDs(sectionName, function (idArray) {
+      let reporderArray = v[`_reporder_${sectionName}`] ? v[`_reporder_${sectionName}`].toLowerCase().split(',') : [],
+        ids = [...new Set(reporderArray.filter(x => idArray.includes(x)).concat(idArray))];
+      callback(ids);
+    });
+  });
+};
 
 /** @typedef sendChatMsgOptions
  * @property {string} title - Title of the message
@@ -5084,7 +5130,7 @@ on("change:sheet_type", function() {
  * Change tabs
  */
 [ 
-  "pc_main", "pc_abilities", "pc_gears", "pc_config", "pc_version",
+  "pc_main", "pc_abilities", "pc_gears", "pc_config", "pc_script", "pc_version",
   "npc_main", "npc_config"
 ].forEach(button => {
   on(`clicked:${button}-btn`, function() {
@@ -5652,18 +5698,26 @@ on("clicked:drecup-btn", function() {
  */
 function updateDef() {
   getAttrs(SWData.PC.COMBAT.def, function(values) {
+    const capabilities = strval(values.capabilities).split(",");
+    delete values.capabilities;
     values.armure = intval(values.armure) * intval(values.armure_eqp);
     delete values.armure_eqp;
     values.bouclier = intval(values.bouclier) * intval(values.bouclier_eqp);
     delete values.bouclier_eqp;
-    const defAbility = strval(values.def_car);
-    delete values.def_car;
-    if (defAbility === "agi")
-      values.con = 0;
-    if (defAbility === "con") 
-      values.agi = 0;
+    let def_car = "AGI";
+    let def_car_bonus = intval(values.agi);
+    if (capabilities.includes("peaudepierre")) {
+      const conValue = intval(values.con);
+      if (conValue > def_car_bonus) {
+        def_car = "CON";
+        def_car_bonus = conValue;
+      }
+    }
+    values.agi = 0;
+    values.con = 0;
+    values.def_car_bonus = def_car_bonus;
     def = addValues(values);
-    setAttrs({ def });
+    setAttrs({ def, def_car, def_car_bonus }, false);
   });
 }
 
@@ -5923,6 +5977,24 @@ function insertRolls(text, options = {}) {
 }
 
 /**
+ * On adding/removing/reordering attacks, renumber them
+ */
+on("change:repeating_armes:arme-nom change:_reporder:armes remove:repeating_armes", function() {
+  getSectionIDsOrdered("repeating_armes", function (rowIds) {
+    const attacks = rowIds.map(id => `repeating_armes_${id}_arme-nom`);
+    getAttrs(attacks, function (values) {
+      let label = 0
+      const updates = new Map();
+      Object.keys(values).forEach(attack => {
+        const [ , , id ] = attack.split("_");
+        updates.set(`repeating_armes_${id}_arme-label`, ++label);
+      });
+      setAttrs(Object.fromEntries(updates));
+    });
+  });
+});
+
+/**
  * Roll an attack in chat
  */
 on("clicked:repeating_armes:attack-btn", function() {
@@ -6010,9 +6082,9 @@ on("clicked:repeating_armes:attack-btn", function() {
         tacticDM = " +2@{devol}[Att. précise/violente]";
         break;
       case 4:
-        tacticBonus = ` ${tactBM}[Attaque spéciale]`;
+        tacticBonus = ` + (${tactBM})[Option tactique]`;
         if (tactDM !== "")
-          tacticDM = " " + tactDM.replace("d4°", "@{devol}");
+          tacticDM = " + (" + tactDM.replace(/d(4°|E)/, "@{devol}") + ")[Option tactique]";
         break;
     }
 
@@ -6103,6 +6175,12 @@ on("clicked:repeating_armes:attack-btn", function() {
   })
 });
 
+/*on("clicked:repeating_armes:armeopt-btn", function() {
+  getAttrs([ "repeating_armes_armeopt" ], function (values) {
+
+  });
+});*/
+
 /**
  * Display ability text with alert on usage
  * @param {number} path - Path #
@@ -6189,20 +6267,46 @@ function actionAbility(path, rank) {
 }
 
 /**
+ * Update the list of special capabilities
+ * @param {string} name - name of ability
+ * @param {number} owned - owend ability 0/1 
+ * @param {string} capabilities - comma-separated of special capabilities
+ * @returns {string}
+ */
+function processCapabilities(name, owned, capabilities) {
+  name = name.replace(/ /gm, "").toLowerCase();
+  if (SWData.PC.CAPABILITIES.includes(name)) {
+    capabilities += ((capabilities !== "") ? "," : "") + name;
+    if (!owned) {
+      capabilities = capabilities.split(",").filter(cp => cp !== name).join(",");
+    }
+  }
+  return capabilities;
+}
+
+/**
  * Update rank in path
  * @param {number} path - Path #
  */
 function setRank(path) {
-  rankAttrs = seq(5).map(rank => `v${path}r${rank}`);
+  rankAttrs = [
+    "capabilities",
+    ...seq(5).map(rank => `v${path}r${rank}`),
+    ...seq(5).map(rank => `voie${path}-t${rank}`)
+  ];
   getAttrs(rankAttrs, function (values) {
     let rank = 0;
-    Object.keys(values).forEach(ability => {
+    let capabilities = strval(values.capabilities);
+    delete values.capabilities;
+    Object.keys(values).filter(a => !a.startsWith("voie")).forEach(ability => {
       const owned = intval(values[ability]);
       const hasRank = intval(ability.charAt(ability.length - 1)) * owned;
       if (hasRank > rank)
         rank = hasRank;
+      const name = values[`voie${path}-t${ ability.charAt(ability.length - 1) }`];
+      capabilities = processCapabilities(name, owned, capabilities);
     });
-    setAttrs({ [`rang_voie${path}`]: rank });
+    setAttrs({ [`rang_voie${path}`]: rank, capabilities });
   });
 }
 
@@ -7649,6 +7753,8 @@ on("sheet:opened", function() {
     "version",
     "verfdp",
     "debug_mode",
+    "scriptVersion",
+    "scriptVersion_max",
     "character_token",
     "sheet_type",
     "profil",
@@ -7668,7 +7774,7 @@ on("sheet:opened", function() {
     ) {
       migrateSheet(sheetType, curVer);
     }
-    
+
     let updates = new Map();
     
     updates = getTokenURL(updates, values);
@@ -7680,6 +7786,15 @@ on("sheet:opened", function() {
       updates = rebuildPathAll(updates, values);
       rebuildBuffValues();
     }
+
+    const hasMODScript = (strval(values.scriptVersion).toLowerCase() === "true");
+    const scriptVersion = strval(values.scriptVersion_max);
+    if (hasMODScript) {
+      updates.set("script_title", `COFantasy2 v${scriptVersion}`);
+    } else {
+      updates.set("script_title", "Le script MOD COFantasy2 n'est pas installé...");
+    }
+    updates.set("script_show", hasMODScript ? "1" : "0");
 
     if (values.version !== values.verfdp)
       updates.set("version", values.verfdp);

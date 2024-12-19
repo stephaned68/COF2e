@@ -337,6 +337,7 @@ input[value="0"].pc-skills-btn ~ button.pc-skills-btn {
 .pc-abilities-tab,
 .pc-gears-tab,
 .pc-config-tab,
+.pc-script-tab,
 .pc-version-tab,
 .pc-rolls-subtab,
 .pc-skills-subtab,
@@ -351,6 +352,7 @@ input[value="0"].pc-skills-btn ~ button.pc-skills-btn {
 .tabs-toggle[value="abilities"] ~ div .pc-abilities-btn,
 .tabs-toggle[value="gears"] ~ div .pc-gears-btn,
 .tabs-toggle[value="config"] ~ div .pc-config-btn,
+.tabs-toggle[value="script"] ~ div .pc-script-btn,
 .tabs-toggle[value="version"] ~ div .pc-version-btn,
 .tabs-toggle[value="main"] ~ div .npc-main-btn, 
 .tabs-toggle[value="config"] ~ div .npc-config-btn,
@@ -366,6 +368,7 @@ input[value="0"].pc-skills-btn ~ button.pc-skills-btn {
 .tabs-toggle[value="abilities"] ~ div.pc-abilities-tab,
 .tabs-toggle[value="gears"] ~ div.pc-gears-tab,
 .tabs-toggle[value="config"] ~ div.pc-config-tab,
+.tabs-toggle[value="script"] ~ div.pc-script-tab,
 .tabs-toggle[value="version"] ~ div.pc-version-tab,
 .tabs-toggle[value="rolls"] ~ div.pc-rolls-subtab,
 .tabs-toggle[value="skills"] ~ div.pc-skills-subtab,
@@ -381,12 +384,14 @@ input.block-switch {
 }
 
 .abilities-view,
-.block-switch:checked ~ .abilities-edit {
+.block-switch:checked ~ .abilities-edit,
+input[value="1"].show-script ~ div.show-script {
   display: block;
 }
 
 .abilities-edit,
-.block-switch:checked ~ .abilities-view {
+.block-switch:checked ~ .abilities-view,
+input[value="0"].show-script ~ div.show-script {
   display: none;
 }
 
@@ -532,8 +537,8 @@ div.change-view {
 
 .pc-attacks .weapon-option {
   display: grid;
-  grid-template-columns: 2.7rem 6fr 1fr 4.5fr 4.5fr .1fr .1fr .1fr;
-  gap: 3px;
+  grid-template-columns: 25px 6fr 1fr 4.5fr 4.5fr;
+  gap: 2px;
   margin-bottom: 2px;
 }
 
