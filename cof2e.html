@@ -5979,7 +5979,7 @@ function insertRolls(text, options = {}) {
 /**
  * On adding/removing/reordering attacks, renumber them
  */
-on("change:repeating_armes:arme-nom change:_reporder:armes remove:repeating_armes", function() {
+on("change:repeating_armes:arme-nom remove:repeating_armes", function() {
   getSectionIDsOrdered("repeating_armes", function (rowIds) {
     const attacks = rowIds.map(id => `repeating_armes_${id}_arme-nom`);
     getAttrs(attacks, function (values) {
