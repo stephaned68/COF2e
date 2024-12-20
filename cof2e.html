@@ -958,11 +958,22 @@
                 &nbsp;<span class="align-self-center">+</span>&nbsp;
                 <select class="select-md" name="attr_arme-bonus" title="@{arme-bonus} Bonus aux dommages">
                   <option value="0">-</option>
-                  <option value="@{agi}">AGI</option>
-                  <option value="@{for}" selected>FOR</option>
-                  <option value="@{per}">PER</option>
-                  <option value="@{int}">INT</option>
-                  <option value="@{cha}">CHA</option>
+                  <optgroup label="Base">
+                    <option class="optgroup" value="" disabled>&nbsp;Base</option>
+                    <option value="@{agi}">AGI</option>
+                    <option value="@{for}" selected>FOR</option>
+                    <option value="@{per}">PER</option>
+                    <option value="@{int}">INT</option>
+                    <option value="@{cha}">CHA</option>
+                  </optgroup>
+                  <optgroup label="Test">
+                    <option class="optgroup" value="" disabled>&nbsp;Test</option>
+                    <option value="@{agi_test}">AGI (t)</option>
+                    <option value="@{for_test}">FOR (t)</option>
+                    <option value="@{per_test}">PER (t)</option>
+                    <option value="@{int_test}">INT (t)</option>
+                    <option value="@{cha_test}">CHA (t)</option>
+                  </optgroup>
                 </select>
                 &nbsp;<span class="align-self-center">+</span>&nbsp;
                 <input type="number" name="attr_arme-dmdiv" title="@{arme-dmdiv} Bonus DM divers" value="0">
@@ -973,11 +984,11 @@
                 <input type="hidden" name="attr_arme-portees" value="">
               </div>
               <div class="d-flex d-flex-middle bordered">
-                <input type="text" name="attr_arme-special" title="@{arme-special}" placeholder="Effet, capacités spéciales..." value="">
+                <input type="text" name="attr_arme-special" title="@{arme-special}" placeholder="Effet spécial..." value="">
+                <button type="action" class="flat-btn img-btn float-right" name="act_armeopt-btn">
+                  <span class="img-btn">y</span>
+                </button>
               </div>
-              <!-- <button type="action" class="flat-btn img-btn" name="act_armeopt-btn">
-                <span class="img-btn">y</span>
-              </button> -->
 
             </div>
 
@@ -986,6 +997,7 @@
               <div class="weapon-option">
                 <div></div>
                 <div class="bordered">
+                  <input type="text" name="attr_arme-atkmods" placeholder="Modificateurs d'attaque" title="@{atkmods} Modificateurs séparés par des virgules&#10; auto: réussite automatique&#10; choc: peut faire des attaques non léthales sans malus&#10; explodeMax: dés de dégâts explosifs&#10; pasDeDmg: l'attaque ne fait pas de DM&#10; poudre: arme à poudre&#10; reroll1: relance les 1 sur les dés de DM&#10; tempDmg: fait toujours des attaques non léthales" value="">
                 </div>
                 <div class="bordered">
                 </div>
@@ -3831,6 +3843,15 @@
   
             <div class="sheet-col">
   
+              <ul>
+                <li>
+                  Renuméroter les attaques&nbsp;
+                  <button type="action" class="flat-btn img-btn" name="act_renum_atk-btn" title="Renuméroter les attaques">
+                    <span class="img-btn">x</span>
+                  </button>
+                </li>
+              </ul>
+
             </div>
   
             <div class="sheet-col">
@@ -5983,25 +6004,31 @@ function insertRolls(text, options = {}) {
 /**
  * Number attacks
  */
-on("change:repeating_armes:arme-nom", function() {
+on("change:repeating_armes:arme-nom clicked:renum_atk-btn", function(eventInfo) {
+  const renumber = (eventInfo.triggerName === "clicked:renum_atk-btn");
   getSectionIDsOrdered("repeating_armes", function (rowIds) {
     const labels = rowIds.map(id => `repeating_armes_${id}_arme-label`);
     getAttrs([ "max_attack_label", ...labels ], function (values) {
       const maxLabel = intval(values.max_attack_label);
       delete values.max_attack_label;
-      let numLabel = maxLabel;
+      let numLabel = renumber ? 0 : maxLabel;
       const updates = new Map();
       Object.keys(values).forEach(label => {
-        if (intval(values[label]) === 0) {
-          numLabel++;
-          updates.set(label, numLabel);
-        }
+        if (renumber || intval(values[label]) === 0)
+          updates.set(label, ++numLabel);
       });
-      if (numLabel > maxLabel)
+      if (renumber || numLabel > maxLabel)
         updates.set("max_attack_label", numLabel);
       if (updates.size > 0)
         setAttrs(Object.fromEntries(updates));
     });
+  });
+});
+
+on("clicked:repeating_armes:armeopt-btn", function() {
+  getAttrs(["repeating_armes_armeopt"], function(values) {
+    const option = 1 - intval(values.repeating_armes_armeopt);
+    setAttrs({ repeating_armes_armeopt: option });
   });
 });
 
@@ -6021,7 +6048,8 @@ on("clicked:repeating_armes:attack-btn", function() {
     "bonus",
     "dmdiv",
     "portee",
-    "special"
+    "special",
+    "atkmods"
   ];
   const sitModAttrs = [
     "couvert",
@@ -6064,6 +6092,8 @@ on("clicked:repeating_armes:attack-btn", function() {
     const range = (portee !== "") ? ` (${portee})` : "";
     const crit = intval(values[section + "crit"], 20);
     const isRanged = (atk === "atktir" && portee !== "");
+    const modifiers = strval(values[section + "atkmods"]).split(",").map(m => m.toLowerCase());
+    console.log(modifiers)
 
     // 2 mains & bouclier 
     const twoHanded = boolval(values[section + "2m"]);
@@ -6124,13 +6154,21 @@ on("clicked:repeating_armes:attack-btn", function() {
       const [ dm1m, dm2m ] = dm.split("/");
       dm = shieldUsed ? dm1m : `?{Maniée à|Une main,${dm1m}|Deux mains,${dm2m}}`;
     }
+    
     const dmtype = strval(values[section + "dmtype"]);
     const dmdesc = [ dmtype, ...dmextra ].join(" ").trim();
     const dmbonus = strval(values[section + "bonus"]);
     const dmdiv = strval(values[section + "dmdiv"]);
+
+    let dmOpt = "";
+    if (modifiers.includes("explodemax"))
+      dmOpt += "!";
+    if (modifiers.includes("reroll1"))
+      dmOpt += "r";
+
     let dmroll = "";
     if (dm !== "" )
-      dmroll = `[[${dm}]][DM] + ${dmbonus}[Bonus] + ${dmdiv}[Divers]${tacticDM}`;
+      dmroll = `[[${dm}${dmOpt}]][DM] + ${dmbonus}[Bonus] + ${dmdiv}[Divers]${tacticDM}`;
     if (dmroll !== "" && tactics === 1)
       dmroll = `floor((${dmroll})/2)`;
     if (dmroll !== "")
