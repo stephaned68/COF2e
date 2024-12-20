@@ -51,6 +51,9 @@
   <input type="hidden" name="attr_script_title" value="">
   <input type="hidden" name="attr_cofantasy" value="">
 
+  <!-- Repeating labels -->
+  <input type="hidden" name="attr_max_attack_label" value="">
+
   <!-- Entête : Logo, Avatar, Identité -->
   <div class="heading">
 
@@ -905,6 +908,7 @@
                 </button>
               </div>
               <div class="d-flex d-flex-middle bordered">
+                <input type="hidden" name="attr_arme-label" value="0">
                 <span class="align-self-center" name="attr_arme-label"></span>&nbsp;
                 <input type="text" name="attr_arme-nom" title="@{arme-nom}" placeholder="Arme/attaque" value="">
               </div>
@@ -5977,19 +5981,26 @@ function insertRolls(text, options = {}) {
 }
 
 /**
- * On adding/removing/reordering attacks, renumber them
+ * Number attacks
  */
-on("change:repeating_armes:arme-nom remove:repeating_armes", function() {
+on("change:repeating_armes:arme-nom", function() {
   getSectionIDsOrdered("repeating_armes", function (rowIds) {
-    const attacks = rowIds.map(id => `repeating_armes_${id}_arme-nom`);
-    getAttrs(attacks, function (values) {
-      let label = 0
+    const labels = rowIds.map(id => `repeating_armes_${id}_arme-label`);
+    getAttrs([ "max_attack_label", ...labels ], function (values) {
+      const maxLabel = intval(values.max_attack_label);
+      delete values.max_attack_label;
+      let numLabel = maxLabel;
       const updates = new Map();
-      Object.keys(values).forEach(attack => {
-        const [ , , id ] = attack.split("_");
-        updates.set(`repeating_armes_${id}_arme-label`, ++label);
+      Object.keys(values).forEach(label => {
+        if (intval(values[label]) === 0) {
+          numLabel++;
+          updates.set(label, numLabel);
+        }
       });
-      setAttrs(Object.fromEntries(updates));
+      if (numLabel > maxLabel)
+        updates.set("max_attack_label", numLabel);
+      if (updates.size > 0)
+        setAttrs(Object.fromEntries(updates));
     });
   });
 });
