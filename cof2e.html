@@ -997,9 +997,7 @@
               <div class="weapon-option">
                 <div></div>
                 <div class="bordered">
-                  <input type="text" name="attr_arme-atkmods" placeholder="Modificateurs d'attaque" title="@{atkmods} Modificateurs séparés par des virgules&#10; auto: réussite automatique&#10; choc: peut faire des attaques non léthales sans malus&#10; explodeMax: dés de dégâts explosifs&#10; pasDeDmg: l'attaque ne fait pas de DM&#10; poudre: arme à poudre&#10; reroll1: relance les 1 sur les dés de DM&#10; tempDmg: fait toujours des attaques non léthales" value="">
-                </div>
-                <div class="bordered">
+                  <input type="text" name="attr_arme-atkmods" placeholder="Modificateurs d'attaque" title="@{atkmods} Modificateurs séparés par des virgules&#10; deBonus: avec dé bonus&#10; deMalus: avec dé malus&#10; auto: réussite automatique&#10; choc: peut faire des attaques non léthales sans malus&#10; explodeMax: dés de dégâts explosifs&#10; pasDeDmg: l'attaque ne fait pas de DM&#10; poudre: arme à poudre&#10; reroll1: relance les 1 sur les dés de DM&#10; tempDmg: fait toujours des attaques non léthales" value="">
                 </div>
                 <div class="bordered">
                 </div>
@@ -6139,8 +6137,31 @@ on("clicked:repeating_armes:attack-btn", function() {
 
     // Determine normal or malus die roll
     let roll = weakened === 1 ? "2d20kl1" : "1d20";
+    let bRoll = true;
     if (isRanged && modContact === 1)
       roll = "2d20kl1";
+    if (modifiers.includes("debonus") && !modifiers.includes("demalus")) {
+      switch(roll) {
+        case "2d20kl1":
+          roll = "1d20";
+          bRoll = false;
+          break;
+        case "1d20":
+          roll = "2d20kh1";
+          break;
+      }
+    }
+    if (modifiers.includes("demalus") && !modifiers.includes("debonus")) {
+      switch(roll) {
+        case "1d20":
+          roll = "2d20kl1";
+          break;
+        case "2d20kh1":
+          roll = "1d20";
+          bRoll = false;
+          break;
+      }
+    }
 
     // Attack roll
     let attack = "";
@@ -6217,7 +6238,7 @@ on("clicked:repeating_armes:attack-btn", function() {
       dmcrit,
       text: special
     };
-    if (roll === "1d20")
+    if (roll === "1d20" && bRoll)
       atkProps.broll = attack;
     const chatMsg = cof2RollTemplate(atkProps);
     sendChatMsg(chatMsg);
