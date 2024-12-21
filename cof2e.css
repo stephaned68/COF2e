@@ -537,7 +537,7 @@ div.change-view {
 
 .pc-attacks .weapon-option {
   display: grid;
-  grid-template-columns: 25px 6fr 1fr 4.5fr 4.5fr;
+  grid-template-columns: 25px 6fr 5fr 5fr;
   gap: 2px;
   margin-bottom: 2px;
 }
