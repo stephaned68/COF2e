@@ -6136,8 +6136,8 @@ on("clicked:repeating_armes:attack-btn", function() {
     }
 
     // Determine normal or malus die roll
-    let roll = weakened === 1 ? "2d20kl1" : "1d20";
-    let bRoll = true;
+    let roll = (weakened === 1) ? "2d20kl1" : "1d20";
+    let bRoll = (weakened !== 1);
     if (isRanged && modContact === 1)
       roll = "2d20kl1";
     if (modifiers.includes("debonus") && !modifiers.includes("demalus")) {
