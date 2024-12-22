@@ -908,7 +908,7 @@
                 </button>
               </div>
               <div class="d-flex d-flex-middle bordered">
-                <input type="hidden" name="attr_arme-label" value="0">
+                <input type="hidden" name="attr_arme-label" value="">
                 <span class="align-self-center" name="attr_arme-label"></span>&nbsp;
                 <input type="text" name="attr_arme-nom" title="@{arme-nom}" placeholder="Arme/attaque" value="">
               </div>
@@ -4303,6 +4303,20 @@
     {{/broll}}
   </div>
   {{/roll}}
+  {{#powder}}
+  {{#rollWasFumble() roll}}
+  <div class="sheet-rt sheet-rt-text">
+    <span class="sheet-rt-fumble">{{powder}}</span>
+  </div>
+  {{/rollWasFumble() roll}}
+  {{#broll}}
+  {{#rollWasFumble() broll}}
+  <div class="sheet-rt sheet-rt-text">
+    <span class="sheet-rt-fumble">{{powder}} (si dé malus)</span>
+  </div>
+  {{/rollWasFumble() broll}}
+  {{/broll}}
+  {{/powder}}
   {{#dm}}
   <div class="sheet-rt sheet-rt-2cols">
     <div>Dommages</div>
@@ -5106,6 +5120,15 @@ function dieRoll(type, weakened = 0) {
       break;
   }
   return roll;
+}
+
+/**
+ * Detect MOD script
+ * @param {object} values - getAttrs() object values
+ * @returns {boolean}
+ */
+function hasMODScript(values) {
+  return (strval(values.scriptVersion).toLowerCase() === "true");
 }
 
 /**
@@ -6000,7 +6023,7 @@ function insertRolls(text, options = {}) {
 }
 
 /**
- * Number attacks
+ * Numbering attacks
  */
 on("change:repeating_armes:arme-nom clicked:renum_atk-btn", function(eventInfo) {
   const renumber = (eventInfo.triggerName === "clicked:renum_atk-btn");
@@ -6023,6 +6046,9 @@ on("change:repeating_armes:arme-nom clicked:renum_atk-btn", function(eventInfo) 
   });
 });
 
+/**
+ * Display attack options row
+ */
 on("clicked:repeating_armes:armeopt-btn", function() {
   getAttrs(["repeating_armes_armeopt"], function(values) {
     const option = 1 - intval(values.repeating_armes_armeopt);
@@ -6090,8 +6116,7 @@ on("clicked:repeating_armes:attack-btn", function() {
     const range = (portee !== "") ? ` (${portee})` : "";
     const crit = intval(values[section + "crit"], 20);
     const isRanged = (atk === "atktir" && portee !== "");
-    const modifiers = strval(values[section + "atkmods"]).split(",").map(m => m.toLowerCase());
-    console.log(modifiers)
+    const modifiers = strval(values[section + "atkmods"]).split(",").map(mod => mod.trim().toLowerCase());
 
     // 2 mains & bouclier 
     const twoHanded = boolval(values[section + "2m"]);
@@ -6162,11 +6187,19 @@ on("clicked:repeating_armes:attack-btn", function() {
           break;
       }
     }
+    
+    let fumble = "1";
+
+    let powder = "";
+    if (modifiers.includes("poudre")) {
+      powder = "La poudre explose et inflige [[1@{devol}]] DM";
+      fumble = "<2";
+    }
 
     // Attack roll
     let attack = "";
     if (atk !== "0")
-      attack = `[[${roll}cs>${crit}cf1[Dé] + @{${atk}}[Bonus] + ${atkdiv}[Divers]${tacticBonus}${modSit} ]]`;
+      attack = `[[${roll}cs>${crit}cf${fumble}[Dé] + @{${atk}}[Bonus] + ${atkdiv}[Divers]${tacticBonus}${modSit} ]]`;
     
     // Damage roll
     let [ dm, ...dmextra ] = strval(values[section + "dm"]).split(" ");
@@ -6236,6 +6269,7 @@ on("clicked:repeating_armes:attack-btn", function() {
       dmdesc,
       critdiff: `[[${useCritDiff}]]`,
       dmcrit,
+      powder,
       text: special
     };
     if (roll === "1d20" && bRoll)
@@ -6244,12 +6278,6 @@ on("clicked:repeating_armes:attack-btn", function() {
     sendChatMsg(chatMsg);
   })
 });
-
-/*on("clicked:repeating_armes:armeopt-btn", function() {
-  getAttrs([ "repeating_armes_armeopt" ], function (values) {
-
-  });
-});*/
 
 /**
  * Display ability text with alert on usage
@@ -7857,14 +7885,12 @@ on("sheet:opened", function() {
       rebuildBuffValues();
     }
 
-    const hasMODScript = (strval(values.scriptVersion).toLowerCase() === "true");
-    const scriptVersion = strval(values.scriptVersion_max);
-    if (hasMODScript) {
-      updates.set("script_title", `COFantasy2 v${scriptVersion}`);
+    if (hasMODScript(values)) {
+      updates.set("script_title", `COFantasy2 v${ strval(values.scriptVersion_max) }`);
     } else {
       updates.set("script_title", "Le script MOD COFantasy2 n'est pas installé...");
     }
-    updates.set("script_show", hasMODScript ? "1" : "0");
+    updates.set("script_show", hasMODScript(values) ? "1" : "0");
 
     if (values.version !== values.verfdp)
       updates.set("version", values.verfdp);
