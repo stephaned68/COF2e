@@ -72,7 +72,9 @@ Cette zone de texte libre permet d'indiquer la ou les réductions et résistance
 
 # Armes & attaques
 
-Cette section permet d'indiquer les armes et attaques à la disposition du PJ. Pour chacune, vous indiquez :
+Cette section permet d'indiquer les armes et attaques à la disposition du PJ.
+
+Pour chacune, vous indiquez :
 - Le nom de l'attaque,
 - Le type d'attaque (contact, distance ou magique),
 - Un éventuel bonus pour toucher propre à cette attaque,
@@ -84,6 +86,14 @@ Cette section permet d'indiquer les armes et attaques à la disposition du PJ. P
 - Un bonus optionnel de DM
 - La portée pour une arme à distance
 - Un effet spécial ou une description affichée dans le chat Roll20.
+
+Des informations optionnelles peuvent être indiquées :
+- Modificateurs d'attaque : vous pouvez spécifier une série de mentions spéciales permettant de régler les différents paramètres de l'attaque. Séparez les différentes mentions par des virgules.
+  - <kbd>deBonus</kbd> : l'attaque est faite avec un dé bonus, sauf si le personnage est _Affaibli_
+  - <kbd>deMalus</kbd> : l'attaque est faite avec un dé malus
+  - <kbd>explodeMax</kbd> : le dé de DM est _explosif_ (relance d'un nouveau dé de DM en cas de résultat maximum)
+  - <kbd>reroll1</kbd> : le dé de DM est relancé jusqu'à ce que son résultat soit supérieur à 1
+  - <kbd>poudre</kbd> : l'arme explose et inflige 1d4° DM à l'utilisateur s'il ne maîtrise pas les armes à poudre
 
 Un clic sur le bouton d20 permet de lancer le jet d'attaque et de DM dans le chat en tenant compte des divers paramètres. Deux jets distincts d'attaque sont effectués, sauf si le PJ est _Affaibli_.
 
