@@ -8,6 +8,8 @@
 
 [Onglet Configuration]({{ site.baseurl }}/pc-config)
 
+[Onglet Script]({{ site.baseurl }}/pc-script)
+
 [Informations Techniques]({{ site.baseurl }}/pc-tech)
 
 ---
