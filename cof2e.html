@@ -997,9 +997,6 @@
               <div class="weapon-option">
                 <div></div>
                 <div class="bordered">
-                  <input type="text" name="attr_arme-atkmods" placeholder="Modificateurs d'attaque" title="@{arme-atkmods} Modificateurs séparés par des virgules&#10; deBonus: avec dé bonus&#10; deMalus: avec dé malus&#10; auto: réussite automatique&#10; choc: peut faire des attaques non léthales sans malus&#10; explodeMax: dés de dégâts explosifs&#10; pasDeDmg: l'attaque ne fait pas de DM&#10; poudre: arme à poudre&#10; reroll1: relance les 1 sur les dés de DM&#10; tempDmg: fait toujours des attaques non léthales" value="">
-                </div>
-                <div class="bordered">
                   <select name="attr_arme-atktype" class="select-lg" title="@{arme-atktype} Type d'arme/attaque">
                     <option value="">Type d'attaque...</option>
                     <option value="naturel">Arme naturelle</option>
@@ -1009,8 +1006,11 @@
                   </select>
                 </div>
                 <div class="bordered">
+                  <input type="text" name="attr_arme-atkmods" placeholder="Modificateurs d'attaque" title="@{arme-atkmods} Modificateurs séparés par des virgules&#10; deBonus: avec dé bonus&#10; deMalus: avec dé malus&#10; auto: réussite automatique&#10; choc: peut faire des attaques non léthales sans malus&#10; explodeMax: dés de dégâts explosifs&#10; pasDeDmg: l'attaque ne fait pas de DM&#10; poudre: arme à poudre&#10; reroll1: relance les 1 sur les dés de DM&#10; tempDmg: fait toujours des attaques non léthales" value="">
                 </div>
-                <div></div>
+                <div class="bordered">
+                  <input type="text" name="attr_arme-options" placeholder="Options d'attaque avec argument" title="@{arme-options} Options d'attaque">
+                </div>
               </div>
             </div>
 
@@ -3885,7 +3885,7 @@
               <li>
                 <details>
                   <summary>
-                    <strong>Version 1.0.0</strong> (2024-12-15)
+                    <strong>Version 1.0.0</strong> (2024-12-24)
                   </summary>
                   <ul>
                     <li>Première version de la fiche</li>
@@ -6080,7 +6080,7 @@ on("clicked:repeating_armes:attack-btn", function() {
     "dmdiv",
     "portee",
     "special",
-    "atkmods"
+    "atkmods",
   ];
   const sitModAttrs = [
     "couvert",
