@@ -35,7 +35,7 @@ ou héroïque, H = supérieure et héroïque)
 - <kbd>dr_max</kbd> : nombre maximum de dés de récupération
 - <kbd>temp_dm</kbd> : dommages temporaires
 
-## Mana, Dé écolutif, Chance
+## Mana, Dé évolutif, Chance
 
 - <kbd>pm</kbd> : PM courants
 - <kbd>pm_buff</kbd> : buffs au maximum de PM

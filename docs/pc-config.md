@@ -8,7 +8,7 @@ Les préférence et réglages possibles de la fiche sont configurés dans cet on
 - Afficher voies 7-8-9 : Cette option permet d'afficher les voies supplémentaires (voies de prestige)
 - Afficher compétences : Cette option permet d'activer ou de désactiver le sous-onglet _Compétences_ de l'onglet _Capacités_.
 
-## Règles optionnelles :
+## Règles optionnelles
 
 - Initiative variable : Un jet de 1d6 sans limite est ajouté au score d'initiative en début de combat.
 - Initiative + AGI : Le score d'Initiative est calculé en ajoutant l'AGI à la somme 10 + PER.

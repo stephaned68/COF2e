@@ -9,3 +9,7 @@ L'option _Renuméroter les attaques_ permet que les attaques du personnage soien
 ## Prédicats
 
 Un champs de texte libre permet de saisir la liste des prédicats pour le personnage.
+
+---
+
+[Retour]({{ site.baseurl }}/pc-main)
