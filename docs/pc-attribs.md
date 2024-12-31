@@ -87,19 +87,28 @@ Pour chacune, vous indiquez :
 - La portée pour une arme à distance
 - Un effet spécial ou une description affichée dans le chat Roll20.
 
-Des informations optionnelles peuvent être indiquées :
-- Modificateurs d'attaque : vous pouvez spécifier une série de mentions spéciales permettant de régler les différents paramètres de l'attaque. Séparez les différentes mentions par des virgules.
+Des paramètres optionnels peuvent être ajoutés :
+- Type d'attaque : vous pouvez indiquer le type de cette attaque en choisissant parmi
+  - Arme naturelle 
+  - Sortilège
+  - Arme de jet
+  
+  Ce paramètre est utilisé par le script COFantasy2
+
+- Modificateurs d'attaque : vous pouvez spécifier une série de mentions spéciales permettant de régler le comportement du jet d'attaque. Séparez les différentes mentions par des virgules.
   - <kbd>deBonus</kbd> : l'attaque est faite avec un dé bonus, sauf si le personnage est _Affaibli_
   - <kbd>deMalus</kbd> : l'attaque est faite avec un dé malus
   - <kbd>explodeMax</kbd> : le dé de DM est _explosif_ (relance d'un nouveau dé de DM en cas de résultat maximum)
   - <kbd>reroll1</kbd> : le dé de DM est relancé jusqu'à ce que son résultat soit supérieur à 1
   - <kbd>poudre</kbd> : l'arme explose et inflige 1d4° DM à l'utilisateur s'il ne maîtrise pas les armes à poudre
 
+- Options d'attaques avec arguments : ce paramètre est utilisé par le script COFantasy2
+
 Un clic sur le bouton d20 permet de lancer le jet d'attaque et de DM dans le chat en tenant compte des divers paramètres. Deux jets distincts d'attaque sont effectués, sauf si le PJ est _Affaibli_.
 
 Si l'arme est maniée à deux mains et que le bouclier est équipé, le jet d'attaque n'est pas effectué, un message d'avertissement s'affiche à la place.
 
-Si l'arme peut être maniée à une main ou à deux mains, les dés de DM peuvent être indiqués sous la forme <kbd>1d8/1d12</kbd>. Un popup Roll20 s'affiche pour demander comment l'arme est maniée, à moins que le bouclier soit équipé, auquel cas ce sont les DM à une main qui sont pris en compte.
+Si l'arme peut être maniée à une main ou à deux mains, les dés de DM peuvent être indiqués sous la forme <kbd>DM 1m/DM 2m</kbd> (_Ex. : <kbd>1d8/1d12</kbd>_). Un popup Roll20 s'affiche pour demander comment l'arme est maniée, à moins que le bouclier soit équipé, auquel cas ce sont les DM à une main qui sont pris en compte.
 
 Le texte d'effet spécial est traité par la fiche pour substituer les jets en ligne comme décrit pour la description des [capacités]({{ site.baseurl }}/pc-abilities).
 

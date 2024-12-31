@@ -7,6 +7,7 @@ Les noms d'attributs Roll20 utilisables dans des macros s'affichent dans des bul
 - <kbd>agi</kbd>, <kbd>con</kbd>, <kbd>for</kbd>, <kbd>per</kbd>, <kbd>cha</kbd>, <kbd>int</kbd>, <kbd>vol</kbd> : scores de caractéristiques de base
 - <kbd>xxx_sup</kbd> : type de jet (N = normal, S = supérieure 
 ou héroïque, H = supérieure et héroïque)
+- <kbd>xxx_dsup</kbd> : expression de dé (selon le type de jet et les états préjudiciables)
 - <kbd>xxx_buff</kbd> : buffs/debuffs aux caractéristiques
 - <kbd>xxx_test</kbd> : scores de caractéristiques avec buffs
 

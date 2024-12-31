@@ -39,21 +39,17 @@ Le joueur peut sélectionner une couleur spécifique pour les messages de chat d
 
 ## Premiers rangs
 
-Pour chaque voie du PJ, vous pouvez indiquer la valeur du premier rang (1 pour les voies de peuples et de profil, 3 ou 4 pour les voies de prestige).
+Pour chaque voie du PJ, vous pouvez indiquer la valeur du premier rang (1 pour les voies de peuple et de profil, 3 ou 4 pour les voies de prestige).
 
-# Import de profil
+# Import des capacités
 
-Cette section permet d'importer les capacités et l'équipement par défaut d'un profil.
+Cette section permet d'importer les capacités d'une voie de profil ou de prestige.
 
-Rendez-vous sur l'application [Export Chronuqes Mobiles](https://comob-data.rpgapps.net/) et sélectionnez l'univers _Fantasy 2E_. Choisissez le profil souhaité, complétez la première voie par une voie de peuple, et cliquez sur le bouton <kbd>Copier</kbd>.
+Collez le texte dans le champ prévu à cet effet, saisissez le no de la voie correspondante et cliquez sur le bouton <kbd>Importer</kbd>. 
 
-Collez le texte dans le champ prévu à cet effet et cliquez sur le bouton <kbd>Importer</kbd>. 
-
-La fiche de personnage est automatiquement remplie :
-- Les voies et capacités **écrasent** toutes données précédemment saisies.
-- L'équipement de base est ajouté dans l'inventaire. Celui-ci est d'abord effacé si vous cochez la case correspondante.
-
-Il est ensuite possible de cocher les cases <kbd>A une attaque</kbd> des armes insérées dans l'équipement pour générer automatique les lignes d'attaques dans l'onglet _Attributs_ de la fiche.
+- La voie choisie est remplie avec le texte copié, toutes les données précédemment saisies sont **écrasées** !
+- La description de chaque capacité est analysée pour trouver des références à un nombre d'utilisations limité (ex : _"une fois par combat, ..."_)
+- Si le nom d'une capacité comporte un astérisque <kbd>*</kbd>, celle-ci est considérée comme un sort
 
 ---
 
