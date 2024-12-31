@@ -258,6 +258,14 @@ div.path div.block-title {
   float: right;
 }
 
+.m2 {
+  margin: 2px;
+}
+
+.p2 {
+  padding: 2px;
+}
+
 /* Identity layout */
 
 .cofmain .heading {
@@ -301,7 +309,8 @@ div.path div.block-title {
 .identity-npc,
 .cof-pc,
 .cof-npc,
-.weapon-opt {
+.weapon-opt,
+.weapon-thrown {
   display: none;
 }
 
@@ -309,7 +318,8 @@ div.path div.block-title {
 .cof-head-toggle[value="npc"] ~ div.identity-npc,
 .cof-type-toggle[value="pc"] ~ div.cof-pc,
 .cof-type-toggle[value="npc"] ~ div.cof-npc,
-.cof-wopt-toggle[value="1"] ~ div.weapon-opt {
+.cof-wopt-toggle[value="1"] ~ div.weapon-opt,
+.cof-thrown-toggle[value="1"] ~ div.weapon-thrown {
     display: block;
 }
 
@@ -538,6 +548,13 @@ div.change-view {
 .pc-attacks .weapon-option {
   display: grid;
   grid-template-columns: 25px 4fr 6fr 6fr;
+  gap: 2px;
+  margin-bottom: 2px;
+}
+
+.pc-attacks .weapon-throw {
+  display: grid;
+  grid-template-columns: 25px 20% 20% 20%;
   gap: 2px;
   margin-bottom: 2px;
 }

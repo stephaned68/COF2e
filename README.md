@@ -15,9 +15,15 @@ Consultez la [documentation](https://stephaned68.github.io/COF2e/)
 
 ## Version courante
 
-v1.0.0 [Screenshot](cof2e.png)
+v1.1.0 [Screenshot](cof2e.png)
 
 ## Notes de version
+
+### Version 1.1.0 (2024-12-31)
+
+- Ajout gestion des compagnons (dépendances d'attributs)
+- Ajout options d'attaques pour script COFantasy2
+- Import de profil JSON remplacé par import de voie PDF
 
 ### Version 1.0.0 (2024-12-24)
 
