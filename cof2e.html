@@ -6686,7 +6686,7 @@ on("clicked:repeating_armes:attack-btn", function() {
     
     // Damage roll
     let [ dm, ...dmextra ] = strval(values[section + "dm"]).split(" ");
-    dm = dm.replace("d4°", "@{devol}");
+    dm = dm.replace("dE", "d4°").replace("d4°", "@{devol}");
     if (dm.includes("/")) {
       const [ dm1m, dm2m ] = dm.split("/");
       dm = shieldUsed ? dm1m : `?{Maniée à|Une main,${dm1m}|Deux mains,${dm2m}}`;
