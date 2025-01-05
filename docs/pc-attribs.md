@@ -64,7 +64,9 @@ Cette section présente le calcul de la DEF du personnage.
 
 Dans cette section, on trouve les points de chance courants et maximum. Les PC maximums affichés tiennent compte d'éventuels buffs.
 
-Si on clique sur <kbd>PC</kbd>, la fiche récupère les derniers jets de d20 effectués, et les ré-affiche avec le bonus de +10 accordé par la dépense d'un point de chance.
+Si on clique sur l'icone de d20, la fiche récupère les derniers jets de d20 effectués, et les ré-affiche avec le bonus de +10 accordé par la dépense d'un point de chance.
+
+Si on clique sur l'icone de d6, la fiche effectue un test de chance (cf page 206).
 
 # Réduction des dommages
 

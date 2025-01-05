@@ -5,8 +5,27 @@ Les préférence et réglages possibles de la fiche sont configurés dans cet on
   - Public : Tous les joueurs voient les jets du PJ dans le chat.
   - Chuchotés au MJ : Seul le joueur et le MJ voient les jets (uniquement le MJ pour une fiche de PNJ non partagées aux joueurs).
   - Avec token : Le token par défaut du personnage apparaît dans tous les messages envoyés dans le chat par la fiche.
+- Calcul automatique PV max. : Cette option permet que la fiche calcule automatiquement les PV maximums (cf. ci-dessous)
 - Afficher voies 7-8-9 : Cette option permet d'afficher les voies supplémentaires (voies de prestige)
 - Afficher compétences : Cette option permet d'activer ou de désactiver le sous-onglet _Compétences_ de l'onglet _Capacités_.
+
+### Calcul automatique des PV maximums
+
+Pour un fonctionnement correct de cette option, il est nécessaire de respecter les contraintes suivantes :
+- La voie n°1 est la voie de peuple ou du mage
+- Les voies n°2 et 3 sont les voies où sont choisies les deux capacités au niveau 1
+- La capacité supplémentaire prise par les profils de mages au niveau 1 doit avoir la propriété <kbd>initial</kbd>
+- Les PV de la voie (qui sont ceux de la famille de profil auquel appartient la voie) doivent être spécifiés. Ceux-ci sont initialisés automatiquement si le nom de la voie est reconnu par la fiche.
+
+Les PV maximums sont calculés en faisant la somme des éléments suivants :
+- [niveau] x [CON]
+- pour toutes les capacités possédées (cochées) qui n'ont pas la propriété <kbd>doublon</kbd> (cf capacité en doublon, p. 171)
+  - Si rang 1 de la voie 1 : 0 PV
+  - Sinon si rang 1 de voie 2 ou 3 : [PV de voie]
+  - Sinon si rang 2 de voie 1,2 ou 3 et propriété <kbd>initial</kbd> : 0 PV
+  - Sinon si rang 1 ou 2 : [PV de voie]/2
+  - Sinon (rang >2) : [PV de voie]
+
 
 ## Règles optionnelles
 

@@ -75,6 +75,8 @@ ou héroïque, H = supérieure et héroïque)
 ## Capacités
 
 - <kbd>voie1nom</kbd> : nom de la voie n°1
+- <kbd>voie1pv</kbd> : nombre de PV de la famille de profil de la voie n°1
+- <kbd>v1br</kbd> : rang de base de la voie n°1 (*)
 - <kbd>rang_voie1</kbd> : rang du personnage dans la voie n°1
 - <kbd>v1r1</kbd> : 1 si le rang 1 de la voie n°1 possédée
 - <kbd>v1r1_spell</kbd> 1 si le rang 1 de la voie n°1 est un sort
@@ -83,7 +85,8 @@ ou héroïque, H = supérieure et héroïque)
 - <kbd>v1r1_use_max</kbd> : nombre d'utilisations maximum de la capacité s'il y a lieu
 - <kbd>v1r1_freq</kbd> : fréquence de renouvellement des utilisations de la capacité s'il y a lieu
 - <kbd>v1r1_use</kbd> : nombre d'utilisations de la capacité
-- <kbd>v1br</kbd> : rang de base de la voie n°1 (*)
+- <kbd>v1r1_param</kbd> : paramètre optionnel de la capacité
+- <kbd>v1r1_props</kbd> : propriétés optionnelles pour la capacité
 
 Ces attributs existent pour toutes les voies (1 à 9) et tous les rangs (1 à 5).
 

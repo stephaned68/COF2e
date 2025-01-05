@@ -11,12 +11,20 @@ Cet onglet de la fiche de personnage présente deux vues (_Affichage_ et _Editio
 
 Pour chaque voie, vous indiquez :
 - Le nom de la voie,
+- Le nombre de PV correspondant à la famille de profil pour cette voie (ce nombre est normalement inséré automatiquement si le nom de la voie est reconnue)
 - Pour chacun des 5 rangs :
   - Le nom de la capacité,
   - S'il s'agit d'un sort (pour le calcul des PM maximum du PJ),
   - La description de la capacité,
   - Le nombre d'utilisation maximum s'il y a lieu,
-  - La fréquence à laquelle ce nombre d'utilisation se renouvelle.
+  - La fréquence à laquelle ce nombre d'utilisation se renouvelle,
+  - Un paramètre optionnel, 
+  
+    _Exemples d'utilisation :_
+    - _Nom de la fiche de PNJ du compagnon (rôdeur, chevalier, etc...)_
+    - _Précision sur la capacité (type d'arme pour la voie du maître d'armes)_
+
+  - Un ensemble de propriétés spéciales, principalement utilisées par le script MOD COFantasy2
 
 ## Mode Affichage
 
