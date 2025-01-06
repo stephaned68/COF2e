@@ -17,17 +17,18 @@ Une section dépliante permet d'ajouter plus de détail :
 
 Pour chaque pièce d'équipement, vous pouvez indiquer une liste de propriétés qui peuvent modifier d'autres sections de la fiche.
 
-Cette liste de propriétés se présente sous la forme d'une suite d'élements séparés les uns des autres par des virgules. Chaque élément est lui-même constitué d'un code de propriété et d'une valeur, séparés par <kbd>:</kbd> et un espace.
+Cette liste de propriétés est à indiquer dans le champ de texte, une propriété/valeur par ligne.
 
-<kbd>code: valeur,code: valeur,code: valeur</kbd>
+La syntaxe de cette liste est la même que pour les [prédicats]({{ site.baseurl }}/pc-script).
 
 Les codes et valeurs correspondantes que vous pouvez indiquer sont :
-- <kbd>critique:</kbd> seuil de réussite critique
-- <kbd>dm-1m:</kbd> jet de DM quand l'arme est maniée à une main
-- <kbd>dm-2m:</kbd> jet de  DM quand l'arme est maniée à deux mains
-- <kbd>type-dm:</kbd> type de DM
-- <kbd>bonus-def:</kbd> bonus apporté à la DEF par l'armure
-- <kbd>portee:</kbd> portée de l'arme à distance
+- <kbd>critique</kbd> : seuil de réussite critique
+- <kbd>dm-1m</kbd> : jet de DM quand l'arme est maniée à une main
+- <kbd>dm-2m</kbd> : jet de  DM quand l'arme est maniée à deux mains
+- <kbd>type-dm</kbd> : type de DM
+- <kbd>portee</kbd> : portée de l'arme à distance
+- <kbd>bonus-def</kbd> : bonus apporté à la DEF par l'armure
+- <kbd>agi-max</kbd> : valeur maximum d'AGI pour port de l'armure
 
 ## Equipement lié à une attaque
 

@@ -24,7 +24,9 @@ Pour chaque voie, vous indiquez :
     - _Nom de la fiche de PNJ du compagnon (rôdeur, chevalier, etc...)_
     - _Précision sur la capacité (type d'arme pour la voie du maître d'armes)_
 
-  - Un ensemble de propriétés spéciales, principalement utilisées par le script MOD COFantasy2
+  - Une liste de propriétés spéciales, principalement utilisées par le script MOD COFantasy2.
+  
+    La syntaxe de cette liste est la même que pour les [prédicats]({{ site.baseurl }}/pc-script).
 
 ## Mode Affichage
 
@@ -93,8 +95,8 @@ Avant d'être envoyé dans le chat, les descriptions des capacités sont analys�
 - <kbd>[AGI]</kbd>, <kbd>[CON]</kbd>, <kbd>[FOR]</kbd>, etc... sont remplacés par le score de la caractéristique correspondante.
 - <kbd>[nombre +/- XXX]</kbd>, où <kbd>XXX</kbd> est un nom de caractéristique, sont remplacés par le résultat du calcul.
 - <kbd>[rang n]</kbd>, <kbd>[rang voie n]</kbd> et <kbd>[rang Nom De La Voie]</kbd> sont remplacés par la valeur du rang dans la voie correspondante.
-- <kbd>Nd4°</kbd> ou <kbd>Nd4E</kbd> est remplacé par un jet du nombre <kbd>N</kbd> de dés évolutifs.
-- <kbd>[Nd4° + XXX]</kbd> ou <kbd>[Nd4E + XXX]</kbd> est remplacé par un jet du nombre <kbd>N</kbd> de dés évolutifs auquel le score de la caractéristique <kbd>XXX</kbd> (_AGI_, _CHA_ etc...) est ajouté.
+- <kbd>Nd4°</kbd> ou <kbd>NdE</kbd> est remplacé par un jet du nombre <kbd>N</kbd> de dés évolutifs.
+- <kbd>[Nd4° + XXX]</kbd> ou <kbd>[NdE + XXX]</kbd> est remplacé par un jet du nombre <kbd>N</kbd> de dés évolutifs auquel le score de la caractéristique <kbd>XXX</kbd> (_AGI_, _CHA_ etc...) est ajouté.
 - Les formules de dés sont remplacés par le jet correspondant. Exemple : <kbd>1d10</kbd>, <kbd>2d6+6</kbd>, <kbd>1d8 + 2</kbd>...
 
 Si vous connaissez le langage de macro de Roll20, vous pouvez indiquer ces inline-rolls vous-même dans le texte de la capacité.

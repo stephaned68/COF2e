@@ -10,6 +10,14 @@ L'option _Renuméroter les attaques_ permet que les attaques du personnage soien
 
 Un champs de texte libre permet de saisir la liste des prédicats pour le personnage.
 
+### Syntaxe des prédicats
+
+Chaque ligne de prédicat est constituée d'un code et d'une valeur, séparés par <kbd>:</kbd> et d'un nombre quelconque d'espaces.
+
+La ligne peut ne comporter qu'un code sans <kbd>:</kbd> ni valeur, pour activer une option booléenne.
+
+Les lignes vides ou commençant par <kbd>//</kbd> (pour insérer un texte de commentaire) sont autorisées mais non traitées.
+
 ---
 
 [Retour]({{ site.baseurl }}/pc-main)
