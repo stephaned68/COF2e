@@ -55,6 +55,7 @@ ou héroïque, H = supérieure et héroïque)
 - <kbd>bouclier</kbd> : bonus de bouclier
 - <kbd>bouclier_eqp</kbd> : 0/1 selon que le bouclier soit équipé ou pas
 - <kbd>def_car</kbd> : caractéristique bonus (agi ou con)
+- <kbd>def_car_max</kbd> : bonus de caractéristique maximum (selon armure)
 - <kbd>def_buff</kbd> : buffs à la Défense
 - <kbd>def_action</kbd> : bonus d'action défensive
 - <kbd>def</kbd> : score de Défense
