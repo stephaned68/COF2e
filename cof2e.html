@@ -3,7 +3,7 @@
   <!-- Nouvelle version fiche -->
   <input type="hidden" name="attr_verfdp" value="1.1.01">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.1.0">
+  <input type="hidden" name="attr_version" value="1.1.01">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
 
@@ -1033,7 +1033,7 @@
                   </div>
                   <div class="bordered">
                     Possédés :&nbsp;
-                    <input type="number" class="two-digits" name="attr_jet-possedes" title="@{jet-possedes}" value="0">
+                    <input type="number" class="two-digits" name="attr_jet-dispo_max" title="@{jet-dispo_max}" value="0">
                   </div>
                   <div class="bordered">
                     Taux perte :&nbsp;
@@ -4575,11 +4575,11 @@
                   </div>
                   <div class="bordered">
                     Possédés :&nbsp;
-                    <input type="number" class="two-digits" name="attr_jet-dispo" title="@{jet-dispo}" value="0">
+                    <input type="number" class="two-digits" name="attr_jet-dispo_max" title="@{jet-dispo_max}" value="0">
                   </div>
                   <div class="bordered">
                     Taux perte :&nbsp;
-                    <input type="number" class="two-digits" name="attr_jet-dispo" title="@{jet-dispo}" value="0">
+                    <input type="number" class="two-digits" name="attr_jet-perte" title="@{jet-perte}" value="0">
                     &nbsp;%
                   </div>
                 </div>
@@ -4866,6 +4866,8 @@
 
 </rolltemplate>
 
+<script type="text/worker">
+</script>
 <script type="text/worker">
 
 /**
