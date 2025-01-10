@@ -1,9 +1,9 @@
 <div class="cofmain">
 
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.1.0">
+  <input type="hidden" name="attr_verfdp" value="1.1.01">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.1.0">
+  <input type="hidden" name="attr_version" value="1.1.01">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
 
@@ -36,6 +36,8 @@
   <input type="hidden" name="attr_def_car" value="AGI">
   <input type="hidden" name="attr_def_car_bonus" value="0">
   <input type="hidden" name="attr_def_car_max" value="0">
+  <input type="hidden" name="attr_def_armor_id" value="">
+  <input type="hidden" name="attr_def_shield_id" value="">
   <input type="hidden" name="attr_def_buff" value="0">
   <input type="hidden" name="attr_def_cond" value="0">
   <input type="hidden" name="attr_pv_buff" value="0">
@@ -2945,7 +2947,7 @@
                 <span title="Argot des voleurs et langue des signes">Argotien</span>
               </div>
               <div>
-                <input type="checkbox" name="attr_lang_Runique">
+                <input type="checkbox" name="attr_lang_celestien">
                 <span title="Anges, créatures des plans supérieurs, élémentaires de l'air">Célestien</span>
               </div>
               <div>
@@ -3956,6 +3958,10 @@
                 <input type="checkbox" name="attr_cfg_pvmax_auto" value="1">
               </li>
               <li>
+                <span>Contrôle points de capacités&nbsp;</span>
+                <input type="checkbox" name="attr_cfg_pts_capas" value="1">
+              </li>
+              <li>
                 <span>Afficher voies 7-8-9&nbsp;</span>
                 <input type="checkbox" name="attr_voies_789" value="1">
               </li>
@@ -4284,7 +4290,7 @@
 
     </div>
 
-    <!-<li>Fiche PNJ -->
+    <!-- Fiche PNJ -->
     <div class="cof-npc">
       <input type="hidden" class="tabs-toggle" name="attr_npc_tab" value="main" />
       <div>
@@ -4407,7 +4413,6 @@
                 <div class="npc-trait">
                   <div class="block-title">
                     <span>PV</span>
-                    (RD <input type="number" name="attr_rd" title="@{rd}" value="">)
                   </div>
                   <div class="bordered">
                     <input type="number" class="two-digits" name="attr_pv" title="@{pv}" value="0">
@@ -4442,6 +4447,19 @@
                 </div>
 
               </div>
+              
+            </div>
+
+            <div class="npc-row">
+
+              <div class="npc-trait-rd">
+                <div class="block-title">
+                  <span>RD</span>
+                </div>
+                <div class="bordered">
+                  <input type="text" name="attr_rd" title="@{rd}" value="">
+                </div>
+              </div>
 
             </div>
 
@@ -4449,7 +4467,7 @@
 
           <div>
             <h4>Description</h4>
-            <textarea name="attr_pnj_desc" title="@{pnj_desc}" rows="8" value=""></textarea>  
+            <textarea name="attr_pnj_desc" class="large" title="@{pnj_desc}"></textarea>  
           </div>
   
         </div>
@@ -4870,8 +4888,6 @@
 </rolltemplate>
 
 <script type="text/worker">
-</script>
-<script type="text/worker">
 
 /**
  * COF2e Sheet Worker
@@ -4881,7 +4897,10 @@ const SWData = {
   settings: {
     debugMode: false,
     hiddenClass: "hidden",
-    visibleClass: "visible"
+    visibleClass: "visible",
+    peoplePath: 1,
+    profilePaths: [ 2, 3 ],
+    level1Paths: [ 1, 2, 3 ],
   },
   SHEET_TYPE: {
     PC: "pc",
@@ -6141,22 +6160,54 @@ function getProfileData(profile, selectFamily = "") {
  * - set DR type
  */
 on("change:famille", function() {
-  getAttrs([ "profil", "famille" ], function(values) {
-    
-    const family = strval(values.famille);
-    const profile = strval(values.profil);
-    setProfilesList(family, profile);
+  const section = "repeating_buffs";
+  getSectionIDs(section.split("_")[1], rowIds => {
+    const allBuffs = [];
+    rowIds.forEach(rowId => {
+      allBuffs.push(`${section}_${rowId}_buff-nom`);
+    });
+    getAttrs([ "profil", "famille", ...allBuffs ], function(values) {
+      const family = strval(values.famille);
+      const profile = strval(values.profil);
+      setProfilesList(family, profile);
 
-    let drecup = 8;
-    switch (family) {
-      case "Combattants":
-        drecup = 10;
-        break;
-      case "Mages":
-        drecup = 6
-        break;
-    }
-    setAttrs({ drecup });
+      const updates = new Map();
+
+      let drecup = 8;
+      let target = "";
+      switch (family) {
+        case "Aventuriers":
+          target = "pc";
+          break;
+        case "Combattants":
+          drecup = 10;
+          break;
+        case "Mages":
+          drecup = 6
+          break;
+        case "Mystiques":
+          target = "dr";
+          break;
+      }
+      updates.set("drecup", drecup);
+
+      if (target !== "") {
+        const search = "Famille " + family;
+        const found = allBuffs.find(buff => {
+          if (strval(values[buff]).trim().toLowerCase() === search.trim().toLowerCase())
+            return true;
+        });
+        if (!found) {
+          const rowId = `${section}_${ generateRowID() }_buff-`;
+          updates.set(rowId + "on", 1);
+          updates.set(rowId + "nom", search);
+          updates.set(rowId + "attrib", target);
+          updates.set(rowId + "value", 1);
+        }
+      }
+
+      setAttrs(Object.fromEntries(updates));
+    });
   });
 });
 
@@ -6364,10 +6415,6 @@ function updatePVMax() {
     if (!boolval(values.cfg_pvmax_auto))
       return;
 
-    const peoplePath = 1;
-    const profilePaths = [ 2, 3 ];
-    const level1Paths = [ peoplePath, ...profilePaths ];
-
     // niveau * CON 
     let pvMax = intval(values.niveau) * intval(values.con);
 
@@ -6383,15 +6430,15 @@ function updatePVMax() {
       const rank = intval(ability.charAt(3));
       const pathPV = intval(values[`voie${path}pv`]);
 
-      if (path === peoplePath && rank === 1)
+      if (path === SWData.settings.peoplePath && rank === 1)
         return;
 
-      if (profilePaths.includes(path) && rank === 1) {
+      if (SWData.settings.profilePaths.includes(path) && rank === 1) {
         pvMax += pathPV;
         return;
       }
 
-      if (level1Paths.includes(path) && rank === 2 && getProp(props, "initial"))
+      if (SWData.settings.level1Paths.includes(path) && rank === 2 && getProp(props, "initial"))
         return;
       
       if (rank > 2) {
@@ -6758,14 +6805,68 @@ function updateDef() {
     values.def_car_max = 0;
     values.def_car_bonus = def_car_bonus;
     def = addValues(values);
-    setAttrs({ def, def_car, def_car_bonus }, false);
+    setAttrs({ def, def_car, def_car_bonus });//, false);
   });
 }
 
 /**
- * On Init components change
+ * Update the equipment section
+ * @param {string} attribute - name of defense attribute
  */
-on(eventList("change", SWData.PC.COMBAT.def, " "), updateDef);
+function updateEquiped(attribute) {
+  getSectionIDs("equipement", gearIds => {
+    const section = "repeating_equipement";
+    const allGears = [];
+    gearIds.forEach(rowId => {
+      allGears.push(`${section}_${rowId}_equip-on`);
+      allGears.push(`${section}_${rowId}_equip-nom`);
+      allGears.push(`${section}_${rowId}_equip-props`);
+    });
+    const defense = attribute.replace("_eqp", "");
+    getAttrs([ attribute, defense, ...allGears ], function(values) {
+      const equiped = intval(values[attribute]);
+      const defBonus = intval(values[defense]);
+
+      let gears;
+      if (defense === "armure")
+        gears = getArmors(values, gearIds);
+      if (defense === "bouclier") 
+        gears = getShields(values, gearIds);
+      
+      const updates = new Map();
+
+      // un-equip all armor | shields
+      gears.keys().forEach(id => {
+        updates.set(`${section}_${id}_equip-on`, 0);
+      });
+
+      // equip armor | shield with def bonus
+      if (equiped === 1) {
+        let equipId = "";
+        gears.forEach((gear, id) => {
+          const gearDef = getDefBonus(gear.props, defense);
+          if (gearDef == defBonus)
+            equipId = id;
+        });
+        if (equipId !== "")
+          updates.set(`${section}_${equipId}_equip-on`, 1);
+      }
+
+      if (updates.size > 0)
+        setAttrs(Object.fromEntries(updates), { silent: true });
+    });
+  });
+}
+
+/**
+ * On DEF components change
+ */
+on(eventList("change", SWData.PC.COMBAT.def, " "), function(eventInfo) {
+  updateDef();
+  const attribute = eventInfo.triggerName;
+  if (attribute.endsWith("_eqp"))
+    updateEquiped(attribute);
+});
 
 /**
  * On Luck apply button click
@@ -7483,6 +7584,57 @@ function updateAllPathNames(path) {
 }
 
 /**
+ * Check max ability points
+ */
+function checkAbilityPoints() {
+  const owned = [];
+  const props = [];
+  seq(9).forEach(v => {
+    seq(5).forEach(r => {
+      const rank = `v${v}r${r}`;
+      owned.push(rank);
+      props.push(rank + "_props");
+    });
+  });
+  getAttrs([ "cfg_pts_capas", "niveau", ...owned, ...props ], function(values) {
+    const checkAP = boolval(values.cfg_pts_capas);
+    if (!checkAP)
+      return;
+
+    const level = intval(values.niveau);
+    const maxPoints = level * 2;
+    let usedPoints = 0;
+    owned.forEach(ability => {
+      if (!boolval(values[ability]))
+        return;
+      const path = intval(ability.charAt(1));
+      const rank = intval(ability.charAt(3));
+      
+      if (path === SWData.settings.peoplePath && rank === 1)
+        return;
+
+      const props = strval(values[ability + "_props"]);
+      if (SWData.settings.level1Paths.includes(path) && rank === 2 && getProp(props, "initial"))
+        return;
+
+      usedPoints += (rank > 2) ? 2 : 1;
+    });
+
+    if (usedPoints > maxPoints) {
+      const chatMsg = cof2RollTemplate({
+        lsub: "Contrôle",
+        rsub: "Points de Capacités",
+        text : `${usedPoints} utilisés mais ${maxPoints} maximum`
+      });
+      sendChatMsg(chatMsg, {
+        ...SWData.RT_OPTIONS,
+        whisper: "gm"
+      });
+    }
+  });
+}
+
+/**
  * Return simple / unqualified path name
  * @param {string} fullPathName - full path name (voie de ...)
  * @returns {string}
@@ -7528,6 +7680,9 @@ seq(9).forEach(path => {
 
       // Update PV
       updatePVMax();
+
+      // Check ability points
+      checkAbilityPoints();
     });
   });
 
@@ -7995,12 +8150,87 @@ function getGearProps(name) {
 }
 
 /**
+ * Detect if equipment is an armor
+ * @param {string} name - equipment name
+ * @param {string} props - equipment properties
+ * @returns {boolean}
+ */
+function isArmor(name, props) {
+  const inName = intval(getProp(props, "bonus-def")) && !name.toLowerCase().includes("bouclier");
+  const inProps = intval(getProp(props, "armure"));
+  return inName || inProps;
+}
+
+/**
+ * Detect if equipment is a shield
+ * @param {string} name - equipment name
+ * @param {string} props - equipment properties
+ * @returns {boolean}
+ */
+function isShield(name, props) {
+  const inName = intval(getProp(props, "bonus-def")) && name.toLowerCase().includes("bouclier");
+  const inProps = intval(getProp(props, "bouclier"));
+  return inName || inProps;
+}
+
+/**
+ * Return map of armor items
+ * @param {object} values - getAttrs() object 
+ * @param {string[]} rowIds - list of equipment item ids
+ * @returns {Map<string, object>}
+ */
+function getArmors(values, rowIds) {
+  const armors = new Map();
+  rowIds.forEach(rowId => {
+    const equiped = intval(values[`repeating_equipement_${rowId}_equip-on`]);
+    const name = strval(values[`repeating_equipement_${rowId}_equip-nom`]);
+    const props = strval(values[`repeating_equipement_${rowId}_equip-props`]);
+    if (isArmor(name, props))
+      armors.set(rowId, { name, equiped, props });
+  });
+  return armors;
+}
+
+/**
+ * Return map of shield items
+ * @param {object} values - getAttrs() object 
+ * @param {string[]} rowIds - list of equipment item ids
+ * @returns {Map<string, object>}
+ */
+function getShields(values, rowIds) {
+  const shields = new Map();
+  rowIds.forEach(rowId => {
+    const equiped = intval(values[`repeating_equipement_${rowId}_equip-on`]);
+    const name = strval(values[`repeating_equipement_${rowId}_equip-nom`]);
+    const props = strval(values[`repeating_equipement_${rowId}_equip-props`]);
+    if (isShield(name, props))
+      shields.set(rowId, { name, equiped, props });
+    return shields;
+  });
+}
+
+/**
+ * Return DEF bonus for armor or shield
+ * @param {string} props - properties list
+ * @param {string} defense - type of defense gear ("armure" | "bouclier")
+ * @returns {number}
+ */
+function getDefBonus(props, defense) {
+  let defBonus = intval(getProp(props, defense));
+  defBonus = defBonus === 0 ? intval(getProp(props, "bonus-def")) : defBonus;
+  return defBonus;
+}
+
+/**
  * On changes in equipement list
  */
 on("change:repeating_equipement remove:repeating_equipement", function() {
   encumbrance();
 });
 
+/**
+ * Retrieve props from name
+ */
 on("change:repeating_equipement:equip-nom", function() {
   getAttrs([ "repeating_equipement_equip-nom", "repeating_equipement_equip-props" ], function(values) {
     const name = strval(values["repeating_equipement_equip-nom"]);
@@ -8015,21 +8245,94 @@ on("change:repeating_equipement:equip-nom", function() {
   })
 });
 
+/**
+ * Equip / Unequip armor & shield
+ */
+on("change:repeating_equipement:equip-on", function(eventInfo) {
+  const equipId = eventInfo.triggerName.split("_")[2];
+  const section = "repeating_equipement";
+  getSectionIDs("equipement", gearIds => {
+    const allGears = [];
+    gearIds.forEach(rowId => {
+      allGears.push(`${section}_${rowId}_equip-on`);
+      allGears.push(`${section}_${rowId}_equip-nom`);
+      allGears.push(`${section}_${rowId}_equip-props`);
+    });
+    getAttrs([ 
+      `${section}_equip-on`, 
+      `${section}_equip-nom`, 
+      `${section}_equip-props`, 
+      ...allGears
+    ], function (values) {
+      const equiped = intval(values[`${section}_equip-on`]);
+      const name = strval(values[`${section}_equip-nom`]);
+      const props = strval(values[`${section}_equip-props`]);
+      const armor = isArmor(name, props);
+      const shield = isShield(name, props);
+      if (!armor && !shield)
+        return;
+
+      const defense = armor ? "armure" : "bouclier";
+
+      const defBonus = getDefBonus(props, defense);
+
+      // search for armure_malus: / bouclier_malus: or set to armor/shield bonus
+      let defMalus = intval(getProp(props, defense + "-malus"));
+      defMalus = defMalus === 0 ? defBonus : defMalus;
+
+      const defCarMax = intval(getProp(props, "agi-max"));
+
+      const updates = new Map();
+
+      let gears;
+      if (armor)
+        gears = getArmors(values, gearIds);
+      if (shield) 
+        gears = getShields(values, gearIds);
+
+      // un-equip any other armor or shield
+      gears.keys().forEach(id => {
+        if (equiped && id !== equipId)
+          updates.set(`${section}_${id}_equip-on`, 0);
+      });
+
+      // nothing equiped...
+      updates.set(defense + "_eqp", 0);
+      // ... unless something is equiped
+      gears.values().forEach(gear => {
+        if (gear.equiped === 1)
+          updates.set(defense + "_eqp", 1);
+      });
+
+      // set armor | shield values
+      if (equiped === 1) {
+        updates.set(defense, defBonus);
+        updates.set(defense + "_malus", defMalus);
+        updates.set("def_car_max", defCarMax);
+      }
+
+      if (updates.size > 0)
+        setAttrs(Object.fromEntries(updates));
+    });
+  })
+});
+
+/**
+ * Handle attacks 
+ */
 on(eventList("change", [ 
-  "on",
   "props",
   "atk"
 ].map(a => `repeating_equipement:equip-${a}`), " "), function (eventInfo) {
-  getAttrs([
-    "on",
+  const gearAttrs = [
     "nom",
     "detail",
     "props",
     "atk",
     "atkid"
-  ].map(a => `repeating_equipement_equip-${a}`), function(values) {
-    const [ on, name, detail, props, atk, atkid ] = Object.keys(values);
-    const equiped = intval(values[on]);
+  ].map(a => `repeating_equipement_equip-${a}`);
+  getAttrs(gearAttrs, function(values) {
+    const [ name, detail, props, atk, atkid ] = Object.keys(values);
     const equipment = strval(values[name]);
     const description = strval(values[detail]);
     const properties = strval(values[props]);
@@ -8047,25 +8350,18 @@ on(eventList("change", [
       return;
     }
 
-    const shield = equipment.toLowerCase().includes("bouclier");
-    //const helmet = equipment.toLowerCase().includes("casque") || equipment.toLowerCase().includes("heaume");
+    defProps = [ 
+      "bonus-def",
+      "armure",
+      "armure-malus",
+      "bouclier",
+      "bouclier-malus",
+      "agi-max",
+    ];
     properties.split("\n").forEach(prop => {
       const { name, value } = parseNameValue(prop);
-      if (name === "")
+      if (name === "" || defProps.includes(name))
         return;
-
-      if (name === "bonus-def") {
-        const attrib = shield ? "bouclier" : "armure";
-        attributes.set(attrib, intval(value));
-        attributes.set(attrib + "_eqp", equiped);
-        if (!shield)
-          attributes.set("armure_malus", intval(value));
-        return;
-      }
-      if (name === "agi-max") {
-        attributes.set("def_car_max", intval(value));
-        return;
-      }
       
       attackRow.set(name, value);
     });
@@ -8095,7 +8391,6 @@ on(eventList("change", [
       attributes.set(rowId + "special", description);
     }
 
-    console.log(attributes)
     if (attributes.size > 0)
       setAttrs(Object.fromEntries(attributes));
   });
