@@ -26,6 +26,14 @@
       "description": "Activer le calcul automatique des PV maximum"
     },
     {
+      "attribute": "cfg_pts_capas",
+      "displayname": "Contrôle points de capacités",
+      "type": "checkbox",
+      "value": "1",
+      "default": "",
+      "description": "Activer le contrôle des points de capacités dépensés"
+    },
+    {
 			"attribute": "cfg_highfan",
 			"displayname": "Options High Fantasy",
 			"type": "checkbox",
