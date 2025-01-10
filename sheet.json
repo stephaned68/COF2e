@@ -18,6 +18,14 @@
       "description": "Type de fiche par défaut quand la fiche est créée"
     },
     {
+      "attribute": "cfg_pvmax_auto",
+      "displayname": "Calcul auto. PV max.",
+      "type": "checkbox",
+      "value": "1",
+      "default": "",
+      "description": "Activer le calcul automatique des PV maximum"
+    },
+    {
 			"attribute": "cfg_highfan",
 			"displayname": "Options High Fantasy",
 			"type": "checkbox",
