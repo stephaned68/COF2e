@@ -9,9 +9,10 @@ Pour chacune des 7 caractéristiques, vous indiquez :
 - S'il s'agit d'une caractéristique _supérieure_ (les jets de d20 sont effectués avec un _dé bonus_).
 
 Vous indiquez également :
-- Les PV courants et maximum ainsi qu'une éventuelle RD,
+- Les PV courants et maximum,
 - Le score d'Initiative,
-- Le score de Défense.
+- Le score de Défense,
+- Les différentes RD.
 
 Des boutons permettent de faire des jets de caractéristiques et d'Initiative.
 
@@ -32,6 +33,24 @@ Cette liste contient les attaques dont le PNJ dispose en combat. Pour chaque att
 - Un bonus/malus à ajouter aux DM,
 - La portée de l'attaque à distance,
 - Un effet spécial ou description de l'attaque.
+
+Des paramètres optionnels peuvent être ajoutés :
+- Type d'attaque : vous pouvez indiquer le type de cette attaque en choisissant parmi
+  - Arme naturelle 
+  - Arme en main
+  - Sortilège
+  - Arme de jet
+  
+  Ce paramètre est utilisé par le script COFantasy2
+
+- Modificateurs d'attaque : vous pouvez spécifier une série de mentions spéciales permettant de régler le comportement du jet d'attaque. Séparez les différentes mentions par des virgules.
+  - <kbd>deBonus</kbd> : l'attaque est faite avec un dé bonus, sauf si le personnage est _Affaibli_
+  - <kbd>deMalus</kbd> : l'attaque est faite avec un dé malus
+  - <kbd>explodeMax</kbd> : le dé de DM est _explosif_ (relance d'un nouveau dé de DM en cas de résultat maximum)
+  - <kbd>reroll1</kbd> : le dé de DM est relancé jusqu'à ce que son résultat soit supérieur à 1
+  - <kbd>poudre</kbd> : l'arme explose et inflige 1d4° DM à l'utilisateur s'il ne maîtrise pas les armes à poudre
+
+- Options d'attaques avec arguments : ce paramètre est utilisé par le script COFantasy2
 
 Un clic sur le bouton d20 permet de lancer le jet d'attaque et de DM dans le chat en tenant compte des divers paramètres. Si la case d'attaques multiples est cochée et que le nom de l'attaque contient le motif <kbd>(n attaques)</kbd>, le nombre n de jets d'attaque est effectué.
 

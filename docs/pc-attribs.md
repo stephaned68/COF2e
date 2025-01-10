@@ -57,6 +57,7 @@ Un ensemble d'icones cliquables permettent d'appliquer les effets d'un ou plusie
 
 Cette section présente le calcul de la DEF du personnage.
 - Les cases à cocher à côté de l'armure et du bouclier permettent de déterminer si le PJ les porte ou pas et si leurs bonus entrent en compte.
+- Cocher ou décocher l'une de ces cases coche ou décoche également l'équipement dans l'inventaire du personnage, si la fiche est capable de retrouver le bon élément.
 - Le malus d'encombrement de l'armure est appliqué aux jets d'AGI si elle est portée (case cochée).
 - La sélection de l'_Action défensive_ applique le bonus correspondant à la DEF.
 
@@ -92,6 +93,7 @@ Pour chacune, vous indiquez :
 Des paramètres optionnels peuvent être ajoutés :
 - Type d'attaque : vous pouvez indiquer le type de cette attaque en choisissant parmi
   - Arme naturelle 
+  - Arme en main
   - Sortilège
   - Arme de jet
   

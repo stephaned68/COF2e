@@ -22,13 +22,33 @@ Cette liste de propriétés est à indiquer dans le champ de texte, une proprié
 La syntaxe de cette liste est la même que pour les [prédicats]({{ site.baseurl }}/pc-script).
 
 Les codes et valeurs correspondantes que vous pouvez indiquer sont :
-- <kbd>critique</kbd> : seuil de réussite critique
-- <kbd>dm-1m</kbd> : jet de DM quand l'arme est maniée à une main
-- <kbd>dm-2m</kbd> : jet de  DM quand l'arme est maniée à deux mains
-- <kbd>type-dm</kbd> : type de DM
-- <kbd>portee</kbd> : portée de l'arme à distance
-- <kbd>bonus-def</kbd> : bonus apporté à la DEF par l'armure
-- <kbd>agi-max</kbd> : valeur maximum d'AGI pour port de l'armure
+
+- Pour les armes :
+  - <kbd>critique</kbd> : seuil de réussite critique
+  - <kbd>dm-1m</kbd> : jet de DM quand l'arme est maniée à une main
+  - <kbd>dm-2m</kbd> : jet de  DM quand l'arme est maniée à deux mains
+  - <kbd>type-dm</kbd> : type de DM
+  - <kbd>portee</kbd> : portée de l'arme à distance
+- Pour les protections (armures et boucliers) :
+  - <kbd>bonus-def</kbd> : bonus apporté à la DEF par l'armure ou le bouclier
+  - <kbd>armure</kbd> : bonus apporté à la DEF par l'armure
+  - <kbd>bouclier</kbd> : bonus apporté à la DEF par le  bouclier
+  - <kbd>agi-max</kbd> : valeur maximum d'AGI pour port de l'armure
+
+## Equipement lié à la défense
+
+Si vous cochez la case <kbd>Equipment porté</kbd> d'une armure ou d'un bouclier, tout autre équipement de même nature qui était précédemment coché est décoché (une seule armure ou bouclier à la fois), et les paramètres de calcul de la Défense sont automatiquement mis à jour à partir des propriétés.
+
+Si aucune armure ou aucun bouclier n'est porté, la case correspondante de la Défense est décochée.
+
+### Détermination de la nature de l'équipement
+
+- Une pièce d'équipement est une armure
+  - si elle a une propriété <kbd>armure</kbd> avec son bonus
+  - ou si elle a une propriété <kbd>bonus-def</kbd> et que son nom ne contient pas le mot <kbd>bouclier</kbd>
+- Une pièce d'équipement est un bouclier
+  - si elle a une propriété <kbd>bouclier</kbd> avec son bonus
+  - ou si elle a une propriété <kbd>bonus-def</kbd> et que son nom contient le mot <kbd>bouclier</kbd>
 
 ## Equipement lié à une attaque
 

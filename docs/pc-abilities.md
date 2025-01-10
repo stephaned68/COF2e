@@ -24,7 +24,7 @@ Pour chaque voie, vous indiquez :
     - _Nom de la fiche de PNJ du compagnon (rôdeur, chevalier, etc...)_
     - _Précision sur la capacité (type d'arme pour la voie du maître d'armes)_
 
-  - Une liste de propriétés spéciales, principalement utilisées par le script MOD COFantasy2.
+  - Une liste de propriétés optionnelles, principalement utilisées par le script MOD COFantasy2.
   
     La syntaxe de cette liste est la même que pour les [prédicats]({{ site.baseurl }}/pc-script).
 

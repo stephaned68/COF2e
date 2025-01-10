@@ -6,6 +6,7 @@ Les préférence et réglages possibles de la fiche sont configurés dans cet on
   - Chuchotés au MJ : Seul le joueur et le MJ voient les jets (uniquement le MJ pour une fiche de PNJ non partagées aux joueurs).
   - Avec token : Le token par défaut du personnage apparaît dans tous les messages envoyés dans le chat par la fiche.
 - Calcul automatique PV max. : Cette option permet que la fiche calcule automatiquement les PV maximums (cf. ci-dessous)
+- Contrôle points de capacités : Cette option permet que la fiche vérifie les dépassements de points de capacité (cf. ci-dessous)
 - Afficher voies 7-8-9 : Cette option permet d'afficher les voies supplémentaires (voies de prestige)
 - Afficher compétences : Cette option permet d'activer ou de désactiver le sous-onglet _Compétences_ de l'onglet _Capacités_.
 
@@ -26,6 +27,21 @@ Les PV maximums sont calculés en faisant la somme des éléments suivants :
   - Sinon si rang 1 ou 2 : [PV de voie]/2
   - Sinon (rang >2) : [PV de voie]
 
+### Contrôle des points de capacités
+
+Pour un fonctionnement correct de cette option, il est nécessaire de respecter les mêmes contraintes que ci-dessus :
+- La voie n°1 est la voie de peuple ou du mage
+- Les voies n°2 et 3 sont les voies où sont choisies les deux capacités au niveau 1
+- La capacité supplémentaire prise par les profils de mages au niveau 1 doit avoir la propriété <kbd>initial</kbd>
+
+La fiche décompte pour les capacités possédées (cochées) :
+- Si rang 1 de la voie 1 : 0 point
+- Sinon si rang 1 de voie 2 ou 3 : 1 point
+- Sinon si rang 2 de voie 1,2 ou 3 et propriété <kbd>initial</kbd> : 0 point
+- Sinon si rang 1 ou 2 : 1 point
+- Sinon (rang >2) : 2 points
+
+Si le nombre de points de capacités utilisé dépasse le nombre maximum disponble soit 2 x [niveau], un message d'alerte s'affiche dans le chat Roll20.
 
 ## Règles optionnelles
 
