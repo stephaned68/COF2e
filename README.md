@@ -19,6 +19,13 @@ v1.1.0 [Screenshot](cof2e.png)
 
 ## Notes de version
 
+### Version 1.1.02 (future 1.2.0 Roll20)
+
+- Ajout d'une gestion des armures, boucliers et casques équipés
+- Ajout d'une option pour vérifier les points de capacités utilisés
+- Création automatique de buff pour les profils de la famille Aventuriers (+1 PC) et Mystiques (+1 DR)
+- Modification du champ RD dans la fiche de PNJ
+
 ### Version 1.1.0 (2024-01-05)
 
 - Ajout d'un bouton pour le test de chance
