@@ -418,12 +418,17 @@ input[value="0"].show-script ~ div.show-script {
   display: none;
 }
 
-input[value="0"].init-agi ~ div.init-agi {
+input[value="0"].init-agi ~ div.init-agi,
+input[value="0"].bouclier-malus ~ div.bouclier-malus {
   display: none;
 }
 
 input[value="1"].init-agi ~ div.init-agi {
   display: inline;
+}
+
+input[value="1"].bouclier-malus ~ div.bouclier-malus {
+  display: block;
 }
 
 div.change-view {

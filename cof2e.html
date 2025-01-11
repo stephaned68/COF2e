@@ -1,9 +1,9 @@
 <div class="cofmain">
 
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.1.01">
+  <input type="hidden" name="attr_verfdp" value="1.1.02">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.1.01">
+  <input type="hidden" name="attr_version" value="1.1.02">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
 
@@ -36,8 +36,8 @@
   <input type="hidden" name="attr_def_car" value="AGI">
   <input type="hidden" name="attr_def_car_bonus" value="0">
   <input type="hidden" name="attr_def_car_max" value="0">
-  <input type="hidden" name="attr_def_armor_id" value="">
-  <input type="hidden" name="attr_def_shield_id" value="">
+  <input type="hidden" name="attr_casque" value="0">
+  <input type="hidden" name="attr_casque_malus" value="0">
   <input type="hidden" name="attr_def_buff" value="0">
   <input type="hidden" name="attr_def_cond" value="0">
   <input type="hidden" name="attr_pv_buff" value="0">
@@ -811,11 +811,7 @@
                 <input type="number" name="attr_bouclier" title="@{bouclier} Bonus de bouclier" value="0">
               </div>
               <div class="bordered centered">
-                <span name="attr_def_car_bonus" title="@{def_car_bonus} Bonus de caractéristique"></span> <!--
-                <select class="select-sm" name="attr_def_car" title="@{def_car} AGI/CON">
-                  <option value="agi" selected>AGI</option>
-                  <option value="con">CON</option>
-                </select> -->
+                <span name="attr_def_car_bonus" title="@{def_car_bonus} Bonus de caractéristique"></span>
               </div>
               <div class="bordered centered">
                 <span name="attr_def_buff" title="@{def_buff} Bonus divers"></span>
@@ -841,10 +837,18 @@
               <div class="bordered centered">
                 <input type="number" name="attr_armure_malus" title="@{armure_malus} Malus d'armure" value="0">
               </div>
+              <div>
+                <input type="hidden" class="bouclier-malus" name="attr_cfg_bouclier_malus" value="0">
+                <div class="bordered centered bouclier-malus">
+                  <input type="number" name="attr_bouclier_malus" title="@{bouclier_malus} Malus de bouclier" value="0">
+                </div>
+              </div>
               <div></div>
               <div></div>
-              <div></div>
-              <div></div>
+              <div>
+                <input type="checkbox" name="attr_casque_eqp" title="@{casque_eqp} Casque équipé" value="1">
+                Casque (RD : <span name="attr_casque"></span>)&nbsp;
+              </div>
               <div></div>
             </div>
 
@@ -3962,6 +3966,10 @@
                 <input type="checkbox" name="attr_cfg_pts_capas" value="1">
               </li>
               <li>
+                <span>Malus de bouclier&nbsp;</span>
+                <input type="checkbox" name="attr_cfg_bouclier_malus" value="1">
+              </li>
+              <li>
                 <span>Afficher voies 7-8-9&nbsp;</span>
                 <input type="checkbox" name="attr_voies_789" value="1">
               </li>
@@ -6560,12 +6568,21 @@ SWData.PC.ABILITIES.forEach(ability => {
   
   // Roll ability
   on(`clicked:${short}-btn`, function () {
-    getAttrs([ `${short}_dsup`, "armure_malus", "armure_eqp" ], function(values) {
+    const defGearAttrs = [
+      "armure_malus", "armure_eqp",
+      "cfg_bouclier_malus", "bouclier_malus", "bouclier_eqp",
+      "casque", "casque_eqp",
+    ];
+    getAttrs([ `${short}_dsup`, ...defGearAttrs ], function(values) {
       const [ roll ] = Object.keys(values);
       const armure_eqp = intval(values.armure_eqp);
       const armure_malus = intval(values.armure_malus) * armure_eqp;
+      const bouclier_eqp = intval(values.bouclier_eqp);
+      const bouclier_malus = intval(values.bouclier_malus) * bouclier_eqp;
       const armor_malus = short === "agi" ? ` - ${armure_malus}[Malus armure]` : "";
-      const carac = `[[@{${roll}}[Dé] + @{${short}_test}[Bonus ${short.toUpperCase()}]${armor_malus} ]] `;
+      const shield_malus = (short === "agi" && boolval(values.cfg_bouclier_malus)) ? ` - ${bouclier_malus}[Malus bouclier]` : "";
+      const helmet_malus = short === "per" ? helmetMalus(values) : "";
+      const carac = `[[@{${roll}}[Dé] + @{${short}_test}[Bonus ${short.toUpperCase()}]${armor_malus}${shield_malus}${helmet_malus} ]] `;
       const chatMsg = cof2RollTemplate({
         lsub: "Test",
         rsub: capitalize(ability),
@@ -6581,13 +6598,15 @@ SWData.PC.ABILITIES.forEach(ability => {
  * On initiative button click
  */
 on("clicked:init-btn", function () {
-  const init = `[[@{init}[Initiative] + @{cfg_init_variable}[Dé(s)] &{tracker} ]]`;
-  const chatMsg = cof2RollTemplate({
-    lsub: "Jet",
-    rsub: "Initiative",
-    roll: init
+  getAttrs(["casque_eqp", "casque"], function(values) {
+    const init = `[[@{init}[Initiative]${ helmetMalus(values) } + @{cfg_init_variable}[Dé(s)] &{tracker} ]]`;
+    const chatMsg = cof2RollTemplate({
+      lsub: "Jet",
+      rsub: "Initiative",
+      roll: init
+    });
+    sendChatMsg(chatMsg);
   });
-  sendChatMsg(chatMsg);
 });
 
 /**
@@ -6832,7 +6851,9 @@ function updateEquiped(attribute) {
         gears = getArmors(values, gearIds);
       if (defense === "bouclier") 
         gears = getShields(values, gearIds);
-      
+      if (defense === "casque") 
+        gears = getHelmets(values, gearIds);
+
       const updates = new Map();
 
       // un-equip all armor | shields
@@ -6840,7 +6861,7 @@ function updateEquiped(attribute) {
         updates.set(`${section}_${id}_equip-on`, 0);
       });
 
-      // equip armor | shield with def bonus
+      // equip armor | shield | helmet with def bonus
       if (equiped === 1) {
         let equipId = "";
         gears.forEach((gear, id) => {
@@ -6866,6 +6887,10 @@ on(eventList("change", SWData.PC.COMBAT.def, " "), function(eventInfo) {
   const attribute = eventInfo.triggerName;
   if (attribute.endsWith("_eqp"))
     updateEquiped(attribute);
+});
+
+on("change:casque_eqp", function() {
+  updateEquiped("casque_eqp");
 });
 
 /**
@@ -8006,26 +8031,20 @@ function parseBuffList(attribute) {
       if (buff.trim() === "")
         return;
       let value = 0;
-      const [ , expression ] = buff.split(":").map(e => e.trim());
+      const [ expression ] = buff.split(":").map(e => e.trim()).slice(1);
       const attrBuff = SWData.PC.BUFFS.From.find(a => `[${a}]` === expression.toLowerCase());
       if (attrBuff) {
         value = intval(values[attrBuff]);
       } else {
-        const result = expression.match(/rang[ ]*voie[ ]*([1-9])/i);
+        const result = expression.match(/\[rang[ ]*voie[ ]*([1-9])\][ ]*\+?[ ]*([0-9]*)?/i);
         if (result) {
-          const [ matched, path ] = result;
+          const [ matched, path, bonus ] = result;
           if (matched && intval(path) > 0)
-            value = intval(allRanks[intval(path) - 1]); 
+            value = intval(allRanks[intval(path) - 1]);
+          if (bonus)
+            value += intval(bonus);
         } else {
-          if (expression.startsWith("!")) {
-            try {
-              value = intval(eval(expression.slice(1)));
-            } catch (ex) {
-              clog("Erreur JS");
-            }
-          } else {
-            value = intval(expression);
-          }
+          value = intval(expression);
         }
       } 
       buffTotal += value;
@@ -8150,14 +8169,36 @@ function getGearProps(name) {
 }
 
 /**
+ * Return DEF bonus for armor or shield
+ * @param {string} props - properties list
+ * @param {string} defense - type of defense gear ("armure" | "bouclier" | "casque")
+ * @returns {number}
+ */
+function getDefBonus(props, defense) {
+  let defBonus = intval(getProp(props, defense));
+  defBonus = defBonus === 0 ? intval(getProp(props, "bonus-def")) : defBonus;
+  return defBonus;
+}
+
+/**
+ * Return helmet malus to insert in roll
+ * @param {object} values - getAttrs() object
+ * @returns {string}
+ */
+function helmetMalus(values) {
+  const helmet = intval(values.casque_eqp) * intval(values.casque);
+  return (helmet > 0) ? ` - ${helmet}[Malus casque]` : "";
+}
+
+/**
  * Detect if equipment is an armor
  * @param {string} name - equipment name
  * @param {string} props - equipment properties
  * @returns {boolean}
  */
 function isArmor(name, props) {
-  const inName = intval(getProp(props, "bonus-def")) && !name.toLowerCase().includes("bouclier");
-  const inProps = intval(getProp(props, "armure"));
+  const inName = (intval(getProp(props, "bonus-def")) !== 0) && !name.toLowerCase().includes("bouclier");
+  const inProps = (intval(getProp(props, "armure")) !== 0);
   return inName || inProps;
 }
 
@@ -8168,9 +8209,41 @@ function isArmor(name, props) {
  * @returns {boolean}
  */
 function isShield(name, props) {
-  const inName = intval(getProp(props, "bonus-def")) && name.toLowerCase().includes("bouclier");
-  const inProps = intval(getProp(props, "bouclier"));
+  const inName = (intval(getProp(props, "bonus-def")) !== 0) && name.toLowerCase().includes("bouclier");
+  const inProps = (intval(getProp(props, "bouclier")) !== 0);
   return inName || inProps;
+}
+
+/**
+ * Detect if equipment is a helmet
+ * @param {string} props - equipment properties
+ * @returns {boolean}
+ */
+function isHelmet(props) {
+  return (intval(getProp(props, "casque")) !== 0);
+}
+
+/**
+ * Return map of defense items
+ * @param {object} values - getAttrs() object 
+ * @param {string[]} rowIds - list of equipment item ids
+ * @param {string} [type="armors"] - type of defense gear
+ * @returns {Map<string, object>}
+ */
+function getDefGear(values, rowIds, type = "armors") {
+  const gears = new Map();
+  rowIds.forEach(rowId => {
+    const equiped = intval(values[`repeating_equipement_${rowId}_equip-on`]);
+    const name = strval(values[`repeating_equipement_${rowId}_equip-nom`]);
+    const props = strval(values[`repeating_equipement_${rowId}_equip-props`]);
+    if (type === "armors" && isArmor(name, props))
+      gears.set(rowId, { name, equiped, props });
+    if (type === "shields" && isShield(name, props))
+      gears.set(rowId, { name, equiped, props });
+    if (type === "helmets" && isHelmet(props))
+      gears.set(rowId, { name, equiped, props });
+  });
+  return gears;
 }
 
 /**
@@ -8180,15 +8253,7 @@ function isShield(name, props) {
  * @returns {Map<string, object>}
  */
 function getArmors(values, rowIds) {
-  const armors = new Map();
-  rowIds.forEach(rowId => {
-    const equiped = intval(values[`repeating_equipement_${rowId}_equip-on`]);
-    const name = strval(values[`repeating_equipement_${rowId}_equip-nom`]);
-    const props = strval(values[`repeating_equipement_${rowId}_equip-props`]);
-    if (isArmor(name, props))
-      armors.set(rowId, { name, equiped, props });
-  });
-  return armors;
+  return getDefGear(values, rowIds, "armors");
 }
 
 /**
@@ -8198,27 +8263,17 @@ function getArmors(values, rowIds) {
  * @returns {Map<string, object>}
  */
 function getShields(values, rowIds) {
-  const shields = new Map();
-  rowIds.forEach(rowId => {
-    const equiped = intval(values[`repeating_equipement_${rowId}_equip-on`]);
-    const name = strval(values[`repeating_equipement_${rowId}_equip-nom`]);
-    const props = strval(values[`repeating_equipement_${rowId}_equip-props`]);
-    if (isShield(name, props))
-      shields.set(rowId, { name, equiped, props });
-    return shields;
-  });
+  return getDefGear(values, rowIds, "shields");
 }
 
 /**
- * Return DEF bonus for armor or shield
- * @param {string} props - properties list
- * @param {string} defense - type of defense gear ("armure" | "bouclier")
- * @returns {number}
+ * Return map of shield items
+ * @param {object} values - getAttrs() object 
+ * @param {string[]} rowIds - list of equipment item ids
+ * @returns {Map<string, object>}
  */
-function getDefBonus(props, defense) {
-  let defBonus = intval(getProp(props, defense));
-  defBonus = defBonus === 0 ? intval(getProp(props, "bonus-def")) : defBonus;
-  return defBonus;
+function getHelmets(values, rowIds) {
+  return getDefGear(values, rowIds, "helmets");
 }
 
 /**
@@ -8269,14 +8324,16 @@ on("change:repeating_equipement:equip-on", function(eventInfo) {
       const props = strval(values[`${section}_equip-props`]);
       const armor = isArmor(name, props);
       const shield = isShield(name, props);
-      if (!armor && !shield)
+      const helmet = isHelmet(props);
+      if (!armor && !shield && !helmet)
         return;
 
-      const defense = armor ? "armure" : "bouclier";
+      const defense = armor ? "armure" : ( shield ? "bouclier" : "casque" );
 
       const defBonus = getDefBonus(props, defense);
 
-      // search for armure_malus: / bouclier_malus: or set to armor/shield bonus
+      // search for armure-malus: | bouclier-malus: | casque-malus: 
+      // or set to armor | shield | casque bonus
       let defMalus = intval(getProp(props, defense + "-malus"));
       defMalus = defMalus === 0 ? defBonus : defMalus;
 
@@ -8289,6 +8346,8 @@ on("change:repeating_equipement:equip-on", function(eventInfo) {
         gears = getArmors(values, gearIds);
       if (shield) 
         gears = getShields(values, gearIds);
+      if (helmet)
+        gears = getHelmets(values, gearIds);
 
       // un-equip any other armor or shield
       gears.keys().forEach(id => {
@@ -8308,9 +8367,11 @@ on("change:repeating_equipement:equip-on", function(eventInfo) {
       if (equiped === 1) {
         updates.set(defense, defBonus);
         updates.set(defense + "_malus", defMalus);
-        updates.set("def_car_max", defCarMax);
+        if (armor) 
+          updates.set("def_car_max", defCarMax);
       }
 
+      console.log(updates)
       if (updates.size > 0)
         setAttrs(Object.fromEntries(updates));
     });
