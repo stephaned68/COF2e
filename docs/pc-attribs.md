@@ -56,9 +56,12 @@ Un ensemble d'icones cliquables permettent d'appliquer les effets d'un ou plusie
 # Défense
 
 Cette section présente le calcul de la DEF du personnage.
-- Les cases à cocher à côté de l'armure et du bouclier permettent de déterminer si le PJ les porte ou pas et si leurs bonus entrent en compte.
+- Les cases à cocher à côté de l'armure, du bouclier et du casque permettent de déterminer si le PJ les porte ou pas et si leurs bonus et malus entrent en compte.
+- Le malus de bouclier n'apparaît que si l'option correspondante est activée dans la configuration de la fiche.
 - Cocher ou décocher l'une de ces cases coche ou décoche également l'équipement dans l'inventaire du personnage, si la fiche est capable de retrouver le bon élément.
-- Le malus d'encombrement de l'armure est appliqué aux jets d'AGI si elle est portée (case cochée).
+- Le malus d'armure est appliqué aux jets d'AGI si elle est portée (case cochée).
+- Le malus du bouclier est appliqué aux jets d'AGI si l'option est active et qu'il est porté (case cochée).
+- Le malus du casque est appliqué aux jets de PER et d'Initiative s'il est porté (case cochée).
 - La sélection de l'_Action défensive_ applique le bonus correspondant à la DEF.
 
 # Points de Chance

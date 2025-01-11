@@ -37,9 +37,9 @@ Les codes et valeurs correspondantes que vous pouvez indiquer sont :
 
 ## Equipement lié à la défense
 
-Si vous cochez la case <kbd>Equipment porté</kbd> d'une armure ou d'un bouclier, tout autre équipement de même nature qui était précédemment coché est décoché (une seule armure ou bouclier à la fois), et les paramètres de calcul de la Défense sont automatiquement mis à jour à partir des propriétés.
+Si vous cochez la case <kbd>Equipment porté</kbd> d'une armure ou d'un bouclier ou d'un casque, tout autre équipement de même nature qui était précédemment coché est décoché (une seule pièce portée à la fois), et les paramètres de calcul de la Défense sont automatiquement mis à jour à partir des propriétés.
 
-Si aucune armure ou aucun bouclier n'est porté, la case correspondante de la Défense est décochée.
+Si aucune armure, aucun bouclier ou aucun casque n'est porté, la case correspondante de la Défense est décochée.
 
 ### Détermination de la nature de l'équipement
 
@@ -49,6 +49,7 @@ Si aucune armure ou aucun bouclier n'est porté, la case correspondante de la D�
 - Une pièce d'équipement est un bouclier
   - si elle a une propriété <kbd>bouclier</kbd> avec son bonus
   - ou si elle a une propriété <kbd>bonus-def</kbd> et que son nom contient le mot <kbd>bouclier</kbd>
+- Une pièce d'équipement est un casque si elle a une propriété <kbd>casque</kbd> avec sa RD
 
 ## Equipement lié à une attaque
 
