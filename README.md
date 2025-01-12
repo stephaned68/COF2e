@@ -19,10 +19,14 @@ v1.1.0 [Screenshot](cof2e.png)
 
 ## Notes de version
 
-### Version 1.1.02 (future 1.2.0 Roll20)
+### Version 1.1.03 (future 1.2.0 Roll20)
 
 - Ajout d'une gestion des armures, boucliers et casques équipés
 - Ajout d'une option pour vérifier les points de capacités utilisés
+- Déplacement de l'import des voies dans un sous-onglet Import de l'onglet Capacités
+- Ajout d'une icône pour chaque nom de voie en mode Edition pour l'import du texte des capacités
+- Modification du calcul des DR max avec une base de 2 sauf pour les profils de Mystiques (3 DR)
+- Modification du calcul des DR max avec une base de 2 sauf pour les profils de Mystiques (3 DR)
 - Création automatique de buff pour les profils de la famille Aventuriers (+1 PC) et Mystiques (+1 DR)
 - Modification du champ RD dans la fiche de PNJ
 

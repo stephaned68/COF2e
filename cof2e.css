@@ -363,6 +363,7 @@ input[value="0"].pc-skills-btn ~ button.pc-skills-btn {
 .pc-rolls-subtab,
 .pc-skills-subtab,
 .pc-buffs-subtab,
+.pc-import-subtab,
 .npc-main-tab,
 .npc-config-tab,
 .npc-script-tab {
@@ -380,7 +381,8 @@ input[value="0"].pc-skills-btn ~ button.pc-skills-btn {
 .tabs-toggle[value="config"] ~ div .npc-config-btn,
 .tabs-toggle[value="rolls"] ~ div .pc-rolls-btn,
 .tabs-toggle[value="skills"] ~ div .pc-skills-btn,
-.tabs-toggle[value="buffs"] ~ div .pc-buffs-btn {
+.tabs-toggle[value="buffs"] ~ div .pc-buffs-btn,
+.tabs-toggle[value="import"] ~ div .pc-import-btn {
   color: white; 
   background-color: var(--cof-hilite); 
 }
@@ -395,6 +397,7 @@ input[value="0"].pc-skills-btn ~ button.pc-skills-btn {
 .tabs-toggle[value="rolls"] ~ div.pc-rolls-subtab,
 .tabs-toggle[value="skills"] ~ div.pc-skills-subtab,
 .tabs-toggle[value="buffs"] ~ div.pc-buffs-subtab,
+.tabs-toggle[value="import"] ~ div.pc-import-subtab,
 .tabs-toggle[value="main"] ~ div.npc-main-tab, 
 .tabs-toggle[value="config"] ~ div.npc-config-tab,
 .tabs-toggle[value="script"] ~ div.npc-script-tab {
@@ -697,7 +700,6 @@ input[value="0"].show-paths-789 ~ div.abilities {
 .pc-config-tab li.config-check {
   list-style: none;
 }
-  
 
 .pc-config-tab .pc-configs {
   display: grid;

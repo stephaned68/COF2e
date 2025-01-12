@@ -1,9 +1,9 @@
 <div class="cofmain">
 
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.1.02">
+  <input type="hidden" name="attr_verfdp" value="1.1.03">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.1.02">
+  <input type="hidden" name="attr_version" value="1.1.03">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
 
@@ -41,8 +41,10 @@
   <input type="hidden" name="attr_def_buff" value="0">
   <input type="hidden" name="attr_def_cond" value="0">
   <input type="hidden" name="attr_pv_buff" value="0">
+  <input type="hidden" name="attr_dr_base" value="2">
   <input type="hidden" name="attr_dr_buff" value="0">
   <input type="hidden" name="attr_pm_buff" value="0">
+  <input type="hidden" name="attr_pc_base" value="2">
   <input type="hidden" name="attr_pc_buff" value="0">
 
   <!-- Other hidden attributes -->
@@ -584,9 +586,10 @@
               </div>
 
               <div class="bordered centered">
+                <input type="hidden" name="attr_dr_max" value="2">
                 <input type="number" name="attr_dr" title="@{dr} DR courants" value="2">
-                /
-                <input type="number" name="attr_dr_max" title="@{dr_max} DR maximum" value="2">
+                /&nbsp;
+                <span name="attr_dr_max" title="@{dr_max} DR maximum"></span>
               </div>
 
             </div>
@@ -876,7 +879,7 @@
                 &nbsp;/&nbsp;
                 <span name="attr_pc_max" title="@{pc_max} PC maximum"></span>
                 &nbsp;=&nbsp;
-                <input type="number" name="attr_pc_base" title="@{pc_base} Base" value="2">
+                <span name="attr_pc_base" title="@{pc_base} Base PC"></span>
                 &nbsp;+&nbsp;
                 <span name="attr_cha" title="Score de CHArisme"></span>
                 &nbsp;+&nbsp;
@@ -2097,6 +2100,9 @@
               <div class="path-title d-flex">
                 <input type="text" name="attr_voie1nom" title="@{voie1nom}" value="1 - Voie de peuple">
                 PV&nbsp;<input type="number" name="attr_voie1pv" title="@{voie1pv}" value="">
+                <button type="action" class="flat-btn img-btn" name="act_import_v1-btn" title="Importer les capacités">
+                  <span class="img-btn">W</span>
+                </button>
               </div>
               <div class="rank">
                 <div class="d-flex">
@@ -2189,6 +2195,9 @@
               <div class="path-title d-flex">
                 <input type="text" name="attr_voie2nom" title="@{voie2nom}" value="2 - Voie de profil">
                 PV&nbsp;<input type="number" name="attr_voie2pv" title="@{voie2pv}" value="">
+                <button type="action" class="flat-btn img-btn" name="act_import_v2-btn" title="Importer les capacités">
+                  <span class="img-btn">W</span>
+                </button>
               </div>
               <div class="rank">
                 <div class="d-flex">
@@ -2281,6 +2290,9 @@
               <div class="path-title d-flex">
                 <input type="text" name="attr_voie3nom" title="@{voie3nom}" value="3 - Voie de profil">
                 PV&nbsp;<input type="number" name="attr_voie3pv" title="@{voie3pv}" value="">
+                <button type="action" class="flat-btn img-btn" name="act_import_v3-btn" title="Importer les capacités">
+                  <span class="img-btn">W</span>
+                </button>
               </div>
               <div class="rank">
                 <div class="d-flex">
@@ -2377,6 +2389,9 @@
               <div class="path-title d-flex">
                 <input type="text" name="attr_voie4nom" title="@{voie4nom}" value="4 - Voie de profil">
                 PV&nbsp;<input type="number" name="attr_voie4pv" title="@{voie4pv}" value="">
+                <button type="action" class="flat-btn img-btn" name="act_import_v4-btn" title="Importer les capacités">
+                  <span class="img-btn">W</span>
+                </button>
               </div>
               <div class="rank">
                 <div class="d-flex">
@@ -2413,7 +2428,7 @@
                 </div>
               </div>
               <div class="rank">
-                <div class="d-fle">
+                <div class="d-flex">
                   <input type="text" name="attr_voie4-t3" title="@{voie4-t3}" placeholder="Nom de la capacité">
                   <input type="checkbox" name="attr_v4r3_spell" title="@{v4r3_spell} Est un sort" value="1">
                 </div>
@@ -2469,6 +2484,9 @@
               <div class="path-title d-flex">
                 <input type="text" name="attr_voie5nom" title="@{voie5nom}" value="5 - Voie de profil">
                 PV&nbsp;<input type="number" name="attr_voie5pv" title="@{voie5pv}" value="">
+                <button type="action" class="flat-btn img-btn" name="act_import_v5-btn" title="Importer les capacités">
+                  <span class="img-btn">W</span>
+                </button>
               </div>
               <div class="rank">
                 <div class="d-flex">
@@ -2561,6 +2579,9 @@
               <div class="path-title d-flex">
                 <input type="text" name="attr_voie6nom" title="@{voie6nom}" value="6 - Voie de profil">
                 PV&nbsp;<input type="number" name="attr_voie6pv" title="@{voie6pv}" value="">
+                <button type="action" class="flat-btn img-btn" name="act_import_v6-btn" title="Importer les capacités">
+                  <span class="img-btn">W</span>
+                </button>
               </div>
               <div class="rank">
                 <div class="d-flex">
@@ -2657,6 +2678,9 @@
               <div class="path-title d-flex">
                 <input type="text" name="attr_voie7nom" title="@{voie7nom}" value="7 - Voie de prestige 1">
                 PV&nbsp;<input type="number" name="attr_voie7pv" title="@{voie7pv}" value="">
+                <button type="action" class="flat-btn img-btn" name="act_import_v7-btn" title="Importer les capacités">
+                  <span class="img-btn">W</span>
+                </button>
               </div>
               <div class="rank">
                 <div class="d-flex">
@@ -2749,6 +2773,9 @@
               <div class="path-title d-flex">
                 <input type="text" name="attr_voie8nom" title="@{voie8nom}" value="8 - Voie de prestige 2">
                 PV&nbsp;<input type="number" name="attr_voie8pv" title="@{voie8pv}" value="">
+                <button type="action" class="flat-btn img-btn" name="act_import_v8-btn" title="Importer les capacités">
+                  <span class="img-btn">W</span>
+                </button>
               </div>
               <div class="rank">
                 <div class="d-flex">
@@ -2841,6 +2868,9 @@
               <div class="path-title d-flex">
                 <input type="text" name="attr_voie9nom" title="@{voie9nom}" value="Voie n°9">
                 PV&nbsp;<input type="number" name="attr_voie9pv" title="@{voie9pv}" value="">
+                <button type="action" class="flat-btn img-btn" name="act_import_v9-btn" title="Importer les capacités">
+                  <span class="img-btn">W</span>
+                </button>
               </div>
               <div class="rank">
                 <div class="d-flex">
@@ -2994,6 +3024,7 @@
           <input type="hidden" class="pc-skills-btn" name="attr_use_skills" value="0">
           <button type="action" name="act_pc_skills-btn" class="sub-tab tab-btn pc-skills-btn">COMPETENCES</button>
           <button type="action" name="act_pc_buffs-btn" class="sub-tab tab-btn pc-buffs-btn">BUFFS</button>
+          <button type="action" name="act_pc_import-btn" class="sub-tab tab-btn pc-import-btn">IMPORT</button>
         </div>
         
         <hr>
@@ -3825,6 +3856,35 @@
           </details>
 
         </div>
+
+        <!-- Fiche PJ, Onglet CAPACITES, Sous-onglet Import -->
+        <div class="pc-import-subtab">
+
+          <div class="sheet-2colrow">
+
+            <div class="sheet-col">
+              <h4>Import des capacités</h4>
+              <textarea class="statblock" name="attr_voie_pdf" placeholder="Copiez ici le texte de la voie..."></textarea>
+            </div>
+
+            <div class="sheet-col">
+
+              <ul>
+                <li>N'oubliez pas d'indiquer le premier rang de la voie dans la configuration</li>
+                <li>
+                  La première ligne est le nom de la voie<br>
+                  Les préfixes ("Voie du ...", "Voie de la ...") sont tronqués
+                </li>
+                <li>Une ligne commençant par un chiffre marque le début d'une capacité</li>
+                <li>Les lignes suivantes constituent la description de la capacité</li>
+              </ul>
+              
+            </div>
+
+          </div>
+
+        </div>
+
       </div>
 
       <!-- Fiche PJ, Onglet Equipement -->
@@ -3976,6 +4036,30 @@
               <li>
                 <span>Afficher compétences&nbsp;</span>
                 <input type="checkbox" name="attr_use_skills" value="1">
+              </li>
+            </ul>
+
+            <h4>Forcer les valeurs maxi.</h4>
+            <ul>
+              <li>
+                <input type="checkbox" name="attr_pvmax_force" title="@{pvmax_force}">
+                <span>PV :&nbsp;</span>
+                <input type="number" class="two-digits" name="attr_pv_max" title="@{pv_max}">
+              </li>
+              <li>
+                <input type="checkbox" name="attr_drmax_force" title="@{drmax_force}">
+                <span>DR :&nbsp;</span>
+                <input type="number" class="two-digits" name="attr_dr_max" title="@{dr_max}">
+              </li>
+              <li>
+                <input type="checkbox" name="attr_pcmax_force" title="@{pcmax_force}">
+                <span>PC :&nbsp;</span>
+                <input type="number" class="two-digits" name="attr_pc_max" title="@{pc_max}">
+              </li>
+              <li>
+                <input type="checkbox" name="attr_pmmax_force" title="@{pmmax_force}">
+                <span>PM :&nbsp;</span>
+                <input type="number" class="two-digits" name="attr_pm_max" title="@{pm_max}">
               </li>
             </ul>
 
@@ -4146,36 +4230,11 @@
           </div>
 
         </div>
-
+        
+        <!-- 
+          
         <hr>
 
-        <details>
-          <summary>Importer capacités</summary>
-
-          <div class="sheet-2colrow">
-
-            <div class="sheet-col">
-              <textarea class="statblock" name="attr_voie_pdf"></textarea>
-            </div>
-
-            <div class="sheet-col">
-              <ul>
-                <li>Copiez le texte de la voie dans le cadre ci-contre</li>
-                <li>N'oubliez pas d'indiquer le premier rang de la voie ci-dessus</li>
-                <li>Indiquez le no de la voie ci-dessous pour importer les capacités</li>
-              </ul>
-              Voie : <input type="number" name="attr_import_voie">&nbsp;
-              <button type="action" class="flat-btn img-btn" name="act_import_ranks-btn" title="Importer les capacités">
-                <span class="img-btn">W</span>&nbsp;Importer
-              </button>
-            </div>
-
-
-          </div>
-
-        </details>
-
-        <!-- 
         <details>
 
           <summary>Importer profil & équipement</summary>
@@ -4254,12 +4313,15 @@
               <li>
                 <details>
                   <summary>
-                    <strong>Version 1.1.02</strong> (future 1.2.0 Roll20)
+                    <strong>Version 1.1.03</strong> (future 1.2.0 Roll20)
                   </summary>
                   <ul>
                     <li>Ajout d'une gestion des armures, boucliers et casques équipés</li>
                     <li>Ajout d'une option pour vérifier les points de capacités utilisés</li>
-                    <li>Création automatique de buff pour les profils de la famille Aventuriers (+1 PC) et Mystiques (+1 DR)</li>
+                    <li>Import des voies déplacé de l'onglet Configuration dans un sous-onglet Import de l'onglet Capacités</li>
+                    <li>Ajout d'une icône pour chaque nom de voie en mode Edition pour l'import du texte des capacités</li>
+                    <li>Modification du calcul des DR max avec une base de 2 sauf pour les profils de Mystiques (3 DR)</li>
+                    <li>Modification du calcul des PC max avec une base de 2 sauf pour les profils d'Aventuriers (3 PC)</li>
                     <li>Modification du champ RD dans la fiche de PNJ</li>
                   </ul>
                 </details>
@@ -6136,7 +6198,7 @@ on("change:sheet_type", function() {
 /**
  * Change subtabs
  */
-[ "rolls", "skills", "buffs" ].forEach(button => {
+[ "rolls", "skills", "buffs", "import" ].forEach(button => {
   on(`clicked:pc_${button}-btn`, function() {
       setAttrs({ pc_subtab: button });
   });
@@ -6180,6 +6242,7 @@ function getProfileData(profile, selectFamily = "") {
  * On change of family
  * - set list of profiles
  * - set DR type
+ * - set PC & DR base
  */
 on("change:famille", function() {
   const section = "repeating_buffs";
@@ -6195,38 +6258,26 @@ on("change:famille", function() {
 
       const updates = new Map();
 
-      let drecup = 8;
-      let target = "";
+      let dRecup = 8;
+      let pcBase = 2;
+      let drBase = 2;
       switch (family) {
         case "Aventuriers":
-          target = "pc";
+          pcBase = 3;
           break;
         case "Combattants":
-          drecup = 10;
+          dRecup = 10;
           break;
         case "Mages":
-          drecup = 6
+          dRecup = 6;
           break;
         case "Mystiques":
-          target = "dr";
+          drBase = 3;
           break;
       }
-      updates.set("drecup", drecup);
-
-      if (target !== "") {
-        const search = "Famille " + family;
-        const found = allBuffs.find(buff => {
-          if (strval(values[buff]).trim().toLowerCase() === search.trim().toLowerCase())
-            return true;
-        });
-        if (!found) {
-          const rowId = `${section}_${ generateRowID() }_buff-`;
-          updates.set(rowId + "on", 1);
-          updates.set(rowId + "nom", search);
-          updates.set(rowId + "attrib", target);
-          updates.set(rowId + "value", 1);
-        }
-      }
+      updates.set("drecup", dRecup);
+      updates.set("pc_base", pcBase);
+      updates.set("dr_base", drBase);
 
       setAttrs(Object.fromEntries(updates));
     });
@@ -6409,8 +6460,11 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
  * Compute max DR
  */
 function updateDRMax() {
-  getAttrs([ "con", "dr_buff" ], function(values) {
-    const dr_max = 2 + intval(values.con) + intval(values.dr_buff);
+  getAttrs([ "drmax_force", "dr_base", "con", "dr_buff" ], function(values) {
+    if (boolval(values.drmax_force))
+      return;
+
+    const dr_max = intval(values.dr_base) + intval(values.con) + intval(values.dr_buff);
     setAttrs({ dr_max });
   });
 }
@@ -6418,7 +6472,7 @@ function updateDRMax() {
 /**
  * On CON change
  */
-on("change:con change:dr_buff", updateDRMax);
+on("change:dr_base change:con change:dr_buff", updateDRMax);
 
 /**
  * Compute pv_max
@@ -6433,8 +6487,10 @@ function updatePVMax() {
       other.push(`v${path}r${rank}_props`);
     });
   });
-  getAttrs([ "cfg_pvmax_auto", "niveau", "con", "pv_buff", ...owned, ...other ], function(values) {
+  getAttrs([ "cfg_pvmax_auto", "pvmax_force", "niveau", "con", "pv_buff", ...owned, ...other ], function(values) {
     if (!boolval(values.cfg_pvmax_auto))
+      return;
+    if (boolval(values.pvmax_force))
       return;
 
     // niveau * CON 
@@ -6519,7 +6575,10 @@ function updatePMMax() {
       spells.push(`v${p}r${r}_spell`);
     });
   });
-  getAttrs([ "cfg_use_mana", "vol", "pm_buff", ...spells, ...owned, ...bRanks ], function(values) {
+  getAttrs([ "cfg_use_mana", "pmmax_force", "vol", "pm_buff", ...spells, ...owned, ...bRanks ], function(values) {
+    if (boolval(values.pmmax_force))
+      return;
+
     const useMorePM = boolval(values.cfg_use_mana);
     const spellPM = spells.reduce((pm, spell) => {
       const [ ability ] = spell.split("_");
@@ -6553,7 +6612,10 @@ seq(9).forEach(p => {
  * Compute max PC
  */
 function updatePCMax() {
-  getAttrs([ "cha", "pc_base", "pc_buff" ], function(values) {
+  getAttrs([ "pcmax_force", "pc_base", "cha", "pc_buff" ], function(values) {
+    if (boolval(values.pcmax_force))
+      return;
+    
     const pc_max = addValues(values);
     setAttrs({ pc_max });
   });
@@ -6562,7 +6624,7 @@ function updatePCMax() {
 /**
  * On PC components change
  */
-on("change:cha change:pc_base change:pc_buff", updatePCMax);
+on("change:pc_base change:cha change:pc_buff", updatePCMax);
 
 /**
  * Ability rolls
@@ -8085,6 +8147,55 @@ function rebuildBuffValues() {
   });
 }
 
+seq(9).forEach(path => {
+  
+  on(`clicked:import_v${path}-btn`, function() {
+    getAttrs([ "voie_pdf", `v${path}br` ], function(values) {
+      const text = strval(values.voie_pdf);
+      console.log(text)
+      if (text === "")
+        return;
+       
+      const base = values[`v${path}br`];
+      const updates = new Map();
+      let ability = "";
+      text.split("\n").forEach((line, index) => {
+        // first line
+        if (index === 0) {
+          let pathName = simplePathName(line.toLowerCase());
+          if (pathName !== "")
+            updates.set(`voie${path}nom`, capitalize(pathName));
+          return;
+        }
+  
+        if (strval(line) === "")
+          return;
+  
+        // Found ability title
+        const matched = line.match(/([1-9])\.[ ]+(.*)[ ]:/);
+        if (matched) {
+          let [ , rank, title ] = matched;
+          rank = intval(rank) - base + 1;
+          updates.set(`v${path}r${rank}_spell`, title.includes("*") ? 1 : 0);
+          title = title.replace("*", "");
+          updates.set(`voie${path}-t${rank}`, title.trim());
+          ability = `voie${path}-${rank}`;
+          return;
+        }
+        const desc = updates.has(ability) ? updates.get(ability) + " " : "";
+        updates.set(ability, desc + line.trim());
+      });
+  
+      if (updates.size > 0) {
+        updates.set("voie_pdf", "");
+        setAttrs(Object.fromEntries(updates));
+        abilityUsages(path);
+      }
+    });
+  });
+
+});
+
 /**
  * Recalculate total encumbrance
  */
@@ -8669,52 +8780,6 @@ function importGears(gearData, attributes) {
 
   return attributes;
 }
-
-on("clicked:import_ranks-btn", function() {
-  getAttrs([ "voie_pdf", "import_voie", ...seq(9).map(p => `v${p}br`) ], function(values) {
-    const text = strval(values.voie_pdf);
-    const path = numval(values.import_voie);
-    if (text === "" || path === 0)
-      return;
-     
-    const base = values[`v${path}br`];
-    const updates = new Map();
-    let ability = "";
-    text.split("\n").forEach((line, index) => {
-      // first line
-      if (index === 0) {
-        let pathName = simplePathName(line.toLowerCase());
-        if (pathName !== "")
-          updates.set(`voie${path}nom`, capitalize(pathName));
-        return;
-      }
-
-      if (strval(line) === "")
-        return;
-
-      // Found ability title
-      const matched = line.match(/([1-9])\.[ ]+(.*)[ ]:/);
-      if (matched) {
-        let [ , rank, title ] = matched;
-        rank = intval(rank) - base + 1;
-        updates.set(`v${path}r${rank}_spell`, title.includes("*") ? 1 : 0);
-        title = title.replace("*", "");
-        updates.set(`voie${path}-t${rank}`, title.trim());
-        ability = `voie${path}-${rank}`;
-        return;
-      }
-      const desc = updates.has(ability) ? updates.get(ability) + " " : "";
-      updates.set(ability, desc + line.trim());
-    });
-
-    if (updates.size > 0) {
-      updates.set("voie_pdf", "");
-      updates.set("import_voie", "");
-      setAttrs(Object.fromEntries(updates));
-      abilityUsages(path);
-    }
-  });
-});
 
 /**
  * Click on button to display link to COMob Export in chat
