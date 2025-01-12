@@ -30,10 +30,12 @@ ou héroïque, H = supérieure et héroïque)
 - <kbd>pv</kbd> : PV courants
 - <kbd>pv_buff</kbd> : buffs au maximum de PV
 - <kbd>pv_max</kbd> : PV maximums
+- <kbd>pvmax_force</kbd> : 0/1 pour forcer la valeur max des PV
 - <kbd>drecup</kbd> : valeur du dé de récupération (6/8/10)
 - <kbd>dr</kbd> : nombre courant de dés de récupération
 - <kbd>dr_buff</kbd> : buffs au maximum de DR
 - <kbd>dr_max</kbd> : nombre maximum de dés de récupération
+- <kbd>drmax_force</kbd> : 0/1 pour forcer la valeur max des DR
 - <kbd>temp_dm</kbd> : dommages temporaires
 
 ## Mana, Dé évolutif, Chance
@@ -41,10 +43,12 @@ ou héroïque, H = supérieure et héroïque)
 - <kbd>pm</kbd> : PM courants
 - <kbd>pm_buff</kbd> : buffs au maximum de PM
 - <kbd>pm_max</kbd> : PM maximums
+- <kbd>pmmax_force</kbd> : 0/1 pour forcer la valeur max des PM
 - <kbd>devol</kbd> : dé évolutif (d4/d6/d8/d10/d12)
 - <kbd>pc</kbd> : PC courants
 - <kbd>pc_buff</kbd> : buffs au maximum de PC
 - <kbd>pc_max</kbd> : PC maximums
+- <kbd>pcmax_force</kbd> : 0/1 pour forcer la valeur max des PC
 
 ## Défense
 
@@ -54,6 +58,9 @@ ou héroïque, H = supérieure et héroïque)
 - <kbd>armure_malus</kbd> : malus d'armure
 - <kbd>bouclier</kbd> : bonus de bouclier
 - <kbd>bouclier_eqp</kbd> : 0/1 selon que le bouclier soit équipé ou pas
+- <kbd>bouclier_malus</kbd> : malus de bouclier (si l'option est activée)
+- <kbd>casque</kbd> : RD du casque contre les DM critiques
+- <kbd>casque_eqp</kbd> : 0/1 selon que le casque soit équipé ou pas
 - <kbd>def_car</kbd> : caractéristique bonus (agi ou con)
 - <kbd>def_car_max</kbd> : bonus de caractéristique maximum (selon armure)
 - <kbd>def_buff</kbd> : buffs à la Défense
@@ -91,8 +98,8 @@ ou héroïque, H = supérieure et héroïque)
 
 Ces attributs existent pour toutes les voies (1 à 9) et tous les rangs (1 à 5).
 
-- <kbd>noms_voies</kbd> : liste des noms de voies, séparés par des \|
-- <kbd>rangs_voies</kbd> : liste des rangs dans les voies, séparés par des ,
+- <kbd>noms_voies</kbd> : liste des noms de voies, séparés par des <kbd>|</kbd>
+- <kbd>rangs_voies</kbd> : liste des rangs dans les voies, séparés par des <kbd>,</kbd>
 
 ## Buffs / Debuffs
 

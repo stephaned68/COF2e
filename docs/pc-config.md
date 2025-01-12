@@ -76,16 +76,6 @@ Le joueur peut sélectionner une couleur spécifique pour les messages de chat d
 
 Pour chaque voie du PJ, vous pouvez indiquer la valeur du premier rang (1 pour les voies de peuple et de profil, 3 ou 4 pour les voies de prestige).
 
-# Import des capacités
-
-Cette section permet d'importer les capacités d'une voie de profil ou de prestige.
-
-Collez le texte dans le champ prévu à cet effet, saisissez le no de la voie correspondante et cliquez sur le bouton <kbd>Importer</kbd>. 
-
-- La voie choisie est remplie avec le texte copié, toutes les données précédemment saisies sont **écrasées** !
-- La description de chaque capacité est analysée pour trouver des références à un nombre d'utilisations limité (ex : _"une fois par combat, ..."_)
-- Si le nom d'une capacité comporte un astérisque <kbd>*</kbd>, celle-ci est considérée comme un sort
-
 ---
 
 [Retour]({{ site.baseurl }}/pc-main)
