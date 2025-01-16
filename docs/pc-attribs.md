@@ -30,7 +30,7 @@ Lorsque le bouton d'initiative est cliqué, si le token du PJ est sélectionné 
 
 Pour les boutons de jets d'attaque, le jet de dé effectué dépend des circonstances :
 - Un jet de d20 avec _dé malus_ en cas d'état _Affaibli_,
-- Deux jets de d20 sinon. Le premier jet affiché est pris en compte dans le cas général. Si le PJ bénéficie d'un _dé bonus_ ou d'un _dé malus_, c'est le plus élevé ou le moins élevé des deux jets qui est pris en compte.
+- Deux jets de d20 sinon. Dans le cas général (jet normal), prenez en compte le premier jet affiché. Prenez le plus élevé des deux jets si le PJ bénéficie d'un _dé bonus_ ou le moins élevé s'il subit un _dé malus_.
 
 # Vigueur
 
@@ -111,7 +111,7 @@ Des paramètres optionnels peuvent être ajoutés :
 
 - Options d'attaques avec arguments : ce paramètre est utilisé par le script COFantasy2
 
-Un clic sur le bouton d20 permet de lancer le jet d'attaque et de DM dans le chat en tenant compte des divers paramètres. Deux jets distincts d'attaque sont effectués, sauf si le PJ est _Affaibli_.
+Un clic sur le bouton d20 permet de lancer le jet d'attaque et de DM dans le chat en tenant compte des divers paramètres. Deux jets distincts d'attaque sont effectués, sauf si le PJ est _Affaibli_. Dans le cas général (jet normal), prenez en compte le premier jet affiché. Prenez le plus élevé des deux jets si le PJ bénéficie d'un _dé bonus_ ou le moins élevé s'il subit un _dé malus_.
 
 Si l'arme est maniée à deux mains et que le bouclier est équipé, le jet d'attaque n'est pas effectué, un message d'avertissement s'affiche à la place.
 

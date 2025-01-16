@@ -65,7 +65,7 @@ L'icone située à côté de **Nom** permet d'afficher un menu d'action dans le 
 Ce sous-onglet n'apparaît que si la règle optionnelle est activée dans l'onglet _Configuration_ de la fiche.
 
 - Cliquez sur le nom de la compétence pour faire un jet dans le chat Roll20.
-- La caractéristique la plus souvent utilisée est indiquée par défaut mais vous pouvez la changer selon les circonstances. La dernière caractéristique utilisée pour chaque jet de compétence est sauvegardée.
+- La caractéristique la plus souvent utilisée est indiquée par défaut mais vous pouvez la changer selon les circonstances.
 - Le choix _Demander_ permet d'afficher un popup Roll20 pour sélectionner la caractéristique au moment du jet.
 - Indiquez le bonus de compétence qui s'ajoute au jet.
 

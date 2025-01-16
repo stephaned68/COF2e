@@ -2,6 +2,8 @@
 
 Cette section permet de tenir à jour l'inventaire du matériel possédé par le personnage.
 
+Le trésor affiché est la somme de toutes les pièces dans la bourse du personnage, convertie en pièces d'argent.
+
 Pour chaque élément de l'inventaire, vous indiquez :
 - Le nom de la pièce d'équipement.
 - Sa valeur d'encombrement (qui n'est utilisée que si la règle optionnelle d'encombrement est active).
@@ -32,7 +34,11 @@ Les codes et valeurs correspondantes que vous pouvez indiquer sont :
 - Pour les protections (armures et boucliers) :
   - <kbd>bonus-def</kbd> : bonus apporté à la DEF par l'armure ou le bouclier
   - <kbd>armure</kbd> : bonus apporté à la DEF par l'armure
-  - <kbd>bouclier</kbd> : bonus apporté à la DEF par le  bouclier
+  - <kbd>armure-malus</kbd> : malus à l'AGI de l'armure portée
+  - <kbd>bouclier</kbd> : bonus apporté à la DEF par le bouclier
+  - <kbd>bouclier-malus</kbd> : malus à l'AGI du bouclier porté
+  - <kbd>casque</kbd> : RD du casque contre les DM critiques
+  - <kbd>casque-malus</kbd> : malus à la PER & Init du casque porté
   - <kbd>agi-max</kbd> : valeur maximum d'AGI pour port de l'armure
 
 ## Equipement lié à la défense
