@@ -40,6 +40,12 @@ button
   text-align: right;
 }
 
+.cofmain .cofsheet input[type='number'].treasure {
+  width: 7rem;
+  text-align: right;
+  font-size: small;
+}
+
 summary {
   display: list-item;
 }
@@ -168,6 +174,10 @@ span.img-btn {
 
 span.img-btn-lg {
   font-size: large;
+}
+
+span.img-btn-xl {
+  font-size: x-large;
 }
 
 .img-btn:hover {
@@ -623,11 +633,20 @@ div.change-view {
 }
 
 .abilities .rank textarea {
-  height: 4rem;
+  height: 12rem;
   overflow: hidden;
   resize: vertical;
 }
 
+.abilities-view .abilities input:checked ~ .rank-title {
+  font-weight: bold;
+}
+
+.abilities-view .abilities .rank span {
+  white-space: pre-wrap;
+  /*font-size: x-small;*/
+  user-select: text;
+}
 
 .abilities .rank textarea.one-row,
 .pc-gears .gears textarea.one-row,
@@ -785,6 +804,7 @@ textarea.import-result {
   border-radius: 5px;
   background-color: whitesmoke;
   margin-left: -37px;
+  margin-top: 12px;
 }
 
 .withoutavatars .sheet-rolltemplate-cof2 {
@@ -792,7 +812,7 @@ textarea.import-result {
 }
 
 .sheet-rolltemplate-cof2 .sheet-rt {
-  font-family: "Merriweather Sans", "Verdana";
+  font-family: "Merriweather Sans";
 }
 
 .sheet-rolltemplate-cof2 .sheet-rt-header {
@@ -858,8 +878,13 @@ textarea.import-result {
 }
 
 .sheet-rolltemplate-cof2 .sheet-rt-token {
-  width: 48px;
-  height: 48px;
+  margin-top: -16px;
+  width: 72px;
+  height: 72px;
+}
+
+.sheet-rolltemplate-cof2 .sheet-rt-token ~ div {
+  align-self: center;
 }
 
 .sheet-rolltemplate-cof2 .sheet-rt-roll {

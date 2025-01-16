@@ -1,9 +1,9 @@
 <div class="cofmain">
 
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.1.03">
+  <input type="hidden" name="attr_verfdp" value="1.1.04">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.1.03">
+  <input type="hidden" name="attr_version" value="1.1.04">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
 
@@ -963,15 +963,18 @@
                       &nbsp;Elémentaires
                     </option>
                     <option value="acide">A - Acide</option>
-                    <option value="électricité">E - Electricité</option>
+                    <option value="electrique">E - Electricité</option>
                     <option value="feu">Fe - Feu</option>
                     <option value="froid">Fr - Froid</option>
+                    <option value="sonique">S - Sonique</option>
                   </optgroup>
                   <optgroup label="Autres">
                     <option disabled class="optgroup">
                       &nbsp;Autres
                     </option>
-                    <option value="magiques">M - Magiques</option>
+                    <option value="drain">Dr - Drain</option>
+                    <option value="magique">M - Magiques</option>
+                    <option value="maladie">Ma - Maladie</option>
                   </optgroup>
                 </select>
                 &nbsp;<span class="align-self-center">+</span>&nbsp;
@@ -982,8 +985,9 @@
                     <option value="@{agi}">AGI</option>
                     <option value="@{for}" selected>FOR</option>
                     <option value="@{per}">PER</option>
-                    <option value="@{int}">INT</option>
                     <option value="@{cha}">CHA</option>
+                    <option value="@{int}">INT</option>
+                    <option value="@{vol}">VOL</option>
                   </optgroup>
                   <optgroup label="Test">
                     <option class="optgroup" value="" disabled>&nbsp;Test</option>
@@ -3137,6 +3141,7 @@
                   </button>
                 </div>
                 <div>
+                  <input type="hidden" name="attr_acrobaties_def" value="@{agi}">
                   <select class="select-md" name="attr_acrobaties_carac" title="@{acrobaties_carac} Bonus de caractéristique">
                     <option value="0">-</option>
                     <option value="@{agi}" selected>AGI</option>
@@ -3161,6 +3166,7 @@
                   </button>
                 </div>
                 <div>
+                  <input type="hidden" name="attr_artisanat_def" value="@{int}">
                   <select class="select-md" name="attr_artisanat_carac" title="@{artisanat_carac} Bonus de caractéristique">
                     <option value="0">-</option>
                     <option value="@{agi}">AGI</option>
@@ -3185,6 +3191,7 @@
                   </button>
                 </div>
                 <div>
+                  <input type="hidden" name="attr_athletisme_def" value="?">
                   <select class="select-md" name="attr_athletisme_carac" title="@{athletisme_carac} Bonus de caractéristique">
                     <option value="0">-</option>
                     <option value="@{agi}">AGI</option>
@@ -3209,6 +3216,7 @@
                   </button>
                 </div>
                 <div>
+                  <input type="hidden" name="attr_commerce_def" value="@{cha}">
                   <select class="select-md" name="attr_commerce_carac" title="@{commerce_carac} Bonus de caractéristique">
                     <option value="0">-</option>
                     <option value="@{agi}">AGI</option>
@@ -3233,6 +3241,7 @@
                   </button>
                 </div>
                 <div>
+                  <input type="hidden" name="attr_connaissance_def" value="@{int}">
                   <select class="select-md" name="attr_connaissance_carac" title="@{connaissance_carac} Bonus de caractéristique">
                     <option value="0">-</option>
                     <option value="@{agi}">AGI</option>
@@ -3257,6 +3266,7 @@
                   </button>
                 </div>
                 <div>
+                  <input type="hidden" name="attr_discretion_def" value="@{agi}">
                   <select class="select-md" name="attr_discretion_carac" title="@{discretion_carac} Bonus de caractéristique">
                     <option value="0">-</option>
                     <option value="@{agi}" selected>AGI</option>
@@ -3281,6 +3291,7 @@
                   </button>
                 </div>
                 <div>
+                  <input type="hidden" name="attr_divertissement_def" value="@{cha}">
                   <select class="select-md" name="attr_divertissement_carac" title="@{divertissement_carac} Bonus de caractéristique">
                     <option value="0">-</option>
                     <option value="@{agi}">AGI</option>
@@ -3305,6 +3316,7 @@
                   </button>
                 </div>
                 <div>
+                  <input type="hidden" name="attr_equitation_def" value="?">
                   <select class="select-md" name="attr_equitation_carac" title="@{equitation_carac} Bonus de caractéristique">
                     <option value="0">-</option>
                     <option value="@{agi}">AGI</option>
@@ -3329,6 +3341,7 @@
                   </button>
                 </div>
                 <div>
+                  <input type="hidden" name="attr_escalade_def" value="@{agi}">
                   <select class="select-md" name="attr_escalade_carac" title="@{escalade_carac} Bonus de caractéristique">
                     <option value="0">-</option>
                     <option value="@{agi}" selected>AGI</option>
@@ -3353,6 +3366,7 @@
                   </button>
                 </div>
                 <div>
+                  <input type="hidden" name="attr_effraction_def" value="@{agi}">
                   <select class="select-md" name="attr_effraction_carac" title="@{effraction_carac} Bonus de caractéristique">
                     <option value="0">-</option>
                     <option value="@{agi}" selected>AGI</option>
@@ -3377,6 +3391,7 @@
                   </button>
                 </div>
                 <div>
+                  <input type="hidden" name="attr_empathie_def" value="@{per}">
                   <select class="select-md" name="attr_empathie_carac" title="@{empathie_carac} Bonus de caractéristique">
                     <option value="0">-</option>
                     <option value="@{agi}">AGI</option>
@@ -3405,6 +3420,7 @@
                   </button>
                 </div>
                 <div>
+                  <input type="hidden" name="attr_intimidation_def" value="@{cha}">
                   <select class="select-md" name="attr_intimidation_carac" title="@{intimidation_carac} Bonus de caractéristique">
                     <option value="0">-</option>
                     <option value="@{agi}">AGI</option>
@@ -3429,6 +3445,7 @@
                   </button>
                 </div>
                 <div>
+                  <input type="hidden" name="attr_medecine_def" value="@{per}">
                   <select class="select-md" name="attr_medecine_carac" title="@{medecine_carac} Bonus de caractéristique">
                     <option value="0">-</option>
                     <option value="@{agi}">AGI</option>
@@ -3453,6 +3470,7 @@
                   </button>
                 </div>
                 <div>
+                  <input type="hidden" name="attr_natation_def" value="@{con}">
                   <select class="select-md" name="attr_natation_carac" title="@{natation_carac} Bonus de caractéristique">
                     <option value="0">-</option>
                     <option value="@{agi}">AGI</option>
@@ -3477,6 +3495,7 @@
                   </button>
                 </div>
                 <div>
+                  <input type="hidden" name="attr_occultisme_def" value="@{int}">
                   <select class="select-md" name="attr_occultisme_carac" title="@{occultisme_carac} Bonus de caractéristique">
                     <option value="0">-</option>
                     <option value="@{agi}">AGI</option>
@@ -3501,6 +3520,7 @@
                   </button>
                 </div>
                 <div>
+                  <input type="hidden" name="attr_persuasion_def" value="@{cha}">
                   <select class="select-md" name="attr_persuasion_carac" title="@{persuasion_carac} Bonus de caractéristique">
                     <option value="0">-</option>
                     <option value="@{agi}">AGI</option>
@@ -3525,6 +3545,7 @@
                   </button>
                 </div>
                 <div>
+                  <input type="hidden" name="attr_religion_def" value="@{int}">
                   <select class="select-md" name="attr_religion_carac" title="@{religion_carac} Bonus de caractéristique">
                     <option value="0">-</option>
                     <option value="@{agi}">AGI</option>
@@ -3549,6 +3570,7 @@
                   </button>
                 </div>
                 <div>
+                  <input type="hidden" name="attr_renseignement_def" value="@{cha}">
                   <select class="select-md" name="attr_renseignement_carac" title="@{renseignement_carac} Bonus de caractéristique">
                     <option value="0">-</option>
                     <option value="@{agi}">AGI</option>
@@ -3573,6 +3595,7 @@
                   </button>
                 </div>
                 <div>
+                  <input type="hidden" name="attr_sciences_def" value="@{int}">
                   <select class="select-md" name="attr_sciences_carac" title="@{sciences_carac} Bonus de caractéristique">
                     <option value="0">-</option>
                     <option value="@{agi}">AGI</option>
@@ -3597,6 +3620,7 @@
                   </button>
                 </div>
                 <div>
+                  <input type="hidden" name="attr_tromperie_def" value="@{cha}">
                   <select class="select-md" name="attr_tromperie_carac" title="@{tromperie_carac} Bonus de caractéristique">
                     <option value="0">-</option>
                     <option value="@{agi}">AGI</option>
@@ -3621,6 +3645,7 @@
                   </button>
                 </div>
                 <div>
+                  <input type="hidden" name="attr_survie_def" value="@{per}">
                   <select class="select-md" name="attr_survie_carac" title="@{survie_carac} Bonus de caractéristique">
                     <option value="0">-</option>
                     <option value="@{agi}">AGI</option>
@@ -3645,6 +3670,7 @@
                   </button>
                 </div>
                 <div>
+                  <input type="hidden" name="attr_vigilance_def" value="@{per}">
                   <select class="select-md" name="attr_vigilance_carac" title="@{vigilance_carac} Bonus de caractéristique">
                     <option value="0">-</option>
                     <option value="@{agi}">AGI</option>
@@ -3906,12 +3932,25 @@
               <div class="d-flex d-flex-middle">
                 <input type="hidden" name="attr_total_enc" value="0">
                 <input type="hidden" name="attr_limite_enc" value="10">
-                &nbsp;Trésor&nbsp;:&nbsp;<input type="text" name="attr_tresor" title="@{tresor}" placeholder="Bourses et possessions" value="">
+                <input type="hidden" name="attr_tresor" value="">
+                <input type="hidden" name="attr_tresor_pieces" value="">
+                &nbsp;Trésor&nbsp;:&nbsp;<input type="text" name="attr_tresor" title="@{tresor}" readonly>
                 &nbsp;Encombrement&nbsp;:&nbsp;<span class="align-self-center" name="attr_total_enc" title="@{total_enc} Encombrement total"></span>
                 &nbsp;/&nbsp;<span class="align-self-center" name="attr_limite_enc" title="@{limite_enc} Seuil d'encombrement"></span>
                 <button type="action" name="act_profequip-btn" class="flat-btn img-btn" title="Equipement de base du profil">
                   <span class="img-btn">l</span>
                 </button>
+              </div>
+              <div class="d-flex d-flex-middle">
+                <details>
+                  <summary>Bourse</summary>
+                  <div class="d-flex">
+                    PP:<input type="number" class="treasure" name="attr_tresor_pp">
+                    PO:<input type="number" class="treasure" name="attr_tresor_po">
+                    PA:<input type="number" class="treasure" name="attr_tresor_pa">
+                    PC:<input type="number" class="treasure" name="attr_tresor_pc">
+                  </div>
+                </details>
               </div>
             </div>
 
@@ -3984,7 +4023,7 @@
             <div class="block-title block-header">
               Equipement divers
             </div>
-            <textarea name="attr_equip_divers" title="@{equip_divers}" value=""></textarea>
+            <textarea name="attr_equip_divers" title="@{equip_divers}"></textarea>
           </div>
 
           <!-- Notes -->
@@ -3992,7 +4031,7 @@
             <div class="block-title block-header">
               Notes
             </div>
-            <textarea name="attr_notes" title="@{notes}" value=""></textarea>
+            <textarea name="attr_notes" title="@{notes}"></textarea>
           </div>
 
         </div>
@@ -4301,7 +4340,9 @@
       <div class="pc-version-tab">
         <h3>
           Notes de version (v<span name="attr_version"></span>)
-          <button type="action" class="flat-btn img-btn" name="act_helpdoc-btn"><span class="img-btn">N</span></button>
+          <button type="action" class="flat-btn img-btn" name="act_helpdoc-btn" title="Documentation en ligne">
+            <span class="img-btn img-btn-xl">i</span>
+          </button>
         </h3>
 
         <div class="sheet-2colrow">
@@ -4313,7 +4354,7 @@
               <li>
                 <details>
                   <summary>
-                    <strong>Version 1.1.03</strong> (future 1.2.0 Roll20)
+                    <strong>Version 1.1.04</strong> (future 1.2.0 Roll20)
                   </summary>
                   <ul>
                     <li>Ajout d'une gestion des armures, boucliers et casques équipés</li>
@@ -4324,6 +4365,9 @@
                     <li>Modification du calcul des PC max avec une base de 2 sauf pour les profils d'Aventuriers (3 PC)</li>
                     <li>Ajout d'options de configuration pour forcer la valeur max des PV, DR, PC et PM</li>
                     <li>Modification du champ RD dans la fiche de PNJ</li>
+                    <li>Amélioration de la reconnaissance d'inline-rolls dans les descriptions de capacités</li>
+                    <li>Ajout du détail de la bourse par type de pièces et total du trésor en PA</li>
+                    <li>Améliorations visuelles diverses</li>
                   </ul>
                 </details>
               </li>
@@ -4880,7 +4924,7 @@
   {{/token}}
   {{#token}}
   <div class="sheet-rt sheet-rt-2cols sheet-rt-header sheet-color-{{color}} sheet-rt-title">
-    <div class="sheet-rt-token">{{token}}</div>
+    <div class="sheet-rt-token sheet-rt-token-{{tokenpx}}">{{token}}</div>
     <div>{{perso}}</div>
   </div>
   {{/token}}
@@ -5594,6 +5638,12 @@ const SWData = {
       },
     ]
   },
+  COINS: [
+    "pp",
+    "po",
+    "pa",
+    "pc",
+  ],
   GEARS: {
     props: [
       "dm-1m",
@@ -5625,7 +5675,7 @@ const SWData = {
     },
     {
       name: "Rapière",
-      props: "critique: 19,dm-1m: 1d8,type-dm: Perforants",
+      props: "critique: 19,dm-1m: 1d6,type-dm: Perforants",
     },
     {
       name: "Arc court",
@@ -6139,7 +6189,7 @@ function dieRoll(type, weakened = 0) {
  * @returns {boolean}
  */
 function hasMODScript(values) {
-  return (strval(values.scriptVersion).toLowerCase() === "true");
+  return values.scriptVersion;
 }
 
 /**
@@ -6910,14 +6960,8 @@ function updateDef() {
  * @param {string} attribute - name of defense attribute
  */
 function updateEquiped(attribute) {
-  getSectionIDs("equipement", gearIds => {
+  processAllGear([ "on", "nom", "props" ], function(gearIds, allGears) {
     const section = "repeating_equipement";
-    const allGears = [];
-    gearIds.forEach(rowId => {
-      allGears.push(`${section}_${rowId}_equip-on`);
-      allGears.push(`${section}_${rowId}_equip-nom`);
-      allGears.push(`${section}_${rowId}_equip-props`);
-    });
     const defense = attribute.replace("_eqp", "");
     getAttrs([ attribute, defense, ...allGears ], function(values) {
       const equiped = intval(values[attribute]);
@@ -7220,7 +7264,7 @@ function insertRolls(text, options = {}) {
   });
 
   // Search for " [XXX] "
-  matchRegExp(text, /([ ]*)\[(AGI|CON|FOR|PER|CHA|INT|VOL)\]([ ]*)/gm).forEach(result => {
+  matchRegExp(text, /([ ]+)\[(AGI|CON|FOR|PER|CHA|INT|VOL)\]([ ]+)/gm).forEach(result => {
     let [ matched, sb, ability, sa ] = result;
     const replace = `${sb}[[@{${ability.toLowerCase()}}]]${sa}`;
     text = text.replace(matched, replace);
@@ -8020,11 +8064,12 @@ on("clicked:repeating_rolls:roll-btn", function() {
 SWData.PC.SKILLS.forEach(skill => {
   on(`clicked:skill-${skill.name}`, function () {
     const skillName = (skill.label !== "") ? skill.label : capitalize(skill.name);
-    const skillAttrs = [ "carac", "bonus" ].map(a => `${skill.name}_${a}`);
+    const skillAttrs = [ "carac", "bonus", "def" ].map(a => `${skill.name}_${a}`);
     getAttrs(skillAttrs, function (values) {
-      const [ carac, bonus ] = Object.keys(values);
+      const [ carac, bonus, def ] = Object.keys(values);
       let caracBonus = strval(values[carac]);
       const skillBonus = intval(values[bonus]);
+      const skillDef = intval(values[def]);
 
       let rollCmd = "1d20cs20cf1[Dés]";
 
@@ -8049,6 +8094,10 @@ SWData.PC.SKILLS.forEach(skill => {
         broll: rollCmd
       });
       sendChatMsg(chatMsg);
+
+      // Restore default carac
+      if (caracBonus !== skillDef)
+        setAttrs({ [caracBonus]: skillDef });
     });
   });
 });
@@ -8202,20 +8251,8 @@ seq(9).forEach(path => {
  */
 function encumbrance() {
   const section = "repeating_equipement";
-  getSectionIDs("equipement", function (rowIds) {
-    const allEquip = [];
-    rowIds.forEach(id => {
-      [ "on", "qte", "enc" ]
-        .map(attr => `${section}_${id}_equip-${attr}`)
-        .forEach(a => {
-          allEquip.push(a);
-        });
-    });
-    getAttrs([
-      "cfg_use_encmb",
-      "for",
-      ...allEquip
-    ], function(values) {
+  processAllGear([ "on", "qte", "enc" ], function(rowIds, allEquip) {
+    getAttrs([ "cfg_use_encmb", "for", ...allEquip ], function(values) {
       const useEncumbrance = intval(values.cfg_use_encmb);
       const threshold = loadLimit(intval(values.for));
       let encumbrance = 0;
@@ -8276,8 +8313,14 @@ on("clicked:helpgear-btn", function() {
     "type-dm:=Types de dommages",
     "critique:=Seuil de critique",
     "portee:=Portée arme à distance",
-    "bonus-def:=Bonus DEF de l'armure",
-    "desc=Séparer les propriétés par des virgules"
+    "bonus-def:=Bonus DEF de l'armure ou du bouclier",
+    "armure:=Bonus DEF de l'armure",
+    "armure-malus:=Malus d'armure portée",
+    "bouclier:=Bonus DEF du bouclier",
+    "bouclier-malus:=Malus de bouclier porté",
+    "casque:=RD du casque contre les DM critiques",
+    "casque-malus:=Malus de PER et Init du casque porté",
+    "desc=Une propriété par ligne"
   ], {
     template: "custom",
     whisper: "gm"
@@ -8350,6 +8393,22 @@ function isHelmet(props) {
 }
 
 /**
+ * Detect if equipment is a weapon
+ * @param {string} props - equipment properties
+ * @param {string} [filter=""] - filter weapon prop
+ * @returns {boolean}
+ */
+function isWeapon(props, filter = "") {
+  if (filter !== "") {
+    const dm = strval(getProp(props, filter));
+    if (dm !== "" && filter === "dm-2m")
+      return (strval(getProp(props, "dm-1m")) === "");
+    return dm !== "";
+  }
+  return (strval(getProp(props, "dm-1m")) !== "" || strval(getProp(props, "dm-2m")) !== "");
+}
+
+/**
  * Return map of defense items
  * @param {object} values - getAttrs() object 
  * @param {string[]} rowIds - list of equipment item ids
@@ -8393,7 +8452,7 @@ function getShields(values, rowIds) {
 }
 
 /**
- * Return map of shield items
+ * Return map of helmet items
  * @param {object} values - getAttrs() object 
  * @param {string[]} rowIds - list of equipment item ids
  * @returns {Map<string, object>}
@@ -8401,6 +8460,73 @@ function getShields(values, rowIds) {
 function getHelmets(values, rowIds) {
   return getDefGear(values, rowIds, "helmets");
 }
+
+/**
+ * Return map of weapon items
+ * @param {object} values - getAttrs() object 
+ * @param {string[]} rowIds - list of equipment item ids
+ * @param {string} [filter=""] - filter weapon props
+ * @returns {Map<string, object>}
+ */
+function getWeapons(values, rowIds, filter = "") {
+  const gears = new Map();
+  rowIds.forEach(rowId => {
+    const equiped = intval(values[`repeating_equipement_${rowId}_equip-on`]);
+    const name = strval(values[`repeating_equipement_${rowId}_equip-nom`]);
+    const props = strval(values[`repeating_equipement_${rowId}_equip-props`]);
+    console.log(props)
+    if (isWeapon(props, filter))
+      gears.set(rowId, { name, equiped, props });
+  });
+  return gears;
+}
+
+function getOneHanded(values, rowIds) {
+  return getWeapons(values, rowIds, "dm-1m");
+}
+
+function getTwoHanded(values, rowIds) {
+  return getWeapons(values, rowIds, "dm-2m");
+}
+
+/**
+ * Process a list of gear attributes
+ * @param {string[]} attributes - list of gear attributes to retrieve
+ * @param {object} callback - callback function (rowIds, allGears) => {}
+ */
+function processAllGear(attributes, callback) {
+  const section = "equipement";
+  getSectionIDs(section, gearIds => {
+    const allGears = [];
+    gearIds.forEach(rowId => {
+      attributes.forEach(attribute => {
+        allGears.push(`repeating_${section}_${rowId}_equip-${attribute}`);
+      });
+    });
+    callback(gearIds, allGears);
+  });
+}
+
+SWData.COINS.forEach(coin => {
+  on(`change:tresor_${coin}`, function() {
+    const coins = SWData.COINS.map(c => `tresor_${c}`);
+    getAttrs(coins, function(values) {
+      const tresor_pieces = SWData.COINS
+        .filter(c => intval(values[`tresor_${c}`]) !== 0)
+        .map(c=> `${ c.toUpperCase() } : ${ intval(values[`tresor_${c}`]) }`)
+        .join(", ");
+      values.tresor_pp = intval(values.tresor_pp) * 100;
+      values.tresor_po = intval(values.tresor_po) * 10;
+      const pc = intval(values.tresor_pc);
+      values.tresor_pa = intval(values.tresor_pa) + Math.floor(pc / 10);
+      values.tresor_pc = 0;
+      console.log(values)
+      const total = addValues(values);
+      const tresor = `${total} PA`;
+      setAttrs({ tresor, tresor_pieces });
+    });
+  });
+})
 
 /**
  * On changes in equipement list
@@ -8432,13 +8558,7 @@ on("change:repeating_equipement:equip-nom", function() {
 on("change:repeating_equipement:equip-on", function(eventInfo) {
   const equipId = eventInfo.triggerName.split("_")[2];
   const section = "repeating_equipement";
-  getSectionIDs("equipement", gearIds => {
-    const allGears = [];
-    gearIds.forEach(rowId => {
-      allGears.push(`${section}_${rowId}_equip-on`);
-      allGears.push(`${section}_${rowId}_equip-nom`);
-      allGears.push(`${section}_${rowId}_equip-props`);
-    });
+  processAllGear([ "on", "nom", "props" ], function(gearIds, allGears) {
     getAttrs([ 
       `${section}_equip-on`, 
       `${section}_equip-nom`, 
@@ -8603,7 +8723,7 @@ on("clicked:profequip-btn", function() {
       baseGear.set(rowId + "equip-qte", gear.number);
       const props = getGearProps(gear.name);
       if (props !== "")
-        baseGear.set(rowId + "equip-props", props);
+        baseGear.set(rowId + "equip-props", props.split(",").join("\n"));
     });
     if (baseGear.size > 0)
       setAttrs(Object.fromEntries(baseGear));
@@ -9504,6 +9624,168 @@ function setDebugMode(debugMode) {
   );
 }
 
+function migrateCOF1Value(attr, oldVal) {
+  let newVal = oldVal;
+
+  switch(`${attr}=${oldVal}`) {
+    case "atk=@{ATKCAC}":
+    case "atk=@{ATKTIR}":
+    case "atk=@{ATKMAG}":
+      newVal = oldVal.slice(2, 8).toLowerCase();
+      break;
+    case "typeattaque=Naturel":
+      newVal = "naturel";
+      break;
+    case "typeattaque=Arme 1 main":
+    case "typeattaque=Arme 2 mains":
+    case "typeattaque=Arme gauche":
+      newVal = "main";
+      break;
+    case "typeattaque=Sortilege":
+      newVal = "sort";
+      break;
+    case "typeattaque=Arme de jet":
+      newVal = "jet";
+      break;
+    case "typedegats=tranchant":
+    case "typedegats=contondant":
+      newVal += "s";
+      break;
+    case "typedegats=percant":
+      newVal = "perforants";
+      break;
+    case "dmcar=@{FOR}":
+    case "dmcar=@{CON}":
+    case "dmcar=@{INT}":
+    case "dmcar=@{CHA}":
+      newVal = "@{" + oldVal.slice(2, 5).toLowerCase() + "}";
+      break;
+    case "dmcar=@{DEX}":
+      newVal = "@{agi}";
+      break;
+    case "dmcar=@{SAG}":
+      newVal = "@{per}";
+      break;
+  }
+
+  return newVal;
+}
+
+/**
+ * Migrate sheet from COF1
+ * @param {string} sheetType - type of sheet
+ * @param {number} verCOF1 - COF1 version number
+ * @returns {void}
+ */
+function migrateCOF1Sheet(sheetType, verCOF1) {
+  if (sheetType !== SWData.SHEET_TYPE.PC)
+    return;
+
+  const section = "armes";
+  getSectionIDs(section, atkIds => {
+    const oldAtks = [];
+    const oldAtkAttrs = [ 
+      "label:", "nom:",
+      "atk:", "atkdiv:", "crit:",
+      "dmnbde:~", "dmde:~", "dmcar:bonus", "dmdiv:",
+      "portee:",
+      "spec:special",
+      "typeattaque:atktype", "modificateurs:atkmods", "typedegats:dmtype", "options:"
+    ];
+    atkIds.forEach(id => {
+      oldAtkAttrs.map(a => a.split(":")[0]).forEach(attr => {
+        oldAtks.push(`repeating_${section}_${id}_arme${attr}`);
+      });
+    });
+
+    const oldAttrs = [
+      "profil", "sexe",
+      "dex",
+      "defarmureon", "defarmure", "defarmuremalus",
+      "defbouclieron", "defbouclier", "defboucliermalus",
+      "defcar",
+      "casque_on", "casque_rd",
+      "rds",
+    ];
+    getAttrs([ ...oldAttrs, ...oldAtks ], function(values) {
+      const chatMsg = [];
+      chatMsg.push(`title=Migration Fiche COF1`);
+      chatMsg.push("subtitle=@{character_name}");
+      
+      const migrated = new Map();
+  
+      migrated.set("genre", strval(values.sexe));
+  
+      const profile = capitalize(strval(values.profil));
+      let famille;
+      for (const family of Object.keys(SWData.PC.PROFILES)) {
+        if (SWData.PC.PROFILES[family].find(p => p.value === profile)) {
+          famille = family;
+        }
+      }
+      if (!famille) {
+        switch (profile) {
+          case "Invocateur":
+            famille = "Mages";
+            break;
+          case "Psionique":
+            famille = "Mystiques";
+            break;
+          case "Samouraï":
+          case "Seigneur":
+            famille = "Combattants";
+            break;
+        }
+      }
+      if (famille) {
+        migrated.set("famille", famille);
+        chatMsg.push(`Famille=${famille}`);
+      }
+  
+      migrated.set("agi", intval(values.dex));
+      chatMsg.push(`AGI=${ migrated.get("agi") }`);
+  
+      [ "armure", "bouclier" ].forEach(attribute => {
+        migrated.set(attribute, intval(values[`def${attribute}`]));
+        migrated.set(`${attribute}_eqp`, intval(values[`def${attribute}on`]));
+        migrated.set(`${attribute}_malus`, intval(values[`def${attribute}malus`]));
+        chatMsg.push(`${ capitalize(attribute) }=${ migrated.get(attribute) }`);
+      });
+      migrated.set("casque_eqp", intval(values.casque_on));
+      migrated.set("casque", intval(values.casque_rd));
+  
+      migrated.set("rd", strval(values.rds));
+
+      atkIds.forEach((id, ix) => {
+        oldAtkAttrs.forEach(attr => {
+          let [ oldAttr, newAttr ] = attr.split(":");
+          if (newAttr === "~")
+            return;
+          if (!newAttr)
+            newAttr = oldAttr;
+          const oldValue = strval(values[`repeating_armes_${id}_arme${oldAttr}`]);
+          const newValue = migrateCOF1Value(oldAttr, oldValue);
+          migrated.set(`repeating_${section}_${id}_arme-${newAttr}`, newValue);
+          if (oldAttr === "nom")
+            chatMsg.push(`Attaque n° ${ix + 1}=${oldValue}`);
+        });
+        const dm = strval(values[`repeating_armes_${id}_armedmnbde`], "1")+"d"+strval(values[`repeating_armes_${id}_armedmde`], "4");
+        migrated.set(`repeating_${section}_${id}_arme-dm`, dm);
+      });
+  
+      migrated.set("version_max", "v" + verCOF1);
+
+      if (migrated.size > 0) {
+        setAttrs(Object.fromEntries(migrated));
+        chatMsg.push(`Résultat=${migrated.size} attributs repris`);
+      }
+  
+      chatMsg.push(`desc=Migration COF1 v${verCOF1} terminée`);
+      sendChatMsg(chatMsg, { whisper: "gm", template: "custom" });
+    });
+  });
+}
+
 /**
  * Apply sheet migrations
  * @param {string} sheetType - character sheet type
@@ -9512,7 +9794,7 @@ function setDebugMode(debugMode) {
  */
 function migrateSheet(sheetType, curVer) {
   if (curVer.major === 1 && curVer.minor < 1)
-    // migrateSheetV1_1(); // version 1.0 > 1.1
+    //migrateSheetVMaj_min(sheetType);
   
   return;
 }
@@ -9549,6 +9831,17 @@ function rebuildPathAll(updates, values) {
   updates.set("rangs_voies", allRanks.join(","));
   updates.set("noms_voies", allNames.join("|"));
   return updates;
+}
+
+/**
+ * Load gears lists
+ */
+function loadGearLists() {
+  processAllGear([ "nom", "props" ], function(rowIds, allGears) {
+    getAttrs(allGears, function(values) {
+      const wlist = getWeapons(values, rowIds);
+    });
+  });
 }
 
 /**
@@ -9597,6 +9890,13 @@ on("sheet:opened", function() {
     setDebugMode(values.debug_mode);
 
     const sheetType = strval(values.sheet_type);
+    
+    const verCOF1 = Number(values.version);
+    if (!isNaN(verCOF1)) {
+      migrateCOF1Sheet(sheetType, verCOF1);
+      values.version = "1.1.0";
+    }
+
     const newVer = parseSemVer(values.verfdp);
     const curVer = parseSemVer(values.version);
     if (
@@ -9617,6 +9917,7 @@ on("sheet:opened", function() {
       setProfilesList(family, profile);
       updates = rebuildPathAll(updates, values);
       rebuildBuffValues();
+      //loadGearLists();
     }
 
     // Set companion attributes from master
