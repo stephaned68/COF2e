@@ -19,7 +19,7 @@ v1.1.0 [Screenshot](cof2e.png)
 
 ## Notes de version
 
-### Version _1.1.04_ (future 1.2.0 Roll20)
+### Version _1.1.05_ (future 1.2.0 Roll20)
 
 - Ajout d'une gestion des armures, boucliers et casques équipés
 - Ajout d'une option pour vérifier les points de capacités utilisés
@@ -31,6 +31,8 @@ v1.1.0 [Screenshot](cof2e.png)
 - Modification du champ RD dans la fiche de PNJ
 - Amélioration de le reconnaissance d'inline-rolls dans les descriptions de capacités
 - Ajout du détail de la bourse par type de pièces et total du trésor en PA
+- Ajout gestion des objets en main
+- Ajout des boutons des menus d'action sur la fiche de PNJ
 
 ### Version 1.1.0 (2024-01-05)
 

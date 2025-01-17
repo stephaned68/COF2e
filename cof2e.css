@@ -370,6 +370,8 @@ input[value="0"].pc-skills-btn ~ button.pc-skills-btn {
 .pc-config-tab,
 .pc-script-tab,
 .pc-version-tab,
+.pc-otact-subtab,
+.pc-hands-subtab,
 .pc-rolls-subtab,
 .pc-skills-subtab,
 .pc-buffs-subtab,
@@ -389,6 +391,8 @@ input[value="0"].pc-skills-btn ~ button.pc-skills-btn {
 .tabs-toggle[value="version"] ~ div .pc-version-btn,
 .tabs-toggle[value="main"] ~ div .npc-main-btn, 
 .tabs-toggle[value="config"] ~ div .npc-config-btn,
+.tabs-toggle[value="otact"] ~ div .pc-otact-btn,
+.tabs-toggle[value="hands"] ~ div .pc-hands-btn,
 .tabs-toggle[value="rolls"] ~ div .pc-rolls-btn,
 .tabs-toggle[value="skills"] ~ div .pc-skills-btn,
 .tabs-toggle[value="buffs"] ~ div .pc-buffs-btn,
@@ -404,6 +408,8 @@ input[value="0"].pc-skills-btn ~ button.pc-skills-btn {
 .tabs-toggle[value="config"] ~ div.pc-config-tab,
 .tabs-toggle[value="script"] ~ div.pc-script-tab,
 .tabs-toggle[value="version"] ~ div.pc-version-tab,
+.tabs-toggle[value="otact"] ~ div.pc-otact-subtab,
+.tabs-toggle[value="hands"] ~ div.pc-hands-subtab,
 .tabs-toggle[value="rolls"] ~ div.pc-rolls-subtab,
 .tabs-toggle[value="skills"] ~ div.pc-skills-subtab,
 .tabs-toggle[value="buffs"] ~ div.pc-buffs-subtab,
@@ -605,6 +611,15 @@ div.change-view {
   margin-top: 2px;
 }
 
+.pc-hands-subtab .pc-hands {
+  display: grid;
+  grid-template-columns: 25px 1fr 1fr;
+}
+
+.pc-hands input[value="0"].pc-hand ~ button span {
+  display: none;
+}
+
 .pc-abilities-tab .abilities {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -644,21 +659,29 @@ div.change-view {
 
 .abilities-view .abilities .rank span {
   white-space: pre-wrap;
-  /*font-size: x-small;*/
   user-select: text;
 }
 
+.weapon textarea.one-row,
 .abilities .rank textarea.one-row,
 .pc-gears .gears textarea.one-row,
 .resources textarea.one-row {
   padding: 0;
+  margin: 0;
   height: 2rem;
+  resize: vertical;
+}
+
+.weapon button[type="action"].float-right {
+  margin-top: -24px;
+  margin-right: -12px;
 }
 
 .pc-gears .gears textarea.one-row {
   width: 65%;
 }
 
+.weapon textarea.one-row:focus,
 .abilities .rank textarea.one-row:focus,
 .pc-gears .gears textarea.one-row:focus,
 .resources textarea.one-row:focus {

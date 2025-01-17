@@ -1,9 +1,9 @@
 <div class="cofmain">
 
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.1.04">
+  <input type="hidden" name="attr_verfdp" value="1.1.05">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.1.04">
+  <input type="hidden" name="attr_version" value="1.1.05">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
 
@@ -65,7 +65,7 @@
     <div>
       <img
         class="logo"
-        title="Version 1.1.0 - 05/01/2025"
+        title="Version 1.1.05 - 17/01/2025"
         src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cof2e_logo.jpg"
       />
     </div>
@@ -203,6 +203,7 @@
   <div class="cofsheet">
     <input type="hidden" class="cof-type-toggle" name="attr_sheet_type" value="pc"/> 
     <button type="action" class="hidden" name="act_pc_menus-btn"></button>
+    <button type="action" class="hidden" name="act_npc_menus-btn"></button>
 
       <!-- Fiche PJ -->
     <div class="cof-pc">
@@ -1007,7 +1008,7 @@
                 <input type="hidden" name="attr_arme-portees" value="">
               </div>
               <div class="d-flex d-flex-middle bordered">
-                <input type="text" name="attr_arme-special" title="@{arme-special}" placeholder="Effet spécial..." value="">
+                <textarea class="one-row" name="attr_arme-special" title="@{arme-special}" placeholder="Effet spécial..."></textarea>
                 <button type="action" class="flat-btn img-btn float-right" name="act_armeopt-btn">
                   <span class="img-btn">y</span>
                 </button>
@@ -1018,7 +1019,8 @@
             <input type="hidden" class="cof-wopt-toggle" name="attr_armeopt" value="0"/>
             <div class="weapon-opt">
               <div class="weapon-option">
-                <div></div>
+                <div>
+                </div>
                 <div class="bordered">
                   <select name="attr_arme-atktype" class="select-lg" title="@{arme-atktype} Type d'arme/attaque">
                     <option value="">Type d'attaque...</option>
@@ -1060,106 +1062,173 @@
 
           </fieldset>
 
+          <!-- Fiche PJ, Onglet Caractéristiques, Sous-onglets -->
+          <input type="hidden" class="tabs-toggle" name="attr_pc_subtab1" value="otact" />
+          <div class="pc-subtabs">
+            <button type="action" name="act_pc_otact-btn" class="sub-tab tab-btn pc-otact-btn">OPTIONS</button>
+            <button type="action" name="act_pc_hands-btn" class="sub-tab tab-btn pc-hands-btn">EN MAIN</button>
+          </div>
+        
           <hr>
           
-          <div class="sheet-2colrow">
-            
-            <div class="sheet-col">
-              <h4>Options Tactiques</h4>
+          <div class="pc-otact-subtab">
 
-              <div class="pc-tactic">
-                <div>
-                  <input type="radio" name="attr_tactique" value="0" checked>
-                  Aucune
+            <div class="sheet-2colrow">
+              
+              <div class="sheet-col">
+                <h4>Options Tactiques</h4>
+  
+                <div class="pc-tactic">
+                  <div>
+                    <input type="radio" name="attr_tactique" value="0" checked>
+                    Aucune
+                  </div>
+                  <div>
+                  </div>
                 </div>
-                <div>
+  
+                <div class="pc-tactic">
+                  <div>
+                    <input type="radio" name="attr_tactique" value="1">
+                    Attaque assurée
+                  </div>
+                  <div>
+                    +5 en attaque et DM divisés par 2
+                  </div>
+                </div>
+  
+                <div class="pc-tactic">
+                  <div>
+                    <input type="radio" name="attr_tactique" value="2">
+                    Att. précise/violente
+                  </div>
+                  <div>
+                    -3 en attaque et +1d4° DM
+                  </div>
+                </div>
+  
+                <div class="pc-tactic">
+                  <div>
+                    <input type="radio" name="attr_tactique" value="3">
+                    Att. précise/violente
+                  </div>
+                  <div>
+                    -7 en attaque et +2d4° DM
+                  </div>
+                </div>
+  
+                <div class="pc-tactic">
+                  <div>
+                    <input type="radio" name="attr_tactique" value="4">
+                    Autres bonus/malus
+                  </div>
+                  <div class="d-flex">
+                    <input type="number" class="align-self-center" name="attr_tactdiv" value="0">
+                    <span class="align-self-center">DM :&nbsp;</span>
+                    <input type="text" class="w-auto align-self-center" name="attr_tactdmdiv" placeholder="DM supplémentaires" value="">
+                  </div>
+                </div>
+  
+              </div>
+  
+              <div class="sheet-col">
+                <h4>Modificateurs de situation</h4>
+  
+                <div class="pc-tactic">
+                  <div>Cible à couvert</div>
+                  <div>
+                    <select class="select-md" name="attr_modsit_couvert" title="@{modsit_couvert} Mod. couvert">
+                      <option value="0">Aucun</option>
+                      <option value="2" title="Végétation">Faible (-2)</option>
+                      <option value="5" title="Muraille">Fort (-5)</option>
+                    </select>
+                  </div>
+                </div>
+  
+                <div class="pc-tactic">
+                  <div>Cible en pleine mêlée</div>
+                  <div>
+                    <select class="select-md" name="attr_modsit_melee" title="@{modsit_melee} Mod. en mêlée">
+                      <option value="0">Non</option>
+                      <option value="2" title="">Oui (-2)</option>
+                      <option value="5" title="Masquée par un allié">Masquée (-5)</option>
+                    </select>
+                  </div>
+                </div>
+  
+                <div class="pc-tactic">
+                  <div>Tireur</div>
+                  <div>
+                    <input type="checkbox" name="attr_modsit_contact" title="@{modsit_contact} Mod. au contact" value="1">
+                    <span>&nbsp;Au contact d'un adversaire</span>
+                  </div>
+                </div>
+  
+                <div class="pc-tactic">
+                  <div>Visibilité</div>
+                  <div>
+                    <input type="checkbox" name="attr_modsit_visibilite" title="@{modsit_visibilite} Mod. de visibilité" value="5">
+                    <span>&nbsp;Brouillard / Pénombre</span>
+                  </div>
                 </div>
               </div>
-
-              <div class="pc-tactic">
-                <div>
-                  <input type="radio" name="attr_tactique" value="1">
-                  Attaque assurée
-                </div>
-                <div>
-                  +5 en attaque et DM divisés par 2
-                </div>
-              </div>
-
-              <div class="pc-tactic">
-                <div>
-                  <input type="radio" name="attr_tactique" value="2">
-                  Att. précise/violente
-                </div>
-                <div>
-                  -3 en attaque et +1d4° DM
-                </div>
-              </div>
-
-              <div class="pc-tactic">
-                <div>
-                  <input type="radio" name="attr_tactique" value="3">
-                  Att. précise/violente
-                </div>
-                <div>
-                  -7 en attaque et +2d4° DM
-                </div>
-              </div>
-
-              <div class="pc-tactic">
-                <div>
-                  <input type="radio" name="attr_tactique" value="4">
-                  Autres bonus/malus
-                </div>
-                <div class="d-flex">
-                  <input type="number" class="align-self-center" name="attr_tactdiv" value="0">
-                  <span class="align-self-center">DM :&nbsp;</span>
-                  <input type="text" class="w-auto align-self-center" name="attr_tactdmdiv" placeholder="DM supplémentaires" value="">
-                </div>
-              </div>
-
+  
             </div>
 
-            <div class="sheet-col">
-              <h4>Modificateurs de situation</h4>
+          </div>
 
-              <div class="pc-tactic">
-                <div>Cible à couvert</div>
-                <div>
-                  <select class="select-md" name="attr_modsit_couvert" title="@{modsit_couvert} Mod. couvert">
-                    <option value="0">Aucun</option>
-                    <option value="2" title="Végétation">Faible (-2)</option>
-                    <option value="5" title="Muraille">Fort (-5)</option>
-                  </select>
+          <div class="pc-hands-subtab">
+
+            <div class="sheet-2colrow">
+
+              <div class="sheet-col">
+
+                <div class="pc-hands">
+
+                  <div>
+                    <input type="hidden" class="pc-hand" name="attr_main_princ_btn" value="0">
+                    <button type="action" class="flat-btn" name="act_main_princ-btn">
+                      <span class="d20-btn">t</span>
+                    </button>
+                  </div>
+
+                  <div class="block-title">
+                    <span class="align-self-center">Main principale</span>
+                  </div>
+
+                  <div class="bordered">
+                    <select name="attr_main_princ" class="select-lg hand-main">
+                    </select>
+                  </div>
+
                 </div>
+
+                <div class="pc-hands">
+
+                  <div>
+                    <input type="hidden" class="pc-hand" name="attr_main_autre_btn" value="0">
+                    <button type="action" class="flat-btn" name="act_main_autre-btn">
+                      <span class="d20-btn">t</span>
+                    </button>
+                  </div>
+
+                  <div class="block-title">
+                    <span class="align-self-center">Autre Main</span>
+                  </div>
+                  
+                  <div class="bordered">
+                    <select name="attr_main_autre" class="select-lg hand-other">
+                    </select>
+                  </div>
+                </div>
+                
               </div>
 
-              <div class="pc-tactic">
-                <div>Cible en pleine mêlée</div>
-                <div>
-                  <select class="select-md" name="attr_modsit_melee" title="@{modsit_melee} Mod. en mêlée">
-                    <option value="0">Non</option>
-                    <option value="2" title="">Oui (-2)</option>
-                    <option value="5" title="Masquée par un allié">Masquée (-5)</option>
-                  </select>
-                </div>
+              <div class="sheet-col">
+
+
               </div>
 
-              <div class="pc-tactic">
-                <div>Tireur</div>
-                <div>
-                  <input type="checkbox" name="attr_modsit_contact" title="@{modsit_contact} Mod. au contact" value="1">
-                  <span>&nbsp;Au contact d'un adversaire</span>
-                </div>
-              </div>
-
-              <div class="pc-tactic">
-                <div>Visibilité</div>
-                <div>
-                  <input type="checkbox" name="attr_modsit_visibilite" title="@{modsit_visibilite} Mod. de visibilité" value="5">
-                  <span>&nbsp;Brouillard / Pénombre</span>
-                </div>
-              </div>
             </div>
 
           </div>
@@ -3022,7 +3091,7 @@
         </details>
 
         <!-- Fiche PJ, Onglet Capacités, Sous-onglets -->
-        <input type="hidden" class="tabs-toggle" name="attr_pc_subtab" value="rolls" />
+        <input type="hidden" class="tabs-toggle" name="attr_pc_subtab2" value="rolls" />
         <div class="pc-subtabs">
           <button type="action" name="act_pc_rolls-btn" class="sub-tab tab-btn pc-rolls-btn">JETS</button>
           <input type="hidden" class="pc-skills-btn" name="attr_use_skills" value="0">
@@ -3945,10 +4014,10 @@
                 <details>
                   <summary>Bourse</summary>
                   <div class="d-flex">
-                    PP:<input type="number" class="treasure" name="attr_tresor_pp">
-                    PO:<input type="number" class="treasure" name="attr_tresor_po">
-                    PA:<input type="number" class="treasure" name="attr_tresor_pa">
                     PC:<input type="number" class="treasure" name="attr_tresor_pc">
+                    PA:<input type="number" class="treasure" name="attr_tresor_pa">
+                    PO:<input type="number" class="treasure" name="attr_tresor_po">
+                    PP:<input type="number" class="treasure" name="attr_tresor_pp">
                   </div>
                 </details>
               </div>
@@ -4354,7 +4423,7 @@
               <li>
                 <details>
                   <summary>
-                    <strong>Version 1.1.04</strong> (future 1.2.0 Roll20)
+                    <strong>Version 1.1.05</strong> (future 1.2.0 Roll20)
                   </summary>
                   <ul>
                     <li>Ajout d'une gestion des armures, boucliers et casques équipés</li>
@@ -4367,6 +4436,8 @@
                     <li>Modification du champ RD dans la fiche de PNJ</li>
                     <li>Amélioration de la reconnaissance d'inline-rolls dans les descriptions de capacités</li>
                     <li>Ajout du détail de la bourse par type de pièces et total du trésor en PA</li>
+                    <li>Ajout des boutons des menus d'action sur la fiche de PNJ</li>
+                    <li>Ajout gestion des objets en main</li>
                     <li>Améliorations visuelles diverses</li>
                   </ul>
                 </details>
@@ -4433,7 +4504,12 @@
         <div class="npc-main">
   
           <div>
-            <h4>Caractéristiques</h4>
+            <h4>
+              Caractéristiques
+              <button type="action" class="flat-btn img-btn" name="act_caract_menu-btn" title="%{caract_menu-btn} Menu des jets de caractéristiques">
+                <span class="img-btn">l</span>
+              </button>
+            </h4>
   
             <div class="npc-4colrow">
               
@@ -4446,7 +4522,7 @@
                 </div>
                 <div class="bordered">
                   <input type="number" name="attr_agi" title="@{agi}" value="0">
-                  <input type="checkbox" name="attr_agi_sup" title="@{agi_sup} Caractéristique supérieure" value="1">
+                  <input type="checkbox" name="attr_agi_sup" title="@{agi_sup} Caractéristique supérieure" value="S">
                 </div>
               </div>
 
@@ -4459,7 +4535,7 @@
                 </div>
                 <div class="bordered">
                   <input type="number" name="attr_con" title="@{con}" value="0">
-                  <input type="checkbox" name="attr_con_sup" title="@{con_sup} Caractéristique supérieure" value="1">
+                  <input type="checkbox" name="attr_con_sup" title="@{con_sup} Caractéristique supérieure" value="S">
                 </div>
               </div>
 
@@ -4472,7 +4548,7 @@
                 </div>
                 <div class="bordered">
                   <input type="number" name="attr_for" title="@{for}" value="0">
-                  <input type="checkbox" name="attr_for_sup" title="@{for_sup} Caractéristique supérieure" value="1">
+                  <input type="checkbox" name="attr_for_sup" title="@{for_sup} Caractéristique supérieure" value="S">
                 </div>
               </div>
 
@@ -4485,7 +4561,7 @@
                 </div>
                 <div class="bordered">
                   <input type="number" name="attr_per" title="@{per}" value="0">
-                  <input type="checkbox" name="attr_per_sup" title="@{per_sup} Caractéristique supérieure" value="1">
+                  <input type="checkbox" name="attr_per_sup" title="@{per_sup} Caractéristique supérieure" value="S">
                 </div>
               </div>
 
@@ -4502,7 +4578,7 @@
                 </div>
                 <div class="bordered">
                   <input type="number" name="attr_cha" title="@{cha}" value="0">
-                  <input type="checkbox" name="attr_cha_sup" title="@{cha_sup} Caractéristique supérieure" value="1">
+                  <input type="checkbox" name="attr_cha_sup" title="@{cha_sup} Caractéristique supérieure" value="S">
                 </div>
               </div>
               
@@ -4515,7 +4591,7 @@
                 </div>
                 <div class="bordered">
                   <input type="number" name="attr_int" title="@{int}" value="0">
-                  <input type="checkbox" name="attr_int_sup" title="@{int_sup} Caractéristique supérieure" value="1">
+                  <input type="checkbox" name="attr_int_sup" title="@{int_sup} Caractéristique supérieure" value="S">
                 </div>
               </div>
 
@@ -4528,7 +4604,7 @@
                 </div>
                 <div class="bordered">
                   <input type="number" name="attr_vol" title="@{vol}" value="0">
-                  <input type="checkbox" name="attr_vol_sup" title="@{vol_sup} Caractéristique supérieure" value="1">
+                  <input type="checkbox" name="attr_vol_sup" title="@{vol_sup} Caractéristique supérieure" value="S">
                 </div>
               </div>
 
@@ -4607,7 +4683,12 @@
           
           <div class="weapon">
             <div></div>
-            <h4>ARME / SORT</h4>
+            <h4>
+              ARME / SORT
+              <button type="action" class="flat-btn img-btn" name="act_npcatks_menu-btn" title="%{npcatks_menu-btn} Menu des jets d'attaques">
+                <span class="img-btn">l</span>
+              </button>
+            </h4>
             <h4>ATTAQUE</h4>
             <h4>CRIT.</h4>
             <h4>DM</h4>
@@ -4747,7 +4828,12 @@
 
           <div class="npc-ability">
             <div></div>
-            <h4>CAPACIT&Eacute;</h4>
+            <h4>
+              CAPACIT&Eacute;
+              <button type="action" class="flat-btn img-btn" name="act_npcrolls_menu-btn" title="%{npcrolls_menu-btn} Menu des jets de capacités">
+                <span class="img-btn">l</span>
+              </button>
+            </h4>
             <h4>DESCRIPTION</h4>
           </div>
 
@@ -4924,7 +5010,7 @@
   {{/token}}
   {{#token}}
   <div class="sheet-rt sheet-rt-2cols sheet-rt-header sheet-color-{{color}} sheet-rt-title">
-    <div class="sheet-rt-token sheet-rt-token-{{tokenpx}}">{{token}}</div>
+    <div class="sheet-rt-token">{{token}}</div>
     <div>{{perso}}</div>
   </div>
   {{/token}}
@@ -5807,7 +5893,9 @@ const SWData = {
     { pv: 4, name: "soins" },
     { pv: 4, name: "spiritualité" },
     { pv: 4, name: "corruption" },
-  ]
+  ],
+
+  attackList: [],
 }
 
 // =================
@@ -6249,9 +6337,15 @@ on("change:sheet_type", function() {
 /**
  * Change subtabs
  */
+[ "otact", "hands" ].forEach(button => {
+  on(`clicked:pc_${button}-btn`, function() {
+      setAttrs({ pc_subtab1: button });
+  });
+});
+
 [ "rolls", "skills", "buffs", "import" ].forEach(button => {
   on(`clicked:pc_${button}-btn`, function() {
-      setAttrs({ pc_subtab: button });
+      setAttrs({ pc_subtab2: button });
   });
 });
 
@@ -7551,6 +7645,46 @@ on("clicked:repeating_armes:attack-btn", function() {
 });
 
 /**
+ * Change objects in hands 
+ */
+on("change:main_princ change:main_autre", function(eventInfo) {
+  const attribute = eventInfo.sourceAttribute;
+  getAttrs([ attribute ], function(values) {
+    const inHand = strval(values[attribute]);
+    const hand = attribute.split("_")[1];
+
+    const updates = new Map();
+
+    const [ rowId ] = inHand.split("~").slice(1);
+    updates.set(`${attribute}_btn`, (rowId) ? 1 : 0);
+
+    if (hand === "autre")
+      updates.set("bouclier_eqp", inHand === "bouclier" ? 1 : 0);
+    if (updates.size > 0)
+      setAttrs(Object.fromEntries(updates));
+
+  });
+});
+
+/**
+ * Process in-hand attack button
+ */
+on("clicked:main_princ-btn clicked:main_autre-btn", function (eventInfo) {
+  const [ button ] = eventInfo.triggerName.split(":").splice(1);
+  const hand = button.replace("-btn", "");
+  getAttrs([ "character_name", hand ], function(values) {
+    const charName = strval(values.character_name);
+    const [ rowId ] = strval(values[hand]).split("~").slice(1);
+    if (!rowId)
+      return;
+    const attack = `%{${charName}|repeating_armes_${rowId}_attack-btn}`;
+    startRoll(attack, roll => {
+      finishRoll(roll.rollId);
+    });
+  });
+});
+
+/**
  * Toggle abilities edit/view mode
  */
 on("clicked:edit_view-btn", function() {
@@ -8490,23 +8624,44 @@ function getTwoHanded(values, rowIds) {
 }
 
 /**
+ * Process a list of attack/weapons attributes
+ * @param {string} section - section name (armes | npcarmes)
+ * @param {string[]} attributes - list of attack attributes to retrieve
+ * @param {object} callback - callback function (rowIds, allAttacks) => {}
+ */
+function processAllAttacks(section, attributes, callback) {
+  getSectionIDs(section, rowIds => {
+    const allAttacks = [];
+    rowIds.forEach(rowId => {
+      attributes.forEach(attribute => {
+        allAttacks.push(`repeating_${section}_${rowId}_arme-${attribute}`);
+      });
+    });
+    callback(rowIds, allAttacks);
+  });
+}
+
+/**
  * Process a list of gear attributes
  * @param {string[]} attributes - list of gear attributes to retrieve
  * @param {object} callback - callback function (rowIds, allGears) => {}
  */
 function processAllGear(attributes, callback) {
   const section = "equipement";
-  getSectionIDs(section, gearIds => {
+  getSectionIDs(section, rowIds => {
     const allGears = [];
-    gearIds.forEach(rowId => {
+    rowIds.forEach(rowId => {
       attributes.forEach(attribute => {
         allGears.push(`repeating_${section}_${rowId}_equip-${attribute}`);
       });
     });
-    callback(gearIds, allGears);
+    callback(rowIds, allGears);
   });
 }
 
+/**
+ * Process coins & treasure
+ */
 SWData.COINS.forEach(coin => {
   on(`change:tresor_${coin}`, function() {
     const coins = SWData.COINS.map(c => `tresor_${c}`);
@@ -8976,7 +9131,7 @@ function menuButton(color) {
 }
 
 /**
- * Display stats rolls menu
+ * Display stats rolls chat menu
  */
 on("clicked:caract_menu-btn", function () {
   getAttrs([ "character_name", "couleur_pj" ], function (values) {
@@ -8999,16 +9154,18 @@ on("clicked:caract_menu-btn", function () {
 });
 
 /**
- * Display attack rolls menu
+ * Display attack rolls chat menu
+ * @param {string} [npc=""] - PC ("") or NPC ("npc") attacks
  */
-on("clicked:attacks_menu-btn", function () {
-  getSectionIDs("armes", function (rowIds) {
-    const section = "repeating_armes_"
+function attackRollsMenu(npc = "") {
+  getSectionIDs(npc + "armes", function (rowIds) {
+    const section = `repeating_${npc}armes_`;
     const attackNames = rowIds.map(rowId => `${section}${rowId}_arme-nom`);
+    const attackBtn = (npc === "") ? "attack" : "npcatk";
     getAttrs([ "character_name", "couleur_pj", ...attackNames ], function (values) {
       const charName = strval(values.character_name);
       const color = strval(values.couleur_pj);
-      const chatMsg = rowIds.map((rowId, ix) => `${ix + 1}. ${values[`${section}${rowId}_arme-nom`]}=[Jet](~${charName}|${section}${rowId}_attack-btn${menuButton(color)})`);
+      const chatMsg = rowIds.map((rowId, ix) => `${ix + 1}. ${values[`${section}${rowId}_arme-nom`]}=[Jet](~${charName}|${section}${rowId}_${attackBtn}-btn${menuButton(color)})`);
       if (chatMsg === 0)
         return;
       sendChatMsg([
@@ -9022,6 +9179,10 @@ on("clicked:attacks_menu-btn", function () {
       });
     });
   });
+}
+
+on("clicked:attacks_menu-btn", function () {
+  attackRollsMenu();
 });
 
 /**
@@ -9086,16 +9247,18 @@ seq(9).forEach(path => {
 });
 
 /**
- * Ability rolls menu
+ * Display ability rolls menu
+ * @param {string} [npc=""] - PC ("") or NPC ("npc") ability rolls
  */
-on("clicked:rolls_menu-btn", function () {
-  getSectionIDs("rolls", function (rowIds) {
-    const section = "repeating_rolls_"
-    const rollNames = rowIds.map(rowId => `${section}${rowId}_roll-nom`);
+function abilityRollsMenu(npc = "") {
+  getSectionIDs(npc + "rolls", function (rowIds) {
+    const section = `repeating_${npc}rolls_`;
+    const rollNameAttr = (npc === "") ? "roll-nom" : "npcroll-name";
+    const rollNames = rowIds.map(rowId => `${section}${rowId}_${rollNameAttr}`);
     getAttrs([ "character_name", "couleur_pj", ...rollNames ], function (values) {
       const charName = strval(values.character_name);
       const color = strval(values.couleur_pj);
-      const chatMsg = rowIds.map((rowId, ix) => `${ix + 1}. ${values[`${section}${rowId}_roll-nom`]}=[Jet](~${charName}|${section}${rowId}_roll-btn${menuButton(color)})`);
+      const chatMsg = rowIds.map((rowId, ix) => `${ix + 1}. ${values[`${section}${rowId}_${rollNameAttr}`]}=[Jet](~${charName}|${section}${rowId}_${npc}roll-btn${menuButton(color)})`);
       if (chatMsg.length === 0)
         return;
       sendChatMsg([
@@ -9109,6 +9272,10 @@ on("clicked:rolls_menu-btn", function () {
       });
     });
   });
+}
+
+on("clicked:rolls_menu-btn", function () {
+  abilityRollsMenu();
 });
 
 /**
@@ -9134,15 +9301,20 @@ on("clicked:skills_menu-btn", function () {
 });
 
 /**
- * All rolls menu
+ * Display all rolls menu
  */
-on("clicked:pc_menus-btn", function () {
+function allRollsMenu(npc = "") {
   getAttrs([ "character_name", "couleur_pj", "use_skills" ], function (values) {
     const charName = strval(values.character_name);
-    const color = strval(values.couleur_pj);
-    const menus = [ "caract:Caractéristiques", "attacks:Attaques", "abilities:Capacités", "rolls:Jets de Capacités" ];
-    if (boolval(values.use_skills))
-      menus.push("skills:Jets de Compétences");
+    const color = (npc === "") ? strval(values.couleur_pj) : "";
+    let menus = [ "caract:Caractéristiques" ];
+    if (npc === "npc") {
+      menus = [ ...menus, "npcatks:Attaques", "npcrolls:Capacités" ];
+    } else {
+      menus = [ ...menus, "attacks:Attaques", "abilities:Capacités", "rolls:Jets de Capacités" ];
+      if (boolval(values.use_skills))
+        menus.push("skills:Jets de Compétences");
+    }
     const chatMsg = menus.map(m => {
       const [ button, label ] = m.split(":");
       return `${label}=[Menu](~${charName}|${button}_menu-btn}${menuButton(color)})`;
@@ -9157,6 +9329,10 @@ on("clicked:pc_menus-btn", function () {
       whisper: "gm"
     });
   });
+}
+
+on("clicked:pc_menus-btn", function () {
+  allRollsMenu();
 });
 
 // ================
@@ -9604,6 +9780,27 @@ on("clicked:importsb-btn", function() {
   });
 });
 
+/**
+ * Display NPC attacks menu in chat
+ */
+on("clicked:npcatks_menu-btn", function () {
+  attackRollsMenu("npc");
+});
+
+/**
+ * Display NPC ability rolls menu in chat
+ */
+on("clicked:npcrolls_menu-btn", function () {
+  abilityRollsMenu("npc");
+});
+
+/**
+ * Display all NPC rolls menu
+ */
+on("clicked:npc_menus-btn", function () {
+  allRollsMenu("npc");
+});
+
 // ====================
 // SHEET INIT & UPDATES
 // ====================
@@ -9834,12 +10031,68 @@ function rebuildPathAll(updates, values) {
 }
 
 /**
- * Load gears lists
+ * Load attack lists
  */
-function loadGearLists() {
-  processAllGear([ "nom", "props" ], function(rowIds, allGears) {
-    getAttrs(allGears, function(values) {
-      const wlist = getWeapons(values, rowIds);
+function loadAttackLists(section) {
+  ///return;
+  processAllAttacks(section, [ "atktype", "label", "nom" ], function(rowIds, allAttacks) {
+    getAttrs([ "main_princ", "main_autre", "bouclier_eqp", ...allAttacks ], function(values) {
+      let attackList = [];
+      const mHand = strval(values.main_princ);
+      const oHand = strval(values.main_autre);
+      const shield = boolval(values.bouclier_eqp);
+      rowIds.forEach(id => {
+        const type = strval(values[`repeating_${section}_${id}_arme-atktype`]);
+        if (type === "sort")
+          return;
+        const label = strval(values[`repeating_${section}_${id}_arme-label`]);
+        const name = strval(values[`repeating_${section}_${id}_arme-nom`]);
+        attackList.push({
+          label: name,
+          value: label + "~" + id,
+          selected: false
+        });
+      });
+
+      // main hand
+      let mHandList = [
+        { label: "Rien en main"   , value: "0", selected: false },
+        ...attackList,
+        { label: "Torche"         , value: "torche", selected: false },
+        { label: "Autre"          , value: "autre", selected: false },
+      ];
+      mHandList = mHandList.map(option => {
+        if (option.value === mHand)
+          option.selected = true;
+        attackList = attackList.filter(atk => atk.value !== mHand);
+        return option;
+      });
+      populateListOptions({
+        elemSelector: ".hand-main",
+        optionsArray: mHandList
+      });
+
+      // other hand
+      let oHandList = [
+        { label: "Rien en main"   , value: "0", selected: false },
+        ...attackList,
+        { label: "Bouclier"       , value: "bouclier", selected: false },
+        { label: "Tenu à 2 mains" , value: "2m", selected: false },
+        { label: "Torche"         , value: "torche", selected: false },
+        { label: "Autre"          , value: "autre", selected: false },
+      ]
+      oHandList = oHandList.map(option => {
+        if (option.value === oHand)
+          option.selected = true;
+        if (option.value === "bouclier" && shield)
+          option.selected = true;
+        return option;
+      });
+      populateListOptions({
+        elemSelector: ".hand-other",
+        optionsArray: oHandList
+      });
+
     });
   });
 }
@@ -9917,7 +10170,9 @@ on("sheet:opened", function() {
       setProfilesList(family, profile);
       updates = rebuildPathAll(updates, values);
       rebuildBuffValues();
-      //loadGearLists();
+      loadAttackLists("armes");
+    } else {
+      loadAttackLists("npcarmes");
     }
 
     // Set companion attributes from master
