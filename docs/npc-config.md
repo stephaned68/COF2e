@@ -31,6 +31,16 @@ _Exemple : Loup (rôdeur)_
 
 Cette section dépliable permet d'importer les données techniques du PNJ en copiant un statblock depuis un document PDF. Le bouton <kbd>Importer</kbd> analyse le texte collé dans le champ de texte, et en extrait les données utilisables.
 
+# Menus et macros
+
+Divers boutons disséminés dans la fiche permettent d'afficher dans le chat Roll20 des menus avec des listes d'actions. Ces boutons peuvent être configurés en tant que macros Roll20 et insérés dans la barre rapide des macros et/ou configurés en tant qu'action de jetons.
+
+Les macros à configurer sont les suivantes :
+- <kbd>%{selected|npc_menus-btn}</kbd> affiche un menu de tous les autres sous-menus possibles
+- <kbd>%{selected|caract_menu-btn}</kbd> affiche un menu pour les jets de caractéristiques
+- <kbd>%{selected|npcatks_menu-btn}</kbd> affiche un menu pour les jets d'attaque
+- <kbd>%{selected|npcrolls_menu-btn}</kbd> affiche un menu des jets de capacités
+
 ---
 
 [Retour]({{ site.baseurl }}/npc-main)
