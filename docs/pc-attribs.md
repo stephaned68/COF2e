@@ -76,9 +76,9 @@ Si on clique sur l'icone de d6, la fiche effectue un test de chance (cf page 206
 
 Cette zone de texte libre permet d'indiquer la ou les réductions et résistances aux dommages dont bénéficie le PJ. Elle s'affiche dans le chat quand le nombre de PV diminue pour rappeler au joueur de réduire les dommages reçus.
 
-# Armes & attaques
+# Sous-onglet _Attaques_
 
-Cette section permet d'indiquer les armes et attaques à la disposition du PJ.
+Cet onglet permet d'indiquer les armes et attaques à la disposition du PJ.
 
 Pour chacune, vous indiquez :
 - Le nom de l'attaque,
@@ -100,7 +100,7 @@ Des paramètres optionnels peuvent être ajoutés :
   - Sortilège
   - Arme de jet
   
-  Ce paramètre est utilisé par le script COFantasy2
+  Ce paramètre est utilisé principalement par le script COFantasy2
 
 - Modificateurs d'attaque : vous pouvez spécifier une série de mentions spéciales permettant de régler le comportement du jet d'attaque. Séparez les différentes mentions par des virgules.
   - <kbd>deBonus</kbd> : l'attaque est faite avec un dé bonus, sauf si le personnage est _Affaibli_
@@ -109,7 +109,11 @@ Des paramètres optionnels peuvent être ajoutés :
   - <kbd>reroll1</kbd> : le dé de DM est relancé jusqu'à ce que son résultat soit supérieur à 1
   - <kbd>poudre</kbd> : l'arme explose et inflige 1d4° DM à l'utilisateur s'il ne maîtrise pas les armes à poudre
 
-- Options d'attaques avec arguments : ce paramètre est utilisé par le script COFantasy2
+- Options d'attaques avec arguments : 
+  
+  Ce paramètre est prinicpalement utilisé par le script COFantasy2.
+  
+  Vous pouvez y indiquer l'option <kbd>fx:</kbd> suivi du nom d'un effet spécial Roll20 et optionnellement de la mention <kbd>target</kbd>. Cet effet sera joué avant le jet d'attaque avec pour origine le token du personnage à condition qu'il soit sélectionné sur la map, et si <kbd>target</kbd> est présent, une cible à sélectionner par le joueur.
 
 Un clic sur le bouton d20 permet de lancer le jet d'attaque et de DM dans le chat en tenant compte des divers paramètres. Deux jets distincts d'attaque sont effectués, sauf si le PJ est _Affaibli_. Dans le cas général (jet normal), prenez en compte le premier jet affiché. Prenez le plus élevé des deux jets si le PJ bénéficie d'un _dé bonus_ ou le moins élevé s'il subit un _dé malus_.
 
@@ -121,13 +125,41 @@ Le texte d'effet spécial est traité par la fiche pour substituer les jets en l
 
 L'icone située à côté de **ARME/SORT** permet d'afficher un menu d'action dans le chat avec un bouton pour chaque jet d'attaque.
 
-# Options tactiques
+# Sous-onglet _Options_
+
+## Options tactiques
 
 Cette section permet de prendre en compte les options tactiques des attaques. Après sélection de l'option choisie, les effets de celle-ci sont appliqués à n'importe quel jet d'attaque.
 
-# Modificateurs situationnels
+## Modificateurs situationnels
 
 Cette section permet de modifier les jets d'attaque à distance en fonction des circonstances sélectionnées. Est considérée comme _à distance_ une attaque utilisant le score d'attaque à distance et ayant une portée indiquée. _Cela évite d'appliquer ces modificateurs à une attaque au contact utilisant l'AGI (ex : barde, voleur)_.
+
+# Sous-onglet _En main_
+
+Ce sous-onglet permet de définir les objets en main principale et main gauche/secondaire.
+
+En main principale, on peut équiper :
+- L'une des armes indiquées dans l'onglet Attaques
+  
+  Les armes _naturelles_ et les _sortilèges_ ne sont pas pris en compte dans la liste
+- Une torche,
+- Un autre objet.
+
+En main secondaire, on peut équiper :
+- Une autre arme,
+- L'arme à deux mains choisie en main principale,
+- Un bouclier,
+- Une torche,
+- Un autre objet.
+
+Les règles suivantes s'appliquent :
+- Si l'arme équipée en main principale est une arme à deux mains, la main secondaire prend automatiquement la valeur _Tenu à deux mains_.
+- Si la main secondaire tient un autre objet que le bouclier, le case _Equipé_ correspondante dans la Défense est décochée.
+
+Selon qu'une arme est équipée ou non, un bouton _d20_ apparaît en regard de chaque main et permet de lancer l'attaque en question.
+
+_Les listes déroulantes d'objet sont chargées à l'ouverture de la fiche, en cas de modification de la liste des attaques, il est nécessaire de fermer et ré-ouvrir la fiche._
 
 ---
 
