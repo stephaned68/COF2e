@@ -31,7 +31,8 @@ v1.1.0 [Screenshot](cof2e.png)
 - Modification du champ RD dans la fiche de PNJ
 - Amélioration de le reconnaissance d'inline-rolls dans les descriptions de capacités
 - Ajout du détail de la bourse par type de pièces et total du trésor en PA
-- Ajout gestion des objets en main
+- Ajout de la gestion des objets en main
+- Ajout de la possibilité de lier un FX Roll20 à un jet d'attaque
 - Ajout des boutons des menus d'action sur la fiche de PNJ
 
 ### Version 1.1.0 (2024-01-05)

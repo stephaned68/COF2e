@@ -1,4 +1,4 @@
-/* COF2e v1.1.0 */
+/* COF2e v1.2.0 */
 
 @import url('https://fonts.googleapis.com/css?family=Merriweather+Sans&display=swap');
 
@@ -370,6 +370,7 @@ input[value="0"].pc-skills-btn ~ button.pc-skills-btn {
 .pc-config-tab,
 .pc-script-tab,
 .pc-version-tab,
+.pc-attacks-subtab,
 .pc-otact-subtab,
 .pc-hands-subtab,
 .pc-rolls-subtab,
@@ -391,6 +392,7 @@ input[value="0"].pc-skills-btn ~ button.pc-skills-btn {
 .tabs-toggle[value="version"] ~ div .pc-version-btn,
 .tabs-toggle[value="main"] ~ div .npc-main-btn, 
 .tabs-toggle[value="config"] ~ div .npc-config-btn,
+.tabs-toggle[value="attacks"] ~ div .pc-attacks-btn,
 .tabs-toggle[value="otact"] ~ div .pc-otact-btn,
 .tabs-toggle[value="hands"] ~ div .pc-hands-btn,
 .tabs-toggle[value="rolls"] ~ div .pc-rolls-btn,
@@ -408,6 +410,7 @@ input[value="0"].pc-skills-btn ~ button.pc-skills-btn {
 .tabs-toggle[value="config"] ~ div.pc-config-tab,
 .tabs-toggle[value="script"] ~ div.pc-script-tab,
 .tabs-toggle[value="version"] ~ div.pc-version-tab,
+.tabs-toggle[value="attacks"] ~ div.pc-attacks-subtab,
 .tabs-toggle[value="otact"] ~ div.pc-otact-subtab,
 .tabs-toggle[value="hands"] ~ div.pc-hands-subtab,
 .tabs-toggle[value="rolls"] ~ div.pc-rolls-subtab,
@@ -565,6 +568,12 @@ div.change-view {
   width: 100%;
 }
 
+.pc-attacks-subtab,
+.pc-otact-subtab,
+.pc-hands-subtab {
+  min-height: 120px;
+}
+
 .pc-attacks .weapon {
   display: grid;
   grid-template-columns: 25px 3fr 3fr 1fr 4.5fr 1fr 3.5fr;
@@ -604,7 +613,7 @@ div.change-view {
   gap: 2px;
 }
 
-.pc-attacks .pc-tactic {
+.pc-otact-subtab .pc-tactic {
   display: grid;
   grid-template-columns: 40% 60%;
   gap: 2px;
@@ -663,6 +672,7 @@ div.change-view {
 }
 
 .weapon textarea.one-row,
+.weapon-opt textarea.one-row,
 .abilities .rank textarea.one-row,
 .pc-gears .gears textarea.one-row,
 .resources textarea.one-row {
@@ -682,6 +692,7 @@ div.change-view {
 }
 
 .weapon textarea.one-row:focus,
+.weapon-opt textarea.one-row:focus,
 .abilities .rank textarea.one-row:focus,
 .pc-gears .gears textarea.one-row:focus,
 .resources textarea.one-row:focus {
@@ -1068,4 +1079,16 @@ textarea.import-result {
   grid-column: span 2;
   padding: 5px;
   text-align: center;
+}
+
+/* ROLL TEMPLATES - Dark Mode */
+
+.sheet-rolltemplate-cof2.sheet-rolltemplate-darkmode,
+.sheet-rolltemplate-custom.sheet-rolltemplate-darkmode {
+  color: #333;
+}
+
+.sheet-rolltemplate-cof2.sheet-rolltemplate-darkmode .inlinerollresult,
+.sheet-rolltemplate-custom.sheet-rolltemplate-darkmode .inlinerollresult {
+  color: whitesmoke;
 }

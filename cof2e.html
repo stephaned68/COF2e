@@ -898,336 +898,342 @@
 
         </div>
 
+        <!-- Fiche PJ, Onglet Caractéristiques, Sous-onglets -->
+        <input type="hidden" class="tabs-toggle" name="attr_pc_subtab1" value="atcks" />
+        <div class="pc-subtabs">
+          <button type="action" name="act_pc_attacks-btn" class="sub-tab tab-btn pc-attacks-btn">ATTAQUES</button>
+          <button type="action" name="act_pc_otact-btn" class="sub-tab tab-btn pc-otact-btn">OPTIONS</button>
+          <button type="action" name="act_pc_hands-btn" class="sub-tab tab-btn pc-hands-btn">EN MAIN</button>
+        </div>
+      
         <hr>
-
+        
         <!-- Attaques & Armes -->
-        <div class="pc-attacks">
+        <div class="pc-attacks-subtab">
           
-          <div class="weapon">
-            <div></div>
-            <h4>
-              ARME / SORT
-              <button type="action" class="flat-btn img-btn" name="act_attacks_menu-btn" title="%{attacks_menu-btn} Menu des jets d'attaques">
-                <span class="img-btn">l</span>
-              </button>
-            </h4>
-            <h4>ATTAQUE</h4>
-            <h4>CRIT.</h4>
-            <h4>DM</h4>
-            <h4>PORTEE</h4>
-            <h4>SPECIAL</h4>
-          </div>
-
-          <fieldset class="repeating_armes">
-
+          <div class="pc-attacks">
+            
             <div class="weapon">
-              
-              <div>
-                <button type="action" class="flat-btn" name="act_attack-btn">
-                  <span class="d20-btn">t</span>
+              <div></div>
+              <h4>
+                ARME / SORT
+                <button type="action" class="flat-btn img-btn" name="act_attacks_menu-btn" title="%{attacks_menu-btn} Menu des jets d'attaques">
+                  <span class="img-btn">l</span>
                 </button>
-              </div>
-              <div class="d-flex d-flex-middle bordered">
-                <input type="hidden" name="attr_arme-label" value="">
-                <span class="align-self-center" name="attr_arme-label"></span>&nbsp;
-                <input type="text" name="attr_arme-nom" title="@{arme-nom}" placeholder="Arme/attaque" value="">
-              </div>
-              <div class="d-flex d-flex-middle bordered">
-                <select class="select-md" name="attr_arme-atk" title="@{arme-atk} Score d'attaque">
-                  <option value="0">-</option>
-                  <option value="atkcac" selected>CONTACT</option>
-                  <option value="atktir">DISTANCE</option>
-                  <option value="atkmag">MAGIE</option>
-                </select>
-                &nbsp;<span class="align-self-center">+</span>&nbsp;
-                <input type="number" name="attr_arme-atkdiv" title="@{arme-atkdiv} Bonus divers" value="">
-                <input type="hidden" name="attr_arme-buffatk" value="0">
-              </div>
-              <div class="d-flex d-flex-middle bordered">
-                <input type="number" class="two-digits" name="attr_arme-crit" title="@{arme-crit} Seuil de Critique" value="20" min="2" max="20">
-              </div>
-              <div class="d-flex d-flex-middle bordered">
-                <input type="checkbox" name="attr_arme-2m" title="@{arme-2m} Arme à deux mains" value="1">
-                <input type="text" name="attr_arme-dm" title="@{arme-dm} Dé(s) de DM" placeholder="1d8, 2d6..." value="">
-                <select class="select-xxs" name="attr_arme-dmtype" title="@{arme-dmtype} Type de dommages">
-                  <optgroup label="Physiques">
-                    <option disabled class="optgroup">
-                      &nbsp;Physiques
-                    </option>
-                    <option value="contondants">C - Contondants</option>
-                    <option value="perforants">P - Perforants</option>
-                    <option value="poison">Po - Poison</option>
-                    <option value="tranchants" selected>T - Tranchants</option>
-                  </optgroup>
-                  <optgroup label="Elementaires">
-                    <option disabled class="optgroup">
-                      &nbsp;Elémentaires
-                    </option>
-                    <option value="acide">A - Acide</option>
-                    <option value="electrique">E - Electricité</option>
-                    <option value="feu">Fe - Feu</option>
-                    <option value="froid">Fr - Froid</option>
-                    <option value="sonique">S - Sonique</option>
-                  </optgroup>
-                  <optgroup label="Autres">
-                    <option disabled class="optgroup">
-                      &nbsp;Autres
-                    </option>
-                    <option value="drain">Dr - Drain</option>
-                    <option value="magique">M - Magiques</option>
-                    <option value="maladie">Ma - Maladie</option>
-                  </optgroup>
-                </select>
-                &nbsp;<span class="align-self-center">+</span>&nbsp;
-                <select class="select-md" name="attr_arme-bonus" title="@{arme-bonus} Bonus aux dommages">
-                  <option value="0">-</option>
-                  <optgroup label="Base">
-                    <option class="optgroup" value="" disabled>&nbsp;Base</option>
-                    <option value="@{agi}">AGI</option>
-                    <option value="@{for}" selected>FOR</option>
-                    <option value="@{per}">PER</option>
-                    <option value="@{cha}">CHA</option>
-                    <option value="@{int}">INT</option>
-                    <option value="@{vol}">VOL</option>
-                  </optgroup>
-                  <optgroup label="Test">
-                    <option class="optgroup" value="" disabled>&nbsp;Test</option>
-                    <option value="@{agi_test}">AGI (t)</option>
-                    <option value="@{for_test}">FOR (t)</option>
-                    <option value="@{per_test}">PER (t)</option>
-                    <option value="@{int_test}">INT (t)</option>
-                    <option value="@{cha_test}">CHA (t)</option>
-                  </optgroup>
-                </select>
-                &nbsp;<span class="align-self-center">+</span>&nbsp;
-                <input type="number" name="attr_arme-dmdiv" title="@{arme-dmdiv} Bonus DM divers" value="0">
-                <input type="hidden" name="attr_arme-buffdm" value="0">
-              </div>
-              <div class="d-flex d-flex-middle bordered">
-                <input type="text" name="attr_arme-portee" title="@{arme-portee}" value="">
-                <input type="hidden" name="attr_arme-portees" value="">
-              </div>
-              <div class="d-flex d-flex-middle bordered">
-                <textarea class="one-row" name="attr_arme-special" title="@{arme-special}" placeholder="Effet spécial..."></textarea>
-                <button type="action" class="flat-btn img-btn float-right" name="act_armeopt-btn">
-                  <span class="img-btn">y</span>
-                </button>
-              </div>
-
+              </h4>
+              <h4>ATTAQUE</h4>
+              <h4>CRIT.</h4>
+              <h4>DM</h4>
+              <h4>PORTEE</h4>
+              <h4>SPECIAL</h4>
             </div>
 
-            <input type="hidden" class="cof-wopt-toggle" name="attr_armeopt" value="0"/>
-            <div class="weapon-opt">
-              <div class="weapon-option">
+            <fieldset class="repeating_armes">
+
+              <div class="weapon">
+                
+                <div>
+                  <button type="action" class="flat-btn" name="act_attack-btn">
+                    <span class="d20-btn">t</span>
+                  </button>
+                </div>
+                <div class="d-flex d-flex-middle bordered">
+                  <input type="hidden" name="attr_arme-label" value="">
+                  <span class="align-self-center" name="attr_arme-label"></span>&nbsp;
+                  <input type="text" name="attr_arme-nom" title="@{arme-nom}" placeholder="Arme/attaque" value="">
+                </div>
+                <div class="d-flex d-flex-middle bordered">
+                  <select class="select-md" name="attr_arme-atk" title="@{arme-atk} Score d'attaque">
+                    <option value="0">-</option>
+                    <option value="atkcac" selected>CONTACT</option>
+                    <option value="atktir">DISTANCE</option>
+                    <option value="atkmag">MAGIE</option>
+                  </select>
+                  &nbsp;<span class="align-self-center">+</span>&nbsp;
+                  <input type="number" name="attr_arme-atkdiv" title="@{arme-atkdiv} Bonus divers" value="">
+                  <input type="hidden" name="attr_arme-buffatk" value="0">
+                </div>
+                <div class="d-flex d-flex-middle bordered">
+                  <input type="number" class="two-digits" name="attr_arme-crit" title="@{arme-crit} Seuil de Critique" value="20" min="2" max="20">
+                </div>
+                <div class="d-flex d-flex-middle bordered">
+                  <input type="checkbox" name="attr_arme-2m" title="@{arme-2m} Arme à deux mains" value="1">
+                  <input type="text" name="attr_arme-dm" title="@{arme-dm} Dé(s) de DM" placeholder="1d8, 2d6..." value="">
+                  <select class="select-xxs" name="attr_arme-dmtype" title="@{arme-dmtype} Type de dommages">
+                    <optgroup label="Physiques">
+                      <option disabled class="optgroup">
+                        &nbsp;Physiques
+                      </option>
+                      <option value="contondants">C - Contondants</option>
+                      <option value="perforants">P - Perforants</option>
+                      <option value="poison">Po - Poison</option>
+                      <option value="tranchants" selected>T - Tranchants</option>
+                    </optgroup>
+                    <optgroup label="Elementaires">
+                      <option disabled class="optgroup">
+                        &nbsp;Elémentaires
+                      </option>
+                      <option value="acide">A - Acide</option>
+                      <option value="electrique">E - Electricité</option>
+                      <option value="feu">Fe - Feu</option>
+                      <option value="froid">Fr - Froid</option>
+                      <option value="sonique">S - Sonique</option>
+                    </optgroup>
+                    <optgroup label="Autres">
+                      <option disabled class="optgroup">
+                        &nbsp;Autres
+                      </option>
+                      <option value="drain">Dr - Drain</option>
+                      <option value="magique">M - Magiques</option>
+                      <option value="maladie">Ma - Maladie</option>
+                    </optgroup>
+                  </select>
+                  &nbsp;<span class="align-self-center">+</span>&nbsp;
+                  <select class="select-md" name="attr_arme-bonus" title="@{arme-bonus} Bonus aux dommages">
+                    <option value="0">-</option>
+                    <optgroup label="Base">
+                      <option class="optgroup" value="" disabled>&nbsp;Base</option>
+                      <option value="@{agi}">AGI</option>
+                      <option value="@{for}" selected>FOR</option>
+                      <option value="@{per}">PER</option>
+                      <option value="@{cha}">CHA</option>
+                      <option value="@{int}">INT</option>
+                      <option value="@{vol}">VOL</option>
+                    </optgroup>
+                    <optgroup label="Test">
+                      <option class="optgroup" value="" disabled>&nbsp;Test</option>
+                      <option value="@{agi_test}">AGI (t)</option>
+                      <option value="@{for_test}">FOR (t)</option>
+                      <option value="@{per_test}">PER (t)</option>
+                      <option value="@{int_test}">INT (t)</option>
+                      <option value="@{cha_test}">CHA (t)</option>
+                    </optgroup>
+                  </select>
+                  &nbsp;<span class="align-self-center">+</span>&nbsp;
+                  <input type="number" name="attr_arme-dmdiv" title="@{arme-dmdiv} Bonus DM divers" value="0">
+                  <input type="hidden" name="attr_arme-buffdm" value="0">
+                </div>
+                <div class="d-flex d-flex-middle bordered">
+                  <input type="text" name="attr_arme-portee" title="@{arme-portee}" value="">
+                  <input type="hidden" name="attr_arme-portees" value="">
+                </div>
+                <div class="d-flex d-flex-middle bordered">
+                  <textarea class="one-row" name="attr_arme-special" title="@{arme-special}" placeholder="Effet spécial..."></textarea>
+                  <button type="action" class="flat-btn img-btn float-right" name="act_armeopt-btn">
+                    <span class="img-btn">y</span>
+                  </button>
+                </div>
+
+              </div>
+
+              <input type="hidden" name="attr_arme-gearid" value=""/>
+              <input type="hidden" class="cof-wopt-toggle" name="attr_armeopt" value="0"/>
+              <div class="weapon-opt">
+                <div class="weapon-option">
+                  <div>
+                  </div>
+                  <div class="bordered">
+                    <select name="attr_arme-atktype" class="select-lg" title="@{arme-atktype} Type d'arme/attaque">
+                      <option value="">Type d'attaque...</option>
+                      <option value="main">Arme en main</option>
+                      <option value="jet">Arme de jet</option>
+                      <option value="sort">Sortilège</option>
+                      <option value="naturel">Arme naturelle</option>
+                    </select>
+                  </div>
+                  <div class="bordered">
+                    <input type="text" name="attr_arme-atkmods" placeholder="Modificateurs d'attaque" title="@{arme-atkmods} Modificateurs séparés par des virgules&#10; deBonus: avec dé bonus&#10; deMalus: avec dé malus&#10; auto: réussite automatique&#10; choc: peut faire des attaques non léthales sans malus&#10; explodeMax: dés de dégâts explosifs&#10; pasDeDmg: l'attaque ne fait pas de DM&#10; poudre: arme à poudre&#10; reroll1: relance les 1 sur les dés de DM&#10; tempDmg: fait toujours des attaques non léthales" value="">
+                  </div>
+                  <div class="bordered">
+                    <textarea class="one-row" name="attr_arme-options" placeholder="Options d'attaque avec argument" title="@{arme-options} Options d'attaque"></textarea>
+                  </div>
+                </div>
+
+                <input type="hidden" class="cof-thrown-toggle" name="attr_arme-jet" value="0"/>
+                <div class="weapon-thrown">
+                  <div class="weapon-throw">
+                    <div></div>
+                    <div class="bordered">
+                      Disponibles :&nbsp;
+                      <input type="number" class="two-digits" name="attr_jet-dispo" title="@{jet-dispo}" value="0">
+                    </div>
+                    <div class="bordered">
+                      Possédés :&nbsp;
+                      <input type="number" class="two-digits" name="attr_jet-dispo_max" title="@{jet-dispo_max}" value="0">
+                    </div>
+                    <div class="bordered">
+                      Taux perte :&nbsp;
+                      <input type="number" class="two-digits" name="attr_jet-perte" title="@{jet-perte}" value="0">
+                      &nbsp;%
+                    </div>
+                  </div>
+                </div>
+    
+              </div>
+
+            </fieldset>
+
+          </div>
+
+        </div>
+        
+        <!-- Options tactiques -->
+        <div class="pc-otact-subtab">
+
+          <div class="sheet-2colrow">
+            
+            <div class="sheet-col">
+              <h4>Options Tactiques</h4>
+
+              <div class="pc-tactic">
+                <div>
+                  <input type="radio" name="attr_tactique" value="0" checked>
+                  Aucune
+                </div>
                 <div>
                 </div>
-                <div class="bordered">
-                  <select name="attr_arme-atktype" class="select-lg" title="@{arme-atktype} Type d'arme/attaque">
-                    <option value="">Type d'attaque...</option>
-                    <option value="main">Arme en main</option>
-                    <option value="jet">Arme de jet</option>
-                    <option value="sort">Sortilège</option>
-                    <option value="naturel">Arme naturelle</option>
+              </div>
+
+              <div class="pc-tactic">
+                <div>
+                  <input type="radio" name="attr_tactique" value="1">
+                  Attaque assurée
+                </div>
+                <div>
+                  +5 en attaque et DM divisés par 2
+                </div>
+              </div>
+
+              <div class="pc-tactic">
+                <div>
+                  <input type="radio" name="attr_tactique" value="2">
+                  Att. précise/violente
+                </div>
+                <div>
+                  -3 en attaque et +1d4° DM
+                </div>
+              </div>
+
+              <div class="pc-tactic">
+                <div>
+                  <input type="radio" name="attr_tactique" value="3">
+                  Att. précise/violente
+                </div>
+                <div>
+                  -7 en attaque et +2d4° DM
+                </div>
+              </div>
+
+              <div class="pc-tactic">
+                <div>
+                  <input type="radio" name="attr_tactique" value="4">
+                  Autres bonus/malus
+                </div>
+                <div class="d-flex">
+                  <input type="number" class="align-self-center" name="attr_tactdiv" value="0">
+                  <span class="align-self-center">DM :&nbsp;</span>
+                  <input type="text" class="w-auto align-self-center" name="attr_tactdmdiv" placeholder="DM supplémentaires" value="">
+                </div>
+              </div>
+
+            </div>
+
+            <div class="sheet-col">
+              <h4>Modificateurs de situation</h4>
+
+              <div class="pc-tactic">
+                <div>Cible à couvert</div>
+                <div>
+                  <select class="select-md" name="attr_modsit_couvert" title="@{modsit_couvert} Mod. couvert">
+                    <option value="0">Aucun</option>
+                    <option value="2" title="Végétation">Faible (-2)</option>
+                    <option value="5" title="Muraille">Fort (-5)</option>
                   </select>
                 </div>
-                <div class="bordered">
-                  <input type="text" name="attr_arme-atkmods" placeholder="Modificateurs d'attaque" title="@{arme-atkmods} Modificateurs séparés par des virgules&#10; deBonus: avec dé bonus&#10; deMalus: avec dé malus&#10; auto: réussite automatique&#10; choc: peut faire des attaques non léthales sans malus&#10; explodeMax: dés de dégâts explosifs&#10; pasDeDmg: l'attaque ne fait pas de DM&#10; poudre: arme à poudre&#10; reroll1: relance les 1 sur les dés de DM&#10; tempDmg: fait toujours des attaques non léthales" value="">
-                </div>
-                <div class="bordered">
-                  <input type="text" name="attr_arme-options" placeholder="Options d'attaque avec argument" title="@{arme-options} Options d'attaque">
+              </div>
+
+              <div class="pc-tactic">
+                <div>Cible en pleine mêlée</div>
+                <div>
+                  <select class="select-md" name="attr_modsit_melee" title="@{modsit_melee} Mod. en mêlée">
+                    <option value="0">Non</option>
+                    <option value="2" title="">Oui (-2)</option>
+                    <option value="5" title="Masquée par un allié">Masquée (-5)</option>
+                  </select>
                 </div>
               </div>
 
-              <input type="hidden" class="cof-thrown-toggle" name="attr_arme-jet" value="0"/>
-              <div class="weapon-thrown">
-                <div class="weapon-throw">
-                  <div></div>
-                  <div class="bordered">
-                    Disponibles :&nbsp;
-                    <input type="number" class="two-digits" name="attr_jet-dispo" title="@{jet-dispo}" value="0">
-                  </div>
-                  <div class="bordered">
-                    Possédés :&nbsp;
-                    <input type="number" class="two-digits" name="attr_jet-dispo_max" title="@{jet-dispo_max}" value="0">
-                  </div>
-                  <div class="bordered">
-                    Taux perte :&nbsp;
-                    <input type="number" class="two-digits" name="attr_jet-perte" title="@{jet-perte}" value="0">
-                    &nbsp;%
-                  </div>
+              <div class="pc-tactic">
+                <div>Tireur</div>
+                <div>
+                  <input type="checkbox" name="attr_modsit_contact" title="@{modsit_contact} Mod. au contact" value="1">
+                  <span>&nbsp;Au contact d'un adversaire</span>
                 </div>
               </div>
-  
-            </div>
 
-          </fieldset>
-
-          <!-- Fiche PJ, Onglet Caractéristiques, Sous-onglets -->
-          <input type="hidden" class="tabs-toggle" name="attr_pc_subtab1" value="otact" />
-          <div class="pc-subtabs">
-            <button type="action" name="act_pc_otact-btn" class="sub-tab tab-btn pc-otact-btn">OPTIONS</button>
-            <button type="action" name="act_pc_hands-btn" class="sub-tab tab-btn pc-hands-btn">EN MAIN</button>
-          </div>
-        
-          <hr>
-          
-          <div class="pc-otact-subtab">
-
-            <div class="sheet-2colrow">
-              
-              <div class="sheet-col">
-                <h4>Options Tactiques</h4>
-  
-                <div class="pc-tactic">
-                  <div>
-                    <input type="radio" name="attr_tactique" value="0" checked>
-                    Aucune
-                  </div>
-                  <div>
-                  </div>
-                </div>
-  
-                <div class="pc-tactic">
-                  <div>
-                    <input type="radio" name="attr_tactique" value="1">
-                    Attaque assurée
-                  </div>
-                  <div>
-                    +5 en attaque et DM divisés par 2
-                  </div>
-                </div>
-  
-                <div class="pc-tactic">
-                  <div>
-                    <input type="radio" name="attr_tactique" value="2">
-                    Att. précise/violente
-                  </div>
-                  <div>
-                    -3 en attaque et +1d4° DM
-                  </div>
-                </div>
-  
-                <div class="pc-tactic">
-                  <div>
-                    <input type="radio" name="attr_tactique" value="3">
-                    Att. précise/violente
-                  </div>
-                  <div>
-                    -7 en attaque et +2d4° DM
-                  </div>
-                </div>
-  
-                <div class="pc-tactic">
-                  <div>
-                    <input type="radio" name="attr_tactique" value="4">
-                    Autres bonus/malus
-                  </div>
-                  <div class="d-flex">
-                    <input type="number" class="align-self-center" name="attr_tactdiv" value="0">
-                    <span class="align-self-center">DM :&nbsp;</span>
-                    <input type="text" class="w-auto align-self-center" name="attr_tactdmdiv" placeholder="DM supplémentaires" value="">
-                  </div>
-                </div>
-  
-              </div>
-  
-              <div class="sheet-col">
-                <h4>Modificateurs de situation</h4>
-  
-                <div class="pc-tactic">
-                  <div>Cible à couvert</div>
-                  <div>
-                    <select class="select-md" name="attr_modsit_couvert" title="@{modsit_couvert} Mod. couvert">
-                      <option value="0">Aucun</option>
-                      <option value="2" title="Végétation">Faible (-2)</option>
-                      <option value="5" title="Muraille">Fort (-5)</option>
-                    </select>
-                  </div>
-                </div>
-  
-                <div class="pc-tactic">
-                  <div>Cible en pleine mêlée</div>
-                  <div>
-                    <select class="select-md" name="attr_modsit_melee" title="@{modsit_melee} Mod. en mêlée">
-                      <option value="0">Non</option>
-                      <option value="2" title="">Oui (-2)</option>
-                      <option value="5" title="Masquée par un allié">Masquée (-5)</option>
-                    </select>
-                  </div>
-                </div>
-  
-                <div class="pc-tactic">
-                  <div>Tireur</div>
-                  <div>
-                    <input type="checkbox" name="attr_modsit_contact" title="@{modsit_contact} Mod. au contact" value="1">
-                    <span>&nbsp;Au contact d'un adversaire</span>
-                  </div>
-                </div>
-  
-                <div class="pc-tactic">
-                  <div>Visibilité</div>
-                  <div>
-                    <input type="checkbox" name="attr_modsit_visibilite" title="@{modsit_visibilite} Mod. de visibilité" value="5">
-                    <span>&nbsp;Brouillard / Pénombre</span>
-                  </div>
+              <div class="pc-tactic">
+                <div>Visibilité</div>
+                <div>
+                  <input type="checkbox" name="attr_modsit_visibilite" title="@{modsit_visibilite} Mod. de visibilité" value="5">
+                  <span>&nbsp;Brouillard / Pénombre</span>
                 </div>
               </div>
-  
             </div>
 
           </div>
 
-          <div class="pc-hands-subtab">
+        </div>
 
-            <div class="sheet-2colrow">
+        <!-- Equipé / En maib -->
+        <div class="pc-hands-subtab">
 
-              <div class="sheet-col">
+          <div class="sheet-2colrow">
 
-                <div class="pc-hands">
+            <div class="sheet-col">
 
-                  <div>
-                    <input type="hidden" class="pc-hand" name="attr_main_princ_btn" value="0">
-                    <button type="action" class="flat-btn" name="act_main_princ-btn">
-                      <span class="d20-btn">t</span>
-                    </button>
-                  </div>
+              <div class="pc-hands">
 
-                  <div class="block-title">
-                    <span class="align-self-center">Main principale</span>
-                  </div>
-
-                  <div class="bordered">
-                    <select name="attr_main_princ" class="select-lg hand-main">
-                    </select>
-                  </div>
-
+                <div>
+                  <input type="hidden" class="pc-hand" name="attr_main_princ_btn" value="0">
+                  <button type="action" class="flat-btn" name="act_main_princ-btn">
+                    <span class="d20-btn">t</span>
+                  </button>
                 </div>
 
-                <div class="pc-hands">
+                <div class="block-title">
+                  <span class="align-self-center">Main principale</span>
+                </div>
 
-                  <div>
-                    <input type="hidden" class="pc-hand" name="attr_main_autre_btn" value="0">
-                    <button type="action" class="flat-btn" name="act_main_autre-btn">
-                      <span class="d20-btn">t</span>
-                    </button>
-                  </div>
+                <div class="bordered">
+                  <select name="attr_main_princ" class="select-lg hand-main">
+                  </select>
+                </div>
 
-                  <div class="block-title">
-                    <span class="align-self-center">Autre Main</span>
-                  </div>
-                  
-                  <div class="bordered">
-                    <select name="attr_main_autre" class="select-lg hand-other">
-                    </select>
-                  </div>
+              </div>
+
+              <div class="pc-hands">
+
+                <div>
+                  <input type="hidden" class="pc-hand" name="attr_main_autre_btn" value="0">
+                  <button type="action" class="flat-btn" name="act_main_autre-btn">
+                    <span class="d20-btn">t</span>
+                  </button>
+                </div>
+
+                <div class="block-title">
+                  <span class="align-self-center">Autre Main</span>
                 </div>
                 
+                <div class="bordered">
+                  <select name="attr_main_autre" class="select-lg hand-other">
+                  </select>
+                </div>
               </div>
+              
+            </div>
 
-              <div class="sheet-col">
+            <div class="sheet-col">
 
-
-              </div>
 
             </div>
 
@@ -4438,7 +4444,8 @@
                     <li>Ajout du détail de la bourse par type de pièces et total du trésor en PA</li>
                     <li>Ajout des boutons des menus d'action sur la fiche de PNJ</li>
                     <li>Ajout gestion des objets en main</li>
-                    <li>Améliorations visuelles diverses</li>
+                    <li>Ajout de la possibilité de lier un FX Roll20 à un jet d'attaque</li>
+                    <li>Améliorations visuelles diverses (dont support du darkmode dans le chat)</li>
                   </ul>
                 </details>
               </li>
@@ -5737,7 +5744,13 @@ const SWData = {
       "type-dm",
       "portee",
       "critique",
-      "bonus-def"
+      "bonus-def",
+      "armure",
+      "armure-malus",
+      "bouclier",
+      "bouclier-malus",
+      "casque",
+      "casque-malus",
     ]
   },
   COMPANIONS: [
@@ -5793,27 +5806,27 @@ const SWData = {
     },
     {
       name: "Cuir simple",
-      props: "bonus-def: +2,agi-max: +6",
+      props: "armure: +2,agi-max: +6",
     },
     {
       name: "Cuir renforcé",
-      props: "bonus-def: +3,agi-max: +5",
+      props: "armure: +3,agi-max: +5",
     },
     {
       name: "Chemise de mailles",
-      props: "bonus-def: +4,agi-max: +4",
+      props: "armure: +4,agi-max: +4",
     },
     {
       name: "Cotte de mailles",
-      props: "bonus-def: +5,agi-max: +3",
+      props: "armure: +5,agi-max: +3",
     },
     {
       name: "Petit bouclier",
-      props: "bonus-def: +1",
+      props: "bouclier: +1",
     },
     {
       name: "Grand bouclier",
-      props: "bonus-def: +2",
+      props: "bouclier: +2",
     },
   ],
   PVPATH: [
@@ -5894,8 +5907,6 @@ const SWData = {
     { pv: 4, name: "spiritualité" },
     { pv: 4, name: "corruption" },
   ],
-
-  attackList: [],
 }
 
 // =================
@@ -6337,7 +6348,7 @@ on("change:sheet_type", function() {
 /**
  * Change subtabs
  */
-[ "otact", "hands" ].forEach(button => {
+[ "attacks", "otact", "hands" ].forEach(button => {
   on(`clicked:pc_${button}-btn`, function() {
       setAttrs({ pc_subtab1: button });
   });
@@ -7439,6 +7450,7 @@ on("clicked:repeating_armes:attack-btn", function() {
     "portee",
     "special",
     "atkmods",
+    "options"
   ];
   const sitModAttrs = [
     "couvert",
@@ -7482,6 +7494,7 @@ on("clicked:repeating_armes:attack-btn", function() {
     const crit = intval(values[section + "crit"], 20);
     const isRanged = (atk === "atktir" && portee !== "");
     const modifiers = strval(values[section + "atkmods"]).split(",").map(mod => mod.trim().toLowerCase());
+    const options = strval(values[section + "options"]);
 
     // 2 mains & bouclier 
     const twoHanded = boolval(values[section + "2m"]);
@@ -7624,6 +7637,18 @@ on("clicked:repeating_armes:attack-btn", function() {
       }
     }
 
+    // Play FX !
+    const fxValue = getProp(options, "fx");
+    if (fxValue !== "") {
+      const [ fxName, target ] = (fxValue + " ").split(" ");
+      let fxCmd = `/fx ${fxName} @{selected|token_id}`;
+      if (target.toLowerCase() === "target")
+        fxCmd += " @{target|token_id}";
+      startRoll(fxCmd, roll => {
+        finishRoll(roll.rollId);
+      });
+    }
+
     // Roll attack !
     const atkProps = {
       lsub: "Attaque",
@@ -7649,14 +7674,22 @@ on("clicked:repeating_armes:attack-btn", function() {
  */
 on("change:main_princ change:main_autre", function(eventInfo) {
   const attribute = eventInfo.sourceAttribute;
-  getAttrs([ attribute ], function(values) {
+  const hand = attribute.split("_")[1];
+  const outHand = strval(eventInfo.oldValue);
+  getAttrs([ attribute, "bouclier_eqp" ], function(values) {
     const inHand = strval(values[attribute]);
-    const hand = attribute.split("_")[1];
+    console.log(hand, outHand, inHand)
+    const hasShield = boolval(values.bouclier_eqp);
 
     const updates = new Map();
 
-    const [ rowId ] = inHand.split("~").slice(1);
+    const [ , rowId, twoHands ] = inHand.split("~");
     updates.set(`${attribute}_btn`, (rowId) ? 1 : 0);
+    if (hand === "princ" && twoHands === "1") {
+      updates.set("main_autre", "2m");
+      if (hasShield)
+        updates.set("bouclier_eqp", 0);
+    }
 
     if (hand === "autre")
       updates.set("bouclier_eqp", inHand === "bouclier" ? 1 : 0);
@@ -8786,6 +8819,7 @@ on(eventList("change", [
   "props",
   "atk"
 ].map(a => `repeating_equipement:equip-${a}`), " "), function (eventInfo) {
+  const gearId = eventInfo.sourceAttribute.split("_")[2];
   const gearAttrs = [
     "nom",
     "detail",
@@ -8851,6 +8885,7 @@ on(eventList("change", [
       attributes.set(rowId + "dmtype", strval(attackRow.get("dm-type")));
       attributes.set(rowId + "portee", strval(attackRow.get("portee")));
       attributes.set(rowId + "special", description);
+      attributes.set(rowId + "gearid", gearId);
     }
 
     if (attributes.size > 0)
@@ -8877,8 +8912,14 @@ on("clicked:profequip-btn", function() {
       baseGear.set(rowId + "equip-nom", gear.name);
       baseGear.set(rowId + "equip-qte", gear.number);
       const props = getGearProps(gear.name);
-      if (props !== "")
+      if (props !== "") {
         baseGear.set(rowId + "equip-props", props.split(",").join("\n"));
+        if (
+          props.includes("dm-1m") || props.includes("dm-2m") || 
+          props.includes("bonus-def") || props.includes("armure") || props.includes("bouclier")
+        )
+          baseGear.set(rowId + "equip-on", 1);
+      }
     });
     if (baseGear.size > 0)
       setAttrs(Object.fromEntries(baseGear));
@@ -10035,11 +10076,11 @@ function rebuildPathAll(updates, values) {
  */
 function loadAttackLists(section) {
   ///return;
-  processAllAttacks(section, [ "atktype", "label", "nom" ], function(rowIds, allAttacks) {
+  processAllAttacks(section, [ "atktype", "label", "nom", "2m" ], function(rowIds, allAttacks) {
     getAttrs([ "main_princ", "main_autre", "bouclier_eqp", ...allAttacks ], function(values) {
       let attackList = [];
-      const mHand = strval(values.main_princ);
-      const oHand = strval(values.main_autre);
+      const mainHand = strval(values.main_princ);
+      const otherHand = strval(values.main_autre);
       const shield = boolval(values.bouclier_eqp);
       rowIds.forEach(id => {
         const type = strval(values[`repeating_${section}_${id}_arme-atktype`]);
@@ -10047,10 +10088,11 @@ function loadAttackLists(section) {
           return;
         const label = strval(values[`repeating_${section}_${id}_arme-label`]);
         const name = strval(values[`repeating_${section}_${id}_arme-nom`]);
+        const twoHands = intval(values[`repeating_${section}_${id}_arme-2m`]);
         attackList.push({
           label: name,
-          value: label + "~" + id,
-          selected: false
+          value: `${label}~${id}~${twoHands}`,
+          selected: false,
         });
       });
 
@@ -10062,14 +10104,14 @@ function loadAttackLists(section) {
         { label: "Autre"          , value: "autre", selected: false },
       ];
       mHandList = mHandList.map(option => {
-        if (option.value === mHand)
+        option.selected = false;
+        if (option.value === mainHand)
           option.selected = true;
-        attackList = attackList.filter(atk => atk.value !== mHand);
         return option;
       });
       populateListOptions({
         elemSelector: ".hand-main",
-        optionsArray: mHandList
+        optionsArray: mHandList,
       });
 
       // other hand
@@ -10082,7 +10124,8 @@ function loadAttackLists(section) {
         { label: "Autre"          , value: "autre", selected: false },
       ]
       oHandList = oHandList.map(option => {
-        if (option.value === oHand)
+        option.selected = false;
+        if (option.value === otherHand)
           option.selected = true;
         if (option.value === "bouclier" && shield)
           option.selected = true;
