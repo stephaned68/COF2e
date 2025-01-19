@@ -63,10 +63,12 @@ Si le nombre de points de capacités utilisé dépasse le nombre maximum disponb
 
 ## Notifications
 
-Pour chaque type de notification, le joueur peut choisir entre aucun affichage, un affichage pour tous les joueurs, ou un affichage privé pour lui et le MJ.
+Pour chaque type de notification, vous pouvez choisir entre aucun affichage, un affichage pour tous les joueurs, ou un affichage privé pour le joueur et le MJ.
 
 - Conditions : Les effets des états préjudiciables sont affichés ou pas dans le chat Roll20.
 - Gain/Perte de PV : Les effets des gains ou des pertes de PV lors du clic sur les deux icones sont affichés ou pas dans le chat Roll20.
+
+- FX (caract.) : Vous pouvez indiquer ici le nom d'un FX Roll20 qui sera joué lors d'un jet de caractéristique (commande <kbd>/fx</kbd>).
 
 ## Apparence des messages
 
