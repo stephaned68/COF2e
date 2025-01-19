@@ -254,10 +254,6 @@ div.path div.block-title {
   display: flex;
 }
 
-.d-inline {
-  display: inline-block;
-}
-
 .d-flex-between {
   justify-content: space-between;
   /*align-content: space-between;*/
@@ -265,6 +261,14 @@ div.path div.block-title {
 
 .d-flex-middle {
   vertical-align: middle;
+}
+
+.d-flex-1 {
+  flex: 1;
+}
+
+.d-inline {
+  display: inline-block;
 }
 
 .align-self-center {
@@ -544,6 +548,12 @@ div.change-view {
   background-color: tan;
 }
 
+.conditions input[value="1"].has-conditions ~ .bordered {
+  border-color: orange;
+  border-width: 2px;
+  border-style: dashed;
+}
+
 .pc-luck-rd .luck {
   display: grid;
   grid-template-columns: 1fr 3fr;
@@ -674,6 +684,7 @@ div.change-view {
 .weapon textarea.one-row,
 .weapon-opt textarea.one-row,
 .abilities .rank textarea.one-row,
+.pc-roll-r1 textarea.one-row,
 .pc-gears .gears textarea.one-row,
 .resources textarea.one-row {
   padding: 0;
@@ -694,6 +705,7 @@ div.change-view {
 .weapon textarea.one-row:focus,
 .weapon-opt textarea.one-row:focus,
 .abilities .rank textarea.one-row:focus,
+.pc-roll-r1 textarea.one-row:focus,
 .pc-gears .gears textarea.one-row:focus,
 .resources textarea.one-row:focus {
   height: 6rem;

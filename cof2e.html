@@ -644,7 +644,8 @@
         <div class="pc-cond-def">
   
           <div class="conditions">
-            <div class="centered block-header">Etats préjudiciables</div>
+            <div class="centered block-header block-title">Etats préjudiciables</div>
+            <input type="hidden" class="has-conditions" name="attr_has_conditions" value="0">
             <div class="bordered centered">
               <input type="hidden" class="condition-affaibli" name="attr_condition_affaibli" value="0">
               <button
@@ -899,7 +900,7 @@
         </div>
 
         <!-- Fiche PJ, Onglet Caractéristiques, Sous-onglets -->
-        <input type="hidden" class="tabs-toggle" name="attr_pc_subtab1" value="atcks" />
+        <input type="hidden" class="tabs-toggle" name="attr_pc_subtab1" value="attacks" />
         <div class="pc-subtabs">
           <button type="action" name="act_pc_attacks-btn" class="sub-tab tab-btn pc-attacks-btn">ATTAQUES</button>
           <button type="action" name="act_pc_otact-btn" class="sub-tab tab-btn pc-otact-btn">OPTIONS</button>
@@ -3174,7 +3175,7 @@
               </div>
               
               <div class="d-flex d-flex-middle bordered">
-                <input type="text" name="attr_roll-cmd" title="@{roll-cmd} Autre jet de dés" placeholder="Jet spécial ou description" value="">
+                <textarea class="one-row" name="attr_roll-cmd" title="@{roll-cmd} Autre jet de dés" placeholder="Jet spécial ou description"></textarea>
               </div>
 
             </div>
@@ -4254,6 +4255,12 @@
                   <option value="1">Public</option>
                   <option value="2" selected>Chuchoté</option>
                 </select>
+              </li>
+              <li>
+                <div class="d-flex">
+                  <span>FX (caract.)&nbsp;</span>
+                  <input class="d-flex-1" type="text" name="attr_notif_fx" title="@{notif_fx} FX à jouer pour les jets de caractéristiques" value="">
+                </div>
               </li>
             </ul>
             
@@ -6309,6 +6316,24 @@ function hideArea(div) {
   $20(`.${div}`).addClass(SWData.settings.hiddenClass);
 }
 
+/**
+ * Send an /fx command to Roll20 chat
+ * @param {string} fxValue - FX parameter "name [target]"
+ * @returns {void}
+ */
+function playFX(fxValue) {
+  if (fxValue === "")
+    return;
+
+  const [ fxName, target ] = (fxValue + " ").split(" ");
+  let fxCmd = `/fx ${fxName} @{selected|token_id}`;
+  if (target.toLowerCase() === "target")
+    fxCmd += " @{target|token_id}";
+  startRoll(fxCmd, roll => {
+    finishRoll(roll.rollId);
+  });
+}
+
 // ===============
 // PC SHEET EVENTS
 // ===============
@@ -6805,7 +6830,13 @@ SWData.PC.ABILITIES.forEach(ability => {
       "cfg_bouclier_malus", "bouclier_malus", "bouclier_eqp",
       "casque", "casque_eqp",
     ];
-    getAttrs([ `${short}_dsup`, ...defGearAttrs ], function(values) {
+    getAttrs([ `${short}_dsup`, "notif_fx", ...defGearAttrs ], function(values) {
+      // Play FX !
+      const fxValue = strval(values.notif_fx);
+      if (fxValue !== "")
+        playFX(fxValue);
+
+      // Roll ability
       const [ roll ] = Object.keys(values);
       const armure_eqp = intval(values.armure_eqp);
       const armure_malus = intval(values.armure_malus) * armure_eqp;
@@ -7274,14 +7305,19 @@ SWData.PC.CONDITIONS.forEach(condition => {
     });
   });
 
-  // Display enabled condition
+  // Display enabled condition + any condition remaining
   on(`change:condition_${name}`, function() {
-    getAttrs([ `condition_${name}`, "notif_conditions" ], function(values) {
+    const allConditions = SWData.PC.CONDITIONS.map(condition => `condition_${ condition.name }`);
+    getAttrs([ `condition_${name}`, "notif_conditions", "has_conditions", ...allConditions ], function(values) {
       const [ attribute ] = Object.keys(values);
       const hasCondition = intval(values[attribute]);
       const notify = intval(values.notif_conditions);
       if (hasCondition === 1 && notify !== 0)
         displayCondition(label, effects, description, notify);
+      
+      const has_conditions = allConditions.some(attr => intval(values[attr]) === 1) ? 1 : 0;
+      if (has_conditions !== intval(values.has_conditions))
+        setAttrs({ has_conditions });
     });
   });
 });
@@ -7639,15 +7675,8 @@ on("clicked:repeating_armes:attack-btn", function() {
 
     // Play FX !
     const fxValue = getProp(options, "fx");
-    if (fxValue !== "") {
-      const [ fxName, target ] = (fxValue + " ").split(" ");
-      let fxCmd = `/fx ${fxName} @{selected|token_id}`;
-      if (target.toLowerCase() === "target")
-        fxCmd += " @{target|token_id}";
-      startRoll(fxCmd, roll => {
-        finishRoll(roll.rollId);
-      });
-    }
+    if (fxValue !== "")
+      playFX(fxValue);
 
     // Roll attack !
     const atkProps = {
@@ -10180,6 +10209,7 @@ on("sheet:opened", function() {
     "comp_init",
     "comp_pnjatk",
     "pnjatk",
+    "pc_subtab1",
     ...pathAttrs
   ], function (values) {
 
@@ -10205,6 +10235,9 @@ on("sheet:opened", function() {
 
     let updates = new Map();
     
+    if (values.pc_subtab1 === "")
+      updates.set("pc_subtab1", "attacks");
+
     updates = getTokenURL(updates, values);
     
     if (sheetType === SWData.SHEET_TYPE.PC) {
