@@ -113,7 +113,7 @@ Des paramètres optionnels peuvent être ajoutés :
   
   Ce paramètre est prinicpalement utilisé par le script COFantasy2.
   
-  Vous pouvez y indiquer l'option <kbd>fx:</kbd> suivi du nom d'un effet spécial Roll20 et optionnellement de la mention <kbd>target</kbd>. Cet effet sera joué avant le jet d'attaque avec pour origine le token du personnage à condition qu'il soit sélectionné sur la map, et si <kbd>target</kbd> est présent, une cible à sélectionner par le joueur.
+  Vous pouvez y indiquer l'option <kbd>fx:</kbd> suivi du nom d'un effet spécial Roll20.
 
 Un clic sur le bouton d20 permet de lancer le jet d'attaque et de DM dans le chat en tenant compte des divers paramètres. Deux jets distincts d'attaque sont effectués, sauf si le PJ est _Affaibli_. Dans le cas général (jet normal), prenez en compte le premier jet affiché. Prenez le plus élevé des deux jets si le PJ bénéficie d'un _dé bonus_ ou le moins élevé s'il subit un _dé malus_.
 

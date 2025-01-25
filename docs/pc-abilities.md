@@ -27,6 +27,8 @@ Pour chaque voie, vous indiquez :
   - Une liste de propriétés optionnelles, principalement utilisées par le script MOD COFantasy2.
   
     La syntaxe de cette liste est la même que pour les [prédicats]({{ site.baseurl }}/pc-script).
+
+    Vous pouvez spécifier la propriété <kbd>fx:</kbd> pour pour que la fiche joue un FX Roll20 (commande <kbd>/fx</kbd>) lorsque la capacité est utilisée.
 - Une icône située à côté des PV de voie permet d'importer la liste des capacités à partir du texte collé dans le sous-onglet Import.
 
 ## Mode Affichage
