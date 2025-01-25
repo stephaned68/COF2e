@@ -1,9 +1,9 @@
 <div class="cofmain">
 
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.1.05">
+  <input type="hidden" name="attr_verfdp" value="1.1.06">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.1.05">
+  <input type="hidden" name="attr_version" value="1.1.06">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
 
@@ -65,7 +65,7 @@
     <div>
       <img
         class="logo"
-        title="Version 1.1.05 - 17/01/2025"
+        title="Version 1.1.06 - 25/01/2025"
         src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cof2e_logo.jpg"
       />
     </div>
@@ -4233,7 +4233,7 @@
 
             <div class="float-right">
               <input type="checkbox" name="attr_debug_mode" value="1" title="Mode Debug">&nbsp;
-              <button type="action" class="flat-btn img-btn" name="act_reset_all-btn" title="Re-calculer attributs (rangs, encombrement)">
+              <button type="action" class="flat-btn img-btn" name="act_reset_all-btn" title="Re-calculer attributs&#10;DR, PM, PC, PV max.&#10;Initiative, Défense&#10;Encombrement&#10;Rangs et utilisations capacités&#10;Buffs / De-buffs&#10;Liens Att. <=> Equip.">
                 <span class="img-btn">x</span>
               </button>
             </div>
@@ -4436,7 +4436,7 @@
               <li>
                 <details>
                   <summary>
-                    <strong>Version 1.1.05</strong> (future 1.2.0 Roll20)
+                    <strong>Version 1.1.06</strong> (future 1.2.0 Roll20)
                   </summary>
                   <ul>
                     <li>Ajout d'une gestion des armures, boucliers et casques équipés</li>
@@ -4451,7 +4451,7 @@
                     <li>Ajout du détail de la bourse par type de pièces et total du trésor en PA</li>
                     <li>Ajout des boutons des menus d'action sur la fiche de PNJ</li>
                     <li>Ajout gestion des objets en main</li>
-                    <li>Ajout de la possibilité de lier un FX Roll20 aux jets de caractéristiques et d'attaques</li>
+                    <li>Ajout de la possibilité de lier un FX Roll20 aux jets de caractéristiques, d'attaques et de capacités</li>
                     <li>Améliorations visuelles diverses (dont support du darkmode dans le chat)</li>
                   </ul>
                 </details>
@@ -5095,6 +5095,11 @@
     <span class="sheet-rt-{{textclass}}">{{text}}</span>
   </div>
   {{/text}}
+  {{#alert}}
+  <div class="sheet-rt sheet-rt-text">
+    <span class="sheet-rt-{{alertclass}}">{{alert}}</span>
+  </div>
+  {{/alert}}
 
 </rolltemplate>
 
@@ -6318,18 +6323,24 @@ function hideArea(div) {
 
 /**
  * Send an /fx command to Roll20 chat
- * @param {string} fxValue - FX parameter "name [target]"
+ * @param {string} fxValue - FX parameter "name [target] [count]"
  * @returns {void}
  */
 function playFX(fxValue) {
   if (fxValue === "")
     return;
 
-  const [ fxName, target ] = (fxValue + " ").split(" ");
+  const [ fxName, ...params ] = (fxValue.replace(/\s\s+/g, ' ') + " ").split(" ");
+  let count = 1;
   let fxCmd = `/fx ${fxName} @{selected|token_id}`;
-  if (target.toLowerCase() === "target")
-    fxCmd += " @{target|token_id}";
-  startRoll(fxCmd, roll => {
+  if (params[0] !== "")
+    count = intval(params[0]);
+  
+  let fxChat = fxCmd;
+  while (--count > 0) {
+    fxChat += "\n" + fxCmd;
+  }
+  startRoll(fxChat, roll => {
     finishRoll(roll.rollId);
   });
 }
@@ -7544,20 +7555,25 @@ on("clicked:repeating_armes:attack-btn", function() {
       return;
     }
 
+    let atkTitle = "Attaque";
+
     // Special tactics
     let tacticBonus = "";
     let tacticDM = "";
     switch (tactics) {
       case 1:
-        tacticBonus = " +5[Attaque assurée]";
+        atkTitle = "Attaque assurée";
+        tacticBonus = ` +5[${atkTitle}]`;
         break;
       case 2:
-        tacticBonus = " -3[Att. précise/violente]";
-        tacticDM = " +1@{devol}[Att. précise/violente]";
+        atkTitle = "Att. précise/violente";
+        tacticBonus = ` -3[${atkTitle}]`;
+        tacticDM = ` +1@{devol}[${atkTitle}]`;
         break;
       case 3:
-        tacticBonus = " -7[Att. précise/violente]";
-        tacticDM = " +2@{devol}[Att. précise/violente]";
+        atkTitle = "Att. précise/violente";
+        tacticBonus = ` -7[${atkTitle}]`;
+        tacticDM = ` +2@{devol}[${atkTitle}]`;
         break;
       case 4:
         tacticBonus = ` + (${tactBM})[Option tactique]`;
@@ -7674,13 +7690,13 @@ on("clicked:repeating_armes:attack-btn", function() {
     }
 
     // Play FX !
-    const fxValue = getProp(options, "fx");
+    const fxValue = strval(getProp(options, "fx"));
     if (fxValue !== "")
       playFX(fxValue);
 
     // Roll attack !
     const atkProps = {
-      lsub: "Attaque",
+      lsub: atkTitle.replace("/", " /\n"),
       rsub: name + range,
       roll: attack,
       broll: "",
@@ -7695,8 +7711,18 @@ on("clicked:repeating_armes:attack-btn", function() {
       atkProps.broll = attack;
     const chatMsg = cof2RollTemplate(atkProps);
     sendChatMsg(chatMsg);
-  })
+  });
 });
+
+/**
+ * Return the fully qualified name of attack attribute for gear id, if any
+ * @param {string} data - in hand data (main_princ | main_autre value)
+ * @returns {string}
+ */
+function getWeaponGearAttr(data) {
+  const [ label, weaponId ] = strval(data).split("~");
+  return intval(label) > 0 ? `repeating_armes_${weaponId}_arme-gearid` : "";
+}
 
 /**
  * Change objects in hands 
@@ -7704,15 +7730,38 @@ on("clicked:repeating_armes:attack-btn", function() {
 on("change:main_princ change:main_autre", function(eventInfo) {
   const attribute = eventInfo.sourceAttribute;
   const hand = attribute.split("_")[1];
-  const outHand = strval(eventInfo.oldValue);
-  getAttrs([ attribute, "bouclier_eqp" ], function(values) {
+  const attrs = [
+    attribute,
+    "bouclier_eqp"
+  ];
+
+  const offWeaponGear = getWeaponGearAttr(eventInfo.previousValue);
+  if (offWeaponGear !== "")
+    attrs.push(offWeaponGear);
+  
+  const onWeaponGear = getWeaponGearAttr(eventInfo.newValue);
+  if (onWeaponGear !== "")
+    attrs.push(onWeaponGear);
+  
+  getAttrs(attrs, function(values) {
     const inHand = strval(values[attribute]);
-    console.log(hand, outHand, inHand)
     const hasShield = boolval(values.bouclier_eqp);
 
     const updates = new Map();
 
-    const [ , rowId, twoHands ] = inHand.split("~");
+    if (offWeaponGear !== "") {
+      const equipId = strval(values[offWeaponGear]);
+      if (equipId !== "")
+        updates.set(`repeating_equipement_${equipId}_equip-on`, 0);
+    }
+    
+    if (onWeaponGear !== "") {
+      const equipId = strval(values[onWeaponGear]);
+      if (equipId !== "")
+        updates.set(`repeating_equipement_${equipId}_equip-on`, 1);
+    }
+
+    const [ rowId, twoHands ] = inHand.split("~").splice(1);
     updates.set(`${attribute}_btn`, (rowId) ? 1 : 0);
     if (hand === "princ" && twoHands === "1") {
       updates.set("main_autre", "2m");
@@ -7722,9 +7771,9 @@ on("change:main_princ change:main_autre", function(eventInfo) {
 
     if (hand === "autre")
       updates.set("bouclier_eqp", inHand === "bouclier" ? 1 : 0);
+
     if (updates.size > 0)
       setAttrs(Object.fromEntries(updates));
-
   });
 });
 
@@ -7771,10 +7820,11 @@ function actionAbility(path, rank) {
     `v${path}r${rank}_use`,
     `v${path}r${rank}_use_max`,
     `v${path}r${rank}_freq`,
+    `v${path}r${rank}_props`,
     "pm"
   ];
   getAttrs(abilityAttrs, function(values) {
-    const [ path, ability, desc, owned, spell, used, uses, freq ] = Object.keys(values);
+    const [ path, ability, desc, owned, spell, used, uses, freq, props ] = Object.keys(values);
     const pathName = strval(values[path]);
     const abilityName = strval(values[ability]);
     const abilityOwned = intval(values[owned]);
@@ -7787,16 +7837,23 @@ function actionAbility(path, rank) {
     const maxUses = intval(values[uses]);
     const usage = strval(values[freq]);
 
+    const abilityProps = strval(values[props]);
+
+    // Play FX !
+    const fxValue = strval(getProp(abilityProps, "fx"));
+    if (fxValue !== "")
+      playFX(fxValue);
+
     const updates = new Map();
     
     // alert on usage
     let alert = "";
-    let textclass = "";
+    let alertCSS = "";
     if (maxUses !== 0) {
       if (nbUsed > maxUses) {
         alert = `Déjà utilisée ${maxUses} fois / ${usage.toLowerCase()}`;
         description = "";
-        textclass = "fumble";
+        alertCSS = "fumble";
       } else {
         alert = `Utilisée ${nbUsed} fois`;
       }
@@ -7807,9 +7864,9 @@ function actionAbility(path, rank) {
       let pm = intval(values.pm);
       if (rank > pm) {
         alert = "Plus assez de Points de Mana\n";
-        alert = `${pm} restants pour ${rank} nécessaires\n`;
+        alert += `${pm} restants pour ${rank} nécessaires\n`;
         alert += `Brûlure de Mana : [[${rank - pm}d@{drecup}]] PV perdus\n`
-        textclass = "fumble";
+        alertCSS = "fumble";
       } else {
         pm -= rank;
         alert = `${pm} Points de Mana restants`;
@@ -7819,16 +7876,20 @@ function actionAbility(path, rank) {
 
     // build text
     let text = insertRolls(description);
-    if (alert !== "")
+    if (alertCSS === "")
       text += "\n" + alert
 
     // send to chat
-    const chatMsg = cof2RollTemplate({
+    const rollProps = {
       lsub: `${pathName} - ${rank}`,
       rsub: abilityName,
-      text,
-      textclass
-    });
+      text
+    };
+    if (alertCSS !== "") {
+      rollProps.alert = alert;
+      rollProps.alertclass = alertCSS;
+    }
+    const chatMsg = cof2RollTemplate(rollProps);
     sendChatMsg(chatMsg);
     
     // Update usages
@@ -8398,7 +8459,6 @@ seq(9).forEach(path => {
   on(`clicked:import_v${path}-btn`, function() {
     getAttrs([ "voie_pdf", `v${path}br` ], function(values) {
       const text = strval(values.voie_pdf);
-      console.log(text)
       if (text === "")
         return;
        
@@ -8670,7 +8730,6 @@ function getWeapons(values, rowIds, filter = "") {
     const equiped = intval(values[`repeating_equipement_${rowId}_equip-on`]);
     const name = strval(values[`repeating_equipement_${rowId}_equip-nom`]);
     const props = strval(values[`repeating_equipement_${rowId}_equip-props`]);
-    console.log(props)
     if (isWeapon(props, filter))
       gears.set(rowId, { name, equiped, props });
   });
@@ -8692,7 +8751,7 @@ function getTwoHanded(values, rowIds) {
  * @param {object} callback - callback function (rowIds, allAttacks) => {}
  */
 function processAllAttacks(section, attributes, callback) {
-  getSectionIDs(section, rowIds => {
+  getSectionIDsOrdered("repeating_" + section, rowIds => {
     const allAttacks = [];
     rowIds.forEach(rowId => {
       attributes.forEach(attribute => {
@@ -8737,7 +8796,6 @@ SWData.COINS.forEach(coin => {
       const pc = intval(values.tresor_pc);
       values.tresor_pa = intval(values.tresor_pa) + Math.floor(pc / 10);
       values.tresor_pc = 0;
-      console.log(values)
       const total = addValues(values);
       const tresor = `${total} PA`;
       setAttrs({ tresor, tresor_pieces });
@@ -8834,7 +8892,6 @@ on("change:repeating_equipement:equip-on", function(eventInfo) {
           updates.set("def_car_max", defCarMax);
       }
 
-      console.log(updates)
       if (updates.size > 0)
         setAttrs(Object.fromEntries(updates));
     });
@@ -8943,10 +9000,7 @@ on("clicked:profequip-btn", function() {
       const props = getGearProps(gear.name);
       if (props !== "") {
         baseGear.set(rowId + "equip-props", props.split(",").join("\n"));
-        if (
-          props.includes("dm-1m") || props.includes("dm-2m") || 
-          props.includes("bonus-def") || props.includes("armure") || props.includes("bouclier")
-        )
+        if (props.includes("bonus-def") || props.includes("armure") || props.includes("bouclier"))
           baseGear.set(rowId + "equip-on", 1);
       }
     });
@@ -8990,6 +9044,40 @@ function rebuildRanks() {
 }
 
 /**
+ * Link attacks to gears (by name)
+ */
+function linkAttacks() {
+  getSectionIDs("armes", atkIds => {
+    getSectionIDs("equipement", gearIds => {
+      const allAttacks = [];
+      atkIds.forEach(id => {
+        [ "nom", "atktype", "gearid" ].forEach(attr => {
+          allAttacks.push(`repeating_armes_${id}_arme-${attr}`);
+        });
+      });
+      const allGears = gearIds.map(id => `repeating_equipement_${id}_equip-nom`);
+      getAttrs([ ...allAttacks, ...allGears ], function (values) {
+        const links = new Map();
+        atkIds.forEach(id => {
+          const type = strval(values[`repeating_armes_${id}_arme-atktype`]);
+          if ([ "sort", "naturel" ].includes(type))
+            return;
+          const nom = strval(values[`repeating_armes_${id}_arme-nom`]);
+          const gear = allGears.find(gear => nom.toLowerCase().includes(strval(values[gear]).toLowerCase()));
+          if (gear) {
+            const gearId = gear.split("_")[2];
+            if (gearId)
+              links.set(`repeating_armes_${id}_arme-gearid`, gearId);
+          }
+        });
+        if (links.size > 0)
+          setAttrs(Object.fromEntries(links));
+      });
+    });
+  });
+}
+
+/**
 * On clicking the Reset button
 */
 on("clicked:reset_all-btn", function() {
@@ -9004,6 +9092,10 @@ on("clicked:reset_all-btn", function() {
   rebuildRanks();
   rebuildBuffLists();
   rebuildBuffValues();
+  ask("Lier attaques et équipement ?", function(answer) {
+    if (answer === 1)
+      linkAttacks();
+  });
 });
 
 /**
@@ -9228,14 +9320,14 @@ on("clicked:caract_menu-btn", function () {
  * @param {string} [npc=""] - PC ("") or NPC ("npc") attacks
  */
 function attackRollsMenu(npc = "") {
-  getSectionIDs(npc + "armes", function (rowIds) {
-    const section = `repeating_${npc}armes_`;
-    const attackNames = rowIds.map(rowId => `${section}${rowId}_arme-nom`);
+  const section = `repeating_${npc}armes`;
+  getSectionIDsOrdered(section, function (rowIds) {
+    const attackNames = rowIds.map(rowId => `${section}_${rowId}_arme-nom`);
     const attackBtn = (npc === "") ? "attack" : "npcatk";
     getAttrs([ "character_name", "couleur_pj", ...attackNames ], function (values) {
       const charName = strval(values.character_name);
       const color = strval(values.couleur_pj);
-      const chatMsg = rowIds.map((rowId, ix) => `${ix + 1}. ${values[`${section}${rowId}_arme-nom`]}=[Jet](~${charName}|${section}${rowId}_${attackBtn}-btn${menuButton(color)})`);
+      const chatMsg = rowIds.map((rowId, ix) => `${ix + 1}. ${values[`${section}_${rowId}_arme-nom`]}=[Jet](~${charName}|${section}_${rowId}_${attackBtn}-btn${menuButton(color)})`);
       if (chatMsg === 0)
         return;
       sendChatMsg([
@@ -9321,14 +9413,14 @@ seq(9).forEach(path => {
  * @param {string} [npc=""] - PC ("") or NPC ("npc") ability rolls
  */
 function abilityRollsMenu(npc = "") {
-  getSectionIDs(npc + "rolls", function (rowIds) {
-    const section = `repeating_${npc}rolls_`;
+  const section = `repeating_${npc}rolls`;
+  getSectionIDsOrdered(section, function (rowIds) {
     const rollNameAttr = (npc === "") ? "roll-nom" : "npcroll-name";
-    const rollNames = rowIds.map(rowId => `${section}${rowId}_${rollNameAttr}`);
+    const rollNames = rowIds.map(rowId => `${section}_${rowId}_${rollNameAttr}`);
     getAttrs([ "character_name", "couleur_pj", ...rollNames ], function (values) {
       const charName = strval(values.character_name);
       const color = strval(values.couleur_pj);
-      const chatMsg = rowIds.map((rowId, ix) => `${ix + 1}. ${values[`${section}${rowId}_${rollNameAttr}`]}=[Jet](~${charName}|${section}${rowId}_${npc}roll-btn${menuButton(color)})`);
+      const chatMsg = rowIds.map((rowId, ix) => `${ix + 1}. ${values[`${section}_${rowId}_${rollNameAttr}`]}=[Jet](~${charName}|${section}_${rowId}_${npc}roll-btn${menuButton(color)})`);
       if (chatMsg.length === 0)
         return;
       sendChatMsg([
@@ -10104,7 +10196,6 @@ function rebuildPathAll(updates, values) {
  * Load attack lists
  */
 function loadAttackLists(section) {
-  ///return;
   processAllAttacks(section, [ "atktype", "label", "nom", "2m" ], function(rowIds, allAttacks) {
     getAttrs([ "main_princ", "main_autre", "bouclier_eqp", ...allAttacks ], function(values) {
       let attackList = [];
@@ -10115,7 +10206,7 @@ function loadAttackLists(section) {
         const type = strval(values[`repeating_${section}_${id}_arme-atktype`]);
         if (type === "sort")
           return;
-        const label = strval(values[`repeating_${section}_${id}_arme-label`]);
+        const label = strval(values[`repeating_${section}_${id}_arme-label`], "999");
         const name = strval(values[`repeating_${section}_${id}_arme-nom`]);
         const twoHands = intval(values[`repeating_${section}_${id}_arme-2m`]);
         attackList.push({
@@ -10235,7 +10326,7 @@ on("sheet:opened", function() {
 
     let updates = new Map();
     
-    if (values.pc_subtab1 === "")
+    if (sheetType === SWData.SHEET_TYPE.PC && values.pc_subtab1 === "")
       updates.set("pc_subtab1", "attacks");
 
     updates = getTokenURL(updates, values);
