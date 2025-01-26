@@ -7121,6 +7121,8 @@ function updateEquiped(attribute) {
         gears = getShields(values, gearIds);
       if (defense === "casque") 
         gears = getHelmets(values, gearIds);
+      if (!gears)
+        return;
 
       const updates = new Map();
 
@@ -7734,6 +7736,10 @@ on("change:main_princ change:main_autre", function(eventInfo) {
     attribute,
     "bouclier_eqp"
   ];
+  const hands = [
+    "main_princ",
+    "main_autre"
+  ];
 
   const offWeaponGear = getWeaponGearAttr(eventInfo.previousValue);
   if (offWeaponGear !== "")
@@ -7763,10 +7769,14 @@ on("change:main_princ change:main_autre", function(eventInfo) {
 
     const [ rowId, twoHands ] = inHand.split("~").splice(1);
     updates.set(`${attribute}_btn`, (rowId) ? 1 : 0);
-    if (hand === "princ" && twoHands === "1") {
-      updates.set("main_autre", "2m");
-      if (hasShield)
-        updates.set("bouclier_eqp", 0);
+    if (hand === hands[0].split("_")[1]) {
+      if (twoHands === "1") {
+        updates.set(hands[1], "2m");
+        if (hasShield)
+          updates.set("bouclier_eqp", 0);
+      } else {
+        updates.set(hands[1], "0");
+      }
     }
 
     if (hand === "autre")
@@ -8833,24 +8843,48 @@ on("change:repeating_equipement:equip-nom", function() {
 on("change:repeating_equipement:equip-on", function(eventInfo) {
   const equipId = eventInfo.triggerName.split("_")[2];
   const section = "repeating_equipement";
+  const hands = [
+    "main_princ",
+    "main_autre"
+  ]
   processAllGear([ "on", "nom", "props" ], function(gearIds, allGears) {
     getAttrs([ 
       `${section}_equip-on`, 
       `${section}_equip-nom`, 
       `${section}_equip-props`, 
-      ...allGears
+      `${section}_equip-atkid`, 
+      ...allGears,
+      ...hands
     ], function (values) {
       const equiped = intval(values[`${section}_equip-on`]);
       const name = strval(values[`${section}_equip-nom`]);
       const props = strval(values[`${section}_equip-props`]);
+      const atkId = strval(values[`${section}_equip-atkid`]);
       const armor = isArmor(name, props);
       const shield = isShield(name, props);
       const helmet = isHelmet(props);
-      if (!armor && !shield && !helmet)
+      if (!armor && !shield && !helmet && atkId === "")
         return;
 
-      const defense = armor ? "armure" : ( shield ? "bouclier" : "casque" );
+      // unequip weapon in hand
+      console.log(equiped, atkId)
+      if (equiped === 0 && atkId !== "") {
+        let unEquiped;
+        hands.forEach(hand => {
+          const [ label, attack ] = strval(values[hand]).split("~");
+          if (intval(label) > 0 && attack === atkId.toLowerCase())
+            unEquiped = hand;
+        });
+        if (unEquiped) {
+          const updates = { [unEquiped]: "0" };
+          if (unEquiped === hands[0] && strval(values[hands[1]] === "2m"))
+            updates[hands[1]] = "0";
+          setAttrs(updates);
+        }
+        return;
+      }
 
+      const defense = armor ? "armure" : ( shield ? "bouclier" : "casque" );
       const defBonus = getDefBonus(props, defense);
 
       // search for armure-malus: | bouclier-malus: | casque-malus: 
@@ -8869,6 +8903,8 @@ on("change:repeating_equipement:equip-on", function(eventInfo) {
         gears = getShields(values, gearIds);
       if (helmet)
         gears = getHelmets(values, gearIds);
+      if (!gears)
+        return;
 
       // un-equip any other armor or shield
       gears.keys().forEach(id => {
