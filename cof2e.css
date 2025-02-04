@@ -12,7 +12,8 @@ span,
 input,
 select,
 textarea,
-button
+button,
+.charmancer .cofmancer
 {
   box-sizing: border-box;
   font-family: var(--cof-font);
@@ -66,7 +67,8 @@ summary {
   height: 6rem;
 }
 
-.cofmain hr {
+.cofmain hr,
+.cofmancer hr {
   margin-top: 10px;
   margin-bottom: 10px;
   border: 1px solid gray;
@@ -98,7 +100,8 @@ option.optgroup {
 }
 
 /* Main div */
-.cofmain {
+.cofmain,
+.cofmancer {
 
   /* CSS Vars */
   --cof-font: "Merriweather Sans", "Verdana";
@@ -114,6 +117,14 @@ option.optgroup {
   border-radius: 10px;
   margin: 5px;
   padding: 5px;
+}
+
+.cofmancer textarea {
+  height: 2.5rem;
+}
+
+.cofmancer textarea:focus {
+  height: 15rem;
 }
 
 .bordered {
@@ -158,6 +169,17 @@ select.select-xxs {
 
 select.select-xxs option {
   font-size: small;
+}
+
+.cofmancer button {
+  background-color: transparent;
+  border: 2px solid var(--cof-color);
+  border-radius: 5px;
+}
+
+.cofmancer button:hover {
+  font-weight: bold;
+  box-shadow: var(--cof-dark);
 }
 
 /* Icon buttons & images */
@@ -329,6 +351,10 @@ div.path div.block-title {
   margin: 2px;
 }
 
+input[value="npc"] ~ button[name="act_charmancer-btn"] {
+  display: none;
+}
+
 /* Sheet types */
 .identity-pc,
 .identity-npc,
@@ -455,6 +481,24 @@ input[value="1"].init-agi ~ div.init-agi {
 
 input[value="1"].bouclier-malus ~ div.bouclier-malus {
   display: block;
+}
+
+.cofmancer .type-pol,
+.cofmancer .type-exp,
+.cofmancer .type-spe {
+  display: none;
+}
+
+.cofmancer input[value="pol"] ~ .type-pol,
+.cofmancer input[value="exp"] ~ .type-exp,
+.cofmancer input[value="spe"] ~ .type-spe {
+  display: block;
+}
+
+.cofmancer .stat-cell {
+  width: 10%;
+  text-align: center;
+  margin-top: 5px;
 }
 
 div.change-view {
