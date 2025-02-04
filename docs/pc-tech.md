@@ -128,15 +128,15 @@ Ces attributs existent pour toutes les voies (1 à 9) et tous les rangs (1 à 5)
 # Effets spéciaux (FX)
 
 Vous pouvez indiquer le nom d'un effet spécial à plusieurs endroits de la fiche :
-- Dans la configuration pour les jets de caractéristiques
-- Dans les options d'attaque
-- Dans les propriétés des capacités
+- Dans la configuration pour les jets de caractéristiques sous la forme <kbd>nom-fx nombre</kbd>
+- Dans les options d'attaque sous la forme <kbd>fx: nom-fx nombre</kbd>
+- Dans les propriétés des capacités sous la forme <kbd>fx: nom-fx nombre</kbd>
 
 Cette effet spécial est une animation qui sera jouée par Roll20 en même temps que le jet est effectué dans le chat.
 
 Lorsque vous spécifiez un FX, vous devez indiquer :
 - son nom : deux mots séparés par un tiret <kbd>type-couleur</kbd>, cf [documentation Roll20](https://help.roll20.net/hc/en-us/articles/360037258714-Effects-FX-Tool#01J5XWT925BXP979H4MZXC2SJP)
-- le nombre de fois où le FX doit être joué
+- le nombre de fois où le FX doit être joué (1 par défaut)
 
 Cet effet sera joué en même temps que le jet est affiché dans le chat avec pour origine le token du personnage à condition qu'il soit sélectionné sur la map. Si l'effet est directionnel, Roll20 demandera au joueur de sélectionner un point cible.
 
