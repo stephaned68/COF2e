@@ -125,6 +125,22 @@ Ces attributs existent pour toutes les voies (1 à 9) et tous les rangs (1 à 5)
 - <kbd>pm_buff_list</kbd> : liste des buffs/debuffs aux PM
 - <kbd>pc_buff_list</kbd> : liste des buffs/debuffs aux PC
 
+# Persomancien
+
+Un bouton situé à côté du type de fiche de personnage permet de lancer le Persomancien (CharacterMancer). Cette fonctionnalité expérimentale permet de simplifier la création d'un PJ.
+
+**Important** : Pour que ce bouton fonctionne, vous devez ajouter un compendium quelconque aux paramètres de la partie. Vous ne l'utiliserez pas dans le VTT, il permet juste que le bouton d'ouverture du Persomancien fonctionne.
+
+- Sélectionnez le type de liste de valeurs de caractéristiques (polyvalent, expert ou spécialiste).
+- Choisissez une valeur pour chaque caractéristique
+- Sélectionnez le peuple du personnage, la liste des bonus/malus aux caractéristiques s'affiche pour rappel.
+- Choisissez les bonus/malus aux caractéristiques, la valeur finale est calculée. Attention, le Persomancien ne contrôle pas la validité des choix.
+- Choisissez le profil du personnage.
+- Vous pouvez demander au Persomancien de charger la liste d'équipement par défaut du profil ainsi que de créer les attaques correspondantes aux armes
+- Copiez depuis le PDF des règles le texte de la voie de peuple ou du mage et des deux voies dans lesquelles vous allez choisir vos deux capacités de niveau 1, et collez-le dans le champ correspondant du Persomancien. Vous pouvez également choisir la voie dans laquelle le personnage obtient une capacité de rang 2 si le profil choisi appartient à la famille des mages.
+
+Cliquez sur le bouton Valider pour charger la fiche avec les différentes valeurs choisies dans le Persomancien.
+
 # Effets spéciaux (FX)
 
 Vous pouvez indiquer le nom d'un effet spécial à plusieurs endroits de la fiche :
