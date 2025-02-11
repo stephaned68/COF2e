@@ -8131,7 +8131,7 @@ function insertRolls(text, options = {}) {
     let [ matched, sb, dice, , ability, sa ] = result;
     if (ability.startsWith("rang "))
       ability = `rang_voie${ findPathByName(ability, pathNames) }`;
-    const replace = `${sb}[[${dice}${devol} + @{${ability.toLowerCase()}_test}[${ability}] ]]${sa}`;
+    const replace = `${sb}[[${dice}${devol} + @{${ability.toLowerCase()}}[${ability}] ]]${sa}`;
     text = text.replace(matched, replace);
   });
 
@@ -8148,14 +8148,14 @@ function insertRolls(text, options = {}) {
     if (ability.startsWith("rang ")) {
       ability = `rang_voie${ findPathByName(ability, pathNames) }`;
     }
-    const replace = `${sb}[[${value} + @{${ability.toLowerCase()}_test}]]${sa}`;
+    const replace = `${sb}[[${value} + @{${ability.toLowerCase()}}]]${sa}`;
     text = text.replace(matched, replace);
   });
 
   // Search for " [XXX] "
   matchRegExp(text, /([ ]+)\[(AGI|CON|FOR|PER|CHA|INT|VOL)\]([ ]+)/gm).forEach(result => {
     let [ matched, sb, ability, sa ] = result;
-    const replace = `${sb}[[@{${ability.toLowerCase()}_test}]]${sa}`;
+    const replace = `${sb}[[@{${ability.toLowerCase()}}]]${sa}`;
     text = text.replace(matched, replace);
   });
 
