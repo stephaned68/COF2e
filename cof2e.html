@@ -5090,7 +5090,671 @@
 
               <div>
                 <button type="action" class="flat-btn" name="act_npcroll-btn">
-                  <span class="
+                  <span class="img-btn img-btn-lg">w</span>
+                </button>
+              </div>
+
+              <div class="bordered">
+                <input type="text" name="attr_npcroll-name" title="@{npcroll-name}" placeholder="Nom de la capacité" value="">
+              </div>
+
+              <div class="bordered">
+                <input type="text" name="attr_npcroll-desc" title="@{npcroll-desc}" placeholder="Description de la capacité" value="">
+              </div>
+
+            </div>
+
+          </fieldset>
+
+        </div>
+
+      </div>
+
+      <div class="npc-gears-tab">
+
+        <div class="npc-gears">
+
+          <!-- Liste des équipements -->
+          <div class="gears">
+
+            <div class="block-title block-header">
+              Equipements
+              <button type="action" name="act_helpgear-btn" class="img-btn flat-btn" title="Aide équipement" >
+                <span class="img-btn img-btn-lg">i</span>
+              </button>
+            </div>
+
+            <div class="bordered">
+              <div class="d-flex d-flex-middle">
+                <input type="hidden" name="attr_tresor" value="">
+                <input type="hidden" name="attr_tresor_pieces" value="">
+                &nbsp;Trésor&nbsp;:&nbsp;<input type="text" name="attr_tresor" title="@{tresor}" readonly>
+              </div>
+              <div class="d-flex d-flex-middle">
+                <details>
+                  <summary>Bourse</summary>
+                  <div class="d-flex">
+                    PC:<input type="number" class="treasure" name="attr_tresor_pc">
+                    PA:<input type="number" class="treasure" name="attr_tresor_pa">
+                    PO:<input type="number" class="treasure" name="attr_tresor_po">
+                    PP:<input type="number" class="treasure" name="attr_tresor_pp">
+                  </div>
+                </details>
+              </div>
+            </div>
+
+            <div class="bordered">
+              
+              <fieldset class="repeating_equipement">
+
+                <details>
+                  <summary>
+
+                    <span>
+                      <input type="text" name="attr_equip-nom" title="@{equip-nom}" placeholder="Nom de l'équipement">
+                      <button type="action" class="flat-btn" name="act_equipshow-btn" title="Informations sur l'équipement">
+                        <span class="img-btn">w</span>
+                      </button>
+                      Nbre <input type="number" name="attr_equip-qte" title="@{equip-qte} Quantité possédée" value="1">
+                    </span>
+
+                  </summary>
+
+                  <div class="d-flex">
+                    <textarea class="one-row" name="attr_equip-detail" title="@{equip-detail}" placeholder="Description détaillée" value=""></textarea>
+                  </div>
+
+                  <div class="d-flex d-flex-middle">
+                    <textarea class="one-row" name="attr_equip-props" title="@{equip-props} Propriétés" placeholder="Propriétés"></textarea>
+                  </div>
+
+                </details>
+
+
+              </fieldset>
+
+            </div>
+          </div>
+
+        </div>
+
+
+      </div>
+
+      <div class="npc-config-tab">
+
+        <hr>
+
+        <div class="sheet-2colrow">
+
+          <div class="sheet-col">
+
+            <ul>
+
+              <li>
+                Jets&nbsp;:&nbsp;
+                <select class="select-md" name="attr_togm" title="@{togm}">
+                  <option value="" selected>Publics</option>
+                  <option value="/w gm ">Chuchotés au MJ</option>
+                </select>
+                <input type="checkbox" name="attr_token_dsp" title="@{token_dsp}" value=" {{token=[x](@{token_url}) }} ">
+                <span>Avec token</span>
+              </li>
+
+              <li>
+                <strong>Règles optionnelles : </strong>
+                <ul>
+                  <li>
+                    <span>Initiative variable&nbsp;</span>
+                    <input type="checkbox" name="attr_cfg_init_variable" value="1d6!">
+                  </li>
+                  <li>
+                    <span>Critiques différenciés&nbsp;</span>
+                    <input type="checkbox" name="attr_cfg_crit_diff" value="1">
+                  </li>
+                </ul>
+              </li>
+
+              <li>
+                <div class="d-flex m2">
+                  <div><strong>Compagnon de :&nbsp;</strong></div>
+                  <div>
+                    <input type="text" name="attr_compagnon" title="@{compagnon} Nom du PJ" placeholder="Nom du PJ">
+                  </div>
+                </div>
+                <ul>
+                  <li>
+                    <div class="d-flex m2">
+                      <div><span>Défense :&nbsp;</span></div>
+                      <div>
+                        <input type="text" name="attr_comp_def" title="@{comp_def}">
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="d-flex m2">
+                      <div><span>Vigueur :&nbsp;</span></div>
+                      <div>
+                        <input type="text" name="attr_comp_pv_max" title="@{comp_pv_max}">
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="d-flex m2">
+                      <div><span>Initiative :&nbsp;</span></div>
+                      <div>
+                        <input type="text" name="attr_comp_init" title="@{comp_init}">
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="d-flex m2">
+                      <div><span>Attaque :&nbsp;</span></div>
+                      <div>
+                        <input type="text" name="attr_comp_pnjatk" title="@{comp_pnjatk}">
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              
+            </ul>
+
+          </div>
+
+        </div>
+        
+        <hr>
+
+        <details>
+          <summary>Importer un statblock</summary>
+          <div class="npc-2colrow">
+            <div>
+              <textarea name="attr_statblock" class="stat-block" placeholder="Coller ici un statblock copié depuis le PDF"></textarea>
+            </div>
+            <div>
+              <button type="action" name="act_importsb-btn" class="flat-btn img-btn" title="Importer le statblock">
+                <span class="img-btn">W</span>&nbsp;Import
+              </button>
+              <textarea class="import-result" name="attr_resultsb"></textarea>
+            </div>
+          </div>
+        </details>
+
+      </div>
+
+      <div class="npc-script-tab">
+        <h3><span name="attr_script_title"></span></h3>
+
+        <input class="show-script" type="hidden" name="attr_script_show" value="0">
+        <div class="show-script">
+
+          <div class="sheet-2colrow">
+  
+            <div class="sheet-col">
+  
+              <ul>
+                <li>
+                  Renuméroter les attaques&nbsp;
+                  <button type="action" class="flat-btn img-btn" name="act_renum_npcatk-btn" title="Renuméroter les attaques">
+                    <span class="img-btn">x</span>
+                  </button>
+                </li>
+              </ul>
+
+            </div>
+  
+            <div class="sheet-col">
+              <h4>Prédicats</h4>
+              <textarea name="attr_predicats_script" title="@{predicats_script} Prédicats" value=""></textarea>
+            </div>
+  
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Character mancer -->
+  <charmancer class="sheet-charmancer-main">
+
+    <div class="cofmancer">
+
+      <h1>Chroniques Oubliées Fantasy 2E</h1>
+
+      <div class="sheet-2colrow">
+        
+        <h3>Persomancien</h3>
+
+        <div class="sheet-col">
+        
+          <div>
+            Type :
+            <select class="select-md" name="comp_type">
+              <option value="pol">Polyvalent</option>
+              <option value="exp" selected>Expert</option>
+              <option value="spe">Spécialiste</option>
+            </select>
+          </div>
+
+          <br>
+
+          <input type="hidden" name="comp_display" value="exp">
+
+          <div class="type-pol">
+
+            <div class="d-flex d-flex-between">
+              <div class="stat-cell">&nbsp;</div>
+              <div class="stat-cell">+2</div>
+              <div class="stat-cell">+2</div>
+              <div class="stat-cell">+2</div>
+              <div class="stat-cell">+1</div>
+              <div class="stat-cell">+1</div>
+              <div class="stat-cell">+0</div>
+              <div class="stat-cell">-1</div>
+              <div class="stat-cell">Peuple</div>
+              <div class="stat-cell">&nbsp;</div>
+            </div>
+
+          </div>
+
+          <div class="type-exp">
+
+            <div class="d-flex d-flex-between">
+              <div class="stat-cell">&nbsp;</div>
+              <div class="stat-cell">+3</div>
+              <div class="stat-cell">+2</div>
+              <div class="stat-cell">+1</div>
+              <div class="stat-cell">+1</div>
+              <div class="stat-cell">+0</div>
+              <div class="stat-cell">+0</div>
+              <div class="stat-cell">-1</div>
+              <div class="stat-cell">Peuple</div>
+              <div class="stat-cell">&nbsp;</div>
+            </div>
+
+          </div>
+
+          <div class="type-spe">
+
+            <div class="d-flex d-flex-between">
+              <div class="stat-cell">&nbsp;</div>
+              <div class="stat-cell">+4</div>
+              <div class="stat-cell">+2</div>
+              <div class="stat-cell">+1</div>
+              <div class="stat-cell">+0</div>
+              <div class="stat-cell">+0</div>
+              <div class="stat-cell">-1</div>
+              <div class="stat-cell">-1</div>
+              <div class="stat-cell">Peuple</div>
+              <div class="stat-cell">&nbsp;</div>
+            </div>
+
+          </div>
+
+          <div class="d-flex d-flex-between">
+            <div class="stat-cell">AGI</div>
+            <div class="stat-cell"><input type="radio" name="comp_agi_rb" value="0"></div>
+            <div class="stat-cell"><input type="radio" name="comp_agi_rb" value="1"></div>
+            <div class="stat-cell"><input type="radio" name="comp_agi_rb" value="2"></div>
+            <div class="stat-cell"><input type="radio" name="comp_agi_rb" value="3"></div>
+            <div class="stat-cell"><input type="radio" name="comp_agi_rb" value="4"></div>
+            <div class="stat-cell"><input type="radio" name="comp_agi_rb" value="5"></div>
+            <div class="stat-cell"><input type="radio" name="comp_agi_rb" value="6"></div>
+            <div>
+              <select class="select-xs agi-mod" name="comp_agi_mod">
+                <option>-1</option>
+                <option selected>+0</option>
+                <option>+1</option>
+              </select>
+            </div>
+            <div class="stat-cell agi-val">0</div>
+          </div>
+
+          <div class="d-flex d-flex-between">
+            <div class="stat-cell">CON</div>
+            <div class="stat-cell"><input type="radio" name="comp_con_rb" value="0"></div>
+            <div class="stat-cell"><input type="radio" name="comp_con_rb" value="1"></div>
+            <div class="stat-cell"><input type="radio" name="comp_con_rb" value="2"></div>
+            <div class="stat-cell"><input type="radio" name="comp_con_rb" value="3"></div>
+            <div class="stat-cell"><input type="radio" name="comp_con_rb" value="4"></div>
+            <div class="stat-cell"><input type="radio" name="comp_con_rb" value="5"></div>
+            <div class="stat-cell"><input type="radio" name="comp_con_rb" value="6"></div>
+            <div>
+              <select class="select-xs con-mod" name="comp_con_mod">
+                <option>-1</option>
+                <option selected>+0</option>
+                <option>+1</option>
+              </select>
+            </div>
+            <div class="stat-cell con-val">0</div>
+          </div>
+
+          <div class="d-flex d-flex-between">
+            <div class="stat-cell">FOR</div>
+            <div class="stat-cell"><input type="radio" name="comp_for_rb" value="0"></div>
+            <div class="stat-cell"><input type="radio" name="comp_for_rb" value="1"></div>
+            <div class="stat-cell"><input type="radio" name="comp_for_rb" value="2"></div>
+            <div class="stat-cell"><input type="radio" name="comp_for_rb" value="3"></div>
+            <div class="stat-cell"><input type="radio" name="comp_for_rb" value="4"></div>
+            <div class="stat-cell"><input type="radio" name="comp_for_rb" value="5"></div>
+            <div class="stat-cell"><input type="radio" name="comp_for_rb" value="6"></div>
+            <div>
+              <select class="select-xs for-mod" name="comp_for_mod">
+                <option>-1</option>
+                <option selected>+0</option>
+                <option>+1</option>
+              </select>
+            </div>
+            <div class="stat-cell for-val">0</div>
+          </div>
+
+          <div class="d-flex d-flex-between">
+            <div class="stat-cell">PER</div>
+            <div class="stat-cell"><input type="radio" name="comp_per_rb" value="0"></div>
+            <div class="stat-cell"><input type="radio" name="comp_per_rb" value="1"></div>
+            <div class="stat-cell"><input type="radio" name="comp_per_rb" value="2"></div>
+            <div class="stat-cell"><input type="radio" name="comp_per_rb" value="3"></div>
+            <div class="stat-cell"><input type="radio" name="comp_per_rb" value="4"></div>
+            <div class="stat-cell"><input type="radio" name="comp_per_rb" value="5"></div>
+            <div class="stat-cell"><input type="radio" name="comp_per_rb" value="6"></div>
+            <div>
+              <select class="select-xs per-mod" name="comp_per_mod">
+                <option>-1</option>
+                <option selected>+0</option>
+                <option>+1</option>
+              </select>
+            </div>
+            <div class="stat-cell per-val">0</div>
+          </div>
+
+          <div class="d-flex d-flex-between">
+            <div class="stat-cell">CHA</div>
+            <div class="stat-cell"><input type="radio" name="comp_cha_rb" value="0"></div>
+            <div class="stat-cell"><input type="radio" name="comp_cha_rb" value="1"></div>
+            <div class="stat-cell"><input type="radio" name="comp_cha_rb" value="2"></div>
+            <div class="stat-cell"><input type="radio" name="comp_cha_rb" value="3"></div>
+            <div class="stat-cell"><input type="radio" name="comp_cha_rb" value="4"></div>
+            <div class="stat-cell"><input type="radio" name="comp_cha_rb" value="5"></div>
+            <div class="stat-cell"><input type="radio" name="comp_cha_rb" value="6"></div>
+            <div>
+              <select class="select-xs cha-mod" name="comp_cha_mod">
+                <option>-1</option>
+                <option selected>+0</option>
+                <option>+1</option>
+              </select>
+            </div>
+            <div class="stat-cell cha-val">0</div>
+          </div>
+
+          <div class="d-flex d-flex-between">
+            <div class="stat-cell">INT</div>
+            <div class="stat-cell"><input type="radio" name="comp_int_rb" value="0"></div>
+            <div class="stat-cell"><input type="radio" name="comp_int_rb" value="1"></div>
+            <div class="stat-cell"><input type="radio" name="comp_int_rb" value="2"></div>
+            <div class="stat-cell"><input type="radio" name="comp_int_rb" value="3"></div>
+            <div class="stat-cell"><input type="radio" name="comp_int_rb" value="4"></div>
+            <div class="stat-cell"><input type="radio" name="comp_int_rb" value="5"></div>
+            <div class="stat-cell"><input type="radio" name="comp_int_rb" value="6"></div>
+            <div>
+              <select class="select-xs int-mod" name="comp_int_mod">
+                <option>-1</option>
+                <option selected>+0</option>
+                <option>+1</option>
+              </select>
+            </div>
+            <div class="stat-cell int-val">0</div>
+          </div>
+
+          <div class="d-flex d-flex-between">
+            <div class="stat-cell">VOL</div>
+            <div class="stat-cell"><input type="radio" name="comp_vol_rb" value="0"></div>
+            <div class="stat-cell"><input type="radio" name="comp_vol_rb" value="1"></div>
+            <div class="stat-cell"><input type="radio" name="comp_vol_rb" value="2"></div>
+            <div class="stat-cell"><input type="radio" name="comp_vol_rb" value="3"></div>
+            <div class="stat-cell"><input type="radio" name="comp_vol_rb" value="4"></div>
+            <div class="stat-cell"><input type="radio" name="comp_vol_rb" value="5"></div>
+            <div class="stat-cell"><input type="radio" name="comp_vol_rb" value="6"></div>
+            <div>
+              <select class="select-xs vol-mod" name="comp_vol_mod">
+                <option>-1</option>
+                <option selected>+0</option>
+                <option>+1</option>
+              </select>
+            </div>
+            <div class="stat-cell vol-val">0</div>
+          </div>
+
+          <hr>
+
+          <div class="d-flex">
+            <span class="align-self-center">Peuple :</span>
+            <select class="select-md align-self-center" name="comp_peuple">
+              <option value="">Choisir...</option>
+              <option>Demi-elfe</option>
+              <option>Demi-orc</option>
+              <option>Elfe (haut)</option>
+              <option>Elfe (sylvain)</option>
+              <option>Gnome</option>
+              <option>Halfelin</option>
+              <option>Humain</option>
+              <option>Nain</option>
+            </select>
+            <span class="people-mods align-self-center"></span>
+          </div>
+
+          <hr>
+    
+          <div class="d-flex">
+            <span>Profil :</span>
+            <select class="select-lg" name="comp_famille_profil">
+              <option value="">Choisir...</option>
+              <optgroup label="Aventuriers">
+                <option disabled class="optgroup">
+                  &nbsp;Aventuriers
+                </option>
+                <option value="Aventuriers:Arquebusier">Arquebusier</option>
+                <option value="Aventuriers:Barde">Barde</option>
+                <option value="Aventuriers:Rôdeur">Rôdeur</option>
+                <option value="Aventuriers:Voleur">Voleur</option>
+              </optgroup>
+              <optgroup label="Combattants">
+                <option disabled class="optgroup">
+                  &nbsp;Combattants
+                </option>
+                <option value="Combattants:Barbare">Barbare</option>
+                <option value="Combattants:Chevalier">Chevalier</option>
+                <option value="Combattants:Guerrier">Guerrier</option>
+              </optgroup>
+              <optgroup label="Mages">
+                <option disabled class="optgroup">
+                  &nbsp;Mages
+                </option>
+                <option value="Mages:Ensorceleur">Ensorceleur</option>
+                <option value="Mages:Forgesort">Forgesort</option>
+                <option value="Mages:Magicien">Magicien</option>
+                <option value="Mages:Sorcier">Sorcier</option>
+              </optgroup>
+              <optgroup label="Mystique">
+                <option disabled class="optgroup">
+                  &nbsp;Mystique
+                </option>
+                <option value="Mystiques:Druide">Druide</option>
+                <option value="Mystiques:Moine">Moine</option>
+                <option value="Mystiques:Prêtre">Prêtre</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <div>
+            <input type="checkbox" name="comp_base_gear" value="1">
+            Charger l'équipement de base
+          </div>
+
+          <div>
+            <input type="checkbox" name="comp_gear_atks" value="1">
+            Créer des attaques pour les armes
+          </div>
+    
+        </div>
+
+        <div class="sheet-col">
+
+          <h4>Voie de peuple (1)</h4>
+          <textarea name="comp_voie1" placeholder="Coller le texte de la voie de peuple ou du mage"></textarea>
+          <div class="d-flex">
+            <input type="radio" name="comp_rank2" value="1">
+            &nbsp;Rang 2 (famille des mages)
+          </div>
+          <br>
+
+          <h4>Voie de profil (2)</h4>
+          <textarea name="comp_voie2" placeholder="Coller le texte d'une voie de profil"></textarea>
+          <div class="d-flex">
+            <input type="radio" name="comp_rank2" value="2">
+            &nbsp;Rang 2 (famille des mages)
+          </div>
+          <br>
+
+          <h4>Voie de profil (3)</h4>
+          <textarea name="comp_voie3" placeholder="Coller le texte d'une voie de profil"></textarea>
+          <div class="d-flex">
+            <input type="radio" name="comp_rank2" value="3">
+            &nbsp;Rang 2 (famille des mages)
+          </div>
+          <br>
+
+        </div>
+
+      </div>
+      
+      <hr>
+    
+      <div class="d-flex d-flex-between">
+        <button type="cancel" value="cancel">Annuler</button>
+        <button type="finish" value="finish">Valider</button>
+      </div>
+
+    </div>
+
+  </charmancer>
+
+</div>
+
+<rolltemplate class="sheet-rolltemplate-cof2">
+
+  {{^token}}
+  <div class="sheet-rt sheet-rt-header sheet-color-{{color}} sheet-rt-title">
+    {{perso}}
+  </div>
+  {{/token}}
+  {{#token}}
+  <div class="sheet-rt sheet-rt-2cols sheet-rt-header sheet-color-{{color}} sheet-rt-title">
+    <div class="sheet-rt-token">{{token}}</div>
+    <div>{{perso}}</div>
+  </div>
+  {{/token}}
+  <div class="sheet-rt sheet-rt-2cols sheet-rt-header sheet-color-{{color}}">
+    <div>{{lsub}}</div>
+    <div>{{rsub}}</div>
+  </div>
+  {{#roll}}
+  <div class="sheet-rt sheet-rt-roll">
+    {{roll}} 
+    {{#broll}}
+    | {{broll}}
+    {{/broll}}
+  </div>
+  {{/roll}}
+  {{#powder}}
+  {{#rollWasFumble() roll}}
+  <div class="sheet-rt sheet-rt-text">
+    <span class="sheet-rt-fumble">{{powder}}</span>
+  </div>
+  {{/rollWasFumble() roll}}
+  {{#broll}}
+  {{#rollWasFumble() broll}}
+  <div class="sheet-rt sheet-rt-text">
+    <span class="sheet-rt-fumble">{{powder}} (si dé malus)</span>
+  </div>
+  {{/rollWasFumble() broll}}
+  {{/broll}}
+  {{/powder}}
+  {{#dm}}
+  <div class="sheet-rt sheet-rt-2cols">
+    <div>Dommages</div>
+    <div>
+      {{dm}} {{#rollWasCrit() roll}}
+      {{#rollTotal() critdiff 0}}
+      <span class="sheet-rt-critical"> + {{dm}} CRITIQUE !</span>
+      {{/rollTotal() critdiff 0}}
+      {{/rollWasCrit() roll}}
+      {{#^rollWasCrit() roll}} {{#rollWasCrit() broll}}
+      {{#rollTotal() critdiff 0}}
+      ( + <span class="sheet-rt-critical">{{dm}}</span> si dé bonus)
+      {{/rollTotal() critdiff 0}}
+      {{/rollWasCrit() broll}}
+      {{/^rollWasCrit() roll}} {{dmdesc}}
+    </div>
+  </div>
+  {{/dm}}
+  {{#dmcrit}}
+  {{#rollWasCrit() roll}}
+  <div class="sheet-rt sheet-rt-2cols">
+    <div><span class="sheet-rt-critical">CRITIQUE !</span></div>
+    <div>
+      {{dmcrit}}
+    </div>
+  </div>
+  {{/rollWasCrit() roll}}
+  {{#rollWasCrit() broll}}
+  <div class="sheet-rt sheet-rt-2cols">
+    <div><span class="sheet-rt-critical">CRITIQUE (si dé bonus)</span></div>
+    <div>
+      {{dmcrit}}
+    </div>
+  </div>
+  {{/rollWasCrit() broll}}
+  {{/dmcrit}}
+  {{#text}}
+  <div class="sheet-rt sheet-rt-text">
+    <span class="sheet-rt-{{textclass}}">{{text}}</span>
+  </div>
+  {{/text}}
+  {{#chance}}
+  <div class="sheet-rt sheet-rt-text">
+    <span>{{chance}}</span>
+  </div>
+  {{/chance}}
+  {{#alert}}
+  <div class="sheet-rt sheet-rt-text">
+    <span class="sheet-rt-{{alertclass}}">{{alert}}</span>
+  </div>
+  {{/alert}}
+
+</rolltemplate>
+
+<rolltemplate class="sheet-rolltemplate-custom">
+
+  <div class="sheet-container sheet-color-{{color}}">
+    <div class="sheet-header">
+      {{#title}}<div class="sheet-title">{{title}}</div>{{/title}}
+      {{#subtitle}}<div class="sheet-subtitle">{{subtitle}}</div>{{/subtitle}}
+    </div>
+    <div class="sheet-content">
+      {{#allprops() title subtitle desc color token}}
+      <div class="sheet-key">{{key}}</div>
+      <div class="sheet-value">{{value}}</div>
+      {{/allprops() title subtitle desc color token}}
+      {{#desc}}<div class="sheet-desc">{{desc}}</div>{{/desc}}
+    </div>
+  </div>
+
+</rolltemplate>
+
 <script type="text/worker">
 
 /**
