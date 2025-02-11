@@ -24,6 +24,7 @@ button,
 }
 
 .cofmain .pc-gears input[type="text"],
+.cofmain .npc-gears input[type="text"],
 .cofmain input[type="text"].w-auto {
   width: auto;
   flex-grow: 1;
@@ -408,6 +409,7 @@ input[value="0"].pc-skills-btn ~ button.pc-skills-btn {
 .pc-buffs-subtab,
 .pc-import-subtab,
 .npc-main-tab,
+.npc-gears-tab,
 .npc-config-tab,
 .npc-script-tab {
   display: none;
@@ -421,6 +423,7 @@ input[value="0"].pc-skills-btn ~ button.pc-skills-btn {
 .tabs-toggle[value="script"] ~ div .pc-script-btn,
 .tabs-toggle[value="version"] ~ div .pc-version-btn,
 .tabs-toggle[value="main"] ~ div .npc-main-btn, 
+.tabs-toggle[value="gears"] ~ div .npc-gears-btn,
 .tabs-toggle[value="config"] ~ div .npc-config-btn,
 .tabs-toggle[value="attacks"] ~ div .pc-attacks-btn,
 .tabs-toggle[value="otact"] ~ div .pc-otact-btn,
@@ -448,6 +451,7 @@ input[value="0"].pc-skills-btn ~ button.pc-skills-btn {
 .tabs-toggle[value="buffs"] ~ div.pc-buffs-subtab,
 .tabs-toggle[value="import"] ~ div.pc-import-subtab,
 .tabs-toggle[value="main"] ~ div.npc-main-tab, 
+.tabs-toggle[value="gears"] ~ div.npc-gears-tab, 
 .tabs-toggle[value="config"] ~ div.npc-config-tab,
 .tabs-toggle[value="script"] ~ div.npc-script-tab {
     display: block;
@@ -525,9 +529,25 @@ div.change-view {
 
 .pc-attributes .trait {
   display: grid;
-  grid-template-columns: 2fr 0.5fr 1fr 1fr 1fr;
+  grid-template-columns: 1.5fr 0.25fr 1fr 1.35fr 1.35fr;
   gap: 2px;
   padding: 2px;
+}
+
+.pc-attributes .trait details.trait-detail summary,
+.pc-buffs-subtab summary.buffs-detail {
+  list-style: none;
+}
+
+.pc-attributes .trait details.trait-detail summary:hover,
+.pc-buffs-subtab summary.buffs-detail:hover {
+  color: orange;
+  font-weight: bold;
+}
+
+.pc-attributes .trait details[open].trait-detail,
+.pc-attributes .trait span.trait-detail {
+  font-size: xx-small;
 }
 
 .pc-attributes .attack {
@@ -727,9 +747,11 @@ div.change-view {
 
 .weapon textarea.one-row,
 .weapon-opt textarea.one-row,
+.abilities .path textarea.one-row,
 .abilities .rank textarea.one-row,
 .pc-roll-r1 textarea.one-row,
 .pc-gears .gears textarea.one-row,
+.npc-gears .gears textarea.one-row,
 .resources textarea.one-row {
   padding: 0;
   margin: 0;
@@ -746,11 +768,17 @@ div.change-view {
   width: 65%;
 }
 
+.npc-gears .gears textarea.one-row {
+  width: 100%;
+}
+
 .weapon textarea.one-row:focus,
 .weapon-opt textarea.one-row:focus,
 .abilities .rank textarea.one-row:focus,
+.abilities .path textarea.one-row:focus,
 .pc-roll-r1 textarea.one-row:focus,
 .pc-gears .gears textarea.one-row:focus,
+.npc-gears .gears textarea.one-row:focus,
 .resources textarea.one-row:focus {
   height: 6rem;
 }
@@ -790,13 +818,15 @@ input[value="0"].show-paths-789 ~ div.abilities {
   gap: 2px;
 }
 
-.pc-gears-tab .pc-gears {
+.pc-gears-tab .pc-gears,
+.npc-gears-tab .npc-gears {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 5px;
 }
 
 .pc-gears .gears,
+.npc-gears .gears,
 .pc-gears .resources,
 .pc-gears .misc-gears,
 .pc-gears .notes {
@@ -883,7 +913,13 @@ textarea.stat-block {
 textarea.import-result {
   border: none; 
   background-color: transparent;
-  height: 10em;
+  resize: none;
+}
+
+textarea.migration {
+  font-family: monospace;
+  border: none; 
+  background-color: transparent;
   resize: none;
 }
 

@@ -1,9 +1,9 @@
 <div class="cofmain">
 
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.2.0">
+  <input type="hidden" name="attr_verfdp" value="1.2.01">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.2.0">
+  <input type="hidden" name="attr_version" value="1.2.01">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
 
@@ -15,7 +15,7 @@
   <input type="hidden" name="attr_devol" value="d4">
   <input type="hidden" name="attr_last_rolls" value="">
 
-  <!-- Buffs PJ -->
+  <!-- Buffs caracs PJ -->
   <input type="hidden" name="attr_agi_buff" value="0">
   <input type="hidden" name="attr_con_buff" value="0">
   <input type="hidden" name="attr_for_buff" value="0">
@@ -23,6 +23,15 @@
   <input type="hidden" name="attr_cha_buff" value="0">
   <input type="hidden" name="attr_int_buff" value="0">
   <input type="hidden" name="attr_vol_buff" value="0">
+  <!-- Buffs tests carac PJ -->
+  <input type="hidden" name="attr_tagi_buff" value="0">
+  <input type="hidden" name="attr_tcon_buff" value="0">
+  <input type="hidden" name="attr_tfor_buff" value="0">
+  <input type="hidden" name="attr_tper_buff" value="0">
+  <input type="hidden" name="attr_tcha_buff" value="0">
+  <input type="hidden" name="attr_tint_buff" value="0">
+  <input type="hidden" name="attr_tvol_buff" value="0">
+  <!-- Buffs combat PJ -->
   <input type="hidden" name="attr_atkcac_buff" value="0">
   <input type="hidden" name="attr_atkcac_cond" value="0">
   <input type="hidden" name="attr_atktir_buff" value="0">
@@ -50,6 +59,7 @@
   <!-- Other hidden attributes -->
   <input type="hidden" name="attr_rangs_voies" value="">
   <input type="hidden" name="attr_noms_voies" value="">
+  <input type="hidden" name="attr_capabilities" value="">
   
   <!-- COFantasy MOD interaction -->
   <input type="hidden" name="attr_script_title" value="">
@@ -65,7 +75,7 @@
     <div>
       <img
         class="logo"
-        title="Version 1.2.0 - 02/02/2025"
+        title="Version 1.2.0 - 04/02/2025"
         src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cof2e_logo.jpg"
       />
     </div>
@@ -237,8 +247,8 @@
                 </button>
               </h4>
               <h4></h4>
+              <h4>Base</h4>
               <h4>Mod</h4>
-              <h4>Bonus</h4>
               <h4>Test</h4>
             </div>
 
@@ -260,14 +270,29 @@
                 <input type="hidden" name="attr_agi_dsup" value="1d20">
               </div>
               <div class="bordered">
-                <input type="number" name="attr_agi" title="@{agi}" value="0">
+                <input type="number" name="attr_agi_base" title="@{agi_base}" value="0">
               </div>
               <div class="centered bordered">
-                <span name="attr_agi_buff"></span>
+                <details class="trait-detail">
+                  <input type="hidden" name="attr_agi" value="0">
+                  <summary>
+                    <span name="attr_agi" title="@{agi}"></span>
+                  </summary>
+                  Base: <span class="trait-detail" name="attr_agi_base" title="@{agi_base}"></span>
+                  <br>
+                  + Buff: <span class="trait-detail" name="attr_agi_buff" title="@{agi_buff}"></span>
+                </details>
               </div>
               <div class="centered bordered">
-                <input type="hidden" name="attr_agi_test" title="@{agi_test}" value="0">
-                <span name="attr_agi_test"></span>
+                <input type="hidden" name="attr_agi_test" value="0">
+                <details class="trait-detail">
+                  <summary>
+                    <span name="attr_agi_test" title="@{agi_test}"></span>
+                  </summary>
+                  Base: <span class="trait-detail" name="attr_agi" title="@{agi}"></span>
+                  <br>
+                  + Buff : <span class="trait-detail" name="attr_agi_tbuff" title="@{agi_tbuff}"></span>
+                </details>
               </div>
             </div>
 
@@ -288,14 +313,29 @@
                 <input type="hidden" name="attr_con_dsup" value="1d20">
               </div>
               <div class="bordered">
-                <input type="number" name="attr_con" title="@{con}" value="0">
+                <input type="number" name="attr_con_base" title="@{con_base}" value="0">
               </div>
               <div class="centered bordered">
-                <span name="attr_con_buff"></span>
+                <input type="hidden" name="attr_con" value="0">
+                <details class="trait-detail">
+                  <summary>
+                    <span name="attr_con" title="@{con}"></span>
+                  </summary>
+                  Base: <span class="trait-detail" name="attr_con_base" title="@{con_base}"></span>
+                  <br>
+                  + Buff: <span class="trait-detail" name="attr_con_buff" title="@{con_buff}"></span>
+                </details>
               </div>
               <div class="centered bordered">
                 <input type="hidden" name="attr_con_test" title="@{con_test}" value="0">
-                <span name="attr_con_test"></span>
+                <details class="trait-detail">
+                  <summary>
+                    <span name="attr_con_test"></span>
+                  </summary>
+                  Base: <span class="trait-detail" name="attr_con" title="@{con}"></span>
+                  <br>
+                  + Buff : <span class="trait-detail" name="attr_con_tbuff" title="@{con_tbuff}"></span>
+                </details>
               </div>
             </div>
 
@@ -316,14 +356,29 @@
                 <input type="hidden" name="attr_for_dsup" value="1d20">
               </div>
               <div class="bordered">
-                <input type="number" name="attr_for" title="@{for}" value="0">
+                <input type="number" name="attr_for_base" title="@{for_base}" value="0">
               </div>
               <div class="centered bordered">
-                <span name="attr_for_buff"></span>
+                <input type="hidden" name="attr_for" value="0">
+                <details class="trait-detail">
+                  <summary>
+                    <span name="attr_for" title="@{for}"></span>
+                  </summary>
+                  Base: <span class="trait-detail" name="attr_for_base" title="@{for_base}"></span>
+                  <br>
+                  + Buff : <span class="trait-detail" name="attr_for_buff" title="@{for_buff}"></span>
+                </details>
               </div>
               <div class="centered bordered">
                 <input type="hidden" name="attr_for_test" title="@{for_test}" value="0">
-                <span name="attr_for_test"></span>
+                <details class="trait-detail">
+                  <summary>
+                    <span name="attr_for_test" title="@{for_test}"></span>
+                  </summary>
+                  Base: <span class="trait-detail" name="attr_for" title="@{for}"></span>
+                  <br>
+                  + Buff : <span class="trait-detail" name="attr_for_tbuff" title="@{for_tbuff}"></span>
+                </details>
               </div>
             </div>
 
@@ -344,14 +399,29 @@
                 <input type="hidden" name="attr_per_dsup" value="1d20">
               </div>
               <div class="bordered">
-                <input type="number" name="attr_per" title="@{per}" value="0">
+                <input type="number" name="attr_per_base" title="@{per_base}" value="0">
               </div>
               <div class="centered bordered">
-                <span name="attr_per_buff"></span>
+                <input type="hidden" name="attr_per" value="0">
+                <details class="trait-detail">
+                  <summary>
+                    <span name="attr_per" title="@{per}"></span>
+                  </summary>
+                  Base: <span class="trait-detail" name="attr_per_base" title="@{per_base}"></span>
+                  <br>
+                  + Buff : <span class="trait-detail" name="attr_per_buff" title="@{per_buff}"></span>
+                </details>
               </div>
               <div class="centered bordered">
                 <input type="hidden" name="attr_per_test" title="@{per_test}" value="0">
-                <span name="attr_per_test"></span>
+                <details class="trait-detail">
+                  <summary>
+                    <span name="attr_per_test" title="@{per_test}"></span>
+                  </summary>
+                  Base: <span class="trait-detail" name="attr_per" title="@{per}"></span>
+                  <br>
+                  + Buff : <span class="trait-detail" name="attr_per_tbuff" title="@{per_tbuff}"></span>
+                </details>
               </div>
             </div>
 
@@ -372,14 +442,29 @@
                 <input type="hidden" name="attr_cha_dsup" value="1d20">
               </div>
               <div class="bordered">
-                <input type="number" name="attr_cha" title="@{cha}" value="0">
+                <input type="number" name="attr_cha_base" title="@{cha_base}" value="0">
               </div>
               <div class="centered bordered">
-                <span name="attr_cha_buff"></span>
+                <input type="hidden" name="attr_cha" value="0">
+                <details class="trait-detail">
+                  <summary>
+                    <span name="attr_cha" title="@{cha}"></span>
+                  </summary>
+                  Base: <span class="trait-detail" name="attr_cha_base" title="@{cha_base}"></span>
+                  <br>
+                  + Buff : <span class="trait-detail" name="attr_cha_buff" title="@{cha_buff}"></span>
+                </details>
               </div>
               <div class="centered bordered">
                 <input type="hidden" name="attr_cha_test" title="@{cha_test}" value="0">
-                <span name="attr_cha_test"></span>
+                <details class="trait-detail">
+                  <summary>
+                    <span name="attr_cha_test" title="@{cha_test}"></span>
+                  </summary>
+                  Base: <span class="trait-detail" name="attr_cha" title="@{cha}"></span>
+                  <br>
+                  + Buff : <span class="trait-detail" name="attr_cha_tbuff" title="@{cha_tbuff}"></span>
+                </details>
               </div>
             </div>
 
@@ -400,14 +485,29 @@
                 <input type="hidden" name="attr_int_dsup" value="1d20">
               </div>
               <div class="bordered">
-                <input type="number" name="attr_int" title="@{int}" value="0">
+                <input type="number" name="attr_int_base" title="@{int_base}" value="0">
               </div>
               <div class="centered bordered">
-                <span name="attr_int_buff"></span>
+                <input type="hidden" name="attr_int" value="0">
+                <details class="trait-detail">
+                  <summary>
+                    <span name="attr_int" title="@{int}"></span>
+                  </summary>
+                  Base: <span class="trait-detail" name="attr_int_base" title="@{int_base}"></span>
+                  <br>
+                  + Buff : <span class="trait-detail" name="attr_int_buff" title="@{int_buff}"></span>
+                </details>
               </div>
               <div class="centered bordered">
                 <input type="hidden" name="attr_int_test" title="@{int_test}" value="0">
-                <span name="attr_int_test"></span>
+                <details class="trait-detail">
+                  <summary>
+                    <span name="attr_int_test" title="@{int_test}"></span>
+                  </summary>
+                  Base: <span class="trait-detail" name="attr_int" title="@{int}"></span>
+                  <br>
+                  + Buff : <span class="trait-detail" name="attr_int_tbuff" title="@{int_tbuff}"></span>
+                </details>
               </div>
             </div>
 
@@ -428,14 +528,29 @@
                 <input type="hidden" name="attr_vol_dsup" value="1d20">
               </div>
               <div class="bordered">
-                <input type="number" name="attr_vol" title="@{vol}" value="0">
+                <input type="number" name="attr_vol_base" title="@{vol_base}" value="0">
               </div>
               <div class="centered bordered">
-                <span name="attr_vol_buff"></span>
+                <input type="hidden" name="attr_vol" value="0">
+                <details class="trait-detail">
+                  <summary>
+                    <span name="attr_vol" title="@{vol}"></span>
+                  </summary>
+                  Base: <span class="trait-detail" name="attr_vol_base" title="@{vol_base}"></span>
+                  <br>
+                  + Buff : <span class="trait-detail" name="attr_vol_buff" title="@{vol_buff}"></span>
+                </details>
               </div>
               <div class="centered bordered">
                 <input type="hidden" name="attr_vol_test" title="@{vol_test}" value="0">
-                <span name="attr_vol_test"></span>
+                <details class="trait-detail">
+                  <summary>
+                    <span name="attr_vol_test" title="@{vol_test}"></span>
+                  </summary>
+                  Base: <span class="trait-detail" name="attr_vol" title="@{vol}"></span>
+                  <br>
+                  + Buff : <span class="trait-detail" name="attr_vol_tbuff" title="@{vol_tbuff}"></span>
+                </details>
               </div>
             </div>
 
@@ -648,7 +763,12 @@
         <div class="pc-cond-def">
   
           <div class="conditions">
-            <div class="centered block-header block-title">Etats préjudiciables</div>
+            <div class="centered block-header block-title">
+              Etats préjudiciables&nbsp;
+              <button type="action" class="flat-btn img-btn" name="act_etats_menu-btn" title="%{etats_menu-btn} Menu des états préjudiciables">
+                <span class="img-btn">l</span>
+              </button>
+            </div>
             <input type="hidden" class="has-conditions" name="attr_has_conditions" value="0">
             <div class="bordered centered">
               <input type="hidden" class="condition-affaibli" name="attr_condition_affaibli" value="0">
@@ -996,23 +1116,12 @@
                   &nbsp;<span class="align-self-center">+</span>&nbsp;
                   <select class="select-md" name="attr_arme-bonus" title="@{arme-bonus} Bonus aux dommages">
                     <option value="0">-</option>
-                    <optgroup label="Base">
-                      <option class="optgroup" value="" disabled>&nbsp;Base</option>
-                      <option value="@{agi}">AGI</option>
-                      <option value="@{for}" selected>FOR</option>
-                      <option value="@{per}">PER</option>
-                      <option value="@{cha}">CHA</option>
-                      <option value="@{int}">INT</option>
-                      <option value="@{vol}">VOL</option>
-                    </optgroup>
-                    <optgroup label="Test">
-                      <option class="optgroup" value="" disabled>&nbsp;Test</option>
-                      <option value="@{agi_test}">AGI (t)</option>
-                      <option value="@{for_test}">FOR (t)</option>
-                      <option value="@{per_test}">PER (t)</option>
-                      <option value="@{int_test}">INT (t)</option>
-                      <option value="@{cha_test}">CHA (t)</option>
-                    </optgroup>
+                    <option value="@{agi}">AGI</option>
+                    <option value="@{for}" selected>FOR</option>
+                    <option value="@{per}">PER</option>
+                    <option value="@{cha}">CHA</option>
+                    <option value="@{int}">INT</option>
+                    <option value="@{vol}">VOL</option>
                   </select>
                   &nbsp;<span class="align-self-center">+</span>&nbsp;
                   <input type="number" name="attr_arme-dmdiv" title="@{arme-dmdiv} Bonus DM divers" value="0">
@@ -1239,6 +1348,10 @@
 
             <div class="sheet-col">
 
+              <div class="d-flex">
+                <input type="checkbox" name="attr_en_selle" title="@{en_selle}" value="1">
+                <span>&nbsp;En selle</span>
+              </div>
 
             </div>
 
@@ -2188,6 +2301,7 @@
                   <span class="img-btn">W</span>
                 </button>
               </div>
+              <textarea class="one-row" name="attr_voie1notes" title="@{voie1notes}" placeholder="Notes"></textarea>
               <div class="rank">
                 <div class="d-flex">
                   <input type="text" name="attr_voie1-t1" title="@{voie1-t1}" placeholder="Nom de la capacité">
@@ -2283,6 +2397,7 @@
                   <span class="img-btn">W</span>
                 </button>
               </div>
+              <textarea class="one-row" name="attr_voie2notes" title="@{voie2notes}" placeholder="Notes"></textarea>
               <div class="rank">
                 <div class="d-flex">
                   <input type="text" name="attr_voie2-t1" title="@{voie2-t1}" placeholder="Nom de la capacité">
@@ -2378,6 +2493,7 @@
                   <span class="img-btn">W</span>
                 </button>
               </div>
+              <textarea class="one-row" name="attr_voie3notes" title="@{voie3notes}" placeholder="Notes"></textarea>
               <div class="rank">
                 <div class="d-flex">
                   <input type="text" name="attr_voie3-t1" title="@{voie3-t1}" placeholder="Nom de la capacité">
@@ -2477,6 +2593,7 @@
                   <span class="img-btn">W</span>
                 </button>
               </div>
+              <textarea class="one-row" name="attr_voie4notes" title="@{voie4notes}" placeholder="Notes"></textarea>
               <div class="rank">
                 <div class="d-flex">
                   <input type="text" name="attr_voie4-t1" title="@{voie4-t1}" placeholder="Nom de la capacité">
@@ -2572,6 +2689,7 @@
                   <span class="img-btn">W</span>
                 </button>
               </div>
+              <textarea class="one-row" name="attr_voie5notes" title="@{voie5notes}" placeholder="Notes"></textarea>
               <div class="rank">
                 <div class="d-flex">
                   <input type="text" name="attr_voie5-t1" title="@{voie5-t1}" placeholder="Nom de la capacité">
@@ -2667,6 +2785,7 @@
                   <span class="img-btn">W</span>
                 </button>
               </div>
+              <textarea class="one-row" name="attr_voie6notes" title="@{voie6notes}" placeholder="Notes"></textarea>
               <div class="rank">
                 <div class="d-flex">
                   <input type="text" name="attr_voie6-t1" title="@{voie6-t1}" placeholder="Nom de la capacité">
@@ -2766,6 +2885,7 @@
                   <span class="img-btn">W</span>
                 </button>
               </div>
+              <textarea class="one-row" name="attr_voie7notes" title="@{voie7notes}" placeholder="Notes"></textarea>
               <div class="rank">
                 <div class="d-flex">
                   <input type="text" name="attr_voie7-t1" title="@{voie7-t1}" placeholder="Nom de la capacité">
@@ -2861,6 +2981,7 @@
                   <span class="img-btn">W</span>
                 </button>
               </div>
+              <textarea class="one-row" name="attr_voie8notes" title="@{voie8notes}" placeholder="Notes"></textarea>
               <div class="rank">
                 <div class="d-flex">
                   <input type="text" name="attr_voie8-t1" title="@{voie8-t1}" placeholder="Nom de la capacité">
@@ -2956,6 +3077,7 @@
                   <span class="img-btn">W</span>
                 </button>
               </div>
+              <textarea class="one-row" name="attr_voie9notes" title="@{voie9notes}" placeholder="Notes"></textarea>
               <div class="rank">
                 <div class="d-flex">
                   <input type="text" name="attr_voie9-t1" title="@{voie9-t1}" placeholder="Nom de la capacité">
@@ -3805,6 +3927,18 @@
                     <option value="int">INT</option>
                     <option value="vol">VOL</option>
                   </optgroup>
+                  <optgroup label="Tests">
+                    <option disabled class="optgroup">
+                      &nbsp;Tests
+                    </option>
+                    <option value="tagi">AGI</option>
+                    <option value="tcon">CON</option>
+                    <option value="tfor">FOR</option>
+                    <option value="tper">PER</option>
+                    <option value="tcha">CHA</option>
+                    <option value="tint">INT</option>
+                    <option value="tvol">VOL</option>
+                  </optgroup>
                   <optgroup label="Combat">
                     <option disabled class="optgroup">
                       &nbsp;Combat
@@ -3847,6 +3981,13 @@
           <input type="hidden" name="attr_cha_buff_list" value="">
           <input type="hidden" name="attr_int_buff_list" value="">
           <input type="hidden" name="attr_vol_buff_list" value="">
+          <input type="hidden" name="attr_tagi_buff_list" value="">
+          <input type="hidden" name="attr_tcon_buff_list" value="">
+          <input type="hidden" name="attr_tfor_buff_list" value="">
+          <input type="hidden" name="attr_tper_buff_list" value="">
+          <input type="hidden" name="attr_tcha_buff_list" value="">
+          <input type="hidden" name="attr_tint_buff_list" value="">
+          <input type="hidden" name="attr_tvol_buff_list" value="">
           <input type="hidden" name="attr_atkcac_buff_list" value="">
           <input type="hidden" name="attr_atktir_buff_list" value="">
           <input type="hidden" name="attr_atkmag_buff_list" value="">
@@ -3858,106 +3999,167 @@
           <input type="hidden" name="attr_pc_buff_list" value="">
 
           <details>
-            <summary>
+            <summary class="buffs-detail">
               Détail par attribut
             </summary>
 
-            <div class="buff-detail">
-              <div class="bordered">AGI</div>
-              <div class="bordered"><span name="attr_agi_buff_list"></span></div>
-              <div class="bordered"><span name="attr_agi_buff"></span></div>
-            </div>
+            <details>
+              <summary>Caractéristiques</summary>
 
-            <div class="buff-detail">
-              <div class="bordered">CON</div>
-              <div class="bordered"><span name="attr_con_buff_list"></span></div>
-              <div class="bordered"><span name="attr_con_buff"></span></div>
-            </div>
+              <div class="buff-detail">
+                <div class="bordered">AGI</div>
+                <div class="bordered"><span name="attr_agi_buff_list"></span></div>
+                <div class="bordered"><span name="attr_agi_buff"></span></div>
+              </div>
+              
+              <div class="buff-detail">
+                <div class="bordered">CON</div>
+                <div class="bordered"><span name="attr_con_buff_list"></span></div>
+                <div class="bordered"><span name="attr_con_buff"></span></div>
+              </div>
+              
+              <div class="buff-detail">
+                <div class="bordered">FOR</div>
+                <div class="bordered"><span name="attr_for_buff_list"></span></div>
+                <div class="bordered"><span name="attr_for_buff"></span></div>
+              </div>
+              
+              <div class="buff-detail">
+                <div class="bordered">PER</div>
+                <div class="bordered"><span name="attr_per_buff_list"></span></div>
+                <div class="bordered"><span name="attr_per_buff"></span></div>
+              </div>
+              
+              <div class="buff-detail">
+                <div class="bordered">CHA</div>
+                <div class="bordered"><span name="attr_cha_buff_list"></span></div>
+                <div class="bordered"><span name="attr_cha_buff"></span></div>
+              </div>
+              
+              <div class="buff-detail">
+                <div class="bordered">INT</div>
+                <div class="bordered"><span name="attr_int_buff_list"></span></div>
+                <div class="bordered"><span name="attr_int_buff"></span></div>
+              </div>
 
+              <div class="buff-detail">
+                <div class="bordered">VOL</div>
+                <div class="bordered"><span name="attr_vol_buff_list"></span></div>
+                <div class="bordered"><span name="attr_vol_buff"></span></div>
+              </div>
+
+            </details>
+
+            <details>
+              <summary>Tests</summary>
+              
+              <div class="buff-detail">
+                <div class="bordered">AGI</div>
+                <div class="bordered"><span name="attr_tagi_buff_list"></span></div>
+                <div class="bordered"><span name="attr_tagi_buff"></span></div>
+              </div>
+              
+              <div class="buff-detail">
+                <div class="bordered">CON</div>
+                <div class="bordered"><span name="attr_tcon_buff_list"></span></div>
+                <div class="bordered"><span name="attr_tcon_buff"></span></div>
+              </div>
+              
+              <div class="buff-detail">
+                <div class="bordered">FOR</div>
+                <div class="bordered"><span name="attr_tfor_buff_list"></span></div>
+                <div class="bordered"><span name="attr_tfor_buff"></span></div>
+              </div>
+              
+              <div class="buff-detail">
+                <div class="bordered">PER</div>
+                <div class="bordered"><span name="attr_tper_buff_list"></span></div>
+                <div class="bordered"><span name="attr_tper_buff"></span></div>
+              </div>
+              
+              <div class="buff-detail">
+                <div class="bordered">CHA</div>
+                <div class="bordered"><span name="attr_tcha_buff_list"></span></div>
+                <div class="bordered"><span name="attr_tcha_buff"></span></div>
+              </div>
+              
+              <div class="buff-detail">
+                <div class="bordered">INT</div>
+                <div class="bordered"><span name="attr_tint_buff_list"></span></div>
+                <div class="bordered"><span name="attr_tint_buff"></span></div>
+              </div>
+
+              <div class="buff-detail">
+                <div class="bordered">VOL</div>
+                <div class="bordered"><span name="attr_tvol_buff_list"></span></div>
+                <div class="bordered"><span name="attr_tvol_buff"></span></div>
+              </div>
+
+            </details>
             
-            <div class="buff-detail">
-              <div class="bordered">FOR</div>
-              <div class="bordered"><span name="attr_for_buff_list"></span></div>
-              <div class="bordered"><span name="attr_for_buff"></span></div>
-            </div>
-            
-            <div class="buff-detail">
-              <div class="bordered">PER</div>
-              <div class="bordered"><span name="attr_per_buff_list"></span></div>
-              <div class="bordered"><span name="attr_per_buff"></span></div>
-            </div>
+            <details>
+              <summary>Combat</summary>
+  
+              <div class="buff-detail">
+                <div class="bordered">INIT</div>
+                <div class="bordered"><span name="attr_init_buff_list"></span></div>
+                <div class="bordered"><span name="attr_init_buff"></span></div>
+              </div>
+  
+              <div class="buff-detail">
+                <div class="bordered">ATC</div>
+                <div class="bordered"><span name="attr_atkcac_buff_list"></span></div>
+                <div class="bordered"><span name="attr_atkcac_buff"></span></div>
+              </div>
+  
+              <div class="buff-detail">
+                <div class="bordered">ATD</div>
+                <div class="bordered"><span name="attr_atktir_buff_list"></span></div>
+                <div class="bordered"><span name="attr_atktir_buff"></span></div>
+              </div>
+  
+              <div class="buff-detail">
+                <div class="bordered">MAG</div>
+                <div class="bordered"><span name="attr_atkmag_buff_list"></span></div>
+                <div class="bordered"><span name="attr_atkmag_buff"></span></div>
+              </div>
+  
+              <div class="buff-detail">
+                <div class="bordered">DEF</div>
+                <div class="bordered"><span name="attr_def_buff_list"></span></div>
+                <div class="bordered"><span name="attr_def_buff"></span></div>
+              </div>
 
-            <div class="buff-detail">
-              <div class="bordered">CHA</div>
-              <div class="bordered"><span name="attr_cha_buff_list"></span></div>
-              <div class="bordered"><span name="attr_cha_buff"></span></div>
-            </div>
-            
-            <div class="buff-detail">
-              <div class="bordered">INT</div>
-              <div class="bordered"><span name="attr_int_buff_list"></span></div>
-              <div class="bordered"><span name="attr_int_buff"></span></div>
-            </div>
-            
-            <div class="buff-detail">
-              <div class="bordered">VOL</div>
-              <div class="bordered"><span name="attr_vol_buff_list"></span></div>
-              <div class="bordered"><span name="attr_vol_buff"></span></div>
-            </div>
+            </details>
 
-            <div class="buff-detail">
-              <div class="bordered">INIT</div>
-              <div class="bordered"><span name="attr_init_buff_list"></span></div>
-              <div class="bordered"><span name="attr_init_buff"></span></div>
-            </div>
+            <details>
+              <summary>Ressources</summary>
+              
+              <div class="buff-detail">
+                <div class="bordered">PV</div>
+                <div class="bordered"><span name="attr_pv_buff_list"></span></div>
+                <div class="bordered"><span name="attr_pv_buff"></span></div>
+              </div>
+  
+              <div class="buff-detail">
+                <div class="bordered">DR</div>
+                <div class="bordered"><span name="attr_dr_buff_list"></span></div>
+                <div class="bordered"><span name="attr_dr_buff"></span></div>
+              </div>
+              
+              <div class="buff-detail">
+                <div class="bordered">PM</div>
+                <div class="bordered"><span name="attr_pm_buff_list"></span></div>
+                <div class="bordered"><span name="attr_pm_buff"></span></div>
+              </div>
+              
+              <div class="buff-detail">
+                <div class="bordered">PC</div>
+                <div class="bordered"><span name="attr_pc_buff_list"></span></div>
+                <div class="bordered"><span name="attr_pc_buff"></span></div>
+              </div>
 
-            <div class="buff-detail">
-              <div class="bordered">ATC</div>
-              <div class="bordered"><span name="attr_atkcac_buff_list"></span></div>
-              <div class="bordered"><span name="attr_atkcac_buff"></span></div>
-            </div>
-
-            <div class="buff-detail">
-              <div class="bordered">ATD</div>
-              <div class="bordered"><span name="attr_atktir_buff_list"></span></div>
-              <div class="bordered"><span name="attr_atktir_buff"></span></div>
-            </div>
-
-            <div class="buff-detail">
-              <div class="bordered">MAG</div>
-              <div class="bordered"><span name="attr_atkmag_buff_list"></span></div>
-              <div class="bordered"><span name="attr_atkmag_buff"></span></div>
-            </div>
-
-            <div class="buff-detail">
-              <div class="bordered">DEF</div>
-              <div class="bordered"><span name="attr_def_buff_list"></span></div>
-              <div class="bordered"><span name="attr_def_buff"></span></div>
-            </div>
-            
-            <div class="buff-detail">
-              <div class="bordered">PV</div>
-              <div class="bordered"><span name="attr_pv_buff_list"></span></div>
-              <div class="bordered"><span name="attr_pv_buff"></span></div>
-            </div>
-
-            <div class="buff-detail">
-              <div class="bordered">DR</div>
-              <div class="bordered"><span name="attr_dr_buff_list"></span></div>
-              <div class="bordered"><span name="attr_dr_buff"></span></div>
-            </div>
-            
-            <div class="buff-detail">
-              <div class="bordered">PM</div>
-              <div class="bordered"><span name="attr_pm_buff_list"></span></div>
-              <div class="bordered"><span name="attr_pm_buff"></span></div>
-            </div>
-            
-            <div class="buff-detail">
-              <div class="bordered">PC</div>
-              <div class="bordered"><span name="attr_pc_buff_list"></span></div>
-              <div class="bordered"><span name="attr_pc_buff"></span></div>
-            </div>
+            </details>
 
           </details>
 
@@ -4043,6 +4245,9 @@
 
                     <span>
                       <input type="text" name="attr_equip-nom" title="@{equip-nom}" placeholder="Nom de l'équipement">
+                      <button type="action" class="flat-btn" name="act_equipshow-btn" title="Informations sur l'équipement">
+                        <span class="img-btn">w</span>
+                      </button>
                       Enc. <input type="number" name="attr_equip-enc" title="@{equip-enc} Encombrement (0,1,2)" value="0">
                       Nbre <input type="number" name="attr_equip-qte" title="@{equip-qte} Quantité possédée" value="1">
                       <input type="checkbox" name="attr_equip-on" title="@{equip-on} Equipement porté" value="1">
@@ -4051,7 +4256,7 @@
                   </summary>
 
                   <div class="d-flex">
-                    <input type="text" name="attr_equip-detail" title="@{equip-detail}" placeholder="Description" value="">
+                    <textarea class="one-row" name="attr_equip-detail" title="@{equip-detail}" placeholder="Description détaillée" value=""></textarea>
                   </div>
 
                   <div class="d-flex d-flex-middle">
@@ -4139,10 +4344,6 @@
                 <span>Avec token</span>
               </li>
               <li class="config-check">
-                <input type="checkbox" name="attr_cfg_1attack_roll" value="1">
-                <span>Un seul jet d'attaque</span>
-              </li>
-              <li class="config-check">
                 <input type="checkbox" name="attr_cfg_pvmax_auto" value="1">
                 <span>Calcul automatique des PV max.</span>
               </li>
@@ -4152,7 +4353,7 @@
               </li>
               <li class="config-check">
                 <input type="checkbox" name="attr_cfg_bouclier_malus" value="1">
-                <span>Malus de bouclier</span>
+                <span>Utiliser le malus de bouclier</span>
               </li>
               <li class="config-check">
                 <input type="checkbox" name="attr_voies_789" value="1">
@@ -4293,6 +4494,19 @@
                   <option value="gray">Gris</option>
                   <option value="dark">Sombre</option>
                 </select>
+              </li>
+              <li>
+                Contenu 
+                <ul>
+                  <li class="config-check">
+                    <input type="checkbox" name="attr_cfg_1attack_roll" value="1">
+                    <span>Un seul jet d'attaque</span>
+                  </li>
+                  <li class="config-check">
+                    <input type="checkbox" name="attr_cfg_luck_btn" value="1">
+                    <span>Bouton Chance</span>
+                  </li>
+                </ul>
               </li>
             </ul>
     
@@ -4446,7 +4660,7 @@
               <li>
                 <details>
                   <summary>
-                    <strong>Version 1.2.0</strong> (2025-02-02)
+                    <strong>Version 1.2.0</strong> (2025-02-04)
                   </summary>
                   <ul>
                     <li>Ajout d'une gestion des armures, boucliers et casques équipés</li>
@@ -4507,6 +4721,13 @@
 
           <div class="sheet-col">
 
+            <details>
+              <summary>
+                Migrations
+              </summary>
+              <textarea class="large migration" name="attr_migration"></textarea>
+            </details>
+
           </div>
 
         </div>
@@ -4520,6 +4741,7 @@
       <input type="hidden" class="tabs-toggle" name="attr_npc_tab" value="main" />
       <div>
         <button type="action" name="act_npc_main-btn" class="main-tab tab-btn npc-main-btn">TRAITS</button>
+        <button type="action" name="act_npc_gears-btn" class="main-tab tab-btn npc-gears-btn">EQUIPEMENT</button>
         <button type="action" name="act_npc_config-btn" class="main-tab tab-btn npc-config-btn">CONFIGURATION</button>
         <button type="action" name="act_npc_script-btn" class="main-tab tab-btn npc-script-btn">SCRIPT</button>
       </div>
@@ -4868,7 +5090,7 @@
 
               <div>
                 <button type="action" class="flat-btn" name="act_npcroll-btn">
-                  <span class="d20-btn">t</span>
+                  <span class="img-btn img-btn-lg">w</span>
                 </button>
               </div>
 
@@ -4885,6 +5107,77 @@
           </fieldset>
 
         </div>
+
+      </div>
+
+      <div class="npc-gears-tab">
+
+        <div class="npc-gears">
+
+          <!-- Liste des équipements -->
+          <div class="gears">
+
+            <div class="block-title block-header">
+              Equipements
+              <button type="action" name="act_helpgear-btn" class="img-btn flat-btn" title="Aide équipement" >
+                <span class="img-btn img-btn-lg">i</span>
+              </button>
+            </div>
+
+            <div class="bordered">
+              <div class="d-flex d-flex-middle">
+                <input type="hidden" name="attr_tresor" value="">
+                <input type="hidden" name="attr_tresor_pieces" value="">
+                &nbsp;Trésor&nbsp;:&nbsp;<input type="text" name="attr_tresor" title="@{tresor}" readonly>
+              </div>
+              <div class="d-flex d-flex-middle">
+                <details>
+                  <summary>Bourse</summary>
+                  <div class="d-flex">
+                    PC:<input type="number" class="treasure" name="attr_tresor_pc">
+                    PA:<input type="number" class="treasure" name="attr_tresor_pa">
+                    PO:<input type="number" class="treasure" name="attr_tresor_po">
+                    PP:<input type="number" class="treasure" name="attr_tresor_pp">
+                  </div>
+                </details>
+              </div>
+            </div>
+
+            <div class="bordered">
+              
+              <fieldset class="repeating_equipement">
+
+                <details>
+                  <summary>
+
+                    <span>
+                      <input type="text" name="attr_equip-nom" title="@{equip-nom}" placeholder="Nom de l'équipement">
+                      <button type="action" class="flat-btn" name="act_equipshow-btn" title="Informations sur l'équipement">
+                        <span class="img-btn">w</span>
+                      </button>
+                      Nbre <input type="number" name="attr_equip-qte" title="@{equip-qte} Quantité possédée" value="1">
+                    </span>
+
+                  </summary>
+
+                  <div class="d-flex">
+                    <textarea class="one-row" name="attr_equip-detail" title="@{equip-detail}" placeholder="Description détaillée" value=""></textarea>
+                  </div>
+
+                  <div class="d-flex d-flex-middle">
+                    <textarea class="one-row" name="attr_equip-props" title="@{equip-props} Propriétés" placeholder="Propriétés"></textarea>
+                  </div>
+
+                </details>
+
+
+              </fieldset>
+
+            </div>
+          </div>
+
+        </div>
+
 
       </div>
 
@@ -5431,6 +5724,11 @@
     <span class="sheet-rt-{{textclass}}">{{text}}</span>
   </div>
   {{/text}}
+  {{#chance}}
+  <div class="sheet-rt sheet-rt-text">
+    <span>{{chance}}</span>
+  </div>
+  {{/chance}}
   {{#alert}}
   <div class="sheet-rt sheet-rt-text">
     <span class="sheet-rt-{{alertclass}}">{{alert}}</span>
@@ -5471,6 +5769,7 @@ const SWData = {
     peoplePath: 1,
     profilePaths: [ 2, 3 ],
     level1Paths: [ 1, 2, 3 ],
+    minLevels: [ 1, 2, 3, 5, 7, 9, 11, 13 ],
   },
   SHEET_TYPE: {
     PC: "pc",
@@ -5835,13 +6134,8 @@ const SWData = {
     },
     BUFFS: {
       To: [
-        "agi",
-        "con",
-        "for",
-        "per",
-        "cha",
-        "int",
-        "vol",
+        "agi", "con", "for", "per", "cha", "int", "vol",
+        "tagi", "tcon", "tfor", "tper", "tcha", "tint", "tvol",
         "init",
         "atkcac",
         "atktir",
@@ -5964,7 +6258,9 @@ const SWData = {
       }
     ],
     CAPABILITIES: [
-      "peaudepierre"
+      "peaudepierre",
+      "cavalierémérite",
+      "monturefantastique"
     ],
     SKILLS: [
       {
@@ -6110,71 +6406,124 @@ const SWData = {
   GEARS: [
     {
       name: "Pétoire",
-      props: "dm-1m: 1d10,portee: 20,type-dm: Perforants",
+      props: [
+        "dm-1m: 1d10",
+        "portee: 20",
+        "type-dm: Perforants",
+      ]
     },
     {
       name: "Epée longue",
-      props: "dm-1m: 1d8,type-dm: Tranchants",
+      props: [ 
+        "dm-1m: 1d8",
+        "type-dm: Tranchants",
+      ]
     },
     {
       name: "Dague",
-      props: "dm-1m: 1d4,type-dm: Perforants",
+      props: [ 
+        "dm-1m: 1d4",
+        "type-dm: Perforants",
+      ]
     },
     {
       name: "Rapière",
-      props: "critique: 19,dm-1m: 1d6,type-dm: Perforants",
+      props: [ 
+        "critique: 19",
+        "dm-1m: 1d6",
+        "type-dm: Perforants",
+      ]
     },
     {
       name: "Arc court",
-      props: "dm-2m: 1d6,portee: 30,type-dm: Perforants",
+      props: [ 
+        "dm-2m: 1d6",
+        "portee: 30",
+        "type-dm: Perforants",
+      ]
     },
     {
       name: "Hache à deux mains",
-      props: "dm-2m: 2d6,type-dm: Tranchants",
+      props: [
+        "dm-2m: 2d6",
+        "type-dm: Tranchants",
+      ]
     },
     {
       name: "Javelot",
-      props: "dm-1m: 1d6, type-dm: Perforants",
+      props: [
+        "dm-1m: 1d6",
+        "type-dm: Perforants",
+      ]
     },
     {
       name: "Lance de cavalerie",
-      props: "dm-1m: 2d6, type-dm: Perforants",
+      props: [
+        "dm-1m: 2d6",
+        "type-dm: Perforants",
+      ]
     },
     {
       name: "Bâton ferré",
-      props: "dm-2m: 1d6, type-dm: Contondants",
+      props: [
+        "dm-2m: 1d6",
+        "type-dm: Contondants",
+      ]
     },
     {
       name: "Epieu",
-      props: "dm-1m: 1d6,dm-2m: 1d10,type-dm: Perforants",
+      props: [
+        "dm-1m: 1d6",
+        "dm-2m: 1d10",
+        "type-dm: Perforants",
+      ]
     },
     {
       name: "Marteau de guerre",
-      props: "dm-1m: 1d6,type-dm: Contondants",
+      props: [
+        "dm-1m: 1d6",
+        "type-dm: Contondants",
+      ]
     },
     {
       name: "Cuir simple",
-      props: "armure: +2,agi-max: +6",
+      props: [
+        "armure: +2",
+        "agi-max: +6",
+      ]
     },
     {
       name: "Cuir renforcé",
-      props: "armure: +3,agi-max: +5",
+      props: [
+        "armure: +3",
+        "agi-max: +5",
+      ]
     },
     {
       name: "Chemise de mailles",
-      props: "armure: +4,agi-max: +4",
+      props: [
+        "armure: +4",
+        "agi-max: +4",
+      ]
     },
     {
       name: "Cotte de mailles",
-      props: "armure: +5,agi-max: +3",
+      props: [
+        "armure: +5",
+        "agi-max: +3",
+      ]
     },
     {
       name: "Petit bouclier",
-      props: "bouclier: +1",
+      props: [ 
+        "bouclier: +1",
+      ],
     },
     {
       name: "Grand bouclier",
-      props: "bouclier: +2",
+      props: [
+        "bouclier: +2",
+      ],
     },
   ],
   PVPATH: [
@@ -6308,7 +6657,7 @@ function strval(value, onError = "") {
 */
 function capitalize(str) {
   if (str && str !== "")
-    return str.charAt(0).toUpperCase() + str.substring(1);
+    return str.charAt(0).toUpperCase() + str.substring(1).toLowerCase();
 }
 
 /**
@@ -6466,6 +6815,21 @@ function seq(count, base = 1) {
 function eventList(eventName, attributeList, joinChar = "") {
   const result = attributeList.map(a => `${eventName}:${ a.toLowerCase() }`)
   return joinChar !== "" ? result.join(joinChar) : result;
+}
+
+/**
+ * Return repeating attribute name
+ * @param {string} section - section name
+ * @param {string} name - attribute name
+ * @param {string} [id=""] - row Id
+ * @returns {string}
+ */
+function repeatingAttr(section, name, id = "") {
+  let attribute = `repeating_${section}`;
+  if (id !== "")
+    attribute += "_" + id;
+  attribute += "_" + name;
+  return attribute;
 }
 
 /**
@@ -6709,7 +7073,7 @@ on("change:sheet_type", function() {
  */
 [ 
   "pc_main", "pc_abilities", "pc_gears", "pc_config", "pc_script", "pc_version",
-  "npc_main", "npc_config", "npc_script"
+  "npc_main", "npc_gears", "npc_config", "npc_script"
 ].forEach(button => {
   on(`clicked:${button}-btn`, function() {
     const [ type, value ] = button.split("_");
@@ -6936,14 +7300,20 @@ on("clicked:alias-toggle", function() {
  */
 SWData.PC.ABILITIES.forEach(ability => {
   const short = shorten(ability);
-  const attrs = [ 
-    short, 
-    `${short}_buff` 
+  const attrs = [
+    `${short}_base`,
+    `${short}_buff`,
+    `t${short}_buff`,
   ];
   on(eventList("change", attrs, " "), function () {
     getAttrs(attrs, function(values) {
-      const score = addValues(values);
-      setAttrs({ [`${short}_test`]: score });
+      const base = intval(values[`${short}_base`]);
+      const buff = intval(values[`${short}_buff`]);
+      const tbuff = intval(values[`t${short}_buff`]);
+      setAttrs({ 
+        [short]: base + buff,
+        [`${short}_test`]: base + buff + tbuff
+      });
     });
   });
 });
@@ -6953,7 +7323,8 @@ SWData.PC.ABILITIES.forEach(ability => {
  */
 function updateInit() {
   getAttrs([ ...SWData.PC.COMBAT.init ], function(values) {
-    values.agi *= intval(values.cfg_init_agi);
+    const car = Object.keys(values).find(k => k.startsWith("agi"));
+    values[car] *= intval(values.cfg_init_agi);
     delete values.cfg_init_agi;
     const init = addValues(values);
     setAttrs({ init });
@@ -7155,6 +7526,33 @@ function updatePCMax() {
 on("change:pc_base change:cha change:pc_buff", updatePCMax);
 
 /**
+ * Return list of attributes for luck roll button
+ * @returns {string[]}
+ */
+function luckButtonAttrs() {
+  return [
+    "cfg_luck_btn", 
+    "character_name", 
+    "couleur_pj", 
+    "pc"
+  ];
+}
+
+/**
+ * Return roll template field for luck button
+ * @param {Object} values - getAttrs() object
+ * @returns {string}
+ */
+function addLuckButton(values) {
+  if (!boolval(values.cfg_luck_btn))
+    return "";
+  const charName = strval(values.character_name);
+  const color = strval(values.couleur_pj);
+  const pc = intval(values.pc);
+  return `[Chance](~${charName}|luck_apply-btn${menuButton(color, { size: "1.3em" })}) ${pc} Points de Chance restants`;
+}
+
+/**
  * Ability rolls
  */
 SWData.PC.ABILITIES.forEach(ability => {
@@ -7177,7 +7575,7 @@ SWData.PC.ABILITIES.forEach(ability => {
       "cfg_bouclier_malus", "bouclier_malus", "bouclier_eqp",
       "casque", "casque_eqp",
     ];
-    getAttrs([ `${short}_dsup`, "notif_fx", ...defGearAttrs ], function(values) {
+    getAttrs([ `${short}_dsup`, "notif_fx", ...luckButtonAttrs(), ...defGearAttrs ], function(values) {
       // Play FX !
       const fxValue = strval(values.notif_fx);
       if (fxValue !== "")
@@ -7196,7 +7594,8 @@ SWData.PC.ABILITIES.forEach(ability => {
       const chatMsg = cof2RollTemplate({
         lsub: "Test",
         rsub: capitalize(ability),
-        roll: carac
+        roll: carac,
+        chance: addLuckButton(values)
       });
       sendChatMsg(chatMsg);
     });
@@ -7225,7 +7624,7 @@ on("clicked:init-btn", function () {
 SWData.PC.COMBAT.attacks.forEach(attk => {
   const [ attack, , description ] = attk;
   on(`clicked:${attack}-btn`, function () {
-    getAttrs([ "cfg_1attack_roll", "condition_affaibli" ], function (values) {
+    getAttrs([ "cfg_1attack_roll", "condition_affaibli", ...luckButtonAttrs() ], function (values) {
       const useOneRoll = boolval(values.cfg_1attack_roll);
       const roll = (intval(values.condition_affaibli) === 1) ? "2d20kl1" : "1d20";
       const atkRoll = `[[${roll}cs20cf1[Dé] + @{${attack}}[Bonus] ]]`;
@@ -7233,7 +7632,8 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
         lsub: "Attaque",
         rsub: description,
         roll: atkRoll,
-        broll: ""
+        broll: "",
+        chance: addLuckButton(values)
       };
       if (roll === "1d20" && !useOneRoll)
         atkProps.broll = atkRoll;
@@ -7540,11 +7940,9 @@ on("clicked:luck_apply-btn", function() {
  * On Luck roll button click
  */
 on("clicked:luck_roll-btn", function() {
-  const lsub = "Jet";
-  const rsub = "Chance";
   const chatMsg = cof2RollTemplate({
-    lsub,
-    rsub,
+    lsub: "Jet",
+    rsub: "Chance",
     roll: "[[ 1d6![Dé] + @{pc}[Points de Chance restants] ]]",
     save: "[[0]]"
   });
@@ -7853,8 +8251,11 @@ on("clicked:repeating_armes:attack-btn", function() {
     "tactdiv",
     "tactdmdiv",
     "noms_voies",
+    "en_selle",
+    "capabilities",
+    ...luckButtonAttrs(),
     ...sitModAttrs.map(a => `modsit_${a}`),
-    ...attackAttrs.map(a => `${section}${a}`) 
+    ...attackAttrs.map(a => `${section}${a}`)
   ], function (values) {
     
     // general options
@@ -7866,6 +8267,8 @@ on("clicked:repeating_armes:attack-btn", function() {
     const tactDM = strval(values.tactdmdiv);
     const weakened = intval(values.condition_affaibli);
     const pathNames = strval(values.noms_voies);
+    const mounted = boolval(values.en_selle);
+    const capabilities = strval(values.capabilities).split(",");
     
     // situational modifiers
     const modCover = intval(values.modsit_couvert) * -1;
@@ -7886,7 +8289,7 @@ on("clicked:repeating_armes:attack-btn", function() {
 
     // 2 mains & bouclier 
     const twoHanded = boolval(values[section + "2m"]);
-    if (twoHanded && shieldUsed) {
+    if (atk !== "atkmag" && twoHanded && shieldUsed) {
       sendChatMsg(cof2RollTemplate({
         lsub: "Attaque",
         rsub: name + range,
@@ -7993,9 +8396,18 @@ on("clicked:repeating_armes:attack-btn", function() {
     if (modifiers.includes("reroll1"))
       dmOpt += "r";
 
+    let riderDM = "";
+    if (mounted && atk === "atkcac") {
+      if (capabilities.includes("monturefantastique")) {
+        riderDM = " +2[Cavalier rang 5]"
+      } else if (capabilities.includes("cavalierémérite")) {
+        riderDM = " +1[Cavalier rang 2]"
+      }
+    }
+
     let dmroll = "";
     if (dm !== "" )
-      dmroll = `[[${dm}${dmOpt}]][DM] + ${dmbonus}[Bonus] + ${dmdiv}[Divers]${tacticDM}`;
+      dmroll = `[[${dm}${dmOpt}]][DM] + ${dmbonus}[Bonus] + ${dmdiv}[Divers]${tacticDM}${riderDM}`;
     if (dmroll !== "" && tactics === 1)
       dmroll = `floor((${dmroll})/2)`;
     if (dmroll !== "")
@@ -8048,7 +8460,8 @@ on("clicked:repeating_armes:attack-btn", function() {
       critdiff: `[[${useCritDiff}]]`,
       dmcrit,
       powder,
-      text: special
+      text: special,
+      chance: addLuckButton(values)
     };
     if (roll === "1d20" && bRoll)
       atkProps.broll = attack;
@@ -8293,7 +8706,13 @@ function setRank(path) {
       const name = values[`voie${path}-t${ ability.charAt(ability.length - 1) }`];
       capabilities = processCapabilities(name, owned, capabilities);
     });
-    setAttrs({ [`rang_voie${path}`]: rank, capabilities });
+    const updates = { 
+      [`rang_voie${path}`]: rank, 
+      capabilities,
+    };
+    if (capabilities.includes("cavalierémérite"))
+      updates.rang_cavalier = rank;
+    setAttrs(updates);
   });
 }
 
@@ -8341,44 +8760,68 @@ function updateAllPathNames(path) {
  * Check max ability points
  */
 function checkAbilityPoints() {
+  const names = [];
   const owned = [];
   const props = [];
+  const baseRank = [];
   seq(9).forEach(v => {
+    baseRank.push(`v${v}br`);
     seq(5).forEach(r => {
+      names.push(`voie${v}-t${r}`);
       const rank = `v${v}r${r}`;
       owned.push(rank);
       props.push(rank + "_props");
     });
   });
-  getAttrs([ "cfg_pts_capas", "niveau", ...owned, ...props ], function(values) {
+  getAttrs([ 
+      "cfg_pts_capas",
+      "niveau",
+      ...owned,
+      ...names,
+      ...props,
+      ...baseRank
+    ], function(values) {
     const checkAP = boolval(values.cfg_pts_capas);
     if (!checkAP)
       return;
 
     const level = intval(values.niveau);
+    const alerts = [];
     const maxPoints = level * 2;
     let usedPoints = 0;
+
     owned.forEach(ability => {
       if (!boolval(values[ability]))
         return;
       const path = intval(ability.charAt(1));
+      const base = intval(baseRank[`v${path}br`], 1);
       const rank = intval(ability.charAt(3));
+      const rankPath = rank + base - 1;
       
-      if (path === SWData.settings.peoplePath && rank === 1)
+      if (path === SWData.settings.peoplePath && rankPath === 1)
         return;
 
       const props = strval(values[ability + "_props"]);
-      if (SWData.settings.level1Paths.includes(path) && rank === 2 && getProp(props, "initial"))
+      if (SWData.settings.level1Paths.includes(path) && rankPath === 2 && getProp(props, "initial"))
         return;
+
+      const minLevel = SWData.settings.minLevels[rankPath - 1];
+      if (level < minLevel) {
+        const rankName = values[`voie${path}-t${rankPath}`];
+        alerts.push(`La capacité ${rankName} (rang ${rankPath}) n'est pas accessible avant le niveau ${minLevel}`);
+      }
 
       usedPoints += (rank > 2) ? 2 : 1;
     });
 
     if (usedPoints > maxPoints) {
+      let text = `${usedPoints} points utilisés mais ${maxPoints} au maximum`;
+      if (alerts.length > 0)
+        text += "\n" + alerts.join("\n");
       const chatMsg = cof2RollTemplate({
         lsub: "Contrôle",
         rsub: "Points de Capacités",
-        text : `${usedPoints} utilisés mais ${maxPoints} maximum`
+        text
       });
       sendChatMsg(chatMsg, {
         ...SWData.RT_OPTIONS,
@@ -8612,7 +9055,7 @@ on("clicked:repeating_rolls:roll-btn", function() {
     "voie",
     "bonus"
   ].map(attribute => `${section}${attribute}`);
-  getAttrs([ "rangs_voies", "noms_voies", ...rollAttrs ], function (values) {
+  getAttrs([ "rangs_voies", "noms_voies", ...luckButtonAttrs(), ...rollAttrs ], function (values) {
     const rollName = strval(values[section + "nom"]);
     const type = strval(values[section + "type"]);
     let carac = strval(values[section + "carac"]);
@@ -8660,7 +9103,8 @@ on("clicked:repeating_rolls:roll-btn", function() {
       lsub,
       rsub: rollName,
       roll: rollCmd,
-      text
+      text,
+      chance: addLuckButton(values)
     });
     sendChatMsg(chatMsg);
   });
@@ -8673,7 +9117,7 @@ SWData.PC.SKILLS.forEach(skill => {
   on(`clicked:skill-${skill.name}`, function () {
     const skillName = (skill.label !== "") ? skill.label : capitalize(skill.name);
     const skillAttrs = [ "carac", "bonus", "def" ].map(a => `${skill.name}_${a}`);
-    getAttrs(skillAttrs, function (values) {
+    getAttrs([ ...skillAttrs, ...luckButtonAttrs() ], function (values) {
       const [ carac, bonus, def ] = Object.keys(values);
       let caracBonus = strval(values[carac]);
       const skillBonus = intval(values[bonus]);
@@ -8699,7 +9143,8 @@ SWData.PC.SKILLS.forEach(skill => {
         lsub: "Compétence",
         rsub: skillName,
         roll: rollCmd,
-        broll: rollCmd
+        broll: rollCmd,
+        chance: addLuckButton(values)
       });
       sendChatMsg(chatMsg);
 
@@ -8815,7 +9260,7 @@ function rebuildBuffValues() {
 function importFromPDF(text, path, base = 1) {
   const updates = new Map();
 
-  let ability = "";
+  let ability = `voie${path}notes`;
   text.split("\n").forEach((line, index) => {
     // first line
     if (index === 0) {
@@ -8927,11 +9372,11 @@ function encumbrance() {
       });
 
       const effects = [];
-      if (encumbrance * useEncumbrance > threshold )
+      if (encumbrance * useEncumbrance > threshold)
         effects.push("Essouflé-e et dé malus aux tests d'AGI");
-      if (encumbrance * useEncumbrance > 2 * threshold )
+      if (encumbrance * useEncumbrance > 2 * threshold)
         effects.push("Ralenti");
-      if (encumbrance * useEncumbrance > 3 * threshold )
+      if (encumbrance * useEncumbrance > 3 * threshold)
         effects.push("Immobilisé");
       if (effects.length > 0) {
         const text = "@{character_name} est encombré-e et subit les effets suivants :\n" 
@@ -8977,13 +9422,13 @@ on("clicked:helpgear-btn", function() {
 });
 
 /**
- * Get gear properties from name
+ * Get gear properties list from name
  * @param {string} name - gear name
- * @returns {string}
+ * @returns {string[]}
  */
 function getGearProps(name) {
   const gear = SWData.GEARS.find(g => g.name.toLowerCase() === name.toLowerCase());
-  return gear ? gear.props : "";
+  return gear ? gear.props : [];
 }
 
 /**
@@ -9204,17 +9649,47 @@ on("change:repeating_equipement remove:repeating_equipement", function() {
 });
 
 /**
+ * Display equipment details in chat
+ */
+on("clicked:repeating_equipement:equipshow-btn", function () {
+  const section = "equipement";
+  const gearAttrs = [ "nom", "detail", "props" ].map(a => repeatingAttr(section, `equip-${a}`));
+  getAttrs([ ...gearAttrs, "character_name" ], function(values) {
+    const nom = strval(values[repeatingAttr(section, "equip-nom")]);
+    const detail = strval(values[repeatingAttr(section, "equip-detail")]);
+    const props = strval(values[repeatingAttr(section, "equip-props")]);
+    if (detail === "" && props === "")
+      return
+    const chatMsg = [
+      "title=Equipement",
+      `subtitle=${nom}`,
+      `desc=${ strval(values.character_name) }`
+    ];
+    if (detail !== "")
+      chatMsg.push(`Description=${detail}`);
+    if (props !== "") {
+      props.split("\n").filter(prop => strval(prop) !== "").forEach(prop => {
+        const [ code, value ] = strval(prop).split(":");
+        chatMsg.push(`Prop: ${code}=${value} `);
+      });
+    }
+    sendChatMsg(chatMsg, { template: "custom" });
+  });
+});
+
+/**
  * Retrieve props from name
  */
 on("change:repeating_equipement:equip-nom", function() {
-  getAttrs([ "repeating_equipement_equip-nom", "repeating_equipement_equip-props" ], function(values) {
-    const name = strval(values["repeating_equipement_equip-nom"]);
-    const hasProps = strval(values["repeating_equipement_equip-props"]);
+  const section = "equipement";
+  const gearAttrs = [ "nom", "props" ].map(a => repeatingAttr(section, `equip-${a}`));
+  getAttrs([ ...gearAttrs ], function(values) {
+    const name = strval(values[repeatingAttr(section, "equip-nom")]);
+    const hasProps = strval(values[repeatingAttr(section, "equip-props")]);
     if (name !== "" && hasProps === "") {
-      let props = getGearProps(name);
-      if (props !== "") {
-        props = props.split(",").join("\n");
-        setAttrs({ ["repeating_equipement_equip-props"]: props });
+      const props = getGearProps(name);
+      if (props.length > 0) {
+        setAttrs({ [repeatingAttr(section, "equip-props")]: props.join("\n") });
       }
     }
   })
@@ -9229,7 +9704,7 @@ on("change:repeating_equipement:equip-on", function(eventInfo) {
   const hands = [
     "main_princ",
     "main_autre"
-  ]
+  ];
   processAllGear([ "on", "nom", "props" ], function(gearIds, allGears) {
     getAttrs([ 
       `${section}_equip-on`, 
@@ -9414,9 +9889,10 @@ function loadBaseGear(profile, attacks = false) {
     const rowId = `repeating_equipement_${ generateRowID() }_`;
     baseGear.set(rowId + "equip-nom", gear.name);
     baseGear.set(rowId + "equip-qte", gear.number);
-    const props = getGearProps(gear.name);
-    if (props !== "") {
-      baseGear.set(rowId + "equip-props", props.split(",").join("\n"));
+    const propList = getGearProps(gear.name);
+    if (propList.length > 0) {
+      const props = propList.join("\n");
+      baseGear.set(rowId + "equip-props", props);
       if (props.includes("bonus-def") || props.includes("armure") || props.includes("bouclier"))
         baseGear.set(rowId + "equip-on", 1);
       if (props.includes("dm-1m") || props.includes("dm-2m"))
@@ -9706,12 +10182,18 @@ on("clicked:helpdoc-btn", function() {
 
 /**
  * Return CSS style for chat menu buttons
- * @param {string} color - PC color name
+ * @param {string|string[]} color - PC color name | [ bckg, text ] color array
+ * @param {object} [font={}] - font properties object
  * @returns {string}
  */
-function menuButton(color) {
+function menuButton(color, font = {}) {
   color = color || "default";
-  const [ backColor, textColor ] = SWData.COLORS[color];
+  font = { size: "0.9em", weight: "bold", ...font };
+  let backColor, textColor;
+  if (Array.isArray(color))
+    [ backColor, textColor = "white" ] = color;
+  else
+    [ backColor, textColor ] = SWData.COLORS[color];
   return "\" style=\"" + [
     "border: none",
     "border-radius: 3px",
@@ -9719,8 +10201,8 @@ function menuButton(color) {
     `color: ${textColor}`,
     "padding: 2px",
     "margin: 1px",
-    "font-size: 0.9em",
-    "font-weight: bold"
+    `font-size: ${font.size}`,
+    `font-weight: ${font.weight}`
   ].join("; ");
 }
 
@@ -9743,6 +10225,30 @@ on("clicked:caract_menu-btn", function () {
     ], {
       template: "custom",
       whisper: "gm"
+    });
+  });
+});
+
+/**
+ * Display conditions menu
+ */
+on("clicked:etats_menu-btn", function() {
+  const allConditions = SWData.PC.CONDITIONS.map(c => `condition_${c.name}`);
+  getAttrs([ "character_name", "couleur_pj", "notif_conditions", ...allConditions ], function (values) {
+    const charName = strval(values.character_name);
+    const whisper = intval(values.notif_conditions) === 2 ? "gm" : "";
+    const chatMsg = SWData.PC.CONDITIONS.map(condition => {
+      const color = boolval(values[`condition_${condition.name}`]) ? [ "#dc3545" ] : [ "#198754" ];
+      return `${condition.label}=[⚪](~${charName}|${condition.name}-icon${menuButton(color)})`;
+    });
+    sendChatMsg([
+      `title=${charName}`,
+      "subtitle=Etats préjudiciables",
+      "color=" + strval(values.couleur_pj),
+      ...chatMsg
+    ], {
+      whisper,
+      template: "custom"
     });
   });
 });
@@ -10146,7 +10652,10 @@ function setCompanion(values) {
     return;
 
   // build the list of values to retrieve
-  let askValues;
+  let askValues = 
+    `{{mounted=[[@{${companionOf}|en_selle}]] }} ` +
+    `{{rider=[[@{${companionOf}|rang_cavalier}]] }} ` +
+    `{{defowner=[[@{${companionOf}|def}]] }} `
   SWData.COMPANIONS.forEach(attr => {
     let expr = strval(values[`comp_${attr}`]);
     if (expr === "")
@@ -10164,6 +10673,9 @@ function setCompanion(values) {
   if (askValues) {
     startRoll("!" + askValues, values => {
       const updates = new Map();
+      const mounted = boolval(values.results.mounted.result);
+      const rider = intval(values.results.rider.result);
+      const defOwner = intval(values.results.defowner.result);
       SWData.COMPANIONS.forEach(attr => {
         if (values.results[attr]) {
           const value = values.results[attr].result;
@@ -10172,6 +10684,8 @@ function setCompanion(values) {
           updates.set(attr, value);
         }
       });
+      if (mounted && rider >= 2 && defOwner > intval(updates.get("def")))
+        updates.set("def", defOwner);
       if (updates.size > 0)
         setAttrs(Object.fromEntries(updates));
     });
@@ -10578,14 +11092,55 @@ function migrateCOF1Sheet(sheetType, verCOF1) {
 }
 
 /**
+ * Update migration log
+ * @param {string} log - current migration log
+ * @param {string} newVer - new version label
+ * @param {string} text - migration text to add
+ * @returns {string}
+ */
+function migrateLog(log, newVer, text) {
+  text = `${new Date().toLocaleString() } - v${newVer}: ${text}`;
+  return text + "\n" + log;
+}
+
+/**
+ * Migrate to Version 1.3.0
+ * @param {string} sheetType - type of sheet
+ * @param {object} curVer - semantic version parts
+ * @returns {void}
+ * 
+ * Update xxx_base caracteristics attributes with xxx values
+ */
+function migrateSheetToV1_3(sheetType, curVer = { major: 1, minor: 2, patch: 0 }) {
+  if (sheetType !== SWData.SHEET_TYPE.PC)
+    return;
+  
+  getAttrs([ "migration", ...SWData.PC.ABILITIES.map(a => shorten(a)) ], function(values) {
+    let migration = strval(values.migration);
+    delete values.migration;
+    const updates = new Map();
+    if (curVer.major = 1 && curVer.minor === 2 && curVer.patch < 1) {
+      Object.keys(values).forEach(attr => {
+        const base = `${attr}_base`;
+        updates.set(base, intval(values[attr]));
+        migration = migrateLog(migration, "1.3.0", `${base} = ${ updates.get(base) }`)
+      });
+      updates.set("migration", migration);
+    }
+    if (updates.size > 0)
+      setAttrs(Object.fromEntries(updates));
+  });
+}
+
+/**
  * Apply sheet migrations
  * @param {string} sheetType - character sheet type
  * @param {object} curVer - current version
  * @returns {void}
  */
 function migrateSheet(sheetType, curVer) {
-  if (curVer.major === 1 && curVer.minor < 1)
-    //migrateSheetVMaj_min(sheetType);
+  if (curVer.major === 1 && curVer.minor < 3)
+    migrateSheetToV1_3(sheetType, curVer);
   
   return;
 }
@@ -10699,7 +11254,8 @@ function loadAttackLists(section) {
 */
 function parseSemVer(version) {
   version += ".0.0";
-  if (version.toLowerCase().startsWith("v")) version = version.slice(1);
+  if (version.toLowerCase().startsWith("v")) 
+    version = version.slice(1);
   const [ major, minor, patch ] = version.split(".");
   return { 
     major: intval(major),
@@ -10796,9 +11352,11 @@ on("sheet:opened", function() {
  * Run charactermancer
  */
 on("clicked:charmancer-btn", function() {
-  deleteCharmancerData([], function() {
-    startCharactermancer("main");
-  });
+  startCharactermancer("main");
+});
+
+on("page:main", function() {
+  deleteCharmancerData();
 });
 
 /**
@@ -10901,8 +11459,8 @@ on("mancerfinish:finish", function(mancerData) {
   // abilities
   const type = strval(values.type);
   if (type !== "") {
-    SWData.PC.ABILITIES.map(a => shorten(a)).forEach(short => {
-      updates[short] = abilityValue(short, values);
+    SWData.PC.ABILITIES.map(a => shorten(a) + "_base").forEach(base => {
+      updates[base] = abilityValue(base, values);
     });
   }
 
