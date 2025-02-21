@@ -1,23 +1,27 @@
 # Chroniques Oubliées Fantasy 2ème édition
 
-## Installation en fiche _Custom_
-
-Pour installer cette fiche de personnage sur Roll20 :
-* Vous devez avoir un compte payant __Pro__.
-* Créez une partie en sélectionnant le choix _Custom_ dans les paramètres de jeu.
-* Copiez le code des fichiers <kbd>cof2e.html</kbd> et <kbd>cof2e.css</kbd> dans les onglets correspondants
-* Ne cochez __pas__ la case <kbd>Legacy</kbd>
-* Sauvegardez les paramètres.
-
 ## Utilisation
 
 Consultez la [documentation](https://stephaned68.github.io/COF2e/)
 
 ## Version courante
 
-v1.2.0 [Screenshot](cof2e.png)
+v1.3.0 [Screenshot](cof2e.png)
 
 ## Notes de version
+
+### Version _1.3.0_ (2025-02-??)
+
+- Ajout de buffs aux caractéristiques pris en compte dans les attributes dérivés
+- Ajout d'un contrôle sur le niveau minimum requis pour les rangs de capacités
+- Ajout d'une case "en selle" (pour gestion de la voie du cavalier)
+- Affichage optionnel d'un bouton Chance dans les jets de caracs, d'attaques et de capacités
+- Ajout d'un menu de chat pour les états préjudiciables
+- Prise en compte de l'état Immobilisé pour les jets d'attaque avec dé malus
+- Ajout de toutes les armes et armures dans la liste des équipements reconnus. La mise en correspondance est faite en ignorant les majuscules/minuscules et accents
+- Ajout de 4 listes d'actions sur l'onglet Script des fiches de PJ et PNJ.
+- Ajout d'un onglet Equipement simplifié sur la fiche de PNJ
+- Correction d'un bug dans l'appel du _Persomancien_
 
 ### Version _1.2.0_ (2025-02-04)
 

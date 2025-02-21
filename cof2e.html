@@ -1,9 +1,9 @@
 <div class="cofmain">
 
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.2.01">
+  <input type="hidden" name="attr_verfdp" value="1.2.02">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.2.01">
+  <input type="hidden" name="attr_version" value="1.2.02">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
 
@@ -67,6 +67,13 @@
 
   <!-- Repeating labels -->
   <input type="hidden" name="attr_max_attack_label" value="">
+  <input type="hidden" name="attr_max_actions1_label" value="">
+  <input type="hidden" name="attr_max_actions2_label" value="">
+  <input type="hidden" name="attr_max_actions3_label" value="">
+  <input type="hidden" name="attr_max_actions4_label" value="">
+
+  <!-- Charmancer
+  <input type="hidden" name="attr_charmancer" value=""> -->
 
   <!-- Entête : Logo, Avatar, Identité -->
   <div class="heading">
@@ -75,7 +82,7 @@
     <div>
       <img
         class="logo"
-        title="Version 1.2.0 - 04/02/2025"
+        title="Version 1.3.0 - ??/02/2025"
         src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cof2e_logo.jpg"
       />
     </div>
@@ -769,7 +776,6 @@
                 <span class="img-btn">l</span>
               </button>
             </div>
-            <input type="hidden" class="has-conditions" name="attr_has_conditions" value="0">
             <div class="bordered centered">
               <input type="hidden" class="condition-affaibli" name="attr_condition_affaibli" value="0">
               <button
@@ -1001,7 +1007,7 @@
             <div class="bordered">
               <div class="d-flex d-flex-middle">
                 <input type="hidden" name="attr_pc_max" value="0">
-                <input type="number" name="attr_pc" title="@{pc} PC courants" value="0">
+                <input type="number" class="two-digits" name="attr_pc" title="@{pc} PC courants" value="0">
                 &nbsp;/&nbsp;
                 <span name="attr_pc_max" title="@{pc_max} PC maximum"></span>
                 &nbsp;=&nbsp;
@@ -1010,6 +1016,8 @@
                 <span name="attr_cha" title="Score de CHArisme"></span>
                 &nbsp;+&nbsp;
                 <span name="attr_pc_buff" title="@{pc_buff} Bonus divers"></span>
+                <input type="hidden" name="attr_double_pc">
+                &nbsp;<span name="attr_double_pc"></span>
               </div>
             </div>
           </div>
@@ -4351,91 +4359,115 @@
                 <input type="checkbox" name="attr_cfg_pts_capas" value="1">
                 <span>Contrôle des points de capacités</span>
               </li>
-              <li class="config-check">
-                <input type="checkbox" name="attr_cfg_bouclier_malus" value="1">
-                <span>Utiliser le malus de bouclier</span>
-              </li>
+            </ul>
+
+            <h4>Affichage</h4>
+            <ul>
               <li class="config-check">
                 <input type="checkbox" name="attr_voies_789" value="1">
-                <span>Afficher les voies 7-8-9</span>
+                <span>Voies 7-8-9</span>
               </li>
               <li class="config-check">
                 <input type="checkbox" name="attr_use_skills" value="1">
-                <span>Afficher les compétences</span>
+                <span>Compétences</span>
               </li>
             </ul>
 
-            <h4>Forcer les valeurs maxi.</h4>
-            <ul>
-              <li>
-                <input type="checkbox" name="attr_pvmax_force" title="@{pvmax_force}">
-                <span>PV :&nbsp;</span>
-                <input type="number" class="two-digits" name="attr_pv_max" title="@{pv_max}">
-              </li>
-              <li>
-                <input type="checkbox" name="attr_drmax_force" title="@{drmax_force}">
-                <span>DR :&nbsp;</span>
-                <input type="number" class="two-digits" name="attr_dr_max" title="@{dr_max}">
-              </li>
-              <li>
-                <input type="checkbox" name="attr_pcmax_force" title="@{pcmax_force}">
-                <span>PC :&nbsp;</span>
-                <input type="number" class="two-digits" name="attr_pc_max" title="@{pc_max}">
-              </li>
-              <li>
-                <input type="checkbox" name="attr_pmmax_force" title="@{pmmax_force}">
-                <span>PM :&nbsp;</span>
-                <input type="number" class="two-digits" name="attr_pm_max" title="@{pm_max}">
-              </li>
-            </ul>
+            <details>
+              <summary>
+                <h4>Règles optionnelles</h4>
+              </summary>
+              <ul>
+                <li class="config-check" title="Atlas & règles optionnelles, p. 160">
+                  <input type="checkbox" name="attr_cfg_init_variable" value="1d6!">
+                  <span>Initiative variable</span>
+                </li>
+                <li class="config-check" title="Atlas & règles optionnelles, p. 153">
+                  <input type="checkbox" name="attr_cfg_init_agi" value="1">
+                  <span>Initiative + AGI</span>
+                </li>
+                <li class="config-check" title="Atlas & règles optionnelles, p. 157">
+                  <input type="checkbox" name="attr_cfg_use_encmb" value="1">
+                  <span>Encombrement&nbsp;</span>
+                </li>
+                <li class="config-check" title="Atlas & règles optionnelles, p. 161">
+                  <input type="checkbox" name="attr_cfg_crit_diff" value="1">
+                  <span>Critiques différenciés&nbsp;</span>
+                </li>
+                <li class="config-check" title="Atlas & règles optionnelles, p. 159">
+                  <input type="checkbox" name="attr_cfg_pc_var" value="1">
+                  <span>Points de chance variables&nbsp;</span>
+                </li>
+                <li class="config-check">
+                  <input type="checkbox" name="attr_cfg_bouclier_malus" value="1">
+                  <span>Utiliser le malus de bouclier</span>
+                </li>
+              </ul>
+            </details>
 
-            <h4>Règles optionnelles</h4>
-            <ul>
-              <li class="config-check" title="Atlas & règles optionnelles, p. 160">
-                <input type="checkbox" name="attr_cfg_init_variable" value="1d6!">
-                <span>Initiative variable</span>
-              </li>
-              <li class="config-check" title="Atlas & règles optionnelles, p. 153">
-                <input type="checkbox" name="attr_cfg_init_agi" value="1">
-                <span>Initiative + AGI</span>
-              </li>
-              <li class="config-check" title="Atlas & règles optionnelles, p. 157">
-                <input type="checkbox" name="attr_cfg_use_encmb" value="1">
-                <span>Encombrement&nbsp;</span>
-              </li>
-              <li class="config-check" title="Atlas & règles optionnelles, p. 161">
-                <input type="checkbox" name="attr_cfg_crit_diff" value="1">
-                <span>Critiques différenciés&nbsp;</span>
-              </li>
-            </ul>
-
-            <h4><input type="checkbox" name="attr_cfg_highfan" value="1">&nbsp;High fantasy</h4>
-            <ul>
-              <li class="config-check" title="Atlas & règles optionnelles, p. 184">
-                <input type="checkbox" name="attr_cfg_use_epic" value="1">
-                <span>Progression épique&nbsp;</span>
-              </li>
-              <li class="config-check" title="Atlas & règles optionnelles, p. 183">
-                <input type="checkbox" name="attr_cfg_use_drniv" value="1">
-                <span>Récupération + niveau&nbsp;</span>
-              </li>
-              <li class="config-check" title="Atlas & règles optionnelles, p. 191">
-                <input type="checkbox" name="attr_cfg_use_mana" value="1">
-                <span>Plus de Mana&nbsp;</span>
-              </li>
-            </ul>
+            <details>
+              <summary>
+                <h4><input type="checkbox" name="attr_cfg_highfan" value="1">&nbsp;High fantasy</h4>
+              </summary>
+              <ul>
+                <li class="config-check" title="Atlas & règles optionnelles, p. 184">
+                  <input type="checkbox" name="attr_cfg_use_epic" value="1">
+                  <span>Progression épique&nbsp;</span>
+                </li>
+                <li class="config-check" title="Atlas & règles optionnelles, p. 183">
+                  <input type="checkbox" name="attr_cfg_use_drniv" value="1">
+                  <span>Récupération + niveau&nbsp;</span>
+                </li>
+                <li class="config-check" title="Atlas & règles optionnelles, p. 191">
+                  <input type="checkbox" name="attr_cfg_use_mana" value="1">
+                  <span>Plus de Mana&nbsp;</span>
+                </li>
+              </ul>
+            </details>
   
-            <h4><input type="checkbox" name="attr_cfg_lowfan" value="1">&nbsp;Low Fantasy</h4>
-            <ul>
-              <li class="config-check" title="Atlas & règles optionnelles, p. 193">
-                <input type="checkbox" name="attr_cfg_use_capped6" value="1">
-                <span>Progression limitée&nbsp;</span>
-              </li>
-              <li class="config-check" title="Atlas & règles optionnelles, p. 193">
-                <input type="checkbox" name="attr_cfg_use_dronly" value="1">
-                <span>Récupération - niveau&nbsp;</span>
-              </li>
-            </ul>
+            <details>
+              <summary>
+                <h4><input type="checkbox" name="attr_cfg_lowfan" value="1">&nbsp;Low Fantasy</h4>
+              </summary>
+              <ul>
+                <li class="config-check" title="Atlas & règles optionnelles, p. 193">
+                  <input type="checkbox" name="attr_cfg_use_capped6" value="1">
+                  <span>Progression limitée&nbsp;</span>
+                </li>
+                <li class="config-check" title="Atlas & règles optionnelles, p. 193">
+                  <input type="checkbox" name="attr_cfg_use_dronly" value="1">
+                  <span>Récupération - niveau&nbsp;</span>
+                </li>
+              </ul>
+            </details>
+            
+            <details>
+              <summary>
+                <h4>Forcer les valeurs maxi.</h4>
+              </summary>
+              <ul>
+                <li>
+                  <input type="checkbox" name="attr_pvmax_force" title="@{pvmax_force}">
+                  <span>PV</span>:
+                  <input type="number" class="two-digits" name="attr_pv_max" title="@{pv_max}">
+                </li>
+                <li>
+                  <input type="checkbox" name="attr_drmax_force" title="@{drmax_force}">
+                  <span>DR</span>:
+                  <input type="number" class="two-digits" name="attr_dr_max" title="@{dr_max}">
+                </li>
+                <li>
+                  <input type="checkbox" name="attr_pcmax_force" title="@{pcmax_force}">
+                  <span>PC</span>:
+                  <input type="number" class="two-digits" name="attr_pc_max" title="@{pc_max}">
+                </li>
+                <li>
+                  <input type="checkbox" name="attr_pmmax_force" title="@{pmmax_force}">
+                  <span>PM</span>:
+                  <input type="number" class="two-digits" name="attr_pm_max" title="@{pm_max}">
+                </li>
+              </ul>
+            </details>
 
           </div>
 
@@ -4630,11 +4662,113 @@
                 </li>
               </ul>
 
+              <h4>Listes d'actions</h4>
+
+              <div class="pc-actions">
+               
+                <details>
+                  <summary class="block-title">
+                    <span name="attr_liste_actions_1"></span>
+                  </summary>
+                  <input class="list-name" type="text" name="attr_liste_actions_1" title="@{liste_actions_1}" value="Liste d'actions n°1">
+                  <fieldset class="repeating_actions1">
+                    <div class="d-flex">
+                      <input type="checkbox" name="attr_action-on" title="@{action-on} Action disponible" value="1" checked>
+                      <input type="text" name="attr_action-nom" title="@{action-nom}" placeholder="Nom de l'action">
+                      <select class="select-sm" name="attr_action-type" title="@{action-type} Type G/M/A/L">
+                        <option value="" selected>n/a</option>
+                        <option value="G">(G)</option>
+                        <option value="M">(M)</option>
+                        <option value="A">(A)</option>
+                        <option value="L">(L)</option>
+                      </select>
+                    </div>
+                    <textarea class="one-row" name="attr_action-cmd" title="@{action-cmd}" placeholder="Commande de script"></textarea>
+                  </fieldset>
+                </details>
+
+              </div>
+
+              <div class="pc-actions">
+               
+                <details>
+                  <summary class="block-title">
+                    <span name="attr_liste_actions_2"></span>
+                  </summary>
+                  <input class="list-name" type="text" name="attr_liste_actions_2" title="@{liste_actions_2}" value="Liste d'actions n°2">
+                  <fieldset class="repeating_actions2">
+                    <div class="d-flex">
+                      <input type="checkbox" name="attr_action-on" title="@{action-on} Action disponible" value="1" checked>
+                      <input type="text" name="attr_action-nom" title="@{action-nom}" placeholder="Nom de l'action">
+                      <select class="select-sm" name="attr_action-type" title="@{action-type} Type G/M/A/L">
+                        <option value="" selected>n/a</option>
+                        <option value="G">(G)</option>
+                        <option value="M">(M)</option>
+                        <option value="A">(A)</option>
+                        <option value="L">(L)</option>
+                      </select>
+                    </div>
+                    <textarea class="one-row" name="attr_action-cmd" title="@{action-cmd}" placeholder="Commande de script"></textarea>
+                  </fieldset>
+                </details>
+
+              </div>
+
+              <div class="pc-actions">
+               
+                <details>
+                  <summary class="block-title">
+                    <span name="attr_liste_actions_3"></span>
+                  </summary>
+                  <input class="list-name" type="text" name="attr_liste_actions_3" title="@{liste_actions_3}" value="Liste d'actions n°3">
+                  <fieldset class="repeating_actions3">
+                    <div class="d-flex">
+                      <input type="checkbox" name="attr_action-on" title="@{action-on} Action disponible" value="1" checked>
+                      <input type="text" name="attr_action-nom" title="@{action-nom}" placeholder="Nom de l'action">
+                      <select class="select-sm" name="attr_action-type" title="@{action-type} Type G/M/A/L">
+                        <option value="" selected>n/a</option>
+                        <option value="G">(G)</option>
+                        <option value="M">(M)</option>
+                        <option value="A">(A)</option>
+                        <option value="L">(L)</option>
+                      </select>
+                    </div>
+                    <textarea class="one-row" name="attr_action-cmd" title="@{action-cmd}" placeholder="Commande de script"></textarea>
+                  </fieldset>
+                </details>
+
+              </div>
+
+              <div class="pc-actions">
+               
+                <details>
+                  <summary class="block-title">
+                    <span name="attr_liste_actions_4"></span>
+                  </summary>
+                  <input class="list-name" type="text" name="attr_liste_actions_4" title="@{liste_actions_4}" value="Liste d'actions n°4">
+                  <fieldset class="repeating_actions4">
+                    <div class="d-flex">
+                      <input type="checkbox" name="attr_action-on" title="@{action-on} Action disponible" value="1" checked>
+                      <input type="text" name="attr_action-nom" title="@{action-nom}" placeholder="Nom de l'action">
+                      <select class="select-sm" name="attr_action-type" title="@{action-type} Type G/M/A/L">
+                        <option value="" selected>n/a</option>
+                        <option value="G">(G)</option>
+                        <option value="M">(M)</option>
+                        <option value="A">(A)</option>
+                        <option value="L">(L)</option>
+                      </select>
+                    </div>
+                    <textarea class="one-row" name="attr_action-cmd" title="@{action-cmd}" placeholder="Commande de script"></textarea>
+                  </fieldset>
+                </details>
+
+              </div>
+
             </div>
   
             <div class="sheet-col">
               <h4>Prédicats</h4>
-              <textarea name="attr_predicats_script" title="@{predicats_script} Prédicats" value=""></textarea>
+              <textarea class="x-large" name="attr_predicats_script" title="@{predicats_script} Prédicats" value=""></textarea>
             </div>
   
           </div>
@@ -4656,6 +4790,29 @@
           <div class="sheet-col">
 
             <ul>
+
+              <li>
+                <details>
+                  <summary>
+                    <strong>Version 1.3.0</strong> (2025-02-??)
+                  </summary>
+                  <ul>
+                    <li>Ajout de buffs aux caractéristiques pris en compte dans les attributes dérivés</li>
+                    <li>Ajout d'un contrôle sur le niveau minimum requis pour les rangs de capacités</li>
+                    <li>Ajout d'une case "en selle" (pour gestion de la voie du cavalier)</li>
+                    <li>Affichage optionnel d'un bouton Chance dans tous les jets de D20</li>
+                    <li>Ajout d'un menu de chat pour les états préjudiciables</li>
+                    <li>Prise en compte de l'état Immobilisé pour les jets d'attaque avec dé malus</li>
+                    <li>
+                      Ajout de toutes les armes et armures dans la liste des équipements reconnus
+                      La mise en correspondance est faite en ignorant les majuscules/minuscules et accents
+                    </li>
+                    <li>Ajout de 4 listes d'actions sur l'onglet Script des fiches de PJ et PNJ</li>
+                    <li>Ajout d'un onglet Equipement simplifié sur la fiche de PNJ</li>
+                    <li>Correction d'un bug sur l'appel du Persomancien</li>
+                  </ul>
+                </details>
+              </li>
 
               <li>
                 <details>
@@ -4694,7 +4851,7 @@
                     <li>Rangs 1 des voies 1,2 & 3 cochés par défaut</li>
                     <li>Ajout d'une option de calcul automatique des PV max</li>
                     <li>Ajout de la gestion de compagnons</li>
-                    <li>Ajout d'options d'attaque pour script COFantasy2</li>
+                    <li>Ajout d'options d'attaque pour le script COFantasy2</li>
                     <li>Remplacement import profil en JSON par import de voie depuis PDF</li>
                     <li>Ajout d'un bouton de génération de l'équipement de base du profil</li>
                     <li>Ajout de la gestion de l'AGI/CON maximum selon l'armure</li>
@@ -4721,10 +4878,9 @@
 
           <div class="sheet-col">
 
+            <h4>Migrations</h4>
             <details>
-              <summary>
-                Migrations
-              </summary>
+              <summary>Détail des mises à jour</summary>
               <textarea class="large migration" name="attr_migration"></textarea>
             </details>
 
@@ -5302,11 +5458,114 @@
                 </li>
               </ul>
 
+              
+              <h4>Listes d'actions</h4>
+
+              <div class="npc-actions">
+               
+                <details>
+                  <summary class="block-title">
+                    <span name="attr_liste_actions_1"></span>
+                  </summary>
+                  <input class="list-name" type="text" name="attr_liste_actions_1" title="@{liste_actions_1}" value="Liste d'actions n°1">
+                  <fieldset class="repeating_actions1">
+                    <div class="d-flex">
+                      <input type="checkbox" name="attr_action-on" title="@{action-on} Action disponible" value="1" checked>
+                      <input type="text" name="attr_action-nom" title="@{action-nom}" placeholder="Nom de l'action">
+                      <select class="select-sm" name="attr_action-type" title="@{action-type} Type G/M/A/L">
+                        <option value="" selected>n/a</option>
+                        <option value="G">(G)</option>
+                        <option value="M">(M)</option>
+                        <option value="A">(A)</option>
+                        <option value="L">(L)</option>
+                      </select>
+                    </div>
+                    <textarea class="one-row" name="attr_action-cmd" title="@{action-cmd}" placeholder="Commande de script"></textarea>
+                  </fieldset>
+                </details>
+
+              </div>
+
+              <div class="npc-actions">
+               
+                <details>
+                  <summary class="block-title">
+                    <span name="attr_liste_actions_2"></span>
+                  </summary>
+                  <input class="list-name" type="text" name="attr_liste_actions_2" title="@{liste_actions_2}" value="Liste d'actions n°2">
+                  <fieldset class="repeating_actions2">
+                    <div class="d-flex">
+                      <input type="checkbox" name="attr_action-on" title="@{action-on} Action disponible" value="1" checked>
+                      <input type="text" name="attr_action-nom" title="@{action-nom}" placeholder="Nom de l'action">
+                      <select class="select-sm" name="attr_action-type" title="@{action-type} Type G/M/A/L">
+                        <option value="" selected>n/a</option>
+                        <option value="G">(G)</option>
+                        <option value="M">(M)</option>
+                        <option value="A">(A)</option>
+                        <option value="L">(L)</option>
+                      </select>
+                    </div>
+                    <textarea class="one-row" name="attr_action-cmd" title="@{action-cmd}" placeholder="Commande de script"></textarea>
+                  </fieldset>
+                </details>
+
+              </div>
+
+              <div class="npc-actions">
+               
+                <details>
+                  <summary class="block-title">
+                    <span name="attr_liste_actions_3"></span>
+                  </summary>
+                  <input class="list-name" type="text" name="attr_liste_actions_3" title="@{liste_actions_3}" value="Liste d'actions n°3">
+                  <fieldset class="repeating_actions3">
+                    <div class="d-flex">
+                      <input type="checkbox" name="attr_action-on" title="@{action-on} Action disponible" value="1" checked>
+                      <input type="text" name="attr_action-nom" title="@{action-nom}" placeholder="Nom de l'action">
+                      <select class="select-sm" name="attr_action-type" title="@{action-type} Type G/M/A/L">
+                        <option value="" selected>n/a</option>
+                        <option value="G">(G)</option>
+                        <option value="M">(M)</option>
+                        <option value="A">(A)</option>
+                        <option value="L">(L)</option>
+                      </select>
+                    </div>
+                    <textarea class="one-row" name="attr_action-cmd" title="@{action-cmd}" placeholder="Commande de script"></textarea>
+                  </fieldset>
+                </details>
+
+              </div>
+
+              <div class="npc-actions">
+               
+                <details>
+                  <summary class="block-title">
+                    <span name="attr_liste_actions_4"></span>
+                  </summary>
+                  <input class="list-name" type="text" name="attr_liste_actions_4" title="@{liste_actions_4}" value="Liste d'actions n°4">
+                  <fieldset class="repeating_actions4">
+                    <div class="d-flex">
+                      <input type="checkbox" name="attr_action-on" title="@{action-on} Action disponible" value="1" checked>
+                      <input type="text" name="attr_action-nom" title="@{action-nom}" placeholder="Nom de l'action">
+                      <select class="select-sm" name="attr_action-type" title="@{action-type} Type G/M/A/L">
+                        <option value="" selected>n/a</option>
+                        <option value="G">(G)</option>
+                        <option value="M">(M)</option>
+                        <option value="A">(A)</option>
+                        <option value="L">(L)</option>
+                      </select>
+                    </div>
+                    <textarea class="one-row" name="attr_action-cmd" title="@{action-cmd}" placeholder="Commande de script"></textarea>
+                  </fieldset>
+                </details>
+
+              </div>
+
             </div>
   
             <div class="sheet-col">
               <h4>Prédicats</h4>
-              <textarea name="attr_predicats_script" title="@{predicats_script} Prédicats" value=""></textarea>
+              <textarea class="x-large" name="attr_predicats_script" title="@{predicats_script} Prédicats" value=""></textarea>
             </div>
   
           </div>
@@ -6098,7 +6357,7 @@ const SWData = {
         },
       ],
     },
-    ABILITIES: [ 
+    STATS: [ 
       "agilité",
       "constitution",
       "force",
@@ -6126,7 +6385,7 @@ const SWData = {
         "armure", "armure_eqp",
         "bouclier", "bouclier_eqp",
         "agi", "con", "def_car_bonus", "def_car_max",
-        "capabilities",
+        "rangs_voies", "noms_voies",
         "def_cond",
         "def_buff",
         "def_action"
@@ -6257,11 +6516,6 @@ const SWData = {
         ]
       }
     ],
-    CAPABILITIES: [
-      "peaudepierre",
-      "cavalierémérite",
-      "monturefantastique"
-    ],
     SKILLS: [
       {
         name: "acrobaties",
@@ -6381,22 +6635,20 @@ const SWData = {
     "pa",
     "pc",
   ],
-  GEARS: {
-    props: [
-      "dm-1m",
-      "dm-2m",
-      "type-dm",
-      "portee",
-      "critique",
-      "bonus-def",
-      "armure",
-      "armure-malus",
-      "bouclier",
-      "bouclier-malus",
-      "casque",
-      "casque-malus",
-    ]
-  },
+  GEARPROPS: [
+    "dm-1m",
+    "dm-2m",
+    "type-dm",
+    "portee",
+    "critique",
+    "bonus-def",
+    "armure",
+    "armure-malus",
+    "bouclier",
+    "bouclier-malus",
+    "casque",
+    "casque-malus",
+  ],
   COMPANIONS: [
     "def",
     "pv_max",
@@ -6405,73 +6657,65 @@ const SWData = {
   ],
   GEARS: [
     {
-      name: "Pétoire",
+      name: "Bâton",
+      altname: "",
       props: [
-        "dm-1m: 1d10",
-        "portee: 20",
-        "type-dm: Perforants",
-      ]
-    },
-    {
-      name: "Epée longue",
-      props: [ 
-        "dm-1m: 1d8",
-        "type-dm: Tranchants",
-      ]
-    },
-    {
-      name: "Dague",
-      props: [ 
-        "dm-1m: 1d4",
-        "type-dm: Perforants",
-      ]
-    },
-    {
-      name: "Rapière",
-      props: [ 
-        "critique: 19",
-        "dm-1m: 1d6",
-        "type-dm: Perforants",
-      ]
-    },
-    {
-      name: "Arc court",
-      props: [ 
-        "dm-2m: 1d6",
-        "portee: 30",
-        "type-dm: Perforants",
-      ]
-    },
-    {
-      name: "Hache à deux mains",
-      props: [
-        "dm-2m: 2d6",
-        "type-dm: Tranchants",
-      ]
-    },
-    {
-      name: "Javelot",
-      props: [
-        "dm-1m: 1d6",
-        "type-dm: Perforants",
-      ]
-    },
-    {
-      name: "Lance de cavalerie",
-      props: [
-        "dm-1m: 2d6",
-        "type-dm: Perforants",
+        "dm-2m: 1d4",
+        "type-dm: Contondants",
       ]
     },
     {
       name: "Bâton ferré",
+      altname: "",
       props: [
         "dm-2m: 1d6",
         "type-dm: Contondants",
       ]
     },
     {
+      name: "Dague",
+      altname: "",
+      props: [ 
+        "dm-1m: 1d4",
+        "type-dm: Perforants",
+      ]
+    },
+    {
+      name: "Epée à deux mains",
+      altname: "epee a 2 mains,epee 2m",
+      props: [ 
+        "dm-2m: 2d6",
+        "type-dm: Tranchants",
+      ]
+    },
+    {
+      name: "Epée bâtarde",
+      altname: "",
+      props: [ 
+        "dm-1m: 1d8",
+        "dm-2m: 1d12",
+        "type-dm: Tranchants",
+      ]
+    },
+    {
+      name: "Epée courte",
+      altname: "",
+      props: [ 
+        "dm-1m: 1d6",
+        "type-dm: Perforants",
+      ]
+    },
+    {
+      name: "Epée longue",
+      altname: "",
+      props: [ 
+        "dm-1m: 1d8",
+        "type-dm: Tranchants",
+      ]
+    },
+    {
       name: "Epieu",
+      altname: "",
       props: [
         "dm-1m: 1d6",
         "dm-2m: 1d10",
@@ -6479,14 +6723,237 @@ const SWData = {
       ]
     },
     {
-      name: "Marteau de guerre",
+      name: "Fléau",
+      altname: "",
       props: [
         "dm-1m: 1d6",
         "type-dm: Contondants",
       ]
     },
     {
+      name: "Fléau à deux mains",
+      altname: "fleau a 2m,fleau 2m",
+      props: [
+        "dm-2m: 1d10",
+        "type-dm: Contondants",
+      ]
+    },
+    {
+      name: "Gourdin",
+      altname: "",
+      props: [
+        "dm-1m: 1d4",
+        "type-dm: Contondants",
+      ]
+    },
+    {
+      name: "Hache",
+      altname: "",
+      props: [
+        "dm-1m: 1d8",
+        "type-dm: Tranchants",
+      ]
+    },
+    {
+      name: "Hache à deux mains",
+      altname: "hache a 2m,hache 2m",
+      props: [
+        "dm-2m: 2d6",
+        "type-dm: Tranchants",
+      ]
+    },
+    {
+      name: "Lance",
+      altname: "",
+      props: [
+        "dm-1m: 1d6",
+        "dm-2m: 1d10",
+        "type-dm: Perforants",
+      ]
+    },
+    {
+      name: "Lance de cavalerie",
+      altname: "",
+      props: [
+        "dm-1m: 2d6",
+        "type-dm: Perforants",
+      ]
+    },
+    {
+      name: "Marteau",
+      altname: "marteau de guerre",
+      props: [
+        "dm-1m: 1d6",
+        "type-dm: Contondants",
+      ]
+    },
+    {
+      name: "Masse",
+      altname: "",
+      props: [
+        "dm-1m: 1d6",
+        "type-dm: Contondants",
+      ]
+    },
+    {
+      name: "Pique",
+      altname: "",
+      props: [
+        "dm-2m: 1d10",
+        "type-dm: Perforants",
+      ]
+    },
+    {
+      name: "Rapière",
+      altname: "",
+      props: [ 
+        "critique: 19",
+        "dm-1m: 1d6",
+        "type-dm: Perforants",
+      ]
+    },
+    {
+      name: "Stylet",
+      altname: "",
+      props: [ 
+        "dm-1m: 1d3",
+        "type-dm: Perforants",
+      ]
+    },
+    {
+      name: "Vivelame",
+      altname: "",
+      props: [ 
+        "critique: 19",
+        "dm-2m: 1d10",
+        "type-dm: Tranchants",
+      ]
+    },
+    {
+      name: "Arbalète de poing",
+      altname: "",
+      props: [
+        "dm-1m: 1d6",
+        "portee: 10",
+        "type-dm: Perforants",
+      ]
+    },
+    {
+      name: "Arbalète lègère",
+      altname: "",
+      props: [
+        "dm-2m: 2d4",
+        "portee: 30",
+        "type-dm: Perforants",
+      ]
+    },
+    {
+      name: "Arbalète lourde",
+      altname: "",
+      props: [
+        "dm-2m: 2d6",
+        "portee: 60",
+        "type-dm: Perforants",
+      ]
+    },
+    {
+      name: "Arc court",
+      altname: "",
+      props: [ 
+        "dm-2m: 1d6",
+        "portee: 30",
+        "type-dm: Perforants",
+      ]
+    },
+    {
+      name: "Arc long",
+      altname: "",
+      props: [ 
+        "dm-2m: 1d8",
+        "portee: 50",
+        "type-dm: Perforants",
+      ]
+    },
+    {
+      name: "Couteaux de lancer",
+      altname: "",
+      props: [ 
+        "dm-1m: 1d4",
+        "portee: 10",
+        "type-dm: Perforants",
+      ]
+    },
+    {
+      name: "Fronde",
+      altname: "",
+      props: [ 
+        "dm-1m: 1d4",
+        "portee: 20",
+        "type-dm: Contondants",
+      ]
+    },
+    {
+      name: "Hachette",
+      altname: "",
+      props: [
+        "dm-1m: 1d6",
+        "portee: 5",
+        "type-dm: Perforants",
+      ]
+    },
+    {
+      name: "Javelot",
+      altname: "",
+      props: [
+        "dm-1m: 1d6",
+        "type-dm: Perforants",
+      ]
+    },
+    {
+      name: "Lance-pierre",
+      altname: "lance-pierres,lance pierre,lance pierres",
+      props: [
+        "dm-1m: 1d3",
+        "type-dm: Contondants",
+      ]
+    },
+    {
+      name: "Pétoire",
+      altname: "",
+      props: [
+        "dm-1m: 1d10",
+        "portee: 20",
+        "type-dm: Perforants",
+      ]
+    },
+    {
+      name: "Mousquet",
+      altname: "",
+      props: [
+        "dm-2m: 2d6",
+        "portee: 50",
+        "type-dm: Perforants",
+      ]
+    },
+    {
+      name: "Tissus matelassés",
+      altname: "tissu matelasse",
+      props: [
+        "armure: +1",
+        "agi-max: +7",
+      ]
+    },
+    {
+      name: "Fourrures",
+      altname: "fourrure",
+      props: [
+        "armure: +1",
+        "agi-max: +7",
+      ]
+    },
+    {
       name: "Cuir simple",
+      altname: "armure de cuir",
       props: [
         "armure: +2",
         "agi-max: +6",
@@ -6494,6 +6961,7 @@ const SWData = {
     },
     {
       name: "Cuir renforcé",
+      altname: "armure de cuir renforce",
       props: [
         "armure: +3",
         "agi-max: +5",
@@ -6501,6 +6969,7 @@ const SWData = {
     },
     {
       name: "Chemise de mailles",
+      altname: "",
       props: [
         "armure: +4",
         "agi-max: +4",
@@ -6508,101 +6977,272 @@ const SWData = {
     },
     {
       name: "Cotte de mailles",
+      altname: "",
       props: [
         "armure: +5",
         "agi-max: +3",
       ]
     },
     {
+      name: "Armure de plaques",
+      altname: "demi-plaque,demi plaque",
+      props: [
+        "armure: +6",
+        "agi-max: +2",
+      ]
+    },
+    {
+      name: "Plaque complète",
+      altname: "harnois",
+      props: [
+        "armure: +7",
+        "agi-max: +1",
+      ]
+    },
+    {
       name: "Petit bouclier",
+      altname: "",
       props: [ 
         "bouclier: +1",
       ],
     },
     {
       name: "Grand bouclier",
+      altname: "",
       props: [
         "bouclier: +2",
       ],
     },
   ],
   PVPATH: [
-    { pv: 4, name: "artilleur" },
-    { pv: 4, name: "explosifs" },
-    { pv: 4, name: "mercenaire" },
-    { pv: 4, name: "pistolero"},
-    { pv: 4, name: "précision" },
-    { pv: 4, name: "escrime" }, 
-    { pv: 4, name: "musicien" },
-    { pv: 4, name: "saltimbanque"},
-    { pv: 4, name: "séduction" },
-    { pv: 4, name: "vagabond" },
-    { pv: 4, name: "archer" },
-    { pv: 4, name: "compagnon animal" },
-    { pv: 4, name: "survie" },
-    { pv: 4, name: "traqueur" },
-    { pv: 4, name: "combat à deux armes" },
-    { pv: 4, name: "assassin" },
-    { pv: 4, name: "aventurier" },
-    { pv: 4, name: "déplacement" },
-    { pv: 4, name: "roublard" },
-    { pv: 4, name: "spadassin" },
-    { pv: 5, name: "brute" },
-    { pv: 5, name: "pagne" },
-    { pv: 5, name: "pourfendeur" },
-    { pv: 5, name: "primitif" },
-    { pv: 5, name: "rage" },
-    { pv: 5, name: "cavalier" },
-    { pv: 5, name: "guerre" },
-    { pv: 5, name: "preux" },
-    { pv: 5, name: "meneur d'homme" },
-    { pv: 5, name: "noblesse" },
-    { pv: 5, name: "bouclier" },
-    { pv: 5, name: "combat" },
-    { pv: 5, name: "maître d'armes" },
-    { pv: 5, name: "résistance" },
-    { pv: 5, name: "soldat" },
-    { pv: 3, name: "mage" },
-    { pv: 3, name: "air" },
-    { pv: 3, name: "divination" },
-    { pv: 3, name: "envoûteur" },
-    { pv: 3, name: "illusions" },
-    { pv: 3, name: "invocation" },
-    { pv: 3, name: "artefacts" },
-    { pv: 3, name: "élixirs" },
-    { pv: 3, name: "métal" },
-    { pv: 3, name: "golem" },
-    { pv: 3, name: "runes" },
-    { pv: 3, name: "arcanes exhumés" },
-    { pv: 3, name: "arcanes oubliés" },
-    { pv: 3, name: "arcanes perdus" },
-    { pv: 3, name: "magie des arcanes" },
-    { pv: 3, name: "magie destructrice" },
-    { pv: 3, name: "magie élémentaire" },
-    { pv: 3, name: "magie protectrice" },
-    { pv: 3, name: "magie universelle" },
-    { pv: 3, name: "démon" },
-    { pv: 3, name: "mort" },
-    { pv: 3, name: "outre-tombe" },
-    { pv: 3, name: "sang" },
-    { pv: 3, name: "sombre magie" },
-    { pv: 3, name: "arcanes obscurs" },
-    { pv: 4, name: "animaux" },
-    { pv: 4, name: "fauve" },
-    { pv: 4, name: "nature" },
-    { pv: 4, name: "protecteur" },
-    { pv: 4, name: "végétaux" },
-    { pv: 4, name: "énergie vitale" },
-    { pv: 4, name: "maîtrise" },
-    { pv: 4, name: "médiation" },
-    { pv: 4, name: "poing" },
-    { pv: 4, name: "vent" },
-    { pv: 4, name: "foi" },
-    { pv: 4, name: "guerre sainte" },
-    { pv: 4, name: "prière" },
-    { pv: 4, name: "soins" },
-    { pv: 4, name: "spiritualité" },
-    { pv: 4, name: "corruption" },
+    { pv: 4, name: "artilleur", profile: "arquebusier",
+      abilities: [ "mecanismes", "arme a repetition", "tir de barrage", "canon double", "couleuvrine" ] 
+    },
+    { pv: 4, name: "explosifs", profile: "arquebusier",
+      abilities: [ "tir de grenaille", "demolition", "poudre puissante", "piege explosif", "boulet explosif" ]
+     },
+    { pv: 4, name: "mercenaire", profile: "arquebusier",
+      abilities: [ "pilier de bar", "mort ou vif", "combattant aguerri", "constitution heroique", "combat de masse" ]
+     },
+    { pv: 4, name: "pistolero", profile: "arquebusier",
+      abilities: [ "plus vite que son ombre", "ajuster le tir", "tir double", "agilite heroique", "as de la gachette" ]
+     },
+    { pv: 4, name: "precision", profile: "arquebusier",
+      abilities: [ "joli coup", "defaut dans la cuirasse", "tir precis", "tireur d'elite", "tir fatal" ]
+     },
+    { pv: 4, name: "escrime", profile: "barde",
+      abilities: [ "precision", "feinte", "intelligence du combat", "attaque flamboyante", "botte mortelle" ]
+     }, 
+    { pv: 4, name: "musicien", profile: "barde",
+      abilities: [ "chant des heros", "chant de reconfort", "attaque sonore", "zone de silence", "danse irresistible" ]
+     },
+    { pv: 4, name: "saltimbanque", profile: "barde",
+      abilities: [ "acrobate", "grace feline", "lanceur de couteau", "liberte d'action", "esquive acrobatique" ]
+     },
+    { pv: 4, name: "seduction", profile: "barde",
+      abilities: [ "charmant", "dentelle et rapiere", "baratineur de genie", "charisme heroique", "suggestion" ]
+     },
+    { pv: 4, name: "vagabond", profile: "barde",
+      abilities: [ "rumeurs et legendes", "eclectique", "attirail", "comprehension des langues", "deguisement" ]
+     },
+    { pv: 4, name: "archer", profile: "rodeur",
+      abilities: [ "archer emerite", "tir chirurgical", "dans le mille", "tir rapide", "fleche de mort" ]
+     },
+    { pv: 4, name: "compagnon animal", profile: "rodeur",
+      abilities: [ "le loup", "travail d'equipe", "lien empathique", "loup alpha", "tactique de meute" ]
+     },
+    { pv: 4, name: "survie", profile: "rodeur",
+      abilities: [ "survie", "nature nourriciere", "grand pas", "constitution heroique", "increvable" ]
+     },
+    { pv: 4, name: "traqueur", profile: "rodeur",
+      abilities: [ "eclaireur", "attaque eclair", "chasseur emerite", "perception heroique", "repli" ]
+     },
+    { pv: 4, name: "combat a deux armes", profile: "rodeur",
+      abilities: [ "attaque a suivre", "parade croisee", "droite - gauche", "combattant heroique", "double peine" ]
+     },
+    { pv: 4, name: "assassin", profile: "voleur",
+      abilities: [ "discretion", "attaque sournoise", "attaque par surprise", "disparition", "ouverture mortelle" ]
+     },
+    { pv: 4, name: "aventurier", profile: "voleur",
+      abilities: [ "baratin", "provocation", "souplesse du felin", "charisme heroique", "attaque paralysante" ]
+     },
+    { pv: 4, name: "deplacement", profile: "voleur",
+      abilities: [ "agile", "reflexes felins", "acrobaties", "agilite heroique", "esquive de la magie" ]
+     },
+    { pv: 4, name: "roublard", profile: "voleur",
+      abilities: [ "doigts agiles", "aux aguets", "feindre la mort", "expert en criminalite", "maitre du poison" ]
+     },
+    { pv: 4, name: "spadassin", profile: "voleur",
+      abilities: [ "attaque en finesse", "esquive fatale", "frappe chirurgicale", "ambidextrie", "botte secrete" ]
+     },
+    { pv: 5, name: "brute", profile: "barbare",
+      abilities: [ "argument de taille", "tour de force", "attaque brutale", "force heroique", "briseur d'os" ]
+     },
+    { pv: 5, name: "pagne", profile: "barbare",
+      abilities: [ "vigueur", "peau de pierre", "tatouages", "constitution heroique", "peau d'acier" ]
+     },
+    { pv: 5, name: "pourfendeur", profile: "barbare",
+      abilities: [ "reflexes eclair", "charge", "enchainement", "dechainement d'acier", "attaque tourbillon" ]
+     },
+    { pv: 5, name: "primitif", profile: "barbare",
+      abilities: [ "proche de la nature", "armure de vent", "vigilance", "resistance a la magie", "vitalite debordante" ]
+     },
+    { pv: 5, name: "rage", profile: "barbare",
+      abilities: [ "cri de guerre", "defier la mort", "rage du berserk", "meme pas mal", "furie du berserk" ]
+     },
+    { pv: 5, name: "cavalier", profile: "chevalier",
+      abilities: [ "fidele monture", "cavalier emerite", "charge", "monture magique", "monture fantastique" ]
+     },
+    { pv: 5, name: "guerre", profile: "chevalier",
+      abilities: [ "armure sur mesure", "encaisser un coup", "frappe du justicier", "force heroique", "mon armure est une arme" ]
+     },
+    { pv: 5, name: "preux", profile: "chevalier",
+      abilities: [ "ignorer la douleur", "piqures d'insectes", "laissez-le moi", "charisme heroique", "seul contre tous" ]
+     },
+    { pv: 5, name: "meneur d'homme", profile: "chevalier",
+      abilities: [ "sans peur", "intercepter", "exemplaire", "charge fantastique", "ordre de bataille" ]
+     },
+    { pv: 5, name: "noblesse", profile: "chevalier",
+      abilities: [ "eduquer", "ecuyer", "autorite naturelle", "massacrer la pietaille", "formation d'elite" ]
+     },
+    { pv: 5, name: "bouclier", profile: "guerrier",
+      abilities: [ "proteger un allie", "parer un coup", "defense au bouclier", "absorber un sort", "renvoi de sort" ]
+     },
+    { pv: 5, name: "combat", profile: "guerrier",
+      abilities: [ "vivacite", "manoeuvre", "attaque puissante", "double attaque", "attaque circulaire" ]
+     },
+    { pv: 5, name: "maitre d'armes", profile: "guerrier",
+      abilities: [ "arme de predilection", "science du critique", "specialisation", "attaque parfaite", "riposte" ]
+     },
+    { pv: 5, name: "resistance", profile: "guerrier",
+      abilities: [ "robustesse", "resilient", "armure lourde", "constitution heroique", "dur a cuire" ]
+     },
+    { pv: 5, name: "soldat", profile: "guerrier",
+      abilities: [ "teigneux", "prouesse", "piqure de rappel", "force heroique", "rempart" ]
+     },
+    { pv: 3, name: "mage", profile: "ensorceleur,forgesort,magicien,sorcier",
+      abilities: [ "occultisme", "maitrise de la magie", "tour de magie", "esprit superieur", "tempete de mana" ]
+     },
+    { pv: 3, name: "air", profile: "ensorceleur",
+      abilities: [ "murmures dans le vent", "sous tensiion", "telekinesie", "foudre", "forme etheree" ]
+     },
+    { pv: 3, name: "divination", profile: "ensorceleur",
+      abilities: [ "divination", "detection de l'invisible", "clairvoyance", "perception heroique", "prescience" ]
+     },
+    { pv: 3, name: "envouteur", profile: "ensorceleur",
+      abilities: [ "injonction", "sommeil", "confusion", "amitie", "domination" ]
+     },
+    { pv: 3, name: "illusions", profile: "ensorceleur",
+      abilities: [ "mirage", "image decalee", "sort illusoire", "imitation", "execution mentale" ]
+     },
+    { pv: 3, name: "invocation", profile: "ensorceleur",
+      abilities: [ "choc", "serviteur invisible", "arme de mana", "porte dimensionnelle", "mur de mana" ]
+     },
+    { pv: 3, name: "artefacts", profile: "forgesort",
+      abilities: [ "baton de mage", "ouverture - fermeture", "sac sans fond", "frappe des arcanes", "artefact etrange" ]
+     },
+    { pv: 3, name: "elixirs", profile: "forgesort",
+      abilities: [ "fortifiant", "feu gregeois", "elixir de guerison", "elixirs mineurs", "elixirs majeurs" ]
+     },
+    { pv: 3, name: "metal", profile: "forgesort",
+      abilities: [ "morsure de la forge", "metal brulant", "magnetisme", "metal hurlant", "endurant" ]
+     },
+    { pv: 3, name: "golem", profile: "forgesort",
+      abilities: [ "grosse tete", "golem", "protecteur", "statuette", "golem superieur" ]
+     },
+    { pv: 3, name: "runes", profile: "forgesort",
+      abilities: [ "runes de defense", "rune de puissance", "rune de protection", "rune d'energie", "rune de garde" ]
+     },
+    { pv: 3, name: "arcanes exhumes", profile: "ensorceleur,forgesort,magicien,sorcier",
+      abilities: [ "message magique", "toiles", "sphere de tenebres", "chien de garde", "nuage empoisonne" ]
+     },
+    { pv: 3, name: "arcanes oublies", profile: "ensorceleur,forgesort,magicien,sorcier",
+      abilities: [ "ventriloquie", "bouclier de mana", "corde magique", "retrecissement", "zone de magie nulle" ]
+     },
+    { pv: 3, name: "arcanes perdus", profile: "ensorceleur,forgesort,magicien,sorcier",
+      abilities: [ "disque de transport", "fuite rapide", "agrandissement", "inversion de la gravite", "metamorphose" ]
+     },
+    { pv: 3, name: "magie des arcanes", profile: "magicien",
+      abilities: [ "projectile de mana", "levitation", "forme gazeuse", "acceleration", "desintegration" ]
+     },
+    { pv: 3, name: "magie destructrice", profile: "magicien",
+      abilities: [ "arc de feu", "saper les forces", "fleche de feu", "explosion de feu", "appel de la foudre" ]
+     },
+    { pv: 3, name: "magie elementaire", profile: "magicien",
+      abilities: [ "asphyxie", "maitrise des elements", "arme elementaire", "respiration aquatique", "armure de pierre" ]
+     },
+    { pv: 3, name: "magie protectrice", profile: "magicien",
+      abilities: [ "arumre de mana", "chute ralentie", "dephasage", "cercle de protection", "interruption du temps" ]
+     },
+    { pv: 3, name: "magie universelle", profile: "magicien",
+      abilities: [ "lumiere", "familier", "invisibilite", "vol", "teleportation" ]
+     },
+    { pv: 3, name: "demon", profile: "sorcier",
+      abilities: [ "malediction", "beaute de la succube", "pacte demoniaque", "aspect du demon", "invocation d'un demon" ]
+     },
+    { pv: 3, name: "mort", profile: "sorcier",
+      abilities: [ "siphon des ames", "masque mortuaire", "baiser du vampire", "peur", "briser les coeurs" ]
+     },
+    { pv: 3, name: "outre-tombe", profile: "sorcier",
+      abilities: [ "un pied dans la tombe", "armure d'os", "animation des morts", "ensevelissement", "armee des morts" ]
+     },
+    { pv: 3, name: "sang", profile: "sorcier",
+      abilities: [ "saignements", "sang mordant", "exsangue", "rituel de sang", "lien de sang" ]
+     },
+    { pv: 3, name: "sombre magie", profile: "sorcier",
+      abilities: [ "tenebres", "reptation", "strangulation", "manteau d'ombre", "pacte tenebreux" ]
+     },
+    { pv: 3, name: "arcanes obscurs", profile: "sorcier",
+      abilities: [ "contact vampirique", "tentation du demon", "epidemie", "aura maudite", "extinction de masse" ]
+     },
+    { pv: 4, name: "animaux", profile: "druide",
+      abilities: [ "langage des animaux", "petit compagnon", "nuee d'insectes", "masque du predateur", "forme animale" ]
+     },
+    { pv: 4, name: "fauve", profile: "druide",
+      abilities: [ "vitesse du felin", "panthere", "attaque bondissante", "grand felin", "les sept vies du chat" ]
+     },
+    { pv: 4, name: "nature", profile: "druide",
+      abilities: [ "maitre de la survie", "terrains difficiles", "baton de druide", "constitution heroique", "resistant" ]
+     },
+    { pv: 4, name: "protecteur", profile: "druide",
+      abilities: [ "baies magiques", "foret vivante", "regeneration", "perception heroique", "forme d'arbre" ]
+     },
+    { pv: 4, name: "vegetaux", profile: "druide",
+      abilities: [ "peau d'ecorce", "prison vegetale", "fleche vivante", "animation d'un arbre", "porte vegetale" ]
+     },
+    { pv: 4, name: "energie vitale", profile: "moine",
+      abilities: [ "mains d'energie", "projection du ki", "invulnerable", "pression mortelle", "ascetisme" ]
+     },
+    { pv: 4, name: "maitrise", profile: "moine",
+      abilities: [ "agilite du singe", "griffes du tigre", "morsure du serpent", "fureur du dragon", "moment de perfection" ]
+     },
+    { pv: 4, name: "meditation", profile: "moine",
+      abilities: [ "pacifisme", "transe de guerison", "matrise du ki", "volonte heroique", "projection mentale" ]
+     },
+    { pv: 4, name: "poing", profile: "moine",
+      abilities: [ "poings de fer", "peau de fer", "parade de projectiles", "deluge de coups", "puissance du ki" ]
+     },
+    { pv: 4, name: "vent", profile: "moine",
+      abilities: [ "pas du vent", "course du vent", "course des airs", "agilite heroique", "passe-muraille" ]
+     },
+    { pv: 4, name: "foi", profile: "pretre",
+      abilities: [ "predicateur", "miracle mineur", "arme de lumiere", "ailes celestes", "foudres divines" ]
+     },
+    { pv: 4, name: "guerre sainte", profile: "pretre",
+      abilities: [ "arme benie", "bouclier de la foi", "chatiment divin", "marteau de la foi", "mot de pouvoir" ]
+     },
+    { pv: 4, name: "priere", profile: "pretre",
+      abilities: [ "benediction", "sanctuaire", "destruction du mal", "volonte heroique", "intervention divine" ]
+     },
+    { pv: 4, name: "soins", profile: "pretre",
+      abilities: [ "recuperation mineure", "vigueur divine", "recuperation majeure", "phenix", "retablissement" ]
+     },
+    { pv: 4, name: "spiritualite", profile: "pretre",
+      abilities: [ "vetements sacres", "augure", "delivrance", "charisme heroique", "marche des plans" ]
+     },
+    { pv: 4, name: "corruption", profile: "pretre",
+      abilities: [ "blessure mineure", "poison", "blessure majeure", "vengeance", "epidemie" ]
+     },
   ],
 }
 
@@ -6670,18 +7310,14 @@ function shorten(ability) {
 }
 
 /**
- * @typedef clogOptions
- * @property {string} title - title of logged data
- * @property {boolean} debug - display only if debug_mode attribute enabled
- * @property {string} color - color name for log line
- * @property {string} style - CSS style for log line
- * @property {string} headerStyle - CSS style for log title
- */
-
-/**
-* Log to JS console with color & style
-* @param {any} data - data to log
-* @param {clogOptions} options - console display options
+ * Log to JS console with color & style
+ * @param {any}     data - data to log
+ * @param {object}  options - console display options
+ * @param {string}  options.title - title of logged data
+ * @param {boolean} options.debug - display only if debug_mode attribute enabled
+ * @param {string}  options.color - color name for log line
+ * @param {string}  options.style - CSS style for log line
+ * @param {string}  options.headerStyle - CSS style for log title
 */
 function clog(data, options = {}) {
   let { 
@@ -6697,7 +7333,7 @@ function clog(data, options = {}) {
     return;
 
   title = strval(title);
-  if (title !== "") title = ` Sheet-Worker : ${title} `;
+  if (title !== "") title = ` Sheet-Worker > ${title} `;
   const titleStyle = `color:${textColor}; background-color:${backColor}; ${headerStyle} text-decoration:underline;`;
   const textStyle = `color:${textColor}; background-color:${backColor}; ${style}`;
 
@@ -6720,11 +7356,21 @@ function clog(data, options = {}) {
 }
 
 /**
+ * Return title for event log
+ * @param {object} eventInfo - Roll20 eventInfo object
+ * @returns {string}
+ */
+function logTitle(eventInfo) {
+  return `CHANGE:${ strval(eventInfo.triggerName) }`;
+}
+
+/**
  * Log and set attributes data
  * @param {object} data - attributes name/value pairs
+ * @param {string} [title=""] - title for the JS console log
  */
-function logAndSet(data) {
-  clog(data);
+function logAndSet(data, title = "") {
+  clog(data, { title, textColor: "white", backColor: "brown" });
   setAttrs(data);
 }
 
@@ -6757,6 +7403,53 @@ function parseNameValue(data, delim = ":") {
     value = strval(value).trim();
   }
   return { name, value };
+}
+
+/**
+ * Clean-up text
+ * @param {string} t - text to cleanup (multiple spaces & accents)
+ * @param {boolean} [tags=true] - also remove COF2 tags (action types & spells)
+ * @returns {string}
+ */
+function cleanText(t, tags = true) {
+  t = strval(t).toLowerCase();
+  t = t.replace(/\s\s+/g,   " ");
+  t = t.replace(/[àâä]/g,   "a");
+  t = t.replace(/[éèêë]/g,  "e");
+  t = t.replace(/[îï]/g,    "i");
+  t = t.replace(/[ôö]/g,    "o");
+  t = t.replace(/[ùûü]/g,   "u");
+  t = t.replace(/ÿ/g,       "y");
+  t = t.replace(/ç/g,       "c");
+  t = t.replace(/œ/g,       "oe");
+  t = t.replace(/æ/g,       "ae");
+  t = t.replace(/’/g,       "'");
+  if (tags) {
+    t = t.replace(/\(G\)/,  "");
+    t = t.replace(/\(M\)/,  "");
+    t = t.replace(/\(A\)/,  "");
+    t = t.replace(/\(L\)/,  "");
+    t = t.replace(/\*/,     "");
+  }
+  return t.trim();
+}
+
+/**
+ * Return if a property exists
+ * @param {string} data - list of properties separated by \n
+ * @param {string} propName - property name to search
+ * @returns {boolean}
+ */
+function hasProp(data, propName) {
+  const props = data.split("\n").reduce((props, prop) => {
+    if (prop.trim() === "")
+      return;
+    const { name } = parseNameValue(prop);
+    if (name) 
+      props.push(name);
+    return props;
+  }, []);
+  return props.includes(propName);
 }
 
 /**
@@ -6859,16 +7552,13 @@ function getSectionIDsOrdered(sectionName, callback) {
   });
 };
 
-/** @typedef sendChatMsgOptions
- * @property {string} title - Title of the message
- * @property {string} template - Name of roll template
- * @property {string} whisper - Target for whispered message
- */
-
 /**
  * Send a message to chat
  * @param {string|string[]} msg - Message to send
- * @param {sendChatMsgOptions} options - Options for the message
+ * @param {object} options - Options for the message
+ * @param {string} options.title - Title of the message
+ * @param {string} options.template - Name of roll template
+ * @param {string} options.whisper - Target for whispered message
  */
 function buildChatMsg(msg, options = SWData.RT_OPTIONS) {
   let { title = "", template = "default", whisper = "@{togm}" } = options;
@@ -7023,26 +7713,134 @@ function hideArea(div) {
 
 /**
  * Send an /fx command to Roll20 chat
- * @param {string} fxValue - FX parameter "name [target] [count]"
+ * @param {string} fxValue - FX parameter "name {target} {count}[,name {target} {count}]"
  * @returns {void}
  */
 function playFX(fxValue) {
   if (fxValue === "")
     return;
 
-  const [ fxName, ...params ] = (fxValue.replace(/\s\s+/g, ' ') + " ").split(" ");
-  let count = 1;
-  let fxCmd = `/fx ${fxName} @{selected|token_id}`;
-  if (params[0] !== "")
-    count = intval(params[0]);
-  
-  let fxChat = fxCmd;
-  while (--count > 0) {
-    fxChat += "\n" + fxCmd;
-  }
-  startRoll(fxChat, roll => {
-    finishRoll(roll.rollId);
+  let fxChat = "";
+  fxValue.split(",").forEach((fx, ix) => {
+    if (ix > 0)
+      fxChat += "\n";
+    const [ fxName, ...params ] = (fx.replace(/\s\s+/g, " ") + " ").split(" ");
+    let count = 1;
+    const fxCmd = `/fx ${fxName} @{selected|token_id}`;
+    if (params[0] !== "")
+      count = intval(params[0]);
+    
+    fxChat += fxCmd;
+    while (--count > 0) {
+      fxChat += "\n" + fxCmd;
+    }
   });
+
+  if (fxChat !== "") {
+    startRoll(fxChat, roll => {
+      finishRoll(roll.rollId);
+    });
+  }
+}
+
+/**
+ * Return paths names
+ * @param {string} noms_voies - noms_voies attribute value
+ * @returns {string[]}
+ */
+function getPathNames(noms_voies) {
+  return strval(noms_voies).split("|").map(n => strval(n).trim());
+}
+
+/**
+ * Return paths ranks
+ * @param {string} rangs_voies - rangs_voies attribute value
+ * @returns {number[]}
+ */
+function getPathRanks(rangs_voies) {
+  return strval(rangs_voies).split(",").map(r => intval(r));
+}
+
+/**
+ * Return list of owned abilities
+ * @param {object} values - getAttrs() object
+ * @returns {string[]}
+ */
+function ownedAbilities(values) {
+  const ranks = getPathRanks(strval(values.rangs_voies));
+  let abilities = [];
+  getPathNames(strval(values.noms_voies)).forEach((pathName, ix) => {
+    if (ranks[ix] === 0)
+      return;
+    pathName = cleanText(pathName)
+    const path = SWData.PVPATH.find(path => path.name === pathName);
+    if (!path)
+      return;
+    const owned = path.abilities.slice(0, ranks[ix]);
+    abilities = [ ...abilities, ...owned ];
+  });
+  return abilities;
+}
+
+/**
+ * Return owned abilities tree
+ * @param {object} values - getAttrs() object
+ * @returns {{ name: string, profile: string, abilities: string[]}[]} ability tree
+ */
+function ownedAbilityTree(values) {
+  const ranks = getPathRanks(strval(values.rangs_voies));
+  let abilities = [];
+  getPathNames(strval(values.noms_voies)).forEach((pathName, ix) => {
+    if (ranks[ix] === 0)
+      return;
+    pathName = cleanText(pathName)
+    const path = SWData.PVPATH.find(path => path.name === pathName);
+    if (!path)
+      return;
+    const owned = path.abilities.slice(0, ranks[ix]);
+    abilities.push({ name: pathName, profile: path.profile, abilities: owned });
+  });
+  return abilities;
+}
+
+/**
+ * Check if ability name is owned
+ * @param {object} search - search parameters
+ * @param {string} search.name - ability name to search for
+ * @param {string} [search.inPath=""] - name of path to search ability in
+ * @param {object} values - getAttrs() object
+ * @returns {boolean}
+ */
+function hasAbility(search, values) {
+  const { name, inPath = "" } = search;
+  let owned;
+  if (inPath !== "") {
+    owned = ownedAbilityTree(values);
+    const path = owned.find(path => path.name === cleanText(inPath));
+    if (!path)
+      return false;
+    owned = path.abilities;
+  } else {
+    owned = ownedAbilities(values);
+  }
+  return owned.includes(cleanText(name));
+}
+
+/**
+ * Count the number of paths with attained rank 
+ * @param {object} search - search option
+ * @param {string} search.profile - profile name to search
+ * @param {number} [search.minRank=5] - attained rank to search
+ * @param {object} values - getAtts() object values
+ * @returns {number}
+ */
+function getPathsWithRank(search, values) {
+  const { profile, minRank = 5 } = search;
+  const owned = ownedAbilityTree(values);
+  const withRank = owned
+  .filter(path => path.profile === cleanText(profile, false))
+  .filter(path => path.abilities.length >= minRank);
+  return withRank.length;
 }
 
 // ===============
@@ -7136,50 +7934,47 @@ function getProfileData(profile, selectFamily = "") {
  * - set DR type
  * - set PC & DR base
  */
-on("change:famille", function() {
-  const section = "repeating_buffs";
-  getSectionIDs(section.split("_")[1], rowIds => {
-    const allBuffs = [];
-    rowIds.forEach(rowId => {
-      allBuffs.push(`${section}_${rowId}_buff-nom`);
-    });
-    getAttrs([ "profil", "famille", ...allBuffs ], function(values) {
-      const family = strval(values.famille);
-      const profile = strval(values.profil);
-      setProfilesList(family, profile);
+on("change:famille", function(eventInfo) {
+getAttrs([ "profil", "famille" ], function(values) {
+  const family = strval(values.famille);
+  const profile = strval(values.profil);
+  setProfilesList(family, profile);
 
-      const updates = new Map();
+  const updates = new Map();
 
-      let dRecup = 8;
-      let pcBase = 2;
-      let drBase = 2;
-      switch (family) {
-        case "Aventuriers":
-          pcBase = 3;
-          break;
-        case "Combattants":
-          dRecup = 10;
-          break;
-        case "Mages":
-          dRecup = 6;
-          break;
-        case "Mystiques":
-          drBase = 3;
-          break;
-      }
-      updates.set("drecup", dRecup);
-      updates.set("pc_base", pcBase);
-      updates.set("dr_base", drBase);
+  let dRecup = 8;
+  let pcBase = 2;
+  let drBase = 2;
+  let voie1pv = 4;
+  switch (family) {
+    case "Aventuriers":
+      pcBase = 3;
+      break;
+    case "Combattants":
+      dRecup = 10;
+      voie1pv = 5;
+      break;
+    case "Mages":
+      dRecup = 6;
+      voie1pv = 3;
+      break;
+    case "Mystiques":
+      drBase = 3;
+      break;
+  }
+  updates.set("drecup", dRecup);
+  updates.set("pc_base", pcBase);
+  updates.set("dr_base", drBase);
+  updates.set("voie1pv", voie1pv);
 
-      setAttrs(Object.fromEntries(updates));
-    });
+  logAndSet(Object.fromEntries(updates), logTitle(eventInfo));
   });
 });
 
 /**
  * On change of profile, check skill proficiencies
  */
-on("change:profil", function() {
+on("change:profil", function(eventInfo) {
   getAttrs([ "profil", "famille", "use_skills" ], function(values) {
     const useSkills = boolval(values.use_skills);
     if (!useSkills)
@@ -7202,7 +7997,7 @@ on("change:profil", function() {
     });
         
     if (proficiencies.size > 0)
-      setAttrs(Object.fromEntries(proficiencies));
+      logAndSet(Object.fromEntries(proficiencies), logTitle(eventInfo));
   });
 });
 
@@ -7252,7 +8047,7 @@ function updateDEvol(level, attributes) {
 /**
  * On level change
  */
-on("change:niveau", function() {
+on("change:niveau", function(eventInfo) {
   getAttrs([ "niveau", "cfg_use_epic", "cfg_use_capped6" ], function(values) {
     const cappedAt6 = boolval(values.cfg_use_capped6);
     // base progression
@@ -7272,7 +8067,7 @@ on("change:niveau", function() {
       updateAttrs.set("atkmag_base", epicBase);
       updateAttrs.set("def_base", epicBase);
     }
-    setAttrs(Object.fromEntries(updateAttrs))
+    logAndSet(Object.fromEntries(updateAttrs), logTitle(eventInfo));
   });
 });
 
@@ -7296,24 +8091,24 @@ on("clicked:alias-toggle", function() {
 })
 
 /**
- * On ability components change
+ * On stats components change
  */
-SWData.PC.ABILITIES.forEach(ability => {
-  const short = shorten(ability);
+SWData.PC.STATS.forEach(stat => {
+  const short = shorten(stat);
   const attrs = [
     `${short}_base`,
     `${short}_buff`,
     `t${short}_buff`,
   ];
-  on(eventList("change", attrs, " "), function () {
+  on(eventList("change", attrs, " "), function (eventInfo) {
     getAttrs(attrs, function(values) {
       const base = intval(values[`${short}_base`]);
       const buff = intval(values[`${short}_buff`]);
       const tbuff = intval(values[`t${short}_buff`]);
-      setAttrs({ 
+      logAndSet({
         [short]: base + buff,
         [`${short}_test`]: base + buff + tbuff
-      });
+      }, logTitle(eventInfo));
     });
   });
 });
@@ -7321,13 +8116,13 @@ SWData.PC.ABILITIES.forEach(ability => {
 /**
  * Update the init attribute
  */
-function updateInit() {
+function updateInit(eventInfo) {
   getAttrs([ ...SWData.PC.COMBAT.init ], function(values) {
     const car = Object.keys(values).find(k => k.startsWith("agi"));
     values[car] *= intval(values.cfg_init_agi);
     delete values.cfg_init_agi;
     const init = addValues(values);
-    setAttrs({ init });
+    logAndSet({ init }, logTitle(eventInfo));
   });
 }
 
@@ -7347,10 +8142,10 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
     `${attack}_cond`,
     `${attack}_buff`
   ];
-  on(eventList("change", changed, " "), function() {
+  on(eventList("change", changed, " "), function(eventInfo) {
     getAttrs(changed, function(values) {
       const score = addValues(values);
-      setAttrs({ [attack]: score });
+      logAndSet({ [attack]: score }, logTitle(eventInfo));
     });
   });
 });
@@ -7358,13 +8153,13 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
 /**
  * Compute max DR
  */
-function updateDRMax() {
+function updateDRMax(eventInfo) {
   getAttrs([ "drmax_force", "dr_base", "con", "dr_buff" ], function(values) {
     if (boolval(values.drmax_force))
       return;
 
     const dr_max = intval(values.dr_base) + intval(values.con) + intval(values.dr_buff);
-    setAttrs({ dr_max });
+    logAndSet({ dr_max }, logTitle(eventInfo));
   });
 }
 
@@ -7376,7 +8171,7 @@ on("change:dr_base change:con change:dr_buff", updateDRMax);
 /**
  * Compute pv_max
  */
-function updatePVMax() {
+function updatePVMax(eventInfo) {
   const owned = [];
   const other = [];
   seq(9).forEach(path => {
@@ -7387,7 +8182,7 @@ function updatePVMax() {
     });
   });
   getAttrs([ "cfg_pvmax_auto", "pvmax_force", "niveau", "con", "pv_buff", ...owned, ...other ], function(values) {
-    if (!boolval(values.cfg_pvmax_auto))
+    if (!boolval(values.cfg_pvmax_auto) && strval(eventInfo.triggerName) !== "RESET")
       return;
     if (boolval(values.pvmax_force))
       return;
@@ -7428,7 +8223,7 @@ function updatePVMax() {
     
     pvMax += intval(values.pv_buff);
 
-    setAttrs({ pv_max: pvMax });
+    logAndSet({ pv_max: pvMax }, logTitle(eventInfo));
   });
 }
 
@@ -7449,9 +8244,9 @@ function loadLimit(force) {
 /**
  * Compute load threshold
  */
-function updateLoadLimit() {
+function updateLoadLimit(eventInfo) {
   getAttrs([ "for" ], function(value) {
-    setAttrs({ limite_enc: loadLimit(intval(value.for)) });
+    logAndSet({ limite_enc: loadLimit(intval(value.for)) }, logTitle(eventInfo));
   });
 }
 
@@ -7463,7 +8258,7 @@ on("change:for", updateLoadLimit);
 /**
  * Compute max PM
  */
-function updatePMMax() {
+function updatePMMax(eventInfo) {
   const owned = [];
   const spells = [];
   const bRanks = [];
@@ -7474,7 +8269,14 @@ function updatePMMax() {
       spells.push(`v${p}r${r}_spell`);
     });
   });
-  getAttrs([ "cfg_use_mana", "pmmax_force", "vol", "pm_buff", ...spells, ...owned, ...bRanks ], function(values) {
+  getAttrs([ 
+    "cfg_use_mana", "pmmax_force",
+    "vol", "pm_buff",
+    "cha", "rangs_voies", "noms_voies",
+    ...spells,
+    ...owned,
+    ...bRanks 
+  ], function(values) {
     if (boolval(values.pmmax_force))
       return;
 
@@ -7488,15 +8290,22 @@ function updatePMMax() {
         pmGain = 2;
       return pm + (intval(values[ability]) * intval(values[spell]) * pmGain);
     }, 0);
-    const pm_max = intval(values.vol) + spellPM + intval(values.pm_buff);
-    setAttrs({ pm_max });
+    let base = intval(values.vol);
+    if (hasAbility({ name: "charisme heroique", inPath: "seduction" }, values)) {
+      const cha = intval(values.cha);
+      if (cha > base)
+        base = cha;
+    }
+    const pm_max = base + spellPM + intval(values.pm_buff);
+    logAndSet({ pm_max }, logTitle(eventInfo));
   });
 }
 
 /**
  * On VOL & PM buff change
+ * On CHA & ranks change
  */
-on("change:vol change:pm_buff", updatePMMax);
+on("change:vol change:pm_buff change:cha change:rangs_voies", updatePMMax);
 
 /**
  * On change of an ability spell
@@ -7510,20 +8319,22 @@ seq(9).forEach(p => {
 /**
  * Compute max PC
  */
-function updatePCMax() {
-  getAttrs([ "pcmax_force", "pc_base", "cha", "pc_buff" ], function(values) {
+function updatePCMax(eventInfo) {
+  getAttrs([ "pcmax_force", "pc_base", "cha", "pc_buff", "cfg_pc_var" ], function(values) {
     if (boolval(values.pcmax_force))
       return;
     
-    const pc_max = addValues(values);
-    setAttrs({ pc_max });
+    const doublePC = boolval(values.cfg_pc_var) ? 2 : 1;
+    delete values.cfg_pc_var;
+    const pc_max = addValues(values) * doublePC;
+    logAndSet({ pc_max, double_pc: doublePC === 2 ? " x 2" : "" }, logTitle(eventInfo));
   });
 }
 
 /**
  * On PC components change
  */
-on("change:pc_base change:cha change:pc_buff", updatePCMax);
+on("change:pc_base change:cha change:pc_buff change:cfg_pc_var", updatePCMax);
 
 /**
  * Return list of attributes for luck roll button
@@ -7549,22 +8360,22 @@ function addLuckButton(values) {
   const charName = strval(values.character_name);
   const color = strval(values.couleur_pj);
   const pc = intval(values.pc);
-  return `[Chance](~${charName}|luck_apply-btn${menuButton(color, { size: "1.3em" })}) ${pc} Points de Chance restants`;
+  return `[Chance](~${charName}|luck_apply-btn${menuButton(color, { size: "1.3em" })}) (Reste ${pc} PC)`;
 }
 
 /**
- * Ability rolls
+ * Stats rolls
  */
-SWData.PC.ABILITIES.forEach(ability => {
-  const short = shorten(ability);
+SWData.PC.STATS.forEach(stat => {
+  const short = shorten(stat);
   
-  // Set the ability die rolls
-  on(`change:${short}_sup change:condition_affaibli`, function() {
+  // Set the stat die rolls
+  on(`change:${short}_sup change:condition_affaibli`, function(eventInfo) {
     getAttrs([ `${short}_sup`, "condition_affaibli" ], function(values) {
       const [ dType ] = Object.keys(values);
       const weakened = intval(values.condition_affaibli);
       const roll = dieRoll(values[dType], weakened);
-      setAttrs({ [`${short}_dsup`]: roll });
+      logAndSet({ [`${short}_dsup`]: roll }, logTitle(eventInfo));
     });
   });
   
@@ -7593,7 +8404,7 @@ SWData.PC.ABILITIES.forEach(ability => {
       const carac = `[[@{${roll}}[Dé] + @{${short}_test}[Bonus ${short.toUpperCase()}]${armor_malus}${shield_malus}${helmet_malus} ]] `;
       const chatMsg = cof2RollTemplate({
         lsub: "Test",
-        rsub: capitalize(ability),
+        rsub: capitalize(stat),
         roll: carac,
         chance: addLuckButton(values)
       });
@@ -7624,9 +8435,15 @@ on("clicked:init-btn", function () {
 SWData.PC.COMBAT.attacks.forEach(attk => {
   const [ attack, , description ] = attk;
   on(`clicked:${attack}-btn`, function () {
-    getAttrs([ "cfg_1attack_roll", "condition_affaibli", ...luckButtonAttrs() ], function (values) {
+    getAttrs([
+      "cfg_1attack_roll", "condition_affaibli", "condition_immobilise",
+      ...luckButtonAttrs()
+      ], function (values) {
       const useOneRoll = boolval(values.cfg_1attack_roll);
-      const roll = (intval(values.condition_affaibli) === 1) ? "2d20kl1" : "1d20";
+      const weakened = intval(values.condition_affaibli);
+      const restrained = intval(values.condition_immobilise);
+      const hasMalusDie = (weakened === 1) || (restrained === 1);
+      const roll = hasMalusDie ? "2d20kl1" : "1d20";
       const atkRoll = `[[${roll}cs20cf1[Dé] + @{${attack}}[Bonus] ]]`;
       const atkProps = {
         lsub: "Attaque",
@@ -7811,23 +8628,23 @@ on("clicked:drecup-btn", function() {
 /**
  * Update the def attribute
  */
-function updateDef() {
+function updateDef(eventInfo) {
   getAttrs(SWData.PC.COMBAT.def, function(values) {
-    const capabilities = strval(values.capabilities).split(",");
-    delete values.capabilities;
     values.armure = intval(values.armure) * intval(values.armure_eqp);
     delete values.armure_eqp;
     values.bouclier = intval(values.bouclier) * intval(values.bouclier_eqp);
     delete values.bouclier_eqp;
     let def_car = "AGI";
     let def_car_bonus = intval(values.agi);
-    if (capabilities.includes("peaudepierre")) {
+    if (hasAbility({ name: "peau de pierre", inPath: "pagne" }, values)) {
       const conValue = intval(values.con);
       if (conValue > def_car_bonus) {
         def_car = "CON";
         def_car_bonus = conValue;
       }
     }
+    delete values.rangs_voies;
+    delete values.noms_voies;
     values.agi = 0;
     values.con = 0;
     def_car_max = intval(values.def_car_max);
@@ -7835,7 +8652,7 @@ function updateDef() {
     values.def_car_max = 0;
     values.def_car_bonus = def_car_bonus;
     def = addValues(values);
-    setAttrs({ def, def_car, def_car_bonus });//, false);
+    logAndSet({ def, def_car, def_car_bonus }, logTitle(eventInfo));
   });
 }
 
@@ -7890,8 +8707,8 @@ function updateEquiped(attribute) {
  * On DEF components change
  */
 on(eventList("change", SWData.PC.COMBAT.def, " "), function(eventInfo) {
-  updateDef();
-  const attribute = eventInfo.triggerName;
+  updateDef(eventInfo);
+  const attribute = strval(eventInfo.triggerName, "");
   if (attribute.endsWith("_eqp"))
     updateEquiped(attribute);
 });
@@ -7904,7 +8721,7 @@ on("change:casque_eqp", function() {
  * On Luck apply button click
  */
 on("clicked:luck_apply-btn", function() {
-  getAttrs([ "pc", "last_rolls" ], function(values) {
+  getAttrs([ "pc", "last_rolls", "cfg_pc_var" ], function(values) {
     const lsub = "Utilisation";
     const rsub = "Point de Chance";
     let pc = intval(values.pc);
@@ -7919,11 +8736,12 @@ on("clicked:luck_apply-btn", function() {
       return;
     }
 
+    const luck = boolval(values.cfg_pc_var) ? "1d10" : "10";
     pc -= 1;
     const [ last_roll, last_broll ] = strval(values.last_rolls).split("|");
-    let roll = "[[10" + (last_roll !== "" ? ` + ${last_roll} ` : "" ) + "]]";
+    let roll = "[[" + luck + (last_roll !== "" ? ` + ${last_roll} ` : "" ) + "]]";
     if (last_broll)
-      roll += " | [[10" + ` + ${last_broll} ` + "]]";
+      roll += " | [[" + luck + ` + ${last_broll} ` + "]]";
     const chatMsg = cof2RollTemplate({
       lsub,
       rsub,
@@ -7994,7 +8812,7 @@ function getAttackName(attribute) {
   });
   if (!found)
     return "";
-  const [ , , name ] = found;
+  const [ name ] = found.slice(2);
   return name;
 }
 
@@ -8062,10 +8880,6 @@ SWData.PC.CONDITIONS.forEach(condition => {
       const notify = intval(values.notif_conditions);
       if (hasCondition === 1 && notify !== 0)
         displayCondition(label, effects, description, notify);
-      
-      const has_conditions = allConditions.some(attr => intval(values[attr]) === 1) ? 1 : 0;
-      if (has_conditions !== intval(values.has_conditions))
-        setAttrs({ has_conditions });
     });
   });
 });
@@ -8083,17 +8897,17 @@ function matchRegExp(text, pattern) {
 /**
  * Get the path number from the path name
  * @param {string} name - ability qualifier ('rang voie 1', 'rang voie <name>', 'rang <name>')
- * @param {string} pathNames - noms_voies attribute value (| delimited)
+ * @param {string[]} names - list of path names
  * @returns {number}
  */
-function findPathByName(name, pathNames) {
+function findPathByName(name, names) {
   const q = name.split(" ").slice(1) || [];
   if (q.length === 0)
     return 0;
 
   const qualifier = q.slice(1).join(" ");
   if (qualifier === "")
-    return 0
+    return 0;
 
   if (q[0].toLowerCase() === "voie") {
     if (Number.isInteger(intval(qualifier)) && intval(qualifier) > 0) {
@@ -8101,29 +8915,25 @@ function findPathByName(name, pathNames) {
     }
   }
 
-  const pathNumber = pathNames.split("|").findIndex(pathName => pathName.toLowerCase() === qualifier.toLowerCase());
+  const pathNumber = names.findIndex(pathName => pathName.toLowerCase() === qualifier.toLowerCase());
 
   return pathNumber + 1;
 }
 
 /**
- * @typedef insertRollsOptions
- * @property {string} pathNames - comma-separated list of path names
- * @property {boolean} isNPC - processing NPC abilities 
- * @property {string} companionOf = name of PC the NPC is a companion of (ends with |)
- */
-
-/**
  * Substitute expressions with in-line rolls
- * @param {string} text - text to process
- * @param {insertRollsOptions} [options={}] - options
+ * @param {string}    text - text to process
+ * @param {object}    options - options
+ * @param {string[]}  options.pathNames - list of path names
+ * @param {boolean}   options.isNPC - processing NPC abilities 
+ * @param {string}    options.companionOf - name of PC the NPC is a companion of (ends with |)
  * @returns {string}
  */
 function insertRolls(text, options = {}) {
   if (!text)
     return "";
   
-  const { pathNames = "", isNPC = false, companionOf = "" } = options;
+  const { pathNames = [], isNPC = false, companionOf = "" } = options;
   const devol = `@{${ isNPC ? companionOf : "" }devol}` ;
 
   // Search for " [#d4° + XXX] " or " [#dE + XXX] "
@@ -8247,12 +9057,14 @@ on("clicked:repeating_armes:attack-btn", function() {
     "cfg_crit_diff", 
     "bouclier_eqp",
     "condition_affaibli",
+    "condition_immobilise",
     "tactique",
     "tactdiv",
     "tactdmdiv",
     "noms_voies",
     "en_selle",
-    "capabilities",
+    "noms_voies",
+    "rangs_voies",
     ...luckButtonAttrs(),
     ...sitModAttrs.map(a => `modsit_${a}`),
     ...attackAttrs.map(a => `${section}${a}`)
@@ -8266,12 +9078,12 @@ on("clicked:repeating_armes:attack-btn", function() {
     const tactBM = intval(values.tactdiv);
     const tactDM = strval(values.tactdmdiv);
     const weakened = intval(values.condition_affaibli);
-    const pathNames = strval(values.noms_voies);
+    const restrained = intval(values.condition_immobilise);
+    const pathNames = getPathNames(strval(values.noms_voies));
     const mounted = boolval(values.en_selle);
-    const capabilities = strval(values.capabilities).split(",");
     
     // situational modifiers
-    const modCover = intval(values.modsit_couvert) * -1;
+    let modCover = intval(values.modsit_couvert) * -1;
     const modMelee = intval(values.modsit_melee) * -1;
     const modContact = intval(values.modsit_contact);
     const modVisible = intval(values.modsit_visibilite) * -1;
@@ -8281,8 +9093,8 @@ on("clicked:repeating_armes:attack-btn", function() {
     const atkdiv = intval(values[section + "atkdiv"]);
     const name = capitalize(strval(values[section + "nom"], getAttackName(atk)));
     const portee = strval(values[section + "portee"]);
-    const range = (portee !== "") ? ` (${portee})` : "";
-    const crit = intval(values[section + "crit"], 20);
+    let range = (portee !== "") ? ` (${portee})` : "";
+    let crit = intval(values[section + "crit"], 20);
     const isRanged = (atk === "atktir" && portee !== "");
     const modifiers = strval(values[section + "atkmods"]).split(",").map(mod => mod.trim().toLowerCase());
     const options = strval(values[section + "options"]);
@@ -8329,14 +9141,25 @@ on("clicked:repeating_armes:attack-btn", function() {
     // Build situational modifiers
     let modSit = "";
     if (isRanged) {
-      modSit += modCover !== 0 ? ` ${modCover}[Cible à ouvert]` : "";
+      if (hasAbility({ name: "joli coup", inPath: "precision" }, values)) {
+        if (modCover === -2)
+          modCover = 0;
+        if (modCover === -5)
+          modCover = -2;
+      }
+      modSit += modCover !== 0 ? ` ${modCover}[Cible à couvert]` : "";
       modSit += modMelee !== 0 ? ` ${modMelee}[Cible en mêlée]` : "";
       modSit += modVisible !== 0 ? ` ${modVisible}[Visibilité]` : "";
+      if (hasAbility({ name: "tir precis", inPath: "precision" }, values))
+        crit = 19;
+      if (hasAbility({ name: "tir fatal", inPath: "precision" }, values))
+        crit = 18;
     }
 
     // Determine normal or malus die roll
-    let roll = (weakened === 1) ? "2d20kl1" : "1d20";
-    let bRoll = (weakened !== 1);
+    const withMalusDie = (weakened === 1) || (restrained === 1);
+    let roll = withMalusDie ? "2d20kl1" : "1d20";
+    let bRoll = !withMalusDie;
     if (isRanged && modContact === 1)
       roll = "2d20kl1";
     if (modifiers.includes("debonus") && !modifiers.includes("demalus")) {
@@ -8396,18 +9219,29 @@ on("clicked:repeating_armes:attack-btn", function() {
     if (modifiers.includes("reroll1"))
       dmOpt += "r";
 
-    let riderDM = "";
+    let extraDM = "";
+
     if (mounted && atk === "atkcac") {
-      if (capabilities.includes("monturefantastique")) {
-        riderDM = " +2[Cavalier rang 5]"
-      } else if (capabilities.includes("cavalierémérite")) {
-        riderDM = " +1[Cavalier rang 2]"
+      if (hasAbility({ name: "monture fantastique", inPath: "cavalier" }, values)) {
+        extraDM = " +2[Cavalier rang 5]"
+      } else if (hasAbility({ name: "cavalier emerite", inPath: "cavalier" }, values)) {
+        extraDM = " +1[Cavalier rang 2]"
       }
+    }
+
+    if (modifiers.includes("poudre")) {
+      let powderBonus = 0;
+      if (hasAbility({ name: "poudre puissante", inPath: "explosifs" }, values)) {
+        powderBonus = 1 + getPathsWithRank({ profile: "arquebusier", minRank: 5 }, values);
+        range = ` ([[${intval(portee)}[Base] + 10[Poudre puissante]]])`;
+      }
+      if (powderBonus > 0)
+        extraDM = ` +${powderBonus}[Poudre puissante]`;
     }
 
     let dmroll = "";
     if (dm !== "" )
-      dmroll = `[[${dm}${dmOpt}]][DM] + ${dmbonus}[Bonus] + ${dmdiv}[Divers]${tacticDM}${riderDM}`;
+      dmroll = `[[${dm}${dmOpt}]][DM] + ${dmbonus}[Bonus] + ${dmdiv}[Divers]${tacticDM}${extraDM}`;
     if (dmroll !== "" && tactics === 1)
       dmroll = `floor((${dmroll})/2)`;
     if (dmroll !== "")
@@ -8667,51 +9501,23 @@ function actionAbility(path, rank) {
 }
 
 /**
- * Update the list of special capabilities
- * @param {string} name - name of ability
- * @param {number} owned - owend ability 0/1 
- * @param {string} capabilities - comma-separated of special capabilities
- * @returns {string}
- */
-function processCapabilities(name, owned, capabilities) {
-  name = name.replace(/ /gm, "").toLowerCase();
-  if (SWData.PC.CAPABILITIES.includes(name)) {
-    capabilities += ((capabilities !== "") ? "," : "") + name;
-    if (!owned) {
-      capabilities = capabilities.split(",").filter(cp => cp !== name).join(",");
-    }
-  }
-  return capabilities;
-}
-
-/**
  * Update rank in path
  * @param {number} path - Path #
  */
 function setRank(path) {
   rankAttrs = [
-    "capabilities",
     ...seq(5).map(rank => `v${path}r${rank}`),
     ...seq(5).map(rank => `voie${path}-t${rank}`)
   ];
   getAttrs(rankAttrs, function (values) {
     let rank = 0;
-    let capabilities = strval(values.capabilities);
-    delete values.capabilities;
     Object.keys(values).filter(a => !a.startsWith("voie")).forEach(ability => {
       const owned = intval(values[ability]);
       const hasRank = intval(ability.charAt(ability.length - 1)) * owned;
       if (hasRank > rank)
         rank = hasRank;
-      const name = values[`voie${path}-t${ ability.charAt(ability.length - 1) }`];
-      capabilities = processCapabilities(name, owned, capabilities);
     });
-    const updates = { 
-      [`rang_voie${path}`]: rank, 
-      capabilities,
-    };
-    if (capabilities.includes("cavalierémérite"))
-      updates.rang_cavalier = rank;
+    const updates = { [`rang_voie${path}`]: rank };
     setAttrs(updates);
   });
 }
@@ -8721,18 +9527,22 @@ function setRank(path) {
  * @param {number} path - path number changed
  */
 function updateAllRanks(path) {
-  getAttrs([ `rang_voie${path}`, `v${path}br`, "rangs_voies" ], function(values) {
+  getAttrs([ `rang_voie${path}`, `v${path}br`, "rangs_voies", "noms_voies" ], function(values) {
     const [ rankPath, rankBase ] = Object.keys(values);
     let rank = intval(values[rankPath]);
     const base = intval(values[rankBase]);
-    const ranks = strval(values.rangs_voies);
+    const names = getPathNames(strval(values.noms_voies));
     let allRanks = Array(9);
-    if (ranks !== "")
-      allRanks = ranks.split(",").map(r => intval(r));
+    const rangs_voies = strval(values.rangs_voies);
+    if (rangs_voies !== "")
+      allRanks = getPathRanks(rangs_voies);
     if (rank > 0 && base > 1)
       rank += base - 1;
     allRanks[path - 1] = rank;
-    setAttrs({ rangs_voies: allRanks.join(",") });
+    const updates = { rangs_voies: allRanks.join(",") };
+    if (cleanText(names[path - 1], false) === "cavalier")
+      updates.rang_cavalier = rank;
+    setAttrs(updates);
   });
 }
 
@@ -8833,11 +9643,15 @@ function checkAbilityPoints() {
 
 /**
  * Return simple / unqualified path name
- * @param {string} fullPathName - full path name (voie de ...)
+ * @param {string} fullPathName - full path name (voie du|de la|des ...)
+ * @param {boolean} [cleanup=true] - clean up text (accents & COF tags)
  * @returns {string}
  */
-function simplePathName(fullPathName) {
-  return fullPathName.toLowerCase().replace(/voie[ ]+(du|des|de la|de l'|de l’)/, "").trim();
+function simplePathName(fullPathName, cleanup = true) {
+  let simplePathName = fullPathName.toLowerCase().replace(/voie[ ]+(du|des|de la|de l'|de l’)/, "");
+  if (cleanup)
+    simplePathName = cleanText(simplePathName);
+  return simplePathName.trim();
 }
 
 /**
@@ -8870,13 +9684,13 @@ seq(9).forEach(path => {
       actionAbility(path, rank);
     });
 
-    on(`change:v${path}r${rank} change:v${path}r${rank}_param`, function() {
+    on(`change:v${path}r${rank} change:v${path}r${rank}_param`, function(eventInfo) {
       
       // Update rank in path
       setRank(path);
 
       // Update PV
-      updatePVMax();
+      updatePVMax(eventInfo);
 
       // Check ability points
       checkAbilityPoints();
@@ -8898,8 +9712,8 @@ seq(9).forEach(path => {
   });
 
   // Update PV max
-  on(`change:voie${path}pv`, function () {
-    updatePVMax();
+  on(`change:voie${path}pv`, function (eventInfo) {
+    updatePVMax(eventInfo);
   });
 });
 
@@ -9015,8 +9829,8 @@ function abilityUsages(path = 0) {
       if (matches.length === 0)
         return; // no regex match
 
-      const [ , use, freq ] = matches[0];
-      if ([ "round", "tour" ].includes(freq.toLowerCase())) 
+      const [ use, freq ] = matches[0].slice(1);
+      if ([ "round", "tour" ].includes(freq.toLowerCase()))
         return; // no per round usage
 
       const useMax = [ "une", "deux", "trois" ].indexOf(use.toLowerCase()) + 1;
@@ -9036,8 +9850,8 @@ function abilityUsages(path = 0) {
  */
 function abilityRollQuery() {
   return "?{Carac ?|" 
-  + SWData.PC.ABILITIES
-  .map(a => `${ a.substring(0,3).toUpperCase() },@{${ a.substring(0,3) }_test}`)
+  + SWData.PC.STATS
+  .map(stat => `${ shorten(stat).toUpperCase() },@{${ shorten(stat) }_test}`)
   .join("|")
   + "}";
 }
@@ -9063,10 +9877,10 @@ on("clicked:repeating_rolls:roll-btn", function() {
     const bonus = intval(values[section + "bonus"]);
     let rollCmd = strval(values[section + "cmd"]);
 
-    const ranks = values.rangs_voies.split(",").map(r => intval(r));
-    const names = values.noms_voies.split("|").map(r => strval(r));
+    const ranks = getPathRanks(strval(values.rangs_voies));
+    const names = getPathNames(strval(values.noms_voies));
 
-    let lsub = "Compétence";
+    let lsub = "Capacité";
     let text = "";
 
     if (type !== "0") {
@@ -9086,7 +9900,6 @@ on("clicked:repeating_rolls:roll-btn", function() {
       // + Rang
       if (path > 0) {
         rollCmd += ` + (${ranks[path - 1]})[Rang ${names[path - 1]}]`;
-        lsub = "Capacité";
       }
       // + Bonus
       if (bonus !== 0)
@@ -9264,7 +10077,7 @@ function importFromPDF(text, path, base = 1) {
   text.split("\n").forEach((line, index) => {
     // first line
     if (index === 0) {
-      let pathName = simplePathName(line.toLowerCase());
+      let pathName = simplePathName(line.toLowerCase(), false);
       if (pathName !== "")
         updates.set(`voie${path}nom`, capitalize(pathName));
       return;
@@ -9300,7 +10113,7 @@ seq(9).forEach(path => {
         return;
        
       const base = values[`v${path}br`];
-      const updates = importFromPDF(text, base); /*
+      const updates = importFromPDF(text, path, base); /*
       const updates = new Map();
       let ability = "";
       text.split("\n").forEach((line, index) => {
@@ -9402,8 +10215,8 @@ on("clicked:helpgear-btn", function() {
   sendChatMsg([
     "title=Propriétés d'équipement",
     "subtitle=Liste des codes et valeurs",
-    "dm-1m:=Dés de DM une main",
-    "dm-2m:=Dés de DM deux mains",
+    "dm-1m:=Dés de DM à une main",
+    "dm-2m:=Dés de DM à deux mains",
     "type-dm:=Types de dommages",
     "critique:=Seuil de critique",
     "portee:=Portée arme à distance",
@@ -9427,8 +10240,15 @@ on("clicked:helpgear-btn", function() {
  * @returns {string[]}
  */
 function getGearProps(name) {
-  const gear = SWData.GEARS.find(g => g.name.toLowerCase() === name.toLowerCase());
-  return gear ? gear.props : [];
+  const found = SWData.GEARS.find(gear => {
+    if (cleanText(gear.name, false) === cleanText(name, false))
+      return gear;
+    if (strval(gear.altname) !== "") {
+      if (gear.altname.split(",").includes(cleanText(name)))
+        return gear;
+    }
+  });
+  return found ? found.props : [];
 }
 
 /**
@@ -9683,7 +10503,7 @@ on("clicked:repeating_equipement:equipshow-btn", function () {
 on("change:repeating_equipement:equip-nom", function() {
   const section = "equipement";
   const gearAttrs = [ "nom", "props" ].map(a => repeatingAttr(section, `equip-${a}`));
-  getAttrs([ ...gearAttrs ], function(values) {
+  getAttrs(gearAttrs, function(values) {
     const name = strval(values[repeatingAttr(section, "equip-nom")]);
     const hasProps = strval(values[repeatingAttr(section, "equip-props")]);
     if (name !== "" && hasProps === "") {
@@ -9725,7 +10545,6 @@ on("change:repeating_equipement:equip-on", function(eventInfo) {
         return;
 
       // unequip weapon in hand
-      console.log(equiped, atkId)
       if (equiped === 0 && atkId !== "") {
         let unEquiped;
         hands.forEach(hand => {
@@ -9747,8 +10566,9 @@ on("change:repeating_equipement:equip-on", function(eventInfo) {
 
       // search for armure-malus: | bouclier-malus: | casque-malus: 
       // or set to armor | shield | casque bonus
-      let defMalus = intval(getProp(props, defense + "-malus"));
-      defMalus = defMalus === 0 ? defBonus : defMalus;
+      const malus = defense + "-malus";
+      let defMalus = intval(getProp(props, malus));
+      defMalus = defMalus === 0 && !hasProp(props, malus) ? defBonus : defMalus;
 
       const defCarMax = intval(getProp(props, "agi-max"));
 
@@ -9790,6 +10610,27 @@ on("change:repeating_equipement:equip-on", function(eventInfo) {
         setAttrs(Object.fromEntries(updates));
     });
   })
+});
+
+/**
+ * Delete equiped defense gear
+ */
+on("remove:repeating_equipement", function (eventInfo) {
+  const rowId = eventInfo.sourceAttribute + "_";
+  const equiped = boolval(eventInfo.removedInfo[rowId + "equip-on"]);
+  if (!equiped)
+    return;
+  const name = strval(eventInfo.removedInfo[rowId + "equip-nom"]);
+  const props = strval(eventInfo.removedInfo[rowId + "equip-props"]);
+  const defense = [];
+  if (isArmor(name, props))
+    defense.push(...[ "armure", "armure_eqp", "armure_malus" ]);
+  if (isShield(name, props))
+    defense.push(...[ "bouclier", "bouclier_eqp", "bouclier_malus" ]);
+  if (isHelmet(props))
+    defense.push(...[ "casque", "casque_eqp" ]);
+  if (defense.length > 0)
+    setAttrs(Object.fromEntries(defense.map(a => [ a, 0])));
 });
 
 /**
@@ -9971,7 +10812,7 @@ function linkAttacks() {
           if ([ "sort", "naturel" ].includes(type))
             return;
           const nom = strval(values[`repeating_armes_${id}_arme-nom`]);
-          const gear = allGears.find(gear => nom.toLowerCase().includes(strval(values[gear]).toLowerCase()));
+          const gear = allGears.find(gear => cleanText(nom, false).includes(cleanText(strval(values[gear]), false)));
           if (gear) {
             const gearId = gear.split("_")[2];
             if (gearId)
@@ -9989,18 +10830,19 @@ function linkAttacks() {
 * On clicking the Reset button
 */
 on("clicked:reset_all-btn", function() {
-  updateDRMax();
-  updatePMMax();
-  updatePCMax();
-  updatePVMax();
-  updateInit();
-  updateDef();
-  abilityUsages();
-  encumbrance();
-  rebuildRanks();
-  rebuildBuffLists();
-  rebuildBuffValues();
-  ask("Lier attaques et équipement ?", function(answer) {
+  const e = { triggerName: "RESET" };
+  updateDRMax(e);
+  updatePMMax(e);
+  updatePCMax(e);
+  updatePVMax(e);
+  updateInit(e);
+  updateDef(e);
+  abilityUsages(e);
+  encumbrance(e);
+  rebuildRanks(e);
+  rebuildBuffLists(e);
+  rebuildBuffValues(e);
+  ask("Lier attaques et équipements ?", function(answer) {
     if (answer === 1)
       linkAttacks();
   });
@@ -10118,7 +10960,7 @@ function importGears(gearData, attributes) {
       attributes.set(rowId + "equip-detail", gear.special);
     
     const props = gear.props
-      .filter(prop => SWData.GEARS.props.includes(prop.id))
+      .filter(prop => SWData.GEARPROPS.includes(prop.id))
       .map(prop => `${prop.id}: ${prop.valeur}`);
     if (props.length > 0)
       attributes.set(rowId + "equip-props", props.join("\n"));
@@ -10213,9 +11055,9 @@ on("clicked:caract_menu-btn", function () {
   getAttrs([ "character_name", "couleur_pj" ], function (values) {
     const charName = strval(values.character_name);
     const color = strval(values.couleur_pj);
-    const chatMsg = SWData.PC.ABILITIES.map(ability => {
-      const short = shorten(ability);
-      return `${capitalize(ability)}=[${short.toUpperCase()}](~${charName}|${short}-btn${menuButton(color)})`
+    const chatMsg = SWData.PC.STATS.map(stat => {
+      const short = shorten(stat);
+      return `${capitalize(stat)}=[${short.toUpperCase()}](~${charName}|${short}-btn${menuButton(color)})`
     });
     sendChatMsg([
       `title=${charName}`,
@@ -10442,8 +11284,8 @@ on("clicked:pc_menus-btn", function () {
 /**
  * On NPC ability button click
  */
-SWData.PC.ABILITIES.forEach(ability => {
-  const short = shorten(ability);
+SWData.PC.STATS.forEach(stat => {
+  const short = shorten(stat);
   on(`clicked:pnj_${short}-btn`, function () {
     getAttrs([ `${short}_sup` ], function (value) {
       const [ dType ] = Object.keys(value);
@@ -10451,7 +11293,7 @@ SWData.PC.ABILITIES.forEach(ability => {
       const carac = `[[${roll}[Dé] + (@{${short}})[Bonus ${short.toUpperCase()}] ]] `;      
       const chatMsg = cof2RollTemplate({
         lsub: "Test",
-        rsub: capitalize(ability),
+        rsub: capitalize(stat),
         roll: carac
       });
       sendChatMsg(chatMsg);
@@ -10538,7 +11380,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     let companionOf = strval(values.compagnon);
     companionOf = companionOf !== "" ? companionOf + "|" : "";
     const name = capitalize(strval(values[section + "nom"], "Attaque"));
-    const use_multi = intval(values[section + "multi"]);
+    const useMulti = intval(values[section + "multi"]);
     const roll = strval(values[section + "roll"]);
     const atk = strval(values[section + "atk"]);
     const portee = strval(values[section + "portee"]);
@@ -10546,10 +11388,10 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     const crit = intval(values[section + "crit"], 20);
 
     let multiAttacks = 1;
-    if (use_multi === 1) {
+    if (useMulti === 1) {
       const result = name.match(/\(([0-9]*)[ ]*attaques\)/);
       if (result) {
-        [ , multiAttacks ] = result;
+        [ multiAttacks ] = result.slice(1);
       }
       if (intval(multiAttacks) <= 0 )
         multiAttacks = 1;
@@ -10615,7 +11457,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     };
 
     for (let atk = 1; atk <= multiAttacks; atk++) {
-      if (use_multi === 1)
+      if (useMulti === 1)
         chatAtk = { ...chatAtk, lsub: `${atk}${ atk > 1 ? "ème" : "ère" } attaque` };
       const chatMsg = cof2RollTemplate(chatAtk);
       sendChatMsg(chatMsg);
@@ -10710,8 +11552,8 @@ SWData.COMPANIONS.forEach(attr => {
  * @returns {Map} updated Map
  */
 function importNPCAbilities(sbLine, npcAttrs) {
-  SWData.PC.ABILITIES.forEach(ability => {
-    const short = shorten(ability);
+  SWData.PC.STATS.forEach(stat => {
+    const short = shorten(stat);
     const rx = new RegExp(` ${short.toUpperCase()} (.)([0-9]*)(\\*)? `);
     const match = sbLine.match(rx);
     if (!match) 
@@ -11115,7 +11957,7 @@ function migrateSheetToV1_3(sheetType, curVer = { major: 1, minor: 2, patch: 0 }
   if (sheetType !== SWData.SHEET_TYPE.PC)
     return;
   
-  getAttrs([ "migration", ...SWData.PC.ABILITIES.map(a => shorten(a)) ], function(values) {
+  getAttrs([ "migration", ...SWData.PC.STATS.map(s => shorten(s)) ], function(values) {
     let migration = strval(values.migration);
     delete values.migration;
     const updates = new Map();
@@ -11401,27 +12243,27 @@ on("mancerchange:peuple", function (eventInfo) {
 });
 
 /**
- * Return ability final value
- * @param {string} ability - short ability name
+ * Return stat final value
+ * @param {string} stat - short stat name
  * @param {object} values - charmancer data object
  * @returns {number}
  */
-function abilityValue(ability, values) {
+function statValue(stat, values) {
   const statArrays = {
     "pol": [ 2, 2, 2, 1, 1, 0, -1 ],
     "exp": [ 3, 2, 1, 1, 0, 0, -1 ],
     "spe": [ 4, 2, 1, 0, 0, -1, -1 ]
   };
-  const ix = intval(values[`${ability}_rb`]);
+  const ix = intval(values[`${stat}_rb`]);
   const value = statArrays[strval(values.type, "exp")][ix];
-  const mod = intval(values[`${ability}_mod`]);
+  const mod = intval(values[`${stat}_mod`]);
   return (value + mod);
 }
 
 /**
  * Swap radio buttons values
  */
-SWData.PC.ABILITIES.map(a => shorten(a)).forEach(short => {
+SWData.PC.STATS.map(stat => shorten(stat)).forEach(short => {
   const radioBtn = short + "_rb";
   const select = short + "_mod";
   on(`mancerchange:${radioBtn} mancerchange:${select}`, function (eventInfo) {
@@ -11429,12 +12271,12 @@ SWData.PC.ABILITIES.map(a => shorten(a)).forEach(short => {
     const values = getCharmancerData()[page].values;
     if (eventInfo.triggerName.endsWith("_rb")) {
       const index = intval(eventInfo.newValue);
-      const others = SWData.PC.ABILITIES.map(a => shorten(a) + "_rb").filter(a => a !== short + "_rb");
+      const others = SWData.PC.STATS.map(stat => shorten(stat) + "_rb").filter(stat => stat !== short + "_rb");
       const sameValue = others.find(a => intval(values[a]) === index);
       if (sameValue)
         setAttrs({ [sameValue]: eventInfo.previousValue }, { silent: true });
     }
-    setCharmancerText({ [`${short}-val`]: abilityValue(short, values) }); 
+    setCharmancerText({ [`${short}-val`]: statValue(short, values) }); 
   });
 });
 
@@ -11456,11 +12298,11 @@ on("mancerfinish:finish", function(mancerData) {
 
   const updates = ({ famille, profil, peuple });
   
-  // abilities
+  // stats
   const type = strval(values.type);
   if (type !== "") {
-    SWData.PC.ABILITIES.map(a => shorten(a) + "_base").forEach(base => {
-      updates[base] = abilityValue(base, values);
+    SWData.PC.STATS.map(s => shorten(s)).forEach(stat => {
+      updates[stat + "_base"] = statValue(stat, values);
     });
   }
 
@@ -11484,8 +12326,9 @@ on("mancerfinish:finish", function(mancerData) {
       updates[`v${path}r2_props`] = "initial";
     }
   });
-  if (voies.filter(v => v !== "").length > 0)
-    abilityUsages(path);
+  if (voies.filter(v => v !== "").length > 0) {
+    abilityUsages();
+  }
 
   // gear and attacks
   const baseGear = boolval(values.base_gear);

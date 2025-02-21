@@ -13,10 +13,15 @@ input,
 select,
 textarea,
 button,
-.charmancer .cofmancer
-{
+.charmancer .cofmancer {
   box-sizing: border-box;
   font-family: var(--cof-font);
+}
+
+input:hover:read-write,
+input:hover:read-write,
+select:hover {
+  background-color: white;
 }
 
 .cofmain input[type="text"] {
@@ -42,6 +47,11 @@ button,
   text-align: right;
 }
 
+.cofmain .cofsheet input[type='text'].two-digits {
+  width: 2rem;
+  text-align: right;
+}
+
 .cofmain .cofsheet input[type='number'].treasure {
   width: 7rem;
   text-align: right;
@@ -50,6 +60,14 @@ button,
 
 summary {
   display: list-item;
+}
+
+summary h4 {
+  display: inline;
+}
+
+.cofmain textarea.x-large {
+  height: 18rem;
 }
 
 .cofmain textarea.large {
@@ -248,12 +266,18 @@ button[type='action'].block-title:hover {
 /* General Layout */
 
 div.block-title,
+summary.block-title,
 button.block-title {
   background-color: var(--cof-color);
   color: var(--cof-dark);
   text-align: center;
   padding-top: 2px;
   padding-bottom: 2px;
+}
+
+summary.block-title {
+  margin-left: 15px;
+  list-style-position: outside;
 }
 
 div.block-header {
@@ -612,7 +636,7 @@ div.change-view {
   background-color: tan;
 }
 
-.conditions input[value="1"].has-conditions ~ .bordered {
+.conditions .bordered:has(input[value="1"]) {
   border-color: orange;
   border-width: 2px;
   border-style: dashed;
@@ -731,9 +755,13 @@ div.change-view {
 }
 
 .abilities .rank textarea {
-  height: 12rem;
+  height: 2.5rem;
   overflow: hidden;
   resize: vertical;
+}
+
+.abilities .rank textarea:focus {
+  height: 12rem;
 }
 
 .abilities-view .abilities input:checked ~ .rank-title {
@@ -751,7 +779,9 @@ div.change-view {
 .abilities .rank textarea.one-row,
 .pc-roll-r1 textarea.one-row,
 .pc-gears .gears textarea.one-row,
+.pc-actions textarea.one-row,
 .npc-gears .gears textarea.one-row,
+.npc-actions textarea.one-row,
 .resources textarea.one-row {
   padding: 0;
   margin: 0;
@@ -778,7 +808,9 @@ div.change-view {
 .abilities .path textarea.one-row:focus,
 .pc-roll-r1 textarea.one-row:focus,
 .pc-gears .gears textarea.one-row:focus,
+.pc-actions textarea.one-row:focus,
 .npc-gears .gears textarea.one-row:focus,
+.npc-actions textarea.one-row:focus,
 .resources textarea.one-row:focus {
   height: 6rem;
 }
@@ -836,14 +868,37 @@ input[value="0"].show-paths-789 ~ div.abilities {
 .pc-config-tab li {
   margin-top: 2px;
 }
+
 .pc-config-tab li.config-check {
   list-style: none;
+}
+
+.pc-config-tab details:has(li input[type="checkbox"]:checked) summary h4::after {
+  content: " *";
+  font-variant-position: super;
 }
 
 .pc-config-tab .pc-configs {
   display: grid;
   grid-template-columns: 60% 40%;
   gap: 2px;
+}
+
+.pc-config-tab input[name="attr_pvmax_force"] ~ span,
+.pc-config-tab input[name="attr_drmax_force"] ~ span,
+.pc-config-tab input[name="attr_pcmax_force"] ~ span,
+.pc-config-tab input[name="attr_pmmax_force"] ~ span {
+  display: inline-block;
+  width: 5rem;
+}
+
+.pc-script-tab .pc-actions,
+.npc-script-tab .npc-actions {
+  margin-top: 10px;
+}
+
+.pc-script-tab .pc-actions input.list-name {
+  margin: 2px;
 }
 
 /* NPC LAYOUT */
