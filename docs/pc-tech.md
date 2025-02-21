@@ -4,12 +4,14 @@ Les noms d'attributs Roll20 utilisables dans des macros s'affichent dans des bul
 
 ## Caractéristiques
 
-- <kbd>agi</kbd>, <kbd>con</kbd>, <kbd>for</kbd>, <kbd>per</kbd>, <kbd>cha</kbd>, <kbd>int</kbd>, <kbd>vol</kbd> : scores de caractéristiques de base
-- <kbd>xxx_sup</kbd> : type de jet (N = normal, S = supérieure 
+- <kbd>agi_base</kbd>, <kbd>con_base</kbd>, <kbd>for_base</kbd>, <kbd>per_base</kbd>, <kbd>cha_base</kbd>, <kbd>int_base</kbd>, <kbd>vol_base</kbd> : scores de caractéristiques de base
+- - <kbd>agi_sup</kbd>, <kbd>con_sup</kbd>, <kbd>for_sup</kbd>, <kbd>per_sup</kbd>, <kbd>cha_sup</kbd>, <kbd>int_sup</kbd>, <kbd>vol_sup</kbd> : type de jet (N = normal, S = supérieure 
 ou héroïque, H = supérieure et héroïque)
-- <kbd>xxx_dsup</kbd> : expression de dé (selon le type de jet et les états préjudiciables)
-- <kbd>xxx_buff</kbd> : buffs/debuffs aux caractéristiques
-- <kbd>xxx_test</kbd> : scores de caractéristiques avec buffs
+- - <kbd>agi_dsup</kbd>, <kbd>con_dsup</kbd>, <kbd>for_dsup</kbd>, <kbd>per_dsup</kbd>, <kbd>cha_dsup</kbd>, <kbd>int_dsup</kbd>, <kbd>vol_dsup</kbd> : expression de dé (selon le type de jet et les états préjudiciables)
+- <kbd>agi_buff</kbd>, <kbd>con_buff</kbd>, <kbd>for_buff</kbd>, <kbd>per_buff</kbd>, <kbd>cha_buff</kbd>, <kbd>int_buff</kbd>, <kbd>vol_buff</kbd> : buffs/debuffs aux caractéristiques
+- <kbd>agi</kbd>, <kbd>con</kbd>, <kbd>for</kbd>, <kbd>per</kbd>, <kbd>cha</kbd>, <kbd>int</kbd>, <kbd>vol</kbd> : scores de caractéristiques _avec buffs/debuffs_
+- <kbd>tagi_buff</kbd>, <kbd>tcon_buff</kbd>, <kbd>tfor_buff</kbd>, <kbd>tper_buff</kbd>, <kbd>tcha_buff</kbd>, <kbd>tint_buff</kbd>, <kbd>tvol_buff</kbd> : buffs/debus aux tests de caractéristiques
+- - <kbd>agi_test</kbd>, <kbd>con_test</kbd>, <kbd>for_test</kbd>, <kbd>per_test</kbd>, <kbd>cha_test</kbd>, <kbd>int_test</kbd>, <kbd>vol_test</kbd> : scores de tests de caractéristiques _avec buffs_
 
 ## Combat
 
@@ -79,6 +81,34 @@ ou héroïque, H = supérieure et héroïque)
 - <kbd>condition_ralenti</kbd> : 0/1 selon que le personnage subit l'état préjudiciable _Ralenti_
 - <kbd>condition_renverse</kbd> : 0/1 selon que le personnage subit l'état préjudiciable _Renversé_
 - <kbd>condition_surpris</kbd> : 0/1 selon que le personnage subit l'état préjudiciable _Surpris_
+- <kbd>has_conditions</kbd> : 0/1 selon que le personnage subit au moins un état préjudiciable
+
+## Objets en main
+
+- <kbd>main_princ</kbd> : objet en main principale
+  
+  Valeurs possibles
+  - <kbd>0</kbd> : rien en main
+  - <kbd>n~xxxxxx~b</kbd> : arme en main, cf ci-dessous
+  - <kbd>torche</kbd>
+  - <kbd>autre</kbd> 
+- <kbd>main_autre</kbd> : objet dans l'autre main
+  
+  Valeurs possibles
+  - <kbd>0</kbd> : rien en main
+  - <kbd>n~xxxxxx~b</kbd> : arme en main, cf ci-dessous
+  - <kbd>2m</kbd> : arme tenue à deux mains
+  - <kbd>torche</kbd>
+  - <kbd>bouclier</kbd> : coche ou décoche la case bouclier de la Défense
+  - <kbd>autre</kbd>
+- <kbd>en_selle</kbd> : 0/1 selon que le personnage soit en selle ou pas (utile pour la voie du cavalier)
+
+### Arme en main
+
+Si une arme est en main, l'attribut correspondant prend une valeur composée de 3 éléments séparés par <kbd>~</kbd> :
+- <kbd>n</kbd> : no de label de l'attaque (**999** si le script COFantasy2 n'est pas installé et que les attaques ne sont pas auto-numérotées)
+- <kbd>xxxxxx</kbd> : id de la ligne d'attaque, pour jet si l'icone d20 est cliquée
+- <kbd>b</kbd> : 0/1 selon que l'arme est à deux mains
 
 ## Capacités
 
@@ -103,13 +133,20 @@ Ces attributs existent pour toutes les voies (1 à 9) et tous les rangs (1 à 5)
 
 ## Buffs / Debuffs
 
-- <kbd>agi_buff_list</kbd> : liste des buffs/debuffs d'AGI 
-- <kbd>con_buff_list</kbd> : liste des buffs/debuffs de CON 
+- <kbd>agi_buff_list</kbd> : liste des buffs/debuffs d'AGI
+- <kbd>con_buff_list</kbd> : liste des buffs/debuffs de CON
 - <kbd>for_buff_list</kbd> : liste des buffs/debuffs de FOR
 - <kbd>per_buff_list</kbd> : liste des buffs/debuffs de PER
 - <kbd>cha_buff_list</kbd> : liste des buffs/debuffs de CHA
 - <kbd>int_buff_list</kbd> : liste des buffs/debuffs d'INT
 - <kbd>vol_buff_list</kbd> : liste des buffs/debuffs de VOL
+- <kbd>tagi_buff_list</kbd> : liste des buffs/debuffs aux tests d'AGI
+- <kbd>tcon_buff_list</kbd> : liste des buffs/debuffs aux tests de CON
+- <kbd>tfor_buff_list</kbd> : liste des buffs/debuffs aux tests de FOR
+- <kbd>tper_buff_list</kbd> : liste des buffs/debuffs aux tests de PER
+- <kbd>tcha_buff_list</kbd> : liste des buffs/debuffs aux tests de CHA
+- <kbd>tint_buff_list</kbd> : liste des buffs/debuffs aux tests d'INT
+- <kbd>tvol_buff_list</kbd> : liste des buffs/debuffs aux tests de VOL
 - <kbd>init_buff_list</kbd> : liste des buffs/debuffs d'Initiative
 - <kbd>init_cond</kbd> : total des debuffs à l'Initiative dus aux états préjudiciables
 - <kbd>atkcac_buff_list</kbd> : liste des buffs/debuffs d'attaque au contact
@@ -156,6 +193,21 @@ Lorsque vous spécifiez un FX, vous devez indiquer :
 
 Cet effet sera joué en même temps que le jet est affiché dans le chat avec pour origine le token du personnage à condition qu'il soit sélectionné sur la map. Si l'effet est directionnel, Roll20 demandera au joueur de sélectionner un point cible.
 
+# Support des capacités
+
+Certaines capacités de profil sont automatiquement prises en charge par la fiche. Pour ce faire, celle-ci doit être capable de détecter les noms de voies et capacités. La mise en correspondance est faite en ignorant les majuscules/minuscules et accents.
+
+- Arquebusier :
+  - Poudre puissante (_Explosifs rang 3_) : portée et bonus au DM
+  - Joli coup (_Précision rang 1_) : réduction de la pénalité pour cible au couvert
+  - Tir précis (_Précision rang 3_) : augmentation de la plage de critique
+- Barbare :
+  - Peau de pierre (_Pagne rang 2_) : calcul de la DEF basé sur la CON
+- Barde :
+  - Charisme héroïque (_Séduction rang 4_) : calcul des PM max basé sur le CHA
+- Chevalier :
+  - Cavalier émérite (_Cavalier rang 2_) : bonus aux DM et DEF de la monture
+
 # Menus et macros
 
 Divers boutons disséminés dans la fiche permettent d'afficher dans le chat Roll20 des menus avec des listes d'actions. Ces boutons peuvent être configurés en tant que macros Roll20 et insérés dans la barre rapide des macros et/ou configurés en tant qu'action de jetons.
@@ -163,6 +215,7 @@ Divers boutons disséminés dans la fiche permettent d'afficher dans le chat Rol
 Les macros à configurer sont les suivantes :
 - <kbd>%{selected|pc_menus-btn}</kbd> affiche un menu de tous les autres sous-menus possibles
 - <kbd>%{selected|caract_menu-btn}</kbd> affiche un menu pour les jets de caractéristiques
+- <kbd>%{selected|etats_menu-btn}</kbd> affiche un menu des états préjudiciables
 - <kbd>%{selected|attacks_menu-btn}</kbd> affiche un menu pour les jets d'attaque
 - <kbd>%{selected|abilities_menu-btn}</kbd> affiche un menu des voies dans lesquelles le personnage possède des capacités
 - <kbd>%{selected|rolls_menu-btn}</kbd> affiche un menu des jets de capacités

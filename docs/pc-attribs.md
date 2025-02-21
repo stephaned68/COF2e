@@ -165,6 +165,8 @@ Selon qu'une arme est équipée ou non, un bouton _d20_ apparaît en regard de c
 
 _Les listes déroulantes d'objet sont chargées à l'ouverture de la fiche, en cas de modification de la liste des attaques, il est nécessaire de fermer et ré-ouvrir la fiche._
 
+On peut également indiquer dans ce sous-onglet si le personnage est en selle ou pas.
+
 ---
 
 [Retour]({{ site.baseurl }}/pc-main)
