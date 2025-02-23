@@ -69,7 +69,10 @@ Dans cette section, vous pouvez renseigner une liste de ressources ou de consomm
 
 Pour chaque élément de la liste, vous indiquez :
 - Le nom de la ressource,
-- Le nombre actuellement en possession du PJ.
+- Le nombre actuellement en possession du PJ,
+- Un liste optionnelle de propriétés permettant de préciser la nature de la ressource.
+
+Si vous spécifiez une propriété <kbd>type</kbd> avec la valeur <kbd>munitions</kbd>, la fiche recherche dans les armes une ligne dont le type d'attaque est _Armes de jet_ et dont le nom de munition correspond au nom de la ressource. Elle établit la relation entre les deux éléments pour décrémenter la ressource à chaque attaque et afficher un message d'avertissement lorsque le personnage est à court de munitions.
 
 # Equipement divers et notes
 

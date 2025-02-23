@@ -20,7 +20,7 @@ Des boutons permettent de faire des jets de caractéristiques et d'Initiative.
 
 Cette zone de texte libre permet de préciser des informations générales sur le PNJ ou la créature.
 
-# Attaques
+# Sous-onglet _Attaques_
 
 Cette liste contient les attaques dont le PNJ dispose en combat. Pour chaque attaque, vous indiquez :
 - Son nom,
@@ -56,7 +56,13 @@ Un clic sur le bouton d20 permet de lancer le jet d'attaque et de DM dans le cha
 
 Le texte d'effet spécial est traité par la fiche pour substituer les jets en ligne comme décrit pour la description des [capacités des PJs]({{ site.baseurl }}/pc-abilities).
 
-# Capacités
+## Attaque groupée
+
+Cette section permet de gérer les bonus pour toucher d'un groupe de 2 à 8 créatures attaquant la même cible. 
+
+A partir de 5 créatures, la fiche effectue deux attaques, en répartissant le nombre de créatures en deux groupes.
+
+# Sous-onglet _Capacités_
 
 Cette liste contient les capacités spéciales du PNJ. Pour chacune, vous indiquez son nom et sa description.
 

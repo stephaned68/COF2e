@@ -49,6 +49,9 @@ Si le nombre de points de capacités utilisé dépasse le nombre maximum disponb
 - Initiative + AGI : Le score d'Initiative est calculé en ajoutant l'AGI à la somme 10 + PER.
 - Encombrement : L'encombrement de l'équipement porté par le PJ est calculé et des alertes sont affichées dans le chat Roll20 selon que les divers seuils sont dépassés.
 - Critiques différenciés : Les réussites critiques en combat provoquent des effets différenciés selon le type de DM de l'arme utilisée.
+- Points de chance variables : La dépense d'un PC ajoute 1d10 au résultat du dernier jet de D20. En compensation, le nombre de PC est doublé.
+- Utiliser le malus de bouclier : Le bouclier inflige un malus à certaines actions (comme une armure).
+- Suivre les munitions : Les munitions liées aux attaques d'arme de jet sont déduites des ressources.
 
 ## High Fantasy
 
@@ -61,6 +64,10 @@ Si le nombre de points de capacités utilisé dépasse le nombre maximum disponb
 - Progression limitée : Les scores d'attaquent n'augmentent plus après le niveau 6.
 - Récupération - niveau : Le jet de récupération rapide est un jet de DR sec, sans ajouter la moitié du niveau.
 
+## Forcer les valeurs maxi
+
+Cette section permet de fixer la valeur maximum des PV, DR, PC et PM et empêche la fiche de les calculer automatiquement.
+
 ## Notifications
 
 Pour chaque type de notification, vous pouvez choisir entre aucun affichage, un affichage pour tous les joueurs, ou un affichage privé pour le joueur et le MJ.
@@ -72,7 +79,11 @@ Pour chaque type de notification, vous pouvez choisir entre aucun affichage, un 
 
 ## Apparence des messages
 
-Le joueur peut sélectionner une couleur spécifique pour les messages de chat de son personnage.
+Vous pouvez sélectionner une couleur spécifique pour les messages de chat du personnage.
+
+Vous pouvez également modifier certains aspects des messages de chat :
+- Un seul jet d'attaque (au lieu des deux jets effectués par défaut par la fiche).
+- Bouton Chance : Un bouton chance est affiché au bas des messages sur tous les jets de D20 et permet de dépenser instantanément un PC.
 
 ## Premiers rangs
 
