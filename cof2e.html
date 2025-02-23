@@ -1,9 +1,9 @@
 <div class="cofmain">
 
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.2.02">
+  <input type="hidden" name="attr_verfdp" value="1.2.03">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.2.02">
+  <input type="hidden" name="attr_version" value="1.2.03">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
 
@@ -59,7 +59,8 @@
   <!-- Other hidden attributes -->
   <input type="hidden" name="attr_rangs_voies" value="">
   <input type="hidden" name="attr_noms_voies" value="">
-  <input type="hidden" name="attr_capabilities" value="">
+
+  <input type="hidden" name="attr_rang_cavalier" value="0">
   
   <!-- COFantasy MOD interaction -->
   <input type="hidden" name="attr_script_title" value="">
@@ -1175,6 +1176,10 @@
                 <div class="weapon-thrown">
                   <div class="weapon-throw">
                     <div></div>
+                    <div class="bordered">
+                      <input type="hidden" name="attr_jet-resid" value="">
+                      <input type="text" name="attr_jet-nom" title="@{jet-nom}" placeholder="Nom de la munition">
+                    </div>
                     <div class="bordered">
                       Disponibles :&nbsp;
                       <input type="number" class="two-digits" name="attr_jet-dispo" title="@{jet-dispo}" value="0">
@@ -4402,6 +4407,10 @@
                   <input type="checkbox" name="attr_cfg_bouclier_malus" value="1">
                   <span>Utiliser le malus de bouclier</span>
                 </li>
+                <li class="config-check">
+                  <input type="checkbox" name="attr_cfg_use_ammo" value="1">
+                  <span>Suivre les munitions</span>
+                </li>
               </ul>
             </details>
 
@@ -4807,7 +4816,9 @@
                       Ajout de toutes les armes et armures dans la liste des équipements reconnus
                       La mise en correspondance est faite en ignorant les majuscules/minuscules et accents
                     </li>
+                    <li>Gestion simplifée du suivi des munitions</li>
                     <li>Ajout de 4 listes d'actions sur l'onglet Script des fiches de PJ et PNJ</li>
+                    <li>Prise en compte des attaques groupées sur la fiche de PNJ</li>
                     <li>Ajout d'un onglet Equipement simplifié sur la fiche de PNJ</li>
                     <li>Correction d'un bug sur l'appel du Persomancien</li>
                   </ul>
@@ -5080,187 +5091,266 @@
   
         </div>
 
-        <hr>
-
-        <div class="npc-attacks">
-          
-          <div class="weapon">
-            <div></div>
-            <h4>
-              ARME / SORT
-              <button type="action" class="flat-btn img-btn" name="act_npcatks_menu-btn" title="%{npcatks_menu-btn} Menu des jets d'attaques">
-                <span class="img-btn">l</span>
-              </button>
-            </h4>
-            <h4>ATTAQUE</h4>
-            <h4>CRIT.</h4>
-            <h4>DM</h4>
-            <h4>PORTEE</h4>
-            <h4>SPECIAL</h4>
-          </div>
-
-          <input type="hidden" name="attr_pnjatk">
-
-          <fieldset class="repeating_npcarmes">
-
-            <div class="weapon">
-              
-              <div>
-                <button type="action" class="flat-btn" name="act_npcatk-btn">
-                  <span class="d20-btn">t</span>
-                </button>
-              </div>
-              <div class="d-flex d-flex-middle bordered">
-                <input type="hidden" name="attr_arme-label" value="">
-                <span class="align-self-center" name="attr_arme-label"></span>&nbsp;
-                <input type="text" name="attr_arme-nom" title="@{arme-nom}" placeholder="Arme/attaque" value="">
-              </div>
-              <div class="d-flex d-flex-middle bordered">
-                <input type="checkbox" name="attr_arme-multi" title="@{arme-multi} Attaques multiples" value="1">&nbsp;
-                <select class="select-xs" name="attr_arme-roll" title="@{arme-roll} Type de jet">
-                  <option value="1d20" selected>No - Normal</option>
-                  <option value="2d20kh1">Db - Dé bonus</option>
-                  <option value="2d20kl1">Dm - Dé malus</option>
-                </select>&nbsp;
-                <input type="number" class="two-digits" name="attr_arme-atk" title="@{arme-atk} Bonus d'attaque" value="">
-              </div>
-              <div class="d-flex d-flex-middle bordered">
-                <input type="number" class="two-digits" name="attr_arme-crit" title="@{arme-crit} Seuil de Critique" value="20" min="2" max="20">
-              </div>
-              <div class="d-flex d-flex-middle bordered">
-                <input type="text" name="attr_arme-dm" title="@{arme-dm} Dé(s) de DM" placeholder="1d8, 2d6..." value="">
-                <select class="select-xxs" name="attr_arme-dmtype" title="@{arme-dmtype} Type de dommages">
-                  <optgroup label="Physiques">
-                    <option disabled class="optgroup">
-                      &nbsp;Physiques
-                    </option>
-                    <option value="contondants">C - Contondants</option>
-                    <option value="perforants">P - Perforants</option>
-                    <option value="poison">Po - Poison</option>
-                    <option value="tranchants" selected>T - Tranchants</option>
-                  </optgroup>
-                  <optgroup label="Naturels">
-                    <option disabled class="optgroup">
-                      &nbsp;Naturels
-                    </option>
-                    <option value="coup">Co - Coup</option>
-                    <option value="morsure">M - Morsure</option>
-                    <option value="griffes">G - Griffes</option>
-                  </optgroup>
-                  <optgroup label="Elementaires">
-                    <option disabled class="optgroup">
-                      &nbsp;Elémentaires
-                    </option>
-                    <option value="acide">A - Acide</option>
-                    <option value="électricité">E - Electricité</option>
-                    <option value="feu">Fe - Feu</option>
-                    <option value="froid">Fr - Froid</option>
-                  </optgroup>
-                  <optgroup label="Autres">
-                    <option disabled class="optgroup">
-                      &nbsp;Autres
-                    </option>
-                    <option value="magiques">M - Magiques</option>
-                  </optgroup>
-                </select>
-                &nbsp;<span class="align-self-center">+</span>&nbsp;
-                <input type="number" class="two-digits" name="attr_arme-dmdiv" title="@{arme-dmdiv} Bonus DM" value="0">
-              </div>
-              <div class="d-flex d-flex-middle bordered">
-                <input type="text" name="attr_arme-portee" title="@{arme-portee}" value="">
-              </div>
-              <div class="d-flex d-flex-middle bordered">
-                <input type="text" name="attr_arme-special" title="@{arme-special}" placeholder="Effet, capacités spéciales..." value="">
-                <button type="action" class="flat-btn img-btn float-right" name="act_armeopt-btn">
-                  <span class="img-btn">y</span>
-                </button>
-              </div>
-
-            </div>
-
-            <input type="hidden" class="cof-wopt-toggle" name="attr_armeopt" value="0"/>
-            <div class="weapon-opt">
-              <div class="weapon-option">
-                <div></div>
-                <div class="bordered">
-                  <select name="attr_arme-atktype" class="select-lg" title="@{arme-atktype} Type d'arme/attaque">
-                    <option value="">Type d'attaque...</option>
-                    <option value="main">Arme en main</option>
-                    <option value="jet">Arme de jet</option>
-                    <option value="sort">Sortilège</option>
-                    <option value="naturel">Arme naturelle</option>
-                  </select>
-                </div>
-                <div class="bordered">
-                  <input type="text" name="attr_arme-atkmods" placeholder="Modificateurs d'attaque" title="@{arme-atkmods} Modificateurs séparés par des virgules&#10; deBonus: avec dé bonus&#10; deMalus: avec dé malus&#10; auto: réussite automatique&#10; choc: peut faire des attaques non léthales sans malus&#10; explodeMax: dés de dégâts explosifs&#10; pasDeDmg: l'attaque ne fait pas de DM&#10; poudre: arme à poudre&#10; reroll1: relance les 1 sur les dés de DM&#10; tempDmg: fait toujours des attaques non léthales" value="">
-                </div>
-                <div class="bordered">
-                  <input type="text" name="attr_arme-options" placeholder="Options d'attaque avec argument" title="@{arme-options} Options d'attaque">
-                </div>
-              </div>
-
-              <input type="hidden" class="cof-thrown-toggle" name="attr_arme-jet" value="0"/>
-              <div class="weapon-thrown">
-                <div class="weapon-throw">
-                  <div></div>
-                  <div class="bordered">
-                    Disponibles :&nbsp;
-                    <input type="number" class="two-digits" name="attr_jet-dispo" title="@{jet-dispo}" value="0">
-                  </div>
-                  <div class="bordered">
-                    Possédés :&nbsp;
-                    <input type="number" class="two-digits" name="attr_jet-dispo_max" title="@{jet-dispo_max}" value="0">
-                  </div>
-                  <div class="bordered">
-                    Taux perte :&nbsp;
-                    <input type="number" class="two-digits" name="attr_jet-perte" title="@{jet-perte}" value="0">
-                    &nbsp;%
-                  </div>
-                </div>
-              </div>
-  
-            </div>
-
-          </fieldset>
-
+        <!-- Fiche PNJ, Onglet Caractéristiques, Sous-onglets -->
+        <input type="hidden" class="tabs-toggle" name="attr_npc_subtab1" value="attacks" />
+        <div class="npc-subtabs">
+          <button type="action" name="act_npc_attacks-btn" class="sub-tab tab-btn npc-attacks-btn">ATTAQUES</button>
+          <button type="action" name="act_npc_abilities-btn" class="sub-tab tab-btn npc-abilities-btn">CAPACITES</button>
         </div>
 
         <hr>
-        
-        <div class="npc-abilities">
 
-          <div class="npc-ability">
-            <div></div>
-            <h4>
-              CAPACIT&Eacute;
-              <button type="action" class="flat-btn img-btn" name="act_npcrolls_menu-btn" title="%{npcrolls_menu-btn} Menu des jets de capacités">
-                <span class="img-btn">l</span>
-              </button>
-            </h4>
-            <h4>DESCRIPTION</h4>
+        <div class="npc-attacks-subtab">
+
+          <div class="npc-attacks">
+          
+            <div class="weapon">
+              <div></div>
+              <h4>
+                ARME / SORT
+                <button type="action" class="flat-btn img-btn" name="act_npcatks_menu-btn" title="%{npcatks_menu-btn} Menu des jets d'attaques">
+                  <span class="img-btn">l</span>
+                </button>
+              </h4>
+              <h4>ATTAQUE</h4>
+              <h4>CRIT.</h4>
+              <h4>DM</h4>
+              <h4>PORTEE</h4>
+              <h4>SPECIAL</h4>
+            </div>
+  
+            <input type="hidden" name="attr_pnjatk">
+  
+            <fieldset class="repeating_npcarmes">
+  
+              <div class="weapon">
+                
+                <div>
+                  <button type="action" class="flat-btn" name="act_npcatk-btn">
+                    <span class="d20-btn">t</span>
+                  </button>
+                </div>
+                <div class="d-flex d-flex-middle bordered">
+                  <input type="hidden" name="attr_arme-label" value="">
+                  <span class="align-self-center" name="attr_arme-label"></span>&nbsp;
+                  <input type="text" name="attr_arme-nom" title="@{arme-nom}" placeholder="Arme/attaque" value="">
+                </div>
+                <div class="d-flex d-flex-middle bordered">
+                  <input type="checkbox" name="attr_arme-multi" title="@{arme-multi} Attaques multiples" value="1">&nbsp;
+                  <select class="select-xs" name="attr_arme-roll" title="@{arme-roll} Type de jet">
+                    <option value="1d20" selected>No - Normal</option>
+                    <option value="2d20kh1">Db - Dé bonus</option>
+                    <option value="2d20kl1">Dm - Dé malus</option>
+                  </select>&nbsp;
+                  <input type="number" class="two-digits" name="attr_arme-atk" title="@{arme-atk} Bonus d'attaque" value="">
+                </div>
+                <div class="d-flex d-flex-middle bordered">
+                  <input type="number" class="two-digits" name="attr_arme-crit" title="@{arme-crit} Seuil de Critique" value="20" min="2" max="20">
+                </div>
+                <div class="d-flex d-flex-middle bordered">
+                  <input type="text" name="attr_arme-dm" title="@{arme-dm} Dé(s) de DM" placeholder="1d8, 2d6..." value="">
+                  <select class="select-xxs" name="attr_arme-dmtype" title="@{arme-dmtype} Type de dommages">
+                    <optgroup label="Physiques">
+                      <option disabled class="optgroup">
+                        &nbsp;Physiques
+                      </option>
+                      <option value="contondants">C - Contondants</option>
+                      <option value="perforants">P - Perforants</option>
+                      <option value="poison">Po - Poison</option>
+                      <option value="tranchants" selected>T - Tranchants</option>
+                    </optgroup>
+                    <optgroup label="Naturels">
+                      <option disabled class="optgroup">
+                        &nbsp;Naturels
+                      </option>
+                      <option value="coup">Co - Coup</option>
+                      <option value="morsure">M - Morsure</option>
+                      <option value="griffes">G - Griffes</option>
+                    </optgroup>
+                    <optgroup label="Elementaires">
+                      <option disabled class="optgroup">
+                        &nbsp;Elémentaires
+                      </option>
+                      <option value="acide">A - Acide</option>
+                      <option value="électricité">E - Electricité</option>
+                      <option value="feu">Fe - Feu</option>
+                      <option value="froid">Fr - Froid</option>
+                    </optgroup>
+                    <optgroup label="Autres">
+                      <option disabled class="optgroup">
+                        &nbsp;Autres
+                      </option>
+                      <option value="magiques">M - Magiques</option>
+                    </optgroup>
+                  </select>
+                  &nbsp;<span class="align-self-center">+</span>&nbsp;
+                  <input type="number" class="two-digits" name="attr_arme-dmdiv" title="@{arme-dmdiv} Bonus DM" value="0">
+                </div>
+                <div class="d-flex d-flex-middle bordered">
+                  <input type="text" name="attr_arme-portee" title="@{arme-portee}" value="">
+                </div>
+                <div class="d-flex d-flex-middle bordered">
+                  <textarea class="one-row" name="attr_arme-special" title="@{arme-special}" placeholder="Effet, capacités spéciales..."></textarea>
+                  <button type="action" class="flat-btn img-btn float-right" name="act_armeopt-btn">
+                    <span class="img-btn">y</span>
+                  </button>
+                </div>
+  
+              </div>
+  
+              <input type="hidden" class="cof-wopt-toggle" name="attr_armeopt" value="0"/>
+              <div class="weapon-opt">
+                <div class="weapon-option">
+                  <div></div>
+                  <div class="bordered">
+                    <select name="attr_arme-atktype" class="select-lg" title="@{arme-atktype} Type d'arme/attaque">
+                      <option value="">Type d'attaque...</option>
+                      <option value="main">Arme en main</option>
+                      <option value="jet">Arme de jet</option>
+                      <option value="sort">Sortilège</option>
+                      <option value="naturel">Arme naturelle</option>
+                    </select>
+                  </div>
+                  <div class="bordered">
+                    <input type="text" name="attr_arme-atkmods" placeholder="Modificateurs d'attaque" title="@{arme-atkmods} Modificateurs séparés par des virgules&#10; deBonus: avec dé bonus&#10; deMalus: avec dé malus&#10; auto: réussite automatique&#10; choc: peut faire des attaques non léthales sans malus&#10; explodeMax: dés de dégâts explosifs&#10; pasDeDmg: l'attaque ne fait pas de DM&#10; poudre: arme à poudre&#10; reroll1: relance les 1 sur les dés de DM&#10; tempDmg: fait toujours des attaques non léthales" value="">
+                  </div>
+                  <div class="bordered">
+                    <input type="text" name="attr_arme-options" placeholder="Options d'attaque avec argument" title="@{arme-options} Options d'attaque">
+                  </div>
+                </div>
+  
+                <input type="hidden" class="cof-thrown-toggle" name="attr_arme-jet" value="0"/>
+                <div class="weapon-thrown">
+                  <div class="weapon-throw">
+                    <div></div>
+                    <div class="bordered">
+                      Disponibles :&nbsp;
+                      <input type="number" class="two-digits" name="attr_jet-dispo" title="@{jet-dispo}" value="0">
+                    </div>
+                    <div class="bordered">
+                      Possédés :&nbsp;
+                      <input type="number" class="two-digits" name="attr_jet-dispo_max" title="@{jet-dispo_max}" value="0">
+                    </div>
+                    <div class="bordered">
+                      Taux perte :&nbsp;
+                      <input type="number" class="two-digits" name="attr_jet-perte" title="@{jet-perte}" value="0">
+                      &nbsp;%
+                    </div>
+                  </div>
+                </div>
+    
+              </div>
+  
+            </fieldset>
+  
           </div>
 
-          <fieldset class="repeating_npcrolls">
-            
-            <div class="npc-ability">
+          <hr>
 
-              <div>
-                <button type="action" class="flat-btn" name="act_npcroll-btn">
-                  <span class="img-btn img-btn-lg">w</span>
-                </button>
+          <div class="sheet-2colrow">
+
+            <div class="sheet-col">
+
+              <h4>Attaque groupée</h4>
+
+              <div class="npc-tactic">
+                <div>
+                  <input type="radio" name="attr_atkgroup" value="1" checked>
+                  1 créature
+                </div>
+                <div>
+                </div>
               </div>
 
-              <div class="bordered">
-                <input type="text" name="attr_npcroll-name" title="@{npcroll-name}" placeholder="Nom de la capacité" value="">
+              <div class="npc-tactic">
+                <div>
+                  <input type="radio" name="attr_atkgroup" value="2">
+                  2 créatures
+                </div>
+                <div>
+                  +5 en attaque
+                </div>
               </div>
 
-              <div class="bordered">
-                <input type="text" name="attr_npcroll-desc" title="@{npcroll-desc}" placeholder="Description de la capacité" value="">
+              <div class="npc-tactic">
+                <div>
+                  <input type="radio" name="attr_atkgroup" value="3">
+                  3 créatures
+                </div>
+                <div>
+                  +10 en attaque
+                </div>
+              </div>
+
+              <div class="npc-tactic">
+                <div>
+                  <input type="radio" name="attr_atkgroup" value="4">
+                  4 créatures
+                </div>
+                <div>
+                  Touche automatique
+                </div>
+              </div>
+
+              <div class="npc-tactic">
+                <div>
+                  <input type="radio" name="attr_atkgroup" value="5">
+                  Jusqu'à 8 créatures
+                </div>
+                <div class="d-flex">
+                  Nombre :&nbsp;
+                  <input type="number" name="attr_nbgroup" title="@{nbgroup}" min="5" max="8" value="">
+                </div>
               </div>
 
             </div>
 
-          </fieldset>
+            <div class="sheet-col">
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="npc-abilities-subtab">
+        
+          <div class="npc-abilities">
+
+            <div class="npc-ability">
+              <div></div>
+              <h4>
+                CAPACIT&Eacute;
+                <button type="action" class="flat-btn img-btn" name="act_npcrolls_menu-btn" title="%{npcrolls_menu-btn} Menu des jets de capacités">
+                  <span class="img-btn">l</span>
+                </button>
+              </h4>
+              <h4>DESCRIPTION</h4>
+            </div>
+  
+            <fieldset class="repeating_npcrolls">
+              
+              <div class="npc-ability">
+  
+                <div>
+                  <button type="action" class="flat-btn" name="act_npcroll-btn">
+                    <span class="img-btn img-btn-lg">w</span>
+                  </button>
+                </div>
+  
+                <div class="bordered">
+                  <input type="text" name="attr_npcroll-name" title="@{npcroll-name}" placeholder="Nom de la capacité" value="">
+                </div>
+  
+                <div class="bordered">
+                  <textarea class="one-row" name="attr_npcroll-desc" title="@{npcroll-desc}" placeholder="Description de la capacité"></textarea>
+                </div>
+  
+              </div>
+  
+            </fieldset>
+  
+          </div>
 
         </div>
 
@@ -7624,9 +7714,10 @@ function askValue(prompt, callback) {
   const askValue = `!{{ask=[[?{${prompt}}]]}}`;
   startRoll(askValue, question => {
     const query = question.results.ask.result;
-      if(query && callback) {
-          callback(query);
-      }
+    if(query && callback) {
+        callback(query);
+    }
+    finishRoll(question.rollId);
   });
 }
 
@@ -7647,7 +7738,7 @@ function ask(askParams, callback) {
       if(query && callback) {
           callback(query, choices);
       }
-      //finishRoll(question.rollId);
+      finishRoll(question.rollId);
   });
 };
 
@@ -7891,6 +7982,12 @@ on("change:sheet_type", function() {
 [ "rolls", "skills", "buffs", "import" ].forEach(button => {
   on(`clicked:pc_${button}-btn`, function() {
       setAttrs({ pc_subtab2: button });
+  });
+});
+
+[ "attacks", "abilities" ].forEach(button => {
+  on(`clicked:npc_${button}-btn`, function() {
+      setAttrs({ npc_subtab1: button });
   });
 });
 
@@ -9054,7 +9151,8 @@ on("clicked:repeating_armes:attack-btn", function() {
   ];
   getAttrs([
     "cfg_1attack_roll",
-    "cfg_crit_diff", 
+    "cfg_crit_diff",
+    "cfg_use_ammo",
     "bouclier_eqp",
     "condition_affaibli",
     "condition_immobilise",
@@ -9067,12 +9165,14 @@ on("clicked:repeating_armes:attack-btn", function() {
     "rangs_voies",
     ...luckButtonAttrs(),
     ...sitModAttrs.map(a => `modsit_${a}`),
-    ...attackAttrs.map(a => `${section}${a}`)
+    ...attackAttrs.map(a => `${section}${a}`),
+    "repeating_armes_jet-resid"
   ], function (values) {
     
     // general options
     const useOneRoll = boolval(values.cfg_1attack_roll);
     const useCritDiff = intval(values.cfg_crit_diff);
+    const useAmmo = boolval(values.cfg_use_ammo);
     const shieldUsed = boolval(values.bouclier_eqp);
     const tactics = intval(values.tactique);
     const tactBM = intval(values.tactdiv);
@@ -9098,6 +9198,7 @@ on("clicked:repeating_armes:attack-btn", function() {
     const isRanged = (atk === "atktir" && portee !== "");
     const modifiers = strval(values[section + "atkmods"]).split(",").map(mod => mod.trim().toLowerCase());
     const options = strval(values[section + "options"]);
+    const ressourceId = strval(values["repeating_armes_jet-resid"]);
 
     // 2 mains & bouclier 
     const twoHanded = boolval(values[section + "2m"]);
@@ -9301,6 +9402,14 @@ on("clicked:repeating_armes:attack-btn", function() {
       atkProps.broll = attack;
     const chatMsg = cof2RollTemplate(atkProps);
     sendChatMsg(chatMsg);
+
+    if (useAmmo && ressourceId !== "") {
+      const resVal = `repeating_ressources_${ressourceId}_res-val`;
+      getAttrs([ resVal ], function(values) {
+        const munitions = Math.max(0, intval(values[resVal]) -1);
+        setAttrs({ [resVal]: munitions });
+      });
+    }
   });
 });
 
@@ -10758,6 +10867,67 @@ on("clicked:profequip-btn", function() {
   });
 });
 
+on("change:repeating_ressources:res-props", function(eventInfo) {
+  const rsRessources = "repeating_ressources";
+  const rsArmes = "repeating_armes";
+  const resourceId = eventInfo.sourceAttribute.split("_")[2];
+  getSectionIDs(rsArmes, rowIds => {
+    const allAttacks = [];
+    rowIds.forEach(rowId => {
+      allAttacks.push(...[ "arme-atktype", "jet-nom" ].map(a => `${rsArmes}_${rowId}_${a}`));
+    });
+    getAttrs([ "cfg_use_ammo", `${rsRessources}_res-desc`, `${rsRessources}_res-props`, ...allAttacks ], function(values) {
+      const useAmmo = boolval(values.cfg_use_ammo);
+      if (!useAmmo)
+        return;
+
+      const desc = strval(values[`${rsRessources}_res-desc`]);
+      const props = strval(values[`${rsRessources}_res-props`]);
+      if (getProp(props, "type").toLowerCase() !== "munitions")
+        return;
+
+      const thrownIds = allAttacks
+      .filter(a => a.endsWith("arme-atktype"))
+      .filter(a => values[a] === "jet")
+      .map(a => a.split("_")[2]);
+      let updates;
+      thrownIds.forEach(id => {
+        const name = `${rsArmes}_${id}_jet-nom`;
+        if (strval(values[name]).trim() === desc.trim())
+          updates = { [`${rsArmes}_${id}_jet-resid`]: resourceId };
+      });
+      if (updates)
+        setAttrs(updates);
+    });
+  })
+});
+
+on("change:repeating_ressources:res-val", function(eventInfo) {
+  const section = "repeating_ressources";
+  const attrs = [ "desc", "val", "props" ].map(a => `${section}_res-${a}`)
+  getAttrs([ "cfg_use_ammo", ...attrs ], function (values) {
+    const useAmmo = boolval(values.cfg_use_ammo);
+    if (!useAmmo)
+      return;
+
+    const desc = strval(values[`${section}_res-desc`]);
+    const props = strval(values[`${section}_res-props`]);
+    if (getProp(props, "type").toLowerCase() !== "munitions")
+      return;
+
+    const value = intval(values[`${section}_res-val`]);
+    if (value <= 0) {
+      const chatMsg = cof2RollTemplate({
+        lsub: "Attaque",
+        rsub: "Munitions",
+        text: `Plus de ${desc}`,
+        textclass: "fumble"
+      });
+      sendChatMsg(chatMsg);
+    }
+  });
+});
+
 /**
  * Rebuild all ranks in path
  */
@@ -11375,10 +11545,17 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     "portee",
     "special"
   ];
-  getAttrs([ "cfg_crit_diff", "compagnon", ...attackAttrs.map(attribute => `${section}${attribute}`) ], function (values) {
+  getAttrs([ 
+    "cfg_crit_diff",
+    "compagnon",
+    "atkgroup", "nbgroup",
+    ...attackAttrs.map(attribute => `${section}${attribute}`)
+  ], function (values) {
     const useCritDiff = intval(values.cfg_crit_diff);
     let companionOf = strval(values.compagnon);
     companionOf = companionOf !== "" ? companionOf + "|" : "";
+    const group = intval(values.atkgroup);
+    const groupNb = intval(values.nbgroup);
     const name = capitalize(strval(values[section + "nom"], "Attaque"));
     const useMulti = intval(values[section + "multi"]);
     const roll = strval(values[section + "roll"]);
@@ -11386,6 +11563,42 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     const portee = strval(values[section + "portee"]);
     const range = (portee !== "") ? ` (${portee})` : "";
     const crit = intval(values[section + "crit"], 20);
+
+    const grouped = "Attaque groupée";
+    const bonus5 = { nb: 2, bonus: ` +5[${grouped}]` };
+    const bonus10 = { nb: 3, bonus: ` +10[${grouped}]` };
+    const bonusAuto = { nb: 4, bonus: "" };
+    const autoHit = "Touche automatique";
+    const atkgrp = [];
+    switch (group) {
+      case 1:
+        atkgrp.push({ nb: 1, bonus: "" });
+        break;
+      case 2:
+        atkgrp.push(bonus5);
+        break;
+      case 3:
+        atkgrp.push(bonus10);
+        break;
+      case 4:
+        atkgrp.push(bonusAuto);
+        break;
+      case 5:
+        if (groupNb === 5) {
+          atkgrp.push(bonus10);
+          atkgrp.push(bonus5);
+        } else if (groupNb === 6) {
+          atkgrp.push(bonus10);
+          atkgrp.push(bonus10);
+        } else if (groupNb === 7) {
+          atkgrp.push(bonusAuto);
+          atkgrp.push(bonus10);
+        } else {
+          atkgrp.push(bonusAuto);
+          atkgrp.push(bonusAuto);
+        }
+        break;
+    }
 
     let multiAttacks = 1;
     if (useMulti === 1) {
@@ -11397,10 +11610,23 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
         multiAttacks = 1;
     }
 
-    let attack = "";
-    if (atk !== "0")
-      attack = `[[${roll}cs>${crit}cf1[Dé] + ${atk}[Bonus] ]]`;
-    
+    const attacks = [];
+    if (atk !== "0" && atkgrp[0].nb !== 4) {
+      // (grouped ?) attack
+      attacks.push(`[[${roll}cs>${crit}cf1[Dé] + ${atk}[Bonus]${atkgrp[0].bonus} ]]`);
+    } else {
+      // auto-hit
+      attacks.push(autoHit);
+    }
+    // second grouped attack ?
+    if (atkgrp.length === 2) {
+      if (atk !== "0" && atkgrp[1].nb !== 4) {
+        attacks.push(`[[${roll}cs>${crit}cf1[Dé] + ${atk}[Bonus]${atkgrp[1].bonus} ]]`);
+      } else {
+        attacks.push(autoHit);
+      }
+    }
+
     let [ dm, ...dmextra ] = strval(values[section + "dm"]).split(" ");
     const dmtype = strval(values[section + "dmtype"]);
     const dmdesc = [ dmtype, ...dmextra ].join(" ").trim();
@@ -11444,24 +11670,39 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
       }
     }
 
-    let chatAtk = {
-      lsub: "Attaque",
-      rsub: name + range,
-      roll: attack,
-      broll: attack,
-      dm: dmroll,
-      dmdesc,
-      critdiff: `[[${useCritDiff}]]`,
-      dmcrit,
-      text: special
-    };
+    attacks.forEach((attack, ix) => {
+      
+      // base attack roll
+      let chatAtk = {
+        lsub: "Attaque",
+        rsub: name + range,
+        roll: attack,
+        broll: "",
+        dm: dmroll,
+        dmdesc,
+        critdiff: `[[${useCritDiff}]]`,
+        dmcrit,
+        text: special
+      };
+      
+      // process grouped attacks
+      if (atkgrp[ix].nb === 4) {
+        chatAtk.save = 0;
+      } else {
+        chatAtk = { ...chatAtk, broll: attack };
+      }
+      if (atkgrp[ix].nb > 1)
+        chatAtk = { ...chatAtk, alert: `Groupe n°${ix + 1} : [[${atkgrp[ix].nb}]] créatures` };
 
-    for (let atk = 1; atk <= multiAttacks; atk++) {
-      if (useMulti === 1)
-        chatAtk = { ...chatAtk, lsub: `${atk}${ atk > 1 ? "ème" : "ère" } attaque` };
-      const chatMsg = cof2RollTemplate(chatAtk);
-      sendChatMsg(chatMsg);
-    }
+      // process multi-attacks
+      for (let atk = 1; atk <= multiAttacks; atk++) {
+        if (useMulti === 1)
+          chatAtk = { ...chatAtk, lsub: `${atk}${ atk > 1 ? "ème" : "ère" } attaque` };
+        const chatMsg = cof2RollTemplate(chatAtk);
+        sendChatMsg(chatMsg);
+      }
+    });
+
   })
 });
 

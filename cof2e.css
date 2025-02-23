@@ -433,6 +433,8 @@ input[value="0"].pc-skills-btn ~ button.pc-skills-btn {
 .pc-buffs-subtab,
 .pc-import-subtab,
 .npc-main-tab,
+.npc-attacks-subtab,
+.npc-abilities-subtab,
 .npc-gears-tab,
 .npc-config-tab,
 .npc-script-tab {
@@ -441,40 +443,44 @@ input[value="0"].pc-skills-btn ~ button.pc-skills-btn {
 
 /* Style the active (sub-)tab button */
 .tabs-toggle[value="main"] ~ div .pc-main-btn,
+.tabs-toggle[value="attacks"] ~ div .pc-attacks-btn,
+.tabs-toggle[value="otact"] ~ div .pc-otact-btn,
+.tabs-toggle[value="hands"] ~ div .pc-hands-btn,
 .tabs-toggle[value="abilities"] ~ div .pc-abilities-btn,
+.tabs-toggle[value="rolls"] ~ div .pc-rolls-btn,
+.tabs-toggle[value="skills"] ~ div .pc-skills-btn,
+.tabs-toggle[value="buffs"] ~ div .pc-buffs-btn,
+.tabs-toggle[value="import"] ~ div .pc-import-btn,
 .tabs-toggle[value="gears"] ~ div .pc-gears-btn,
 .tabs-toggle[value="config"] ~ div .pc-config-btn,
 .tabs-toggle[value="script"] ~ div .pc-script-btn,
 .tabs-toggle[value="version"] ~ div .pc-version-btn,
 .tabs-toggle[value="main"] ~ div .npc-main-btn, 
+.tabs-toggle[value="attacks"] ~ div .npc-attacks-btn,
+.tabs-toggle[value="abilities"] ~ div .npc-abilities-btn,
 .tabs-toggle[value="gears"] ~ div .npc-gears-btn,
-.tabs-toggle[value="config"] ~ div .npc-config-btn,
-.tabs-toggle[value="attacks"] ~ div .pc-attacks-btn,
-.tabs-toggle[value="otact"] ~ div .pc-otact-btn,
-.tabs-toggle[value="hands"] ~ div .pc-hands-btn,
-.tabs-toggle[value="rolls"] ~ div .pc-rolls-btn,
-.tabs-toggle[value="skills"] ~ div .pc-skills-btn,
-.tabs-toggle[value="buffs"] ~ div .pc-buffs-btn,
-.tabs-toggle[value="import"] ~ div .pc-import-btn {
+.tabs-toggle[value="config"] ~ div .npc-config-btn {
   color: white; 
   background-color: var(--cof-hilite); 
 }
 
 /* Show the selected tab */
 .tabs-toggle[value="main"] ~ div.pc-main-tab,
-.tabs-toggle[value="abilities"] ~ div.pc-abilities-tab,
-.tabs-toggle[value="gears"] ~ div.pc-gears-tab,
-.tabs-toggle[value="config"] ~ div.pc-config-tab,
-.tabs-toggle[value="script"] ~ div.pc-script-tab,
-.tabs-toggle[value="version"] ~ div.pc-version-tab,
 .tabs-toggle[value="attacks"] ~ div.pc-attacks-subtab,
 .tabs-toggle[value="otact"] ~ div.pc-otact-subtab,
 .tabs-toggle[value="hands"] ~ div.pc-hands-subtab,
+.tabs-toggle[value="abilities"] ~ div.pc-abilities-tab,
 .tabs-toggle[value="rolls"] ~ div.pc-rolls-subtab,
 .tabs-toggle[value="skills"] ~ div.pc-skills-subtab,
 .tabs-toggle[value="buffs"] ~ div.pc-buffs-subtab,
 .tabs-toggle[value="import"] ~ div.pc-import-subtab,
+.tabs-toggle[value="gears"] ~ div.pc-gears-tab,
+.tabs-toggle[value="config"] ~ div.pc-config-tab,
+.tabs-toggle[value="script"] ~ div.pc-script-tab,
+.tabs-toggle[value="version"] ~ div.pc-version-tab,
 .tabs-toggle[value="main"] ~ div.npc-main-tab, 
+.tabs-toggle[value="attacks"] ~ div.npc-attacks-subtab,
+.tabs-toggle[value="abilities"] ~ div.npc-abilities-subtab,
 .tabs-toggle[value="gears"] ~ div.npc-gears-tab, 
 .tabs-toggle[value="config"] ~ div.npc-config-tab,
 .tabs-toggle[value="script"] ~ div.npc-script-tab {
@@ -700,7 +706,7 @@ div.change-view {
 .pc-attacks .weapon-throw,
 .npc-attacks .weapon-throw {
   display: grid;
-  grid-template-columns: 25px 20% 20% 20%;
+  grid-template-columns: 25px 20% 16% 16% 20%;
   gap: 2px;
   margin-bottom: 2px;
 }
@@ -711,7 +717,8 @@ div.change-view {
   gap: 2px;
 }
 
-.pc-otact-subtab .pc-tactic {
+.pc-otact-subtab .pc-tactic,
+.npc-attacks-subtab .npc-tactic {
   display: grid;
   grid-template-columns: 40% 60%;
   gap: 2px;
@@ -780,6 +787,7 @@ div.change-view {
 .pc-roll-r1 textarea.one-row,
 .pc-gears .gears textarea.one-row,
 .pc-actions textarea.one-row,
+.npc-abilities .npc-ability textarea.one-row,
 .npc-gears .gears textarea.one-row,
 .npc-actions textarea.one-row,
 .resources textarea.one-row {
@@ -809,6 +817,7 @@ div.change-view {
 .pc-roll-r1 textarea.one-row:focus,
 .pc-gears .gears textarea.one-row:focus,
 .pc-actions textarea.one-row:focus,
+.npc-abilities .npc-ability textarea.one-row:focus,
 .npc-gears .gears textarea.one-row:focus,
 .npc-actions textarea.one-row:focus,
 .resources textarea.one-row:focus {
@@ -947,7 +956,7 @@ input[value="0"].show-paths-789 ~ div.abilities {
 
 .npc-attacks .weapon {
   display: grid;
-  grid-template-columns: 25px 3.5fr 2fr 1fr 4fr 1fr 4fr;
+  grid-template-columns: 25px 3.5fr 2fr 1fr 3fr 1fr 5fr;
   gap: 2px;
   margin-bottom: 2px;
 }

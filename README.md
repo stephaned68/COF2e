@@ -18,8 +18,10 @@ v1.3.0 [Screenshot](cof2e.png)
 - Affichage optionnel d'un bouton Chance dans les jets de caracs, d'attaques et de capacités
 - Ajout d'un menu de chat pour les états préjudiciables
 - Prise en compte de l'état Immobilisé pour les jets d'attaque avec dé malus
-- Ajout de toutes les armes et armures dans la liste des équipements reconnus. La mise en correspondance est faite en ignorant les majuscules/minuscules et accents
+- Ajout de toutes les armes et armures dans la liste des équipements reconnus
+- Gestion simplifée du suivi des munitions
 - Ajout de 4 listes d'actions sur l'onglet Script des fiches de PJ et PNJ.
+- Prise en compte des attaques groupées sur la fiche de PNJ
 - Ajout d'un onglet Equipement simplifié sur la fiche de PNJ
 - Correction d'un bug dans l'appel du _Persomancien_
 
