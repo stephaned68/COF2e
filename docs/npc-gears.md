@@ -14,4 +14,4 @@ Une section dépliante permet d'ajouter plus de détail :
 
 ---
 
-[Retour]({{ site.baseurl }}/pc-main)
+[Retour]({{ site.baseurl }}/npc-main)

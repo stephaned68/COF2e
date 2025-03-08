@@ -43,7 +43,7 @@ Dans cette section, on trouve :
 - Le type de dé de récupération, et le nombre de DR courants et maximum,
 - Le nombre de DM temporaires encaissés par le PJ.
 
-Les PV et DR max affichés tiennent compte d'éventuels buffs (ex: +1 DR pour un PJ de la famille des Mystiques).
+Les PV et DR max affichés tiennent compte de la famille du profil (+1 DR pour un PJ Mystique) et d'éventuels buffs.
 
 Deux icones permettent de faire varier les PV en saisissant le gain ou la perte dans un popup Roll20. Une formule de dé peut être saisie dans ce popup (_ex_ : <kbd>1d8</kbd>) et le jet correspondant sera effectué. Si nécessaire en cas de perte de PV, la fiche applique l'état préjudiciable _Affaibli_ (1 PV) et la perte de DR (0 PV).
 
@@ -70,7 +70,7 @@ Cette section présente le calcul de la DEF du personnage.
 
 # Points de Chance
 
-Dans cette section, on trouve les points de chance courants et maximum. Les PC maximums affichés tiennent compte d'éventuels buffs.
+Dans cette section, on trouve les points de chance courants et maximum. Les PC maximums affichés tiennent compte de la famille du profil (+1 PC pour un PJ Aventurier) d'éventuels buffs.
 
 Si on clique sur l'icone de d20, la fiche récupère les derniers jets de d20 effectués, et les ré-affiche avec le bonus de +10 accordé par la dépense d'un point de chance.
 
@@ -106,6 +106,8 @@ Des paramètres optionnels peuvent être ajoutés :
   
   Ce paramètre est utilisé principalement par le script COFantasy2
 
+- Seuil d'usure : cette valeur est utilisée si l'option correspondante est activée dans la configuration.
+
 - Modificateurs d'attaque : vous pouvez spécifier une série de mentions spéciales permettant de régler le comportement du jet d'attaque. Séparez les différentes mentions par des virgules.
   - <kbd>deBonus</kbd> : l'attaque est faite avec un dé bonus, sauf si le personnage est _Affaibli_
   - <kbd>deMalus</kbd> : l'attaque est faite avec un dé malus
@@ -115,9 +117,12 @@ Des paramètres optionnels peuvent être ajoutés :
 
 - Options d'attaques avec arguments : 
   
-  Ce paramètre est prinicpalement utilisé par le script **COFantasy2**.
+  Ce paramètre est principalement utilisé par le script **COFantasy2**.
   
-  Vous pouvez y indiquer l'option <kbd>fx:</kbd> suivi du nom d'un effet spécial Roll20.
+  Vous pouvez toutefois y indiquer les options suivantes reconnues par la fiche :
+  
+  - <kbd>fx: </kbd> suivi du nom d'un FX Roll20 et d'un nombre facultatif de répétition
+  - <kbd>effet: {cible} ? </kbd> suivi d'un texte à afficher si le jet de D20 atteint ou dépasse la valeur cible
 
 - Pour les armes de type _Arme de jet_ : vous pouvez spécifier des paramètres supplémentaires.
   - Nom de la munition (utile si le suivi simplifié des munitions est activé dans la configuration)

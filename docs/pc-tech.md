@@ -5,13 +5,13 @@ Les noms d'attributs Roll20 utilisables dans des macros s'affichent dans des bul
 ## Caractéristiques
 
 - <kbd>agi_base</kbd>, <kbd>con_base</kbd>, <kbd>for_base</kbd>, <kbd>per_base</kbd>, <kbd>cha_base</kbd>, <kbd>int_base</kbd>, <kbd>vol_base</kbd> : scores de caractéristiques de base
-- - <kbd>agi_sup</kbd>, <kbd>con_sup</kbd>, <kbd>for_sup</kbd>, <kbd>per_sup</kbd>, <kbd>cha_sup</kbd>, <kbd>int_sup</kbd>, <kbd>vol_sup</kbd> : type de jet (N = normal, S = supérieure 
+- <kbd>agi_sup</kbd>, <kbd>con_sup</kbd>, <kbd>for_sup</kbd>, <kbd>per_sup</kbd>, <kbd>cha_sup</kbd>, <kbd>int_sup</kbd>, <kbd>vol_sup</kbd> : type de jet (N = normal, S = supérieure 
 ou héroïque, H = supérieure et héroïque)
-- - <kbd>agi_dsup</kbd>, <kbd>con_dsup</kbd>, <kbd>for_dsup</kbd>, <kbd>per_dsup</kbd>, <kbd>cha_dsup</kbd>, <kbd>int_dsup</kbd>, <kbd>vol_dsup</kbd> : expression de dé (selon le type de jet et les états préjudiciables)
+- <kbd>agi_dsup</kbd>, <kbd>con_dsup</kbd>, <kbd>for_dsup</kbd>, <kbd>per_dsup</kbd>, <kbd>cha_dsup</kbd>, <kbd>int_dsup</kbd>, <kbd>vol_dsup</kbd> : expression de dé (selon le type de jet et les états préjudiciables)
 - <kbd>agi_buff</kbd>, <kbd>con_buff</kbd>, <kbd>for_buff</kbd>, <kbd>per_buff</kbd>, <kbd>cha_buff</kbd>, <kbd>int_buff</kbd>, <kbd>vol_buff</kbd> : buffs/debuffs aux caractéristiques
 - <kbd>agi</kbd>, <kbd>con</kbd>, <kbd>for</kbd>, <kbd>per</kbd>, <kbd>cha</kbd>, <kbd>int</kbd>, <kbd>vol</kbd> : scores de caractéristiques _avec buffs/debuffs_
 - <kbd>tagi_buff</kbd>, <kbd>tcon_buff</kbd>, <kbd>tfor_buff</kbd>, <kbd>tper_buff</kbd>, <kbd>tcha_buff</kbd>, <kbd>tint_buff</kbd>, <kbd>tvol_buff</kbd> : buffs/debus aux tests de caractéristiques
-- - <kbd>agi_test</kbd>, <kbd>con_test</kbd>, <kbd>for_test</kbd>, <kbd>per_test</kbd>, <kbd>cha_test</kbd>, <kbd>int_test</kbd>, <kbd>vol_test</kbd> : scores de tests de caractéristiques _avec buffs_
+- <kbd>agi_test</kbd>, <kbd>con_test</kbd>, <kbd>for_test</kbd>, <kbd>per_test</kbd>, <kbd>cha_test</kbd>, <kbd>int_test</kbd>, <kbd>vol_test</kbd> : scores de tests de caractéristiques _avec buffs_
 
 ## Combat
 
@@ -220,6 +220,47 @@ Les macros à configurer sont les suivantes :
 - <kbd>%{selected|abilities_menu-btn}</kbd> affiche un menu des voies dans lesquelles le personnage possède des capacités
 - <kbd>%{selected|rolls_menu-btn}</kbd> affiche un menu des jets de capacités
 - <kbd>%{selected|skills_menu-btn}</kbd> affiche un popup Roll20 permettant de sélectionner la compétence à utiliser (si cette option est activée dans la configuration de la fiche)
+
+# Roll Templates
+
+Ci-dessous la liste des champs utilisables dans chacun des _roll templates_ de la fiche.
+
+## cof2
+
+<kbd>&{template:cof2} {{nom=valeur }} ... </kbd>
+
+Où <kbd>nom</kbd> :
+
+- <kbd>{{color}}</kbd> : Couleur du message de chat. Utiliser la valeur <kbd>@{nom du personnage|couleur_pj}</kbd>
+- <kbd>{{perso}}</kbd> : Nom du personnage, centré en haut du message de chat
+- <kbd>{{lsub}}</kbd> : Sous-titre du message, à gauche
+- <kbd>{{rsub}}</kbd> : Sous-titre du message, à droite
+- <kbd>{{roll}}</kbd> : Jet de dés (test, attaque)
+- <kbd>{{broll}}</kbd> : Deuxième jet de dés (pour gérer les dés bonus/malus)
+- <kbd>{{dm}}</kbd> : Jet de dommage
+- <kbd>{{dmdesc}}</kbd> : Type de dommages
+- <kbd>{{text}}</kbd> : Texte descriptif
+- <kbd>{{textclass}}</kbd> : Valeur <kbd>critical</kbd> pour affichage en vert, <kbd>fumble</kbd> pour affichage en rouge
+- <kbd>{{alert}}</kbd> : Texte d'alerte si nécessaire
+- <kbd>{{alertclass}}</kbd> : Valeur <kbd>critical</kbd> pour affichage en vert, <kbd>fumble</kbd> pour affichage en rouge
+
+Ajouter <kbd>@{nom du personnage|token_dsp}</kbd> à la fin de la macro pour afficher le token lié à la fiche
+
+## custom
+
+Ce roll-template est une amélioration du template par défaut fourni par Roll20.
+
+<kbd>&{template:custom} {{nom=valeur }} ... </kbd>
+
+Où <kbd>nom</kbd> :
+
+- <kbd>{{color}}</kbd> : Couleur du message de chat. Utiliser la valeur <kbd>@{nom du personnage|couleur_pj}</kbd>
+- <kbd>{{token}}</kbd> : Utiliser <kbd>@{nom du personnage|token_dsp}</kbd> pour afficher le token lié à la fiche
+- <kbd>{{title}}</kbd> : Titre du message
+- <kbd>{{subtitle}}</kbd> : Sous-titre du message
+- <kbd>{{desc}}</kbd> : Ligne de fin du message
+
+L'utilisateur peut indiquer des paires _nom / valeur_ libres, qui sont affichées ligne par ligne entre le titre et le pied du message.
 
 ---
 

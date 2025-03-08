@@ -50,7 +50,12 @@ Des paramètres optionnels peuvent être ajoutés :
   - <kbd>reroll1</kbd> : le dé de DM est relancé jusqu'à ce que son résultat soit supérieur à 1
   - <kbd>poudre</kbd> : l'arme explose et inflige 1d4° DM à l'utilisateur s'il ne maîtrise pas les armes à poudre
 
-- Options d'attaques avec arguments : ce paramètre est utilisé par le script COFantasy2
+- Options d'attaques avec arguments : ce paramètre est principalement utilisé par le script **COFantasy2**.
+  
+  Vous pouvez toutefois y indiquer les options suivantes reconnues par la fiche :
+  
+  - <kbd>fx: </kbd> suivi du nom d'un FX Roll20 et d'un nombre facultatif de répétition
+  - <kbd>effet: {cible} ? </kbd> suivi d'un texte à afficher si le jet de D20 atteint ou dépasse la valeur cible
 
 Un clic sur le bouton d20 permet de lancer le jet d'attaque et de DM dans le chat en tenant compte des divers paramètres. Si la case d'attaques multiples est cochée et que le nom de l'attaque contient le motif <kbd>(n attaques)</kbd>, le nombre n de jets d'attaque est effectué.
 

@@ -31,6 +31,7 @@ Les codes et valeurs correspondantes que vous pouvez indiquer sont :
   - <kbd>dm-2m</kbd> : jet de  DM quand l'arme est maniée à deux mains
   - <kbd>type-dm</kbd> : type de DM
   - <kbd>portee</kbd> : portée de l'arme à distance
+  - <kbd>usure</kbd> : seuil d'usure
 - Pour les protections (armures et boucliers) :
   - <kbd>bonus-def</kbd> : bonus apporté à la DEF par l'armure ou le bouclier
   - <kbd>armure</kbd> : bonus apporté à la DEF par l'armure
@@ -70,7 +71,7 @@ Dans cette section, vous pouvez renseigner une liste de ressources ou de consomm
 Pour chaque élément de la liste, vous indiquez :
 - Le nom de la ressource,
 - Le nombre actuellement en possession du PJ,
-- Un liste optionnelle de propriétés permettant de préciser la nature de la ressource.
+- Une liste optionnelle de propriétés permettant de préciser la nature de la ressource.
 
 Si vous spécifiez une propriété <kbd>type</kbd> avec la valeur <kbd>munitions</kbd>, la fiche recherche dans les armes une ligne dont le type d'attaque est _Armes de jet_ et dont le nom de munition correspond au nom de la ressource. Elle établit la relation entre les deux éléments pour décrémenter la ressource à chaque attaque et afficher un message d'avertissement lorsque le personnage est à court de munitions.
 

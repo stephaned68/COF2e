@@ -43,10 +43,14 @@ La fiche décompte pour les capacités possédées (cochées) :
 
 Si le nombre de points de capacités utilisé dépasse le nombre maximum disponble soit 2 x [niveau], un message d'alerte s'affiche dans le chat Roll20.
 
-## Règles optionnelles
+## Initiative
 
 - Initiative variable : Un jet de 1d6 sans limite est ajouté au score d'initiative en début de combat.
+- Départager les inits identiques : La valeur de <kbd>(AGI+PER)/10</kbd> est ajoutée au jet d'initiative.
 - Initiative + AGI : Le score d'Initiative est calculé en ajoutant l'AGI à la somme 10 + PER.
+
+## Règles optionnelles
+
 - Encombrement : L'encombrement de l'équipement porté par le PJ est calculé et des alertes sont affichées dans le chat Roll20 selon que les divers seuils sont dépassés.
 - Critiques différenciés : Les réussites critiques en combat provoquent des effets différenciés selon le type de DM de l'arme utilisée.
 - Points de chance variables : La dépense d'un PC ajoute 1d10 au résultat du dernier jet de D20. En compensation, le nombre de PC est doublé.
@@ -63,6 +67,7 @@ Si le nombre de points de capacités utilisé dépasse le nombre maximum disponb
 
 - Progression limitée : Les scores d'attaquent n'augmentent plus après le niveau 6.
 - Récupération - niveau : Le jet de récupération rapide est un jet de DR sec, sans ajouter la moitié du niveau.
+- Usure des armes : Un échec critique en attaque provoque un jet d'usure
 
 ## Forcer les valeurs maxi
 

@@ -6,6 +6,8 @@
 
 [Onglet Configuration]({{ site.baseurl }}/npc-config)
 
+[Onglet Script]({{ site.baseurl }}/npc-script)
+
 ---
 
 [Retour]({{ site.baseurl }}/index)
