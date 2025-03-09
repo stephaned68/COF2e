@@ -1,11 +1,18 @@
 # Voies et capacités
 
 La convention adoptée dans la fiche COF 2E est la suivante :
-- La voie n°1 est la voie de peuple,
+- La voie n°1 est la voie de peuple ou du mage,
 - Les voies n°2 à 6 sont les voies de profil,
 - Les voies n°7 et 8 sont la ou les voies de prestige.
 
-Cet onglet de la fiche de personnage présente deux vues (_Affichage_ et _Edition_), une case à cocher permet de basculer d'un mode à l'autre.
+|        |        |        |
+| ------ | ------ | ------ |
+| Voie 1 | Voie 2 | Voie 3 |
+| Voie 4 | Voie 5 | Voie 6 |
+| Voie 7 | Voie 8 | Voie 9 |
+|        |        |        |
+
+Cet onglet de la fiche de personnage présente deux vues, les textes cliquables _Affichage_ et _Edition_ permettent de basculer d'un mode à l'autre.
 
 ## Mode Edition
 
@@ -86,7 +93,10 @@ Pour chaque élément de la liste, vous pouvez indiquer :
   - Comme une valeur fixe, par exemple <kbd>+1</kbd>, <kbd>-2</kbd>
   - Comme le score d'un autre attribut, en référençant celui-ci entre crochets, par exemple <kbd>[CHA]</kbd>
   - Comme le niveau du personnage, en le référençant sous la forme <kbd>[niveau]</kbd>
-  - Comme un rang dans une voie <kbd>n</kbd>, éventuellement ajusté d'un bonus <kbd>X</kbd>, en référençant celle-ci sous la forme <kbd>[rang voie n]</kbd> ou <kbd>[rang voie n] + X</kbd>
+  - Comme le rang dans une voie, éventuellement ajusté d'un bonus <kbd>X</kbd>, en référençant celle-ci sous la forme :
+    - <kbd>[rang voie n]</kbd> ou <kbd>[rang voie n] + X</kbd> pour la voie no <kbd>n</kbd>
+    - <kbd>[rang voie nom]</kbd> ou <kbd>[rang voie nom] + X</kbd> pour la voie <kbd>nom</kbd>
+    - <kbd>[rang nom]</kbd> ou <kbd>[rang nom] + X</kbd> pour la voie <kbd>nom</kbd>
 
 Plusieurs buffs peuvent s'appliquer au même attribut du PJ. Si c'est le cas, le total des buffs actuellement actifs (cochés) est calculé.
 

@@ -15,15 +15,15 @@ Les préférence et réglages possibles de la fiche sont configurés dans cet on
 
 ## Compagnon
 
-Cette section permet d'identifier le PNJ comme le compagnon ou familier d'un PJ, dans le cas où certains attributs du PNJ sont calculés à partir d'autres attributs du PJ.
+Cette section permet d'identifier le PNJ comme le compagnon ou familier d'un PJ, dans le cas où certains traits du PNJ sont calculés à partir de valeurs d'attributs du PJ.
 
-Pour ce faire, il faut indiquer le nom **exact** du PJ dans le PNJ est le compagnon, puis définir une expression pour le calcul des attributs du PNJ, en spécifiant le nom d'un attribut du PJ dont il dépend entre [ ]. Comme il s'agit d'expressions mathématiques, la multiplication est représentée par le signe <kbd>*</kbd> et la division par le signe <kbd>/</kbd>.
+Pour ce faire, il faut indiquer le nom **exact** du PJ dans le PNJ est le compagnon, puis définir une expression pour le calcul des traits du PNJ, en spécifiant le nom d'un attribut du PJ dont il dépend entre <kbd>[ ]</kbd>. Comme il s'agit d'expressions mathématiques interprétées par du code Javascript, la multiplication est représentée par le signe <kbd>*</kbd> et la division par le signe <kbd>/</kbd>.
 
 _Exemple : Loup (rôdeur)_
 
 - Défense : <kbd>12 + [rang_voie?]</kbd> 
   
-  _En remplaçant ? par le no de la voie du compagnon animal_
+  _En remplaçant ? par le no de la voie du compagnon animal_ sur la fiche du rôdeur.
 
 - Vigueur : <kbd>[niveau]*4</kbd>
 - Initiative : <kbd>[init]</kbd>
