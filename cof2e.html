@@ -1,9 +1,9 @@
 <div class="cofmain">
 
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.2.03">
+  <input type="hidden" name="attr_verfdp" value="1.3.0">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.2.03">
+  <input type="hidden" name="attr_version" value="1.3.0">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
 
@@ -14,6 +14,7 @@
   <!-- Jets -->
   <input type="hidden" name="attr_devol" value="d4">
   <input type="hidden" name="attr_last_rolls" value="">
+  <input type="hidden" name="attr_usure_check" value="">
 
   <!-- Buffs caracs PJ -->
   <input type="hidden" name="attr_agi_buff" value="0">
@@ -83,7 +84,7 @@
     <div>
       <img
         class="logo"
-        title="Version 1.3.0 - ??/02/2025"
+        title="Version 1.3.0 - 09/03/2025"
         src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cof2e_logo.jpg"
       />
     </div>
@@ -270,7 +271,7 @@
                 </button>
               </div>
               <div>
-                <select class="select-xxs" name="attr_agi_sup">
+                <select class="select-xxs" name="attr_agi_sup" title="@{agi_dsup}">
                   <option value="N" selected>N Normale</option>
                   <option value="S">S Supérieure OU Héroïque</option>
                   <option value="H">H Supérieure ET Héroïque</option>
@@ -313,7 +314,7 @@
                 </button>
               </div>
               <div>
-                <select class="select-xxs" name="attr_con_sup">
+                <select class="select-xxs" name="attr_con_sup" title="@{con_dsup}">
                   <option value="N" selected>N Normale</option>
                   <option value="S">S Supérieure OU Héroïque</option>
                   <option value="H">H Supérieure ET Héroïque</option>
@@ -356,7 +357,7 @@
                 </button>
               </div>
               <div>
-                <select class="select-xxs" name="attr_for_sup">
+                <select class="select-xxs" name="attr_for_sup" title="@{for_dsup}">
                   <option value="N" selected>N Normale</option>
                   <option value="S">S Supérieure OU Héroïque</option>
                   <option value="H">H Supérieure ET Héroïque</option>
@@ -399,7 +400,7 @@
                 </button>
               </div>
               <div>
-                <select class="select-xxs" name="attr_per_sup">
+                <select class="select-xxs" name="attr_per_sup" title="@{per_dsup}">
                   <option value="N" selected>N Normale</option>
                   <option value="S">S Supérieure OU Héroïque</option>
                   <option value="H">H Supérieure ET Héroïque</option>
@@ -442,7 +443,7 @@
                 </button>
               </div>
               <div>
-                <select class="select-xxs" name="attr_cha_sup">
+                <select class="select-xxs" name="attr_cha_sup" title="@{cha_dsup}">
                   <option value="N" selected>N Normale</option>
                   <option value="S">S Supérieure OU Héroïque</option>
                   <option value="H">H Supérieure ET Héroïque</option>
@@ -485,7 +486,7 @@
                 </button>
               </div>
               <div>
-                <select class="select-xxs" name="attr_int_sup">
+                <select class="select-xxs" name="attr_int_sup" title="@{int_dsup}">
                   <option value="N" selected>N Normale</option>
                   <option value="S">S Supérieure OU Héroïque</option>
                   <option value="H">H Supérieure ET Héroïque</option>
@@ -528,7 +529,7 @@
                 </button>
               </div>
               <div>
-                <select class="select-xxs" name="attr_vol_sup">
+                <select class="select-xxs" name="attr_vol_sup" title="@{vol_dsup}">
                   <option value="N" selected>N Normale</option>
                   <option value="S">S Supérieure OU Héroïque</option>
                   <option value="H">H Supérieure ET Héroïque</option>
@@ -717,7 +718,7 @@
                 <input type="hidden" name="attr_dr_max" value="2">
                 <input type="number" name="attr_dr" title="@{dr} DR courants" value="2">
                 /&nbsp;
-                <span name="attr_dr_max" title="@{dr_max} DR maximum"></span>
+                <span class="attr-max" name="attr_dr_max" title="@{dr_max} DR maximum"></span>
               </div>
 
             </div>
@@ -737,9 +738,10 @@
               <div class="block-title centered">PM</div>
 
               <div class="bordered centered">
-                <input type="number" name="attr_pm" title="@{pm} PM courants" value="0">
+                <input type="hidden" name="attr_pm_max" value="0">
+                <input class="two-digits" type="number" name="attr_pm" title="@{pm} PM courants" value="0">
                 /
-                <input type="number" name="attr_pm_max" title="@{pm_max} PM maximum" value="0">
+                <span class="attr-max" name="attr_pm_max" title="@{pm_max} PM maximum"></span>
               </div>
 
             </div>
@@ -758,7 +760,7 @@
               </div>
 
               <div class="bordered centered">
-                <span name="attr_devol"></span>
+                <span name="attr_devol" title="@{devol}"></span>
               </div>
 
             </div>
@@ -783,7 +785,7 @@
                 type="action"
                 class="flat-btn img-btn img-btn-lg"
                 name="act_affaibli-icon"
-                title="Affaibli"
+                title="@{condition_affaibli} Affaibli"
               ><img
                 class="bubble-img condition-affaibli"
                 src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cond_affaibli.png"
@@ -794,7 +796,7 @@
                 type="action"
                 class="flat-btn img-btn img-btn-lg"
                 name="act_aveugle-icon"
-                title="Aveuglé"
+                title="@{condition_aveugle} Aveuglé"
               ><img
                 class="bubble-img condition-aveugle"
                 src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cond_aveugle.png"
@@ -805,7 +807,7 @@
                 type="action"
                 class="flat-btn img-btn img-btn-lg"
                 name="act_essoufle-icon"
-                title="Essouflé"
+                title="@{condition_essoufle} Essouflé"
               ><img
                 class="bubble-img condition-essoufle"
                 src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cond_essoufle.png"
@@ -828,7 +830,7 @@
                 type="action"
                 class="flat-btn img-btn img-btn-lg"
                 name="act_etourdi-icon"
-                title="Etourdi"
+                title="@{condition_etourdi} Etourdi"
               ><img
                 class="bubble-img condition-etourdi"
                 src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cond_etourdi.png"
@@ -839,7 +841,7 @@
                 type="action"
                 class="flat-btn img-btn img-btn-lg"
                 name="act_immobilise-icon"
-                title="Immobilisé"
+                title="@{condition_immobilise} Immobilisé"
               ><img
                 class="bubble-img condition-immobilise" 
                 src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cond_immobilise.png"
@@ -864,7 +866,7 @@
                 type="action"
                 class="flat-btn img-btn img-btn-lg"
                 name="act_invalide-icon"
-                title="Invalide"
+                title="@{condition_invalide} Invalide"
               ><img
                 class="bubble-img condition-invalide"
                 src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cond_invalide.png"
@@ -875,7 +877,7 @@
                 type="action"
                 class="flat-btn img-btn img-btn-lg"
                 name="act_paralyse-icon"
-                title="Paralysé"
+                title="@{condition_paralyse} Paralysé"
               ><img
                 class="bubble-img condition-paralyse"
                 src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cond_paralyse.png"
@@ -886,7 +888,7 @@
                 type="action"
                 class="flat-btn img-btn img-btn-lg"
                 name="act_ralenti-icon"
-                title="Ralenti"
+                title="@{condition_ralenti} Ralenti"
               ><img
                 class="bubble-img condition-ralenti"
                 src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cond_ralenti.png"
@@ -897,7 +899,7 @@
                 type="action"
                 class="flat-btn img-btn img-btn-lg"
                 name="act_renverse-icon"
-                title="Renversé"
+                title="@{condition_renverse} Renversé"
               ><img
                 class="bubble-img condition-renverse"
                 src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cond_renverse.png"
@@ -908,7 +910,7 @@
                 type="action"
                 class="flat-btn img-btn img-btn-lg"
                 name="act_surpris-icon"
-                title="Surpris"
+                title="@{condition_surpris} Surpris"
               ><img
                 class="bubble-img condition-surpris"
                 src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cond_surpris.png"
@@ -931,7 +933,9 @@
                 Bouclier
                 <input type="checkbox" name="attr_bouclier_eqp" title="@{bouclier_eqp} Bouclier équipé" value="1">
               </div>
-              <div class="centered"><span name="attr_def_car" title="@{def_car} Caractéristique"></span></div>
+              <div class="centered">
+                <span name="attr_def_car" title="@{def_car} Caractéristique"></span>
+              </div>
               <div class="centered">Div.</div>
               <div class="centered">Action défensive</div>
               <div class="centered"><strong>Score</strong></div>
@@ -1010,15 +1014,16 @@
                 <input type="hidden" name="attr_pc_max" value="0">
                 <input type="number" class="two-digits" name="attr_pc" title="@{pc} PC courants" value="0">
                 &nbsp;/&nbsp;
-                <span name="attr_pc_max" title="@{pc_max} PC maximum"></span>
-                &nbsp;=&nbsp;
+                <span class="attr-max" name="attr_pc_max" title="@{pc_max} PC maximum"></span>
+                &nbsp;(
                 <span name="attr_pc_base" title="@{pc_base} Base PC"></span>
                 &nbsp;+&nbsp;
                 <span name="attr_cha" title="Score de CHArisme"></span>
                 &nbsp;+&nbsp;
                 <span name="attr_pc_buff" title="@{pc_buff} Bonus divers"></span>
+                )&nbsp;
                 <input type="hidden" name="attr_double_pc">
-                &nbsp;<span name="attr_double_pc"></span>
+                &nbsp;<span name="attr_double_pc" title="PC variables"></span>
               </div>
             </div>
           </div>
@@ -1163,6 +1168,7 @@
                       <option value="sort">Sortilège</option>
                       <option value="naturel">Arme naturelle</option>
                     </select>
+                    <input class="two-digits" type="number" name="attr_arme-usure" title="@{arme-usure} Usure">
                   </div>
                   <div class="bordered">
                     <input type="text" name="attr_arme-atkmods" placeholder="Modificateurs d'attaque" title="@{arme-atkmods} Modificateurs séparés par des virgules&#10; deBonus: avec dé bonus&#10; deMalus: avec dé malus&#10; auto: réussite automatique&#10; choc: peut faire des attaques non léthales sans malus&#10; explodeMax: dés de dégâts explosifs&#10; pasDeDmg: l'attaque ne fait pas de DM&#10; poudre: arme à poudre&#10; reroll1: relance les 1 sur les dés de DM&#10; tempDmg: fait toujours des attaques non léthales" value="">
@@ -1170,6 +1176,7 @@
                   <div class="bordered">
                     <textarea class="one-row" name="attr_arme-options" placeholder="Options d'attaque avec argument" title="@{arme-options} Options d'attaque"></textarea>
                   </div>
+
                 </div>
 
                 <input type="hidden" class="cof-thrown-toggle" name="attr_arme-jet" value="0"/>
@@ -3911,7 +3918,12 @@
           <div class="pc-buffs">
             <h4>Nom</h4>
             <h4>Attribut affecté</h4>
-            <h4>Valeur</h4>
+            <h4>
+              Valeur
+              <button type="action" name="act_helpbuff-btn" class="img-btn flat-btn" title="Aide buffs/de-buffs" >
+                <span class="img-btn img-btn-lg">i</span>
+              </button>
+            </h4>
           </div>
 
           <fieldset class="repeating_buffs">
@@ -3976,7 +3988,7 @@
   
               <div class="bordered d-flex">
   
-                <input type="text" name="attr_buff-value" title="@{buff-value}" placeholder="Valeur fixe ou [CAR] ou [rang voie N]" value="">
+                <input type="text" name="attr_buff-value" title="@{buff-value}" placeholder="Valeur fixe ou [CAR] ou [rang voie]" value="">
   
               </div>
 
@@ -4380,7 +4392,7 @@
 
             <details>
               <summary>
-                <h4>Règles optionnelles</h4>
+                <h4>Initiative</h4>
               </summary>
               <ul>
                 <li class="config-check" title="Atlas & règles optionnelles, p. 160">
@@ -4391,17 +4403,29 @@
                   <input type="checkbox" name="attr_cfg_init_agi" value="1">
                   <span>Initiative + AGI</span>
                 </li>
+                <li class="config-check" title="Ajoute (PER+AGI)/10 au score final">
+                  <input type="checkbox" name="attr_cfg_init_mod" value="1">
+                  <span>Départager les init. identiques</span>
+                </li>
+              </ul>
+            </details>
+
+            <details>
+              <summary>
+                <h4>Règles optionnelles</h4>
+              </summary>
+              <ul>
                 <li class="config-check" title="Atlas & règles optionnelles, p. 157">
                   <input type="checkbox" name="attr_cfg_use_encmb" value="1">
-                  <span>Encombrement&nbsp;</span>
+                  <span>Encombrement</span>
                 </li>
                 <li class="config-check" title="Atlas & règles optionnelles, p. 161">
                   <input type="checkbox" name="attr_cfg_crit_diff" value="1">
-                  <span>Critiques différenciés&nbsp;</span>
+                  <span>Critiques différenciés</span>
                 </li>
                 <li class="config-check" title="Atlas & règles optionnelles, p. 159">
                   <input type="checkbox" name="attr_cfg_pc_var" value="1">
-                  <span>Points de chance variables&nbsp;</span>
+                  <span>Points de chance variables</span>
                 </li>
                 <li class="config-check">
                   <input type="checkbox" name="attr_cfg_bouclier_malus" value="1">
@@ -4421,15 +4445,15 @@
               <ul>
                 <li class="config-check" title="Atlas & règles optionnelles, p. 184">
                   <input type="checkbox" name="attr_cfg_use_epic" value="1">
-                  <span>Progression épique&nbsp;</span>
+                  <span>Progression épique</span>
                 </li>
                 <li class="config-check" title="Atlas & règles optionnelles, p. 183">
                   <input type="checkbox" name="attr_cfg_use_drniv" value="1">
-                  <span>Récupération + niveau&nbsp;</span>
+                  <span>Récupération + niveau</span>
                 </li>
                 <li class="config-check" title="Atlas & règles optionnelles, p. 191">
                   <input type="checkbox" name="attr_cfg_use_mana" value="1">
-                  <span>Plus de Mana&nbsp;</span>
+                  <span>Plus de Mana</span>
                 </li>
               </ul>
             </details>
@@ -4441,11 +4465,15 @@
               <ul>
                 <li class="config-check" title="Atlas & règles optionnelles, p. 193">
                   <input type="checkbox" name="attr_cfg_use_capped6" value="1">
-                  <span>Progression limitée&nbsp;</span>
+                  <span>Progression limitée</span>
                 </li>
                 <li class="config-check" title="Atlas & règles optionnelles, p. 193">
                   <input type="checkbox" name="attr_cfg_use_dronly" value="1">
-                  <span>Récupération - niveau&nbsp;</span>
+                  <span>Récupération - niveau</span>
+                </li>
+                <li class="config-check" title="Atlas & règles optionnelles, p. 206">
+                  <input type="checkbox" name="attr_cfg_usure" value="1">
+                  <span>Usure des armes</span>
                 </li>
               </ul>
             </details>
@@ -4803,7 +4831,7 @@
               <li>
                 <details>
                   <summary>
-                    <strong>Version 1.3.0</strong> (2025-02-??)
+                    <strong>Version 1.3.0</strong> (2025-03-09)
                   </summary>
                   <ul>
                     <li>Ajout de buffs aux caractéristiques pris en compte dans les attributes dérivés</li>
@@ -4812,11 +4840,9 @@
                     <li>Affichage optionnel d'un bouton Chance dans tous les jets de D20</li>
                     <li>Ajout d'un menu de chat pour les états préjudiciables</li>
                     <li>Prise en compte de l'état Immobilisé pour les jets d'attaque avec dé malus</li>
-                    <li>
-                      Ajout de toutes les armes et armures dans la liste des équipements reconnus
-                      La mise en correspondance est faite en ignorant les majuscules/minuscules et accents
-                    </li>
+                    <li>Ajout de toutes les armes et armures dans la liste des équipements reconnus</li>
                     <li>Gestion simplifée du suivi des munitions</li>
+                    <li>Gestion de l'usure des armes</li>
                     <li>Ajout de 4 listes d'actions sur l'onglet Script des fiches de PJ et PNJ</li>
                     <li>Prise en compte des attaques groupées sur la fiche de PNJ</li>
                     <li>Ajout d'un onglet Equipement simplifié sur la fiche de PNJ</li>
@@ -5046,7 +5072,7 @@
 
                 <div class="npc-trait">
                   <div class="block-title">
-                    <button class="block-title" type="action" name="act_pnj_init-btn">
+                    <button class="block-title" type="action" name="act_init-btn">
                       <span class="d20-btn">t</span>
                       Init.
                     </button>
@@ -5215,7 +5241,7 @@
                     <input type="text" name="attr_arme-atkmods" placeholder="Modificateurs d'attaque" title="@{arme-atkmods} Modificateurs séparés par des virgules&#10; deBonus: avec dé bonus&#10; deMalus: avec dé malus&#10; auto: réussite automatique&#10; choc: peut faire des attaques non léthales sans malus&#10; explodeMax: dés de dégâts explosifs&#10; pasDeDmg: l'attaque ne fait pas de DM&#10; poudre: arme à poudre&#10; reroll1: relance les 1 sur les dés de DM&#10; tempDmg: fait toujours des attaques non léthales" value="">
                   </div>
                   <div class="bordered">
-                    <input type="text" name="attr_arme-options" placeholder="Options d'attaque avec argument" title="@{arme-options} Options d'attaque">
+                    <textarea class="one-row" name="attr_arme-options" placeholder="Options d'attaque avec argument" title="@{arme-options} Options d'attaque"></textarea>
                   </div>
                 </div>
   
@@ -5447,61 +5473,79 @@
                 <span>Avec token</span>
               </li>
 
+              <li class="config-check">
+                <input type="checkbox" name="attr_cfg_1attack_roll" value="1">
+                <span>Un seul jet d'attaque</span>
+              </li>
+              
+            </ul>
+
+            <h4>Règles optionnelles</h4>
+            <ul>
+
+              <li class="config-check" title="Atlas & règles optionnelles, p. 160">
+                <input type="checkbox" name="attr_cfg_init_variable" value="1d6!">
+                <span>Initiative variable&nbsp;</span>
+              </li>
+
+              <li class="config-check" title="Ajoute (PER+AGI)/10 au score final">
+                <input type="checkbox" name="attr_cfg_init_mod" value="1">
+                <span>Départager les init. identiques</span>
+              </li>
+
+              <li class="config-check" title="Atlas & règles optionnelles, p. 161">
+                <input type="checkbox" name="attr_cfg_crit_diff" value="1">
+                <span>Critiques différenciés&nbsp;</span>
+              </li>
+
+            </ul>
+
+            <h4>Compagnon</h4>
+            <ul>
+
               <li>
-                <strong>Règles optionnelles : </strong>
-                <ul>
-                  <li>
-                    <span>Initiative variable&nbsp;</span>
-                    <input type="checkbox" name="attr_cfg_init_variable" value="1d6!">
-                  </li>
-                  <li>
-                    <span>Critiques différenciés&nbsp;</span>
-                    <input type="checkbox" name="attr_cfg_crit_diff" value="1">
-                  </li>
-                </ul>
+                <div class="npc-configs m2">
+                  <div>Nom du PJ</div>
+                  <div class="d-flex">
+                    : <input type="text" name="attr_compagnon" title="@{compagnon} Nom du PJ">
+                  </div>
+                </div>
+              </li>
+                
+              <li>
+                <div class="npc-configs m2">
+                  <div>Défense</div>
+                  <div class="d-flex">
+                    : <input type="text" name="attr_comp_def" title="@{comp_def}">
+                  </div>
+                </div>
               </li>
 
               <li>
-                <div class="d-flex m2">
-                  <div><strong>Compagnon de :&nbsp;</strong></div>
-                  <div>
-                    <input type="text" name="attr_compagnon" title="@{compagnon} Nom du PJ" placeholder="Nom du PJ">
+                <div class="npc-configs m2">
+                  <div>Vigueur</div>
+                  <div class="d-flex">
+                    : <input type="text" name="attr_comp_pv_max" title="@{comp_pv_max}">
                   </div>
                 </div>
-                <ul>
-                  <li>
-                    <div class="d-flex m2">
-                      <div><span>Défense :&nbsp;</span></div>
-                      <div>
-                        <input type="text" name="attr_comp_def" title="@{comp_def}">
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="d-flex m2">
-                      <div><span>Vigueur :&nbsp;</span></div>
-                      <div>
-                        <input type="text" name="attr_comp_pv_max" title="@{comp_pv_max}">
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="d-flex m2">
-                      <div><span>Initiative :&nbsp;</span></div>
-                      <div>
-                        <input type="text" name="attr_comp_init" title="@{comp_init}">
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="d-flex m2">
-                      <div><span>Attaque :&nbsp;</span></div>
-                      <div>
-                        <input type="text" name="attr_comp_pnjatk" title="@{comp_pnjatk}">
-                      </div>
-                    </div>
-                  </li>
-                </ul>
+              </li>
+
+              <li>
+                <div class="npc-configs m2">
+                  <div>Initiative</div>
+                  <div class="d-flex">
+                    : <input type="text" name="attr_comp_init" title="@{comp_init}">
+                  </div>
+                </div>
+              </li>
+
+              <li>
+                <div class="npc-configs m2">
+                  <div>Attaque</div>
+                  <div class="d-flex">
+                    : <input type="text" name="attr_comp_pnjatk" title="@{comp_pnjatk}">
+                  </div>
+                </div>
               </li>
               
             </ul>
@@ -6068,6 +6112,20 @@
   </div>
   {{/rollWasCrit() broll}}
   {{/dmcrit}}
+  {{#roll}}
+  {{#rollTotal() computed::roll 1}}
+  <div class="sheet-rt sheet-rt-text">
+    {{rolleffect}}
+  </div>
+  {{/rollTotal() computed::roll 1}}
+  {{#broll}}
+  {{#rollTotal() computed::broll 1}}
+  <div class="sheet-rt sheet-rt-text">
+    <span class="sheet-rt sheet-rt-secondary">Si dé bonus : </span>{{brolleffect}}
+  </div>
+  {{/rollTotal() computed::broll 1}}
+  {{/broll}}
+  {{/roll}}
   {{#text}}
   <div class="sheet-rt sheet-rt-text">
     <span class="sheet-rt-{{textclass}}">{{text}}</span>
@@ -6108,6 +6166,7 @@
 
 /**
  * COF2e Sheet Worker
+ * v1.3.0
  */
 
 const SWData = {
@@ -6731,6 +6790,7 @@ const SWData = {
     "type-dm",
     "portee",
     "critique",
+    "usure",
     "bonus-def",
     "armure",
     "armure-malus",
@@ -7382,21 +7442,26 @@ function strval(value, onError = "") {
 
 /**
 * Capitalize string
-* @param {string} str - string to capitalize
+* @param {string} s - string to capitalize
+* @param {boolean} [forceLower=true] - force lower to end of string
 * @returns capitalized string
 */
-function capitalize(str) {
-  if (str && str !== "")
-    return str.charAt(0).toUpperCase() + str.substring(1).toLowerCase();
+function capitalize(s, forceLower = true) {
+  if (s && s !== "")
+    return s.charAt(0).toUpperCase() + (forceLower ? s.substring(1).toLowerCase() : s.substring(1));
 }
 
 /**
- * Return ability short name
- * @param {string} ability - ability name
+ * Return stat short name
+ * @param {string} stat - stat name
  * @returns {string}
  */
-function shorten(ability) {
-  return ability.substring(0, 3);
+function shorten(stat) {
+  return stat.substring(0, 3);
+}
+
+function upperShort(stat) {
+  return shorten(stat).toUpperCase();
 }
 
 /**
@@ -7532,11 +7597,11 @@ function cleanText(t, tags = true) {
  */
 function hasProp(data, propName) {
   const props = data.split("\n").reduce((props, prop) => {
-    if (prop.trim() === "")
-      return;
-    const { name } = parseNameValue(prop);
-    if (name) 
-      props.push(name);
+    if (prop.trim() !== "") {
+      const { name } = parseNameValue(prop);
+      if (name)
+        props.push(name);
+    }
     return props;
   }, []);
   return props.includes(propName);
@@ -7643,14 +7708,20 @@ function getSectionIDsOrdered(sectionName, callback) {
 };
 
 /**
+ * @typedef MsgOptions
+ * @property {string} title - Title of the message
+ * @property {string} template - Name of roll template
+ * @property {string} whisper - Target for whispered message 
+ * @property {number} rollTN - Target number for special roll effect
+ */
+
+/**
  * Send a message to chat
  * @param {string|string[]} msg - Message to send
- * @param {object} options - Options for the message
- * @param {string} options.title - Title of the message
- * @param {string} options.template - Name of roll template
- * @param {string} options.whisper - Target for whispered message
+ * @param {MsgOptions} options - Options for the message
  */
-function buildChatMsg(msg, options = SWData.RT_OPTIONS) {
+function buildChatMsg(msg, options) {
+  options = { ...SWData.RT_OPTIONS, ...options };
   let { title = "", template = "default", whisper = "@{togm}" } = options;
   if (whisper.charAt(0) !== "@" && whisper !== "") whisper = "/w \"" + whisper + "\" ";
   let chatMsg;
@@ -7669,11 +7740,15 @@ function buildChatMsg(msg, options = SWData.RT_OPTIONS) {
 /**
  * Send a message to chat
  * @param {string|string[]} msg - Message to send
- * @param {sendChatMsgOptions} options - Options for the message
+ * @param {MsgOptions} options - Options for the message
  */
- function sendChatMsg(msg, options = SWData.RT_OPTIONS) {
+function sendChatMsg(msg, options) {
+  options = { ...SWData.RT_OPTIONS, ...options };
   const chatCmd = buildChatMsg(msg, options);
   startRoll(chatCmd, roll => {
+
+    const updates = new Map();
+
     let save = 1;
     if (roll.results.save) 
       save = roll.results.save.result;
@@ -7683,8 +7758,38 @@ function buildChatMsg(msg, options = SWData.RT_OPTIONS) {
     if (roll.results.broll)
       last_rolls += "|" + roll.results.broll.result;
     if (last_rolls !== "" && save)
-      setAttrs({ last_rolls });
-    finishRoll(roll.rollId);
+      updates.set("last_rolls", last_rolls);
+
+    // check TN
+    const computed = {};
+    const rollTN = intval(options.rollTN);
+    if (rollTN > 0) {
+      const rollD20 = intval(roll.results.roll.dice[0]);
+      if (rollD20 >= rollTN)
+        computed.roll = 1;
+      if (!computed.roll) {
+        const brollD20 = intval(roll.results.broll.dice[0]);
+        if (brollD20 >= rollTN)
+          computed.broll = 1;
+      }
+    }
+
+    // check usure
+    if (options.usure) {
+      const attackId = strval(options.usure.attackId);
+      const name = strval(options.usure.name);
+      const usure = intval(options.usure.value);
+      if (usure > 0 && attackId !== "") {
+        const rollD20 = intval(roll.results.roll.dice[0]);
+        if (rollD20 === 1 && roll.results.usure)
+          updates.set("usure_check", JSON.stringify({ attack: attackId, name, usure, roll: roll.results.usure.result }));
+      }
+    }
+
+    if (updates.size > 0)
+      setAttrs(Object.fromEntries(updates));
+
+    finishRoll(roll.rollId, computed);
   });
 }
 
@@ -8513,14 +8618,21 @@ SWData.PC.STATS.forEach(stat => {
 
 /**
  * On initiative button click
+ * Used by PC & NPC sheet
  */
 on("clicked:init-btn", function () {
-  getAttrs(["casque_eqp", "casque"], function(values) {
-    const init = `[[@{init}[Initiative]${ helmetMalus(values) } + @{cfg_init_variable}[Dé(s)] &{tracker} ]]`;
+  getAttrs([ "sheet_type", "cfg_init_mod", "per", "agi", "casque_eqp", "casque" ], function(values) {
+    let initMod = "";
+    if (boolval(values.cfg_init_mod))
+      initMod = ` + [[(@{per}+@{agi})/10]][Distinct]`;
+    let helmet = "";
+    if (strval(values.sheet_type) === SWData.SHEET_TYPE.PC)
+      helmet = helmetMalus(values);
+    const roll = `[[@{init}[Initiative]${helmet} + @{cfg_init_variable}[Dé(s)]${initMod} &{tracker} ]]`;
     const chatMsg = cof2RollTemplate({
       lsub: "Jet",
       rsub: "Initiative",
-      roll: init
+      roll
     });
     sendChatMsg(chatMsg);
   });
@@ -8998,11 +9110,11 @@ function matchRegExp(text, pattern) {
  * @returns {number}
  */
 function findPathByName(name, names) {
-  const q = name.split(" ").slice(1) || [];
+  const q = name.replace(/\s\s+/g, " ").trim().split(" ").slice(1) || [];
   if (q.length === 0)
     return 0;
 
-  const qualifier = q.slice(1).join(" ");
+  const qualifier = q.slice(q.length - 1).join(" ");
   if (qualifier === "")
     return 0;
 
@@ -9034,11 +9146,11 @@ function insertRolls(text, options = {}) {
   const devol = `@{${ isNPC ? companionOf : "" }devol}` ;
 
   // Search for " [#d4° + XXX] " or " [#dE + XXX] "
-  matchRegExp(text, /([ ]*)\[([1-9])d(4°|E)[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL|rang voie [1-9])\]([ ]*)/gm).forEach(result => {
-    let [ matched, sb, dice, , ability, sa ] = result;
-    if (ability.startsWith("rang "))
-      ability = `rang_voie${ findPathByName(ability, pathNames) }`;
-    const replace = `${sb}[[${dice}${devol} + @{${ability.toLowerCase()}}[${ability}] ]]${sa}`;
+  matchRegExp(text, /([ ]*)\[([1-9])d(4°|E)[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL|rang voie [1-9]).*\]([ ]*)/gm).forEach(result => {
+    let [ matched, sb, dice, , stat, sa ] = result;
+    if (stat.startsWith("rang "))
+      stat = `rang_voie${ findPathByName(stat, pathNames) }`;
+    const replace = `${sb}[[${dice}${devol} + @{${stat.toLowerCase()}}[${stat}] ]]${sa}`;
     text = text.replace(matched, replace);
   });
 
@@ -9050,7 +9162,7 @@ function insertRolls(text, options = {}) {
   });
 
   // Search for " [# + XXX] "
-  matchRegExp(text, /([ ]*)\[([0-9]+)[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL|rang voie [1-9])\]([ ]*)/gm).forEach(result => {
+  matchRegExp(text, /([ ]*)\[([0-9]+)[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL|rang voie [1-9]).*\]([ ]*)/gm).forEach(result => {
     let [ matched, sb, value, ability, sa ] = result;
     if (ability.startsWith("rang ")) {
       ability = `rang_voie${ findPathByName(ability, pathNames) }`;
@@ -9060,7 +9172,7 @@ function insertRolls(text, options = {}) {
   });
 
   // Search for " [XXX] "
-  matchRegExp(text, /([ ]+)\[(AGI|CON|FOR|PER|CHA|INT|VOL)\]([ ]+)/gm).forEach(result => {
+  matchRegExp(text, /([ ]+)\[(AGI|CON|FOR|PER|CHA|INT|VOL).*\]([ ]+)/gm).forEach(result => {
     let [ matched, sb, ability, sa ] = result;
     const replace = `${sb}[[@{${ability.toLowerCase()}}]]${sa}`;
     text = text.replace(matched, replace);
@@ -9126,7 +9238,8 @@ on("change:repeating_armes:arme-atktype change:repeating_npcarmes:arme-atktype",
 /**
  * Roll an attack in chat
  */
-on("clicked:repeating_armes:attack-btn", function() {
+on("clicked:repeating_armes:attack-btn", function(eventInfo) {
+  const attackId = eventInfo.triggerName.split("_")[2];
   const section = "repeating_armes_arme-"
   const attackAttrs = [
     "nom",
@@ -9140,8 +9253,10 @@ on("clicked:repeating_armes:attack-btn", function() {
     "dmdiv",
     "portee",
     "special",
+    "atktype",
     "atkmods",
-    "options"
+    "options",
+    "usure"
   ];
   const sitModAttrs = [
     "couvert",
@@ -9150,19 +9265,12 @@ on("clicked:repeating_armes:attack-btn", function() {
     "visibilite"
   ];
   getAttrs([
-    "cfg_1attack_roll",
-    "cfg_crit_diff",
-    "cfg_use_ammo",
+    "cfg_1attack_roll", "cfg_crit_diff", "cfg_use_ammo", "cfg_usure",
     "bouclier_eqp",
-    "condition_affaibli",
-    "condition_immobilise",
-    "tactique",
-    "tactdiv",
-    "tactdmdiv",
-    "noms_voies",
+    "condition_affaibli", "condition_immobilise",
+    "tactique", "tactdiv", "tactdmdiv",
+    "noms_voies", "rangs_voies",
     "en_selle",
-    "noms_voies",
-    "rangs_voies",
     ...luckButtonAttrs(),
     ...sitModAttrs.map(a => `modsit_${a}`),
     ...attackAttrs.map(a => `${section}${a}`),
@@ -9173,6 +9281,7 @@ on("clicked:repeating_armes:attack-btn", function() {
     const useOneRoll = boolval(values.cfg_1attack_roll);
     const useCritDiff = intval(values.cfg_crit_diff);
     const useAmmo = boolval(values.cfg_use_ammo);
+    const useWear = boolval(values.cfg_usure);
     const shieldUsed = boolval(values.bouclier_eqp);
     const tactics = intval(values.tactique);
     const tactBM = intval(values.tactdiv);
@@ -9191,13 +9300,15 @@ on("clicked:repeating_armes:attack-btn", function() {
     // attack parameters
     const atk = strval(values[section + "atk"]);
     const atkdiv = intval(values[section + "atkdiv"]);
-    const name = capitalize(strval(values[section + "nom"], getAttackName(atk)));
+    const name = capitalize(strval(values[section + "nom"], getAttackName(atk)), false);
     const portee = strval(values[section + "portee"]);
     let range = (portee !== "") ? ` (${portee})` : "";
     let crit = intval(values[section + "crit"], 20);
     const isRanged = (atk === "atktir" && portee !== "");
+    const atkType = strval(values[section + "atktype"]);
     const modifiers = strval(values[section + "atkmods"]).split(",").map(mod => mod.trim().toLowerCase());
     const options = strval(values[section + "options"]);
+    const usure = strval(values[section + "usure"]);
     const ressourceId = strval(values["repeating_armes_jet-resid"]);
 
     // 2 mains & bouclier 
@@ -9384,24 +9495,40 @@ on("clicked:repeating_armes:attack-btn", function() {
     if (fxValue !== "")
       playFX(fxValue);
 
+    // Check special effect on die roll
+    const rollOptions = {};
+    let rollEffect = "";
+    if (hasProp(options, "effet")) {
+      const [ tn, effect ] = getProp(options, "effet").replace(/\s\s+/g, " ").split("?");
+      rollOptions["rollTN"] = intval(tn.trim());
+      rollEffect = effect.trim();
+    }
+
     // Roll attack !
     const atkProps = {
       lsub: atkTitle.replace("/", " /\n"),
       rsub: name + range,
       roll: attack,
+      rolleffect: rollEffect,
       broll: "",
+      brolleffect: rollEffect,
       dm: dmroll,
       dmdesc,
       critdiff: `[[${useCritDiff}]]`,
       dmcrit,
       powder,
       text: special,
-      chance: addLuckButton(values)
+      chance: addLuckButton(values),
+      usure: ""
     };
     if (roll === "1d20" && bRoll)
       atkProps.broll = attack;
+    if ([ "main", "jet" ].includes(atkType) && useWear) {
+      atkProps.usure = "[[1d10]]";
+      rollOptions["usure"] = { attackId, value: usure, name };
+    }
     const chatMsg = cof2RollTemplate(atkProps);
-    sendChatMsg(chatMsg);
+    sendChatMsg(chatMsg, rollOptions);
 
     if (useAmmo && ressourceId !== "") {
       const resVal = `repeating_ressources_${ressourceId}_res-val`;
@@ -9410,6 +9537,42 @@ on("clicked:repeating_armes:attack-btn", function() {
         setAttrs({ [resVal]: munitions });
       });
     }
+  });
+});
+
+/**
+ * Check usure
+ */
+on("change:usure_check", function() {
+  getAttrs([ "usure_check" ], function(values) {
+    const check = strval(values.usure_check);
+    if (check === "")
+      return;
+    
+    const updates = new Map();
+
+    try {
+      let { attack, name, usure, roll } = JSON.parse(check);
+      console.log(attack, name, usure, roll)
+      if (attack !== "") {
+        usure = Math.max(0, usure - 1);
+        updates.set(`repeating_armes_${attack}_arme-usure`, usure);
+        if (roll > usure) {
+          sendChatMsg(cof2RollTemplate({
+            lsub: "Usure",
+            rsub: name,
+            text: `L'arme se brise (usure : ${usure}) !`,
+            textclass: "fumble"
+          }));
+        }
+      }
+    } 
+    catch (e) {} 
+    finally {
+      updates.set("usure_check", "");
+      setAttrs(Object.fromEntries(updates));
+    }
+
   });
 });
 
@@ -9553,13 +9716,16 @@ function actionAbility(path, rank) {
 
     const updates = new Map();
     
-    // alert on usage
     let alert = "";
     let alertCSS = "";
+    let expended = false;
+
+    // alert on usage
     if (maxUses !== 0) {
       if (nbUsed > maxUses) {
-        alert = `Déjà utilisée ${maxUses} fois / ${usage.toLowerCase()}`;
         description = "";
+        expended = true;
+        alert = `Déjà utilisée ${maxUses} fois / ${usage.toLowerCase()}`;
         alertCSS = "fumble";
       } else {
         alert = `Utilisée ${nbUsed} fois`;
@@ -9567,16 +9733,17 @@ function actionAbility(path, rank) {
     }
 
     // alert on spells & PM
-    if (abilityOwned === 1 && abilitySpell === 1) {
+    if (!expended && abilityOwned === 1 && abilitySpell === 1) {
       let pm = intval(values.pm);
+      alert += (alert !== "") ? "\n" : "";
       if (rank > pm) {
-        alert = "Plus assez de Points de Mana\n";
+        alert += "Plus assez de Points de Mana\n";
         alert += `${pm} restants pour ${rank} nécessaires\n`;
         alert += `Brûlure de Mana : [[${rank - pm}d@{drecup}]] PV perdus\n`
         alertCSS = "fumble";
       } else {
         pm -= rank;
-        alert = `${pm} Points de Mana restants`;
+        alert += `${pm} Points de Mana restants`;
         updates.set("pm", pm);
       }
     }
@@ -9880,7 +10047,7 @@ on("clicked:reset_uses-btn", function() {
     }
 
     // Ask for which abilities to reset
-    ask([ "Capacités ?", ...freqs ], function(selected, choices) {
+    ask([ "Utilisations capacités ?", ...freqs ], function(selected, choices) {
       const freq = choices[selected];
       const titles = abilities[freq].map(a => `voie${ a.charAt(1) }-t${ a.charAt(3) }`);
       const usages = abilities[freq].map(a => `v${ a.charAt(1) }r${ a.charAt(3) }_use_max`);
@@ -9960,7 +10127,7 @@ function abilityUsages(path = 0) {
 function abilityRollQuery() {
   return "?{Carac ?|" 
   + SWData.PC.STATS
-  .map(stat => `${ shorten(stat).toUpperCase() },@{${ shorten(stat) }_test}`)
+  .map(stat => `${ upperShort(stat) },@{${ shorten(stat) }_test}`)
   .join("|")
   + "}";
 }
@@ -10123,25 +10290,31 @@ on("change:repeating_buffs remove:repeating_buffs", function () {
  * @param {string} attribute - attribute name 
  */
 function parseBuffList(attribute) {
-  getAttrs([ `${attribute}_buff_list`, ...SWData.PC.BUFFS.From ], function(values) {
+  getAttrs([ `${attribute}_buff_list`, ...SWData.PC.BUFFS.From, "noms_voies" ], function(values) {
     const [ buff ] = Object.keys(values);
     const buffList = strval(values[buff]).split("; ");
-    const allRanks = values.rangs_voies.split(",");
+    const allRanks = getPathRanks(values.rangs_voies);
     let buffTotal = 0;
     buffList.forEach(buff => {
       if (buff.trim() === "")
         return;
       let value = 0;
-      const [ expression ] = buff.split(":").map(e => e.trim()).slice(1);
+      const expression = strval(buff.split(":")[1]).trim();
       const attrBuff = SWData.PC.BUFFS.From.find(a => `[${a}]` === expression.toLowerCase());
       if (attrBuff) {
         value = intval(values[attrBuff]);
       } else {
-        const result = expression.match(/\[rang[ ]*voie[ ]*([1-9])\][ ]*\+?[ ]*([0-9]*)?/i);
+        let result = expression.match(/\[rang[ ]*voie[ ]*([1-9])\][ ]*\+?[ ]*([0-9]*)?/i);
+        if (!result)
+          result = expression.match(/\[rang[ ]*(.*)\][ ]*\+?[ ]*([0-9]*)?/i);
         if (result) {
           const [ matched, path, bonus ] = result;
-          if (matched && intval(path) > 0)
-            value = intval(allRanks[intval(path) - 1]);
+          let pathNumber = intval(path);
+          if (pathNumber === 0) {
+            pathNumber = findPathByName("rang " + path, getPathNames(values.noms_voies));
+          }
+          if (matched && pathNumber > 0)
+            value = allRanks[pathNumber - 1];
           if (bonus)
             value += intval(bonus);
         } else {
@@ -10171,6 +10344,31 @@ function rebuildBuffValues() {
     parseBuffList(attribute);
   });
 }
+
+// Recalculate buffs values on change of source attributes
+SWData.PC.BUFFS.From.forEach(attribute => {
+  on(`change:${attribute}`, function () {
+    rebuildBuffValues();
+  })
+});
+
+/**
+ * On click on the buffs syntax help button
+ */
+on("clicked:helpbuff-btn", function() {
+  sendChatMsg([
+    "title=Buffs/De-buffs",
+    "Valeur=Valeur fixe",
+    "[CAR]=Score de la caractéristique *CAR* (AGI, FOR, CHA...)",
+    "[rang voie *N*]=Rang dans la voie n° *N*",
+    "[rang voie *Nom*]=Rang dans la voie *Nom*",
+    "[rang *Nom*]=Rang dans la voie *Nom*",
+    "desc=Vous pouvez ajouter un bonus après la voie" + "\n" + "Ex. : *[rang voie 2] + 1*"
+  ], {
+    template: "custom",
+    whisper: "gm"
+  });
+});
 
 /**
  * Parse abilities path text
@@ -10329,6 +10527,7 @@ on("clicked:helpgear-btn", function() {
     "type-dm:=Types de dommages",
     "critique:=Seuil de critique",
     "portee:=Portée arme à distance",
+    "usure:=Seuil d'usure",
     "bonus-def:=Bonus DEF de l'armure ou du bouclier",
     "armure:=Bonus DEF de l'armure",
     "armure-malus:=Malus d'armure portée",
@@ -10757,8 +10956,9 @@ on(eventList("change", [
     "atk",
     "atkid"
   ].map(a => `repeating_equipement_equip-${a}`);
-  getAttrs(gearAttrs, function(values) {
-    const [ name, detail, props, atk, atkid ] = Object.keys(values);
+  getAttrs([ "cfg_usure", ...gearAttrs ], function(values) {
+    const usure = boolval(values.cfg_usure);
+    const [ name, detail, props, atk, atkid ] = Object.keys(values).slice(1);
     const equipment = strval(values[name]);
     const description = strval(values[detail]);
     const properties = strval(values[props]);
@@ -10816,6 +11016,8 @@ on(eventList("change", [
       attributes.set(rowId + "portee", strval(attackRow.get("portee")));
       attributes.set(rowId + "special", description);
       attributes.set(rowId + "gearid", gearId);
+      if (usure && attackRow.has("usure"))
+        attributes.set(rowId + "usure", intval(attackRow.get("usure")));
     }
 
     if (attributes.size > 0)
@@ -11457,31 +11659,17 @@ on("clicked:pc_menus-btn", function () {
 SWData.PC.STATS.forEach(stat => {
   const short = shorten(stat);
   on(`clicked:pnj_${short}-btn`, function () {
-    getAttrs([ `${short}_sup` ], function (value) {
-      const [ dType ] = Object.keys(value);
-      const roll = intval(value[dType]) === 1 ? "2d20kh1" : "1d20";
-      const carac = `[[${roll}[Dé] + (@{${short}})[Bonus ${short.toUpperCase()}] ]] `;      
+    getAttrs([ `${short}_sup` ], function (values) {
+      const [ dType ] = Object.keys(values);
+      const roll = `[[${ dieRoll(values[dType]) }[Dé] + (@{${short}})[Bonus ${short.toUpperCase()}] ]] `;
       const chatMsg = cof2RollTemplate({
         lsub: "Test",
         rsub: capitalize(stat),
-        roll: carac
+        roll
       });
       sendChatMsg(chatMsg);
     });
   });
-});
-
-/**
- * On NPC init button click
- */
-on("clicked:pnj_init-btn", function () {
-  const init = `[[@{init}[Initiative] + @{cfg_init_variable}[Dé(s)] &{tracker} ]]`;
-  const chatMsg = cof2RollTemplate({
-    lsub: "Jet",
-    rsub: "Initiative",
-    roll: init
-  });
-  sendChatMsg(chatMsg);
 });
 
 /**
@@ -11543,14 +11731,17 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     "dmtype",
     "dmdiv",
     "portee",
-    "special"
+    "special",
+    "options"
   ];
-  getAttrs([ 
+  getAttrs([
+    "cfg_1attack_roll",
     "cfg_crit_diff",
     "compagnon",
     "atkgroup", "nbgroup",
     ...attackAttrs.map(attribute => `${section}${attribute}`)
   ], function (values) {
+    const useOneRoll = boolval(values.cfg_1attack_roll);
     const useCritDiff = intval(values.cfg_crit_diff);
     let companionOf = strval(values.compagnon);
     companionOf = companionOf !== "" ? companionOf + "|" : "";
@@ -11669,27 +11860,46 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
           break;
       }
     }
+    
+    // Check special effect on die roll
+    const options = strval(values[section + "options"]);
+    let rollTN = {};
+    let rollEffect = "";
+    if (hasProp(options, "effet")) {
+      const [ tn, effect ] = getProp(options, "effet").replace(/\s\s+/g, " ").split("?");
+      rollTN = { rollTN: intval(tn.trim()) };
+      rollEffect = effect.trim();
+    }
 
+    const fxValue = strval(getProp(options, "fx"));
+    
     attacks.forEach((attack, ix) => {
+      
+      // Play FX !
+      if (fxValue !== "")
+        playFX(fxValue);
       
       // base attack roll
       let chatAtk = {
         lsub: "Attaque",
         rsub: name + range,
         roll: attack,
+        rolleffect: rollEffect,
         broll: "",
+        brolleffect: "",
         dm: dmroll,
         dmdesc,
         critdiff: `[[${useCritDiff}]]`,
         dmcrit,
-        text: special
+        text: special,
       };
-      
+
       // process grouped attacks
-      if (atkgrp[ix].nb === 4) {
-        chatAtk.save = 0;
+      if (atkgrp[ix].nb < 4) {
+        if (!useOneRoll)
+          chatAtk = { ...chatAtk, broll: attack, brolleffect: rollEffect };
       } else {
-        chatAtk = { ...chatAtk, broll: attack };
+        chatAtk.save = 0;
       }
       if (atkgrp[ix].nb > 1)
         chatAtk = { ...chatAtk, alert: `Groupe n°${ix + 1} : [[${atkgrp[ix].nb}]] créatures` };
@@ -11699,7 +11909,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
         if (useMulti === 1)
           chatAtk = { ...chatAtk, lsub: `${atk}${ atk > 1 ? "ème" : "ère" } attaque` };
         const chatMsg = cof2RollTemplate(chatAtk);
-        sendChatMsg(chatMsg);
+        sendChatMsg(chatMsg, rollTN);
       }
     });
 
@@ -11795,7 +12005,7 @@ SWData.COMPANIONS.forEach(attr => {
 function importNPCAbilities(sbLine, npcAttrs) {
   SWData.PC.STATS.forEach(stat => {
     const short = shorten(stat);
-    const rx = new RegExp(` ${short.toUpperCase()} (.)([0-9]*)(\\*)? `);
+    const rx = new RegExp(` ${ short.toUpperCase() } (.)([0-9]*)(\\*)? `);
     const match = sbLine.match(rx);
     if (!match) 
       return;
@@ -12202,16 +12412,13 @@ function migrateSheetToV1_3(sheetType, curVer = { major: 1, minor: 2, patch: 0 }
     let migration = strval(values.migration);
     delete values.migration;
     const updates = new Map();
-    if (curVer.major = 1 && curVer.minor === 2 && curVer.patch < 1) {
-      Object.keys(values).forEach(attr => {
-        const base = `${attr}_base`;
-        updates.set(base, intval(values[attr]));
-        migration = migrateLog(migration, "1.3.0", `${base} = ${ updates.get(base) }`)
-      });
-      updates.set("migration", migration);
-    }
-    if (updates.size > 0)
-      setAttrs(Object.fromEntries(updates));
+    Object.keys(values).forEach(attr => {
+      const base = `${attr}_base`;
+      updates.set(base, intval(values[attr]));
+      migration = migrateLog(migration, "1.3.0", `${base} = ${ updates.get(base) }`)
+    });
+    updates.set("migration", migration);
+    setAttrs(Object.fromEntries(updates));
   });
 }
 
@@ -12356,20 +12563,11 @@ on("sheet:opened", function() {
     ...seq(9).map(p => `voie${p}nom`),
   ];
   getAttrs([
-    "version",
-    "verfdp",
-    "debug_mode",
-    "scriptVersion",
-    "scriptVersion_max",
+    "version", "verfdp",
+    "debug_mode", "scriptVersion", "scriptVersion_max",
     "character_token",
-    "sheet_type",
-    "profil",
-    "famille",
-    "compagnon",
-    "comp_def",
-    "comp_pv",
-    "comp_init",
-    "comp_pnjatk",
+    "sheet_type", "profil", "famille",
+    "compagnon", "comp_def", "comp_pv", "comp_init", "comp_pnjatk",
     "pnjatk",
     "pc_subtab1",
     ...pathAttrs
@@ -12427,6 +12625,7 @@ on("sheet:opened", function() {
 
     if (values.version !== values.verfdp)
       updates.set("version", values.verfdp);
+
     setAttrs(Object.fromEntries(updates));
   });
 });
@@ -12473,7 +12672,7 @@ on("mancerchange:peuple", function (eventInfo) {
       peopleMods = "+1 AGI ou VOL, -1 FOR";
       break;
     case "Humain":
-      peopleMods = "+1 à la plus faible caract.";
+      peopleMods = "+1 à la plus faible carac.";
       break;
     case "Nain":
       peopleMods = "+1 en CON ou VOL, -1 en AGI";

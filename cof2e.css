@@ -1,4 +1,4 @@
-/* COF2e v1.2.0 */
+/* COF2e v1.3.0 */
 
 @import url('https://fonts.googleapis.com/css?family=Merriweather+Sans&display=swap');
 
@@ -47,7 +47,8 @@ select:hover {
   text-align: right;
 }
 
-.cofmain .cofsheet input[type='text'].two-digits {
+.cofmain .cofsheet input[type='text'].two-digits,
+.cofmain .cofsheet span.two-digits {
   width: 2rem;
   text-align: right;
 }
@@ -338,6 +339,12 @@ div.path div.block-title {
   padding: 2px;
 }
 
+.attr-max {
+  font-weight: bold;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
 /* Identity layout */
 
 .cofmain .heading {
@@ -565,17 +572,20 @@ div.change-view {
 }
 
 .pc-attributes .trait details.trait-detail summary,
+/* .pc-luck-rd .luck details.trait-detail summary, */
 .pc-buffs-subtab summary.buffs-detail {
   list-style: none;
 }
 
 .pc-attributes .trait details.trait-detail summary:hover,
+/* .pc-luck-rd .luck details.trait-detail summary:hover, */
 .pc-buffs-subtab summary.buffs-detail:hover {
   color: orange;
   font-weight: bold;
 }
 
 .pc-attributes .trait details[open].trait-detail,
+/* .pc-luck-rd .luck details[open].trait-detail, */
 .pc-attributes .trait span.trait-detail {
   font-size: xx-small;
 }
@@ -754,7 +764,6 @@ div.change-view {
 }
 
 .abilities .rank .rank-summary span.rank-title {
-  display: block;
   width: 21rem;
   overflow-x: hidden;
   text-overflow: ellipsis;
@@ -878,18 +887,24 @@ input[value="0"].show-paths-789 ~ div.abilities {
   margin-top: 2px;
 }
 
-.pc-config-tab li.config-check {
+.pc-config-tab li.config-check,
+.npc-config-tab li.config-check {
   list-style: none;
 }
 
-.pc-config-tab details:has(li input[type="checkbox"]:checked) summary h4::after {
-  content: " *";
-  font-variant-position: super;
+.pc-config-tab details:has(li input[type="checkbox"]:checked) summary h4 {
+  font-style: italic;
 }
 
 .pc-config-tab .pc-configs {
   display: grid;
   grid-template-columns: 60% 40%;
+  gap: 2px;
+}
+
+.npc-config-tab .npc-configs {
+  display: grid;
+  grid-template-columns: 25% 75%;
   gap: 2px;
 }
 
