@@ -10,7 +10,7 @@ La convention adoptée dans la fiche COF 2E est la suivante :
 | Voie 1 | Voie 2 | Voie 3 |
 | Voie 4 | Voie 5 | Voie 6 |
 | Voie 7 | Voie 8 | Voie 9 |
-|        |        |        |
+
 
 Cet onglet de la fiche de personnage présente deux vues, les textes cliquables _Affichage_ et _Edition_ permettent de basculer d'un mode à l'autre.
 
