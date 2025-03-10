@@ -231,18 +231,18 @@ Ci-dessous la liste des champs utilisables dans chacun des _roll templates_ de l
 
 Où <kbd>nom</kbd> :
 
-- <kbd>{{color}}</kbd> : Couleur du message de chat. Utiliser la valeur <kbd>@{nom du personnage|couleur_pj}</kbd>
-- <kbd>{{perso}}</kbd> : Nom du personnage, centré en haut du message de chat
-- <kbd>{{lsub}}</kbd> : Sous-titre du message, à gauche
-- <kbd>{{rsub}}</kbd> : Sous-titre du message, à droite
-- <kbd>{{roll}}</kbd> : Jet de dés (test, attaque)
-- <kbd>{{broll}}</kbd> : Deuxième jet de dés (pour gérer les dés bonus/malus)
-- <kbd>{{dm}}</kbd> : Jet de dommage
-- <kbd>{{dmdesc}}</kbd> : Type de dommages
-- <kbd>{{text}}</kbd> : Texte descriptif
-- <kbd>{{textclass}}</kbd> : Valeur <kbd>critical</kbd> pour affichage en vert, <kbd>fumble</kbd> pour affichage en rouge
-- <kbd>{{alert}}</kbd> : Texte d'alerte si nécessaire
-- <kbd>{{alertclass}}</kbd> : Valeur <kbd>critical</kbd> pour affichage en vert, <kbd>fumble</kbd> pour affichage en rouge
+- <kbd>\{\{color\}\}</kbd> : Couleur du message de chat. Utiliser la valeur <kbd>@{nom du personnage|couleur_pj}</kbd>
+- <kbd>\{\{perso\}\}</kbd> : Nom du personnage, centré en haut du message de chat
+- <kbd>\{\{lsub\}\}</kbd> : Sous-titre du message, à gauche
+- <kbd>\{\{rsub\}\}</kbd> : Sous-titre du message, à droite
+- <kbd>\{\{roll\}\}</kbd> : Jet de dés (test, attaque)
+- <kbd>\{\{broll\}\}</kbd> : Deuxième jet de dés (pour gérer les dés bonus/malus)
+- <kbd>\{\{dm\}\}</kbd> : Jet de dommage
+- <kbd>\{\{dmdesc\}\}</kbd> : Type de dommages
+- <kbd>\{\{text\}\}</kbd> : Texte descriptif
+- <kbd>\{\{textclass\}\}</kbd> : Valeur <kbd>critical</kbd> pour affichage en vert, <kbd>fumble</kbd> pour affichage en rouge
+- <kbd>\{\{alert\}\}</kbd> : Texte d'alerte si nécessaire
+- <kbd>\{\{alertclass\}\}</kbd> : Valeur <kbd>critical</kbd> pour affichage en vert, <kbd>fumble</kbd> pour affichage en rouge
 
 Ajouter <kbd>@{nom du personnage|token_dsp}</kbd> à la fin de la macro pour afficher le token lié à la fiche
 
@@ -254,11 +254,11 @@ Ce roll-template est une amélioration du template par défaut fourni par Roll20
 
 Où <kbd>nom</kbd> :
 
-- <kbd>{{color}}</kbd> : Couleur du message de chat. Utiliser la valeur <kbd>@{nom du personnage|couleur_pj}</kbd>
-- <kbd>{{token}}</kbd> : Utiliser <kbd>@{nom du personnage|token_dsp}</kbd> pour afficher le token lié à la fiche
-- <kbd>{{title}}</kbd> : Titre du message
-- <kbd>{{subtitle}}</kbd> : Sous-titre du message
-- <kbd>{{desc}}</kbd> : Ligne de fin du message
+- <kbd>\{\{color\}\}</kbd> : Couleur du message de chat. Utiliser la valeur <kbd>@{nom du personnage|couleur_pj}</kbd>
+- <kbd>\{\{token\}\}</kbd> : Utiliser <kbd>@{nom du personnage|token_dsp}</kbd> pour afficher le token lié à la fiche
+- <kbd>\{\{title\}\}</kbd> : Titre du message
+- <kbd>\{\{subtitle\}\}</kbd> : Sous-titre du message
+- <kbd>\{\{desc\}\}</kbd> : Ligne de fin du message
 
 L'utilisateur peut indiquer des paires _nom / valeur_ libres, qui sont affichées ligne par ligne entre le titre et le pied du message.
 
