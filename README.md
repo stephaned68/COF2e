@@ -6,7 +6,7 @@ Consultez la [documentation](https://stephaned68.github.io/COF2e/)
 
 ## Version courante
 
-v1.3.0 [Screenshot](cof2e.png)
+v1.4.0 [Screenshot](cof2e.png)
 
 ## Notes de version
 
