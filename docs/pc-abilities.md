@@ -55,16 +55,19 @@ Deux icônes sont situées à côté de **Editer** :
 - L'icône _Horloge_ permet de ré-initialiser le nombre d'utilisation des capacités pour un type de fréquence
 - L'icône _Options_ permet d'afficher un menu d'action dans le chat avec un bouton pour chaque voie. Chacun de ces boutons affiche ensuite un sous-menu d'action avec un bouton d'action pour chaque capacité possédée dans cette voie.
 
+Une troisième icone est affichée si le personnage possède au moins un sort (et donc dispose d'une valeur maximum de Points de Mana). Ce bouton permet d'appliquer la règle de Concentration accrue à l'utilisation d'une capacité de sort.
+
 # Jets de capacités
 
 Ce sous-onglet permet de lister des jets liés aux capacités du PJ. Pour chaque jet, vous pouvez indiquer :
-- Le nom de la capacité
+- Un nom
 - Le jet de dé correspondant :
   - Soit un jet de d20 normal, soit un jet avec _dé bonus_ ou _dé malus_, soit un autre type de jet.
   - Le score de caractéristique éventuel à ajouter au jet. L'option _Demander_ permet d'afficher un popup Roll20 pour choisir la caractéristique selon les circonstances.
   - La voie dont le rang doit être ajouté au jet s'il y a lieu.
   - Un bonus fixe (_+2 pour les voies de profil, +3 pour les voies de peuple, +5 pour les voies de prestige_).
 - Une description ou un jet spécial
+  - Si cette description est vide mais que le nom du jet correspond au nom d'une capacité possédée par le personnage, le texte de cette capacité est récupéré s'il est renseigné.
   - Avant envoi dans le chat, cette description est transformée par insertion de jets en ligne s'il y a lieu (voir paragraphe _Jets en ligne_ ci-dessous).
 
 L'icone située à côté de **Nom** permet d'afficher un menu d'action dans le chat avec un bouton pour chaque jet de capacité.

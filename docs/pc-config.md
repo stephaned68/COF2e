@@ -67,7 +67,11 @@ Si le nombre de points de capacités utilisé dépasse le nombre maximum disponb
 
 - Progression limitée : Les scores d'attaquent n'augmentent plus après le niveau 6.
 - Récupération - niveau : Le jet de récupération rapide est un jet de DR sec, sans ajouter la moitié du niveau.
-- Usure des armes : Un échec critique en attaque provoque un jet d'usure
+- Usure des armes : Un échec critique en attaque provoque un jet d'usure.
+- Règles de Peur : les états préjudiciables Effrayé et Paniqué s'ajoutent aux autres.
+
+## Dark Fantasy
+- Lutte contre l'Ombre : le nombre de PC mini est de -5, et devient la Valeur d'Ombre lorsqu'elle est négative.
 
 ## Forcer les valeurs maxi
 

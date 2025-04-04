@@ -7,6 +7,10 @@
 
 Un bouton situé à côté du type de fiche de personnage permet de lancer le Persomancien (CharacterMancer). Cette fonctionnalité expérimentale permet de simplifier la création d'un PJ. Voir [Informations Techniques]({{ site.baseurl }}/pc-tech) pour les paramètres nécessaires et l'utilisation.
 
+## Check-up
+
+Un autre bouton situé à côté du type de fiche de personnage permet d'afficher un bilan de santé du personnage : nombre de PV, DR, PC (Ombre), PM courants et maximum, états préjudiciables subis, objets tenus en main, nombre d'utilisations restantes des capacités à usage limité, liste des buffs actifs.
+
 # Caractéristiques
 
 Pour chaque caractéristique, vous pouvez indiquer :
@@ -123,6 +127,12 @@ Des paramètres optionnels peuvent être ajoutés :
   
   - <kbd>fx: </kbd> suivi du nom d'un FX Roll20 et d'un nombre facultatif de répétition
   - <kbd>effet: {cible} ? </kbd> suivi d'un texte à afficher si le jet de D20 atteint ou dépasse la valeur cible
+  - <kbd>bonus-magique: </kbd> suivi de la valeur du bonus au jet pour toucher et DM
+  - <kbd>magique-att: </kbd> suivi de la valeur du bonus magique au jet pour toucher
+  - <kbd>magique-dm: </kbd> suivi de la valeur du bonus magique aux DM (peut être un jet de dé)
+  - <kbd>affutee: </kbd> suivi d'un espace pour réduire de 1 le seuil de critique et ajouter 1d4° DM en cas de coup critique
+  - <kbd>element: </kbd> suivi d'un nom d'élément/substance pour ajouter une ligne de 1d4° DM élémentaires (2d4° si le nom de l'élément est suivi d'un espace et du mot <kbd>intense</kbd>)
+  - <kbd>fleau: </kbd> suivi du nom d'un type de créature pour que Roll20 demande confirmation lors de l'attaque et qu'une ligne de 1d4° DM soit ajoutée si la créature ciblée est du même type
 
 - Pour les armes de type _Arme de jet_ : vous pouvez spécifier des paramètres supplémentaires.
   - Nom de la munition (utile si le suivi simplifié des munitions est activé dans la configuration)

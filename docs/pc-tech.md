@@ -235,6 +235,7 @@ Où <kbd>nom</kbd> :
 - <kbd>perso</kbd> : Nom du personnage, centré en haut du message de chat
 - <kbd>lsub</kbd> : Sous-titre du message, à gauche
 - <kbd>rsub</kbd> : Sous-titre du message, à droite
+- <kbd>tags</kbd> : Liste d'étiquettes caractérisant le jet (sort (de zone), états préjudiciables, etc...)
 - <kbd>roll</kbd> : Jet de dés (test, attaque)
 - <kbd>broll</kbd> : Deuxième jet de dés (pour gérer les dés bonus/malus)
 - <kbd>dm</kbd> : Jet de dommage
@@ -250,7 +251,7 @@ Ajouter <kbd>@{nom du personnage|token_dsp}</kbd> à la fin de la macro pour aff
 
 Ce roll-template est une amélioration du template par défaut fourni par Roll20.
 
-<kbd>&{template:custom} {{nom=valeur }} ... </kbd>
+<kbd>&{template:custom} &#123;&#123;nom=valeur &#125;&#125; ... </kbd>
 
 Où <kbd>nom</kbd> :
 

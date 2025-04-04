@@ -41,6 +41,13 @@ Les codes et valeurs correspondantes que vous pouvez indiquer sont :
   - <kbd>casque</kbd> : RD du casque contre les DM critiques
   - <kbd>casque-malus</kbd> : malus à la PER & Init du casque porté
   - <kbd>agi-max</kbd> : valeur maximum d'AGI pour port de l'armure
+- Pour les armes magiques :
+  - <kbd>bonus-magique</kbd> : valeur du bonus au jet pour toucher et DM
+  - <kbd>magique-att</kbd> : valeur du bonus magique au jet pour toucher
+  - <kbd>magique-dm</kbd> : valeur du bonus magique aux DM (peut être un jet de dé)
+  - <kbd>affutee</kbd> : pour réduire de 1 le seuil de critique et ajouter 1d4° DM en cas de coup critique
+  - <kbd>element</kbd> : nom d'élément/substance pour ajouter une ligne de 1d4° DM élémentaires (2d4° si le nom de l'élément est suivi d'un espace et du mot <kbd>intense</kbd>)
+  - <kbd>fleau:</kbd> : nom d'un type de créature pour que Roll20 demande confirmation lors de l'attaque et qu'une ligne de 1d4° DM soit ajoutée si la créature ciblée est du même type
 
 ## Equipement lié à la défense
 
