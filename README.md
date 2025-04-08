@@ -10,7 +10,7 @@ v1.4.0 [Screenshot](cof2e.png)
 
 ## Notes de version
 
-### Version _1.4.0_ (2025-04-01)
+### Version _1.4.0_ (2025-04-08)
 
 - Ajout d'un bouton pour afficher un check-up de l'état du personnage
 - Ajout d'un bouton pour activer la concentration sur les capacités de sort
