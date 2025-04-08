@@ -73,15 +73,16 @@ ou héroïque, H = supérieure et héroïque)
 
 - <kbd>condition_affaibli</kbd> : 0/1 selon que le personnage subit l'état préjudiciable _Affaibli_
 - <kbd>condition_aveugle</kbd> : 0/1 selon que le personnage subit l'état préjudiciable _Aveuglé_
+- <kbd>condition_effraye</kbd> : 0/1 selon que le personnage subit l'état préjudiciable _Effrayé_ (règles de Peur)
 - <kbd>condition_essoufle</kbd> : 0/1 selon que le personnage subit l'état préjudiciable _Essouflé_
 - <kbd>condition_etourdi</kbd> : 0/1 selon que le personnage subit l'état préjudiciable _Etourdi_
 - <kbd>condition_immobilise</kbd> : 0/1 selon que le personnage subit l'état préjudiciable _Immobilisé_
 - <kbd>condition_invalide</kbd> : 0/1 selon que le personnage subit l'état préjudiciable _Invalide_
+- <kbd>condition_panique</kbd> : 0/1 selon que le personnage subit l'état préjudiciable _Paniqué_ (règles de Peur)
 - <kbd>condition_paralyse</kbd> : 0/1 selon que le personnage subit l'état préjudiciable _Paralysé_
 - <kbd>condition_ralenti</kbd> : 0/1 selon que le personnage subit l'état préjudiciable _Ralenti_
 - <kbd>condition_renverse</kbd> : 0/1 selon que le personnage subit l'état préjudiciable _Renversé_
 - <kbd>condition_surpris</kbd> : 0/1 selon que le personnage subit l'état préjudiciable _Surpris_
-- <kbd>has_conditions</kbd> : 0/1 selon que le personnage subit au moins un état préjudiciable
 
 ## Objets en main
 
@@ -126,7 +127,7 @@ Si une arme est en main, l'attribut correspondant prend une valeur composée de 
 - <kbd>v1r1_param</kbd> : paramètre optionnel de la capacité
 - <kbd>v1r1_props</kbd> : propriétés optionnelles pour la capacité
 
-Ces attributs existent pour toutes les voies (1 à 9) et tous les rangs (1 à 5).
+Ces attributs sont déclinés pour toutes les voies (1 à 9) et tous les rangs (1 à 5).
 
 - <kbd>noms_voies</kbd> : liste des noms de voies, séparés par des <kbd>|</kbd>
 - <kbd>rangs_voies</kbd> : liste des rangs dans les voies, séparés par des <kbd>,</kbd>
