@@ -1,4 +1,4 @@
-/* COF2e v1.3.0 */
+/* COF2e v1.4.0 */
 
 @import url('https://fonts.googleapis.com/css?family=Merriweather+Sans&display=swap');
 
@@ -711,7 +711,8 @@ div.change-view {
 
 .pc-attacks .weapon {
   display: grid;
-  grid-template-columns: 25px 3fr 3fr 1fr 4.5fr 1fr 3.5fr;
+  /*grid-template-columns: 25px 3fr 3fr 1fr 4.5fr 1fr 3.5fr;*/
+  grid-template-columns: 25px 3fr 2.75fr 1fr 4.25fr 1fr 4fr;
   gap: 2px;
   margin-bottom: 2px;
 }
@@ -1160,6 +1161,19 @@ textarea.migration {
   border: 2px burlywood solid;
   border-radius: 25%;
   font-weight: bold;
+}
+
+.sheet-rolltemplate-cof2 .inlinerollresult.fullcrit,
+.sheet-rolltemplate-cof2 .inlinerollresult.fullfail {
+  color: whitesmoke;
+}
+
+.sheet-rolltemplate-cof2 .inlinerollresult.fullcrit {
+  background-color: green;
+}
+
+.sheet-rolltemplate-cof2 .inlinerollresult.fullfail {
+  background-color: red;
 }
 
 .sheet-rolltemplate-cof2 .sheet-rt-hidden {

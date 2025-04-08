@@ -700,9 +700,9 @@
               </div>
 
               <div class="bordered centered">
-                <input type="number" class="two-digits" name="attr_pv" title="@{pv} PV courants" value="0">
+                <input type="number" class="two-digits" name="attr_pv" title="@{pv} PV courants">
                 /
-                <input type="number" class="two-digits" name="attr_pv_max" title="@{pv_max} PV maximum" value="0">
+                <input type="number" class="two-digits" name="attr_pv_max" title="@{pv_max} PV maximum">
               </div>
 
             </div>
@@ -7970,7 +7970,7 @@ function allPathRanks(attr) {
  * @returns {string[]|string}
  */
 function eventList(eventName, attributeList, joinChar = "") {
-  const result = attributeList.map(a => `${eventName}:${ a.toLowerCase() }`)
+  const result = attributeList.map(a => `${eventName}:${ a.toLowerCase() }`);
   return joinChar !== "" ? result.join(joinChar) : result;
 }
 
