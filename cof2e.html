@@ -9309,17 +9309,17 @@ on("clicked:vigloss-btn clicked:vigheal-btn", function (eventInfo) {
 
 /**
  * On PV value change
- */
+
 on("change:pv", function (eventInfo) {
   if (eventInfo.sourceType === "sheetworker")
     return;
-
+  
   const oldPV = intval(eventInfo.previousValue);
   const newPV = intval(eventInfo.newValue);
   const vp = oldPV > newPV ? oldPV - newPV : newPV - oldPV;
   const lossOrGain = oldPV > newPV ? -1 : +1;
-  //updatePVDR(vp, lossOrGain, false);
-});
+  updatePVDR(vp, lossOrGain, false);
+});*/
 
 /**
  * On Recup button click
