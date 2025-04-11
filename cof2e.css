@@ -1,4 +1,4 @@
-/* COF2e v1.4.0 */
+/* COF2e v1.4.02 */
 
 @import url('https://fonts.googleapis.com/css?family=Merriweather+Sans&display=swap');
 
@@ -823,6 +823,11 @@ button.spell-concentration {
 .abilities-view .abilities .rank span {
   white-space: pre-wrap;
   user-select: text;
+}
+
+.abilities-view .abilities .rank-summary input[value="1"].spell ~ span.rank-title::after {
+  content: " *";
+  text-decoration: overline;
 }
 
 .weapon textarea.one-row,
