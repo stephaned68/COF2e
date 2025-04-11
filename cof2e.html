@@ -1,9 +1,9 @@
 <div class="cofmain">
 
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.4.0">
+  <input type="hidden" name="attr_verfdp" value="1.4.01">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.4.0">
+  <input type="hidden" name="attr_version" value="1.4.01">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
 
@@ -199,7 +199,7 @@
           <strong>Niveau</strong>
         </div>
         <div class="d-flex d-flex-middle">
-          <input type="number" name="attr_niveau" title="@{niveau}" value="1">
+          <input type="number" name="attr_niveau" title="@{niveau}" value="0">
         </div>
         <div class="d-flex d-flex-middle">
           <strong>Type</strong>
@@ -818,7 +818,7 @@
                 title="@{condition_effraye} Effrayé"
               ><img
                 class="bubble-img condition-effraye"
-                src="https://raw.githubusercontent.com/stephaned68/COF2e/master/cond_effraye.png"
+                src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cond_effraye.png"
                 />
               </button>
               <input type="hidden" class="condition-essoufle" name="attr_condition_essoufle" value="0">
@@ -877,7 +877,7 @@
                 title="@{condition_panique} Paniqué"
               ><img
                 class="bubble-img condition-panique"
-                src="https://raw.githubusercontent.com/stephaned68/COF2e/master/cond_panique.png"
+                src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cond_panique.png"
                 />
               </button>
               <input type="hidden" class="condition-paralyse" name="attr_condition_paralyse" value="0">
@@ -8062,6 +8062,13 @@ class Repeating {
  * @property {string} template - Name of roll template
  * @property {string} whisper - Target for whispered message 
  * @property {number} rollTN - Target number for special roll effect
+ * @property {boolean} critical - Use critical effect
+ * @property {integer} crit - Critical value threshold
+ * @property {boolean} fumble - Use fumble effect
+ * @property {object} usure - Has usure effects
+ * @property {string} usure.attackId - Row id of repeating attack item
+ * @property {string} usure.name - Weapon name
+ * @property {integer} usure.value - Current usure value
  */
 
 /**
@@ -8676,18 +8683,18 @@ getAttrs([ "profil", "famille" ], function(values) {
   let dRecup = 8;
   let pcBase = 2;
   let drBase = 2;
-  let voie1pv = 4;
+  let voie123pv = 4;
   switch (family) {
     case "Aventuriers":
       pcBase = 3;
       break;
     case "Combattants":
       dRecup = 10;
-      voie1pv = 5;
+      voie123pv = 5;
       break;
     case "Mages":
       dRecup = 6;
-      voie1pv = 3;
+      voie123pv = 3;
       break;
     case "Mystiques":
       drBase = 3;
@@ -8696,7 +8703,9 @@ getAttrs([ "profil", "famille" ], function(values) {
   updates.set("drecup", dRecup);
   updates.set("pc_base", pcBase);
   updates.set("dr_base", drBase);
-  updates.set("voie1pv", voie1pv);
+  updates.set("voie1pv", voie123pv);
+  updates.set("voie2pv", voie123pv);
+  updates.set("voie3pv", voie123pv);
 
   logAndSet(Object.fromEntries(updates), logTitle(eventInfo));
   });
@@ -8908,14 +8917,26 @@ function updatePVMax(eventInfo) {
     ...nameSeq(9, "voie#pv"),
     ...allPathRanks("v#r#_props")
   ];
-  getAttrs([ "cfg_pvmax_auto", "pvmax_force", "niveau", "con", "pv_buff", ...owned, ...other ], function(values) {
+  getAttrs([ 
+    "cfg_pvmax_auto",
+    "pvmax_force",
+    "niveau",
+    "con",
+    "pv_buff",
+    "pv",
+    ...owned,
+    ...other 
+  ], function(values) {
     if (!boolval(values.cfg_pvmax_auto) && strval(eventInfo.triggerName) !== "RESET")
       return;
     if (boolval(values.pvmax_force))
       return;
 
+    const niveau = intval(values.niveau);
+    let pv = intval(values.pv);
+
     // niveau * CON 
-    let pvMax = intval(values.niveau) * intval(values.con);
+    let pvMax = niveau * intval(values.con);
 
     owned.forEach(ability => {
       if (!boolval(values[ability]))
@@ -8948,8 +8969,10 @@ function updatePVMax(eventInfo) {
     });
     
     pvMax += intval(values.pv_buff);
+    if (niveau === 1 && pv === 0)
+      pv = pvMax;
 
-    logAndSet({ pv_max: pvMax }, logTitle(eventInfo));
+    logAndSet({ pv, pv_max: pvMax }, logTitle(eventInfo));
   });
 }
 
