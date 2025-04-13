@@ -1,9 +1,9 @@
 <div class="cofmain">
 
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.4.02">
+  <input type="hidden" name="attr_verfdp" value="1.4.03">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.4.02">
+  <input type="hidden" name="attr_version" value="1.4.03">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
 
@@ -8414,18 +8414,19 @@ function playFX(fxValue) {
 
 /**
  * Return info for path+rank identifier
- * @param {string|{ path: number, rank: number }} vr - v#r# identifier (path + rank)
+ * @param {string|{ path: number, rank: number }} pathRank - v#r# identifier (path + rank)
  * @returns {abilityInformations}
  */
-function abilityInfo(vr) {
+function abilityInfo(pathRank) {
   let path = 0;
   let rank = 0;
-  if (typeof(vr) === "string") {
-    path = intval(vr.charAt(1));
-    rank = intval(vr.charAt(3));
+  if (typeof(pathRank) === "string") {
+    path = intval(pathRank.charAt(1));
+    rank = intval(pathRank.charAt(3));
   } else {
-    ({ path, rank } = vr);
+    ({ path, rank } = pathRank);
   }
+  const vr = `v${path}r${rank}`;
   return {
     path,
     rank,
@@ -8955,8 +8956,10 @@ on("change:dr_base change:con change:dr_buff", updateDRMax);
 
 /**
  * Compute pv_max
+ * @param {object} eventInfo - Roll20 eventInfo object
+ * @param {string} [changed=""] - path+rank ability id
  */
-function updatePVMax(eventInfo) {
+function updatePVMax(eventInfo, changed = "") {
   const owned = allPathRanks("v#r#");
   const other = [ 
     ...nameSeq(9, "voie#pv"),
@@ -8965,7 +8968,7 @@ function updatePVMax(eventInfo) {
   getAttrs([ 
     "cfg_pvmax_auto",
     "pvmax_force",
-    "niveau",
+    "famille", "niveau",
     "con",
     "pv_buff",
     "pv",
@@ -8977,18 +8980,24 @@ function updatePVMax(eventInfo) {
     if (boolval(values.pvmax_force))
       return;
 
-    const niveau = intval(values.niveau);
+    const level = intval(values.niveau);
+    
+    // Won't update if changing rank 2 for Mages profiles
+    if (changed !== "")
+      if (level === 1 && strval(values.famille) === "Mages" && abilityInfo(changed).rank === 2)
+        return;
+      
     let pv = intval(values.pv);
 
     // niveau * CON 
-    let pvMax = niveau * intval(values.con);
+    let pvMax = level * intval(values.con);
 
     owned.forEach(ability => {
       if (!boolval(values[ability]))
         return;
       
       const props = strval(values[`${ability}_props`]).toLowerCase();
-      if (getProp(props, "doublon"))
+      if (hasProp(props, "doublon"))
         return;
 
       const { path, rank } = abilityInfo(ability);
@@ -9002,7 +9011,7 @@ function updatePVMax(eventInfo) {
         return;
       }
 
-      if (SWData.settings.level1Paths.includes(path) && rank === 2 && getProp(props, "initial"))
+      if (SWData.settings.level1Paths.includes(path) && rank === 2 && hasProp(props, "initial"))
         return;
       
       if (rank > 2) {
@@ -9014,7 +9023,7 @@ function updatePVMax(eventInfo) {
     });
     
     pvMax += intval(values.pv_buff);
-    if (niveau === 1 && pv === 0)
+    if (level === 1 && pv === 0)
       pv = pvMax;
 
     logAndSet({ pv, pv_max: pvMax }, logTitle(eventInfo));
@@ -10675,29 +10684,36 @@ function updateAllPathNames(path) {
 
 /**
  * Check max ability points
+ * @param {string} [changed=""] - path+rank ability identifier
  */
-function checkAbilityPoints() {
+function checkAbilityPoints(changed = "") {
   const names = allPathRanks("voie#-t#");
   const owned = allPathRanks("v#r#");
   const props = allPathRanks("v#r#_props");
   const baseRank = nameSeq(9, "v#br");
   getAttrs([ 
-      "cfg_pts_capas",
-      "niveau",
-      ...owned,
-      ...names,
-      ...props,
-      ...baseRank
-    ], function(values) {
+    "cfg_pts_capas",
+    "niveau", "famille",
+    ...owned,
+    ...names,
+    ...props,
+    ...baseRank
+  ], function(values) {
     const checkAP = boolval(values.cfg_pts_capas);
     if (!checkAP)
       return;
-
+    
     const level = intval(values.niveau);
+    
+    // Won't update if changing rank 2 for Mages profiles
+    if (changed !== "")
+      if (level === 1 && strval(values.famille) === "Mages" && abilityInfo(changed).rank === 2)
+        return;
+
     const alerts = [];
     const maxPoints = level * 2;
     let usedPoints = 0;
-
+    
     owned.forEach(ability => {
       if (!boolval(values[ability]))
         return;
@@ -10709,7 +10725,7 @@ function checkAbilityPoints() {
         return;
 
       const props = strval(values[ability + "_props"]);
-      if (SWData.settings.level1Paths.includes(path) && rankPath === 2 && getProp(props, "initial"))
+      if (SWData.settings.level1Paths.includes(path) && rankPath === 2 && hasProp(props, "initial"))
         return;
 
       const minLevel = SWData.settings.minLevels[rankPath - 1];
@@ -10771,6 +10787,52 @@ function updatePathPV(path) {
 }
 
 /**
+ * On check/un-check rank 2 for mages
+ */
+on(eventList(
+  "change",
+  SWData.settings.level1Paths.map(p => `v${p}r2`),
+  " "
+), function(eventInfo) {
+  const rank = eventInfo.triggerName;
+  const rankProps = abilityInfo(rank).rankProps;
+  const rank2Props = SWData.settings.level1Paths
+    .filter(p => p !== abilityInfo(rank).path)
+    .map(p => abilityInfo({ path: p, rank: 2 }).rankProps);
+  getAttrs([
+    "famille", "niveau", "voie1nom",
+    rank, rankProps, ...rank2Props
+  ], function(values) {
+    if (strval(values.famille) !== "Mages")
+      return;
+    if (intval(values.niveau) > 1)
+      return;
+
+    const path1Mage = strval(values.voie1nom).toLowerCase().includes("mage");
+    const checked = boolval(values[rank]);
+    const props = strval(values[rankProps])
+      .split("\n")
+      .filter(p => strval(p) !== "")
+      .filter(p => !p.startsWith("initial"));
+    
+    if (checked) {
+      if (!rank2Props.some(a => strval(values[a]).startsWith("initial"))) {
+        if (abilityInfo(rank).path === 1 && path1Mage) {
+          props.push("initial: ");
+        } else if (abilityInfo(rank).path > 1) {
+          props.push("initial: ");
+        }
+      }
+    }
+
+    setAttrs({ [rankProps]: props.join("\n") }, function() {
+      updatePVMax(eventInfo);
+      checkAbilityPoints();
+    });
+  });
+});
+
+/**
  * Abilities
  */
 seq(9).forEach(path => {
@@ -10789,10 +10851,10 @@ seq(9).forEach(path => {
       setRank(path);
 
       // Update PV
-      updatePVMax(eventInfo);
+      updatePVMax(eventInfo, ability);
 
       // Check ability points
-      checkAbilityPoints();
+      checkAbilityPoints(ability);
     });
   });
 
