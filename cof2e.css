@@ -619,11 +619,11 @@ div.change-view {
 }
 
 .pc-attributes .hits input[value="red"].pv-status ~ div.pv-color {
-  background-color: tomato;
+  background-color: orangered;
 }
 
 .pc-attributes .hits input[value="black"].pv-status ~ div.pv-color {
-  background-color: maroon;
+  background-color: firebrick;
   color: whitesmoke;
 }
 

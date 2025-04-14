@@ -1,9 +1,9 @@
 <div class="cofmain">
 
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.4.04">
+  <input type="hidden" name="attr_verfdp" value="1.4.05">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.4.04">
+  <input type="hidden" name="attr_version" value="1.4.05">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
 
@@ -4947,6 +4947,25 @@
               <li>
                 <details>
                   <summary>
+                    <strong>Version 1.5.0</strong> (2025-05-??)
+                  </summary>
+                  <ul>
+                    <li>
+                      Ajout d'une couleur de fond aux PV selon le restant
+                      <br> - Jaune si moins de 50% de PV restants
+                      <br> - Rouge si 1 PV restant
+                      <br> - Rouge foncé si 0 PV restant
+                    </li>
+                    <li>Ajout d'une * aux capacités de sort en mode affichage</li>
+                    <li>Mise au point vérification des points de capacités et calcul auto. des PV</li>
+                    <li>Correctif de l'import PDF pour les voies de magie destructrice et magie élémentaire</li>
+                  </ul>
+                </details>
+              </li>
+
+              <li>
+                <details>
+                  <summary>
                     <strong>Version 1.4.0</strong> (2025-04-08)
                   </summary>
                   <ul>
@@ -7994,17 +8013,20 @@ function nameSeq(count, name, base = 1) {
 
 /**
  * Return 9 paths x 5 ranks ability attributes names
- * @param {string} attr - attribute names template with # placeholders for sequences
+ * @param {string} attr - attribute name from abilityInfo() object
  * @returns {string[]}
  */
 function allPathRanks(attr) {
-  const [ start, middle, end ] = attr.split("#").map(v => strval(v));
   const all = [];
-  seq(9).forEach(p => {
-    seq(5).forEach(r => {
-      all.push(`${start}${p}${middle}${r}${end}`);
+  const template = abilityInfo()[attr];
+  if (template) {
+    const [ start, middle, end ] = template.split("#").map(v => strval(v));
+    seq(9).forEach(p => {
+      seq(5).forEach(r => {
+        all.push(`${start}${p}${middle}${r}${end}`);
+      });
     });
-  });
+  }
   return all;
 }
 
@@ -8405,6 +8427,7 @@ function playFX(fxValue) {
  * @property {string} rankBase - base rank number
  * @property {string} rankName - ability name attribute
  * @property {string} rankDesc - ability description attribute
+ * @property {string} rankOwned - is ability owned
  * @property {string} rankSpell - is spell ability attribute
  * @property {string} rankUse - ability uses attribute
  * @property {string} rankUseMax - ability max uses attribute
@@ -8415,10 +8438,27 @@ function playFX(fxValue) {
 
 /**
  * Return info for path+rank identifier
- * @param {string|{ path: number, rank: number }} pathRank - v#r# identifier (path + rank)
+ * @param {string|{ path: number, rank: number }} [pathRank=""] - v#r# identifier (path + rank)
  * @returns {abilityInformations}
  */
-function abilityInfo(pathRank) {
+function abilityInfo(pathRank = "") {
+  if (pathRank === "") {
+    return {
+      pathName:     "voie#nom",
+      pathPV:       "voie#pv",
+      rankBase:     "v#br",
+      rankName:     "voie#-t#",
+      rankDesc:     "voie#-#",
+      rankOwned:    "v#r#",
+      rankSpell:    "v#r#_spell",
+      rankUse:      "v#r#_use",
+      rankUseMax:   "v#r#_use_max",
+      rankUseFreq:  "v#r#_freq",
+      rankParam:    "v#r#_param",
+      rankProps:    "v#r#_props",
+    };
+  }
+
   let path = 0;
   let rank = 0;
   if (typeof(pathRank) === "string") {
@@ -8961,10 +9001,10 @@ on("change:dr_base change:con change:dr_buff", updateDRMax);
  * @param {string} [changed=""] - path+rank ability id
  */
 function updatePVMax(eventInfo, changed = "") {
-  const owned = allPathRanks("v#r#");
+  const owned = allPathRanks("rankOwned");
   const other = [ 
-    ...nameSeq(9, "voie#pv"),
-    ...allPathRanks("v#r#_props")
+    ...nameSeq(9, abilityInfo().pathPV),
+    ...allPathRanks("rankProps")
   ];
   getAttrs([ 
     "cfg_pvmax_auto",
@@ -9063,9 +9103,9 @@ on("change:for", updateLoadLimit);
  * Compute max PM
  */
 function updatePMMax(eventInfo) {
-  const owned = allPathRanks("v#r#");
-  const spells = allPathRanks("v#r#_spell");
-  const bRanks = nameSeq(9, "v#br");
+  const owned = allPathRanks("rankOwned");
+  const spells = allPathRanks("rankSpell");
+  const bRanks = nameSeq(9, abilityInfo().rankBase);
   getAttrs([ 
     "cfg_use_mana", "pmmax_force",
     "vol", "pm_buff",
@@ -9349,7 +9389,7 @@ function updatePVDR(vp, lossOrGain, buttonClicked = true) {
       const chatMsg = cof2RollTemplate({
           lsub: "PV",
           rsub: `${ lossOrGain === -1 ? "Blessure" : "Soins" } `,
-          text : `@{character_name} ${ lossOrGain === -1 ? "perd" : "gagne" } ${vp} PV${effect}${hasRD} `
+          text : `@{character_name} ${ lossOrGain === -1 ? "perd" : "regagne" } ${vp} PV${effect}${hasRD} `
       });
       const whisper = (notify === 2) ? "gm" : "";
       sendChatMsg(chatMsg, {
@@ -10692,10 +10732,10 @@ function updateAllPathNames(path) {
  * @param {string} [changed=""] - path+rank ability identifier
  */
 function checkAbilityPoints(changed = "") {
-  const names = allPathRanks("voie#-t#");
-  const owned = allPathRanks("v#r#");
-  const props = allPathRanks("v#r#_props");
-  const baseRank = nameSeq(9, "v#br");
+  const names = allPathRanks("rankName");
+  const owned = allPathRanks("rankOwned");
+  const props = allPathRanks("rankProps");
+  const baseRank = nameSeq(9, abilityInfo().rankBase);
   getAttrs([ 
     "cfg_pts_capas",
     "niveau", "famille",
@@ -10897,9 +10937,9 @@ on("clicked:concentration-btn", function () {
  */
 on("clicked:reset_uses-btn", function() {
   const abilityUsage = [ 
-    ...allPathRanks("v#r#"),
-    ...allPathRanks("v#r#_use"),
-    ...allPathRanks("v#r#_freq")
+    ...allPathRanks("rankOwned"),
+    ...allPathRanks("rankUse"),
+    ...allPathRanks("rankUseFreq")
   ];
   getAttrs(abilityUsage, function(values) {
     const freqs = [ "Aucune" ];
@@ -10961,7 +11001,7 @@ on("clicked:reset_uses-btn", function() {
         sendChatMsg(chatMsg);
         const reset = {};
         abilities[freq].forEach(ability => {
-          reset[ability + "_use"] = 0;
+          reset[abilityInfo(ability).rankUse] = 0;
         });
         setAttrs(reset);
       });
@@ -10979,8 +11019,8 @@ function abilityUsages(path = 0) {
     if (path > 0 && v !== path)
       return;
     seq(5).forEach(r => {
-      abilities.push(`voie${v}-${r}`);
-      abilities.push(`v${v}r${r}_freq`);
+      abilities.push(abilityInfo({ path: v, rank: r}).rankDesc);
+      abilities.push(abilityInfo({ path: v, rank: r}).rankUseFreq);
     });
   });
   getAttrs(abilities, function (values) {
@@ -11006,8 +11046,8 @@ function abilityUsages(path = 0) {
 
       const useMax = [ "une", "deux", "trois" ].indexOf(use.toLowerCase()) + 1;
       if (useMax > 0) {
-        updateAbilities.set(`${ability}_use_max`, useMax);
-        updateAbilities.set(`${ability}_freq`, freq);
+        updateAbilities.set(abilityInfo(ability).rankUseMax, useMax);
+        updateAbilities.set(abilityInfo(ability).rankUseFreq, freq);
       }
     });
     if (updateAbilities.size > 0)
@@ -11041,7 +11081,10 @@ on("clicked:repeating_rolls:roll-btn", function() {
     "voie",
     "bonus"
   ].map(attribute => `${section}${attribute}`);
-  const abilityAttrs = [ ...allPathRanks("voie#-t#"), ...allPathRanks("voie#-#") ];
+  const abilityAttrs = [ 
+    ...allPathRanks("rankName"), 
+    ...allPathRanks("rankDesc") 
+  ];
   getAttrs(
     [
       "rangs_voies", "noms_voies",
@@ -11364,6 +11407,8 @@ function importFromPDF(text, path, base = 1) {
       return;
     if (line.startsWith("5. Appel ") && lines[index + 1].startsWith("de la foudre"))
       lines.splice(index, 2, "5. Appel " + lines[index + 1]);
+    if (line.startsWith("3. Arme élémentaire") && lines[index + 1].startsWith("(A) ou (L)*"))
+      lines.splice(index, 2, line + lines[index + 1]);
   });
 
   lines.forEach((line, index) => {
@@ -11375,9 +11420,9 @@ function importFromPDF(text, path, base = 1) {
       return;
     }
 
-    if (strval(line) === "")
+    if (strval(line).replace(/[^\x00-\xFF]/g, "") === "")
       return;
-
+    
     // Found ability title
     const matched = line.match(/([1-9])\.[ ]+(.*)[ ]:/);
     if (matched) {
@@ -11437,8 +11482,9 @@ seq(9).forEach(path => {
   
       if (updates.size > 0) {
         updates.set("voie_pdf", "");
-        setAttrs(Object.fromEntries(updates));
-        abilityUsages(path);
+        setAttrs(Object.fromEntries(updates), function() {
+          abilityUsages(path);
+        });
       }
     });
   });
@@ -12714,7 +12760,7 @@ function holding(hand, values) {
  * Display character check-up status
  */
 function displayCheckup() {
-  const owned = allPathRanks("v#r#");
+  const owned = allPathRanks("rankOwned");
 
   const recapAttrs = [
     "character_name", "couleur_pj", "sheet_type",
@@ -12725,10 +12771,10 @@ function displayCheckup() {
     ...allConditions(),
     "main_princ", "main_autre",
     ...owned,
-    ...allPathRanks("voie#-t#"),
-    ...allPathRanks("v#r#_use"),
-    ...allPathRanks("v#r#_use_max"),
-    ...allPathRanks("v#r#_freq"),
+    ...allPathRanks("rankName"),
+    ...allPathRanks("rankUse"),
+    ...allPathRanks("rankUseMax"),
+    ...allPathRanks("rankUseFreq"),
   ];
   const allBuffs = SWData.PC.BUFFS.To.map(a => `${a}_buff_list`);
   processAllAttacks("armes", [ "nom" ], function(ids, allAttacks) {
