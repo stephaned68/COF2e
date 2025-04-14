@@ -1,9 +1,9 @@
 <div class="cofmain">
 
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.4.03">
+  <input type="hidden" name="attr_verfdp" value="1.4.04">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.4.03">
+  <input type="hidden" name="attr_version" value="1.4.04">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
 
@@ -699,7 +699,8 @@
                 </button>
               </div>
 
-              <div class="bordered centered">
+              <input type="hidden" class="pv-status" name="attr_pvstatus" value="">
+              <div class="bordered centered pv-color">
                 <input type="number" class="two-digits" name="attr_pv" title="@{pv} PV courants">
                 /
                 <input type="number" class="two-digits" name="attr_pv_max" title="@{pv_max} PV maximum">
@@ -1576,8 +1577,8 @@
                   <summary>
                     <div class="rank-summary">
                       <input type="checkbox" name="attr_v2r3" title="@{v2r3}" value="1">
-                      <span class="rank-title" name="attr_voie2-t3"></span>
                       <input type="hidden" class="spell" name="attr_v2r3_spell">
+                      <span class="rank-title" name="attr_voie2-t3"></span>
                       <button type="action" class="flat-btn" name="act_v2r3-btn">
                         <span class="img-btn">w</span>
                       </button>
@@ -9385,18 +9386,22 @@ on("clicked:vigloss-btn clicked:vigheal-btn", function (eventInfo) {
 });
 
 /**
- * On PV value change
-
-on("change:pv", function (eventInfo) {
-  if (eventInfo.sourceType === "sheetworker")
-    return;
-  
-  const oldPV = intval(eventInfo.previousValue);
-  const newPV = intval(eventInfo.newValue);
-  const vp = oldPV > newPV ? oldPV - newPV : newPV - oldPV;
-  const lossOrGain = oldPV > newPV ? -1 : +1;
-  updatePVDR(vp, lossOrGain, false);
-});*/
+ * On PV value change, change background color
+ */
+on("change:pv", function () {
+  getAttrs(["pv", "pv_max"], function (values) {
+    const pvCur = intval(values.pv);
+    const pvMax = intval(values.pv_max);
+    let pvstatus = "";
+    if (pvCur <= Math.floor(pvMax / 2))
+      pvstatus = "yellow";
+    if (pvCur < 2)
+      pvstatus = "red";
+    if (pvCur === 0)
+      pvstatus = "black";
+    setAttrs({ pvstatus })
+  });
+});
 
 /**
  * On Recup button click
@@ -11350,7 +11355,18 @@ function importFromPDF(text, path, base = 1) {
   const updates = new Map();
 
   let ability = `voie${path}notes`;
-  text.split("\n").forEach((line, index) => {
+
+  const lines = text.replaceAll("\r\n", "\n").split("\n");
+
+  // process screwed up texts
+  lines.forEach((line, index) => {
+    if (index === text.length -1)
+      return;
+    if (line.startsWith("5. Appel ") && lines[index + 1].startsWith("de la foudre"))
+      lines.splice(index, 2, "5. Appel " + lines[index + 1]);
+  });
+
+  lines.forEach((line, index) => {
     // first line
     if (index === 0) {
       let pathName = simplePathName(line.toLowerCase(), false);

@@ -614,6 +614,19 @@ div.change-view {
   padding: 2px;
 }
 
+.pc-attributes .hits input[value="yellow"].pv-status ~ div.pv-color {
+  background-color: khaki;
+}
+
+.pc-attributes .hits input[value="red"].pv-status ~ div.pv-color {
+  background-color: tomato;
+}
+
+.pc-attributes .hits input[value="black"].pv-status ~ div.pv-color {
+  background-color: maroon;
+  color: whitesmoke;
+}
+
 .pc-attributes .hit,
 .pc-cond-def .defense {
   margin-top: 2px;
