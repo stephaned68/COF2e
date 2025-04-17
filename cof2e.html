@@ -1,9 +1,9 @@
 <div class="cofmain">
 
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.4.05">
+  <input type="hidden" name="attr_verfdp" value="1.4.06">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.4.05">
+  <input type="hidden" name="attr_version" value="1.4.06">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
 
@@ -87,7 +87,7 @@
     <div>
       <img
         class="logo"
-        title="Version 1.4.0 - 08/04/2025"
+        title="Version 1.5.0 - ??/05/2025"
         src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cof2e_logo.jpg"
       />
     </div>
@@ -4951,12 +4951,15 @@
                   </summary>
                   <ul>
                     <li>
-                      Ajout d'une couleur de fond aux PV selon le restant
+                      Ajout d'une couleur de fond aux PV selon l'état courant
                       <br> - Jaune si moins de 50% de PV restants
                       <br> - Rouge si 1 PV restant
                       <br> - Rouge foncé si 0 PV restant
                     </li>
                     <li>Ajout d'une * aux capacités de sort en mode affichage</li>
+                    <li>Ajout d'un ajustement optionnel des PM dépensés par une capacité de sort</li>
+                    <li>Prise en compte des capacités avec paramètre évolutif</li>
+                    <li>Amélioration objets en main (main gauche selon bouclier équipé ou pas)</li>
                     <li>Mise au point vérification des points de capacités et calcul auto. des PV</li>
                     <li>Correctif de l'import PDF pour les voies de magie destructrice et magie élémentaire</li>
                   </ul>
@@ -8306,15 +8309,15 @@ function askValue(prompt, callback) {
 
 /**
  * Send a drop-down roll query to chat and process response
- * @param {string|array} askParams - Parameters of the roll query 
- * @param {object} callback - Callback function to process input
+ * @param {string|string[]} askParams - Parameters of the roll query 
+ * @param {(query:integer, choices:string[]) => void} callback - Callback function to process input
  */
 function ask(askParams, callback) {
   if (!Array.isArray(askParams)) {
     askParams = [ askParams, "Non", "Oui" ];
   }
   const [ prompt, ...choices ] = askParams;
-  const choice = choices.map((ch, ix) => `${ch},${ix}`).join("|");
+  const choice = choices.map((ch, ix) => `${ch},${ix + 1}`).join("|");
   const ask = `!{{ask=[[?{${prompt}|${choice}}]]}}`;
   startRoll(ask, question => {
       const query = question.results.ask.result;
@@ -10558,16 +10561,16 @@ function actionAbility(path, rank) {
     `v${path}r${rank}_freq`,
     `v${path}r${rank}_props`
   ];
-  getAttrs([ ...abilityAttrs, "pm", "concentration" ], function(values) {
-    const [ path, ability, desc, owned, spell, used, uses, freq, props ] = Object.keys(values);
-    const pathName = strval(values[path]);
+  getAttrs([ ...abilityAttrs, "pm", "concentration", "rangs_voies" ], function(values) {
+    const [ name, ability, desc, owned, spell, used, uses, freq, props ] = Object.keys(values);
+    const pathName = strval(values[name]);
     let abilityName = strval(values[ability]);
     const abilityOwned = boolval(values[owned]);
     const abilitySpell = boolval(values[spell]);
     const attackSpell = abilitySpell ? abilityName.toLowerCase().includes("(a)") : false;
     const concentration = boolval(values.concentration);
     let description = strval(values[desc]);
-    if (abilityName === "")
+    if (abilityName === "" && description === "")
       return;
 
     const allTags = getAllTags(values);
@@ -10608,6 +10611,14 @@ function actionAbility(path, rank) {
     if (!expended && abilityOwned && abilitySpell) {
       let pm = intval(values.pm);
       let mana = rank;
+      const pmProp = strval(getProp(abilityProps, "pm"));
+      if (pmProp !== "") {
+        if ([ "+", "-" ].includes(pmProp.charAt(0))) {
+          mana += intval(pmProp);
+        } else {
+          mana = intval(pmProp);
+        }
+      }
       if (attackSpell && concentration) {
         mana = Math.max(0, mana - 2);
         abilityName = abilityName.replace("(A)", "(L:Concentration)");
@@ -10631,6 +10642,17 @@ function actionAbility(path, rank) {
       if (hasProp(abilityProps, "zone")) {
         allTags.push("Zone");
       }
+    }
+
+    // change rolls based on rank
+    if (description.includes("{{evol}}") && hasProp(abilityProps, "evol")) {
+      let [ base, rank, evol ] = getProp(abilityProps, "evol").split(" ");
+      let param = "";
+      if (intval(rank) >= 0 && strval(base) !== "" && strval(evol) !== "") {
+        const hasRank = getPathRanks(strval(values.rangs_voies))[path - 1];
+        param = (hasRank >= intval(rank)) ? evol : base;
+      }
+      description = description.replace("{{evol}}", param);
     }
 
     // build text
@@ -11550,26 +11572,41 @@ function encumbrance() {
  * On click on the gear props help button
  */
 on("clicked:helpgear-btn", function() {
-  sendChatMsg([
-    "title=Propriétés d'équipement",
-    "subtitle=Liste des codes et valeurs",
-    "dm-1m:=Dés de DM à une main",
-    "dm-2m:=Dés de DM à deux mains",
-    "type-dm:=Types de dommages",
-    "critique:=Seuil de critique",
-    "portee:=Portée arme à distance",
-    "usure:=Seuil d'usure",
-    "bonus-def:=Bonus DEF de l'armure ou du bouclier",
-    "armure:=Bonus DEF de l'armure",
-    "armure-malus:=Malus d'armure portée",
-    "bouclier:=Bonus DEF du bouclier",
-    "bouclier-malus:=Malus de bouclier porté",
-    "casque:=RD du casque contre les DM critiques",
-    "casque-malus:=Malus de PER et Init du casque porté",
-    "desc=Une propriété par ligne"
-  ], {
-    template: "custom",
-    whisper: "gm"
+  ask([
+    "Type ?",
+    "Armes",
+    "Défense",
+    "Armes magiques"
+  ], function(selected, choices) {
+    if (selected === 0)
+      return;
+    sendChatMsg([
+      "title=Propriétés d'équipement",
+      `subtitle=Liste des codes et valeurs (${choices[selected - 1]})`,
+      selected === 1 ? "dm-1m:=Dés de DM à une main" : "",
+      selected === 1 ? "dm-2m:=Dés de DM à deux mains" : "",
+      selected === 1 ? "type-dm:=Types de dommages" : "",
+      selected === 1 ? "critique:=Seuil de critique" : "",
+      selected === 1 ? "portee:=Portée arme à distance" : "",
+      selected === 1 ? "usure:=Seuil d'usure" : "",
+      selected === 2 ? "bonus-def:=Bonus DEF de l'armure ou du bouclier" : "",
+      selected === 2 ? "armure:=Bonus DEF de l'armure" : "",
+      selected === 2 ? "armure-malus:=Malus d'armure portée" : "",
+      selected === 2 ? "bouclier:=Bonus DEF du bouclier" : "",
+      selected === 2 ? "bouclier-malus:=Malus de bouclier porté" : "",
+      selected === 2 ? "casque:=RD du casque contre les DM critiques" : "",
+      selected === 2 ? "casque-malus:=Malus de PER et Init du casque porté" : "",
+      selected === 3 ? "bonus-magique:=Bonus pour toucher et DM" : "",
+      selected === 3 ? "magique-att:=Bonus magique pour toucher" : "",
+      selected === 3 ? "magique-dm:=Bonus magique aux DM" : "",
+      selected === 3 ? "affutee:=Arme affûtée" : "",
+      selected === 3 ? "element:=Nom de l'élément (+' intense')" : "",
+      selected === 3 ? "fleau:=Nom du type de créature" : "",
+      "desc=Une propriété par ligne"
+    ].filter(t => t !== ""), {
+      template: "custom",
+      whisper: "gm"
+    });
   });
 });
 
@@ -11943,6 +11980,13 @@ on("change:repeating_equipement:equip-on", function(eventInfo) {
         updates.set(defense + "_malus", defMalus);
         if (armor) 
           updates.set("def_car_max", defCarMax);
+        if (shield)
+          updates.set(hands[1], "bouclier");
+      }
+
+      if (equiped === 0) {
+        if (shield && strval(values[hands[1]]) === "bouclier")
+          updates.set(hands[1], "");
       }
 
       if (updates.size > 0)
@@ -12677,7 +12721,7 @@ on("clicked:skills_menu-btn", function () {
       const proficient = boolval(values[`${skill.name}_prof`]) ? "*" : "";
       return `${skillLabel}${proficient},${ix + 1}`;
     });
-    ask([ "Compétence ?", ...skillSelect ], (skill, skills) => {
+    ask([ "Compétence ?", ...skillSelect ], (skill) => {
       const skillName = SWData.PC.SKILLS[skill -1].name;
       const action = "%{" + charName + "|skill-" + skillName + "}";
       startRoll(action, roll => {
