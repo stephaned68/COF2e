@@ -35,7 +35,8 @@ Pour chaque voie, vous indiquez :
   
     La syntaxe de cette liste est la même que pour les [prédicats]({{ site.baseurl }}/pc-script).
 
-    Vous pouvez spécifier la propriété <kbd>fx:</kbd> pour pour que la fiche joue un FX Roll20 (commande <kbd>/fx</kbd>) lorsque la capacité est utilisée.
+    Voir le paragraphe _Propriétés des capacités_ ci-dessous pour les propriétés de capacités supportées par la fiche
+
 - Une icône située à côté des PV de voie permet d'importer la liste des capacités à partir du texte collé dans le sous-onglet Import.
 
 ## Mode Affichage
@@ -56,6 +57,19 @@ Deux icônes sont situées à côté de **Editer** :
 - L'icône _Options_ permet d'afficher un menu d'action dans le chat avec un bouton pour chaque voie. Chacun de ces boutons affiche ensuite un sous-menu d'action avec un bouton d'action pour chaque capacité possédée dans cette voie.
 
 Une troisième icone est affichée si le personnage possède au moins un sort (et donc dispose d'une valeur maximum de Points de Mana). Ce bouton permet d'appliquer la règle de Concentration accrue à l'utilisation d'une capacité de sort.
+
+## Propriétés des capacités
+
+Les propriétés suivantes peuvent être appliquées aux capacités :
+
+- <kbd>fx:</kbd> suivi du nom d'un effet spécial et d'un nombre éventuel de répétitions pour pour que la fiche joue un FX Roll20 (commande <kbd>/fx</kbd>) lorsque la capacité est utilisée.
+- <kbd>pm:</kbd> suivi d'un chiffre pour faire varier le nombre de PM utilisés par cette capacité. Ce chiffre peut être absolu (<kbd>3</kbd> pour consommer 3 PM) ou relatif (<kbd>-1</kbd> pour consommer 1 PM de moins que la normale)
+- <kbd>evol: base rang change</kbd> suivi de 3 valeurs séparées par des espaces :
+  - <kbd>base</kbd> est la valeur de base du paramètre évolutif
+  - <kbd>rang</kbd> est le rang auquel la capacité évolue
+  - <kbd>change</kbd> est la nouvelle valeur du paramètre évolutif une fois le rang spécifié atteint
+  
+  Le texte de la capacité doit comporter le mot-clé <kbd>{{evol}}</kbd> là où la substitution avec la valeur de base ou la nouvelle valeur s'effectue.
 
 # Jets de capacités
 
