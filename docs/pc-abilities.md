@@ -64,12 +64,14 @@ Les propriétés suivantes peuvent être appliquées aux capacités :
 
 - <kbd>fx:</kbd> suivi du nom d'un effet spécial et d'un nombre éventuel de répétitions pour pour que la fiche joue un FX Roll20 (commande <kbd>/fx</kbd>) lorsque la capacité est utilisée.
 - <kbd>pm:</kbd> suivi d'un chiffre pour faire varier le nombre de PM utilisés par cette capacité. Ce chiffre peut être absolu (<kbd>3</kbd> pour consommer 3 PM) ou relatif (<kbd>-1</kbd> pour consommer 1 PM de moins que la normale)
-- <kbd>evol: base rang change</kbd> suivi de 3 valeurs séparées par des espaces :
-  - <kbd>base</kbd> est la valeur de base du paramètre évolutif
-  - <kbd>rang</kbd> est le rang auquel la capacité évolue
-  - <kbd>change</kbd> est la nouvelle valeur du paramètre évolutif une fois le rang spécifié atteint
+- <kbd>evol: base rang1 change1 rang2 change2</kbd> suivi de 3 à 5 valeurs séparées par des espaces
+  - <kbd>base</kbd> est la valeur de base du paramètre évolutif (à l'acquisition de la capacité)
+  - <kbd>rang1</kbd> est le premier rang auquel la capacité évolue
+  - <kbd>change1</kbd> est la nouvelle valeur du paramètre évolutif une fois le rang1 spécifié atteint
+  - <kbd>rang2</kbd> (facultatif) est le deuxième rang auquel la capacité évolue
+  - <kbd>change2</kbd> (facultatif) est la nouvelle valeur du paramètre évolutif une fois le rang2 spécifié atteint
   
-  Le texte de la capacité doit comporter le mot-clé <kbd>{{evol}}</kbd> là où la substitution avec la valeur de base ou la nouvelle valeur s'effectue.
+  Le texte de la capacité doit comporter le mot-clé <kbd>&#123;&#123;evol&#125;&#125;</kbd> là où la substitution avec la valeur de base ou la nouvelle valeur s'effectue.
 
 # Jets de capacités
 
