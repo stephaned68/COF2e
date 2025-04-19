@@ -1,9 +1,9 @@
 <div class="cofmain">
 
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.4.07">
+  <input type="hidden" name="attr_verfdp" value="1.4.08">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.4.07">
+  <input type="hidden" name="attr_version" value="1.4.08">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
 
@@ -4575,23 +4575,23 @@
                 <h4>Forcer les valeurs maxi.</h4>
               </summary>
               <ul>
-                <li>
-                  <input type="checkbox" name="attr_pvmax_force" title="@{pvmax_force}">
+                <li class="force-max">
+                  <input type="checkbox" class="force-max" name="attr_pvmax_force" title="@{pvmax_force}">
                   <span>PV</span>:
                   <input type="number" class="two-digits" name="attr_pv_max" title="@{pv_max}">
                 </li>
-                <li>
-                  <input type="checkbox" name="attr_drmax_force" title="@{drmax_force}">
+                <li class="force-max">
+                  <input type="checkbox" class="force-max" name="attr_drmax_force" title="@{drmax_force}">
                   <span>DR</span>:
                   <input type="number" class="two-digits" name="attr_dr_max" title="@{dr_max}">
                 </li>
-                <li>
-                  <input type="checkbox" name="attr_pcmax_force" title="@{pcmax_force}">
+                <li class="force-max">
+                  <input type="checkbox" class="force-max" name="attr_pcmax_force" title="@{pcmax_force}">
                   <span>PC</span>:
                   <input type="number" class="two-digits" name="attr_pc_max" title="@{pc_max}">
                 </li>
-                <li>
-                  <input type="checkbox" name="attr_pmmax_force" title="@{pmmax_force}">
+                <li class="force-max">
+                  <input type="checkbox" class="force-max" name="attr_pmmax_force" title="@{pmmax_force}">
                   <span>PM</span>:
                   <input type="number" class="two-digits" name="attr_pm_max" title="@{pm_max}">
                 </li>
@@ -10503,8 +10503,6 @@ on("change:main_princ change:main_autre", function(eventInfo) {
         updates.set(hands[1], "2m");
         if (hasShield)
           updates.set("bouclier_eqp", 0);
-      } else {
-        updates.set(hands[1], "0");
       }
     }
 
@@ -11985,13 +11983,19 @@ on("change:repeating_equipement:equip-on", function(eventInfo) {
       });
 
       // set armor | shield values
+      let unEquip2Hands = false;
       if (equiped === 1) {
         updates.set(defense, defBonus);
         updates.set(defense + "_malus", defMalus);
         if (armor) 
           updates.set("def_car_max", defCarMax);
-        if (shield)
+        if (shield) {
+          if (strval(values[hands[1]]) === "2m") {
+            updates.set(hands[0], "");
+            unEquip2Hands = true;
+          }
           updates.set(hands[1], "bouclier");
+        }
       } else {
         if (shield && strval(values[hands[1]]) === "bouclier")
           updates.set(hands[1], "");
@@ -11999,6 +12003,15 @@ on("change:repeating_equipement:equip-on", function(eventInfo) {
 
       if (updates.size > 0)
         setAttrs(Object.fromEntries(updates));
+
+      if (unEquip2Hands) {
+        sendChatMsg(cof2RollTemplate({
+          lsub: "En main",
+          rsub: "Bouclier",
+          text: "L'arme en main est rengainée pour lever le bouclier",
+          textclass: "secondary"
+        }));
+      }
     });
   });
 });
