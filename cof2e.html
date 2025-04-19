@@ -1,9 +1,9 @@
 <div class="cofmain">
 
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.4.06">
+  <input type="hidden" name="attr_verfdp" value="1.4.07">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.4.06">
+  <input type="hidden" name="attr_version" value="1.4.07">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
 
@@ -10646,11 +10646,21 @@ function actionAbility(path, rank) {
 
     // change rolls based on rank
     if (description.includes("{{evol}}") && hasProp(abilityProps, "evol")) {
-      let [ base, rank, evol ] = getProp(abilityProps, "evol").split(" ");
+      const hasRank = getPathRanks(strval(values.rangs_voies))[path - 1];
+      const base = "";
+      const rank = [];
+      const change = [];
+      [ base, rank[0], change[0], rank[1], change[1] ] = getProp(abilityProps, "evol").split(" ");
       let param = "";
-      if (intval(rank) >= 0 && strval(base) !== "" && strval(evol) !== "") {
-        const hasRank = getPathRanks(strval(values.rangs_voies))[path - 1];
-        param = (hasRank >= intval(rank)) ? evol : base;
+      if (strval(base) !== "") {
+        if (rank[1] && change[1]) {
+          if (intval(rank[1]) > 0 && strval(change[1]))
+            param = (hasRank >= intval(rank[1])) ? change[1] : "";    
+        }
+        if (param === "" && rank[0] && change[0]) {
+          if (intval(rank[0]) > 0 && strval(change[0]))
+            param = (hasRank >= intval(rank[0])) ? change[0] : "";    
+        }
       }
       description = description.replace("{{evol}}", param);
     }
@@ -11982,9 +11992,7 @@ on("change:repeating_equipement:equip-on", function(eventInfo) {
           updates.set("def_car_max", defCarMax);
         if (shield)
           updates.set(hands[1], "bouclier");
-      }
-
-      if (equiped === 0) {
+      } else {
         if (shield && strval(values[hands[1]]) === "bouclier")
           updates.set(hands[1], "");
       }
@@ -11992,7 +12000,7 @@ on("change:repeating_equipement:equip-on", function(eventInfo) {
       if (updates.size > 0)
         setAttrs(Object.fromEntries(updates));
     });
-  })
+  });
 });
 
 /**
