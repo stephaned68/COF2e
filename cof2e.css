@@ -956,6 +956,10 @@ input[value="0"].show-paths-789 ~ div.abilities {
   gap: 2px;
 }
 
+.pc-config-tab li.force-max input.force-max:checked ~ input.two-digits {
+  border: 1px dotted var(--cof-dark);
+}
+
 .pc-version-tab details ul {
   padding-left: 0;
   margin-left: 10px;
