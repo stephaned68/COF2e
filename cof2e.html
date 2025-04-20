@@ -1,9 +1,9 @@
 <div class="cofmain">
 
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.4.08">
+  <input type="hidden" name="attr_verfdp" value="1.4.09">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.4.08">
+  <input type="hidden" name="attr_version" value="1.4.09">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
 
@@ -1180,6 +1180,7 @@
                     <input class="two-digits" type="number" name="attr_arme-usure" title="@{arme-usure} Usure">
                   </div>
                   <div class="bordered">
+                    <input type="checkbox" name="attr_arme-active" title="@{arme-active} Attaque active" value="1" checked>
                     <input type="text" name="attr_arme-atkmods" placeholder="Modificateurs d'attaque" title="@{arme-atkmods} Modificateurs séparés par des virgules&#10; deBonus: avec dé bonus&#10; deMalus: avec dé malus&#10; auto: réussite automatique&#10; choc: peut faire des attaques non léthales sans malus&#10; explodeMax: dés de dégâts explosifs&#10; pasDeDmg: l'attaque ne fait pas de DM&#10; poudre: arme à poudre&#10; reroll1: relance les 1 sur les dés de DM&#10; tempDmg: fait toujours des attaques non léthales" value="">
                   </div>
                   <div class="bordered">
@@ -4956,12 +4957,13 @@
                       <br> - Rouge si 1 PV restant
                       <br> - Rouge foncé si 0 PV restant
                     </li>
-                    <li>Ajout d'une * aux capacités de sort en mode affichage</li>
+                    <li>Ajout d'une '*' aux capacités de sort en mode affichage</li>
                     <li>Ajout d'un ajustement optionnel des PM dépensés par une capacité de sort</li>
                     <li>Prise en compte des capacités avec paramètre évolutif</li>
-                    <li>Amélioration objets en main (main gauche selon bouclier équipé ou pas)</li>
-                    <li>Mise au point vérification des points de capacités et calcul auto. des PV</li>
-                    <li>Correctif de l'import PDF pour les voies de magie destructrice et magie élémentaire</li>
+                    <li>Amélioration des objets en main (main gauche selon bouclier équipé ou pas)</li>
+                    <li>Mise au point de la vérif. des points de capacités et du calcul auto. des PV</li>
+                    <li>Correction de l'import PDF pour les voies de magie destructrice et magie élémentaire</li>
+                    <li>Ajout d'une case attaque active/inactive (pour script COFantasy2)</li>
                   </ul>
                 </details>
               </li>
@@ -9885,11 +9887,14 @@ function insertRolls(text, options = {}) {
  */
 on("change:repeating_armes:arme-nom clicked:renum_atk-btn", function(eventInfo) {
   const renumber = (eventInfo.triggerName === "clicked:renum_atk-btn");
+  const rowId = strval(eventInfo.triggerName.split("_")[2]);
   getSectionIDsOrdered("repeating_armes", function (rowIds) {
     const labels = rowIds.map(id => `repeating_armes_${id}_arme-label`);
-    getAttrs([ "max_attack_label", ...labels ], function (values) {
+    getAttrs([ "max_attack_label", "scriptVersion", ...labels ], function (values) {
       const maxLabel = intval(values.max_attack_label);
       delete values.max_attack_label;
+      const scriptCOF2 = hasMODScript(values);
+      delete values.scriptVersion;
       let numLabel = renumber ? 0 : maxLabel;
       const updates = new Map();
       Object.keys(values).forEach(label => {
@@ -9898,6 +9903,7 @@ on("change:repeating_armes:arme-nom clicked:renum_atk-btn", function(eventInfo) 
       });
       if (renumber || numLabel > maxLabel)
         updates.set("max_attack_label", numLabel);
+      updates.set("repeating_armes_armeopt", scriptCOF2 ? 1 : 0);
       if (updates.size > 0)
         setAttrs(Object.fromEntries(updates));
     });
@@ -10543,9 +10549,24 @@ on("clicked:edit_view-btn", function() {
 });
 
 /**
- * Display ability text with alert on usage
+ * Return ability enhanced parameter if any
+ * @param {number} hasRank - rank in path
+ * @param {number} rank - rank where ability evolves
+ * @param {string} change - value of enhanced parameter
+ * @returns {string}
+ */
+function enhancedAbility(hasRank, rank, change) {
+  rank = intval(rank);
+  change = strval(change);
+  return (hasRank >= rank) ? change : "";
+}
+
+/**
+ * Display ability text with inline rolls
  * @param {number} path - Path #
  * @param {number} rank - Rank #
+ * 
+ * @description Adds alerts on usage and spells 
  */
 function actionAbility(path, rank) {
   const abilityAttrs = [
@@ -10602,6 +10623,7 @@ function actionAbility(path, rank) {
         alertCSS = "fumble";
       } else {
         alert = `Utilisée ${nbUsed} fois`;
+        alertCSS = "secondary";
       }
     }
 
@@ -10611,10 +10633,15 @@ function actionAbility(path, rank) {
       let mana = rank;
       const pmProp = strval(getProp(abilityProps, "pm"));
       if (pmProp !== "") {
-        if ([ "+", "-" ].includes(pmProp.charAt(0))) {
-          mana += intval(pmProp);
+        let [ pmMod, ...pmModInfo ] = pmProp.split(" ");
+        if ([ "+", "-" ].includes(pmMod.charAt(0))) {
+          mana = Math.max(0, mana - intval(pmMod));
         } else {
-          mana = intval(pmProp);
+          mana = intval(pmMod);
+        }
+        if (mana === 0) {
+          alert = `Pas de PM dépensés ${ pmModInfo.join(" ") }`;
+          alertCSS = "secondary";
         }
       }
       if (attackSpell && concentration) {
@@ -10629,8 +10656,10 @@ function actionAbility(path, rank) {
         alertCSS = "fumble";
       } else {
         pm -= mana;
-        if (mana > 0)
+        if (mana > 0) {
           alert += `${pm} Points de Mana restants`;
+          alertCSS = "secondary";
+        }
         updates.set("pm", pm);
       }
     }
@@ -10644,28 +10673,21 @@ function actionAbility(path, rank) {
 
     // change rolls based on rank
     if (description.includes("{{evol}}") && hasProp(abilityProps, "evol")) {
-      const hasRank = getPathRanks(strval(values.rangs_voies))[path - 1];
-      const base = "";
-      const rank = [];
-      const change = [];
+      const base = "", rank = [], change = [];
       [ base, rank[0], change[0], rank[1], change[1] ] = getProp(abilityProps, "evol").split(" ");
       let param = "";
       if (strval(base) !== "") {
-        if (rank[1] && change[1]) {
-          if (intval(rank[1]) > 0 && strval(change[1]))
-            param = (hasRank >= intval(rank[1])) ? change[1] : "";    
-        }
-        if (param === "" && rank[0] && change[0]) {
-          if (intval(rank[0]) > 0 && strval(change[0]))
-            param = (hasRank >= intval(rank[0])) ? change[0] : "";    
-        }
+        const hasRank = getPathRanks(strval(values.rangs_voies))[path - 1];
+        param = enhancedAbility(hasRank, rank[1], change[1]);
+        if (param === "") 
+          param = enhancedAbility(hasRank, rank[0], change[0]);
       }
       description = description.replace("{{evol}}", param);
     }
 
     // build text
     let text = insertRolls(description);
-    if (alertCSS === "")
+    if (alert !== "" && alertCSS === "")
       text += "\n" + alert
 
     // send to chat
