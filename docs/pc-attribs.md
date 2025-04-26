@@ -108,9 +108,11 @@ Des paramètres optionnels peuvent être ajoutés :
   - Sortilège
   - Arme de jet
   
-  Ce paramètre est utilisé principalement par le script COFantasy2
+  Ce paramètre est principalement utilisé par le script **COFantasy2**.
 
-- Seuil d'usure : cette valeur est utilisée si l'option correspondante est activée dans la configuration.
+- Seuil d'usure : cette valeur est utilisée si l'option low-fantasy correspondante est activée dans la configuration.
+
+- Attaque active : ce paramètre est utilisé par le script **COFantasy2** pour afficher la liste des actions du tour.
 
 - Modificateurs d'attaque : vous pouvez spécifier une série de mentions spéciales permettant de régler le comportement du jet d'attaque. Séparez les différentes mentions par des virgules.
   - <kbd>deBonus</kbd> : l'attaque est faite avec un dé bonus, sauf si le personnage est _Affaibli_
@@ -147,6 +149,8 @@ Si l'arme peut être maniée à une main ou à deux mains, les dés de DM peuven
 Le texte d'effet spécial est traité par la fiche pour substituer les jets en ligne comme décrit pour la description des [capacités]({{ site.baseurl }}/pc-abilities).
 
 L'icone située à côté de **ARME/SORT** permet d'afficher un menu d'action dans le chat avec un bouton pour chaque jet d'attaque.
+
+Le bouton d20 de l'attaque peut être épinglé dans la barre d'action de Roll20 par glisser-déposer.
 
 # Sous-onglet _Options_
 
