@@ -258,7 +258,9 @@
             <div class="trait">
               <h4>
                 Carac
-                <button type="action" class="flat-btn img-btn" name="act_caract_menu-btn" title="%{caract_menu-btn} Menu des jets de caractéristiques">
+                <input type="hidden" name="attr_caract_menu-btn" value="">
+                <button type="action" class="hidden" name="act_caract_menu-btn"/>
+                <button type="roll" class="flat-btn img-btn" name="roll_caractmenu" value="@{caract_menu-btn}">
                   <span class="img-btn">l</span>
                 </button>
               </h4>
@@ -5534,8 +5536,7 @@
   
                 <div>
                   <input type="hidden" name="attr_npcroll-btn" value="">
-                  <button type="action" class="hidden" name="act_npcroll-btn">
-                  </button>
+                  <button type="action" class="hidden" name="act_npcroll-btn"/>
                   <button type="roll" class="flat-btn img-btn" name="roll_npcroll" value="@{npcroll-btn}">
                     <span class="img-btn img-btn-lg">w</span>
                   </button>
@@ -12700,9 +12701,10 @@ on("clicked:helpdoc-btn", function() {
  * Return CSS style for chat menu buttons
  * @param {string|string[]} color - PC color name | [ bckg, text ] color array
  * @param {object} [font={}] - font properties object
+ * @param {{}} [extraCSS={}] - extra properties object
  * @returns {string}
  */
-function menuButton(color, font = {}) {
+function menuButton(color, font = {}, extraCSS = {}) {
   color = color || "default";
   font = { size: "0.9em", weight: "bold", ...font };
   let backColor, textColor;
@@ -12710,6 +12712,7 @@ function menuButton(color, font = {}) {
     [ backColor, textColor = "white" ] = color;
   else
     [ backColor, textColor ] = SWData.COLORS[color];
+  const props = Object.keys(extraCSS).map(prop => `${prop}: ${ extraCSS[prop] }`);
   return "\" style=\"" + [
     "border: none",
     "border-radius: 3px",
@@ -12718,7 +12721,8 @@ function menuButton(color, font = {}) {
     "padding: 2px",
     "margin: 1px",
     `font-size: ${font.size}`,
-    `font-weight: ${font.weight}`
+    `font-weight: ${font.weight}`,
+    ...props
   ].join("; ");
 }
 
@@ -12731,7 +12735,8 @@ on("clicked:caract_menu-btn", function () {
     const color = strval(values.couleur_pj);
     const chatMsg = SWData.PC.STATS.map(stat => {
       const short = shorten(stat);
-      return `${capitalize(stat)}=[${short.toUpperCase()}](~${charName}|${short}-btn${menuButton(color)})`
+      const button = menuButton(color, {}, { width: "2.5rem", ["text-align"]: "center" });
+      return `${capitalize(stat)}=[${short.toUpperCase()}](~${charName}|${short}-btn${button})`
     });
     sendChatMsg([
       `title=${charName}`,
@@ -14159,6 +14164,14 @@ on("sheet:opened change:character_name", function() {
   // NPC repeating buttons
   updateActionButtons({ section: "npcarmes", button: "npcatk-btn", npc: true });
   updateActionButtons({ section: "npcrolls", button: "npcroll-btn", npc: true });
+
+  getAttrs([ "character_name" ], function(values) {
+    const charName = strval(values.character_name);
+      if (charName === "")
+        return;
+    
+    setAttrs({ ["caract_menu-btn"]: `%{${charName}|caract_menu-btn}` });
+  });
 });
 
 /**

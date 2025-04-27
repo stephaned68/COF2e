@@ -222,6 +222,11 @@ button.flat-btn {
   content: "";
 }
 
+.cofmain .trait button[type="roll"].img-btn {
+  padding: 0;
+  margin: 0 5px;
+}
+
 span.img-btn {
   font-family: pictos;
   font-variant: normal;
