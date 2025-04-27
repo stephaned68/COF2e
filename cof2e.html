@@ -1,9 +1,9 @@
 <div class="cofmain">
 
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.4.09">
+  <input type="hidden" name="attr_verfdp" value="1.4.10">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.4.09">
+  <input type="hidden" name="attr_version" value="1.4.10">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
 
@@ -272,7 +272,7 @@
             <!-- AGI -->
             <div class="trait">
               <div class="block-title">
-                <button class="block-title" type="action" name="act_agi-btn">
+                <button  type="action" class="block-title" name="act_agi-btn">
                   <span class="d20-btn">t</span>
                   AGI
                 </button>
@@ -1081,9 +1081,11 @@
               <div class="weapon">
                 
                 <div>
-                  <button type="action" class="flat-btn" name="act_attack-btn">
+                  <input type="hidden" name="attr_attack-btn" value="">
+                  <button type="action" class="hidden" name="act_attack-btn">
                     <span class="d20-btn">t</span>
                   </button>
+                  <button type="roll" class="flat-btn" name="roll_attack" value="@{attack-btn}"/>
                 </div>
                 <div class="d-flex d-flex-middle bordered">
                   <input type="hidden" name="attr_arme-label" value="">
@@ -3336,9 +3338,11 @@
             <div class="pc-roll-r1">
 
               <div>
-                <button class="flat-btn" type="action" name="act_roll-btn">
+                <input type="hidden" name="attr_roll-btn" value="">
+                <button class="hidden" type="action" name="act_roll-btn">
                   <span class="d20-btn">t</span>
                 </button>
+                <button type="roll" class="flat-btn" name="roll_roll" value="@{roll-btn}"/>
               </div>
 
               <div class="d-flex d-flex-middle bordered">
@@ -4491,6 +4495,7 @@
                 <li class="config-check">
                   <input type="checkbox" name="attr_cfg_use_ammo" value="1">
                   <span>Suivre les munitions</span>
+                  &nbsp;<input type="number" name="attr_cfg_ammo_alert" title="Seuil d'alerte munitions restantes" value="">
                 </li>
               </ul>
             </details>
@@ -4548,6 +4553,11 @@
                   <input type="checkbox" name="attr_cfg_use_dronly" value="1">
                   <span>Récupération - niveau</span>
                 </li>
+                <li class="config-check" title="Atlas & règles optionnelles, p. 194">
+                  <input type="checkbox" name="attr_cfg_atk_diff" value="1">
+                  <span>Attaques différenciées</span>
+                </li>
+                <li class="config-check" title="Atlas & règles optionnelles, p. 206">
                 <li class="config-check" title="Atlas & règles optionnelles, p. 206">
                   <input type="checkbox" name="attr_cfg_usure" value="1">
                   <span>Usure des armes</span>
@@ -4958,12 +4968,13 @@
                       <br> - Rouge foncé si 0 PV restant
                     </li>
                     <li>Ajout d'une '*' aux capacités de sort en mode affichage</li>
-                    <li>Ajout d'un ajustement optionnel des PM dépensés par une capacité de sort</li>
+                    <li>Ajout d'une option pour ajuster les PM dépensés par une capacité de sort</li>
                     <li>Prise en compte des capacités avec paramètre évolutif</li>
                     <li>Amélioration des objets en main (main gauche selon bouclier équipé ou pas)</li>
                     <li>Mise au point de la vérif. des points de capacités et du calcul auto. des PV</li>
                     <li>Correction de l'import PDF pour les voies de magie destructrice et magie élémentaire</li>
-                    <li>Ajout d'une case attaque active/inactive (pour script COFantasy2)</li>
+                    <li>Ajout d'une case attaque active/inactive pour le script COFantasy2</li>
+                    <li>Ajout de la possibilité d'épingler les attaques et jets de capacités à la barre d'actions Roll20</li>
                   </ul>
                 </details>
               </li>
@@ -5313,9 +5324,11 @@
               <div class="weapon">
                 
                 <div>
-                  <button type="action" class="flat-btn" name="act_npcatk-btn">
+                  <input type="hidden" name="attr_npcatk-btn" value="">
+                  <button type="action" class="hidden" name="act_npcatk-btn">
                     <span class="d20-btn">t</span>
                   </button>
+                  <button type="roll" class="flat-btn" name="roll_npcatk" value="@{npcatk-btn}" />
                 </div>
                 <div class="d-flex d-flex-middle bordered">
                   <input type="hidden" name="attr_arme-label" value="">
@@ -5520,7 +5533,10 @@
               <div class="npc-ability">
   
                 <div>
-                  <button type="action" class="flat-btn" name="act_npcroll-btn">
+                  <input type="hidden" name="attr_npcroll-btn" value="">
+                  <button type="action" class="hidden" name="act_npcroll-btn">
+                  </button>
+                  <button type="roll" class="flat-btn img-btn" name="roll_npcroll" value="@{npcroll-btn}">
                     <span class="img-btn img-btn-lg">w</span>
                   </button>
                 </div>
@@ -6271,25 +6287,25 @@
   {{/tags}}
   {{#roll}}
   <div class="sheet-rt sheet-rt-roll">
-    {{roll}} 
+    <span class="sheet-rt sheet-rt-roll">{{roll}}</span>
     {{#broll}}
-    | {{broll}}
+    | <span class="sheet-rt sheet-rt-roll">{{broll}}</span>
     {{/broll}}
   </div>
   {{/roll}}
   {{#powder}}
-  {{#rollWasFumble() roll}}
-  <div class="sheet-rt sheet-rt-text">
-    <span class="sheet-rt-fumble">{{powder}}</span>
-  </div>
-  {{/rollWasFumble() roll}}
-  {{#broll}}
-  {{#rollWasFumble() broll}}
-  <div class="sheet-rt sheet-rt-text">
-    <span class="sheet-rt-fumble">{{powder}} (si dé malus)</span>
-  </div>
-  {{/rollWasFumble() broll}}
-  {{/broll}}
+    {{#rollWasFumble() roll}}
+    <div class="sheet-rt sheet-rt-text">
+      <span class="sheet-rt-fumble">{{powder}}</span>
+    </div>
+    {{/rollWasFumble() roll}}
+    {{#broll}}
+      {{#rollWasFumble() broll}}
+      <div class="sheet-rt sheet-rt-text">
+        <span class="sheet-rt-fumble">{{powder}} (si dé malus)</span>
+      </div>
+      {{/rollWasFumble() broll}}
+    {{/broll}}
   {{/powder}}
   {{#dm}}
   <div class="sheet-rt sheet-rt-2cols">
@@ -6297,12 +6313,12 @@
     <div>
       {{dm}} {{#rollWasCrit() roll}}
       {{#rollTotal() critdiff 0}}
-      <span class="sheet-rt-critical"> + {{dm}} CRITIQUE !</span>
+      <span class="sheet-rt-critical"> + {{dm}} CRITIQUE !</span><br>
       {{/rollTotal() critdiff 0}}
       {{/rollWasCrit() roll}}
       {{#^rollWasCrit() roll}} {{#rollWasCrit() broll}}
       {{#rollTotal() critdiff 0}}
-      ( + <span class="sheet-rt-critical">{{dm}}</span> si dé bonus)
+      ( + <span class="sheet-rt-critical">{{dm}}</span> si dé bonus)<br>
       {{/rollTotal() critdiff 0}}
       {{/rollWasCrit() broll}}
       {{/^rollWasCrit() roll}} {{dmdesc}}
@@ -6310,70 +6326,70 @@
   </div>
   {{/dm}}
   {{#dmcrit}}
-  {{#rollWasCrit() roll}}
-  <div class="sheet-rt sheet-rt-2cols">
-    <div><span class="sheet-rt-critical">CRITIQUE !</span></div>
-    <div>
-      {{dmcrit}}
+    {{#rollWasCrit() roll}}
+    <div class="sheet-rt sheet-rt-2cols">
+      <div><span class="sheet-rt-critical">CRITIQUE !</span></div>
+      <div>
+        {{dmcrit}}
+      </div>
     </div>
-  </div>
-  {{/rollWasCrit() roll}}
-  {{#rollWasCrit() broll}}
-  <div class="sheet-rt sheet-rt-2cols">
-    <div><span class="sheet-rt-critical">CRITIQUE (si dé bonus)</span></div>
-    <div>
-      {{dmcrit}}
+    {{/rollWasCrit() roll}}
+    {{#rollWasCrit() broll}}
+    <div class="sheet-rt sheet-rt-2cols">
+      <div><span class="sheet-rt-critical">CRITIQUE (si dé bonus)</span></div>
+      <div>
+        {{dmcrit}}
+      </div>
     </div>
-  </div>
-  {{/rollWasCrit() broll}}
+    {{/rollWasCrit() broll}}
   {{/dmcrit}}
   {{#roll}}
-  {{#rollTotal() computed::critsuccess 1}}
-  <div class="sheet-rt sheet-rt-text">
-    <span class="sheet-rt sheet-rt-critical">{{crithit}}</span>
-  </div>
-  {{/rollTotal() computed::critsuccess 1}}
-  {{#broll}}
-  {{#rollTotal() computed::bcritsuccess 1}}
-  <div class="sheet-rt sheet-rt-text">
-    <span class="sheet-rt sheet-rt-secondary">Si dé bonus :</span>
-    <br>
-    <span class="sheet-rt sheet-rt-critical">{{crithit}}</span>
-  </div>
-  {{/rollTotal() computed::bcritsuccess 1}}
-  {{/broll}}
+    {{#rollTotal() computed::critsuccess 1}}
+    <div class="sheet-rt sheet-rt-text">
+      <span class="sheet-rt sheet-rt-critical">{{crithit}}</span>
+    </div>
+    {{/rollTotal() computed::critsuccess 1}}
+    {{#broll}}
+      {{#rollTotal() computed::bcritsuccess 1}}
+      <div class="sheet-rt sheet-rt-text">
+        <span class="sheet-rt sheet-rt-secondary">Si dé bonus :</span>
+        <br>
+        <span class="sheet-rt sheet-rt-critical">{{crithit}}</span>
+      </div>
+      {{/rollTotal() computed::bcritsuccess 1}}
+    {{/broll}}
   {{/roll}}
   {{#roll}}
-  {{#rollTotal() computed::critfail 1}}
-  <div class="sheet-rt sheet-rt-text">
-    <span class="sheet-rt sheet-rt-fumble">{{fumble}}</span>
-  </div>
-  {{/rollTotal() computed::critfail 1}}
-  {{#broll}}
-  {{#rollTotal() computed::bcritfail 1}}
-  <div class="sheet-rt sheet-rt-text">
-    <span class="sheet-rt sheet-rt-secondary">Si dé malus :</span>
-    <br>
-    <span class="sheet-rt sheet-rt-fumble">{{fumble}}</span>
-  </div>
-  {{/rollTotal() computed::bcritfail 1}}
-  {{/broll}}
+    {{#rollTotal() computed::critfail 1}}
+    <div class="sheet-rt sheet-rt-text">
+      <span class="sheet-rt sheet-rt-fumble">{{fumble}}</span>
+    </div>
+    {{/rollTotal() computed::critfail 1}}
+    {{#broll}}
+      {{#rollTotal() computed::bcritfail 1}}
+      <div class="sheet-rt sheet-rt-text">
+        <span class="sheet-rt sheet-rt-secondary">Si dé malus :</span>
+        <br>
+        <span class="sheet-rt sheet-rt-fumble">{{fumble}}</span>
+      </div>
+      {{/rollTotal() computed::bcritfail 1}}
+    {{/broll}}
   {{/roll}}
   {{#roll}}
-  {{#rollTotal() computed::roll 1}}
-  <div class="sheet-rt sheet-rt-text">
-    {{rolleffect}}
-  </div>
-  {{/rollTotal() computed::roll 1}}
-  {{#broll}}
-  {{#rollTotal() computed::broll 1}}
-  <div class="sheet-rt sheet-rt-text">
-    <span class="sheet-rt sheet-rt-secondary">Si dé bonus :</span>
-    <br>
-    {{rolleffect}}
-  </div>
-  {{/rollTotal() computed::broll 1}}
-  {{/broll}}
+    {{#rollTotal() computed::rollf 1}}
+    <div class="sheet-rt sheet-rt-text">
+      {{rolleffect}}
+    </div>
+    {{/rollTotal() computed::rollf 1}}
+    {{#broll}}
+      {{#rollTotal() computed::brollf 1}}
+      <div class="sheet-rt sheet-rt-text">
+        <span class="sheet-rt sheet-rt-secondary">Si dé bonus :</span>
+        <br>
+        {{brolleffect}}
+      </div>
+      {{/rollTotal() computed::brollf 1}}
+    {{/broll}}
   {{/roll}}
   {{#text}}
   <div class="sheet-rt sheet-rt-text">
@@ -6415,7 +6431,7 @@
 
 /**
  * COF2e Sheet Worker
- * v1.4.0
+ * v1.5.0
  */
 
 const SWData = {
@@ -6456,6 +6472,7 @@ const SWData = {
         { 
           value: "Arquebusier",
           pv: 4,
+          atks: { cac: 2, tir: 3, mag: 0 },
           skills: "artisanat,athletisme,equitation,intimidation,natation,sciences,vigilance",
           gear: [
             {
@@ -6479,6 +6496,7 @@ const SWData = {
         { 
           value: "Barde",
           pv: 4,
+          atks: { cac: 2, tir: 1, mag: 2 },
           skills: "acrobaties,artisanat,athletisme,commerce,connaissances,divertissement,empathie,equitation,intimidation,natation, persuasion, religion, renseignement,tromperie",
           gear : [
             {
@@ -6502,6 +6520,7 @@ const SWData = {
         { 
           value: "Rôdeur",
           pv: 4,
+          atks: { cac: 2, tir: 3, mag: 0 },
           skills: "acrobaties,artisanat,athletisme,discretion,equitation,escalade,medecine,natation,survie,vigilance",
           gear: [
             {
@@ -6524,7 +6543,8 @@ const SWData = {
         },
         { 
           value: "Voleur",
-          pv: 4, 
+          pv: 4,
+          atks: { cac: 2, tir: 2, mag: 1 }, 
           skills: "acrobaties,artisanat,athletisme,commerce,discrétion,escalade,effraction,intimidation,natation,persuasion,renseignement,tromperie,vigilance",
           gear: [
             {
@@ -6554,6 +6574,7 @@ const SWData = {
         { 
           value: "Barbare",
           pv: 5,
+          atks: { cac: 3, tir: 2, mag: 0 },
           skills: "artisanat,athletisme,equitation,escalade,intimidation,natation,survie,vigilance",
           gear: [
             {
@@ -6577,6 +6598,7 @@ const SWData = {
         { 
           value: "Chevalier",
           pv: 5,
+          atks: { cac: 3, tir: 0, mag: 2 },
           skills: "athlétisme,connaissance,equitation,intimidation,natation,persuasion,religion",
           gear: [
             {
@@ -6600,6 +6622,7 @@ const SWData = {
         { 
           value: "Guerrier",
           pv: 5,
+          atks: { cac: 3, tir: 2, mag: 0 },
           skills: "artisanat,athletisme,equitation,intimidation,natation",
           gear: [
             {
@@ -6629,6 +6652,7 @@ const SWData = {
         { 
           value: "Ensorceleur",
           pv: 3,
+          atks: { cac: 1, tir: 1, mag: 3 },
           skills: "artisanat,connaissance,occultisme,sciences",
           gear: [
             {
@@ -6644,6 +6668,7 @@ const SWData = {
         { 
           value: "Forgesort",
           pv: 3,
+          atks: { cac: 2, tir: 0, mag: 3 },
           skills: "artisanat,connaissance,occultisme,sciences",
           gear: [
             {
@@ -6663,6 +6688,7 @@ const SWData = {
         { 
           value: "Magicien",
           pv: 3,
+          atks: { cac: 1, tir: 1, mag: 3 },
           skills: "artisanat,connaissance,occultisme,sciences",
           gear: [
             {
@@ -6682,6 +6708,7 @@ const SWData = {
         { 
           value: "Sorcier",
           pv: 3,
+          atks: { cac: 1, tir: 1, mag: 3 },
           skills: "artisanat,connaissance,occultisme,sciences",
           gear: [
             {
@@ -6703,6 +6730,7 @@ const SWData = {
         { 
           value: "Druide",
           pv: 4,
+          atks: { cac: 2, tir: 1, mag: 2 },
           skills: "artisanat,athletisme,connaissance,discretion,equitation,empathie,medecine,natation,religion,survie,vigilance",
           gear: [
             {
@@ -6726,6 +6754,7 @@ const SWData = {
         { 
           value: "Moine",
           pv: 4,
+          atks: { cac: 3, tir: 0, mag: 2 },
           skills: "acrobaties,artisanat,athletisme,connaissance,discretion,empathie,escalade,medecine,natation,religion,survie,vigilance",
           gear: [
             {
@@ -6737,6 +6766,7 @@ const SWData = {
         { 
           value: "Prêtre",
           pv: 4,
+          atks: { cac: 2, tir: 0, mag: 3 },
           skills: "artisanat,athletisme,connaissance,empathie,equitation,intimidation,medecine,persuasion,religion,survie",
           gear: [
             {
@@ -8055,12 +8085,32 @@ function eventList(eventName, attributeList, joinChar = "") {
  * @returns {string}
  */
 function repeatingAttr(section, name, id = "") {
+  const repeat = [ "repeating", strval(section), strval(name) ];
+  if (strval(id) !== "")
+    repeat.splice(2, 0, id);
+  return repeat.join("_"); /*
   let attribute = `repeating_${section}`;
   if (id !== "")
     attribute += "_" + id;
   attribute += "_" + name;
-  return attribute;
+  return attribute;*/
 }
+
+/**
+ * Return repeating attribute information
+ * @param {string} fullRepeatName - fully qualified repeating attribute name
+ * @returns { { section: string, rowId: string, attribute: string } }
+ */ 
+function repeatingInfo(fullRepeatName) {
+  let section = "", rowId = "", attribute = "";
+  if (strval(fullRepeatName) !== "")
+    [ section, rowId, attribute ] = fullRepeatName.split("_").slice(1).map(v => strval(v));
+  return { section, rowId, attribute };
+}
+
+/**
+ * @typedef {(repeatingRowId: string) => void} removeRepeatingRow
+ */
 
 /**
 * Remove all rows for a repeating section
@@ -8215,11 +8265,11 @@ function sendChatMsg(msg, options) {
     if (rollTN > 0) {
       const rollD20 = diceRoll(roll.results.roll);
       if (rollD20 >= rollTN)
-        computed.roll = 1;
-      if (!computed.roll && roll.results.broll) {
+        computed.rollf = 1;
+      if (!computed.rollf && roll.results.broll) {
         const brollD20 = diceRoll(roll.results.broll);
         if (brollD20 >= rollTN)
-          computed.broll = 1;
+          computed.brollf = 1;
       }
     }
 
@@ -8667,6 +8717,64 @@ function getAllTags(values) {
   return allTags;
 }
 
+/**
+ * Return family for profile name
+ * @param {string} name - profile name
+ * @returns {string}
+ */
+function getFamilyByProfile(name) {
+  let familyName = "";
+  for (const family of Object.keys(SWData.PC.PROFILES)) {
+    const found = SWData.PC.PROFILES[family].find(profile => cleanText(profile.value) === cleanText(name));
+    if (found) {
+      familyName = cleanText(family);
+      break;
+    }
+  }
+  return familyName;
+}
+
+/**
+ * Return PV number for an ability
+ * @param {string} name - ability name
+ * @returns {number}
+ */
+function getAbilityPV(name) {
+  let pv = 0;
+  name = cleanText(name);
+  const profileInfo = SWData.PVPATH.find(p => p.abilities.includes(name));
+  if (profileInfo) {
+    const family = getFamilyByProfile(profileInfo.profile);
+    const rank = profileInfo.abilities.findIndex(ability => ability === name) + 1;
+    switch (family) {
+      case "aventuriers":
+      case "mystiques":
+        if (rank === 1 || rank === 2)
+          pv = 2;
+        if (rank >= 3)
+          pv = 4;
+        break;
+      case "combattants":
+        if (rank === 1)
+          pv = 3;
+        if (rank === 2)
+          pv = 2;
+        if (rank >= 3)
+          pv = 5;
+        break;
+      case "mages":
+        if (rank === 1)
+          pv = 1;
+        if (rank === 2)
+          pv = 2;
+        if (rank >= 3)
+          pv = 3;
+        break;
+    }
+  }
+  return pv;
+}
+
 // ===============
 // PC SHEET EVENTS
 // ===============
@@ -8748,12 +8856,15 @@ function setProfilesList(family, profile) {
  */
 function getProfileData(profile, selectFamily = "") {
   let data;
-  for (const family in SWData.PC.PROFILES) {
-    if (selectFamily !== "" && family.toLowerCase() !== selectFamily.toLowerCase())
-      continue;
-    data = SWData.PC.PROFILES[family].find(p => profile.toLowerCase() === p.value.toLowerCase());
-    if (data)
-      break;
+  const [ primary ] = strval(profile).split("/");
+  if (primary) {
+    for (const family in SWData.PC.PROFILES) {
+      if (selectFamily !== "" && family.toLowerCase() !== selectFamily.toLowerCase())
+        continue;
+      data = SWData.PC.PROFILES[family].find(p => primary.toLowerCase() === p.value.toLowerCase());
+      if (data)
+        break;
+    }
   }
   return data;
 }
@@ -8807,7 +8918,7 @@ getAttrs([ "profil", "famille" ], function(values) {
  * On change of profile, check skill proficiencies
  */
 on("change:profil", function(eventInfo) {
-  getAttrs([ "profil", "famille", "use_skills" ], function(values) {
+  getAttrs([ "profil", "famille", "cfg_atk_diff", "niveau", "use_skills" ], function(values) {
     const useSkills = boolval(values.use_skills);
     if (!useSkills)
       return;
@@ -8816,20 +8927,26 @@ on("change:profil", function(eventInfo) {
     if (!SWData.PC.PROFILES[family])
       return;
 
-    const [ primary ] = strval(values.profil).split("/");
-    const profile = strval(SWData.PC.PROFILES[family].find(p => p.value === primary));
+    const profile = getProfileData(strval(values.profil));
     if (!profile)
       return;
 
+    const updates = new Map();
+
+    if (boolval(values.cfg_atk_diff) && intval(values.niveau) < 2) {
+      Object.keys(profile.atks).forEach(atk => {
+        updates.set(`atk${atk}_base`, profile.atks[atk]);
+      });
+    }
+
     const skillList = profile.skills.split(",");
-    const proficiencies = new Map();
     SWData.PC.SKILLS.forEach(skill => {
       const proficient = skillList.includes(skill.name) ? 1 : 0;
-      proficiencies.set(skill.name + "_prof", proficient);
+      updates.set(skill.name + "_prof", proficient);
     });
         
-    if (proficiencies.size > 0)
-      logAndSet(Object.fromEntries(proficiencies), logTitle(eventInfo));
+    if (updates.size > 0)
+      logAndSet(Object.fromEntries(updates), logTitle(eventInfo));
   });
 });
 
@@ -8841,10 +8958,14 @@ on("change:profil", function(eventInfo) {
  * @returns {Map} updated Map object
  */
 function updateAttacksBase(level, levelCap, attributes) {
-  let atkBase = Math.min(level, levelCap);
-  attributes.set("atkcac_base", atkBase);
-  attributes.set("atktir_base", atkBase);
-  attributes.set("atkmag_base", atkBase);
+  if (level > 1) {
+    for (let lv = 2; lv <= Math.min(level, levelCap); lv++) {
+      SWData.PC.COMBAT.attacks.map(a => a[0]).forEach(atk => {
+        const atkBase = `${atk}_base`;
+        attributes.set(atkBase, intval(attributes.get(atkBase)) + 1);
+      });
+    }
+  }
   return attributes;
 }
 
@@ -8880,15 +9001,26 @@ function updateDEvol(level, attributes) {
  * On level change
  */
 on("change:niveau", function(eventInfo) {
-  getAttrs([ "niveau", "cfg_use_epic", "cfg_use_capped6" ], function(values) {
+  getAttrs([ "niveau", "profil", "cfg_use_epic", "cfg_use_capped6", "cfg_atk_diff" ], function(values) {
     const cappedAt6 = boolval(values.cfg_use_capped6);
+    const atkDiff = boolval(values.cfg_atk_diff);
     // base progression
     const levelCap = cappedAt6 ? 6 : 10;
     const level = intval(values.niveau);
-    let updateAttrs = new Map;
+
+    let updateAttrs = new Map();
+
+    let atks = { cac: 1, tir: 1, mag: 1 };
+    const profile = getProfileData(strval(values.profil));
+    if (profile && atkDiff)
+      atks = profile.atks;
+    Object.keys(atks).forEach(atk => updateAttrs.set(`atk${atk}_base`, profile.atks[atk]));
     updateAttrs = updateAttacksBase(level, levelCap, updateAttrs);
+    console.log(updateAttrs)
+
     updateAttrs = updateDEvol(level, updateAttrs);
     updateAttrs.set("def_base", 10);
+    
     // epic progression
     const useEpic = boolval(values.cfg_use_epic);
     if (level > levelCap && useEpic) {
@@ -9011,13 +9143,13 @@ function updatePVMax(eventInfo, changed = "") {
     ...nameSeq(9, abilityInfo().pathPV),
     ...allPathRanks("rankProps")
   ];
-  getAttrs([ 
+  getAttrs([
+    "cfg_lowfan",
     "cfg_pvmax_auto",
     "pvmax_force",
     "famille", "niveau",
-    "con",
-    "pv_buff",
-    "pv",
+    "con", 
+    "pv", "pv_buff",
     ...owned,
     ...other 
   ], function(values) {
@@ -9027,6 +9159,8 @@ function updatePVMax(eventInfo, changed = "") {
       return;
 
     const level = intval(values.niveau);
+    if (boolval(cfg_lowfan) && level > 6)
+      return;
     
     // Won't update if changing rank 2 for Mages profiles
     if (changed !== "")
@@ -9034,9 +9168,10 @@ function updatePVMax(eventInfo, changed = "") {
         return;
       
     let pv = intval(values.pv);
+    let pvMax = boolval(cfg_lowfan) ? 5 : 0;
 
     // niveau * CON 
-    let pvMax = level * intval(values.con);
+    pvMax += level * intval(values.con);
 
     owned.forEach(ability => {
       if (!boolval(values[ability]))
@@ -9246,6 +9381,7 @@ SWData.PC.STATS.forEach(stat => {
     ];
     getAttrs([ 
       `${short}_dsup`,
+      `${short}_test`,
       "notif_fx",
       "condition_affaibli",
       "cfg_shadow", "pc",
@@ -9267,7 +9403,9 @@ SWData.PC.STATS.forEach(stat => {
       const shadow = shadowValue(values);
       
       // Roll ability
-      const [ roll ] = Object.keys(values);
+      const [ roll, mod ] = Object.keys(values);
+      const statScore = intval(values[mod]);
+      const statMod = ` *(${ statScore >= 0 ? "+" : "" }${statScore})*`;
       const armure_eqp = intval(values.armure_eqp);
       const armure_malus = intval(values.armure_malus) * armure_eqp;
       const bouclier_eqp = intval(values.bouclier_eqp);
@@ -9278,7 +9416,7 @@ SWData.PC.STATS.forEach(stat => {
       const carac = `[[@{${roll}}[Dé] + @{${short}_test}[Bonus ${short.toUpperCase()}]${shadow.malus}${fear}${armor_malus}${shield_malus}${helmet_malus} ]] `;
       const chatMsg = cof2RollTemplate({
         lsub: "Test",
-        rsub: capitalize(stat),
+        rsub: capitalize(stat) + statMod,
         roll: carac,
         chance: addLuckButton(values)
       }, { tags: allTags });
@@ -9317,10 +9455,13 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
   const [ attack, , description ] = attk;
   on(`clicked:${attack}-btn`, function () {
     getAttrs([
-      "cfg_1attack_roll", "condition_affaibli", "condition_immobilise",
-      "cfg_shadow", "pc",
+      attack,
+      "cfg_1attack_roll", "cfg_shadow", "pc",
+      "condition_affaibli", "condition_immobilise",
       ...luckButtonAttrs()
       ], function (values) {
+      const atkMod = intval(values[attack]);
+      const atkBonus = `${ atkMod > 0 ? "+" : "" }${ atkMod }`;
       const useOneRoll = boolval(values.cfg_1attack_roll);
       const weakened = intval(values.condition_affaibli);
       const restrained = intval(values.condition_immobilise);
@@ -9333,7 +9474,7 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
       const atkRoll = `[[${roll}cs20cf1[Dé] + @{${attack}}[Bonus]${shadow.malus} ]]`;
       const atkProps = {
         lsub: "Attaque",
-        rsub: description,
+        rsub: `${description} *(${atkBonus})*`,
         roll: atkRoll,
         broll: "",
         chance: addLuckButton(values)
@@ -9883,27 +10024,27 @@ function insertRolls(text, options = {}) {
 }
 
 /**
- * Numbering PC attacks
+ * Numbering PC attacks 
  */
 on("change:repeating_armes:arme-nom clicked:renum_atk-btn", function(eventInfo) {
   const renumber = (eventInfo.triggerName === "clicked:renum_atk-btn");
-  const rowId = strval(eventInfo.triggerName.split("_")[2]);
   getSectionIDsOrdered("repeating_armes", function (rowIds) {
     const labels = rowIds.map(id => `repeating_armes_${id}_arme-label`);
     getAttrs([ "max_attack_label", "scriptVersion", ...labels ], function (values) {
-      const maxLabel = intval(values.max_attack_label);
-      delete values.max_attack_label;
-      const scriptCOF2 = hasMODScript(values);
-      delete values.scriptVersion;
-      let numLabel = renumber ? 0 : maxLabel;
       const updates = new Map();
-      Object.keys(values).forEach(label => {
+
+      // display attack options row if script detected
+      updates.set("repeating_armes_armeopt", hasMODScript(values) ? 1 : 0);
+      
+      const maxLabel = intval(values.max_attack_label);
+      let numLabel = renumber ? 0 : maxLabel;
+      labels.forEach(label => {
         if (renumber || intval(values[label]) === 0)
           updates.set(label, ++numLabel);
       });
       if (renumber || numLabel > maxLabel)
         updates.set("max_attack_label", numLabel);
-      updates.set("repeating_armes_armeopt", scriptCOF2 ? 1 : 0);
+
       if (updates.size > 0)
         setAttrs(Object.fromEntries(updates));
     });
@@ -9914,7 +10055,7 @@ on("change:repeating_armes:arme-nom clicked:renum_atk-btn", function(eventInfo) 
  * Display attack options row
  */
 on("clicked:repeating_armes:armeopt-btn clicked:repeating_npcarmes:armeopt-btn", function(eventInfo) {
-  const [ section ] = eventInfo.triggerName.split("_").slice(1);
+  const { section } = repeatingInfo(eventInfo.triggerName);
   getAttrs([`repeating_${section}_armeopt`], function(values) {
     const option = 1 - intval(values[`repeating_${section}_armeopt`]);
     setAttrs({ [`repeating_${section}_armeopt`]: option });
@@ -9925,7 +10066,7 @@ on("clicked:repeating_armes:armeopt-btn clicked:repeating_npcarmes:armeopt-btn",
  * Display thrown weapon options
  */
 on("change:repeating_armes:arme-atktype change:repeating_npcarmes:arme-atktype", function(eventInfo) {
-  const [ section ] = eventInfo.triggerName.split("_").slice(1);
+  const { section } = repeatingInfo(eventInfo.triggerName);
   getAttrs([`repeating_${section}_arme-atktype`], function(values) {
     const type = strval(values[`repeating_${section}_arme-atktype`]);
     const thrown = type === "jet" ? 1 : 0;
@@ -9976,7 +10117,10 @@ function criticalHit(values, npc = "") {
   const dmType = strval(values[`repeating_${npc}armes_arme-dmtype`]);
   const critDie = strval(values.cfg_tbl_critdie, "20");
   const roll = critDie === "20b" ? Math.max(getRandom(20), getRandom(20)) : getRandom(numval(critDie));
-  return `[${roll}] ` + SWData.ATTACKS.CS[dmType][roll - 1];
+  const effect = SWData.ATTACKS.CS[dmType][roll - 1];
+  if (effect === "")
+    return "";
+  return `[${roll}] ${effect}`;
 }
 
 /**
@@ -10003,7 +10147,7 @@ function fumbleRoll(values) {
  * Roll an attack in chat
  */
 on("clicked:repeating_armes:attack-btn", function(eventInfo) {
-  const attackId = eventInfo.triggerName.split("_")[2];
+  const { rowId: attackId } = repeatingInfo(eventInfo.triggerName);
   const section = "repeating_armes_arme-"
   const thrown = "repeating_armes_jet-"
   const attackAttrs = [
@@ -10034,7 +10178,7 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
     "cfg_1attack_roll",
     "cfg_crit_diff", "cfg_tbl_crit", "cfg_tbl_fumble",
     "cfg_use_ammo", "cfg_usure",
-    "cfg_shadow", "pc",
+    "cfg_lowfan", "cfg_shadow", "pc",
     "atkcac", "atktir", "atkmag",
     "agi_dsup", "per_dsup",
     "bouclier_eqp",
@@ -10247,8 +10391,11 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
     const dmbonus = strval(values[section + "bonus"]);
     const dmdiv = strval(values[section + "dmdiv"]);
 
+    if (boolval(values.cfg_lowfan))
+      modifiers.push("explodemax");
+
     let dmOpt = "";
-    if (modifiers.includes("explodemax"))
+    if (modifiers.includes("explodemax") && !dm.endsWith("!"))
       dmOpt += "!";
     if (modifiers.includes("reroll1"))
       dmOpt += "r";
@@ -10362,6 +10509,8 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
       rsub: name + atkBonus + range,
       roll: attack,
       broll: "",
+      rollf: "[[0]]",
+      brollf: "[[0]]",
       rolleffect: rollEffect,
       dm: dmroll,
       dmdesc,
@@ -11925,7 +12074,7 @@ on("change:repeating_equipement:equip-nom", function() {
  * Equip / Unequip armor & shield
  */
 on("change:repeating_equipement:equip-on", function(eventInfo) {
-  const equipId = eventInfo.triggerName.split("_")[2];
+  const { rowId: equipId } = repeatingInfo(eventInfo.triggerName);
   const section = "repeating_equipement";
   const hands = [
     "main_princ",
@@ -12066,7 +12215,7 @@ on(eventList("change", [
   "props",
   "atk"
 ].map(a => `repeating_equipement:equip-${a}`), " "), function (eventInfo) {
-  const gearId = eventInfo.sourceAttribute.split("_")[2];
+  const { rowId: gearId } = repeatingInfo(eventInfo.sourceAttribute);
   const gearAttrs = [
     "nom",
     "detail",
@@ -12210,13 +12359,15 @@ function repeating(section, list, prefix = "") {
  * On set resource = ammo
  */
 on("change:repeating_ressources:res-props", function(eventInfo) {
-  const resourceId = eventInfo.sourceAttribute.split("_")[2];
+  const { rowId: resourceId } = repeatingInfo(eventInfo.sourceAttribute);
   const rptResources = "repeating_ressources";
   const rptArmes = "repeating_armes";
   getSectionIDs(rptArmes, rowIds => {
     const allAttacks = [];
     rowIds.forEach(rowId => {
-      allAttacks.push(...[ "arme-atktype", "jet-nom" ].map(a => repeatingAttr(rptArmes.split("_")[1], a, rowId)));
+      allAttacks.push(
+        ...[ "arme-atktype", "jet-nom" ].map(a => repeatingAttr(repeatingInfo(rptArmes).section, a, rowId))
+      );
     });
     getAttrs([
       "cfg_use_ammo",
@@ -12236,7 +12387,7 @@ on("change:repeating_ressources:res-props", function(eventInfo) {
       const thrownIds = allAttacks
       .filter(a => a.endsWith("arme-atktype"))
       .filter(a => values[a] === "jet")
-      .map(a => a.split("_")[2]);
+      .map(a => repeatingInfo(a).rowId);
       let updates;
       thrownIds.forEach(id => {
         const name = `${rptArmes}_${id}_jet-nom`;
@@ -12255,23 +12406,26 @@ on("change:repeating_ressources:res-props", function(eventInfo) {
 on("change:repeating_ressources:res-val", function(eventInfo) {
   const section = "repeating_ressources";
   const attrs = [ "desc", "val", "props" ].map(a => `${section}_res-${a}`)
-  getAttrs([ "cfg_use_ammo", ...attrs ], function (values) {
+  getAttrs([ "cfg_use_ammo", "cfg_ammo_alert", ...attrs ], function (values) {
     const useAmmo = boolval(values.cfg_use_ammo);
     if (!useAmmo)
       return;
-
+    
+    const ammoAlert = intval(values.cfg_ammo_alert);
     const desc = strval(values[`${section}_res-desc`]);
     const props = strval(values[`${section}_res-props`]);
     if (getProp(props, "type").toLowerCase() !== "munitions")
       return;
 
     const value = intval(values[`${section}_res-val`]);
-    if (value <= 0) {
+    if (value <= 0 || value <= ammoAlert) {
+      const text = value <= 0 ? `Plus de ${desc}` : `Plus que ${value} ${desc}`;
+      const textclass = value <= 0 ? "fumble" : "secondary";
       const chatMsg = cof2RollTemplate({
         lsub: "Attaque",
         rsub: "Munitions",
-        text: `Plus de ${desc}`,
-        textclass: "fumble"
+        text,
+        textclass
       });
       sendChatMsg(chatMsg);
     }
@@ -12334,7 +12488,7 @@ function linkAttacks() {
           const nom = strval(values[`repeating_armes_${id}_arme-nom`]);
           const gear = allGears.find(gear => cleanText(nom, false).includes(cleanText(strval(values[gear]), false)));
           if (gear) {
-            const gearId = gear.split("_")[2];
+            const gearId = repeatingInfo(gear).rowId;
             if (gearId)
               links.set(`repeating_armes_${id}_arme-gearid`, gearId);
           }
@@ -13202,8 +13356,10 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
         lsub: "Attaque",
         rsub: name + range,
         roll: attack,
+        rollf: "[[0]]",
         rolleffect: rollEffect,
         broll: "",
+        brollf: "[[0]]",
         brolleffect: "",
         dm: dmroll,
         dmdesc,
@@ -13261,11 +13417,14 @@ on("clicked:repeating_npcrolls:npcroll-btn", function() {
   const section = "repeating_npcrolls_npcroll-";
   getAttrs([ "compagnon", `${section}name`, `${section}desc` ], function (values) {
     const companionOf = strval(values.compagnon);
-    const name = capitalize(strval(values[section + "name"], "Capacité"));
+    let name = strval(values[section + "name"], "Capacité");
+    const [ action ] = name.match(/ \((G|M|A|L)\)$/);
+    if (action)
+      name = name.replace(action, "");
     const text = insertRolls(strval(values[section + "desc"]), { isNPC: true, companionOf });
     const chatMsg = cof2RollTemplate({
       lsub: "Capacité",
-      rsub: name,
+      rsub: capitalize(name) + strval(action),
       text
     });
     sendChatMsg(chatMsg);
@@ -13889,7 +14048,7 @@ function parseSemVer(version) {
 }
 
 /**
- * On opening the sheet
+ * On opening the sheet - general updates
  */
 on("sheet:opened", function() {
   getAttrs([
@@ -13960,6 +14119,46 @@ on("sheet:opened", function() {
 
     setAttrs(Object.fromEntries(updates));
   });
+});
+
+/**
+ * Update attacks roll buttons > action buttons
+ * @param {{section: string, button: string, npc: boolean}} options - settings object
+ */
+function updateActionButtons(options) {
+  const { section, button, npc = false } = options;
+  getSectionIDs(`repeating_${section}`, (rowIds) => {
+    getAttrs([ "character_name", "sheet_type" ], function(values) {
+      const charName = strval(values.character_name);
+      if (charName === "")
+        return;
+      const isNPC = strval(values.sheet_type) === SWData.SHEET_TYPE.NPC;
+      if (npc !== isNPC)
+        return;
+      const updates = new Map();
+      rowIds.forEach(rowId => {
+        const atkBtn = `repeating_${section}_${rowId}_${button}`;
+        updates.set(atkBtn, `%{${charName}|${atkBtn}}`);
+      });
+      if (updates.size > 0)
+        setAttrs(Object.fromEntries(updates));
+    });
+  });
+}
+
+/**
+ * On opening sheet / changing name
+ * - Update attacks roll buttons > action buttons
+ */
+on("sheet:opened change:character_name", function() {
+
+  // PC repeating buttons
+  updateActionButtons({ section: "armes", button: "attack-btn" });
+  updateActionButtons({ section: "rolls", button: "roll-btn" });
+
+  // NPC repeating buttons
+  updateActionButtons({ section: "npcarmes", button: "npcatk-btn", npc: true });
+  updateActionButtons({ section: "npcrolls", button: "npcroll-btn", npc: true });
 });
 
 /**

@@ -22,7 +22,8 @@ v1.4.0 [Screenshot](cof2e.png)
 - Amélioration des objets en main (main gauche selon bouclier équipé ou pas)
 - Mise au point de la vérification des points de capacités et du calcul auto des PV
 - Correction de l'import PDF pour les voies de magie destructrice et magie élémentaire
-- Ajout d'une case attaque active/inactive (pour script COFantasy2)
+- Ajout d'une case attaque active/inactive pour le script COFantasy2
+- Ajout de la possibilité d'épingler les attaques et les jets de capacités à la barre d'actions Roll20
 
 ### Version _1.4.0_ (2025-04-08)
 

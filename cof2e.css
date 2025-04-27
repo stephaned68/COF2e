@@ -1,4 +1,4 @@
-/* COF2e v1.4.02 */
+/* COF2e v1.5.0 */
 
 @import url('https://fonts.googleapis.com/css?family=Merriweather+Sans&display=swap');
 
@@ -119,7 +119,7 @@ button[type="roll"] {
 
 button[type="roll"]:hover {
   font-weight: bold;
-  background-color: none;
+  background-color: transparent;
 }
 
 option.optgroup {
@@ -218,6 +218,10 @@ button.flat-btn {
   background-image: none;
 }
 
+.cofmain button[type="roll"].img-btn:before {
+  content: "";
+}
+
 span.img-btn {
   font-family: pictos;
   font-variant: normal;
@@ -263,13 +267,13 @@ span.d6-btn:hover {
   font-weight: bold;
 }
 
-button[type='action'].block-title {
+button[type="action"].block-title {
   padding: 1px;
   border: none;
   border-radius: 3px;
 }
 
-button[type='action'].block-title:hover {
+button[type="action"].block-title:hover {
   background-color: gray;
 }
 
