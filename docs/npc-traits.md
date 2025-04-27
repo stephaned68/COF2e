@@ -61,6 +61,8 @@ Un clic sur le bouton d20 permet de lancer le jet d'attaque et de DM dans le cha
 
 Le texte d'effet spécial est traité par la fiche pour substituer les jets en ligne comme décrit pour la description des [capacités des PJs]({{ site.baseurl }}/pc-abilities).
 
+Le bouton d20 de l'attaque peut être épinglé dans la barre d'actions de Roll20 par glisser-déposer.
+
 ## Attaque groupée
 
 Cette section permet de gérer les bonus pour toucher d'un groupe de 2 à 8 créatures attaquant la même cible. 
@@ -72,6 +74,8 @@ A partir de 5 créatures, la fiche effectue deux attaques, en répartissant le n
 Cette liste contient les capacités spéciales du PNJ. Pour chacune, vous indiquez son nom et sa description.
 
 Un clic sur le bouton d20 envoie un message dans le chat Roll20 avec le nom et la description. Le texte de la description est traité par la fiche pour substituer les jets en ligne comme décrit pour la description des [capacités des PJs]({{ site.baseurl }}/pc-abilities).
+
+Le bouton d20 de la capacité peut être épinglé dans la barre d'actions de Roll20 par glisser-déposer.
 
 ---
 

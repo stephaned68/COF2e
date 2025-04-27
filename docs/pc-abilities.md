@@ -88,6 +88,8 @@ Ce sous-onglet permet de lister des jets liés aux capacités du PJ. Pour chaque
 
 L'icone située à côté de **Nom** permet d'afficher un menu d'action dans le chat avec un bouton pour chaque jet de capacité.
 
+Le bouton d20 du jet peut être épinglé dans la barre d'actions de Roll20 par glisser-déposer.
+
 # Jets de compétences
 
 Ce sous-onglet n'apparaît que si la règle optionnelle est activée dans l'onglet _Configuration_ de la fiche.

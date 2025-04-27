@@ -150,7 +150,7 @@ Le texte d'effet spécial est traité par la fiche pour substituer les jets en l
 
 L'icone située à côté de **ARME/SORT** permet d'afficher un menu d'action dans le chat avec un bouton pour chaque jet d'attaque.
 
-Le bouton d20 de l'attaque peut être épinglé dans la barre d'action de Roll20 par glisser-déposer.
+Le bouton d20 de l'attaque peut être épinglé dans la barre d'actions de Roll20 par glisser-déposer.
 
 # Sous-onglet _Options_
 
