@@ -76,6 +76,10 @@ summary h4 {
   display: inline;
 }
 
+.cofmain textarea.xx-large {
+  height: 24rem;
+}
+
 .cofmain textarea.x-large {
   height: 18rem;
 }
@@ -224,7 +228,9 @@ button.flat-btn {
 
 .cofmain .trait button[type="roll"].img-btn {
   padding: 0;
-  margin: 0 5px;
+  margin: 0 2px;
+  font-size: 14px;
+  font-weight: bold;
 }
 
 span.img-btn {
@@ -448,6 +454,7 @@ input[value="0"].pc-skills-btn ~ button.pc-skills-btn {
 .pc-main-tab,
 .pc-abilities-tab,
 .pc-gears-tab,
+.pc-notes-tab,
 .pc-config-tab,
 .pc-script-tab,
 .pc-version-tab,
@@ -478,6 +485,7 @@ input[value="0"].pc-skills-btn ~ button.pc-skills-btn {
 .tabs-toggle[value="buffs"] ~ div .pc-buffs-btn,
 .tabs-toggle[value="import"] ~ div .pc-import-btn,
 .tabs-toggle[value="gears"] ~ div .pc-gears-btn,
+.tabs-toggle[value="notes"] ~ div .pc-notes-btn,
 .tabs-toggle[value="config"] ~ div .pc-config-btn,
 .tabs-toggle[value="script"] ~ div .pc-script-btn,
 .tabs-toggle[value="version"] ~ div .pc-version-btn,
@@ -501,6 +509,7 @@ input[value="0"].pc-skills-btn ~ button.pc-skills-btn {
 .tabs-toggle[value="buffs"] ~ div.pc-buffs-subtab,
 .tabs-toggle[value="import"] ~ div.pc-import-subtab,
 .tabs-toggle[value="gears"] ~ div.pc-gears-tab,
+.tabs-toggle[value="notes"] ~ div.pc-notes-tab,
 .tabs-toggle[value="config"] ~ div.pc-config-tab,
 .tabs-toggle[value="script"] ~ div.pc-script-tab,
 .tabs-toggle[value="version"] ~ div.pc-version-tab,

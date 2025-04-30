@@ -1,9 +1,9 @@
 <div class="cofmain">
 
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.4.10">
+  <input type="hidden" name="attr_verfdp" value="1.4.11">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.4.10">
+  <input type="hidden" name="attr_version" value="1.4.11">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
 
@@ -76,6 +76,9 @@
   <input type="hidden" name="attr_max_actions3_label" value="">
   <input type="hidden" name="attr_max_actions4_label" value="">
   <input type="hidden" name="attr_max_actions5_label" value="">
+
+  <input type="hidden" name="attr_PVIG" value="0">
+  <input type="hidden" name="attr_PVIG_max" value="0">
 
   <!-- Charmancer
   <input type="hidden" name="attr_charmancer" value=""> -->
@@ -242,6 +245,7 @@
         <button type="action" name="act_pc_main-btn" class="main-tab tab-btn pc-main-btn">ATTRIBUTS</button>
         <button type="action" name="act_pc_abilities-btn" class="main-tab tab-btn pc-abilities-btn">CAPACITES</button>
         <button type="action" name="act_pc_gears-btn" class="main-tab tab-btn pc-gears-btn">EQUIPEMENT</button>
+        <button type="action" name="act_pc_notes-btn" class="main-tab tab-btn pc-notes-btn">NOTES</button>
         <button type="action" name="act_pc_config-btn" class="main-tab tab-btn pc-config-btn">CONFIGURATION</button>
         <button type="action" name="act_pc_script-btn" class="main-tab tab-btn pc-script-btn">SCRIPT</button>
         <button type="action" name="act_pc_version-btn" class="main-tab tab-btn pc-version-btn">VERSION</button>
@@ -257,7 +261,11 @@
 
             <div class="trait">
               <h4>
-                Carac
+                <input type="hidden" name="attr_caract_select-btn" value="">
+                <button type="action" class="hidden" name="act_caract_select-btn"/>
+                <button type="roll" class="flat-btn img-btn" name="roll_caractselect" value="@{caract_select-btn}">
+                  Carac
+                </button>
                 <input type="hidden" name="attr_caract_menu-btn" value="">
                 <button type="action" class="hidden" name="act_caract_menu-btn"/>
                 <button type="roll" class="flat-btn img-btn" name="roll_caractmenu" value="@{caract_menu-btn}">
@@ -4415,6 +4423,33 @@
 
       </div>
 
+      <!-- Fiche PJ, Onglet Notes -->
+      <div class="pc-notes-tab">
+
+        <div class="sheet-2colrow">
+
+          <div class="sheet-col">
+
+            <div class="block-title block-header">
+              Description, Biographie
+            </div>
+            <textarea class="xx-large" name="attr_desc_bio" title="@{desc_bio}"></textarea>
+
+          </div>
+
+          <div class="sheet-col">
+
+            <div class="block-title block-header">
+              Aventures
+            </div>
+            <textarea class="xx-large" name="attr_aventures" title="@{aventures}"></textarea>
+
+          </div>
+
+        </div>
+
+      </div>
+
       <!-- Fiche PJ, Onglet Config -->
       <div class="pc-config-tab">
 
@@ -4976,7 +5011,7 @@
                     <li>Mise au point de la vérif. des points de capacités et du calcul auto. des PV</li>
                     <li>Correction de l'import PDF pour les voies de magie destructrice et magie élémentaire</li>
                     <li>Ajout d'une case attaque active/inactive pour le script COFantasy2</li>
-                    <li>Ajout de la possibilité d'épingler les attaques et jets de capacités à la barre d'actions Roll20</li>
+                    <li>Ajout de la possibilité d'épingler les jets de carac., d'attaques et de capacités à la barre d'actions Roll20</li>
                   </ul>
                 </details>
               </li>
@@ -5119,8 +5154,14 @@
   
           <div>
             <h4>
-              Caractéristiques
-              <button type="action" class="flat-btn img-btn" name="act_caract_menu-btn" title="%{caract_menu-btn} Menu des jets de caractéristiques">
+              <input type="hidden" name="attr_caract_select-btn" value="">
+              <button type="action" class="hidden" name="act_caract_select-btn"/>
+              <button type="roll" class="flat-btn img-btn" name="roll_caractselect" value="@{caract_select-btn}">
+                Caractéristiques
+              </button>
+              <input type="hidden" name="attr_caract_menu-btn" value="">
+              <button type="action" class="hidden" name="act_caract_menu-btn"/>
+              <button type="roll" class="flat-btn img-btn" name="roll_caractmenu" value="@{caract_menu-btn}">
                 <span class="img-btn">l</span>
               </button>
             </h4>
@@ -8776,6 +8817,16 @@ function getAbilityPV(name) {
   return pv;
 }
 
+/**
+ * Return modifier with sign prefix
+ * @param {number} mod - modifier value
+ * @returns {string}
+ */
+function displayMod(mod) {
+  mod = intval(mod);
+  return `${ mod >= 0 ? "+" : "" }${mod}`;
+}
+
 // ===============
 // PC SHEET EVENTS
 // ===============
@@ -8803,7 +8854,7 @@ on("change:sheet_type", function() {
  * Change tabs
  */
 [ 
-  "pc_main", "pc_abilities", "pc_gears", "pc_config", "pc_script", "pc_version",
+  "pc_main", "pc_abilities", "pc_gears", "pc_notes", "pc_config", "pc_script", "pc_version",
   "npc_main", "npc_gears", "npc_config", "npc_script"
 ].forEach(button => {
   on(`clicked:${button}-btn`, function() {
@@ -9002,7 +9053,7 @@ function updateDEvol(level, attributes) {
  * On level change
  */
 on("change:niveau", function(eventInfo) {
-  getAttrs([ "niveau", "profil", "cfg_use_epic", "cfg_use_capped6", "cfg_atk_diff" ], function(values) {
+  getAttrs([ "niveau", "profil", "pc_max", "cfg_use_epic", "cfg_use_capped6", "cfg_atk_diff" ], function(values) {
     const cappedAt6 = boolval(values.cfg_use_capped6);
     const atkDiff = boolval(values.cfg_atk_diff);
     // base progression
@@ -9011,14 +9062,16 @@ on("change:niveau", function(eventInfo) {
 
     let updateAttrs = new Map();
 
+    if (intval(eventInfo.newValue) === intval(eventInfo.previousValue) + 1) {
+      updateAttrs.set("pc", intval(values.pc_max));
+    }
+
     let atks = { cac: 1, tir: 1, mag: 1 };
     const profile = getProfileData(strval(values.profil));
     if (profile && atkDiff)
       atks = profile.atks;
     Object.keys(atks).forEach(atk => updateAttrs.set(`atk${atk}_base`, profile.atks[atk]));
     updateAttrs = updateAttacksBase(level, levelCap, updateAttrs);
-    console.log(updateAttrs)
-
     updateAttrs = updateDEvol(level, updateAttrs);
     updateAttrs.set("def_base", 10);
     
@@ -9337,9 +9390,11 @@ function luckButtonAttrs() {
 function addLuckButton(values) {
   if (!boolval(values.cfg_luck_btn))
     return "";
+  const pc = intval(values.pc);
+  if (!boolval(values.cfg_shadow) && pc === 0)
+    return "";
   const charName = strval(values.character_name);
   const color = strval(values.couleur_pj);
-  const pc = intval(values.pc);
   const pcLabel = boolval(values.cfg_shadow) ? "Choc" : "Chance";
   return `[${pcLabel}](~${charName}|luck_apply-btn${menuButton(color, { size: "1.3em" })}) (Reste ${pc} PC)`;
 }
@@ -9405,8 +9460,7 @@ SWData.PC.STATS.forEach(stat => {
       
       // Roll ability
       const [ roll, mod ] = Object.keys(values);
-      const statScore = intval(values[mod]);
-      const statMod = ` *(${ statScore >= 0 ? "+" : "" }${statScore})*`;
+      const statMod = ` *(${ displayMod(values[mod]) })*`;
       const armure_eqp = intval(values.armure_eqp);
       const armure_malus = intval(values.armure_malus) * armure_eqp;
       const bouclier_eqp = intval(values.bouclier_eqp);
@@ -9461,8 +9515,7 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
       "condition_affaibli", "condition_immobilise",
       ...luckButtonAttrs()
       ], function (values) {
-      const atkMod = intval(values[attack]);
-      const atkBonus = `${ atkMod > 0 ? "+" : "" }${ atkMod }`;
+      const atkBonus = `${ displayMod(values[attack]) }`;
       const useOneRoll = boolval(values.cfg_1attack_roll);
       const weakened = intval(values.condition_affaibli);
       const restrained = intval(values.condition_immobilise);
@@ -10218,8 +10271,7 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
     const atk = strval(values[section + "atk"]);
     const atkdiv = intval(values[section + "atkdiv"]);
     const name = capitalize(strval(values[section + "nom"], getAttackName(atk)), false);
-    const atkMod = intval(values[atk]) + intval(values.atkdiv);
-    const atkBonus = ` *${ atkMod > 0 ? "+" : "" }${ atkMod }*`;
+    const atkMod = ` *${ displayMod(intval(values[atk]) + intval(values.atkdiv)) }*`;
     const portee = strval(values[section + "portee"]);
     let range = (portee !== "") ? ` *(${portee}${ !portee.toLowerCase().endsWith("m") ? " m" : "" })*` : "";
     let crit = intval(values[section + "crit"], 20);
@@ -10507,7 +10559,7 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
     // Roll attack !
     const atkProps = {
       lsub: atkTitle.replace("/", " /\n"),
-      rsub: name + atkBonus + range,
+      rsub: name + atkMod + range,
       roll: attack,
       broll: "",
       rollf: "[[0]]",
@@ -12706,7 +12758,7 @@ on("clicked:helpdoc-btn", function() {
  */
 function menuButton(color, font = {}, extraCSS = {}) {
   color = color || "default";
-  font = { size: "0.9em", weight: "bold", ...font };
+  font = { size: "0.8rem", weight: "bold", ...font };
   let backColor, textColor;
   if (Array.isArray(color))
     [ backColor, textColor = "white" ] = color;
@@ -12727,16 +12779,38 @@ function menuButton(color, font = {}, extraCSS = {}) {
 }
 
 /**
+ * Display roll query for stats
+ */
+on("clicked:caract_select-btn", function () {
+  const allStats = SWData.PC.STATS.map(stat => `${shorten(stat)}_test`);
+  getAttrs([ "character_name", ...allStats ], function (values) {
+    const charName = strval(values.character_name);
+    const statSelect = SWData.PC.STATS.map((stat, ix) => {
+      const short = shorten(stat); 
+      return `${ short.toUpperCase() } (${ displayMod(values[`${short}_test`]) }),${ix + 1}`
+    });
+    ask([ "Carac. ?", ...statSelect ], (skill) => {
+      const stat = shorten(SWData.PC.STATS[skill -1]);
+      const action = `%{${charName}|${stat}-btn}`;
+      startRoll(action, roll => {
+        finishRoll(roll.rollId);
+      });
+    });
+  });
+});
+
+/**
  * Display stats rolls chat menu
  */
 on("clicked:caract_menu-btn", function () {
-  getAttrs([ "character_name", "couleur_pj" ], function (values) {
+  const allStats = SWData.PC.STATS.map(stat => `${shorten(stat)}_test`);
+  getAttrs([ "character_name", "couleur_pj", ...allStats ], function (values) {
     const charName = strval(values.character_name);
     const color = strval(values.couleur_pj);
     const chatMsg = SWData.PC.STATS.map(stat => {
       const short = shorten(stat);
-      const button = menuButton(color, {}, { width: "2.5rem", ["text-align"]: "center" });
-      return `${capitalize(stat)}=[${short.toUpperCase()}](~${charName}|${short}-btn${button})`
+      const button = menuButton(color, {}, { width: "3.5rem", ["text-align"]: "center" });
+      return `${capitalize(stat)}=[${short.toUpperCase()} (${ values[`${short}_test`] })](~${charName}|${short}-btn${button})`
     });
     sendChatMsg([
       `title=${charName}`,
@@ -12772,7 +12846,8 @@ on("clicked:etats_menu-btn", function() {
     })
     .map(condition => {
       const color = boolval(values[`condition_${condition.name}`]) ? [ "#dc3545" ] : [ "#198754" ];
-      return `${condition.label}=[⚪](~${charName}|${condition.name}-icon${menuButton(color)})`;
+      const button = menuButton(color, {}, { padding: "0px 5px;" });
+      return `${condition.label}=[⚪](~${charName}|${condition.name}-icon${button})`;
     });
     sendChatMsg([
       `title=${charName}`,
@@ -12798,7 +12873,8 @@ function attackRollsMenu(npc = "") {
     getAttrs([ "character_name", "couleur_pj", ...attackNames ], function (values) {
       const charName = strval(values.character_name);
       const color = strval(values.couleur_pj);
-      const chatMsg = rowIds.map((rowId, ix) => `${ix + 1}. ${values[`${section}_${rowId}_arme-nom`]}=[Jet](~${charName}|${section}_${rowId}_${attackBtn}-btn${menuButton(color)})`);
+      const button = menuButton(color, {}, { padding: "0px 5px;" });
+      const chatMsg = rowIds.map((rowId, ix) => `${ix + 1}. ${values[`${section}_${rowId}_arme-nom`]}=[Jet](~${charName}|${section}_${rowId}_${attackBtn}-btn${button})`);
       if (chatMsg === 0)
         return;
       sendChatMsg([
@@ -12828,8 +12904,10 @@ on("clicked:abilities_menu-btn", function () {
     const pathRanks = strval(values.rangs_voies).split(",");
     const pathNames = strval(values.noms_voies).split("|");
     const chatMsg = pathRanks.reduce((result, rank, ix) => {
-      if (intval(rank) > 0)
-        result.push(`${pathNames[ix]}=[Capacités](~${charName}|voie${ix + 1}_menu-btn${menuButton(color)})`);
+      if (intval(rank) > 0) {
+        const button = menuButton(color, {}, { padding: "0px 5px;" });
+        result.push(`${pathNames[ix]}=[Capacités](~${charName}|voie${ix + 1}_menu-btn${button})`);
+      }
       return result;
     }, []);
     if (chatMsg === 0)
@@ -12860,7 +12938,8 @@ seq(9).forEach(path => {
       const chatMsg = seq(5).reduce((result, rank) => {
         if (rank <= pathRank) {
           const abilityName = values[`voie${path}-t${rank}`];
-          result.push(`${abilityName}=[Jet](~${charName}|v${path}r${rank}-btn${menuButton(color)})`);
+          const button = menuButton(color, {}, { padding: "0px 5px;" });
+          result.push(`${abilityName}=[Jet](~${charName}|v${path}r${rank}-btn${button})`);
         }
         return result;
       }, []);
@@ -12891,7 +12970,8 @@ function abilityRollsMenu(npc = "") {
     getAttrs([ "character_name", "couleur_pj", ...rollNames ], function (values) {
       const charName = strval(values.character_name);
       const color = strval(values.couleur_pj);
-      const chatMsg = rowIds.map((rowId, ix) => `${ix + 1}. ${values[`${section}_${rowId}_${rollNameAttr}`]}=[Jet](~${charName}|${section}_${rowId}_${npc}roll-btn${menuButton(color)})`);
+      const button = menuButton(color, {}, { padding: "0px 5px;" });
+      const chatMsg = rowIds.map((rowId, ix) => `${ix + 1}. ${values[`${section}_${rowId}_${rollNameAttr}`]}=[Jet](~${charName}|${section}_${rowId}_${npc}roll-btn${button})`);
       if (chatMsg.length === 0)
         return;
       sendChatMsg([
@@ -12950,7 +13030,8 @@ function allRollsMenu(npc = "") {
     }
     const chatMsg = menus.map(m => {
       const [ button, label ] = m.split(":");
-      return `${label}=[Menu](~${charName}|${button}_menu-btn}${menuButton(color)})`;
+      const menuBtn = menuButton(color, {}, { padding: "0px 5px;" });
+      return `${label}=[Menu](~${charName}|${button}_menu-btn}${menuBtn})`;
     });
     sendChatMsg([
       `title=${charName}`,
@@ -14171,6 +14252,29 @@ on("sheet:opened change:character_name", function() {
         return;
     
     setAttrs({ ["caract_menu-btn"]: `%{${charName}|caract_menu-btn}` });
+    setAttrs({ ["caract_select-btn"]: `%{${charName}|caract_select-btn}` });
+  });
+});
+
+/**
+ * Sync pv <=> PVIG for token bars
+ */
+
+on("change:pv change: pv_max", function() {
+  getAttrs([ "pv", "pv_max" ], function(values) {
+    setAttrs({ 
+      PVIG: intval(values.pv),
+      PVIG_max: intval(pv_max) 
+    }, { silent: true });
+  });
+});
+
+on("change:pvig change:pvig_max", function() {
+  getAttrs([ "PVIG", "PVIG_max" ], function(values) {
+    setAttrs({
+      pv: intval(values.PVIG),
+      pv_max: intval(values.PVIG_max)
+    }, { silent: true });
   });
 });
 
