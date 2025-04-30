@@ -24,7 +24,11 @@ Un clic sur le bouton permet de lancer un jet "sec" de caractéristique. Le type
 - Un d20 avec _dé bonus_ en cas de caractéristique supérieure/héroïque, sans dé bonus si le PJ est _Affaibli_.
 - Un d20 avec _dé bonus_ avec un résultat minimum de 10 en cas de caractéristique supérieure+héroïque, pas de minimum si le PJ est _Affaibli_.
 
+Le texte **Carac** est un bouton qui permet d'afficher une liste de sélection d'une caractéristique pour faire un jet dans le chat.
+
 L'icone située à côté de **Carac** permet d'afficher un menu d'action dans le chat avec un bouton pour chaque jet de caractéristique.
+
+Ces deux boutons/icones peuvtn être épinglés dans la barre d'action de Roll20 par glisser-déposer. 
 
 # Combat
 

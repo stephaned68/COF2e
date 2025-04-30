@@ -16,6 +16,12 @@ Vous indiquez également :
 
 Des boutons permettent de faire des jets de caractéristiques et d'Initiative.
 
+Le texte **Caractéristiques** est un bouton qui permet d'afficher une liste de sélection d'une caractéristique pour faire un jet dans le chat.
+
+L'icone située à côté de **Caractéristiques** permet d'afficher un menu d'action dans le chat avec un bouton pour chaque jet de caractéristique.
+
+Ces deux boutons/icones peuvtn être épinglés dans la barre d'action de Roll20 par glisser-déposer.
+
 # Description
 
 Cette zone de texte libre permet de préciser des informations générales sur le PNJ ou la créature.
