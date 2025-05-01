@@ -104,11 +104,11 @@ Ce sous-onglet n'apparaît que si la règle optionnelle est activée dans l'ongl
 Ce sous-onglet permet de créer une liste de buffs / debuffs, c'est à dire des bonus ou malus obtenus par certaines capacités ou circonstances, qui peuvent s'ajouter de manière temportaire ou permanente à certains attributs du PJ.
 
 Pour chaque élément de la liste, vous pouvez indiquer :
-- Si le buff est actif ou pas (case à cocher).
-- Le nom ou origine du buff.
+- Si le buff est actif ou pas (case à cocher)
+- Le nom ou origine du buff
 - L'attribut auquel ce buff s'applique :
   - Une caractéristique (_AGI_, _CON_, etc)
-  - Un score de combat (Initiative, Attaques, Défense)
+  - Un score de combat (Initiative, Attaques, Défense, DM)
   - Une ressource (PV, DR, PM, PC)
 - La valeur du buff, qui peut s'exprimer :
   - Comme une valeur fixe, par exemple <kbd>+1</kbd>, <kbd>-2</kbd>
@@ -118,8 +118,11 @@ Pour chaque élément de la liste, vous pouvez indiquer :
     - <kbd>[rang voie n]</kbd> ou <kbd>[rang voie n] + X</kbd> pour la voie no <kbd>n</kbd>
     - <kbd>[rang voie nom]</kbd> ou <kbd>[rang voie nom] + X</kbd> pour la voie <kbd>nom</kbd>
     - <kbd>[rang nom]</kbd> ou <kbd>[rang nom] + X</kbd> pour la voie <kbd>nom</kbd>
+  - Comme une expression de dés (principalement pour les buffs aux DM)
 
 Plusieurs buffs peuvent s'appliquer au même attribut du PJ. Si c'est le cas, le total des buffs actuellement actifs (cochés) est calculé.
+
+Dans le cas d'un buff aux DM, celui-ci s'applique à tous les jets d'attaque effectuées à partir du moment où il est actif. Il est possible de le rendre optionnel avec un <kbd>?</kbd> au début de son nom. La fiche demandera alors si ce buff s'applique quand un jet d'attaque est effectué.
 
 Une section dépliable _Détail par attribut_ permet de consulter la liste des buffs actuellement appliqués à chaque attribut et leur somme.
 
