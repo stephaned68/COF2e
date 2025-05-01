@@ -23,7 +23,8 @@ v1.4.0 [Screenshot](cof2e.png)
 - Mise au point de la vérification des points de capacités et du calcul auto des PV
 - Correction de l'import PDF pour les voies de magie destructrice et magie élémentaire
 - Ajout d'une case attaque active/inactive pour le script COFantasy2
-- Ajout de la possibilité d'épingler les jets de carac., d'attaques et de capacités à la barre d'actions Roll20
+- Ajout de la possibilité d'épingler certains jets à la barre d'actions Roll20
+- Ajout de buffs aux DMs avec possibilité de jet optionnel
 
 ### Version _1.4.0_ (2025-04-08)
 

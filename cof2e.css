@@ -226,7 +226,8 @@ button.flat-btn {
   content: "";
 }
 
-.cofmain .trait button[type="roll"].img-btn {
+.cofmain .trait button[type="roll"].img-btn,
+.cofmain .npc-traits button[type="roll"].img-btn {
   padding: 0;
   margin: 0 2px;
   font-size: 14px;
@@ -408,7 +409,7 @@ div.path div.block-title {
 }
 
 input[value="npc"] ~ button[name="act_charmancer-btn"],
-input[value="npc"] ~ button[name="act_checkup-btn"] {
+input[value="npc"] ~ button[name="roll_checkup"] {
   display: none;
 }
 

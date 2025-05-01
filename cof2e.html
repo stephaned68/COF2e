@@ -1,9 +1,9 @@
 <div class="cofmain">
 
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.4.11">
+  <input type="hidden" name="attr_verfdp" value="1.4.12">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.4.11">
+  <input type="hidden" name="attr_version" value="1.4.12">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
 
@@ -52,6 +52,9 @@
   <input type="hidden" name="attr_casque_malus" value="0">
   <input type="hidden" name="attr_def_buff" value="0">
   <input type="hidden" name="attr_def_cond" value="0">
+  <input type="hidden" name="attr_dm_buff" value="">
+
+  <!-- Buffs compteurs -->
   <input type="hidden" name="attr_pv_buff" value="0">
   <input type="hidden" name="attr_dr_base" value="2">
   <input type="hidden" name="attr_dr_buff" value="0">
@@ -214,7 +217,9 @@
           <button type="action" class="flat-btn img-btn" name="act_charmancer-btn" title="Lancer le Persomancien">
             <span class="img-btn">x</span>
           </button>
-          <button type="action" class="flat-btn img-btn" name="act_checkup-btn" title="%{checkup-btn} Check-up">
+          <input type="hidden" name="attr_checkup-btn" value="">
+          <button type="action" class="hidden" name="act_checkup-btn"/>
+          <button type="roll" class="flat-btn img-btn" name="roll_checkup" value="@{checkup-btn}">
             <span class="img-btn align-self-center">Y</span>
           </button>
         </div>
@@ -4048,6 +4053,7 @@
                     <option value="atktir">Distance</option>
                     <option value="atkmag">Magique</option>
                     <option value="def">Défense</option>
+                    <option value="dm">DM</option>
                   </optgroup>
                   <optgroup label="Ressources">
                     <option disabled class="optgroup">
@@ -4093,6 +4099,7 @@
           <input type="hidden" name="attr_atkmag_buff_list" value="">
           <input type="hidden" name="attr_init_buff_list" value="">
           <input type="hidden" name="attr_def_buff_list" value="">
+          <input type="hidden" name="attr_dm_buff_list" value="">
           <input type="hidden" name="attr_pv_buff_list" value="">
           <input type="hidden" name="attr_dr_buff_list" value="">
           <input type="hidden" name="attr_pm_buff_list" value="">
@@ -4228,6 +4235,12 @@
                 <div class="bordered">DEF</div>
                 <div class="bordered"><span name="attr_def_buff_list"></span></div>
                 <div class="bordered"><span name="attr_def_buff"></span></div>
+              </div>
+
+              <div class="buff-detail">
+                <div class="bordered">DM</div>
+                <div class="bordered"><span name="attr_dm_buff_list"></span></div>
+                <div class="bordered"><span name="attr_dm_buff"></span></div>
               </div>
 
             </details>
@@ -4440,7 +4453,7 @@
           <div class="sheet-col">
 
             <div class="block-title block-header">
-              Aventures
+              Evènements, Aventures
             </div>
             <textarea class="xx-large" name="attr_aventures" title="@{aventures}"></textarea>
 
@@ -4998,8 +5011,8 @@
                     <strong>Version 1.5.0</strong> (2025-05-??)
                   </summary>
                   <ul>
-                    <li>
-                      Ajout d'une couleur de fond aux PV selon l'état courant
+                    <li>Ajout d'un onglet Notes aux fiches de PJ</li>
+                    <li>Ajout d'une couleur de fond aux PV selon l'état courant
                       <br> - Jaune si moins de 50% de PV restants
                       <br> - Rouge si 1 PV restant
                       <br> - Rouge foncé si 0 PV restant
@@ -5011,7 +5024,12 @@
                     <li>Mise au point de la vérif. des points de capacités et du calcul auto. des PV</li>
                     <li>Correction de l'import PDF pour les voies de magie destructrice et magie élémentaire</li>
                     <li>Ajout d'une case attaque active/inactive pour le script COFantasy2</li>
-                    <li>Ajout de la possibilité d'épingler les jets de carac., d'attaques et de capacités à la barre d'actions Roll20</li>
+                    <li>Ajout de la possibilité d'épingler certains jets à la barre d'actions Roll20
+                      <br> - Caractéristiques
+                      <br> - Attaques
+                      <br> - Capacités
+                    </li>
+                    <li>Ajout de buffs aux DMs avec possibilité de jet optionnel</li>
                   </ul>
                 </details>
               </li>
@@ -5152,7 +5170,8 @@
 
         <div class="npc-main">
   
-          <div>
+          <div class="npc-traits">
+
             <h4>
               <input type="hidden" name="attr_caract_select-btn" value="">
               <button type="action" class="hidden" name="act_caract_select-btn"/>
@@ -6870,6 +6889,7 @@ const SWData = {
         "atktir",
         "atkmag",
         "def",
+        "dm",
         "pv",
         "dr",
         "pm",
@@ -8573,6 +8593,7 @@ function abilityInfo(pathRank = "") {
     rankBase:     `v${path}br`,
     rankName:     `voie${path}-t${rank}`,
     rankDesc:     `voie${path}-${rank}`,
+    rankOwned:    vr,
     rankSpell:    `${vr}_spell`,
     rankUse:      `${vr}_use`,
     rankUseMax:   `${vr}_use_max`,
@@ -8825,6 +8846,15 @@ function getAbilityPV(name) {
 function displayMod(mod) {
   mod = intval(mod);
   return `${ mod >= 0 ? "+" : "" }${mod}`;
+}
+
+/**
+ * Replace evolutive dice expression with attribute reference
+ * @param {string} expr - dice expression
+ * @returns {string}
+ */
+function replaceDevol(expr) {
+  return expr.replaceAll(/d(4°|E)/g, "@{devol}");
 }
 
 // ===============
@@ -9213,7 +9243,7 @@ function updatePVMax(eventInfo, changed = "") {
       return;
 
     const level = intval(values.niveau);
-    if (boolval(cfg_lowfan) && level > 6)
+    if (boolval(values.cfg_lowfan) && level > 6)
       return;
     
     // Won't update if changing rank 2 for Mages profiles
@@ -9222,7 +9252,7 @@ function updatePVMax(eventInfo, changed = "") {
         return;
       
     let pv = intval(values.pv);
-    let pvMax = boolval(cfg_lowfan) ? 5 : 0;
+    let pvMax = boolval(values.cfg_lowfan) ? 5 : 0;
 
     // niveau * CON 
     pvMax += level * intval(values.con);
@@ -10244,7 +10274,8 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
     ...luckButtonAttrs(),
     ...sitModAttrs.map(a => `modsit_${a}`),
     ...attackAttrs.map(a => `${section}${a}`),
-    ...[ "resid", "nbre" ].map(a => `${thrown}${a}`)
+    ...[ "resid", "nbre" ].map(a => `${thrown}${a}`),
+    "dm_buff_list"
   ], function (values) {
     
     // general options
@@ -10281,6 +10312,9 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
     const usure = strval(values[section + "usure"]);
     const resourceId = strval(values[`${thrown}resid`]);
     const resourceNbr = Math.max(1, intval(values[`${thrown}nbre`]));
+
+    // DM buffs
+    const dmBuffs = strval(values.dm_buff_list).split(";").map(b => b.trim());
 
     // 2 mains & bouclier 
     const twoHanded = boolval(values[section + "2m"]);
@@ -10347,7 +10381,7 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
       case 4:
         tacticBonus = ` + (${tactBM})[Option tactique]`;
         if (tactDM !== "")
-          tacticDM = " + (" + tactDM.replace(/d(4°|E)/, "@{devol}") + ")[Option tactique]";
+          tacticDM = " + (" + replaceDevol(tactDM) + ")[Option tactique]";
         break;
     }
 
@@ -10425,7 +10459,7 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
     
     // Damage roll
     let [ dm, ...dmextra ] = strval(values[section + "dm"]).split(" ");
-    dm = dm.replace("dE", "d4°").replace("d4°", "@{devol}");
+    dm = replaceDevol(dm);
     if (dm.includes("/")) {
       const [ dm1m, dm2m ] = dm.split("/");
       dm = shieldUsed ? dm1m : `?{Maniée à|Une main,${dm1m}|Deux mains,${dm2m}}`;
@@ -10472,6 +10506,16 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
       if (powderBonus > 0)
         extraDM = ` +${powderBonus}[Poudre puissante]`;
     }
+
+    dmBuffs.filter(b => b !== "").forEach(buff => {
+      let [ buffName, buffDM ] = buff.split(":").map(s => s.replaceAll("|", " ").trim());
+      buffDM = replaceDevol(buffDM);
+      if (buffName.charAt(0) === "?") {
+        buffName = buffName.slice(1).trim();
+        buffDM = `?{${buffName}|Non,0|Oui,${buffDM}}`;
+      }
+      extraDM += ` + [[${buffDM}]][${buffName}]`;
+    });
 
     let dmroll = "";
     if (dm !== "" )
@@ -10772,7 +10816,17 @@ function enhancedAbility(hasRank, rank, change) {
  */
 function actionAbility(path, rank) {
   const abilityAttrs = [
-    `voie${path}nom`,
+    abilityInfo({ path, rank }).pathName,
+    abilityInfo({ path, rank }).rankName,
+    abilityInfo({ path, rank }).rankDesc,
+    abilityInfo({ path, rank }).rankOwned,
+    abilityInfo({ path, rank }).rankSpell,
+    abilityInfo({ path, rank }).rankUse,
+    abilityInfo({ path, rank }).rankUseMax,
+    abilityInfo({ path, rank }).rankUseFreq,
+    abilityInfo({ path, rank }).rankProps,
+    abilityInfo({ path, rank }).rankBase
+    /*`voie${path}nom`,
     `voie${path}-t${rank}`,
     `voie${path}-${rank}`,
     `v${path}r${rank}`,
@@ -10780,10 +10834,10 @@ function actionAbility(path, rank) {
     `v${path}r${rank}_use`,
     `v${path}r${rank}_use_max`,
     `v${path}r${rank}_freq`,
-    `v${path}r${rank}_props`
+    `v${path}r${rank}_props`*/
   ];
   getAttrs([ ...abilityAttrs, "pm", "concentration", "rangs_voies" ], function(values) {
-    const [ name, ability, desc, owned, spell, used, uses, freq, props ] = Object.keys(values);
+    const [ name, ability, desc, owned, spell, used, uses, freq, props, br ] = Object.keys(values);
     const pathName = strval(values[name]);
     let abilityName = strval(values[ability]);
     const abilityOwned = boolval(values[owned]);
@@ -10804,6 +10858,7 @@ function actionAbility(path, rank) {
       allTags.push(`${maxUses} / ${ usage.toLowerCase() }`);
 
     const abilityProps = strval(values[props]);
+    const rankBase = intval(values[br]);
 
     // Play FX !
     const fxValue = strval(getProp(abilityProps, "fx"));
@@ -10832,7 +10887,7 @@ function actionAbility(path, rank) {
     // alert on spells & PM
     if (!expended && abilityOwned && abilitySpell) {
       let pm = intval(values.pm);
-      let mana = rank;
+      let mana = rank + rankBase - 1;
       const pmProp = strval(getProp(abilityProps, "pm"));
       if (pmProp !== "") {
         let [ pmMod, ...pmModInfo ] = pmProp.split(" ");
@@ -10875,14 +10930,16 @@ function actionAbility(path, rank) {
 
     // change rolls based on rank
     if (description.includes("{{evol}}") && hasProp(abilityProps, "evol")) {
-      const base = "", rank = [], change = [];
+      let base = "", rank = [], change = [];
       [ base, rank[0], change[0], rank[1], change[1] ] = getProp(abilityProps, "evol").split(" ");
       let param = "";
       if (strval(base) !== "") {
         const hasRank = getPathRanks(strval(values.rangs_voies))[path - 1];
         param = enhancedAbility(hasRank, rank[1], change[1]);
-        if (param === "") 
+        if (param === "")
           param = enhancedAbility(hasRank, rank[0], change[0]);
+        if (param === "")
+          param = base;
       }
       description = description.replace("{{evol}}", param);
     }
@@ -11017,7 +11074,7 @@ function checkAbilityPoints(changed = "") {
       if (!boolval(values[ability]))
         return;
       const { path, rank, rankBase } = abilityInfo(ability);
-      const base = intval(baseRank[rankBase], 1);
+      const base = intval(values[rankBase], 1);
       const rankPath = rank + base - 1;
       
       if (path === SWData.settings.peoplePath && rankPath === 1)
@@ -11036,10 +11093,10 @@ function checkAbilityPoints(changed = "") {
       usedPoints += (rank > 2) ? 2 : 1;
     });
 
-    if (usedPoints > maxPoints) {
-      let text = `${usedPoints} points utilisés mais ${maxPoints} au maximum`;
+    if (usedPoints > maxPoints || alerts.length > 0) {
+      let text = usedPoints > maxPoints ? `${usedPoints} points utilisés mais ${maxPoints} au maximum` : "";
       if (alerts.length > 0)
-        text += "\n" + alerts.join("\n");
+        text += ( text !== "" ? "\n" : "") + alerts.join("\n");
       const chatMsg = cof2RollTemplate({
         lsub: "Contrôle",
         rsub: "Points de Capacités",
@@ -11151,7 +11208,7 @@ seq(9).forEach(path => {
 
       // Update PV
       updatePVMax(eventInfo, ability);
-
+      
       // Check ability points
       checkAbilityPoints(ability);
     });
@@ -11634,6 +11691,7 @@ on("clicked:helpbuff-btn", function() {
     "[rang voie *N*]=Rang dans la voie n° *N*",
     "[rang voie *Nom*]=Rang dans la voie *Nom*",
     "[rang *Nom*]=Rang dans la voie *Nom*",
+    "NdX=Jet de N dés à X faces (d4° ou dE pour dé évolutif)",
     "desc=Vous pouvez ajouter un bonus après la voie" + "\n" + "Ex. : *[rang voie 2] + 1*"
   ], {
     template: "custom",
@@ -13108,6 +13166,8 @@ function displayCheckup() {
     getAttrs([ ...recapAttrs, ...allAttacks, ...allBuffs ], function(values) {
       if (strval(values.sheet_type) === SWData.SHEET_TYPE.NPC)
         return;
+      if (intval(values.pv_max) === 0 && intval(values.dr_max) === 0 && intval(values.pc_max) === 0)
+        return;
 
       const charName = strval(values.character_name);
       const color = strval(values.couleur_pj);
@@ -14251,8 +14311,13 @@ on("sheet:opened change:character_name", function() {
       if (charName === "")
         return;
     
-    setAttrs({ ["caract_menu-btn"]: `%{${charName}|caract_menu-btn}` });
-    setAttrs({ ["caract_select-btn"]: `%{${charName}|caract_select-btn}` });
+    const updates = new Map([
+      "checkup",
+      "caract_menu",
+      "caract_select",
+    ].map(b => [ `${b}-btn`, `%{${charName}|${b}-btn}` ]));
+
+    setAttrs(Object.fromEntries(updates));
   });
 });
 
@@ -14264,7 +14329,7 @@ on("change:pv change: pv_max", function() {
   getAttrs([ "pv", "pv_max" ], function(values) {
     setAttrs({ 
       PVIG: intval(values.pv),
-      PVIG_max: intval(pv_max) 
+      PVIG_max: intval(values.pv_max) 
     }, { silent: true });
   });
 });
