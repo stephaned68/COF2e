@@ -1,9 +1,9 @@
 <div class="cofmain">
 
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.4.12">
+  <input type="hidden" name="attr_verfdp" value="1.4.13">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.4.12">
+  <input type="hidden" name="attr_version" value="1.4.13">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
 
@@ -4468,7 +4468,7 @@
 
         <hr>
 
-        <div class="sheet-2colrow">
+        <div class="sheet-3colrow">
           
           <div class="sheet-col">
 
@@ -4631,6 +4631,10 @@
               </ul>
             </details>
 
+          </div>
+
+          <div class="sheet-col">
+
             <details>
               <summary>
                 <h4>Forcer les valeurs maxi.</h4>
@@ -4657,6 +4661,17 @@
                   <input type="number" class="two-digits" name="attr_pm_max" title="@{pm_max}">
                 </li>
               </ul>
+            </details>
+
+            <details>
+              <summary>
+                <h4>Attributs personnalisés</h4>
+              </summary>
+              <textarea 
+                name="attr_custom"
+                placeholder="nom_attribut: valeur"
+                title="Un nom d'attribut et sa valeur par ligne &#13;Les attributs sont créés sous le nom @{<profil>_<nom_attribut>} &#13;Les lignes commençant par // sont des commentaires et ne sont pas traitées"
+              ></textarea>
             </details>
 
           </div>
@@ -6384,6 +6399,10 @@
       {{/rollWasCrit() broll}}
       {{/^rollWasCrit() roll}} {{dmdesc}}
     </div>
+    {{#dmextra}}
+    <div></div>
+    <div>{{dmextra}}</div>
+    {{/dmextra}}
   </div>
   {{/dm}}
   {{#dmcrit}}
@@ -8150,12 +8169,18 @@ function repeatingAttr(section, name, id = "") {
   const repeat = [ "repeating", strval(section), strval(name) ];
   if (strval(id) !== "")
     repeat.splice(2, 0, id);
-  return repeat.join("_"); /*
-  let attribute = `repeating_${section}`;
-  if (id !== "")
-    attribute += "_" + id;
-  attribute += "_" + name;
-  return attribute;*/
+  return repeat.join("_");
+}
+
+/**
+ * Return repeating attributes list
+ * @param {string} section - section name
+ * @param {string[]} names - list of attribute names
+ * @param {string} [id=""] - rowId
+ * @returns {string[]}
+ */
+function repeatingAttrs(section, names, id = "") {
+  return names.map(a => repeatingAttr(section, a, id));
 }
 
 /**
@@ -10487,16 +10512,18 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
     if (modifiers.includes("reroll1"))
       dmOpt += "r";
 
-    let extraDM = "";
+    const extraDM = [];
 
+    // mounted extra DM
     if (mounted && atk === "atkcac") {
       if (hasAbility({ name: "monture fantastique", inPath: "cavalier" }, values)) {
-        extraDM = " +2[Cavalier rang 5]"
+        extraDM.push(" +2[Cavalier rang 5]");
       } else if (hasAbility({ name: "cavalier emerite", inPath: "cavalier" }, values)) {
-        extraDM = " +1[Cavalier rang 2]"
+        extraDM.push(" +1[Cavalier rang 2]");
       }
     }
 
+    // firearms extra DM
     if (modifiers.includes("poudre")) {
       let powderBonus = 0;
       if (hasAbility({ name: "poudre puissante", inPath: "explosifs" }, values)) {
@@ -10504,9 +10531,10 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
         range = ` ([[${intval(portee)}[Base] + 10[Poudre puissante]]])`;
       }
       if (powderBonus > 0)
-        extraDM = ` +${powderBonus}[Poudre puissante]`;
+        extraDM.push(` +${powderBonus}[Poudre puissante]`);
     }
 
+    // DM buffs
     dmBuffs.filter(b => b !== "").forEach(buff => {
       let [ buffName, buffDM ] = buff.split(":").map(s => s.replaceAll("|", " ").trim());
       buffDM = replaceDevol(buffDM);
@@ -10514,12 +10542,12 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
         buffName = buffName.slice(1).trim();
         buffDM = `?{${buffName}|Non,0|Oui,${buffDM}}`;
       }
-      extraDM += ` + [[${buffDM}]][${buffName}]`;
+      extraDM.push(` + [[${buffDM}]] ${buffName}`);
     });
 
     let dmroll = "";
     if (dm !== "" )
-      dmroll = `[[${dm}${dmOpt}]][DM] + ${dmbonus}[Bonus]${magicDM}${ shadow.dm } + ${dmdiv}[Divers]${tacticDM}${extraDM}`;
+      dmroll = `[[${dm}${dmOpt}]][DM] + ${dmbonus}[Bonus]${magicDM}${ shadow.dm } + ${dmdiv}[Divers]${tacticDM}`;
     if (dmroll !== "" && tactics === 1)
       dmroll = `floor((${dmroll})/2)`;
     if (dmroll !== "")
@@ -10627,6 +10655,9 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
 
     if (roll === "1d20" && bRoll)
       atkProps.broll = attack;
+
+    if(extraDM.length > 0)
+      atkProps.dmextra = extraDM.join("\n");
 
     if ([ "main", "jet" ].includes(atkType) && useWear) {
       atkProps.usure = "[[1d10]]";
@@ -10826,15 +10857,6 @@ function actionAbility(path, rank) {
     abilityInfo({ path, rank }).rankUseFreq,
     abilityInfo({ path, rank }).rankProps,
     abilityInfo({ path, rank }).rankBase
-    /*`voie${path}nom`,
-    `voie${path}-t${rank}`,
-    `voie${path}-${rank}`,
-    `v${path}r${rank}`,
-    `v${path}r${rank}_spell`,
-    `v${path}r${rank}_use`,
-    `v${path}r${rank}_use_max`,
-    `v${path}r${rank}_freq`,
-    `v${path}r${rank}_props`*/
   ];
   getAttrs([ ...abilityAttrs, "pm", "concentration", "rangs_voies" ], function(values) {
     const [ name, ability, desc, owned, spell, used, uses, freq, props, br ] = Object.keys(values);
@@ -10978,8 +11000,8 @@ function actionAbility(path, rank) {
  */
 function setRank(path) {
   rankAttrs = [
-    ...seq(5).map(rank => `v${path}r${rank}`),
-    ...seq(5).map(rank => `voie${path}-t${rank}`)
+    ...seq(5).map(rank => abilityInfo({ path, rank }).rankOwned),
+    ...seq(5).map(rank => abilityInfo({ path, rank }).rankName)
   ];
   getAttrs(rankAttrs, function (values) {
     let rank = 0;
@@ -10989,8 +11011,7 @@ function setRank(path) {
       if (hasRank > rank)
         rank = hasRank;
     });
-    const updates = { [`rang_voie${path}`]: rank };
-    setAttrs(updates);
+    setAttrs({ [`rang_voie${path}`]: rank });
   });
 }
 
@@ -11063,7 +11084,7 @@ function checkAbilityPoints(changed = "") {
     
     // Won't update if changing rank 2 for Mages profiles
     if (changed !== "")
-      if (level === 1 && strval(values.famille) === "Mages" && abilityInfo(changed).rank === 2)
+      if (level === 1 && cleanText(values.famille) === "mages" && abilityInfo(changed).rank === 2)
         return;
 
     const alerts = [];
@@ -11181,7 +11202,7 @@ on(eventList(
       }
     }
 
-    setAttrs({ [rankProps]: props.join("\n") }, function() {
+    setAttrs({ [rankProps]: props.join("\n") }, {}, () => {
       updatePVMax(eventInfo);
       checkAbilityPoints();
     });
@@ -11794,7 +11815,7 @@ seq(9).forEach(path => {
   
       if (updates.size > 0) {
         updates.set("voie_pdf", "");
-        setAttrs(Object.fromEntries(updates), function() {
+        setAttrs(Object.fromEntries(updates), {}, () => {
           abilityUsages(path);
         });
       }
@@ -12627,6 +12648,7 @@ on("clicked:reset_all-btn", function() {
   rebuildRanks(e);
   rebuildBuffLists(e);
   rebuildBuffValues(e);
+  rebuildCustom(e);
   ask("Lier attaques et équipements ?", function(answer) {
     if (answer === 1)
       linkAttacks();
@@ -12646,13 +12668,44 @@ on("change:cfg_highfan change:cfg_lowfan", function (eventInfo) {
         options = [ "use_epic", "use_drniv", "use_mana" ];
         break;
       case "cfg_lowfan":
-        options = [ "use_capped6", "use_dronly", "usure", "use_fear" ];
+        options = [ "use_capped6", "use_dronly", "atk_diff", "usure", "use_fear" ];
         break;
     }
     const subOptions = new Map(options.map(o => [ `cfg_${o}`, checked]));
     setAttrs(Object.fromEntries(subOptions));
   });
 });
+
+/**
+ * Rebuild custom attributes 
+ */
+function rebuildCustom() {
+  getAttrs([ "custom", "profil" ], function (values) {
+    const rows = strval(values.custom)
+      .split("\n")
+      .map(r => strval(r).trim())
+      .filter(r => r !== "" && !r.startsWith("//"));
+    if (rows.length === 0)
+      return;
+    
+    const [ profile ] = cleanText(values.profil).split("/");
+    const updates = new Map();
+    rows.forEach(row => {
+      const { name, value } = parseNameValue(row);
+      if (!name)
+        return;
+      updates.set(`${profile}_${name}`, value);
+    });
+
+    if (updates.size > 0)
+      setAttrs(Object.fromEntries(updates));
+  });
+}
+
+/**
+ * On changing the custom attributes code
+ */
+on("change:custom", rebuildCustom);
 
 /**
  * Return an updated Map of attributes
