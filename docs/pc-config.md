@@ -52,10 +52,14 @@ Si le nombre de points de capacités utilisé dépasse le nombre maximum disponb
 ## Règles optionnelles
 
 - Encombrement : L'encombrement de l'équipement porté par le PJ est calculé et des alertes sont affichées dans le chat Roll20 selon que les divers seuils sont dépassés.
-- Critiques différenciés : Les réussites critiques en combat provoquent des effets différenciés selon le type de DM de l'arme utilisée.
 - Points de chance variables : La dépense d'un PC ajoute 1d10 au résultat du dernier jet de D20. En compensation, le nombre de PC est doublé.
 - Utiliser le malus de bouclier : Le bouclier inflige un malus à certaines actions (comme une armure).
 - Suivre les munitions : Les munitions liées aux attaques d'arme de jet sont déduites des ressources.
+
+## Règles optionnelles (COMBAT)
+- Critiques différenciés : Les réussites critiques en combat provoquent des effets différenciés selon le type de DM de l'arme utilisée.
+- Table de coups critiques : Les effets des réussites critiques en combat sont déterminés aléatoirement.
+- Table d'échecs critiques : Les échecs critiques en combat provoquent des effets défavorables déterminés aléatoirement.
 
 ## High Fantasy
 
@@ -77,6 +81,12 @@ Si le nombre de points de capacités utilisé dépasse le nombre maximum disponb
 ## Forcer les valeurs maxi
 
 Cette section permet de fixer la valeur maximum des PV, DR, PC et PM et empêche la fiche de les calculer automatiquement.
+
+## Attributs personnalisés
+
+Cette section permet de définir une liste d'attributs dans une zone de texte libre. La syntaxe de cette liste est la même que pour les [prédicats]({{ site.baseurl }}/pc-script).
+
+Les attributs personnalisés sont créés avec la valeur indiquée. Ils peuvent être utilisés dans des macros Roll20 ou à d'autres emplacements de la fiche sous le nom <kbd>{nom profil}_{nom attribut}</kbd>.
 
 ## Notifications
 

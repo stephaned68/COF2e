@@ -28,7 +28,7 @@ Le texte **Carac** est un bouton qui permet d'afficher une liste de sélection d
 
 L'icone située à côté de **Carac** permet d'afficher un menu d'action dans le chat avec un bouton pour chaque jet de caractéristique.
 
-Ces deux boutons/icones peuvtn être épinglés dans la barre d'action de Roll20 par glisser-déposer. 
+Ces deux boutons/icones peuvent être épinglés dans la barre d'action de Roll20 par glisser-déposer. 
 
 # Combat
 

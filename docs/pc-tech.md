@@ -239,8 +239,9 @@ Où <kbd>nom</kbd> :
 - <kbd>tags</kbd> : Liste d'étiquettes caractérisant le jet (sort (de zone), états préjudiciables, etc...)
 - <kbd>roll</kbd> : Jet de dés (test, attaque)
 - <kbd>broll</kbd> : Deuxième jet de dés (pour gérer les dés bonus/malus)
-- <kbd>dm</kbd> : Jet de dommage
+- <kbd>dm</kbd> : Jet de dommage (doublé en cas de critique)
 - <kbd>dmdesc</kbd> : Type de dommages
+- <kbd>dmextra</kbd> : Jet de dommage additionnel (non doublé en cas de critique)
 - <kbd>text</kbd> : Texte descriptif
 - <kbd>textclass</kbd> : Valeur <kbd>critical</kbd> pour affichage en vert, <kbd>fumble</kbd> pour affichage en rouge
 - <kbd>alert</kbd> : Texte d'alerte si nécessaire
