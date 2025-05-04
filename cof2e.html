@@ -6400,8 +6400,10 @@
       {{/^rollWasCrit() roll}} {{dmdesc}}
     </div>
     {{#dmextra}}
+    {{#rollGreater() dmextra 0}}
     <div></div>
     <div>{{dmextra}}</div>
+    {{/rollGreater() dmextra 0}}
     {{/dmextra}}
   </div>
   {{/dm}}
@@ -10542,6 +10544,11 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
         buffName = buffName.slice(1).trim();
         buffDM = `?{${buffName}|Non,0|Oui,${buffDM}}`;
       }
+      const matched = buffDM.match(/\[(.+)\]/);
+      if (matched) {
+        const [ match, name ] = matched;
+        buffDM = buffDM.replace(match, `@{${ name.toLowerCase() }}`);
+      }
       extraDM.push(` + [[${buffDM}]] ${buffName}`);
     });
 
@@ -12694,7 +12701,7 @@ function rebuildCustom() {
       const { name, value } = parseNameValue(row);
       if (!name)
         return;
-      updates.set(`${profile}_${name}`, value);
+      updates.set(`${profile}_${name}`, replaceDevol(value));
     });
 
     if (updates.size > 0)
