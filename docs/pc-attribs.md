@@ -11,6 +11,8 @@ Un bouton situé à côté du type de fiche de personnage permet de lancer le Pe
 
 Un autre bouton situé à côté du type de fiche de personnage permet d'afficher un bilan de santé du personnage : nombre de PV, DR, PC (Ombre), PM courants et maximum, états préjudiciables subis, objets tenus en main, nombre d'utilisations restantes des capacités à usage limité, liste des buffs actifs.
 
+Ce bouton peut être épinglé dans la barre d'action de Roll20 par glisser-déposer.
+
 # Caractéristiques
 
 Pour chaque caractéristique, vous pouvez indiquer :
@@ -24,11 +26,11 @@ Un clic sur le bouton permet de lancer un jet "sec" de caractéristique. Le type
 - Un d20 avec _dé bonus_ en cas de caractéristique supérieure/héroïque, sans dé bonus si le PJ est _Affaibli_.
 - Un d20 avec _dé bonus_ avec un résultat minimum de 10 en cas de caractéristique supérieure+héroïque, pas de minimum si le PJ est _Affaibli_.
 
-Le texte **Carac** est un bouton qui permet d'afficher une liste de sélection d'une caractéristique pour faire un jet dans le chat.
+Le texte **Carac** est un bouton qui permet d'afficher un popup Roll20 pour choisir la caractéristique et faire un jet dans le chat.
 
 L'icone située à côté de **Carac** permet d'afficher un menu d'action dans le chat avec un bouton pour chaque jet de caractéristique.
 
-Ces deux boutons/icones peuvent être épinglés dans la barre d'action de Roll20 par glisser-déposer. 
+Ces deux boutons/icones peuvent être épinglés dans la barre d'action de Roll20 par glisser-déposer.
 
 # Combat
 
@@ -63,7 +65,7 @@ Dans cette section, on trouve les points de mana courants et maximum. Les PM max
 
 # Etats préjudiciables
 
-Un ensemble d'icones cliquables permettent d'appliquer les effets d'un ou plusieurs états préjudiciables au PJ. Ces effets sont affichés dans le chat Roll20. Une aide visuelle permet d'induqer si le personnage subit encore au moins un état : si c'est le cas, le cadre autour des icônes est hachuré et de couleur orange.
+Un ensemble d'icones cliquables permettent d'appliquer les effets d'un ou plusieurs états préjudiciables au PJ. Ces effets sont affichés dans le chat Roll20. Une aide visuelle permet d'indiquer si le personnage subit encore au moins un état : si c'est le cas, le cadre autour des icônes est hachuré et de couleur orange.
 
 # Défense
 
@@ -78,9 +80,9 @@ Cette section présente le calcul de la DEF du personnage.
 
 # Points de Chance
 
-Dans cette section, on trouve les points de chance courants et maximum. Les PC maximums affichés tiennent compte de la famille du profil (+1 PC pour un PJ Aventurier) d'éventuels buffs.
+Dans cette section, on trouve les points de chance courants et maximum. Les PC maximums affichés tiennent compte de la famille du profil (+1 PC pour un PJ Aventurier) et d'éventuels buffs.
 
-Si on clique sur l'icone de d20, la fiche récupère les derniers jets de d20 effectués, et les ré-affiche avec le bonus de +10 accordé par la dépense d'un point de chance.
+Si on clique sur l'icone de d20, la fiche récupère les derniers jets de d20 effectués, et les ré-affiche avec le bonus de +10 accordé par la dépense d'un point de chance. Si la règle optionnelle des Points de Chance variables est activée, c'est un jet de d10 qui est ajouté aux derniers jets.
 
 Si on clique sur l'icone de d6, la fiche effectue un test de chance (cf page 206).
 
@@ -125,7 +127,7 @@ Des paramètres optionnels peuvent être ajoutés :
   - <kbd>reroll1</kbd> : le dé de DM est relancé jusqu'à ce que son résultat soit supérieur à 1
   - <kbd>poudre</kbd> : l'arme explose et inflige 1d4° DM à l'utilisateur s'il ne maîtrise pas les armes à poudre
 
-- Options d'attaques avec arguments : 
+- Options d'attaques avec arguments :
   
   Ce paramètre est principalement utilisé par le script **COFantasy2**.
   
@@ -140,11 +142,13 @@ Des paramètres optionnels peuvent être ajoutés :
   - <kbd>element: </kbd> suivi d'un nom d'élément/substance pour ajouter une ligne de 1d4° DM élémentaires (2d4° si le nom de l'élément est suivi d'un espace et du mot <kbd>intense</kbd>)
   - <kbd>fleau: </kbd> suivi du nom d'un type de créature pour que Roll20 demande confirmation lors de l'attaque et qu'une ligne de 1d4° DM soit ajoutée si la créature ciblée est du même type
 
-- Pour les armes de type _Arme de jet_ : vous pouvez spécifier des paramètres supplémentaires.
+- Pour les armes de type _Arme de jet_, vous pouvez spécifier des paramètres supplémentaires :
   - Nom de la munition (utile si le suivi simplifié des munitions est activé dans la configuration)
   - Nombre disponible, nombre possédé et taux de perte sont utilisés par le script **COFantasy2**
 
-Un clic sur le bouton d20 permet de lancer le jet d'attaque et de DM dans le chat en tenant compte des divers paramètres. A moins que l'option de configuration _Un seul jet d'attaque_ ne soit active, deux jets distincts d'attaque sont effectués, sauf si le PJ est _Affaibli_. Dans le cas général (jet normal), prenez en compte le premier jet affiché. Prenez le plus élevé des deux jets si le PJ bénéficie d'un _dé bonus_ ou le moins élevé s'il subit un _dé malus_.
+Un clic sur le bouton d20 permet de lancer le jet d'attaque et de DM dans le chat en tenant compte des divers paramètres. 
+
+A moins que l'option de configuration _Un seul jet d'attaque_ ne soit active, deux jets distincts d'attaque sont effectués, sauf si le PJ est _Affaibli_. Dans le cas général (jet normal), prenez en compte le premier jet affiché. Prenez le plus élevé des deux jets si le PJ bénéficie d'un _dé bonus_ ou le moins élevé s'il subit un _dé malus_.
 
 Si l'arme est maniée à deux mains et que le bouclier est équipé, le jet d'attaque n'est pas effectué, un message d'avertissement s'affiche à la place.
 
@@ -190,7 +194,7 @@ Les règles suivantes s'appliquent :
 
 Selon qu'une arme est équipée ou non, un bouton _d20_ apparaît en regard de chaque main et permet de lancer l'attaque en question.
 
-_Les listes déroulantes d'objet sont chargées à l'ouverture de la fiche, en cas de modification de la liste des attaques, il est nécessaire de fermer et ré-ouvrir la fiche._
+**NB** : _Les listes déroulantes d'objet sont chargées à l'ouverture de la fiche. En cas de modification de la liste des attaques, il est nécessaire de fermer et ré-ouvrir la fiche._
 
 On peut également indiquer dans ce sous-onglet si le personnage est en selle ou pas.
 

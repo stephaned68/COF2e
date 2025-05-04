@@ -18,7 +18,7 @@ Cet onglet de la fiche de personnage présente deux vues, les textes cliquables 
 
 Pour chaque voie, vous indiquez :
 - Le nom de la voie,
-- Le nombre de PV correspondant à la famille de profil pour cette voie (ce nombre est normalement inséré automatiquement si le nom de la voie est reconnue)
+- Le nombre de PV correspondant à la famille de profil pour cette voie (ce nombre est normalement inséré automatiquement si le nom de la voie est reconnu)
 - Pour chacun des 5 rangs :
   - Le nom de la capacité,
   - S'il s'agit d'un sort (pour le calcul des PM maximum du PJ),
@@ -46,15 +46,15 @@ Les informations saisies en mode _Edition_ sont reprises mais non modifiables da
 Pour chaque rang :
 - Une case à cocher permet d'indiquer si la capacité est possédée ou non (permet le calcul du rang du PJ dans ses voies),
 - Une icone permet d'afficher le texte de la capacité dans le chat Roll20.
-  - Si cette capacité a un nombre d'utilisation maximum de configuré, cliquer sur ce bouton en consomme une.
+  - Si cette capacité a un nombre d'utilisations maximum configuré, cliquer sur ce bouton en compte une.
   - Si le nombre d'utilisations est dépassé, une alerte s'affiche dans le chat plutôt que le texte de la capacité.
-- Le nombre de fois où cette capacité a été utilisée et la fréquence de renouvellement s'il y a lieu
+- Le nombre de fois où cette capacité a été utilisée peut être modifié manuellement. La fréquence de renouvellement est affichée.
 
 Le texte de la capacité est transformé par insertion de jets en ligne s'il y a lieu (voir paragraphe _Jets en ligne_ ci-dessous).
 
 Deux icônes sont situées à côté de **Editer** :
-- L'icône _Horloge_ permet de ré-initialiser le nombre d'utilisation des capacités pour un type de fréquence
-- L'icône _Options_ permet d'afficher un menu d'action dans le chat avec un bouton pour chaque voie. Chacun de ces boutons affiche ensuite un sous-menu d'action avec un bouton d'action pour chaque capacité possédée dans cette voie.
+- L'icône _Horloge_ permet de ré-initialiser le nombre d'utilisation des capacités pour un type de fréquence donné (_ex : pour ré-initialiser toutes les capacités "par jour" à la fin d'une récupération longue_).
+- L'icône _Options_ permet d'afficher un menu d'action dans le chat avec un bouton pour chaque voie. Chacun de ces boutons affiche ensuite un sous-menu avec un bouton d'action pour chaque capacité possédée dans cette voie.
 
 Une troisième icone est affichée si le personnage possède au moins un sort (et donc dispose d'une valeur maximum de Points de Mana). Ce bouton permet d'appliquer la règle de Concentration accrue à l'utilisation d'une capacité de sort.
 
@@ -62,8 +62,8 @@ Une troisième icone est affichée si le personnage possède au moins un sort (e
 
 Les propriétés suivantes peuvent être appliquées aux capacités :
 
-- <kbd>fx:</kbd> suivi du nom d'un effet spécial et d'un nombre éventuel de répétitions pour pour que la fiche joue un FX Roll20 (commande <kbd>/fx</kbd>) lorsque la capacité est utilisée.
-- <kbd>pm:</kbd> suivi d'un chiffre pour faire varier le nombre de PM utilisés par cette capacité. Ce chiffre peut être absolu (<kbd>3</kbd> pour consommer 3 PM) ou relatif (<kbd>-1</kbd> pour consommer 1 PM de moins que la normale)
+- <kbd>fx:</kbd> suivi du nom d'un effet spécial et d'un nombre éventuel de répétitions pour que la fiche joue un FX Roll20 (commande <kbd>/fx</kbd>) lorsque la capacité est utilisée.
+- <kbd>pm:</kbd> suivi d'un chiffre pour faire varier le nombre de PM consommés par cette capacité. Ce chiffre peut être absolu (<kbd>3</kbd> pour consommer 3 PM) ou relatif (<kbd>-1</kbd> pour consommer 1 PM de moins que la normale)
 - <kbd>evol: base rang1 evol1 rang2 evol2</kbd> suivi de 3 à 5 valeurs séparées par des espaces
   - <kbd>base</kbd> est la valeur de base du paramètre évolutif (à l'acquisition de la capacité)
   - <kbd>rang1</kbd> est le premier rang auquel la capacité évolue
@@ -101,7 +101,7 @@ Ce sous-onglet n'apparaît que si la règle optionnelle est activée dans l'ongl
 
 # Buffs / Debuffs
 
-Ce sous-onglet permet de créer une liste de buffs / debuffs, c'est à dire des bonus ou malus obtenus par certaines capacités ou circonstances, qui peuvent s'ajouter de manière temportaire ou permanente à certains attributs du PJ.
+Ce sous-onglet permet de créer une liste de buffs / debuffs, c'est à dire des bonus ou malus obtenus par certaines capacités ou circonstances, qui peuvent s'ajouter de manière temporaire ou permanente à certains attributs du PJ.
 
 Pour chaque élément de la liste, vous pouvez indiquer :
 - Si le buff est actif ou pas (case à cocher)
@@ -112,11 +112,10 @@ Pour chaque élément de la liste, vous pouvez indiquer :
   - Une ressource (PV, DR, PM, PC)
 - La valeur du buff, qui peut s'exprimer :
   - Comme une valeur fixe, par exemple <kbd>+1</kbd>, <kbd>-2</kbd>
-  - Comme le score d'un autre attribut, en référençant celui-ci entre crochets, par exemple <kbd>[CHA]</kbd>
+  - Comme la valeur d'un autre attribut, en référençant celui-ci entre crochets, par exemple <kbd>[CHA]</kbd>
   - Comme le niveau du personnage, en le référençant sous la forme <kbd>[niveau]</kbd>
-  - Comme le rang dans une voie, éventuellement ajusté d'un bonus <kbd>X</kbd>, en référençant celle-ci sous la forme :
+  - Comme le rang dans une voie, éventuellement ajusté d'un bonus <kbd>X</kbd>, en référençant celle-ci sous l'une des formes suivantes :
     - <kbd>[rang voie n]</kbd> ou <kbd>[rang voie n] + X</kbd> pour la voie no <kbd>n</kbd>
-    - <kbd>[rang voie nom]</kbd> ou <kbd>[rang voie nom] + X</kbd> pour la voie <kbd>nom</kbd>
     - <kbd>[rang nom]</kbd> ou <kbd>[rang nom] + X</kbd> pour la voie <kbd>nom</kbd>
   - Comme une expression de dés (principalement pour les buffs aux DM)
 

@@ -88,6 +88,10 @@ Cette section permet de définir une liste d'attributs dans une zone de texte li
 
 Les attributs personnalisés sont créés avec la valeur indiquée. Ils peuvent être utilisés dans des macros Roll20 ou à d'autres emplacements de la fiche sous le nom <kbd>{nom profil}_{nom attribut}</kbd>.
 
+_Exemple :_ 
+
+<kbd>sournoise: 2d4°</kbd> sur la fiche d'un profil de voleur crée un attribut nommé <kbd>voleur_sournoise</kbd>. Cet attribut peut être utilisé dans une macro sous le nom <kbd>@{voleur_sournoise}</kbd>
+
 ## Notifications
 
 Pour chaque type de notification, vous pouvez choisir entre aucun affichage, un affichage pour tous les joueurs, ou un affichage privé pour le joueur et le MJ.

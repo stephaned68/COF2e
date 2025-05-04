@@ -158,6 +158,7 @@ Ces attributs sont déclinés pour toutes les voies (1 à 9) et tous les rangs (
 - <kbd>atkmag_cond</kbd> : total des debuffs à l'attaque magique dus aux états préjudiciables
 - <kbd>def_buff_list</kbd> : liste des buffs/debuffs de Défense
 - <kbd>def_cond</kbd> : total des debuffs à la Défense dus aux états préjudiciables
+- <kbd>dm_buff_list</kbd> : liste des buffs/debuffs aux DM
 - <kbd>pv_buff_list</kbd> : liste des buffs/debuffs aux PV
 - <kbd>dr_buff_list</kbd> : liste des buffs/debuffs aux DR
 - <kbd>pm_buff_list</kbd> : liste des buffs/debuffs aux PM
@@ -214,13 +215,14 @@ Certaines capacités de profil sont automatiquement prises en charge par la fich
 Divers boutons disséminés dans la fiche permettent d'afficher dans le chat Roll20 des menus avec des listes d'actions. Ces boutons peuvent être configurés en tant que macros Roll20 et insérés dans la barre rapide des macros et/ou configurés en tant qu'action de jetons.
 
 Les macros à configurer sont les suivantes :
-- <kbd>%{selected|pc_menus-btn}</kbd> affiche un menu de tous les autres sous-menus possibles
-- <kbd>%{selected|caract_menu-btn}</kbd> affiche un menu pour les jets de caractéristiques
-- <kbd>%{selected|etats_menu-btn}</kbd> affiche un menu des états préjudiciables
-- <kbd>%{selected|attacks_menu-btn}</kbd> affiche un menu pour les jets d'attaque
-- <kbd>%{selected|abilities_menu-btn}</kbd> affiche un menu des voies dans lesquelles le personnage possède des capacités
-- <kbd>%{selected|rolls_menu-btn}</kbd> affiche un menu des jets de capacités
-- <kbd>%{selected|skills_menu-btn}</kbd> affiche un popup Roll20 permettant de sélectionner la compétence à utiliser (si cette option est activée dans la configuration de la fiche)
+- <kbd>%{selected|pc_menus-btn}</kbd> : menu de tous les autres sous-menus possibles
+- <kbd>%{selected|caract_menu-btn}</kbd> : menu des jets de caractéristiques
+- <kbd>%{selected|caract_select-btn}</kbd> : popup Roll20 de sélection d'un jet de caractéristique
+- <kbd>%{selected|etats_menu-btn}</kbd> : menu des états préjudiciables
+- <kbd>%{selected|attacks_menu-btn}</kbd> : menu des jets d'attaque
+- <kbd>%{selected|abilities_menu-btn}</kbd> : menu des voies dans lesquelles le personnage possède des capacités
+- <kbd>%{selected|rolls_menu-btn}</kbd> : menu des jets de capacités
+- <kbd>%{selected|skills_menu-btn}</kbd> : popup Roll20 de sélection d'un jet de compétence (si cette option est activée dans la configuration de la fiche)
 
 # Roll Templates
 
@@ -267,7 +269,12 @@ L'utilisateur peut indiquer des paires _nom / valeur_ libres, qui sont affichée
 
 ---
 
-_(*) : les rangs de base sont de 1 pour les voies de profil, 4 pour les voies de prestige (3 pour la Voie du familier fantastique)_
+_(*) :_
+_Les rangs de base ont des valeurs par défaut de 1 pour les voies de profil et de 4 pour les voies de prestige_.
+
+_Ne pas oublier d'indiquer la valeur de 3 pour la Voie du familier fantastique_.
+
+_Le rang de base peut aussi être utilisé pour implémenter la magie rare en mode **low-fantasy**, en changeant le rang de base des voies de magie par 2, 3 ou 4 selon la rareté souhaitée_
 
 ---
 
