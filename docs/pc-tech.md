@@ -269,12 +269,11 @@ L'utilisateur peut indiquer des paires _nom / valeur_ libres, qui sont affichée
 
 ---
 
-_(*) :_
-_Les rangs de base ont des valeurs par défaut de 1 pour les voies de profil et de 4 pour les voies de prestige_.
+_(*) : Les rangs de base ont des valeurs par défaut de 1 pour les voies de profil et de 4 pour les voies de prestige_.
 
 _Ne pas oublier d'indiquer la valeur de 3 pour la Voie du familier fantastique_.
 
-_Le rang de base peut aussi être utilisé pour implémenter la magie rare en mode **low-fantasy**, en changeant le rang de base des voies de magie par 2, 3 ou 4 selon la rareté souhaitée_
+_Le rang de base peut aussi être utilisé pour implémenter la magie rare du mode **low-fantasy**, en changeant le rang de base des voies de magie par 2, 3 ou 4 selon la rareté souhaitée_
 
 ---
 
