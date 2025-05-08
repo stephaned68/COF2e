@@ -6,6 +6,8 @@
 
 [Onglet Equipement]({{ site.baseurl }}/pc-gears)
 
+[Onglet Notes]({{ site.baseurl }}/pc-notes)
+
 [Onglet Configuration]({{ site.baseurl }}/pc-config)
 
 [Onglet Script]({{ site.baseurl }}/pc-script)
