@@ -1,9 +1,9 @@
 <div class="cofmain">
 
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.4.13">
+  <input type="hidden" name="attr_verfdp" value="1.5.0">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.4.13">
+  <input type="hidden" name="attr_version" value="1.5.0">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
 
@@ -93,14 +93,14 @@
     <div>
       <img
         class="logo"
-        title="Version 1.5.0 - ??/05/2025"
+        title="Version 1.5.0 - 08/05/2025"
         src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cof2e_logo.jpg"
       />
     </div>
 
     <!-- Token -->
     <div>
-      <img class="token"  name="attr_character_token">
+      <img class="token" name="attr_character_token">
     </div>
 
     <!-- Identité -->
@@ -727,8 +727,8 @@
             <div class="hits hit">
 
               <div class="block-title centered">
-                <button class="flat-btn" type="action" name="act_drecup-btn">
-                  DR
+                <button class="flat-btn img-btn" type="action" name="act_drecup-btn">
+                  <span>DR</span>
                 </button>
                 <select name="attr_drecup" class="select-xs" title="@{drecup} Type de DR">
                   <option value="6">d6</option>
@@ -777,8 +777,8 @@
             <div class="hits hit">
 
               <div class="block-title centered">
-                <button class="flat-btn" type="action" name="act_devol-btn">
-                  D4°
+                <button class="flat-btn img-btn" type="action" name="act_devol-btn">
+                  <span>D4°</span>
                 </button>
               </div>
 
@@ -4444,16 +4444,40 @@
           <div class="sheet-col">
 
             <div class="block-title block-header">
-              Description, Biographie
+              <button type="action" class="flat-btn img-btn" name="act_appearance-btn">
+                <span class="img-btn-lg">Apparence</span>
+              </button>
             </div>
-            <textarea class="xx-large" name="attr_desc_bio" title="@{desc_bio}"></textarea>
+            <textarea class="xx-large" name="attr_apparence" title="@{apparence}"></textarea>
 
           </div>
 
           <div class="sheet-col">
 
             <div class="block-title block-header">
-              Evènements, Aventures
+              Organisations, Alliés & Ennemis
+            </div>
+            <textarea class="xx-large" name="attr_contacts" title="@{contacts}"></textarea>
+
+          </div>
+
+        </div>
+
+        <div class="sheet-2colrow">
+
+          <div class="sheet-col">
+
+            <div class="block-title block-header">
+              Biographie
+            </div>
+            <textarea class="xx-large" name="attr_biographie" title="@{biographie}"></textarea>
+
+          </div>
+
+          <div class="sheet-col">
+
+            <div class="block-title block-header">
+              Evènements & Aventures
             </div>
             <textarea class="xx-large" name="attr_aventures" title="@{aventures}"></textarea>
 
@@ -5023,28 +5047,21 @@
               <li>
                 <details>
                   <summary>
-                    <strong>Version 1.5.0</strong> (2025-05-??)
+                    <strong>Version 1.5.0</strong> (2025-05-08)
                   </summary>
                   <ul>
                     <li>Ajout d'un onglet Notes aux fiches de PJ</li>
-                    <li>Ajout d'une couleur de fond aux PV selon l'état courant
-                      <br> - Jaune si moins de 50% de PV restants
-                      <br> - Rouge si 1 PV restant
-                      <br> - Rouge foncé si 0 PV restant
-                    </li>
+                    <li>Ajout d'une couleur de fond aux PV selon l'état courant (Jaune si moins de 50% de PV restants, Rouge si 1 PV restant, Rouge foncé si 0 PV restant)</li>
                     <li>Ajout d'une '*' aux capacités de sort en mode affichage</li>
                     <li>Ajout d'une option pour ajuster les PM dépensés par une capacité de sort</li>
                     <li>Prise en compte des capacités avec paramètre évolutif</li>
                     <li>Amélioration des objets en main (main gauche selon bouclier équipé ou pas)</li>
                     <li>Mise au point de la vérif. des points de capacités et du calcul auto. des PV</li>
                     <li>Correction de l'import PDF pour les voies de magie destructrice et magie élémentaire</li>
-                    <li>Ajout d'une case attaque active/inactive pour le script COFantasy2</li>
-                    <li>Ajout de la possibilité d'épingler certains jets à la barre d'actions Roll20
-                      <br> - Caractéristiques
-                      <br> - Attaques
-                      <br> - Capacités
-                    </li>
+                    <li>Ajout de la possibilité d'épingler certains jets à la barre d'actions Roll20</li>
                     <li>Ajout de buffs aux DMs avec possibilité de jet optionnel</li>
+                    <li>Ajout d'une gestion d'attributs personnalisés</li>
+                    <li>Ajout d'une case attaque active/inactive pour le script COFantasy2</li>
                   </ul>
                 </details>
               </li>
@@ -9453,7 +9470,7 @@ function addLuckButton(values) {
   const charName = strval(values.character_name);
   const color = strval(values.couleur_pj);
   const pcLabel = boolval(values.cfg_shadow) ? "Choc" : "Chance";
-  return `[${pcLabel}](~${charName}|luck_apply-btn${menuButton(color, { size: "1.3em" })}) (Reste ${pc} PC)`;
+  return `[${pcLabel}](~${charName}|luck_apply-btn${menuButton(color, { size: "1.3em" }, { class: "chat-button" })}) (Reste ${pc} PC)`;
 }
 
 /**
@@ -12639,6 +12656,17 @@ function linkAttacks() {
   });
 }
 
+on("clicked:appearance-btn", function() {
+  getAttrs([ "character_avatar", "apparence" ], function(values) {
+    const appearance = strval(values.apparence);
+    if (appearance)
+      sendChatMsg(cof2RollTemplate({ text: appearance }));
+    const avatar = strval(values.character_avatar);
+    if (avatar)
+      startRoll(avatar, roll => finishRoll(roll.rollId));
+  })
+});
+
 /**
 * On clicking the Reset button
 */
@@ -12882,8 +12910,13 @@ function menuButton(color, font = {}, extraCSS = {}) {
     [ backColor, textColor = "white" ] = color;
   else
     [ backColor, textColor ] = SWData.COLORS[color];
+  let buttonClass = "";
+  if (extraCSS.class) {
+    buttonClass = ` class=\"${extraCSS.class}\"`;
+    delete extraCSS.class;
+  }
   const props = Object.keys(extraCSS).map(prop => `${prop}: ${ extraCSS[prop] }`);
-  return "\" style=\"" + [
+  return `\"${buttonClass} style=\"` + [
     "border: none",
     "border-radius: 3px",
     `background-color: ${backColor}`,

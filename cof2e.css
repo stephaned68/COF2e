@@ -1190,6 +1190,10 @@ textarea.migration {
   padding: 5px;
 }
 
+.sheet-rolltemplate-cof2 .sheet-rt-text span > a.userscript-chat-button:hover {
+  color: orange;
+}
+
 .sheet-rolltemplate-cof2 .sheet-rt-tags {
   background-color: #6f5b41;
   color: whitesmoke;
