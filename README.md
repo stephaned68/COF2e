@@ -10,6 +10,15 @@ v1.5.0 [Screenshot](cof2e.png)
 
 ## Notes de version
 
+### Version _1.6.0_ (2025-06-??)
+
+- Déplacement des propriétés magiques des armes vers les modificateurs d'attaque
+- Ajout d'un champ _Prédicats si porté_ aux lignes d'attaques et d'équipements
+- Création de deux lignes d'attaque pour une arme avec la propriété _lancer_
+- Ajout de la possibilité d'épingler les jets des capacités à la barre d'actions Roll20
+- Ajout d'un gestion de compétences dans la fiche de PNJ
+- Ajout de 3 coups spéciaux dans la fiche de PNJ
+
 ### Version _1.5.0_ (2025-05-08)
 
 - Ajout d'un onglet Notes aux fiches de PJ (cases _Apparence_, _Biographie_, _Contacts_, _Aventures_)

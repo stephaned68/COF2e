@@ -234,6 +234,14 @@ button.flat-btn {
   font-weight: bold;
 }
 
+.cofmain .rank-summary button[type="roll"].img-btn {
+  padding: 0;
+  margin-left: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+
 span.img-btn {
   font-family: pictos;
   font-variant: normal;
@@ -370,6 +378,10 @@ div.path div.block-title {
   margin-right: 5px;
 }
 
+.cofmain input[value="0"].has-script div.has-script {
+  display: none;
+}
+
 /* Identity layout */
 
 .cofmain .heading {
@@ -419,7 +431,9 @@ input[value="npc"] ~ button[name="roll_checkup"] {
 .cof-pc,
 .cof-npc,
 .weapon-opt,
-.weapon-thrown {
+.weapon-hands,
+.weapon-thrown,
+.weapon-traits {
   display: none;
 }
 
@@ -428,7 +442,10 @@ input[value="npc"] ~ button[name="roll_checkup"] {
 .cof-type-toggle[value="pc"] ~ div.cof-pc,
 .cof-type-toggle[value="npc"] ~ div.cof-npc,
 .cof-wopt-toggle[value="1"] ~ div.weapon-opt,
-.cof-thrown-toggle[value="1"] ~ div.weapon-thrown {
+.cof-wopt-toggle[value="1"] ~ div.weapon-effects,
+.cof-inhand-toggle[value="1"] ~ div.weapon-hands,
+.cof-thrown-toggle[value="1"] ~ div.weapon-thrown,
+.cof-trait-toggle[value="1"] ~ div.weapon-traits {
     display: block;
 }
 
@@ -469,6 +486,7 @@ input[value="0"].pc-skills-btn ~ button.pc-skills-btn {
 .npc-main-tab,
 .npc-attacks-subtab,
 .npc-abilities-subtab,
+.npc-notes-subtab,
 .npc-gears-tab,
 .npc-config-tab,
 .npc-script-tab {
@@ -493,6 +511,7 @@ input[value="0"].pc-skills-btn ~ button.pc-skills-btn {
 .tabs-toggle[value="main"] ~ div .npc-main-btn, 
 .tabs-toggle[value="attacks"] ~ div .npc-attacks-btn,
 .tabs-toggle[value="abilities"] ~ div .npc-abilities-btn,
+.tabs-toggle[value="notes"] ~ div .npc-notes-btn,
 .tabs-toggle[value="gears"] ~ div .npc-gears-btn,
 .tabs-toggle[value="config"] ~ div .npc-config-btn {
   color: white; 
@@ -517,6 +536,7 @@ input[value="0"].pc-skills-btn ~ button.pc-skills-btn {
 .tabs-toggle[value="main"] ~ div.npc-main-tab, 
 .tabs-toggle[value="attacks"] ~ div.npc-attacks-subtab,
 .tabs-toggle[value="abilities"] ~ div.npc-abilities-subtab,
+.tabs-toggle[value="notes"] ~ div.npc-notes-subtab,
 .tabs-toggle[value="gears"] ~ div.npc-gears-tab, 
 .tabs-toggle[value="config"] ~ div.npc-config-tab,
 .tabs-toggle[value="script"] ~ div.npc-script-tab {
@@ -762,7 +782,29 @@ div.change-view {
 .pc-attacks .weapon-option,
 .npc-attacks .weapon-option {
   display: grid;
-  grid-template-columns: 25px 4fr 6fr 6fr;
+  gap: 2px;
+  margin-bottom: 2px;
+}
+
+.pc-attacks .weapon-option {
+  grid-template-columns: 25px 3fr 4fr 9fr;
+}
+
+.npc-attacks .weapon-option {
+  grid-template-columns: 25px 2fr 4fr 10fr;
+}
+
+.npc-attacks .weapon-effect {
+  display: grid;
+  grid-template-columns: 25px 1fr;
+  gap: 2px;
+  margin-bottom: 2px;
+}
+
+.pc-attacks .weapon-hand,
+.npc-attacks .weapon-hand {
+  display: grid;
+  grid-template-columns: 25px 90%;
   gap: 2px;
   margin-bottom: 2px;
 }
@@ -770,12 +812,22 @@ div.change-view {
 .pc-attacks .weapon-throw,
 .npc-attacks .weapon-throw {
   display: grid;
-  grid-template-columns: 25px 20% 16% 16% 20%;
+  grid-template-columns: 25px 16% 16% 18%;
   gap: 2px;
   margin-bottom: 2px;
 }
 
-.pc-attacks .weapon-option div {
+.pc-attacks .weapon-trait,
+.npc-attacks .weapon-trait {
+  display: grid;
+  grid-template-columns: 25px 20%;
+  gap: 2px;
+  margin-bottom: 2px;
+}
+
+.pc-attacks .weapon-option div,
+.npc-attacks .weapon-option div,
+.npc-attacks .weapon-effect div {
   display: flex;
   flex-direction: row;
   gap: 2px;
@@ -794,7 +846,7 @@ div.change-view {
   grid-template-columns: 25px 1fr 1fr;
 }
 
-.pc-hands input[value="0"].pc-hand ~ button span {
+.pc-hands input[value="0"].pc-hand ~ button {
   display: none;
 }
 
@@ -885,9 +937,10 @@ button.spell-concentration {
 }
 
 .pc-gears .gears textarea.one-row {
-  width: 65%;
+  width: 70%;
 }
 
+.pc-gears .gears textarea.one-row.full-width,
 .npc-gears .gears textarea.one-row {
   width: 100%;
 }
