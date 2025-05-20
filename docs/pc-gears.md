@@ -14,6 +14,7 @@ Une section dépliante permet d'ajouter plus de détail :
 - Un description plus longue de l'équipement.
 - Une liste de propriétés (cf ci-dessous).
 - Si cet équipement correspond à une arme pour laquelle un ligne d'attaque doit être ajoutée sur l'onglet [attributs](({{ site.baseurl }}/pc-attribs)).
+- Une liste de prédicats si l'équipement est porté.
 
 ## Propriétés d'équipement
 
@@ -31,6 +32,7 @@ Les codes et valeurs correspondantes que vous pouvez indiquer sont :
   - <kbd>dm-2m</kbd> : jet de  DM quand l'arme est maniée à deux mains
   - <kbd>type-dm</kbd> : type de DM
   - <kbd>portee</kbd> : portée de l'arme à distance
+  - <kbd>lancer</kbd> : portée de l'arme lancée
   - <kbd>usure</kbd> : seuil d'usure
 - Pour les protections (armures et boucliers) :
   - <kbd>bonus-def</kbd> : bonus apporté à la DEF par l'armure ou le bouclier
@@ -47,7 +49,7 @@ Les codes et valeurs correspondantes que vous pouvez indiquer sont :
   - <kbd>magique-dm</kbd> : valeur du bonus magique aux DM (peut être un jet de dé)
   - <kbd>affutee</kbd> : pour réduire de 1 le seuil de critique et ajouter 1d4° DM en cas de coup critique
   - <kbd>element</kbd> : nom d'élément/substance pour ajouter une ligne de 1d4° DM élémentaires (2d4° si le nom de l'élément est suivi d'un espace et du mot <kbd>intense</kbd>)
-  - <kbd>fleau:</kbd> : nom d'un type de créature pour que Roll20 demande confirmation lors de l'attaque et qu'une ligne de 1d4° DM soit ajoutée si la créature ciblée est du même type
+  - <kbd>fleau</kbd> : nom d'un type de créature pour que Roll20 demande confirmation lors de l'attaque et qu'une ligne de 1d4° DM soit ajoutée si la créature ciblée est du même type
 
 ## Equipement lié à la défense
 
@@ -71,6 +73,8 @@ Si vous cochez la case <kbd>A une attaque</kbd>, une ligne d'attaque est automat
 
 La ligne d'attaque est créée en fonction des propriétés d'équipement que vous avez indiqué pour l'arme.
 
+Si l'arme possède la propriété <kbd>lancer</kbd>, la fiche crée deux lignes d'attaque : une pour le maniement au contact et une pour le lancer.
+
 # Ressources
 
 Dans cette section, vous pouvez renseigner une liste de ressources ou de consommables.
@@ -80,11 +84,11 @@ Pour chaque élément de la liste, vous indiquez :
 - Le nombre actuellement en possession du PJ,
 - Une liste optionnelle de propriétés permettant de préciser la nature de la ressource.
 
-Si vous spécifiez une propriété <kbd>type</kbd> avec la valeur <kbd>munitions</kbd>, la fiche recherche dans les armes une ligne dont le type d'attaque est _Armes de jet_ et dont le nom de munition correspond au nom de la ressource. Elle établit la relation entre les deux éléments pour décrémenter la ressource à chaque attaque et afficher un message d'avertissement lorsque le personnage est à court de munitions.
+Si vous spécifiez une propriété <kbd>type</kbd> avec la valeur <kbd>munitions</kbd>, la fiche recherche dans les armes une ligne dont le type d'attaque est _Trait_ et dont le nom de munition correspond au nom de la ressource. Elle établit la relation entre les deux éléments pour décrémenter la ressource à chaque attaque et afficher un message d'avertissement lorsque le personnage est à court de munitions.
 
 # Equipement divers et notes
 
-Ces deux zones de saisie libre permettent d'enregistrer des détails supplémentaires sur le PJ.
+Ces deux zones de saisie libre permettent d'enregistrer des détails supplémentaires sur le matériel du PJ.
 
 ---
 

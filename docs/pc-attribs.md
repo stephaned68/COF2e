@@ -100,7 +100,7 @@ Pour chacune, vous indiquez :
 - Un éventuel bonus pour toucher propre à cette attaque,
 - Le score de critique du jet (_20_ par défaut),
 - Si l'arme est maniée à deux mains uniquement,
-- Les dés de DM (ex : <kbd>1d8</kbd>, <kbd>2d6</kbd>),
+- Les dés de DM (ex : <kbd>1d8</kbd>, <kbd>2d6</kbd>, <kbd>1d6/1d10</kbd> pour les armes à une ou deux mains),
 - Le type de DM (_ex : contondants, perforants_)
 - La caractéristique ajoutée aux DM,
 - Un bonus optionnel de DM
@@ -109,10 +109,11 @@ Pour chacune, vous indiquez :
 
 Des paramètres optionnels peuvent être ajoutés :
 - Type d'attaque : vous pouvez indiquer le type de cette attaque en choisissant parmi
-  - Arme naturelle 
   - Arme en main
-  - Sortilège
   - Arme de jet
+  - Arme de trait (utilisé par la gestion simplifiée des munitions intégrée à la fiche)
+  - Sortilège
+  - Arme naturelle 
   
   Ce paramètre est principalement utilisé par le script **COFantasy2**.
 
@@ -126,6 +127,13 @@ Des paramètres optionnels peuvent être ajoutés :
   - <kbd>explodeMax</kbd> : le dé de DM est _explosif_ (relance d'un nouveau dé de DM en cas de résultat maximum)
   - <kbd>reroll1</kbd> : le dé de DM est relancé jusqu'à ce que son résultat soit supérieur à 1
   - <kbd>poudre</kbd> : l'arme explose et inflige 1d4° DM à l'utilisateur s'il ne maîtrise pas les armes à poudre
+  - <kbd>zone</kbd> : l'attaque est un sort de zone
+  - <kbd>magie X</kbd> suivi de la valeur X du bonus au jet pour toucher et aux DM
+  - <kbd>magieAtt X</kbd> suivi de la valeur X du bonus magique au jet pour toucher
+  - <kbd>magieDmg X</kbd> suivi de la valeur du bonus magique aux DM (peut être un jet de dé)
+  - <kbd>affutee</kbd> pour réduire de 1 le seuil de critique et ajouter 1d4° DM en cas de coup critique
+  - <kbd>element xxx [intense]</kbd> suivi d'un nom d'élément/substance xxx pour ajouter une ligne de 1d4° DM élémentaires (2d4° si le nom de l'élément est suivi d'un espace et du mot <kbd>intense</kbd>)
+  - <kbd>fleau xxx</kbd> suivi du nom d'un type de créature xxx pour que Roll20 demande confirmation lors de l'attaque et qu'une ligne de 1d4° DM soit ajoutée si la créature ciblée est du même type
 
 - Options d'attaques avec arguments :
   
@@ -134,17 +142,11 @@ Des paramètres optionnels peuvent être ajoutés :
   Vous pouvez toutefois y indiquer les options suivantes reconnues par la fiche :
   
   - <kbd>fx: </kbd> suivi du nom d'un FX Roll20 et d'un nombre facultatif de répétition
-  - <kbd>effet: {cible} ? </kbd> suivi d'un texte à afficher si le jet de D20 atteint ou dépasse la valeur cible
-  - <kbd>bonus-magique: </kbd> suivi de la valeur du bonus au jet pour toucher et DM
-  - <kbd>magique-att: </kbd> suivi de la valeur du bonus magique au jet pour toucher
-  - <kbd>magique-dm: </kbd> suivi de la valeur du bonus magique aux DM (peut être un jet de dé)
-  - <kbd>affutee: </kbd> suivi d'un espace pour réduire de 1 le seuil de critique et ajouter 1d4° DM en cas de coup critique
-  - <kbd>element: </kbd> suivi d'un nom d'élément/substance pour ajouter une ligne de 1d4° DM élémentaires (2d4° si le nom de l'élément est suivi d'un espace et du mot <kbd>intense</kbd>)
-  - <kbd>fleau: </kbd> suivi du nom d'un type de créature pour que Roll20 demande confirmation lors de l'attaque et qu'une ligne de 1d4° DM soit ajoutée si la créature ciblée est du même type
+  - <kbd>effet: X xxx</kbd> suivi d'un texte xxx à afficher si le jet de D20 atteint ou dépasse la valeur cible X
 
-- Pour les armes de type _Arme de jet_, vous pouvez spécifier des paramètres supplémentaires :
-  - Nom de la munition (utile si le suivi simplifié des munitions est activé dans la configuration)
-  - Nombre disponible, nombre possédé et taux de perte sont utilisés par le script **COFantasy2**
+- Pour les armes de type _En main_, vous pouvez spécifier une liste de prédicats si l'arme est portée. Ce paramètre est utilisé par le script **COFantasy2**.
+- Pour les armes de type _Trait_, vous pouvez spécifier le nom de la munition (utile si le suivi simplifié des munitions est activé dans la configuration) ainsi que le nombre dépensé par chaque attaque
+- Pour les armes de type _Jet_, vous pouvez spécifier le nombre disponible, nombre possédé et taux de perte. Ces paramètres sont utilisés par le script **COFantasy2**.
 
 Un clic sur le bouton d20 permet de lancer le jet d'attaque et de DM dans le chat en tenant compte des divers paramètres. 
 

@@ -58,10 +58,11 @@ Des paramètres optionnels peuvent être ajoutés :
 
 - Options d'attaques avec arguments : ce paramètre est principalement utilisé par le script **COFantasy2**.
   
-  Vous pouvez toutefois y indiquer les options suivantes reconnues par la fiche :
+  Vous pouvez toutefois y indiquer l'option suivante reconnue par la fiche :
   
   - <kbd>fx: </kbd> suivi du nom d'un FX Roll20 et d'un nombre facultatif de répétition
-  - <kbd>effet: {cible} ? </kbd> suivi d'un texte à afficher si le jet de D20 atteint ou dépasse la valeur cible
+  
+- Cible : vous indiquez un texte à afficher si le jet de D20 atteint ou dépasse la valeur cible
 
 Un clic sur le bouton d20 permet de lancer le jet d'attaque et de DM dans le chat en tenant compte des divers paramètres. Si la case d'attaques multiples est cochée et que le nom de l'attaque contient le motif <kbd>(n attaques)</kbd>, le nombre n de jets d'attaque est effectué.
 
@@ -71,9 +72,19 @@ Le bouton d20 de l'attaque peut être épinglé dans la barre d'actions de Roll2
 
 ## Attaque groupée
 
-Cette section permet de gérer les bonus pour toucher d'un groupe de 2 à 8 créatures attaquant la même cible. 
+Cette section permet de gérer les bonus pour toucher d'un groupe de 2 à 8 créatures attaquant la même cible.
 
 A partir de 5 créatures, la fiche effectue deux attaques, en répartissant le nombre de créatures en deux groupes.
+
+## Coups spéciaux
+
+Cette section permet de définir jusqu'à 3 coups spéciaux que la créature peut utiliser quand elle attaque.
+Pour chaque coup, vous devez indiquer :
+- Le nom de celui-ci
+- Un éventuel bonus au jet d'attaque procuré par l'utilisation de ce coup spécial
+- Un éventuel bonus au jet de DM procuré par l'utilisation de ce coup spécial
+
+La sélection d'un coup spécial applique les bonus spécifiés à toutes les attaques effectuées.
 
 # Sous-onglet _Capacités_
 
@@ -82,6 +93,12 @@ Cette liste contient les capacités spéciales du PNJ. Pour chacune, vous indiqu
 Un clic sur le bouton d20 envoie un message dans le chat Roll20 avec le nom et la description. Le texte de la description est traité par la fiche pour substituer les jets en ligne comme décrit pour la description des [capacités des PJs]({{ site.baseurl }}/pc-abilities).
 
 Le bouton d20 de la capacité peut être épinglé dans la barre d'actions de Roll20 par glisser-déposer.
+
+# Sous-onglet _Notes_
+
+Ce sous-onglet permet de noter diverses informations complémentaires sur le PNJ ou la créature :
+- Ses tactiques de combat
+- Des notes diverses
 
 ---
 
