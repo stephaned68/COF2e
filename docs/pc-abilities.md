@@ -115,13 +115,13 @@ Pour chaque élément de la liste, vous pouvez indiquer :
   - Comme la valeur d'un autre attribut, en référençant celui-ci entre crochets, par exemple <kbd>[CHA]</kbd>
   - Comme le niveau du personnage, en le référençant sous la forme <kbd>[niveau]</kbd>
   - Comme le rang dans une voie, éventuellement ajusté d'un bonus <kbd>X</kbd>, en référençant celle-ci sous l'une des formes suivantes :
-    - <kbd>[rang voie n]</kbd> ou <kbd>[rang voie n] + X</kbd> pour la voie no <kbd>n</kbd>
+    - <kbd>[rang voie N]</kbd> ou <kbd>[rang voie N] + X</kbd> pour la voie no <kbd>N</kbd>
     - <kbd>[rang nom]</kbd> ou <kbd>[rang nom] + X</kbd> pour la voie <kbd>nom</kbd>
   - Comme une expression de dés (principalement pour les buffs aux DM)
 
 Plusieurs buffs peuvent s'appliquer au même attribut du PJ. Si c'est le cas, le total des buffs actuellement actifs (cochés) est calculé.
 
-Dans le cas d'un buff aux DM, celui-ci s'applique à tous les jets d'attaque effectuées à partir du moment où il est actif. Il est possible de le rendre optionnel avec un <kbd>?</kbd> au début de son nom. La fiche demandera alors si ce buff s'applique quand un jet d'attaque est effectué.
+Dans le cas d'un buff aux DM, celui-ci s'applique à tous les jets d'attaque effectuées à partir du moment où il est actif. Il est possible de le rendre optionnel en indiquant un <kbd>?</kbd> au début de son nom. La fiche demandera alors si ce buff s'applique quand un jet d'attaque est effectué.
 
 Une section dépliable _Détail par attribut_ permet de consulter la liste des buffs actuellement appliqués à chaque attribut et leur somme.
 
@@ -141,7 +141,7 @@ Il suffit ensuite de cliquer sur le bouton d'import de la voie pour insérer le 
 Avant d'être envoyé dans le chat, les descriptions des capacités sont analysées et des cartains motifs de texte sont remplacés par des jets en ligne (_in-line rolls_) :
 - <kbd>[AGI]</kbd>, <kbd>[CON]</kbd>, <kbd>[FOR]</kbd>, etc... sont remplacés par le score de la caractéristique correspondante.
 - <kbd>[nombre +/- XXX]</kbd>, où <kbd>XXX</kbd> est un nom de caractéristique, sont remplacés par le résultat du calcul.
-- <kbd>[rang n]</kbd>, <kbd>[rang voie n]</kbd> et <kbd>[rang Nom De La Voie]</kbd> sont remplacés par la valeur du rang dans la voie correspondante.
+- <kbd>[rang voie N]</kbd> est remplacé par la valeur du rang dans la voie indiquée par N.
 - <kbd>Nd4°</kbd> ou <kbd>NdE</kbd> est remplacé par un jet du nombre <kbd>N</kbd> de dés évolutifs.
 - <kbd>[Nd4° + XXX]</kbd> ou <kbd>[NdE + XXX]</kbd> est remplacé par un jet du nombre <kbd>N</kbd> de dés évolutifs auquel le score de la caractéristique <kbd>XXX</kbd> (_AGI_, _CHA_ etc...) est ajouté.
 - Les formules de dés sont remplacés par le jet correspondant. Exemple : <kbd>1d10</kbd>, <kbd>2d6+6</kbd>, <kbd>1d8 + 2</kbd>...

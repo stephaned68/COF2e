@@ -86,6 +86,8 @@ Pour chaque coup, vous devez indiquer :
 
 La sélection d'un coup spécial applique les bonus spécifiés à toutes les attaques effectuées.
 
+Vous pouvez également activer l'une des options tactiques (attaque assurée, précise ou violente) en cochant la case correspondante. Elles sont mutuellement exclusives.
+
 # Sous-onglet _Capacités_
 
 Cette liste contient les capacités spéciales du PNJ. Pour chacune, vous indiquez son nom et sa description.
