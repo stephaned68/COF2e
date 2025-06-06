@@ -1,9 +1,9 @@
 <div class="cofmain">
 
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.5.01">
+  <input type="hidden" name="attr_verfdp" value="1.5.02">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.5.01">
+  <input type="hidden" name="attr_version" value="1.5.02">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
 
@@ -66,6 +66,16 @@
   <input type="hidden" name="attr_rangs_voies" value="">
   <input type="hidden" name="attr_noms_voies" value="">
 
+  <input type="hidden" name="attr_rang_voie1" value="1">
+  <input type="hidden" name="attr_rang_voie2" value="1">
+  <input type="hidden" name="attr_rang_voie3" value="1">
+  <input type="hidden" name="attr_rang_voie4" value="0">
+  <input type="hidden" name="attr_rang_voie5" value="0">
+  <input type="hidden" name="attr_rang_voie6" value="0">
+  <input type="hidden" name="attr_rang_voie7" value="0">
+  <input type="hidden" name="attr_rang_voie8" value="0">
+  <input type="hidden" name="attr_rang_voie9" value="0">
+
   <input type="hidden" name="attr_rang_cavalier" value="0">
   
   <!-- COFantasy MOD interaction -->
@@ -93,7 +103,7 @@
     <div>
       <img
         class="logo"
-        title="Version 1.5.0 - 08/05/2025"
+        title="Version 1.6.0 - ??/06/2025"
         src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cof2e_logo.jpg"
       />
     </div>
@@ -1119,7 +1129,7 @@
                   <input type="hidden" name="attr_arme-buffatk" value="0">
                 </div>
                 <div class="d-flex d-flex-middle bordered">
-                  <input type="number" class="two-digits" name="attr_arme-crit" title="@{arme-crit} Seuil de Critique" value="20" min="2" max="20">
+                  <input type="number" class="two-digits" name="attr_arme-crit" title="@{arme-crit} Seuil de Critique" value="20" min="16" max="20">
                 </div>
                 <div class="d-flex d-flex-middle bordered">
                   <input type="checkbox" name="attr_arme-2m" title="@{arme-2m} Arme à deux mains" value="1">
@@ -1261,7 +1271,7 @@
           <div class="sheet-2colrow">
             
             <div class="sheet-col">
-              <h4>Options Tactiques</h4>
+              <h4 title="DM doublés en cas de coup critique">Options Tactiques</h4>
 
               <div class="pc-tactic">
                 <div>
@@ -1303,9 +1313,9 @@
               </div>
 
               <div class="pc-tactic">
-                <div>
+                <div class="d-flex">
                   <input type="radio" name="attr_tactique" value="4">
-                  Autres bonus/malus
+                  <input type="text" class="align-self-center" name="attr_tactname" placeholder="Autre tactique" value="">
                 </div>
                 <div class="d-flex">
                   <input type="number" class="align-self-center" name="attr_tactdiv" value="0">
@@ -4159,7 +4169,7 @@
                     <option value="atktir">Distance</option>
                     <option value="atkmag">Magique</option>
                     <option value="def">Défense</option>
-                    <option value="dm">DM</option>
+                    <option value="dm" title="DM non doublés si coup critique">DM</option>
                   </optgroup>
                   <optgroup label="Ressources">
                     <option disabled class="optgroup">
@@ -4458,6 +4468,7 @@
             <div class="bordered">
               
               <input type="hidden" class="has-script" name="attr_script_show" value="0">
+
               <fieldset class="repeating_equipement">
 
                 <details>
@@ -4486,8 +4497,8 @@
                     <input type="hidden" name="attr_atkid" value="">
                   </div>
 
-                  <div class="d-flex has-script">
-                    <textarea class="one-row full-width" name="attr_equip-predicats" title="@{equip-predicats}" placeholder="Prédicats si porté"></textarea>
+                  <div class="d-flex">
+                    <textarea class="one-row full-width has-script" name="attr_equip-predicats" title="@{equip-predicats}" placeholder="Prédicats si porté"></textarea>
                   </div>
 
                 </details>
@@ -5163,10 +5174,10 @@
                   <ul>
                     <li>Déplacement des propriétés magiques des armes vers les modificateurs d'attaque</li>
                     <li>Ajout d'un champ <em>Prédicats si porté</em> aux lignes d'attaques et d'équipements</li>
-                    <li>Création de deux lignes d'attaque pour une arme avec la propriété <em>lancer</em></li>
+                    <li>Création de 2 attaques pour les armes avec propriété <em>lancer</em> depuis l'onglet équipement</li>
                     <li>Ajout des jets des capacités aux boutons épinglables à la barre d'actions Roll20</li>
                     <li>Ajout d'un gestion de compétences dans la fiche de PNJ</li>
-                    <li>Ajout de 3 coups spéciaux dans la fiche de PNJ</li>
+                    <li>Ajout des options tactiques et de 3 coups spéciaux dans la fiche de PNJ</li>
                   </ul>
                 </details>
               </li>
@@ -5542,6 +5553,7 @@
             </div>
   
             <input type="hidden" name="attr_pnjatk">
+            <input type="hidden" class="has-script" name="attr_script_show" value="">
   
             <fieldset class="repeating_npcarmes">
   
@@ -5556,7 +5568,7 @@
                 </div>
                 <div class="d-flex d-flex-middle bordered">
                   <input type="hidden" name="attr_arme-label" value="">
-                  <span class="align-self-center" name="attr_arme-label"></span>&nbsp;
+                  <span class="align-self-center has-script" name="attr_arme-label"></span>&nbsp;
                   <input type="text" name="attr_arme-nom" title="@{arme-nom}" placeholder="Arme/attaque" value="">
                 </div>
                 <div class="d-flex d-flex-middle bordered">
@@ -5569,7 +5581,7 @@
                   <input type="number" class="two-digits" name="attr_arme-atk" title="@{arme-atk} Bonus d'attaque" value="">
                 </div>
                 <div class="d-flex d-flex-middle bordered">
-                  <input type="number" class="two-digits" name="attr_arme-crit" title="@{arme-crit} Seuil de Critique" value="20" min="2" max="20">
+                  <input type="number" class="two-digits" name="attr_arme-crit" title="@{arme-crit} Seuil de Critique" value="20" min="16" max="20">
                 </div>
                 <div class="d-flex d-flex-middle bordered">
                   <input type="text" name="attr_arme-dm" title="@{arme-dm} Dé(s) de DM" placeholder="1d8, 2d6..." value="">
@@ -5746,17 +5758,33 @@
 
               <div class="d-flex m2">
 
+                <input type="checkbox" name="attr_pnj_tact" value="1">
+                &nbsp;<span title="+5 en attaque, DM / 2">Attaque assurée</span>
+                
+                &nbsp;<input type="checkbox" name="attr_pnj_tact" value="2">
+                &nbsp;<span title="-3 en attaque, +1d4° DM">Précise</span>
+                
+                &nbsp;<input type="checkbox" name="attr_pnj_tact" value="3">
+                &nbsp;<span title="-7 en attaque, +2d4° DM">Violente</span>
+
+              </div>
+              
+              <div class="d-flex m2">
+
                 <input type="radio" name="attr_pnj_spec" value="0" checked>
                 &nbsp;<span>Aucun</span>
 
               </div>
 
+
               <div class="d-flex m2">
 
                 <input type="radio" name="attr_pnj_spec" value="1">
                 &nbsp;<input type="text" name="attr_cspec1_nom" title="@{cspec1_nom}" placeholder="Coup spécial 1" value="">
-                &nbsp;+&nbsp;<input type="number" name="attr_cspec1_bonus" title="@{cspec1_bonus} Bonus attaque" value="">
-                &nbsp;+&nbsp;<input type="text" name="attr_cspec1_dm" title="@{cspec1_dm}" placeholder="Bonus DM 1" value="">
+                &nbsp;<input type="checkbox" name="attr_cspec1_roll" title="@{cspec1_roll} Dé bonus" value="1">
+                &nbsp;<input type="checkbox" name="attr_cspec1_roll" title="@{cspec1_roll} Dé malus" value="2">
+                &nbsp;/&nbsp;<input type="number" name="attr_cspec1_bonus" title="@{cspec1_bonus} Bonus attaque" value="">
+                &nbsp;<input type="text" name="attr_cspec1_dm" title="@{cspec1_dm}" placeholder="Bonus DM 1" value="">
 
               </div>
 
@@ -5764,8 +5792,10 @@
 
                 <input type="radio" name="attr_pnj_spec" value="2">
                 &nbsp;<input type="text" name="attr_cspec2_nom" title="@{cspec2_nom}" placeholder="Coup spécial 2" value="">
-                &nbsp;+&nbsp;<input type="number" name="attr_cspec2_bonus" title="@{cspec2_bonus} Bonus attaque" value="">
-                &nbsp;+&nbsp;<input type="text" name="attr_cspec2_dm" title="@{cspec2_dm}" placeholder="Bonus DM 2" value="">
+                &nbsp;<input type="checkbox" name="attr_cspec2_roll" title="@{cspec1_roll} Dé bonus" value="1">
+                &nbsp;<input type="checkbox" name="attr_cspec2_roll" title="@{cspec1_roll} Dé malus" value="2">
+                &nbsp;/&nbsp;<input type="number" name="attr_cspec2_bonus" title="@{cspec2_bonus} Bonus attaque" value="">
+                &nbsp;<input type="text" name="attr_cspec2_dm" title="@{cspec2_dm}" placeholder="Bonus DM 2" value="">
 
               </div>
 
@@ -5773,8 +5803,10 @@
 
                 <input type="radio" name="attr_pnj_spec" value="3">
                 &nbsp;<input type="text" name="attr_cspec3_nom" title="@{cspec3_nom}" placeholder="Coup spécial 3" value="">
-                &nbsp;+&nbsp;<input type="number" name="attr_cspec3_bonus" title="@{cspec3_bonus} Bonus attaque" value="">
-                &nbsp;+&nbsp;<input type="text" name="attr_cspec3_dm" title="@{cspec3_dm}" placeholder="Bonus DM 3" value="">
+                &nbsp;<input type="checkbox" name="attr_cspec3_roll" title="@{cspec1_roll} Dé bonus" value="1">
+                &nbsp;<input type="checkbox" name="attr_cspec3_roll" title="@{cspec1_roll} Dé malus" value="2">
+                &nbsp;/&nbsp;<input type="number" name="attr_cspec3_bonus" title="@{cspec3_bonus} Bonus attaque" value="">
+                &nbsp;<input type="text" name="attr_cspec3_dm" title="@{cspec3_dm}" placeholder="Bonus DM 3" value="">
 
               </div>
 
@@ -6004,7 +6036,7 @@
                 <div class="npc-configs m2">
                   <div>Nom du PJ</div>
                   <div class="d-flex">
-                    : <input type="text" name="attr_compagnon" title="@{compagnon} Nom du PJ">
+                    : <input type="text" name="attr_compagnon" title="@{compagnon}">
                   </div>
                 </div>
               </li>
@@ -6013,7 +6045,7 @@
                 <div class="npc-configs m2">
                   <div>Défense</div>
                   <div class="d-flex">
-                    : <input type="text" name="attr_comp_def" title="@{comp_def}">
+                    : <input type="text" name="attr_comp_def" title="@{comp_def}" placeholder="Expression (ex : 10 + [rang_voie2])">
                   </div>
                 </div>
               </li>
@@ -6022,7 +6054,7 @@
                 <div class="npc-configs m2">
                   <div>Vigueur</div>
                   <div class="d-flex">
-                    : <input type="text" name="attr_comp_pv_max" title="@{comp_pv_max}">
+                    : <input type="text" name="attr_comp_pv_max" title="@{comp_pv_max}" placeholder="Expression (ex : 10 + [niveau]*4)">
                   </div>
                 </div>
               </li>
@@ -6031,7 +6063,7 @@
                 <div class="npc-configs m2">
                   <div>Initiative</div>
                   <div class="d-flex">
-                    : <input type="text" name="attr_comp_init" title="@{comp_init}">
+                    : <input type="text" name="attr_comp_init" title="@{comp_init}" placeholder="Expression (ex : [init])">
                   </div>
                 </div>
               </li>
@@ -6040,7 +6072,7 @@
                 <div class="npc-configs m2">
                   <div>Attaque</div>
                   <div class="d-flex">
-                    : <input type="text" name="attr_comp_pnjatk" title="@{comp_pnjatk}">
+                    : <input type="text" name="attr_comp_pnjatk" title="@{comp_pnjatk}" placeholder="Expression (ex : [atkmag])">
                   </div>
                 </div>
               </li>
@@ -6627,10 +6659,8 @@
       {{/^rollWasCrit() roll}} {{dmdesc}}
     </div>
     {{#dmextra}}
-    {{#rollGreater() dmextra 0}}
     <div></div>
     <div>{{dmextra}}</div>
-    {{/rollGreater() dmextra 0}}
     {{/dmextra}}
   </div>
   {{/dm}}
@@ -6752,6 +6782,18 @@ const SWData = {
     profilePaths: [ 2, 3 ],
     level1Paths: [ 1, 2, 3 ],
     minLevels: [ 1, 2, 3, 5, 7, 9, 11, 13 ],
+    highFan: [ 
+      "cfg_use_epic",
+      "cfg_use_drniv",
+      "cfg_use_mana"
+    ],
+    lowFan: [
+      "cfg_use_capped6",
+      "cfg_use_dronly",
+      "cfg_atk_diff",
+      "cfg_usure",
+      "cfg_use_fear"
+    ]
   },
   SHEET_TYPE: {
     PC: "pc",
@@ -8771,7 +8813,7 @@ function dieRoll(type, weakened = 0) {
  * @returns {boolean}
  */
 function hasMODScript(values) {
-  if (!values.scriptVersion || values.scriptVersion?.toLowerCase() === "false")
+  if (!values.scriptVersion)
     return false;
   return values.scriptVersion;
 }
@@ -9344,38 +9386,42 @@ function updateAttacksBase(level, levelCap, attributes) {
 }
 
 /**
- * Update the evolutive die
+ * Return the evolutive die for level
  * @param {number} level - PC's level
- * @param {Map} attributes - Map of attributes to update
- * @returns {Map} updated Map object
+ * @returns {string} 
  */
-function updateDEvol(level, attributes) {
-  let devol;
+function getDEvol(level) {
+  let dEvol;
   switch (true) {
     case level >= 15:
-      devol = "d12";
+      dEvol = "d12";
       break;
     case level >= 12:
-      devol = "d10";
+      dEvol = "d10";
       break;
     case level >= 9:
-      devol = "d8";
+      dEvol = "d8";
       break;
     case level >= 6:
-      devol = "d6";
+      dEvol = "d6";
       break;
     default:
-      devol = "d4";
+      dEvol = "d4";
   }
-  attributes.set("devol", devol);
-  return attributes;
+  return dEvol;
 }
 
 /**
  * On level change
  */
 on("change:niveau", function(eventInfo) {
-  getAttrs([ "niveau", "profil", "pc_max", "cfg_use_epic", "cfg_use_capped6", "cfg_atk_diff" ], function(values) {
+  getAttrs([ 
+    "sheet_type", "niveau", "profil", "pc_max",
+    "cfg_use_epic", "cfg_use_capped6", "cfg_atk_diff"
+  ], function(values) {
+    if (strval(values.sheet_type) === SWData.SHEET_TYPE.NPC)
+      return;
+
     const cappedAt6 = boolval(values.cfg_use_capped6);
     const atkDiff = boolval(values.cfg_atk_diff);
     // base progression
@@ -9392,9 +9438,9 @@ on("change:niveau", function(eventInfo) {
     const profile = getProfileData(strval(values.profil));
     if (profile && atkDiff)
       atks = profile.atks;
-    Object.keys(atks).forEach(atk => updateAttrs.set(`atk${atk}_base`, profile.atks[atk]));
+    Object.keys(atks).forEach(atk => updateAttrs.set(`atk${atk}_base`, atks[atk]));
     updateAttrs = updateAttacksBase(level, levelCap, updateAttrs);
-    updateAttrs = updateDEvol(level, updateAttrs);
+    updateAttrs.set("devol", getDEvol(level));
     updateAttrs.set("def_base", 10);
     
     // epic progression
@@ -9457,7 +9503,11 @@ SWData.PC.STATS.forEach(stat => {
  * Update the init attribute
  */
 function updateInit(eventInfo) {
-  getAttrs([ ...SWData.PC.COMBAT.init ], function(values) {
+  getAttrs([ ...SWData.PC.COMBAT.init, "sheet_type" ], function(values) {
+    if (strval(values.sheet_type) === SWData.SHEET_TYPE.NPC)
+      return;
+
+    delete values.sheet_type;
     const car = Object.keys(values).find(k => k.startsWith("agi"));
     values[car] *= intval(values.cfg_init_agi);
     delete values.cfg_init_agi;
@@ -9494,7 +9544,9 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
  * Compute max DR
  */
 function updateDRMax(eventInfo) {
-  getAttrs([ "drmax_force", "dr_base", "con", "dr_buff" ], function(values) {
+  getAttrs([ "sheet_type", "drmax_force", "dr_base", "con", "dr_buff" ], function(values) {
+    if (strval(values.sheet_type) === SWData.SHEET_TYPE.NPC)
+      return;
     if (boolval(values.drmax_force))
       return;
 
@@ -9520,6 +9572,7 @@ function updatePVMax(eventInfo, changed = "") {
     ...allPathRanks("rankProps")
   ];
   getAttrs([
+    "sheet_type",
     "cfg_lowfan",
     "cfg_pvmax_auto",
     "pvmax_force",
@@ -9529,6 +9582,8 @@ function updatePVMax(eventInfo, changed = "") {
     ...owned,
     ...other 
   ], function(values) {
+    if (strval(values.sheet_type) === SWData.SHEET_TYPE.NPC)
+      return;
     if (!boolval(values.cfg_pvmax_auto) && strval(eventInfo.triggerName) !== "RESET")
       return;
     if (boolval(values.pvmax_force))
@@ -9605,8 +9660,10 @@ function loadLimit(force) {
  * Compute load threshold
  */
 function updateLoadLimit(eventInfo) {
-  getAttrs([ "for" ], function(value) {
-    logAndSet({ limite_enc: loadLimit(intval(value.for)) }, logTitle(eventInfo));
+  getAttrs([ "sheet_type", "for" ], function(values) {
+    if (strval(values.sheet_type) === SWData.SHEET_TYPE.NPC)
+      return;
+    logAndSet({ limite_enc: loadLimit(intval(values.for)) }, logTitle(eventInfo));
   });
 }
 
@@ -9674,7 +9731,9 @@ seq(9).forEach(p => {
  * Compute max PC
  */
 function updatePCMax(eventInfo) {
-  getAttrs([ "pcmax_force", "pc_base", "cha", "pc_buff", "cfg_pc_var" ], function(values) {
+  getAttrs([ "sheet_type", "pcmax_force", "pc_base", "cha", "pc_buff", "cfg_pc_var" ], function(values) {
+    if (strval(values.sheet_type) === SWData.SHEET_TYPE.NPC)
+      return;
     if (boolval(values.pcmax_force))
       return;
     
@@ -10011,7 +10070,7 @@ on("clicked:drecup-btn", function() {
     const addLevel = boolval(values.cfg_use_drniv);
     const drOnly = boolval(values.cfg_use_dronly);
     let bRecup = "", bLevel = 0;
-    if (drOnly) {
+    if (!drOnly) {
       bLevel = addLevel ? level : Math.ceil(level / 2);
       bRecup = `+ ${bLevel}[Niveau${ addLevel ? "" : "/2" }] `;
     }
@@ -10036,7 +10095,11 @@ on("clicked:drecup-btn", function() {
  * Update the def attribute
  */
 function updateDef(eventInfo) {
-  getAttrs(SWData.PC.COMBAT.def, function(values) {
+  getAttrs([ "sheet_type", ...SWData.PC.COMBAT.def ], function(values) {
+    if (strval(values.sheet_type) === SWData.SHEET_TYPE.NPC)
+      return;
+
+    delete values.sheet_type;
     values.armure = intval(values.armure) * intval(values.armure_eqp);
     delete values.armure_eqp;
     values.bouclier = intval(values.bouclier) * intval(values.bouclier_eqp);
@@ -10357,7 +10420,7 @@ function insertRolls(text, options = {}) {
   const devol = `@{${ isNPC ? companionOf : "" }devol}` ;
 
   // Search for " [#d4° + XXX] " or " [#dE + XXX] "
-  matchRegExp(text, /([ ]*)\[([1-9])d(4°|E)[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL|rang voie [1-9].*)\]([ ]*)/gm).forEach(result => {
+  matchRegExp(text, /([ ]*)\[([1-9])d(4°|E)[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL|rang voie [1-9])\]([ ]*)/gm).forEach(result => {
     let [ matched, sb, dice, , stat, sa ] = result;
     if (stat.startsWith("rang "))
       stat = `rang_voie${ findPathByName(stat, pathNames) }`;
@@ -10373,7 +10436,7 @@ function insertRolls(text, options = {}) {
   });
 
   // Search for " [# + XXX] "
-  matchRegExp(text, /([ ]*)\[([0-9]+)[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL|rang voie [1-9].*)\]([ ]*)/gm).forEach(result => {
+  matchRegExp(text, /([ ]*)\[([0-9]+)[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL|rang voie [1-9])\]([ ]*)/gm).forEach(result => {
     let [ matched, sb, value, ability, sa ] = result;
     if (ability.startsWith("rang ")) {
       ability = `rang_voie${ findPathByName(ability, pathNames) }`;
@@ -10383,16 +10446,16 @@ function insertRolls(text, options = {}) {
   });
 
   // Search for " [XXX] "
-  matchRegExp(text, /([ ]+)\[(AGI|CON|FOR|PER|CHA|INT|VOL).*\]([ ]+)/gm).forEach(result => {
+  matchRegExp(text, /([ ]+)\[(AGI|CON|FOR|PER|CHA|INT|VOL)\]([ ]+)/gm).forEach(result => {
     let [ matched, sb, ability, sa ] = result;
     const replace = `${sb}[[@{${ability.toLowerCase()}}]]${sa}`;
     text = text.replace(matched, replace);
   });
 
-  // Search for "... #d# +/- M..."
+  // Search for "... #d# +/- X..."
   matchRegExp(text, /([0-9]+[dD][0-9]+)([ ]*[\+\-]*[ ]*[0-9]*)?/gm).forEach(result => {
     const [ matched, dice, mod ] = result;
-    const replace = `[[${dice}${mod || ""}]]`;
+    const replace = `[[${dice}${ mod || "" }]]`;
     text = text.replace(matched, replace);
   });
   
@@ -10404,13 +10467,21 @@ function insertRolls(text, options = {}) {
  */
 on("change:repeating_armes:arme-nom clicked:renum_atk-btn", function(eventInfo) {
   const renumber = (eventInfo.triggerName === "clicked:renum_atk-btn");
+  let atkId = "";
+  if (!renumber)
+    atkId = strval(eventInfo.triggerName.split("_")[2]);
   getSectionIDsOrdered("repeating_armes", function (rowIds) {
     const labels = rowIds.map(id => `repeating_armes_${id}_arme-label`);
-    getAttrs([ "max_attack_label", "scriptVersion", ...labels ], function (values) {
+    getAttrs([ "character_name", "max_attack_label", "scriptVersion", ...labels ], function (values) {
       const updates = new Map();
 
-      // display attack options row if script detected
-      updates.set("repeating_armes_armeopt", hasMODScript(values) ? 1 : 0);
+      if (!renumber) {
+        // display attack options row if script detected
+        updates.set("repeating_armes_armeopt", hasMODScript(values) ? 1 : 0);
+        // update roll button linked attribute
+        const atkBtn = `repeating_armes_${atkId}_attack-btn`;
+        updates.set(atkBtn, `%{${ strval(values.character_name) }|${atkBtn}}`);
+      }
       
       const maxLabel = intval(values.max_attack_label);
       let numLabel = renumber ? 0 : maxLabel;
@@ -10533,6 +10604,19 @@ function fumbleRoll(values) {
 }
 
 /**
+ * Return range expressed with meters
+ * @param {string} portee - range as entered on attack line
+ * @param {number} extra - additional range
+ * @returns {string}
+ */
+function rangeWithUnits(portee, extra = 0) {
+  portee = portee.replaceAll(" ", "");
+  if (portee.toLowerCase().endsWith("m"))
+    portee = portee.substring(0, portee.length - 1);
+  return `${ intval(portee) + intval(extra) } m`;
+}
+
+/**
  * Roll an attack in chat
  */
 on("clicked:repeating_armes:attack-btn", function(eventInfo) {
@@ -10574,7 +10658,7 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
     "bouclier_eqp",
     "condition_affaibli", "condition_immobilise",
     ...fearConditionsAttrs(),
-    "tactique", "tactdiv", "tactdmdiv",
+    "tactique", "tactname", "tactdiv", "tactdmdiv",
     "noms_voies", "rangs_voies",
     "en_selle",
     ...luckButtonAttrs(),
@@ -10591,6 +10675,7 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
     const useWear = boolval(values.cfg_usure);
     const shieldUsed = boolval(values.bouclier_eqp);
     const tactics = intval(values.tactique);
+    const tactName = strval(values.tactname, "Option tactique");
     const tactBM = intval(values.tactdiv);
     const tactDM = strval(values.tactdmdiv);
     const weakened = intval(values.condition_affaibli);
@@ -10610,7 +10695,7 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
     const name = capitalize(strval(values[section + "nom"], getAttackName(atk)), false);
     const atkMod = ` *${ displayMod(intval(values[atk]) + intval(values.atkdiv)) }*`;
     const portee = strval(values[section + "portee"]);
-    let range = (portee !== "") ? ` *(${portee}${ !portee.toLowerCase().endsWith("m") ? " m" : "" })*` : "";
+    let range = (portee !== "") ? ` *(${ rangeWithUnits(portee) })*` : "";
     let crit = intval(values[section + "crit"], 20);
     const atkType = strval(values[section + "atktype"]);
     const modifiers = strval(values[section + "atkmods"]).split(",").map(mod => mod.trim().toLowerCase());
@@ -10636,6 +10721,8 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
 
     let atkTitle = "Attaque";
     const allTags = getAllTags(values);
+
+    const extraDM = [];
 
     // Magic weapon
     let magicHit = "";
@@ -10668,26 +10755,26 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
 
     // Special tactics
     let tacticBonus = "";
-    let tacticDM = "";
     switch (tactics) {
       case 1:
         atkTitle = "Attaque assurée";
         tacticBonus = ` +5[${atkTitle}]`;
         break;
       case 2:
-        atkTitle = "Att. précise/violente";
+        atkTitle = "Attaque précise";
         tacticBonus = ` -3[${atkTitle}]`;
-        tacticDM = ` +1@{devol}[${atkTitle}]`;
+        extraDM.push(` + [[1@{devol}]] ${atkTitle}`);
         break;
       case 3:
-        atkTitle = "Att. précise/violente";
+        atkTitle = "Attaque violente";
         tacticBonus = ` -7[${atkTitle}]`;
-        tacticDM = ` +2@{devol}[${atkTitle}]`;
+        extraDM.push(` + [[2@{devol}]] ${atkTitle}`);
         break;
       case 4:
-        tacticBonus = ` + (${tactBM})[Option tactique]`;
+        if (tactBM !== 0)
+          tacticBonus = ` + (${tactBM})[${tactName}]`;
         if (tactDM !== "")
-          tacticDM = " + (" + replaceDevol(tactDM) + ")[Option tactique]";
+          extraDM.push(` + ([[${ replaceDevol(tactDM) }]]) ${tactName}`);
         break;
     }
 
@@ -10783,6 +10870,7 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
     const dmdesc = [ dmtype, ...dmextra ].join(" ").trim();
     const dmbonus = strval(values[section + "bonus"]);
     const dmdiv = strval(values[section + "dmdiv"]);
+    let dmAbilities = "";
 
     if (boolval(values.cfg_lowfan))
       modifiers.push("explodemax");
@@ -10793,14 +10881,12 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
     if (modifiers.includes("reroll1"))
       dmOpt += "r";
 
-    const extraDM = [];
-
     // mounted extra DM
     if (mounted && atk === "atkcac") {
       if (hasAbility({ name: "monture fantastique", inPath: "cavalier" }, values)) {
-        extraDM.push(" +2[Cavalier rang 5]");
+        dmAbilities += " +2[Monture fantastique]";
       } else if (hasAbility({ name: "cavalier emerite", inPath: "cavalier" }, values)) {
-        extraDM.push(" +1[Cavalier rang 2]");
+        dmAbilities += " +1[Cavalier émérite]";
       }
     }
 
@@ -10809,10 +10895,10 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
       let powderBonus = 0;
       if (hasAbility({ name: "poudre puissante", inPath: "explosifs" }, values)) {
         powderBonus = 1 + getPathsWithRank({ profile: "arquebusier", minRank: 5 }, values);
-        range = ` ([[${intval(portee)}[Base] + 10[Poudre puissante]]])`;
+        range = ` *(\`\`${ rangeWithUnits(portee, 10) }\`\`)*`;
       }
       if (powderBonus > 0)
-        extraDM.push(` +${powderBonus}[Poudre puissante]`);
+        dmAbilities +=` + ${powderBonus}[Poudre puissante]`;
     }
 
     // DM buffs
@@ -10833,7 +10919,7 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
 
     let dmroll = "";
     if (dm !== "" )
-      dmroll = `[[${dm}${dmOpt}]][DM] + ${dmbonus}[Bonus]${magicDM}${ shadow.dm } + ${dmdiv}[Divers]${tacticDM}`;
+      dmroll = `[[${dm}${dmOpt}]][DM] + ${dmbonus}[Bonus]${magicDM}${ shadow.dm } + ${dmdiv}[Divers]${dmAbilities}`;
     if (dmroll !== "" && tactics === 1)
       dmroll = `floor((${dmroll})/2)`;
     if (dmroll !== "")
@@ -10842,19 +10928,21 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
     let special = insertRolls(strval(values[section + "special"]), { pathNames });
 
     if (hasAtkMod(modifiers, "fleau")) {
-      special += special !== "" ? "\n" : "";
+      //special += special !== "" ? "\n" : "";
       const [ ...curse ] = strval(getAtkMod(modifiers, "fleau")).split(" ");
-      special += `?{Contre ${ curse.join(" ").toUpperCase() } ?|Oui,+[[1@{devol}]] DM Fléau des ${ curse.join(" ") }|Non,&nbsp;}`;
+      //special += 
+      extraDM.push(`?{Contre ${ curse.join(" ").toUpperCase() } ?|Oui,+[[1@{devol}]] DM Fléau des ${ curse.join(" ") }|Non,&nbsp;}`);
     }
 
     if (hasAtkMod(modifiers, "element")) {
-      special += special !== "" ? "\n" : "";
+      //special += special !== "" ? "\n" : "";
       const [ ...element ] = strval(getAtkMod(modifiers, "element")).split(" ");
       if ("aeioué".includes(element[0].charAt(0)))
         element[0] = "d'" + element[0];
       else
         element.unshift("de");
-      special += `+[[${ strval(element[1]).toLowerCase() === "intense" ? "2" : "1" }@{devol}]] DM ${ element.join(" ") }`;
+      //special += 
+      extraDM.push(`+[[${ strval(element[1]).toLowerCase() === "intense" ? "2" : "1" }@{devol}]] DM ${ element.join(" ") }`);
     }
 
     // Determine Max DMs
@@ -11524,6 +11612,16 @@ seq(9).forEach(path => {
       
       // Check ability points
       checkAbilityPoints(ability);
+
+      // Update roll > action button
+      getAttrs([ "character_name", ability ], function(values) {
+        const charName = strval(values.character_name);
+        const owned = boolval(values[ability]);
+        if (charName === "" || !owned)
+          return;
+        
+        setAttrs({ [`${ability}-btn`]: `%{${charName}|${ability}-btn}` });
+      });
     });
   });
 
@@ -11680,6 +11778,18 @@ function abilityUsages(path = 0) {
       setAttrs(Object.fromEntries(updateAbilities));
   }); 
 }
+
+/**
+ * Update roll <=> action button for rolls
+ */
+on("change:repeating_rolls:roll-nom change:repeating_npcrolls:npcroll-name", function(eventInfo) {
+  const [ section, rollId, btName ] = strval(eventInfo.triggerName).split("_").slice(1);
+  getAttrs([ "character_name" ], function(values) {
+    const charName = strval(values.character_name);
+    const rollBtn = `repeating_${section}_${rollId}_${ btName.split("-")[0] }-btn`;
+    setAttrs({ [rollBtn]: `%{${charName}|${rollBtn}}` })
+  });
+});
 
 /**
  * Build a roll query for ability selection
@@ -11908,7 +12018,7 @@ function rebuildBuffLists() {
       rowIds.forEach(id => {
         const rowId = `${section}_${id}_buff-`;
         const enabled = intval(values[`${rowId}on`]);
-        const name = strval(values[`${rowId}nom`]);
+        const name = strval(values[`${rowId}nom`]).replaceAll(":", "|");
         const attribute = `${strval(values[`${rowId}attrib`])}_buff_list`;
         const value = strval(values[`${rowId}value`]);
         if (enabled === 1 && name !== "" && value !== "") {
@@ -12015,6 +12125,19 @@ on("clicked:helpbuff-btn", function() {
 });
 
 /**
+ * Parse abilities path JSON blob
+ * @param {object} data - object parsed from DRS JSON blob
+ * @param {number} path - path number
+ * @param {number} [base=1] - base rank number
+ * @returns {Map<string,string|number>} Map object of attributes to update
+ */
+function importFromDRS(data, path, base) {
+  const updates = new Map();
+  // TODO
+  return updates;
+}
+
+/**
  * Parse abilities path text
  * @param {string} text - text of abilities path
  * @param {number} path - path number
@@ -12068,6 +12191,9 @@ function importFromPDF(text, path, base = 1) {
   return updates;
 }
 
+/**
+ * On import path button click
+ */
 seq(9).forEach(path => {
   
   on(`clicked:import_v${path}-btn`, function() {
@@ -12075,37 +12201,15 @@ seq(9).forEach(path => {
       const text = strval(values.voie_pdf);
       if (text === "")
         return;
-       
+           
       const base = values[`v${path}br`];
-      const updates = importFromPDF(text, path, base); /*
-      const updates = new Map();
-      let ability = "";
-      text.split("\n").forEach((line, index) => {
-        // first line
-        if (index === 0) {
-          let pathName = simplePathName(line.toLowerCase());
-          if (pathName !== "")
-            updates.set(`voie${path}nom`, capitalize(pathName));
-          return;
-        }
-  
-        if (strval(line) === "")
-          return;
-  
-        // Found ability title
-        const matched = line.match(/([1-9])\.[ ]+(.*)[ ]:/);
-        if (matched) {
-          let [ rank, title ] = matched.slice(1);
-          rank = intval(rank) - base + 1;
-          updates.set(`v${path}r${rank}_spell`, title.includes("*") ? 1 : 0);
-          title = title.replace("*", "");
-          updates.set(`voie${path}-t${rank}`, title.trim());
-          ability = `voie${path}-${rank}`;
-          return;
-        }
-        const desc = updates.has(ability) ? updates.get(ability) + " " : "";
-        updates.set(ability, desc + line.trim());
-      });*/
+      let updates;
+      try {
+        const data = JSON.parse(text);
+        updates = importFromDRS(data, path, base);
+      } catch (error) {
+        updates = importFromPDF(text, path, base); 
+      }
   
       if (updates.size > 0) {
         updates.set("voie_pdf", "");
@@ -13023,14 +13127,34 @@ on("change:cfg_highfan change:cfg_lowfan", function (eventInfo) {
     let options;
     switch (sourceAttribute) {
       case "cfg_highfan":
-        options = [ "use_epic", "use_drniv", "use_mana" ];
+        options = SWData.settings.highFan;
         break;
       case "cfg_lowfan":
-        options = [ "use_capped6", "use_dronly", "atk_diff", "usure", "use_fear" ];
+        options = SWData.settings.lowFan;
         break;
     }
-    const subOptions = new Map(options.map(o => [ `cfg_${o}`, checked]));
+    const subOptions = new Map(options.map(o => [ o, checked]));
     setAttrs(Object.fromEntries(subOptions));
+  });
+});
+
+/**
+ * On changing one of high fantasy options
+ */
+on(eventList("change", SWData.settings.highFan, " "), function () {
+  getAttrs(SWData.settings.highFan, function (values) {
+    if (Object.values(values).some(v => !boolval(v)))
+      setAttrs({ cfg_highfan: 0 }, { silent: true });
+  });
+});
+
+/**
+ * On changing one of low fantasy options
+ */
+on(eventList("change", SWData.settings.lowFan, " "), function () {
+  getAttrs(SWData.settings.lowFan, function (values) {
+    if (Object.values(values).some(v => !boolval(v)))
+      setAttrs({ cfg_lowfan: 0 }, { silent: true });
   });
 });
 
@@ -13730,23 +13854,31 @@ on("change:pnjatk", function() {
  */
 on("change:repeating_npcarmes:arme-nom clicked:renum_npcatk-btn", function(eventInfo) {
   const renumber = (eventInfo.triggerName === "clicked:renum_npcatk-btn");
+  let atkId = "";
+  if (!renumber)
+    atkId = strval(eventInfo.triggerName.split("_")[2]);
   getSectionIDsOrdered("repeating_npcarmes", function (rowIds) {
     const labels = rowIds.map(id => `repeating_npcarmes_${id}_arme-label`);
-    getAttrs([ "max_attack_label", "scriptVersion", ...labels ], function (values) {
+    getAttrs([ "character_name", "max_attack_label", "scriptVersion", ...labels ], function (values) {
       const updates = new Map();
 
-      // display attack options row if script detected
-      updates.set("repeating_npcarmes_armeopt", hasMODScript(values) ? 1 : 0);
-
+      if (!renumber) {
+        // display attack options row if script detected
+        updates.set("repeating_npcarmes_armeopt", hasMODScript(values) ? 1 : 0);
+        // update roll button linked attribute
+        const atkBtn = `repeating_npcarmes_${atkId}_npcatk-btn`;
+        updates.set(atkBtn, `%{${ strval(values.character_name) }|${atkBtn}}`);
+      }
+            
       const maxLabel = intval(values.max_attack_label);
-      delete values.max_attack_label;
       let numLabel = renumber ? 0 : maxLabel;
-      Object.keys(values).forEach(label => {
+      labels.forEach(label => {
         if (renumber || intval(values[label]) === 0)
           updates.set(label, ++numLabel);
       });
       if (renumber || numLabel > maxLabel)
         updates.set("max_attack_label", numLabel);
+
       if (updates.size > 0)
         setAttrs(Object.fromEntries(updates));
     });
@@ -13777,14 +13909,15 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
   const specials = [
     "pnj_spec",
     ...seq(3).map(t => `cspec${t}_nom`),
+    ...seq(3).map(t => `cspec${t}_roll`),
     ...seq(3).map(t => `cspec${t}_bonus`),
     ...seq(3).map(t => `cspec${t}_dm`),
   ];
   getAttrs([
     "cfg_1attack_roll", "cfg_lowfan",
     "cfg_crit_diff", "cfg_tbl_crit", "cfg_tbl_critdie", "cfg_tbl_fumble",
-    "compagnon",
-    "atkgroup", "nbgroup",
+    "niveau", "compagnon",
+    "atkgroup", "nbgroup", "pnj_tact",
     ...specials,
     ...attackAttrs.map(attribute => `${section}${attribute}`)
   ], function (values) {
@@ -13796,10 +13929,10 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     const groupNb = intval(values.nbgroup);
     const name = capitalize(strval(values[section + "nom"], "Attaque"));
     const useMulti = intval(values[section + "multi"]);
-    const roll = strval(values[section + "roll"]);
+    let roll = strval(values[section + "roll"]);
     const atk = strval(values[section + "atk"]);
     const portee = strval(values[section + "portee"]);
-    const range = (portee !== "") ? ` (${portee}${ !portee.toLowerCase().endsWith("m") ? " m" : "" })` : "";
+    const range = (portee !== "") ? ` *(${ rangeWithUnits(portee) })*` : "";
     const crit = intval(values[section + "crit"], 20);
 
     const grouped = "Attaque groupée";
@@ -13838,24 +13971,66 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
         break;
     }
 
+    const extraDM = [];
+
+    let tactBonus = "";
+    let tactDM = "";
+    const tactic = intval(values.pnj_tact);
+    if (tactic > 0) {
+      let name = "";
+      switch (tactic) {
+        case 1:
+          name = "Attaque assurée";
+          tactBonus = "+5";
+          break;
+        case 2:
+          name = "Attaque précise";
+          tactBonus = "-3";
+          tactDM = "1" + getDEvol(intval(values.niveau));
+          break;
+        case 3:
+          name = "Attaque violente";
+          tactBonus = "-7";
+          tactDM = "2" + getDEvol(intval(values.niveau));
+          break;
+      }
+      if (tactBonus !== "")
+        tactBonus = ` + ([[${tactBonus}]])[${name}]`;
+      if (tactDM !== "")
+        extraDM.push(` + [[${tactDM}]] ${name}`);
+    }
+
+    let specRoll = 0;
     let specBonus = "";
     let specDM = "";
     let specName = "";
 
     const specMove = intval(values.pnj_spec);
     if (specMove > 0) {
+      specRoll = intval(values[`cspec${specMove}_roll`]);
       specName = strval(values[`cspec${specMove}_nom`]);
       const bonus = intval(values[`cspec${specMove}_bonus`]);
       if (bonus > 0)
         specBonus = ` + [[${bonus}]][${specName}]`;
       specDM = replaceDevol(strval(values[`cspec${specMove}_dm`]));
-      if (specDM !== "")
-        specDM = ` + [[${specDM}]][${specName}]`;
+      if (specDM !== "") {
+        if (isNaN(specDM)) {
+          extraDM.push(` + [[${specDM}]] ${specName}`);
+          specDM = "";
+        } else {
+          specDM = ` + [[${specDM}]][${specName}]`;
+        }
+      }
       if (specBonus !== "" || specDM !== "")
         specName = ` (${specName})`;
       else
         specName = "";
+      if (specRoll === 1)
+        roll = "2d20kh1";
+      if (specRoll === 2)
+        roll = "2d20kl1"; 
     }
+
 
     let multiAttacks = 1;
     if (useMulti === 1) {
@@ -13870,7 +14045,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     const attacks = [];
     if (atk !== "0" && atkgrp[0].nb !== 4) {
       // (grouped ?) attack
-      attacks.push(`[[${roll}cs>${crit}cf1[Dé] + ${atk}[Bonus]${atkgrp[0].bonus}${specBonus} ]]`);
+      attacks.push(`[[${roll}cs>${crit}cf1[Dé] + ${atk}[Bonus]${atkgrp[0].bonus}${tactBonus}${specBonus} ]]`);
     } else {
       // auto-hit
       attacks.push(autoHit);
@@ -13878,7 +14053,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     // second grouped attack ?
     if (atkgrp.length === 2) {
       if (atk !== "0" && atkgrp[1].nb !== 4) {
-        attacks.push(`[[${roll}cs>${crit}cf1[Dé] + ${atk}[Bonus]${atkgrp[1].bonus}${specBonus} ]]`);
+        attacks.push(`[[${roll}cs>${crit}cf1[Dé] + ${atk}[Bonus]${atkgrp[1].bonus}${tactBonus}${specBonus} ]]`);
       } else {
         attacks.push(autoHit);
       }
@@ -13903,7 +14078,11 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     if (dm !== "") {
       dm = dm.replace("dE", "d4°");
       dm = dm.toLowerCase().replace("d4°", `@{${companionOf}devol}`);
-      dmroll = `[[[[${dm}${dmOpt}]][DM] + ${dmdiv}[Divers]${specDM} ]]`;
+      dmroll = `[[${dm}${dmOpt}]][DM] + ${dmdiv}[Divers]${specDM}`;
+      if (tactic === 1)
+        dmroll = `[[floor((${dmroll})/2)]]`;
+      else
+        dmroll = "[[" + dmroll + " ]]";
     }
 
     const special = insertRolls(strval(values[section + "special"]), { isNPC: true, companionOf });
@@ -14006,9 +14185,12 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
         chatAtk.fumble = fumbleEffect;
       }
 
+      if(extraDM.length > 0)
+        chatAtk.dmextra = extraDM.join("\n");
+
       // process grouped attacks
       if (atkgrp[ix].nb < 4) {
-        if (!useOneRoll)
+        if (!useOneRoll && roll === "1d20")
           chatAtk = { ...chatAtk, broll: attack, brolleffect: rollEffect, bcritsuccess: "[[0]]" };
       } else {
         chatAtk.save = 0;
@@ -14037,12 +14219,15 @@ on("clicked:repeating_npcrolls:npcroll-btn", function() {
     const companionOf = strval(values.compagnon);
     let name = strval(values[section + "name"], "Capacité");
     const action = name.match(/ \((G|M|A|L)\)$/);
-    if (action)
+    let actionType = "";
+    if (action) {
       name = name.replace(action[0], "");
+      actionType = " - " + action[1];
+    }
     const text = insertRolls(strval(values[section + "desc"]), { isNPC: true, companionOf });
     const chatMsg = cof2RollTemplate({
-      lsub: "Capacité",
-      rsub: capitalize(name) + strval(action),
+      lsub: "Capacité" + actionType,
+      rsub: capitalize(name),
       text
     });
     sendChatMsg(chatMsg);
@@ -14120,17 +14305,15 @@ SWData.COMPANIONS.forEach(attr => {
 function importNPCStats(sbLine, npcAttrs) {
   SWData.PC.STATS.forEach(stat => {
     const short = shorten(stat);
-    const rx = new RegExp(` ${ short.toUpperCase() } (.)([0-9]*)(\\*)? `);
+    const rx = new RegExp(short.toUpperCase() + " (.)([0-9]*)(\\*)? ");
     const match = sbLine.match(rx);
     if (!match) 
       return;
-    let [ , sign, value, sup ] = match;
-    value = intval(value);
-    if (sign !== "+")
-      value *= -1;
-    sup = sup === "*" ? "1" : "0"
-    npcAttrs.set(short, value)
-    npcAttrs.set(short + "_sup", sup)
+    let [ sign, value, sup ] = match.slice(1);
+    value = intval(value) * ((sign !== "+") ? -1 : 1);
+    npcAttrs.set(short, value);
+    sup = sup === "*" ? "S" : "0";
+    npcAttrs.set(short + "_sup", sup);
   });
   return npcAttrs;
 }
@@ -14148,7 +14331,7 @@ function importNPCAttack(sbLine, npcAttrs) {
   let bonus = "";
   lmatch = latk.match(/(.*?) ([\+\-][0-9]*)/);
   if (lmatch) {
-    [ , name, bonus ] = lmatch;
+    [ name, bonus ] = lmatch.slice(1);
     bonus = intval(bonus);
   }
 
@@ -14156,9 +14339,9 @@ function importNPCAttack(sbLine, npcAttrs) {
   let dmdiv = "";
   let [ dmexpr, special ] = ratk.split(" + ");
   if (dmexpr) {
-    dmatch = dmexpr.match(/([0-9]*[dD][0-9]*)[\-\+]([0-9]*)/);
+    dmatch = dmexpr.match(/([0-9]*[dD][0-9]*)([\-\+]?[0-9]*)?/);
     if (dmatch) {
-      [ , dm, dmdiv ] = dmatch;
+      [ dm, dmdiv ] = dmatch.slice(1);
     }
   }
 
@@ -14173,9 +14356,138 @@ function importNPCAttack(sbLine, npcAttrs) {
   npcAttrs.set(rowId + "crit", "20");
   npcAttrs.set(rowId + "dm", dm);
   npcAttrs.set(rowId + "dmtype", "tranchants");
-  npcAttrs.set(rowId + "dmdiv", dmdiv);
+  npcAttrs.set(rowId + "dmdiv", intval(dmdiv));
   npcAttrs.set(rowId + "special", special);
   
+  return npcAttrs;
+}
+
+/**
+ * Parse statblock data from DRS JSON blob
+ * @param {object} data - parsed JSON blob
+ * @returns {Map<string,string|number>} Map object of attributes to update
+ */
+function statBlockFromDRS(data) {
+  
+  const npcAttrs = new Map();
+  
+  // TODO
+  
+  return npcAttrs;
+}
+
+/**
+ * Parse statblock data from PDF text
+ * @param {string} statblock - text pasted from PDF
+ * @returns {Map<string,string|number>} Map object of attributes to update
+ */
+function statBlockFromPDF(statblock) {
+  
+  let npcAttrs = new Map();
+  
+  const abilities = [];
+  let ability = "";
+
+  let foundAttacks = false;
+  let foundAbilities = false;
+
+  statblock.split("\n").forEach((sbLine, lineNum) => {
+    
+    // attacks
+    if (sbLine.includes(" DM ") && !foundAbilities) {
+      npcAttrs = importNPCAttack(sbLine, npcAttrs);
+      foundAttacks = true;
+      return;
+    }
+    
+    if (foundAttacks) {
+      // abilities
+      if (sbLine.toUpperCase() === sbLine) {
+        foundAbilities = true;
+        if (ability !== "") {
+          const [ name, action, description ] = ability.split("~");
+          abilities.push({ name, action, description });
+          ability = "";
+        }
+        let action = "";
+        const match = sbLine.match(/ \(([GMAL])\)/);
+        if (match) {
+          let matched;
+          [ matched , action ] = match;
+          sbLine = sbLine.replace(matched, "");
+        }
+        sbLine = sbLine.split(":")[0].trim().toLowerCase();
+        ability = capitalize(sbLine) + "~" + action + "~";
+      } else {
+        ability += sbLine + " ";
+      }
+    } else {
+      let match;
+      // name & nc
+      if (lineNum === 0) {
+        match = sbLine.match(/(.*) \| NC ([0-9]*)/);
+        if (match) {
+          const [ , character_name, nc ] = match;
+          npcAttrs.set("character_name", character_name);
+          npcAttrs.set("niveau", nc);
+        }
+        return;
+      }
+      // creature type & size
+      match = sbLine.match(/(CRÉATURE .*) .* TAILLE (.*)/);
+      if (match) {
+        const [ , creature, taille ] = match;
+        if (creature)
+          npcAttrs.set("creature", creature);
+        if (taille)
+          npcAttrs.set("taille", taille);
+        return;
+      }
+
+      // défense
+      match = sbLine.match(/\(S\) Défense ([0-9]*)/);
+      if (!match)
+        match = sbLine.match(/\(S\)DEF ([0-9]*)/);
+      if (match) {
+        const [ , def ] = match;
+        npcAttrs.set("def", def);
+      }
+      
+      // pv
+      match = sbLine.match(/\(V\) Points de vigueur ([0-9]*)([ ]\(RD ([0-9]*)\))?/);
+      if (!match)
+        match = sbLine.match(/\(V\)PV ([0-9]*)([ ]\(RD ([0-9]*)\))?/);
+      if (match) {
+        const [ , pv, rd, rdValue ] = match;
+        npcAttrs.set("pv", pv);
+        npcAttrs.set("pv_max", pv);
+        if (rd)
+          npcAttrs.set("rd", rdValue);
+      }
+
+      // initiative
+      match = sbLine.match(/\(I\) Initiative ([0-9]*)/);
+      if (!match)
+        match = sbLine.match(/\(I\)Init. ([0-9]*)/);
+      if (match) {
+        const [ , init ] = match;
+        npcAttrs.set("init", init);
+      }
+
+      npcAttrs = importNPCStats(sbLine, npcAttrs);
+    }
+  });
+  if (ability !== "") {
+    const [ name, action, description ] = ability.split("~");
+    abilities.push({ name, action, description });
+  }
+
+  abilities.forEach(ability => {
+    const rowId = `repeating_npcrolls_${generateRowID()}_npcroll-`;
+    npcAttrs.set(rowId + "name", `${ability.name}${ ability.action !== "" ? " (" + ability.action + ")" : "" }`);
+    npcAttrs.set(rowId + "desc", ability.description);
+  });
+
   return npcAttrs;
 }
 
@@ -14190,116 +14502,24 @@ on("clicked:importsb-btn", function() {
 
   // add new
   getAttrs(["statblock"], function (value) {
-    const statblock = strval(value.statblock).split("\n");
-    if (statblock.length === 0)
-      return;
-
-    let npcAttrs = new Map();
-    const abilities = [];
-    let ability = "";
-
-    let foundAttacks = false;
-    let foundAbilities = false;
     
-    statblock.forEach((sbLine, lineNum) => {
-      
-      // attacks
-      if (sbLine.includes(" DM ") && !foundAbilities) {
-        npcAttrs = importNPCAttack(sbLine, npcAttrs);
-        foundAttacks = true;
-        return;
-      }
-      
-      if (foundAttacks) {
-        // abilities
-        if (sbLine.toUpperCase() === sbLine) {
-          foundAbilities = true;
-          if (ability !== "") {
-            const [ name, action, description ] = ability.split("~");
-            abilities.push({ name, action, description });
-            ability = "";
-          }
-          let action = "";
-          const match = sbLine.match(/ \(([GMAL])\)/);
-          if (match) {
-            let matched;
-            [ matched , action ] = match;
-            sbLine = sbLine.replace(matched, "");
-          }
-          sbLine = sbLine.split(":")[0].trim().toLowerCase();
-          ability = capitalize(sbLine) + "~" + action + "~";
-        } else {
-          ability += sbLine + " ";
-        }
-      } else {
-        let match;
-        // name & nc
-        if (lineNum === 0) {
-          match = sbLine.match(/(.*) \| NC ([0-9]*)/);
-          if (match) {
-            const [ , character_name, nc ] = match;
-            npcAttrs.set("character_name", character_name);
-            npcAttrs.set("niveau", nc);
-          }
-          return;
-        }
-        // creature type & size
-        match = sbLine.match(/(CRÉATURE .*) .* TAILLE (.*)/);
-        if (match) {
-          const [ , creature, taille ] = match;
-          if (creature)
-            npcAttrs.set("creature", creature);
-          if (taille)
-            npcAttrs.set("taille", taille);
-          return;
-        }
+    const statblock = strval(value.statblock);
+    if (statblock === "")
+      return;
+    
+    let updates = new Map();
 
-        // défense
-        match = sbLine.match(/\(S\) Défense ([0-9]*)/);
-        if (!match)
-          match = sbLine.match(/\(S\)DEF ([0-9]*)/);
-        if (match) {
-          const [ , def ] = match;
-          npcAttrs.set("def", def);
-        }
-        
-        // pv
-        match = sbLine.match(/\(V\) Points de vigueur ([0-9]*)([ ]\(RD ([0-9]*)\))?/);
-        if (!match)
-          match = sbLine.match(/\(V\)PV ([0-9]*)([ ]\(RD ([0-9]*)\))?/);
-        if (match) {
-          const [ , pv, rd, rdValue ] = match;
-          npcAttrs.set("pv", pv);
-          npcAttrs.set("pv_max", pv);
-          if (rd)
-            npcAttrs.set("rd", rdValue);
-        }
-
-        // initiative
-        match = sbLine.match(/\(I\) Initiative ([0-9]*)/);
-        if (!match)
-          match = sbLine.match(/\(I\)Init. ([0-9]*)/);
-        if (match) {
-          const [ , init ] = match;
-          npcAttrs.set("init", init);
-        }
-
-        npcAttrs = importNPCStats(sbLine, npcAttrs);
-      }
-    });
-    if (ability !== "") {
-      const [ name, action, description ] = ability.split("~");
-      abilities.push({ name, action, description });
+    try {
+      const data = JSON.parse(statblock);
+      updates = statBlockFromDRS(data);
+    } catch (error) {
+      updates = statBlockFromPDF(statblock);
     }
 
-    abilities.forEach(ability => {
-      const rowId = `repeating_npcrolls_${generateRowID()}_npcroll-`;
-      npcAttrs.set(rowId + "name", `${ability.name}${ ability.action !== "" ? " (" + ability.action + ")" : "" }`);
-      npcAttrs.set(rowId + "desc", ability.description);
-    });
-
-    npcAttrs.set("statblock", "");
-    setAttrs(Object.fromEntries(npcAttrs));
+    if (updates.size > 0) {
+      updates.set("statblock", "");
+      setAttrs(Object.fromEntries(updates), { silent: true });
+    }
   });
 });
 
@@ -14776,7 +14996,7 @@ function updateActionButtons(options) {
  * - Update attacks roll buttons > action buttons
  */
 on("sheet:opened change:character_name", function() {
-
+  
   // PC repeating buttons
   updateActionButtons({ section: "armes", button: "attack-btn" });
   updateActionButtons({ section: "rolls", button: "roll-btn" });

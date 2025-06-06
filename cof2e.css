@@ -1,4 +1,4 @@
-/* COF2e v1.5.0 */
+/* COF2e v1.6.0 */
 
 @import url('https://fonts.googleapis.com/css?family=Merriweather+Sans&display=swap');
 
@@ -378,7 +378,8 @@ div.path div.block-title {
   margin-right: 5px;
 }
 
-.cofmain input[value="0"].has-script div.has-script {
+.cofmain input[value="0"].has-script textarea.has-script,
+.cofmain input[value="0"].has-script .weapon span.has-script {
   display: none;
 }
 
@@ -1159,52 +1160,65 @@ textarea.migration {
   font-family: "Merriweather Sans";
 }
 
+.pc-config-tab select option[value=""],
 .sheet-rolltemplate-cof2 .sheet-rt-header {
   background-color: burlywood;
   padding: 5px;
 }
 
+.pc-config-tab select option[value="blue"],
 .sheet-rolltemplate-cof2 .sheet-rt-header.sheet-color-blue {
   background-color: #0d6efd;
   color: #fff;
 }
+.pc-config-tab select option[value="indigo"],
 .sheet-rolltemplate-cof2 .sheet-rt-header.sheet-color-indigo { 
   background-color: #6610f2;
   color: #fff;
 }
+.pc-config-tab select option[value="purple"],
 .sheet-rolltemplate-cof2 .sheet-rt-header.sheet-color-purple {
   background-color: #6f42c1;
   color: #fff;
 }
+.pc-config-tab select option[value="pink"],
 .sheet-rolltemplate-cof2 .sheet-rt-header.sheet-color-pink {
   background-color: #d63384;
   color: #fff;
 }
+.pc-config-tab select option[value="red"],
 .sheet-rolltemplate-cof2 .sheet-rt-header.sheet-color-red {
   background-color: #dc3545;
   color: #fff;
 }
+.pc-config-tab select option[value="orange"],
 .sheet-rolltemplate-cof2 .sheet-rt-header.sheet-color-orange { 
   background-color: #fd7e14;
 }
+.pc-config-tab select option[value="yellow"],
 .sheet-rolltemplate-cof2 .sheet-rt-header.sheet-color-yellow {
   background-color: #ffc107;
 }
+.pc-config-tab select option[value="green"],
 .sheet-rolltemplate-cof2 .sheet-rt-header.sheet-color-green { 
   background-color: #198754;
   color: #fff;
 }
+.pc-config-tab select option[value="teal"],
 .sheet-rolltemplate-cof2 .sheet-rt-header.sheet-color-teal {
   background-color: #20c997;
   color: #fff;
 }
+.pc-config-tab select option[value="cyan"],
 .sheet-rolltemplate-cof2 .sheet-rt-header.sheet-color-cyan {
   background-color: #0dcaf0;
 }
+.pc-config-tab select option[value="gray"],
 .sheet-rolltemplate-cof2 .sheet-rt-header.sheet-color-gray {
   background-color: #6c757d;
   color: #fff;
 }
+.pc-config-tab select option[value="dark"],
 .sheet-rolltemplate-cof2 .sheet-rt-header.sheet-color-dark {
   background-color: #343a40;
   color: #fff;
