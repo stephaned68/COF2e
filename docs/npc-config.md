@@ -17,17 +17,33 @@ Les préférence et réglages possibles de la fiche sont configurés dans cet on
 
 Cette section permet d'identifier le PNJ comme le compagnon ou familier d'un PJ, dans le cas où certains traits du PNJ sont calculés à partir de valeurs d'attributs du PJ.
 
-Pour ce faire, il faut indiquer le nom **exact** du PJ dans le PNJ est le compagnon, puis définir une expression pour le calcul des traits du PNJ, en spécifiant le nom d'un attribut du PJ dont il dépend entre <kbd>[ ]</kbd>. Comme il s'agit d'expressions mathématiques interprétées par du code Javascript, la multiplication est représentée par le signe <kbd>*</kbd> et la division par le signe <kbd>/</kbd>.
+Pour ce faire, il faut indiquer le nom **exact** du PJ dans le PNJ est le compagnon, puis définir une expression pour le calcul des traits du PNJ, en spécifiant le nom d'un attribut du PJ dont il dépend entre <kbd>[ ... ]</kbd>. Comme il s'agit d'expressions mathématiques interprétées par du code Javascript, la multiplication est représentée par le signe <kbd>*</kbd> et la division par le signe <kbd>/</kbd>.
 
 _Exemple : Loup (rôdeur)_
 
-- Défense : <kbd>12 + [rang_voie?]</kbd> 
+- Défense : <kbd>12 + [rang_voie?]</kbd> _(ex : \[rang\_voie3\] si "compagnon animal" est en voie n°3)_
   
   _En remplaçant ? par le no de la voie du compagnon animal_ sur la fiche du rôdeur.
 
 - Vigueur : <kbd>[niveau]*4</kbd>
 - Initiative : <kbd>[init]</kbd>
 - Attaque : <kbd>[atkmag]</kbd>
+
+## Compétences
+
+Cette section permet de configurer des bonus de compétences pour le PNJ.
+
+Indiquez une compétence par ligne sous le format :
+
+<kbd>XXX: +bonus Nom de la compétence</kbd>
+
+où
+
+<kbd>XXX</kbd> est un nom de caractéristique (AGI, PER, etc...), suivi de <kbd>:</kbd> et d'un espace
+
+<kbd>+bonus</kbd> est le bonus qui s'ajoute au score de la caractéristique, suivi d'un espace
+
+Lorsqu'un test de caractéristique est effectué et que une ou plusieurs compétences sont associées à celle-ci, la fiche affiche un popup Roll20 pour choisir une compétence ou faire un jet "sec".
 
 ## Importer un statblock
 
@@ -38,10 +54,11 @@ Cette section dépliable permet d'importer les données techniques du PNJ en cop
 Divers boutons disséminés dans la fiche permettent d'afficher dans le chat Roll20 des menus avec des listes d'actions. Ces boutons peuvent être configurés en tant que macros Roll20 et insérés dans la barre rapide des macros et/ou configurés en tant qu'action de jetons.
 
 Les macros à configurer sont les suivantes :
-- <kbd>%{selected|npc_menus-btn}</kbd> affiche un menu de tous les autres sous-menus possibles
-- <kbd>%{selected|caract_menu-btn}</kbd> affiche un menu pour les jets de caractéristiques
-- <kbd>%{selected|npcatks_menu-btn}</kbd> affiche un menu pour les jets d'attaque
-- <kbd>%{selected|npcrolls_menu-btn}</kbd> affiche un menu des jets de capacités
+- <kbd>%{selected|npc_menus-btn}</kbd> : menu de tous les autres sous-menus possibles
+- <kbd>%{selected|caract_menu-btn}</kbd> : menu pour les jets de caractéristiques
+- <kbd>%{selected|caract_select-btn}</kbd> : popup Roll20 de sélection d'un jet de caractéristique
+- <kbd>%{selected|npcatks_menu-btn}</kbd> : popup Roll20 de sélection d'un jet d'attaque (ou jet si le PNJ a une seule attaque)
+- <kbd>%{selected|npcrolls_menu-btn}</kbd> : menu des jets de capacités
 
 ---
 
