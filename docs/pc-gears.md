@@ -86,6 +86,20 @@ Pour chaque élément de la liste, vous indiquez :
 
 Si vous spécifiez une propriété <kbd>type</kbd> avec la valeur <kbd>munitions</kbd>, la fiche recherche dans les armes une ligne dont le type d'attaque est _Trait_ et dont le nom de munition correspond au nom de la ressource. Elle établit la relation entre les deux éléments pour décrémenter la ressource à chaque attaque et afficher un message d'avertissement lorsque le personnage est à court de munitions.
 
+# Munitions
+
+Cette section n'apparait que si le script **COFantasy2** est installé dans la partie.
+
+Elle permet de gérer une liste de munitions spéciales de manière plus détaillée que le suivi des munitions simplifié intégré de base à la fiche.
+
+Pour chaque élément de la liste, vous indiquez :
+- Le nom de la munition
+- Son type (et donc le type d'arme susceptible de l'utiliser)
+- Les quantités possédées courantes et maximum
+- Le taux de perte de la munition une fois utilisée
+- Les effets particuliers de la munition, exprimés comme une liste de mots-clefs
+- Des effets étendus, exprimés avec la même syntaxe que les options d'attaque
+
 # Equipement divers et notes
 
 Ces deux zones de saisie libre permettent d'enregistrer des détails supplémentaires sur le matériel du PJ.
