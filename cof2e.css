@@ -379,7 +379,8 @@ div.path div.block-title {
 }
 
 .cofmain input[value="0"].has-script textarea.has-script,
-.cofmain input[value="0"].has-script .weapon span.has-script {
+.cofmain input[value="0"].has-script .weapon span.has-script,
+.cofmain input[value="0"].has-script + div.ammos {
   display: none;
 }
 
@@ -514,7 +515,8 @@ input[value="0"].pc-skills-btn ~ button.pc-skills-btn {
 .tabs-toggle[value="abilities"] ~ div .npc-abilities-btn,
 .tabs-toggle[value="notes"] ~ div .npc-notes-btn,
 .tabs-toggle[value="gears"] ~ div .npc-gears-btn,
-.tabs-toggle[value="config"] ~ div .npc-config-btn {
+.tabs-toggle[value="config"] ~ div .npc-config-btn,
+.tabs-toggle[value="script"] ~ div .npc-script-btn {
   color: white; 
   background-color: var(--cof-hilite); 
 }
@@ -905,6 +907,10 @@ button.spell-concentration {
   font-weight: bold;
 }
 
+.abilities-view .abilities summary:has(input:not([value=""]).notes).notes {
+  font-style: italic;
+}
+
 .abilities-view .abilities .rank span {
   white-space: pre-wrap;
   user-select: text;
@@ -921,6 +927,7 @@ button.spell-concentration {
 .abilities .rank textarea.one-row,
 .pc-roll-r1 textarea.one-row,
 .pc-gears .gears textarea.one-row,
+.pc-gears .ammos textarea.one-row,
 .pc-actions textarea.one-row,
 .npc-abilities .npc-ability textarea.one-row,
 .npc-gears .gears textarea.one-row,
@@ -952,6 +959,7 @@ button.spell-concentration {
 .abilities .path textarea.one-row:focus,
 .pc-roll-r1 textarea.one-row:focus,
 .pc-gears .gears textarea.one-row:focus,
+.pc-gears .ammos textarea.one-row:focus,
 .pc-actions textarea.one-row:focus,
 .npc-abilities .npc-ability textarea.one-row:focus,
 .npc-gears .gears textarea.one-row:focus,
@@ -1005,6 +1013,7 @@ input[value="0"].show-paths-789 ~ div.abilities {
 .pc-gears .gears,
 .npc-gears .gears,
 .pc-gears .resources,
+.pc-gears .ammos,
 .pc-gears .misc-gears,
 .pc-gears .notes {
   margin-top: 10px;
@@ -1023,7 +1032,11 @@ input[value="0"].show-paths-789 ~ div.abilities {
   font-style: italic;
 }
 
-.pc-config-tab .pc-configs {
+.pc-config-tab ul.pc-configs li {
+  list-style: none;
+}
+
+.pc-config-tab div.pc-configs {
   display: grid;
   grid-template-columns: 60% 40%;
   gap: 2px;
@@ -1160,7 +1173,7 @@ textarea.migration {
   font-family: "Merriweather Sans";
 }
 
-.pc-config-tab select option[value=""],
+.pc-config-tab select[name="attr_couleur_pj"] option[value=""],
 .sheet-rolltemplate-cof2 .sheet-rt-header {
   background-color: burlywood;
   padding: 5px;

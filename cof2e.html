@@ -1,9 +1,9 @@
 <div class="cofmain">
 
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.5.02">
+  <input type="hidden" name="attr_verfdp" value="1.6.0">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.5.02">
+  <input type="hidden" name="attr_version" value="1.6.0">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
 
@@ -103,7 +103,7 @@
     <div>
       <img
         class="logo"
-        title="Version 1.6.0 - ??/06/2025"
+        title="Version 1.6.0 - 12/06/2025"
         src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cof2e_logo.jpg"
       />
     </div>
@@ -1475,6 +1475,13 @@
                 <span name="attr_voie1nom"></span>
               </div>
               <button type="action" class="hidden" name="act_voie1_menu-btn"></button>
+              <details>
+                <summary class="notes">
+                  Notes
+                  <input type="hidden" class="notes" name="attr_voie1notes" value="">
+                </summary>
+                <span name="attr_voie1notes"></span>
+              </details>
               <!-- Rang 1 -->
               <div class="rank">
                 <details>
@@ -1587,6 +1594,13 @@
                 <span name="attr_voie2nom"></span>
               </div>
               <button type="action" class="hidden" name="act_voie2_menu-btn"></button>
+              <details>
+                <summary class="notes">
+                  Notes
+                  <input type="hidden" class="notes" name="attr_voie2notes" value="">
+                </summary>
+                <span name="attr_voie2notes"></span>
+              </details>
               <!-- Rang 1 -->
               <div class="rank">
                 <details>
@@ -1699,6 +1713,13 @@
                 <span name="attr_voie3nom"></span>
               </div>
               <button type="action" class="hidden" name="act_voie3_menu-btn"></button>
+              <details>
+                <summary class="notes">
+                  Notes
+                  <input type="hidden" class="notes" name="attr_voie3notes" value="">
+                </summary>
+                <span name="attr_voie3notes"></span>
+              </details>
               <!-- Rang 1 -->
               <div class="rank">
                 <details>
@@ -1815,6 +1836,13 @@
                 <span name="attr_voie4nom" title="@{voie4nom}"></span>
               </div>
               <button type="action" class="hidden" name="act_voie4_menu-btn"></button>
+              <details>
+                <summary class="notes">
+                  Notes
+                  <input type="hidden" class="notes" name="attr_voie4notes" value="">
+                </summary>
+                <span name="attr_voie4notes"></span>
+              </details>
               <!-- Rang 1 -->
               <div class="rank">
                 <details>
@@ -1927,6 +1955,13 @@
                 <span name="attr_voie5nom" title="@{voie5nom}"></span>
               </div>
               <button type="action" class="hidden" name="act_voie5_menu-btn"></button>
+              <details>
+                <summary class="notes">
+                  Notes
+                  <input type="hidden" class="notes" name="attr_voie5notes" value="">
+                </summary>
+                <span name="attr_voie5notes"></span>
+              </details>
               <!-- Rang 1 -->
               <div class="rank">
                 <details>
@@ -2039,6 +2074,13 @@
                 <span name="attr_voie6nom" title="@{voie6nom}"></span>
               </div>
               <button type="action" class="hidden" name="act_voie6_menu-btn"></button>
+              <details>
+                <summary class="notes">
+                  Notes
+                  <input type="hidden" class="notes" name="attr_voie6notes" value="">
+                </summary>
+                <span name="attr_voie6notes"></span>
+              </details>
               <!-- Rang 1 -->
               <div class="rank">
                 <details>
@@ -2156,6 +2198,13 @@
                 <span name="attr_voie7nom" title="@{voie7nom}"></span>
               </div>
               <button type="action" class="hidden" name="act_voie7_menu-btn"></button>
+              <details>
+                <summary class="notes">
+                  Notes
+                  <input type="hidden" class="notes" name="attr_voie7notes" value="">
+                </summary>
+                <span name="attr_voie7notes"></span>
+              </details>
               <!-- Rang 1 -->
               <div class="rank">
                 <details>
@@ -2268,6 +2317,13 @@
                 <span name="attr_voie8nom" title="@{voie8nom}"></span>
               </div>
               <button type="action" class="hidden" name="act_voie8_menu-btn"></button>
+              <details>
+                <summary class="notes">
+                  Notes
+                  <input type="hidden" class="notes" name="attr_voie8notes" value="">
+                </summary>
+                <span name="attr_voie8notes"></span>
+              </details>
               <!-- Rang 1 -->
               <div class="rank">
                 <details>
@@ -2380,6 +2436,13 @@
                 <span name="attr_voie9nom" title="@{voie9nom}"></span>
               </div>
               <button type="action" class="hidden" name="act_voie9_menu-btn"></button>
+              <details>
+                <summary class="notes">
+                  Notes
+                  <input type="hidden" class="notes" name="attr_voie9notes" value="">
+                </summary>
+                <span name="attr_voie9notes"></span>
+              </details>
               <!-- Rang 1 -->
               <div class="rank">
                 <details>
@@ -4509,29 +4572,74 @@
             </div>
           </div>
 
-          <!-- Liste des ressources -->
-          <div class="resources">
-            <div class="block-title block-header">
-              Ressources
+          <!-- Liste des ressources & munitions -->
+          <div>
+
+            <div class="resources">
+              <div class="block-title block-header">
+                Ressources
+              </div>
+  
+              <div class="bordered">
+                
+                <fieldset class="repeating_ressources">
+  
+                  <div class="d-flex">
+                    <input type="text" name="attr_res-desc" title="@{res-desc}" placeholder="Nom de la ressource" value="">
+                    Nombre :
+                    <input type="number" class="two-digits" name="attr_res-val" title="@{res-val}" value="1">
+                  </div>
+  
+                  <div class="d-flex">
+                    <textarea class="one-row" name="attr_res-props" title="@{res-props} Propriétés" placeholder="Propriétés"></textarea>
+                  </div>
+  
+                </fieldset>
+  
+              </div>
+            </div>
+            
+            <input type="hidden" class="has-script" name="attr_script_show" value="0">
+            <div class="ammos">
+
+              <div class="block-title block-header">
+                Munitions
+              </div>
+  
+              <div class="bordered">
+                
+                <fieldset class="repeating_ammos">
+  
+                  <div class="d-flex">
+                    <input type="text" name="attr_ammo-nom" title="@{ammo-nom}" placeholder="Nom de la munition" value="">
+                    &nbsp;
+                    <select class="select-md" name="attr_ammo-type" title="@{ammo-type} Type de munition">
+                      <option value="fleche" selected>Flèche</option>
+                      <option value="carreau">Carreau</option>
+                      <option value="balle">Balle</option>
+                      <option value="autre">Autre</option>
+                    </select>
+                  </div>
+                  
+                  <div class="d-flex">
+                    <input type="number" class="two-digits" name="attr_ammo-qte" title="@{ammo-qte}" min="0" value="1">
+                    &nbsp;/&nbsp;
+                    <input type="number" class="two-digits" name="attr_ammo-qte_max" title="@{ammo-qte_max}" min="0" value="1">
+                    &nbsp;%&nbsp;
+                    <input type="number" name="attr_ammo-taux" title="@{ammo-taux} Taux de perte" min="0" max="100" value="100">
+                    &nbsp;
+                    <textarea class="one-row" name="attr_ammo-effet" title="@{ammo-effet} Effets" placeholder="Effets (liste de mots-clé)"></textarea>
+                  </div>
+
+                  <div class="d-flex">
+                    <textarea class="one-row" name="attr_ammo-exteff" title="@{ammo-exteff} Effets étendus" placeholder="Effets étendus (syntaxe des options d'attaque)"></textarea>
+                  </div>
+
+                </fieldset>
+  
+              </div>
             </div>
 
-            <div class="bordered">
-              
-              <fieldset class="repeating_ressources">
-
-                <div class="d-flex">
-                  <input type="text" name="attr_res-desc" title="@{res-desc}" placeholder="Nom de la ressource" value="">
-                  Nombre :
-                  <input type="number" class="two-digits" name="attr_res-val" title="@{res-val}" value="1">
-                </div>
-
-                <div class="d-flex">
-                  <textarea class="one-row" name="attr_res-props" title="@{res-props} Propriétés" placeholder="Propriétés"></textarea>
-                </div>
-
-              </fieldset>
-
-            </div>
           </div>
 
         </div>
@@ -4896,59 +5004,86 @@
               <summary>
                 <strong>Premiers rangs</strong>
               </summary>
-              <ul>
+              <ul class="pc-configs">
                 <li>
                   <div class="pc-configs">
                     <span name="attr_voie1nom"></span>
-                    <input type="number" name="attr_v1br" title="@{v1br}" value="1">
+                    <div class="d-flex">
+                      <input type="number" name="attr_v1br" title="@{v1br}" value="1">
+                      <input type="text" name="attr_v1profil" title="@{v1profil}" placeholder="Profil" value="">
+                    </div>
                   </div>
                 </li>
                 <li>
                   <div class="pc-configs">
                     <span name="attr_voie2nom"></span>
-                    <input type="number" name="attr_v2br" title="@{v2br}" value="1">
+                    <div class="d-flex">
+                      <input type="number" name="attr_v2br" title="@{v2br}" value="1">
+                      <input type="text" name="attr_v2profil" title="@{v2profil}" placeholder="Profil" value="">
+                    </div>
                   </div>
                 </li>
                 <li>
                   <div class="pc-configs">
                     <span name="attr_voie3nom"></span>
-                    <input type="number" name="attr_v3br" title="@{v3br}" value="1">
+                    <div class="d-flex">
+                      <input type="number" name="attr_v3br" title="@{v3br}" value="1">
+                      <input type="text" name="attr_v3profil" title="@{v3profil}" placeholder="Profil" value="">
+                    </div>
                   </div>
                 </li>
                 <li>
                   <div class="pc-configs">
                     <span name="attr_voie4nom"></span>
-                    <input type="number" name="attr_v4br" title="@{v4br}" value="1">
+                    <div class="d-flex">
+                      <input type="number" name="attr_v4br" title="@{v4br}" value="1">
+                      <input type="text" name="attr_v4profil" title="@{v4profil}" placeholder="Profil" value="">
+                    </div>
                   </div>
                 </li>
                 <li>
                   <div class="pc-configs">
                     <span name="attr_voie5nom"></span>
-                    <input type="number" name="attr_v5br" title="@{v5br}" value="1">
+                    <div class="d-flex">
+                      <input type="number" name="attr_v5br" title="@{v5br}" value="1">
+                      <input type="text" name="attr_v5profil" title="@{v5profil}" placeholder="Profil" value="">
+                    </div>
                   </div>
                 </li>
                 <li>
                   <div class="pc-configs">
                     <span name="attr_voie6nom"></span>
-                    <input type="number" name="attr_v6br" title="@{v6br}" value="1">
+                    <div class="d-flex">
+                      <input type="number" name="attr_v6br" title="@{v6br}" value="1">
+                      <input type="text" name="attr_v6profil" title="@{v6profil}" placeholder="Profil" value="">
+                    </div>
                   </div>
                 </li>
                 <li>
                   <div class="pc-configs">
                     <span name="attr_voie7nom"></span>
-                    <input type="number" name="attr_v7br" title="@{v7br}" value="4">
+                    <div class="d-flex">
+                      <input type="number" name="attr_v7br" title="@{v7br}" value="4">
+                      <input type="text" name="attr_v7profil" title="@{v7profil}" placeholder="Profil" value="">
+                    </div>
                   </div>
                 </li>
                 <li>
                   <div class="pc-configs">
                     <span name="attr_voie8nom"></span>
-                    <input type="number" name="attr_v8br" title="@{v8br}" value="4">
+                    <div class="d-flex">
+                      <input type="number" name="attr_v8br" title="@{v8br}" value="4">
+                      <input type="text" name="attr_v8profil" title="@{v8profil}" placeholder="Profil" value="">
+                    </div>
                   </div>
                 </li>
                 <li>
                   <div class="pc-configs">
                     <span name="attr_voie9nom"></span>
-                    <input type="number" name="attr_v9br" title="@{v9br}" value="1">
+                    <div class="d-flex">
+                      <input type="number" name="attr_v9br" title="@{v9br}" value="1">
+                      <input type="text" name="attr_v9profil" title="@{v9profil}" placeholder="Profil" value="">
+                    </div>
                   </div>
                 </li>
               </ul>
@@ -5169,15 +5304,16 @@
               <li>
                 <details>
                   <summary>
-                    <strong>Version 1.6.0</strong> (2025-06-??)
+                    <strong>Version 1.6.0</strong> (2025-06-10)
                   </summary>
                   <ul>
                     <li>Déplacement des propriétés magiques des armes vers les modificateurs d'attaque</li>
                     <li>Ajout d'un champ <em>Prédicats si porté</em> aux lignes d'attaques et d'équipements</li>
                     <li>Création de 2 attaques pour les armes avec propriété <em>lancer</em> depuis l'onglet équipement</li>
                     <li>Ajout des jets des capacités aux boutons épinglables à la barre d'actions Roll20</li>
-                    <li>Ajout d'un gestion de compétences dans la fiche de PNJ</li>
+                    <li>Ajout d'une gestion de compétences dans la fiche de PNJ</li>
                     <li>Ajout des options tactiques et de 3 coups spéciaux dans la fiche de PNJ</li>
+                    <li>Ajout d'une liste de munitions sur l'onglet équipement (script COFantasy2)</li>
                   </ul>
                 </details>
               </li>
@@ -7145,6 +7281,12 @@ const SWData = {
       "intelligence",
       "volonté"
     ],
+    STATSUP: {
+      "0": "",
+      "N": "",
+      "S": "*",
+      "H": "**",
+    },
     COMBAT: {
       init: [
         "cfg_init_agi",
@@ -7990,7 +8132,7 @@ const SWData = {
       abilities: [ "asphyxie", "maitrise des elements", "arme elementaire", "respiration aquatique", "armure de pierre" ]
      },
     { pv: 3, name: "magie protectrice", profile: "magicien",
-      abilities: [ "arumre de mana", "chute ralentie", "dephasage", "cercle de protection", "interruption du temps" ]
+      abilities: [ "armure de mana", "chute ralentie", "dephasage", "cercle de protection", "interruption du temps" ]
      },
     { pv: 3, name: "magie universelle", profile: "magicien",
       abilities: [ "lumiere", "familier", "invisibilite", "vol", "teleportation" ]
@@ -8630,6 +8772,16 @@ function diceRoll(roll) {
 }
 
 /**
+ * Send a command to Roll20 chat
+ * @param {string} chatCmd - command to send to chat
+ */
+function sendChatCmd(chatCmd) {
+  startRoll(chatCmd, roll => {
+    finishRoll(roll.rollId);
+  });
+}
+
+/**
  * Send a message to chat
  * @param {string|string[]} msg - Message to send
  * @param {MsgOptions} options - Options for the message
@@ -8861,11 +9013,8 @@ function playFX(fxValue) {
     }
   });
 
-  if (fxChat !== "") {
-    startRoll(fxChat, roll => {
-      finishRoll(roll.rollId);
-    });
-  }
+  if (fxChat !== "")
+    sendChatCmd(fxChat);
 }
 
 /**
@@ -8897,6 +9046,7 @@ function abilityInfo(pathRank = "") {
     return {
       pathName:     "voie#nom",
       pathPV:       "voie#pv",
+      pathProfile:  "v#profil",
       rankBase:     "v#br",
       rankName:     "voie#-t#",
       rankDesc:     "voie#-#",
@@ -8924,6 +9074,7 @@ function abilityInfo(pathRank = "") {
     rank,
     pathName:     `voie${path}nom`,
     pathPV:       `voie${path}pv`,
+    pathProfile:  `v${path}profil`,
     rankBase:     `v${path}br`,
     rankName:     `voie${path}-t${rank}`,
     rankDesc:     `voie${path}-${rank}`,
@@ -9487,7 +9638,10 @@ SWData.PC.STATS.forEach(stat => {
     `t${short}_buff`,
   ];
   on(eventList("change", attrs, " "), function (eventInfo) {
-    getAttrs(attrs, function(values) {
+    getAttrs([ "sheet_type", ...attrs], function(values) {
+      if (strval(values.sheet_type) === SWData.SHEET_TYPE.NPC)
+        return;
+      
       const base = intval(values[`${short}_base`]);
       const buff = intval(values[`${short}_buff`]);
       const tbuff = intval(values[`t${short}_buff`]);
@@ -9579,6 +9733,7 @@ function updatePVMax(eventInfo, changed = "") {
     "famille", "niveau",
     "con", 
     "pv", "pv_buff",
+    "noms_voies",
     ...owned,
     ...other 
   ], function(values) {
@@ -9604,6 +9759,7 @@ function updatePVMax(eventInfo, changed = "") {
     // niveau * CON 
     pvMax += level * intval(values.con);
 
+    const unknowns = [];
     owned.forEach(ability => {
       if (!boolval(values[ability]))
         return;
@@ -9613,7 +9769,7 @@ function updatePVMax(eventInfo, changed = "") {
         return;
 
       const { path, rank } = abilityInfo(ability);
-      const pathPV = intval(values[abilityInfo(ability).pathPV]);
+      let pathPV = intval(values[abilityInfo(ability).pathPV]);
 
       if (path === SWData.settings.peoplePath && rank === 1)
         return;
@@ -9626,6 +9782,19 @@ function updatePVMax(eventInfo, changed = "") {
       if (SWData.settings.level1Paths.includes(path) && rank === 2 && hasProp(props, "initial"))
         return;
       
+      if (pathPV === 0) {
+        const pathName = strval(getPathNames(values.noms_voies)[path - 1]);
+        if (pathName !== "") {
+          const pathInfo = SWData.PVPATH.find(p => p.name === cleanText(pathName));
+          if (pathInfo)
+            pathPV = pathInfo.pv;
+        }
+        if (pathPV === 0)
+          unknowns.push(pathName);
+      }
+      if (pathPV === 0)
+        return;
+
       if (rank > 2) {
         pvMax += pathPV;
       } else {
@@ -9634,6 +9803,19 @@ function updatePVMax(eventInfo, changed = "") {
 
     });
     
+    if (unknowns.length > 0) {
+      sendChatMsg(cof2RollTemplate({
+        lsub: "Erreur",
+        rsub: "Calcul PV max",
+        alert: `**Calcul impossible : Pas de PV indiqué pour la ou les voies ${ unknowns.join(", ") }**`,
+        alertclass: "fumble"
+      }), {
+        ...SWData.RT_OPTIONS,
+        whisper: "gm"
+      });
+      return;
+    }
+
     pvMax += intval(values.pv_buff);
     if (level === 1 && pv === 0)
       pv = pvMax;
@@ -9809,22 +9991,25 @@ SWData.PC.STATS.forEach(stat => {
     });
   });
   
-  // Roll ability
+  // Roll stat
   on(`clicked:${short}-btn`, function () {
     const defGearAttrs = [
       "armure_malus", "armure_eqp",
       "cfg_bouclier_malus", "bouclier_malus", "bouclier_eqp",
       "casque", "casque_eqp",
     ];
-    getAttrs([ 
+    getAttrs([
       `${short}_dsup`,
+      short,
       `${short}_test`,
+      "sheet_type",
       "notif_fx",
       "condition_affaibli",
       "cfg_shadow", "pc",
       ...fearConditionsAttrs(),
       ...luckButtonAttrs(),
-      ...defGearAttrs
+      ...defGearAttrs, 
+      "def_action",
     ], function(values) {
       // Play FX !
       const fxValue = strval(values.notif_fx);
@@ -9840,8 +10025,9 @@ SWData.PC.STATS.forEach(stat => {
       const shadow = shadowValue(values);
       
       // Roll ability
-      const [ roll, mod ] = Object.keys(values);
-      const statMod = ` *(${ displayMod(values[mod]) })*`;
+      const [ roll, mod, test ] = Object.keys(values);
+      const isNPC = strval(values.sheet_type) === SWData.SHEET_TYPE.NPC;
+      const statMod = ` *(${ displayMod(values[isNPC ? mod : test]) })*`;
       const armure_eqp = intval(values.armure_eqp);
       const armure_malus = intval(values.armure_malus) * armure_eqp;
       const bouclier_eqp = intval(values.bouclier_eqp);
@@ -9849,11 +10035,14 @@ SWData.PC.STATS.forEach(stat => {
       const armor_malus = short === "agi" ? ` - ${armure_malus}[Malus armure]` : "";
       const shield_malus = (short === "agi" && boolval(values.cfg_bouclier_malus)) ? ` - ${bouclier_malus}[Malus bouclier]` : "";
       const helmet_malus = short === "per" ? helmetMalus(values) : "";
-      const carac = `[[@{${roll}}[Dé] + @{${short}_test}[Bonus ${short.toUpperCase()}]${shadow.malus}${fear}${armor_malus}${shield_malus}${helmet_malus} ]] `;
+      const defAction = intval(values.def_action);
+      const text = defAction !== 0 ? `+ [[${defAction}]] Défense ${ defAction === 5 ? "totale" : "partielle" }` : "";
+      const carac = `[[@{${roll}}[Dé] + @{${short}${ isNPC ? "" : "_test" }}[Bonus ${short.toUpperCase()}]${shadow.malus}${fear}${armor_malus}${shield_malus}${helmet_malus} ]] `;
       const chatMsg = cof2RollTemplate({
         lsub: "Test",
         rsub: capitalize(stat) + statMod,
         roll: carac,
+        text,
         chance: addLuckButton(values)
       }, { tags: allTags });
       sendChatMsg(chatMsg);
@@ -11189,9 +11378,7 @@ on("clicked:main_princ-btn clicked:main_autre-btn", function (eventInfo) {
     if (!rowId)
       return;
     const attack = `%{${charName}|repeating_armes_${rowId}_attack-btn}`;
-    startRoll(attack, roll => {
-      finishRoll(roll.rollId);
-    });
+    sendChatCmd(attack);
   });
 });
 
@@ -11236,10 +11423,11 @@ function actionAbility(path, rank) {
     abilityInfo({ path, rank }).rankUseMax,
     abilityInfo({ path, rank }).rankUseFreq,
     abilityInfo({ path, rank }).rankProps,
+    abilityInfo({ path, rank }).rankParam,
     abilityInfo({ path, rank }).rankBase
   ];
-  getAttrs([ ...abilityAttrs, "pm", "concentration", "rangs_voies" ], function(values) {
-    const [ name, ability, desc, owned, spell, used, uses, freq, props, br ] = Object.keys(values);
+  getAttrs([ ...abilityAttrs, "character_name", "pm", "concentration", "rangs_voies" ], function(values) {
+    const [ name, ability, desc, owned, spell, used, uses, freq, props, param, br ] = Object.keys(values);
     const pathName = strval(values[name]);
     let abilityName = strval(values[ability]);
     const abilityOwned = boolval(values[owned]);
@@ -11260,7 +11448,10 @@ function actionAbility(path, rank) {
       allTags.push(`${maxUses} / ${ usage.toLowerCase() }`);
 
     const abilityProps = strval(values[props]);
+    //const abilityParam = strval(values[param]);
     const rankBase = intval(values[br]);
+
+    const charName = strval(values.character_name);
 
     // Play FX !
     const fxValue = strval(getProp(abilityProps, "fx"));
@@ -11371,6 +11562,13 @@ function actionAbility(path, rank) {
     // Update attributes
     if (updates.size > 0)
       setAttrs(Object.fromEntries(updates));
+
+    // Do another roll
+    if (hasProp(abilityProps, "roll")) {
+      const chatCmd = `%{${charName}|${ getProp(abilityProps, "roll")}}`;
+      sendChatCmd(chatCmd);
+    }
+
   });
 }
 
@@ -11528,8 +11726,9 @@ function simplePathName(fullPathName, cleanup = true) {
  * Set path PV from path name
  * @param {number} path - path number
  */
-function updatePathPV(path) {
-  getAttrs([ `voie${path}nom` ], function(values) {
+function updatePathInfos(path) {
+  const rankNames = seq(5).map(rank => abilityInfo({ path, rank }).rankName);
+  getAttrs([ `voie${path}nom`, ...rankNames ], function(values) {
     const [ pathName ] = Object.keys(values);
     const name = simplePathName(strval(values[pathName]));
     if (name === "")
@@ -11539,7 +11738,15 @@ function updatePathPV(path) {
     if (!pathPV)
       return;
 
-    setAttrs({ [`voie${path}pv`]: pathPV.pv });
+    const updates = new Map();
+    updates.set(abilityInfo({ path, rank: 0}).pathPV, pathPV.pv);
+    updates.set(abilityInfo({ path, rank: 0}).pathProfile, pathPV.profile);
+    rankNames.forEach((rank, ix) => {
+      if (strval(values[rank]) === "")
+        updates.set(abilityInfo({ path, rank: ix + 1 }).rankName, capitalize(pathPV.abilities[ix]));
+    });
+
+    setAttrs(Object.fromEntries(updates));
   });
 }
 
@@ -11635,8 +11842,8 @@ seq(9).forEach(path => {
     // Update path names attribute
     updateAllPathNames(path);
     
-    // Find path's PV based on name
-    updatePathPV(path);
+    // Find path's infos based on name
+    updatePathInfos(path);
   });
 
   // Update PV max
@@ -13090,7 +13297,7 @@ on("clicked:appearance-btn clicked:description-btn", function() {
     if (!avatar)
       avatar = strval(values.character_token);
     if (avatar)
-      startRoll(avatar, roll => finishRoll(roll.rollId));
+      sendChatCmd(avatar);
   })
 });
 
@@ -13380,19 +13587,21 @@ function menuButton(color, font = {}, extraCSS = {}) {
  * Display roll query for stats
  */
 on("clicked:caract_select-btn", function () {
-  const allStats = SWData.PC.STATS.map(stat => `${shorten(stat)}_test`);
-  getAttrs([ "character_name", ...allStats ], function (values) {
+  const allStats = SWData.PC.STATS.map(stat => `${shorten(stat)}`);
+  const allTests = SWData.PC.STATS.map(stat => `${shorten(stat)}_test`);
+  const allSupH = SWData.PC.STATS.map(stat => `${shorten(stat)}_sup`);
+  getAttrs([ "sheet_type", "character_name", ...allStats, ...allTests, ...allSupH ], function (values) {
+    const isNPC = strval(values.sheet_type) === SWData.SHEET_TYPE.NPC;
     const charName = strval(values.character_name);
     const statSelect = SWData.PC.STATS.map((stat, ix) => {
-      const short = shorten(stat); 
-      return `${ short.toUpperCase() } (${ displayMod(values[`${short}_test`]) }),${ix + 1}`
+      const short = shorten(stat);
+      const supH = SWData.PC.STATSUP[strval(values[`${short}_sup`], "N")];
+      const test = isNPC ? "" : "_test";
+      return `${ short.toUpperCase() } (${ displayMod(values[`${short}${test}`]) })${supH},${ix + 1}`
     });
-    ask([ "Carac. ?", ...statSelect ], (skill) => {
-      const stat = shorten(SWData.PC.STATS[skill -1]);
-      const action = `%{${charName}|${stat}-btn}`;
-      startRoll(action, roll => {
-        finishRoll(roll.rollId);
-      });
+    ask([ "Carac. ?", ...statSelect ], (selected) => {
+      const stat = shorten(SWData.PC.STATS[selected -1]);
+      sendChatCmd(`%{${charName}|${stat}-btn}`);
     });
   });
 });
@@ -13401,14 +13610,17 @@ on("clicked:caract_select-btn", function () {
  * Display stats rolls chat menu
  */
 on("clicked:caract_menu-btn", function () {
-  const allStats = SWData.PC.STATS.map(stat => `${shorten(stat)}_test`);
-  getAttrs([ "character_name", "couleur_pj", ...allStats ], function (values) {
+  const allStats = SWData.PC.STATS.map(stat => `${shorten(stat)}`);
+  const allTests = SWData.PC.STATS.map(stat => `${shorten(stat)}_test`);
+  getAttrs([ "sheet_type", "character_name", "couleur_pj", ...allStats, ...allTests ], function (values) {
+    const isNPC = strval(values.sheet_type) === SWData.SHEET_TYPE.NPC;
     const charName = strval(values.character_name);
     const color = strval(values.couleur_pj);
     const chatMsg = SWData.PC.STATS.map(stat => {
       const short = shorten(stat);
+      const test = isNPC ? "" : "_test";
       const button = menuButton(color, {}, { width: "3.5rem", ["text-align"]: "center" });
-      return `${capitalize(stat)}=[${short.toUpperCase()} (${ values[`${short}_test`] })](~${charName}|${short}-btn${button})`
+      return `${capitalize(stat)}=[${short.toUpperCase()} (${ values[`${short}${test}`] })](~${charName}|${short}-btn${button})`;
     });
     sendChatMsg([
       `title=${charName}`,
@@ -13471,19 +13683,34 @@ function attackRollsMenu(npc = "") {
     getAttrs([ "character_name", "couleur_pj", ...attackNames ], function (values) {
       const charName = strval(values.character_name);
       const color = strval(values.couleur_pj);
-      const button = menuButton(color, {}, { padding: "0px 5px;" });
-      const chatMsg = rowIds.map((rowId, ix) => `${ix + 1}. ${values[`${section}_${rowId}_arme-nom`]}=[Jet](~${charName}|${section}_${rowId}_${attackBtn}-btn${button})`);
-      if (chatMsg === 0)
-        return;
-      sendChatMsg([
-        `title=${charName}`,
-        "subtitle=Jets d'attaque",
-        "color=" + color,
-        ...chatMsg
-      ], {
-        template: "custom",
-        whisper: "gm"
-      });
+      if (npc === "npc") {
+        if (attackNames.length === 0)
+          return;
+        if (attackNames.length === 1) {
+          const action = `%{${charName}|repeating_npcarmes_${ rowIds[0] }_npcatk-btn}`;
+          sendChatCmd(action);
+        } else {
+          const attackSelect = rowIds.map((rowId,ix) => values[`${section}_${rowId}_arme-nom`] + `,${ix + 1}`);
+          ask([ "Attaque ?", ...attackSelect ], (attack) => {
+            const action = `%{${charName}|repeating_npcarmes_${ rowIds[attack - 1] }_npcatk-btn}`;
+            sendChatCmd(action);
+          });
+        }
+      } else {
+        const button = menuButton(color, {}, { padding: "0px 5px;" });
+        const chatMsg = rowIds.map((rowId, ix) => `${ix + 1}. ${values[`${section}_${rowId}_arme-nom`]}=[Jet](~${charName}|${section}_${rowId}_${attackBtn}-btn${button})`);
+        if (chatMsg === 0)
+          return;
+        sendChatMsg([
+          `title=${charName}`,
+          "subtitle=Jets d'attaque",
+          "color=" + color,
+          ...chatMsg
+        ], {
+          template: "custom",
+          whisper: "gm"
+        });
+      }
     });
   });
 }
@@ -13604,9 +13831,7 @@ on("clicked:skills_menu-btn", function () {
     ask([ "Compétence ?", ...skillSelect ], (skill) => {
       const skillName = SWData.PC.SKILLS[skill -1].name;
       const action = "%{" + charName + "|skill-" + skillName + "}";
-      startRoll(action, roll => {
-        finishRoll(roll.rollId);
-      });
+      sendChatCmd(action);
     });
   });
 });
@@ -13618,18 +13843,18 @@ function allRollsMenu(npc = "") {
   getAttrs([ "character_name", "couleur_pj", "use_skills" ], function (values) {
     const charName = strval(values.character_name);
     const color = (npc === "") ? strval(values.couleur_pj) : "";
-    let menus = [ "caract:Caractéristiques" ];
+    let menus = [ "caract_select:Caractéristiques" ];
     if (npc === "npc") {
-      menus = [ ...menus, "npcatks:Attaques", "npcrolls:Capacités" ];
+      menus = [ ...menus, "npcatks_menu:Attaques", "npcrolls_menu:Capacités" ];
     } else {
-      menus = [ ...menus, "attacks:Attaques", "abilities:Capacités", "rolls:Jets de Capacités" ];
+      menus = [ ...menus, "attacks_menu:Attaques", "abilities_menu:Capacités", "rolls_menu:Jets de Capacités" ];
       if (boolval(values.use_skills))
-        menus.push("skills:Jets de Compétences");
+        menus.push("skills_menu:Jets de Compétences");
     }
     const chatMsg = menus.map(m => {
       const [ button, label ] = m.split(":");
       const menuBtn = menuButton(color, {}, { padding: "0px 5px;" });
-      return `${label}=[Menu](~${charName}|${button}_menu-btn}${menuBtn})`;
+      return `${label}=[Menu](~${charName}|${button}-btn}${menuBtn})`;
     });
     sendChatMsg([
       `title=${charName}`,
