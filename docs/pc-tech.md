@@ -115,7 +115,9 @@ Si une arme est en main, l'attribut correspondant prend une valeur composée de 
 
 - <kbd>voie1nom</kbd> : nom de la voie n°1
 - <kbd>voie1pv</kbd> : nombre de PV de la famille de profil de la voie n°1
+- <kbd>voie1notes</kbd> : notes explicatives pour la voie n°1
 - <kbd>v1br</kbd> : rang de base de la voie n°1 (*)
+- <kbd>v1profil</kbd> : profil d'appartenance de la voie n°1
 - <kbd>rang_voie1</kbd> : rang du personnage dans la voie n°1
 - <kbd>v1r1</kbd> : 1 si le rang 1 de la voie n°1 possédée
 - <kbd>v1r1_spell</kbd> 1 si le rang 1 de la voie n°1 est un sort
