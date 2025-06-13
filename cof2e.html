@@ -103,7 +103,7 @@
     <div>
       <img
         class="logo"
-        title="Version 1.6.0 - 12/06/2025"
+        title="Version 1.6.0 - 10/06/2025"
         src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cof2e_logo.jpg"
       />
     </div>
@@ -1594,13 +1594,6 @@
                 <span name="attr_voie2nom"></span>
               </div>
               <button type="action" class="hidden" name="act_voie2_menu-btn"></button>
-              <details>
-                <summary class="notes">
-                  Notes
-                  <input type="hidden" class="notes" name="attr_voie2notes" value="">
-                </summary>
-                <span name="attr_voie2notes"></span>
-              </details>
               <!-- Rang 1 -->
               <div class="rank">
                 <details>
@@ -1713,13 +1706,6 @@
                 <span name="attr_voie3nom"></span>
               </div>
               <button type="action" class="hidden" name="act_voie3_menu-btn"></button>
-              <details>
-                <summary class="notes">
-                  Notes
-                  <input type="hidden" class="notes" name="attr_voie3notes" value="">
-                </summary>
-                <span name="attr_voie3notes"></span>
-              </details>
               <!-- Rang 1 -->
               <div class="rank">
                 <details>
@@ -1836,13 +1822,6 @@
                 <span name="attr_voie4nom" title="@{voie4nom}"></span>
               </div>
               <button type="action" class="hidden" name="act_voie4_menu-btn"></button>
-              <details>
-                <summary class="notes">
-                  Notes
-                  <input type="hidden" class="notes" name="attr_voie4notes" value="">
-                </summary>
-                <span name="attr_voie4notes"></span>
-              </details>
               <!-- Rang 1 -->
               <div class="rank">
                 <details>
@@ -1955,13 +1934,6 @@
                 <span name="attr_voie5nom" title="@{voie5nom}"></span>
               </div>
               <button type="action" class="hidden" name="act_voie5_menu-btn"></button>
-              <details>
-                <summary class="notes">
-                  Notes
-                  <input type="hidden" class="notes" name="attr_voie5notes" value="">
-                </summary>
-                <span name="attr_voie5notes"></span>
-              </details>
               <!-- Rang 1 -->
               <div class="rank">
                 <details>
@@ -2074,13 +2046,6 @@
                 <span name="attr_voie6nom" title="@{voie6nom}"></span>
               </div>
               <button type="action" class="hidden" name="act_voie6_menu-btn"></button>
-              <details>
-                <summary class="notes">
-                  Notes
-                  <input type="hidden" class="notes" name="attr_voie6notes" value="">
-                </summary>
-                <span name="attr_voie6notes"></span>
-              </details>
               <!-- Rang 1 -->
               <div class="rank">
                 <details>
@@ -2198,13 +2163,6 @@
                 <span name="attr_voie7nom" title="@{voie7nom}"></span>
               </div>
               <button type="action" class="hidden" name="act_voie7_menu-btn"></button>
-              <details>
-                <summary class="notes">
-                  Notes
-                  <input type="hidden" class="notes" name="attr_voie7notes" value="">
-                </summary>
-                <span name="attr_voie7notes"></span>
-              </details>
               <!-- Rang 1 -->
               <div class="rank">
                 <details>
@@ -2317,13 +2275,6 @@
                 <span name="attr_voie8nom" title="@{voie8nom}"></span>
               </div>
               <button type="action" class="hidden" name="act_voie8_menu-btn"></button>
-              <details>
-                <summary class="notes">
-                  Notes
-                  <input type="hidden" class="notes" name="attr_voie8notes" value="">
-                </summary>
-                <span name="attr_voie8notes"></span>
-              </details>
               <!-- Rang 1 -->
               <div class="rank">
                 <details>
@@ -2436,13 +2387,6 @@
                 <span name="attr_voie9nom" title="@{voie9nom}"></span>
               </div>
               <button type="action" class="hidden" name="act_voie9_menu-btn"></button>
-              <details>
-                <summary class="notes">
-                  Notes
-                  <input type="hidden" class="notes" name="attr_voie9notes" value="">
-                </summary>
-                <span name="attr_voie9notes"></span>
-              </details>
               <!-- Rang 1 -->
               <div class="rank">
                 <details>
@@ -6090,6 +6034,46 @@
             </div>
           </div>
 
+          <input type="hidden" class="has-script" name="attr_script_show" value="0">
+          <div class="ammos">
+  
+            <div class="block-title block-header">
+              Munitions
+            </div>
+  
+            <div class="bordered">
+              
+              <fieldset class="repeating_ammos">
+  
+                <div class="d-flex">
+                  <input type="text" name="attr_ammo-nom" title="@{ammo-nom}" placeholder="Nom de la munition" value="">
+                  &nbsp;
+                  <select class="select-md" name="attr_ammo-type" title="@{ammo-type} Type de munition">
+                    <option value="fleche" selected>Flèche</option>
+                    <option value="carreau">Carreau</option>
+                    <option value="balle">Balle</option>
+                    <option value="autre">Autre</option>
+                  </select>
+                </div>
+                
+                <div class="d-flex">
+                  <input type="number" class="two-digits" name="attr_ammo-qte" title="@{ammo-qte}" min="0" value="1">
+                  &nbsp;/&nbsp;
+                  <input type="number" class="two-digits" name="attr_ammo-qte_max" title="@{ammo-qte_max}" min="0" value="1">
+                  &nbsp;%&nbsp;
+                  <input type="number" name="attr_ammo-taux" title="@{ammo-taux} Taux de perte" min="0" max="100" value="100">
+                  &nbsp;
+                  <textarea class="one-row" name="attr_ammo-effet" title="@{ammo-effet} Effets" placeholder="Effets (liste de mots-clé)"></textarea>
+                </div>
+  
+                <div class="d-flex">
+                  <textarea class="one-row" name="attr_ammo-exteff" title="@{ammo-exteff} Effets étendus" placeholder="Effets étendus (syntaxe des options d'attaque)"></textarea>
+                </div>
+  
+              </fieldset>
+  
+            </div>
+          </div>
         </div>
 
       </div>
@@ -6395,8 +6379,10 @@
             </div>
   
             <div class="sheet-col">
+
               <h4>Prédicats</h4>
               <textarea class="x-large" name="attr_predicats_script" title="@{predicats_script} Prédicats" value=""></textarea>
+
             </div>
   
           </div>

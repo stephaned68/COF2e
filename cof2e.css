@@ -931,6 +931,7 @@ button.spell-concentration {
 .pc-actions textarea.one-row,
 .npc-abilities .npc-ability textarea.one-row,
 .npc-gears .gears textarea.one-row,
+.npc-gears .ammos textarea.one-row,
 .npc-actions textarea.one-row,
 .resources textarea.one-row {
   padding: 0;
@@ -1014,6 +1015,7 @@ input[value="0"].show-paths-789 ~ div.abilities {
 .npc-gears .gears,
 .pc-gears .resources,
 .pc-gears .ammos,
+.npc-gears .ammos,
 .pc-gears .misc-gears,
 .pc-gears .notes {
   margin-top: 10px;
