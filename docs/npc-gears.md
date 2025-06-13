@@ -12,6 +12,12 @@ Une section dépliante permet d'ajouter plus de détail :
 - Un description plus longue de l'équipement,
 - Une liste de propriétés. Voir [Equipement PJ](({{ site.baseurl }}/pc-gears)) pour plus de détail.
 
+# Munitions
+
+Cette section n'apparait que si le script **COFantasy2** est installé dans la partie.
+
+Elle est identique à celle présente sur la fiche de PJ.
+
 ---
 
 [Retour]({{ site.baseurl }}/npc-main)
