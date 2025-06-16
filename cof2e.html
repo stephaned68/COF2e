@@ -11094,11 +11094,9 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
 
     let dmroll = "";
     if (dm !== "" )
-      dmroll = `[[${dm}${dmOpt}]][DM] + ${dmbonus}[Bonus]${magicDM}${ shadow.dm } + ${dmdiv}[Divers]${dmAbilities}`;
+      dmroll = `[[${dm}${dmOpt}[DM] + ${dmbonus}[Bonus]${magicDM}${ shadow.dm } + ${dmdiv}[Divers]${tacticDM}]]`;
     if (dmroll !== "" && tactics === 1)
-      dmroll = `floor((${dmroll})/2)`;
-    if (dmroll !== "")
-      dmroll = `[[${dmroll} ]]`;
+      dmroll = `[[floor((${dmroll.slice(2, -2)})/2)]]`;
 
     let special = insertRolls(strval(values[section + "special"]), { pathNames });
 
