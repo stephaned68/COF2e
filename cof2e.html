@@ -11051,7 +11051,7 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
       modifiers.push("explodemax");
 
     let dmOpt = "";
-    if (modifiers.includes("explodemax") && !dm.endsWith("!"))
+    if (modifiers.includes("explodemax") && !dm.includes("!"))
       dmOpt += "!";
     if (modifiers.includes("reroll1"))
       dmOpt += "r";
@@ -14276,7 +14276,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
       modifiers.push("explodemax");
 
     let dmOpt = "";
-    if (modifiers.includes("explodemax") && !dm.endsWith("!"))
+    if (modifiers.includes("explodemax") && !dm.includes("!"))
       dmOpt += "!";
     if (modifiers.includes("reroll1"))
       dmOpt += "r";
