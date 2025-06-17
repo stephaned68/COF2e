@@ -1594,6 +1594,13 @@
                 <span name="attr_voie2nom"></span>
               </div>
               <button type="action" class="hidden" name="act_voie2_menu-btn"></button>
+              <details>
+                <summary class="notes">
+                  Notes
+                  <input type="hidden" class="notes" name="attr_voie2notes" value="">
+                </summary>
+                <span name="attr_voie2notes"></span>
+              </details>
               <!-- Rang 1 -->
               <div class="rank">
                 <details>
@@ -1706,6 +1713,13 @@
                 <span name="attr_voie3nom"></span>
               </div>
               <button type="action" class="hidden" name="act_voie3_menu-btn"></button>
+              <details>
+                <summary class="notes">
+                  Notes
+                  <input type="hidden" class="notes" name="attr_voie3notes" value="">
+                </summary>
+                <span name="attr_voie3notes"></span>
+              </details>
               <!-- Rang 1 -->
               <div class="rank">
                 <details>
@@ -1822,6 +1836,13 @@
                 <span name="attr_voie4nom" title="@{voie4nom}"></span>
               </div>
               <button type="action" class="hidden" name="act_voie4_menu-btn"></button>
+              <details>
+                <summary class="notes">
+                  Notes
+                  <input type="hidden" class="notes" name="attr_voie4notes" value="">
+                </summary>
+                <span name="attr_voie4notes"></span>
+              </details>
               <!-- Rang 1 -->
               <div class="rank">
                 <details>
@@ -1934,6 +1955,13 @@
                 <span name="attr_voie5nom" title="@{voie5nom}"></span>
               </div>
               <button type="action" class="hidden" name="act_voie5_menu-btn"></button>
+              <details>
+                <summary class="notes">
+                  Notes
+                  <input type="hidden" class="notes" name="attr_voie5notes" value="">
+                </summary>
+                <span name="attr_voie5notes"></span>
+              </details>
               <!-- Rang 1 -->
               <div class="rank">
                 <details>
@@ -2046,6 +2074,13 @@
                 <span name="attr_voie6nom" title="@{voie6nom}"></span>
               </div>
               <button type="action" class="hidden" name="act_voie6_menu-btn"></button>
+              <details>
+                <summary class="notes">
+                  Notes
+                  <input type="hidden" class="notes" name="attr_voie6notes" value="">
+                </summary>
+                <span name="attr_voie6notes"></span>
+              </details>
               <!-- Rang 1 -->
               <div class="rank">
                 <details>
@@ -2163,6 +2198,13 @@
                 <span name="attr_voie7nom" title="@{voie7nom}"></span>
               </div>
               <button type="action" class="hidden" name="act_voie7_menu-btn"></button>
+              <details>
+                <summary class="notes">
+                  Notes
+                  <input type="hidden" class="notes" name="attr_voie7notes" value="">
+                </summary>
+                <span name="attr_voie7notes"></span>
+              </details>
               <!-- Rang 1 -->
               <div class="rank">
                 <details>
@@ -2275,6 +2317,13 @@
                 <span name="attr_voie8nom" title="@{voie8nom}"></span>
               </div>
               <button type="action" class="hidden" name="act_voie8_menu-btn"></button>
+              <details>
+                <summary class="notes">
+                  Notes
+                  <input type="hidden" class="notes" name="attr_voie8notes" value="">
+                </summary>
+                <span name="attr_voie8notes"></span>
+              </details>
               <!-- Rang 1 -->
               <div class="rank">
                 <details>
@@ -2387,6 +2436,13 @@
                 <span name="attr_voie9nom" title="@{voie9nom}"></span>
               </div>
               <button type="action" class="hidden" name="act_voie9_menu-btn"></button>
+              <details>
+                <summary class="notes">
+                  Notes
+                  <input type="hidden" class="notes" name="attr_voie9notes" value="">
+                </summary>
+                <span name="attr_voie9notes"></span>
+              </details>
               <!-- Rang 1 -->
               <div class="rank">
                 <details>
@@ -11051,7 +11107,7 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
       modifiers.push("explodemax");
 
     let dmOpt = "";
-    if (modifiers.includes("explodemax") && !dm.endsWith("!"))
+    if (modifiers.includes("explodemax") && !dm.includes("!"))
       dmOpt += "!";
     if (modifiers.includes("reroll1"))
       dmOpt += "r";
@@ -11094,7 +11150,8 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
 
     let dmroll = "";
     if (dm !== "" )
-      dmroll = `[[${dm}${dmOpt}]][DM] + ${dmbonus}[Bonus]${magicDM}${ shadow.dm } + ${dmdiv}[Divers]${dmAbilities}`;
+      dmroll = `${dm}${dmOpt} + ${dmbonus}[Bonus]${magicDM}${ shadow.dm } + ${dmdiv}[Divers]${dmAbilities}`;
+    // [[${dm}${dmOpt}]][DM]
     if (dmroll !== "" && tactics === 1)
       dmroll = `floor((${dmroll})/2)`;
     if (dmroll !== "")
@@ -11117,7 +11174,7 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
       else
         element.unshift("de");
       //special += 
-      extraDM.push(`+[[${ strval(element[1]).toLowerCase() === "intense" ? "2" : "1" }@{devol}]] DM ${ element.join(" ") }`);
+      extraDM.push(`+[[${ strval(element[1]).trim().toLowerCase() === "intense" ? "2" : "1" }@{devol}]] DM ${ element.join(" ") }`);
     }
 
     // Determine Max DMs
