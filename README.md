@@ -10,7 +10,7 @@ v1.6.0 [Screenshot](cof2e.png)
 
 ## Notes de version
 
-### Version _1.6.0_ (2025-06-12)
+### Version _1.6.0_ (2025-06-22)
 
 - Déplacement des propriétés magiques des armes vers les modificateurs d'attaque
 - Ajout d'un champ _Prédicats si porté_ aux lignes d'attaques et d'équipements
