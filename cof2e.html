@@ -812,6 +812,7 @@
                 <span class="img-btn">l</span>
               </button>
             </div>
+            <input type="hidden" name="attr_condition_inconscient" value="0">
             <div class="bordered centered">
               <input type="hidden" class="condition-affaibli" name="attr_condition_affaibli" value="0">
               <button
@@ -7382,7 +7383,17 @@ const SWData = {
         "niveau",
       ]
     },
-    CONDITIONS: [ 
+    CONDITIONS: [
+      {
+        name: "inconscient",
+        label: "Inconscient",
+        lowFantasy: false,
+        effects: { },
+        description: [
+          "Tombe au sol inconscient",
+          "Perd 1 Dé de Récupération"
+        ]
+      },
       { 
         name: "affaibli",
         label: "Affaibli",
@@ -10154,6 +10165,51 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
 });
 
 /**
+ * Return object for wounds conditions
+ * @param {object} values - Roll20 getAttrs() object
+ * @returns { {
+ * dr: number,
+ * condition_affaibli: number,
+ * condition_inconscient: number,
+ * effects: string[],
+ * pvstatus: string
+ * } }
+ */
+function wounded(values) {
+  let pv = intval(values.pv);
+  let dr = intval(values.dr);
+  let condition_affaibli = 0;
+  let condition_inconscient = 0;
+  let effects = [];
+  if (pv <= 1) {
+    condition_affaibli = 1;
+    effects.push("subit la condition Affaibli-e (PV = 1)");
+  } 
+  if (pv === 0) {
+    dr = Math.max(dr - 1, 0);
+    condition_inconscient = 1;
+    effects.push("perd un DR et tombe au sol inconscient-e (PV = 0)");
+  }
+
+  const pvMax = intval(values.pv_max);
+  let pvstatus = "";
+  if (pv <= Math.floor(pvMax / 2))
+    pvstatus = "yellow";
+  if (pv < 2)
+    pvstatus = "red";
+  if (pv === 0)
+    pvstatus = "black";
+
+  return {
+    dr,
+    condition_affaibli,
+    condition_inconscient,
+    effects,
+    pvstatus
+  }
+}
+
+/**
  * Update PV & DR
  * @param {number} vp - Number of PV lost or gained
  * @param {number} lossOrGain - Type of change (-1 = loss, +1 = gain)
@@ -10168,7 +10224,7 @@ function updatePVDR(vp, lossOrGain, buttonClicked = true) {
     const hasRD = (lossOrGain === -1 && rd !== "") ? "\n" + "RD " + rd : "";
     const notify = numval(values.notif_pv);
 
-    let effect = "";
+    let effects = "";
     const updateAttrs = new Map;
 
     // already up-to-date if not via button
@@ -10186,7 +10242,13 @@ function updatePVDR(vp, lossOrGain, buttonClicked = true) {
       updateAttrs.set("pv", pv);
     }
 
-    if (pv > 1) {
+    const wounds = wounded(values);
+    updateAttrs.set("condition_affaibli", wounds.condition_affaibli);
+    updateAttrs.set("dr", wounds.dr);
+    effects = wounds.effects.length > 0 ? "\n" : "";
+    effects += wounds.effects.join("\n");
+
+    /*if (pv > 1) {
       updateAttrs.set("condition_affaibli", 0);
     } else if (pv === 1) {
       effect = " et subit la condition Affaibli-e (PV = 1)";
@@ -10195,13 +10257,13 @@ function updatePVDR(vp, lossOrGain, buttonClicked = true) {
       dr = Math.max(dr - 1, 0);
       updateAttrs.set("dr", dr);
       effect = ", perd un DR et tombe au sol inconscient-e (PV = 0)"
-    }
+    }*/
     
     if (notify > 0) {
       const chatMsg = cof2RollTemplate({
           lsub: "PV",
           rsub: `${ lossOrGain === -1 ? "Blessure" : "Soins" } `,
-          text : `@{character_name} ${ lossOrGain === -1 ? "perd" : "regagne" } ${vp} PV${effect}${hasRD} `
+          text : `@{character_name} ${ lossOrGain === -1 ? "perd" : "regagne" } ${vp} PV${effects}${hasRD} `
       });
       const whisper = (notify === 2) ? "gm" : "";
       sendChatMsg(chatMsg, {
@@ -10233,25 +10295,21 @@ function changeVP(button) {
  * On PV change action buttons
  */
 on("clicked:vigloss-btn clicked:vigheal-btn", function (eventInfo) {
-  const [ , button ] = eventInfo.triggerName.split(":");
+  const [ button ] = eventInfo.triggerName.split(":").slice(1);
   changeVP(button);
 });
 
 /**
- * On PV value change, change background color
+ * Change PV background color
  */
 on("change:pv", function () {
-  getAttrs(["pv", "pv_max"], function (values) {
-    const pvCur = intval(values.pv);
-    const pvMax = intval(values.pv_max);
-    let pvstatus = "";
-    if (pvCur <= Math.floor(pvMax / 2))
-      pvstatus = "yellow";
-    if (pvCur < 2)
-      pvstatus = "red";
-    if (pvCur === 0)
-      pvstatus = "black";
-    setAttrs({ pvstatus })
+  getAttrs([ "sheet_type", "pv", "pv_max" ], function (values) {
+    if (strval(values.sheet_type) === SWData.SHEET_TYPE.NPC)
+      return;
+  
+    const wounds = wounded(values);
+  
+    setAttrs({ pvstatus: wounds.pvstatus });
   });
 });
 
@@ -15296,21 +15354,56 @@ on("sheet:opened change:character_name", function() {
  * Sync pv <=> PVIG for token bars
  */
 
-on("change:pv change: pv_max", function() {
-  getAttrs([ "pv", "pv_max" ], function(values) {
+on("change:pv", function(eventInfo) {
+  if (strval(eventInfo.sourceType) !== "player")
+    return;
+  
+  getAttrs([ "pv", "dr" ], function(values) {
+    const wounds = wounded(values);
     setAttrs({ 
       PVIG: intval(values.pv),
-      PVIG_max: intval(values.pv_max) 
+      dr: wounds.dr,
+      condition_affaibli: wounds.condition_affaibli,
+      condition_inconscient: wounds.condition_inconscient,
+      pvstatus: wounds.pvstatus
     }, { silent: true });
   });
 });
 
-on("change:pvig change:pvig_max", function() {
-  getAttrs([ "PVIG", "PVIG_max" ], function(values) {
+on("change:pvig", function(eventInfo) {
+  if (strval(eventInfo.sourceType) !== "player")
+    return;
+
+  getAttrs([ "PVIG", "dr" ], function(values) {
+    const wounds = wounded({
+      pv: intval(values.PVIG),
+      dr: values.dr
+    });
     setAttrs({
       pv: intval(values.PVIG),
-      pv_max: intval(values.PVIG_max)
+      dr: wounds.dr,
+      condition_affaibli: wounds.condition_affaibli,
+      condition_inconscient: wounds.condition_inconscient,
+      pvstatus: wounds.pvstatus
     }, { silent: true });
+  });
+});
+
+on("change:pv_max", function(eventInfo) {
+  if (eventInfo.sourceType !== "player")
+    return;
+
+  getAttrs([ "pv_max" ], function(values) {
+    setAttrs({ PVIG_max: intval(values.pv_max) }, { silent: true });
+  });
+});
+
+on("change:pvig_max", function(eventInfo) {
+  if (eventInfo.sourceType !== "player")
+    return;
+
+  getAttrs([ "PVIG_max" ], function(values) {
+    setAttrs({ pv_max: intval(values.PVIG_max) }, { silent: true });
   });
 });
 
