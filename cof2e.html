@@ -1,9 +1,9 @@
 <div class="cofmain">
 
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.6.0">
+  <input type="hidden" name="attr_verfdp" value="1.7.0">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.6.0">
+  <input type="hidden" name="attr_version" value="1.7.0">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
 
@@ -103,7 +103,7 @@
     <div>
       <img
         class="logo"
-        title="Version 1.6.0 - 22/06/2025"
+        title="Version 1.7.0 - ??/07/2025"
         src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cof2e_logo.jpg"
       />
     </div>
@@ -3446,65 +3446,11 @@
 
         </div>
 
-        <hr>
-
-        <details>
-          <summary>Langues maîtrisées, Autres capacités</summary>
-          <div class="sheet-3colrow">
-            <div class="sheet-col">
-              <div>
-                <input type="checkbox" name="attr_lang_abyssal">
-                <span title="Démons, élémentaires du feu">Abyssal</span>
-              </div>
-              <div>
-                <input type="checkbox" name="attr_lang_aquarien">
-                <span title="Créatures sous-marines, élementaires de l'eau">Aquarien</span>
-              </div>
-              <div>
-                <input type="checkbox" name="attr_lang_argotien">
-                <span title="Argot des voleurs et langue des signes">Argotien</span>
-              </div>
-              <div>
-                <input type="checkbox" name="attr_lang_celestien">
-                <span title="Anges, créatures des plans supérieurs, élémentaires de l'air">Célestien</span>
-              </div>
-              <div>
-                <input type="checkbox" name="attr_lang_commun">
-                <span title="Humains, halfelins">Commun</span>
-              </div>
-            </div>
-            <div class="sheet-col">
-              <div>
-                <input type="checkbox" name="attr_lang_draconique">
-                <span title="Dragons, kobolds, hommes-lézards">Draconique</span>
-              </div>
-              <div>
-                <input type="checkbox" name="attr_lang_noirparle">
-                <span title="Goblinoïdes, orcs, ogres, trolls, créatures maléfiques">Noir parlé</span>
-              </div>
-              <div>
-                <input type="checkbox" name="attr_lang_profond">
-                <span title="Créatures souterraines (elfes des profondeurs)">Profond</span>
-              </div>
-              <div>
-                <input type="checkbox" name="attr_lang_runique">
-                <span title="Gnomes, nains, géants, élémentaires de la terre">Runique</span>
-              </div>
-              <div>
-                <input type="checkbox" name="attr_lang_sylvestre">
-                <span title="Elfes, fées, dryades, sylvaniens">Sylvestre</span>
-              </div>
-            </div>
-            <div class="sheet-col">
-              <textarea name="attr_autres" class="medium" placeholder="Autres capacités"></textarea>
-            </div>
-          </div>
-        </details>
-
         <!-- Fiche PJ, Onglet Capacités, Sous-onglets -->
         <input type="hidden" class="tabs-toggle" name="attr_pc_subtab2" value="rolls" />
         <div class="pc-subtabs">
           <button type="action" name="act_pc_rolls-btn" class="sub-tab tab-btn pc-rolls-btn">JETS</button>
+          <button type="action" name="act_pc_master-btn" class="sub-tab tab-btn pc-master-btn">MAITRISES</button>
           <input type="hidden" class="pc-skills-btn" name="attr_use_skills" value="0">
           <button type="action" name="act_pc_skills-btn" class="sub-tab tab-btn pc-skills-btn">COMPETENCES</button>
           <button type="action" name="act_pc_buffs-btn" class="sub-tab tab-btn pc-buffs-btn">BUFFS</button>
@@ -3605,6 +3551,84 @@
             -->
             
           </fieldset>
+
+        </div>
+
+        <!-- Fiche PJ, Onglet CAPACITES, Sous-onglet Maitrises -->
+        <div class="pc-master-subtab">
+
+          <div class="sheet-3colrow">
+            <div class="sheet-col">
+              <h4>Langues</h4>
+              <div>
+                <input type="checkbox" name="attr_lang_abyssal" value="1">
+                <span title="Démons, élémentaires du feu">Abyssal</span>
+              </div>
+              <div>
+                <input type="checkbox" name="attr_lang_aquarien" value="1">
+                <span title="Créatures sous-marines, élementaires de l'eau">Aquarien</span>
+              </div>
+              <div>
+                <input type="checkbox" name="attr_lang_argotien" value="1">
+                <span title="Argot des voleurs et langue des signes">Argotien</span>
+              </div>
+              <div>
+                <input type="checkbox" name="attr_lang_celestien" value="1">
+                <span title="Anges, créatures des plans supérieurs, élémentaires de l'air">Célestien</span>
+              </div>
+              <div>
+                <input type="checkbox" name="attr_lang_commun" value="1">
+                <span title="Humains, halfelins">Commun</span>
+              </div>
+            </div>
+            <div class="sheet-col">
+              <h4>&nbsp;</h4>
+              <div>
+                <input type="checkbox" name="attr_lang_draconique" value="1">
+                <span title="Dragons, kobolds, hommes-lézards">Draconique</span>
+              </div>
+              <div>
+                <input type="checkbox" name="attr_lang_noirparle" value="1">
+                <span title="Goblinoïdes, orcs, ogres, trolls, créatures maléfiques">Noir parlé</span>
+              </div>
+              <div>
+                <input type="checkbox" name="attr_lang_profond" value="1">
+                <span title="Créatures souterraines (elfes des profondeurs)">Profond</span>
+              </div>
+              <div>
+                <input type="checkbox" name="attr_lang_runique" value="1">
+                <span title="Gnomes, nains, géants, élémentaires de la terre">Runique</span>
+              </div>
+              <div>
+                <input type="checkbox" name="attr_lang_sylvestre" value="1">
+                <span title="Elfes, fées, dryades, sylvaniens">Sylvestre</span>
+              </div>
+            </div>
+            <div class="sheet-col">
+              <h4>Armes</h4>
+              <!--
+              <div>
+                <input type="checkbox" name="attr_prof_cac" value="1m">
+                <span>Contact (une main)</span>
+                &nbsp;
+                <input type="checkbox" name="attr_prof_cac" value="all">
+                <span>(toutes)</span>
+              </div>
+              <div>
+                <input type="checkbox" name="attr_prof_tir" value="1">
+                <span>Distance</span>
+                &nbsp;
+                <input type="checkbox" name="attr_prof_poudre" value="1">
+                <span>Poudre</span>
+              </div>
+              -->
+              <div>
+                <textarea class="one-row" name="attr_maitrises_armes" title="@{maitrises_armes}" placeholder="Autres maitrises d'armes"></textarea>
+              </div>
+              <h4>Armures</h4>
+              <textarea class="one-row" name="attr_maitrises_armures" title="@{maitrises_armures}" placeholder="Autres maitrises d'armures"></textarea>
+            </div>
+          </div>
 
         </div>
 
@@ -5305,6 +5329,18 @@
               <li>
                 <details>
                   <summary>
+                    <strong>Version 1.7.0</strong> (2025-07-jj)
+                  </summary>
+                  <ul>
+                    <li>Sous-onglet <em>Maîtrises</em> dans l'onglet <em>Capacités</em> pour les langues et les maîtrises spéciales d'armes / armures</li>
+                    <li>Ajout d'un popup Roll20 sur le bouton DR pour choisir entre Récupération <em>Rapide</em> ou <em>Complète</em> ou <em>Se dépasser</em></li>
+                  </ul>
+                </details>
+              </li>
+
+              <li>
+                <details>
+                  <summary>
                     <strong>Version 1.6.0</strong> (2025-06-22)
                   </summary>
                   <ul>
@@ -6949,7 +6985,7 @@
 
 /**
  * COF2e Sheet Worker
- * v1.6.0
+ * v1.7.0
  */
 
 const SWData = {
@@ -8505,10 +8541,10 @@ function parseNameValue(data, delim = ":") {
 /**
  * Clean-up text
  * @param {string} t - text to cleanup (multiple spaces & accents)
- * @param {boolean} [tags=true] - also remove COF2 tags (action types & spells)
+ * @param {boolean} [clearTags=true] - also remove COF2 tags (action types & spells)
  * @returns {string}
  */
-function cleanText(t, tags = true) {
+function cleanText(t, clearTags = true) {
   t = strval(t).toLowerCase();
   t = t.replace(/\s\s+/g,   " ");
   t = t.replace(/[àâä]/g,   "a");
@@ -8521,7 +8557,7 @@ function cleanText(t, tags = true) {
   t = t.replace(/œ/g,       "oe");
   t = t.replace(/æ/g,       "ae");
   t = t.replace(/’/g,       "'");
-  if (tags) {
+  if (clearTags) {
     t = t.replace(/\(G\)/,  "");
     t = t.replace(/\(M\)/,  "");
     t = t.replace(/\(A\)/,  "");
@@ -9274,7 +9310,12 @@ function fearConditionMalus(values) {
 /**
  * Return Valeur d'Ombre
  * @param {object} values - Roll20 getAttrs() object
- * @returns { { value: number, malus: string, dm: string, tag: string } }
+ * @returns { {
+ * value: number,
+ * malus: string,
+ * dm: string,
+ * tag: string
+ * } }
  */
 function shadowValue(values) {
   const pc = intval(values.pc);
@@ -9365,9 +9406,9 @@ function getAbilityPV(name) {
         break;
       case "mages":
         if (rank === 1)
-          pv = 1;
-        if (rank === 2)
           pv = 2;
+        if (rank === 2)
+          pv = 1;
         if (rank >= 3)
           pv = 3;
         break;
@@ -9422,8 +9463,17 @@ on("change:sheet_type", function() {
  * Change tabs
  */
 [ 
-  "pc_main", "pc_abilities", "pc_gears", "pc_notes", "pc_config", "pc_script", "pc_version",
-  "npc_main", "npc_gears", "npc_config", "npc_script"
+  "pc_main",
+  "pc_abilities",
+  "pc_gears",
+  "pc_notes",
+  "pc_config",
+  "pc_script",
+  "pc_version",
+  "npc_main",
+  "npc_gears",
+  "npc_config",
+  "npc_script"
 ].forEach(button => {
   on(`clicked:${button}-btn`, function() {
     const [ type, value ] = button.split("_");
@@ -9434,21 +9484,35 @@ on("change:sheet_type", function() {
 /**
  * Change subtabs
  */
-[ "attacks", "otact", "hands" ].forEach(button => {
+[ 
+  "attacks",
+  "otact",
+  "hands"
+].forEach(button => {
   on(`clicked:pc_${button}-btn`, function() {
-      setAttrs({ pc_subtab1: button });
+    setAttrs({ pc_subtab1: button });
   });
 });
 
-[ "rolls", "skills", "buffs", "import" ].forEach(button => {
+[ 
+  "rolls",
+  "master",
+  "skills",
+  "buffs",
+  "import"
+].forEach(button => {
   on(`clicked:pc_${button}-btn`, function() {
-      setAttrs({ pc_subtab2: button });
+    setAttrs({ pc_subtab2: button });
   });
 });
 
-[ "attacks", "abilities", "notes" ].forEach(button => {
+[ 
+  "attacks",
+  "abilities",
+  "notes"
+].forEach(button => {
   on(`clicked:npc_${button}-btn`, function() {
-      setAttrs({ npc_subtab1: button });
+    setAttrs({ npc_subtab1: button });
   });
 });
 
@@ -9496,41 +9560,41 @@ function getProfileData(profile, selectFamily = "") {
  * - set PC & DR base
  */
 on("change:famille", function(eventInfo) {
-getAttrs([ "profil", "famille" ], function(values) {
-  const family = strval(values.famille);
-  const profile = strval(values.profil);
-  setProfilesList(family, profile);
+  getAttrs([ "profil", "famille" ], function(values) {
+    const family = strval(values.famille);
+    const profile = strval(values.profil);
+    setProfilesList(family, profile);
 
-  const updates = new Map();
+    const updates = new Map();
 
-  let dRecup = 8;
-  let pcBase = 2;
-  let drBase = 2;
-  let voie123pv = 4;
-  switch (family) {
-    case "Aventuriers":
-      pcBase = 3;
-      break;
-    case "Combattants":
-      dRecup = 10;
-      voie123pv = 5;
-      break;
-    case "Mages":
-      dRecup = 6;
-      voie123pv = 3;
-      break;
-    case "Mystiques":
-      drBase = 3;
-      break;
-  }
-  updates.set("drecup", dRecup);
-  updates.set("pc_base", pcBase);
-  updates.set("dr_base", drBase);
-  updates.set("voie1pv", voie123pv);
-  updates.set("voie2pv", voie123pv);
-  updates.set("voie3pv", voie123pv);
+    let dRecup = 8;
+    let pcBase = 2;
+    let drBase = 2;
+    let voie123pv = 4;
+    switch (family) {
+      case "Aventuriers":
+        pcBase = 3;
+        break;
+      case "Combattants":
+        dRecup = 10;
+        voie123pv = 5;
+        break;
+      case "Mages":
+        dRecup = 6;
+        voie123pv = 3;
+        break;
+      case "Mystiques":
+        drBase = 3;
+        break;
+    }
+    updates.set("drecup", dRecup);
+    updates.set("pc_base", pcBase);
+    updates.set("dr_base", drBase);
+    updates.set("voie1pv", voie123pv);
+    updates.set("voie2pv", voie123pv);
+    updates.set("voie3pv", voie123pv);
 
-  logAndSet(Object.fromEntries(updates), logTitle(eventInfo));
+    logAndSet(Object.fromEntries(updates), logTitle(eventInfo));
   });
 });
 
@@ -9538,7 +9602,10 @@ getAttrs([ "profil", "famille" ], function(values) {
  * On change of profile, check skill proficiencies
  */
 on("change:profil", function(eventInfo) {
-  getAttrs([ "profil", "famille", "cfg_atk_diff", "niveau", "use_skills" ], function(values) {
+  getAttrs([ 
+    "profil", "famille", "niveau",
+    "cfg_atk_diff", "use_skills"
+  ], function(values) {
     const useSkills = boolval(values.use_skills);
     if (!useSkills)
       return;
@@ -10319,18 +10386,27 @@ on("change:pv", function () {
 on("clicked:drecup-btn", function() {
   const recupAttrs = [ 
     "dr",
+    "dr_max",
     "drecup",
     "niveau",
+    "vol",
     "pv",               
     "pv_max",
+    "cfg_highfan",
     "cfg_use_drniv",
-    "cfg_use_dronly" 
+    "cfg_use_dronly",
+    "last_rolls",
   ];
   getAttrs(recupAttrs, function(values) {
     const lsub = "Jet";
-    const rsub = "Récupération Rapide";
+    let rsub = "Récupération";
+    const highFan = boolval(values.cfg_highfan);
+    const effort = highFan ? "Se dépasser" : "";
+    const rolls = strval(values.last_rolls).split("|").map(r => intval(r));
+
     let dr = intval(values.dr);
-    if (dr === 0) {
+    let drMax = intval(values.dr_max);
+    if (dr === 0 && drMax !== 0) {
       const chatMsg = cof2RollTemplate({
         lsub,
         rsub,
@@ -10343,7 +10419,7 @@ on("clicked:drecup-btn", function() {
 
     const pvMax = intval(values.pv_max);
     let pv = intval(values.pv);
-    if (pv === pvMax) {
+    if (pv === pvMax && !highFan) {
       const chatMsg = cof2RollTemplate({
         lsub,
         rsub,
@@ -10353,30 +10429,51 @@ on("clicked:drecup-btn", function() {
       return;
     }
 
-    dr -= 1;
-    const dRecup = `d${values.drecup}`;
-    const level = intval(values.niveau);
-    const addLevel = boolval(values.cfg_use_drniv);
-    const drOnly = boolval(values.cfg_use_dronly);
-    let bRecup = "", bLevel = 0;
-    if (!drOnly) {
-      bLevel = addLevel ? level : Math.ceil(level / 2);
-      bRecup = `+ ${bLevel}[Niveau${ addLevel ? "" : "/2" }] `;
-    }
-    const recup = `[[${dRecup}[DR] ${bRecup}]] PV récupérés`;
-    const chatMsg = cof2RollTemplate({
-      lsub,
-      rsub,
-      roll: recup,
-      text: `${dr} DR restants`
+    const recups = [ "Rapide", "Complète" ];
+    if (effort !== "")
+      recups.push(effort);
+
+    ask([ "Récupération ?", ...recups ], (typeRecup) => {
+      if (typeRecup !== 2 && dr > 0)
+        dr -= 1;
+      const dRecup = `${ (typeRecup === 1 || drMax === 0) ? "d" : "" }${values.drecup}`;
+      const level = intval(values.niveau);
+      const addLevel = boolval(values.cfg_use_drniv);
+      const drOnly = boolval(values.cfg_use_dronly);
+      let bRecup = "", bLevel = 0;
+      if (!drOnly) {
+        bLevel = addLevel ? level : Math.ceil(level / 2);
+        bRecup = `+ ${bLevel}[Niveau${ addLevel ? "" : "/2" }] `;
+      }
+      let recup;
+      if (typeRecup === 3) {
+        rsub = effort;
+        recup = `[[${rolls[0]} + 1d10 + @{vol}[VOL] ]]`;
+      } else {
+        rsub += " *" + (typeRecup === 1 ? "Rapide" : "Complète") + "*"
+        recup = `[[${dRecup}[DR] ${bRecup}]] PV récupérés`;
+      }
+      let chatMsg = {
+        lsub,
+        rsub,
+        roll: recup,
+        text: `${dr} DR restants`
+      };
+      if (typeRecup === 3 && rolls.length > 1)
+        chatMsg = { ...chatMsg, broll: `[[${rolls[1]} + 1d10 + @{vol}[VOL] ]]` };
+      const chatCmd = buildChatMsg(cof2RollTemplate(chatMsg));
+      startRoll(chatCmd, roll => {
+        finishRoll(roll.rollId);
+        if (typeRecup === 3) {
+          setAttrs({ dr });
+        } else {
+          pv += roll.results.roll.result;
+          pv = Math.min(pv, pvMax);
+          setAttrs({ dr, pv });
+        }
+      });
     });
-    const chatCmd = buildChatMsg(chatMsg);
-    startRoll(chatCmd, roll => {
-      pv += roll.results.roll.result;
-      pv = Math.min(pv, pvMax);
-      finishRoll(roll.rollId);
-      setAttrs({ dr, pv });
-    });
+
   });
 });
 

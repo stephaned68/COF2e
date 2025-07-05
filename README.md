@@ -10,6 +10,11 @@ v1.6.0 [Screenshot](cof2e.png)
 
 ## Notes de version
 
+### Version _1.7.0_ (2025-07)
+
+- Sous-onglet _Maîtrises_ dans l'onglet _Capacités_ pour les langues et les maîtrises spéciales d'armes / armures
+- Ajout d'un popup Roll20 sur le bouton DR pour choisir Récupération _Rapide_ ou _Complète_ ou _Se dépasser_
+
 ### Version _1.6.0_ (2025-06-22)
 
 - Déplacement des propriétés magiques des armes vers les modificateurs d'attaque

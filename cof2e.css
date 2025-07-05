@@ -1,4 +1,4 @@
-/* COF2e v1.6.0 */
+/* COF2e v1.7.0 */
 
 @import url('https://fonts.googleapis.com/css?family=Merriweather+Sans&display=swap');
 
@@ -482,6 +482,7 @@ input[value="0"].pc-skills-btn ~ button.pc-skills-btn {
 .pc-otact-subtab,
 .pc-hands-subtab,
 .pc-rolls-subtab,
+.pc-master-subtab,
 .pc-skills-subtab,
 .pc-buffs-subtab,
 .pc-import-subtab,
@@ -502,6 +503,7 @@ input[value="0"].pc-skills-btn ~ button.pc-skills-btn {
 .tabs-toggle[value="hands"] ~ div .pc-hands-btn,
 .tabs-toggle[value="abilities"] ~ div .pc-abilities-btn,
 .tabs-toggle[value="rolls"] ~ div .pc-rolls-btn,
+.tabs-toggle[value="master"] ~ div .pc-master-btn,
 .tabs-toggle[value="skills"] ~ div .pc-skills-btn,
 .tabs-toggle[value="buffs"] ~ div .pc-buffs-btn,
 .tabs-toggle[value="import"] ~ div .pc-import-btn,
@@ -528,6 +530,7 @@ input[value="0"].pc-skills-btn ~ button.pc-skills-btn {
 .tabs-toggle[value="hands"] ~ div.pc-hands-subtab,
 .tabs-toggle[value="abilities"] ~ div.pc-abilities-tab,
 .tabs-toggle[value="rolls"] ~ div.pc-rolls-subtab,
+.tabs-toggle[value="master"] ~ div.pc-master-subtab,
 .tabs-toggle[value="skills"] ~ div.pc-skills-subtab,
 .tabs-toggle[value="buffs"] ~ div.pc-buffs-subtab,
 .tabs-toggle[value="import"] ~ div.pc-import-subtab,
@@ -758,6 +761,7 @@ div.change-view {
 .pc-otact-subtab,
 .pc-hands-subtab,
 .pc-rolls-subtab,
+.pc-master-subtab,
 .pc-skills-subtab,
 .pc-buffs-subtab,
 .pc-import-subtab {
@@ -925,6 +929,7 @@ button.spell-concentration {
 .weapon-opt textarea.one-row,
 .abilities .path textarea.one-row,
 .abilities .rank textarea.one-row,
+.pc-abilities-tab .pc-master-subtab textarea.one-row,
 .pc-roll-r1 textarea.one-row,
 .pc-gears .gears textarea.one-row,
 .pc-gears .ammos textarea.one-row,
@@ -958,6 +963,7 @@ button.spell-concentration {
 .weapon-opt textarea.one-row:focus,
 .abilities .rank textarea.one-row:focus,
 .abilities .path textarea.one-row:focus,
+.pc-abilities-tab .pc-master-subtab textarea.one-row:focus,
 .pc-roll-r1 textarea.one-row:focus,
 .pc-gears .gears textarea.one-row:focus,
 .pc-gears .ammos textarea.one-row:focus,
