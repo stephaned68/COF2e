@@ -57,7 +57,7 @@ Les PV et DR max affichés tiennent compte de la famille du profil (+1 DR pour u
 
 Deux icones permettent de faire varier les PV en saisissant le gain ou la perte dans un popup Roll20. Une formule de dé peut être saisie dans ce popup (_ex_ : <kbd>1d8</kbd>) et le jet correspondant sera effectué. Si nécessaire en cas de perte de PV, la fiche applique l'état préjudiciable _Affaibli_ (1 PV) et la perte de DR (0 PV).
 
-On peut également cliquer sur <kbd>DR</kbd> pour effectuer un jet de Récupération rapide, ce qui modifie le nombre de PV courants et décompte un DR du nombre disponible.
+On peut également cliquer sur <kbd>DR</kbd> pour effectuer un jet de Récupération _Rapide_ ou _Complète_, ce qui modifie le nombre de PV courants et décompte un DR du nombre disponible. Si l'option de configuration _High Fantasy_ est active, ce bouton permet aussi d'utiliser la règle optionnelle _Se dépasser_.
 
 # Points de Mana
 
