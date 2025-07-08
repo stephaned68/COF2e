@@ -1115,7 +1115,8 @@
                 </div>
                 <div class="d-flex d-flex-middle bordered">
                   <input type="hidden" name="attr_arme-label" value="">
-                  <span class="align-self-center" name="attr_arme-label"></span>&nbsp;
+                  <input type="hidden" class="arme-label" name="attr_arme-showlbl" value="0">
+                  <span class="align-self-center arme-label" name="attr_arme-label"></span>&nbsp;
                   <input type="text" name="attr_arme-nom" title="@{arme-nom}" placeholder="Arme/attaque" value="">
                 </div>
                 <div class="d-flex d-flex-middle bordered">
@@ -5741,7 +5742,8 @@
                 </div>
                 <div class="d-flex d-flex-middle bordered">
                   <input type="hidden" name="attr_arme-label" value="">
-                  <span class="align-self-center has-script" name="attr_arme-label"></span>&nbsp;
+                  <input type="hidden" class="arme-label" name="attr_arme-showlbl" value="0">
+                  <span class="align-self-center arme-label" name="attr_arme-label"></span>&nbsp;
                   <input type="text" name="attr_arme-nom" title="@{arme-nom}" placeholder="Arme/attaque" value="">
                 </div>
                 <div class="d-flex d-flex-middle bordered">
@@ -10464,13 +10466,12 @@ on("clicked:drecup-btn", function() {
       const chatCmd = buildChatMsg(cof2RollTemplate(chatMsg));
       startRoll(chatCmd, roll => {
         finishRoll(roll.rollId);
-        if (typeRecup === 3) {
-          setAttrs({ dr });
-        } else {
+        let updates = new Map([ [ "dr", dr ] ]);
+        if (typeRecup !== 3) {
           pv += roll.results.roll.result;
-          pv = Math.min(pv, pvMax);
-          setAttrs({ dr, pv });
+          updates.set("pv", Math.min(pv, pvMax));
         }
+        setAttrs(Object.fromEntries(updates));
       });
     });
 
@@ -10874,6 +10875,7 @@ on("change:repeating_armes:arme-nom clicked:renum_atk-btn", function(eventInfo) 
       labels.forEach(label => {
         if (renumber || intval(values[label]) === 0)
           updates.set(label, ++numLabel);
+        updates.set(label.replace("label", "showlbl"), hasMODScript(values) ? 1 : 0);
       });
       if (renumber || numLabel > maxLabel)
         updates.set("max_attack_label", numLabel);
@@ -13848,14 +13850,20 @@ on("clicked:etats_menu-btn", function() {
     const lowFantasy = boolval(values.cfg_lowfan);
     const chatMsg = SWData.PC.CONDITIONS
     .filter(condition => {
+      if (condition.name === "inconscient")
+        return;
       if (condition.lowFantasy && !lowFantasy)
         return;
       return condition;
     })
     .map(condition => {
       const color = boolval(values[`condition_${condition.name}`]) ? [ "#dc3545" ] : [ "#198754" ];
-      const button = menuButton(color, {}, { padding: "0px 5px;" });
-      return `${condition.label}=[⚪](~${charName}|${condition.name}-icon${button})`;
+      const button = menuButton(color, {}, { 
+        padding: "0px 5px;",
+        "border-radius": "50%;",
+        "min-width": "10px;"
+      });
+      return `${condition.label}=[&nbsp;](~${charName}|${condition.name}-icon${button})`;
     });
     sendChatMsg([
       `title=${charName}`,
@@ -14298,6 +14306,7 @@ on("change:repeating_npcarmes:arme-nom clicked:renum_npcatk-btn", function(event
       labels.forEach(label => {
         if (renumber || intval(values[label]) === 0)
           updates.set(label, ++numLabel);
+        updates.set(label.replace("label", "showlbl"), hasMODScript(values) ? 1 : 0);
       });
       if (renumber || numLabel > maxLabel)
         updates.set("max_attack_label", numLabel);
@@ -14483,20 +14492,20 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     }
 
     const modifiers = strval(values[section + "atkmods"]).split(",").map(mod => mod.trim());
-
     if (boolval(values.cfg_lowfan))
       modifiers.push("explodemax");
-
-    let dmOpt = "";
-    if (modifiers.includes("explodemax") && !dm.endsWith("!"))
-      dmOpt += "!";
-    if (modifiers.includes("reroll1"))
-      dmOpt += "r";
 
     let [ dm, ...dmextra ] = strval(values[section + "dm"]).split(" ");
     const dmtype = strval(values[section + "dmtype"]);
     const dmdesc = [ dmtype, ...dmextra ].join(" ").trim();
     const dmdiv = strval(values[section + "dmdiv"]);
+
+    let dmOpt = "";
+    if (modifiers.includes("explodemax") && !dm.includes("!"))
+      dmOpt += "!";
+    if (modifiers.includes("reroll1"))
+      dmOpt += "r";
+
     let dmroll = "";
     if (dm !== "") {
       dm = dm.replace("dE", "d4°");
