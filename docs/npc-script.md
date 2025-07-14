@@ -28,6 +28,29 @@ La ligne peut ne comporter qu'un code sans <kbd>:</kbd> ni valeur, pour activer 
 
 Les lignes vides ou commençant par <kbd>//</kbd> (pour insérer un texte de commentaire) sont autorisées mais non traitées.
 
+## Autres scripts MOD
+
+La fiche COF2 peut interagir avec d'autres scripts MOD disponibles dans la bibliothèque Roll20.
+
+Il est nécessaire de disposer d'un compte payant <strong>Pro</strong> pour pouvoir utiliser les scripts MOD.
+
+### TokenMod
+
+Ce script permet de modifier les propriétés d'un token grâce à des commandes de chat Roll20.
+
+Lorsque le script est activé, trois boutons sont affichés sous le token du PNJ dans l'entête de la fiche.
+- <kbd>-</kbd> permet de diminuer la taille du token de 10%
+- <kbd>🗸</kbd> permet de lier les barres du token aux attributs de la fiche (cf Liaison par défaut)
+- <kbd>-</kbd> permet d'augmenter la taille du token de 10%
+
+D'autres options peuvent être activées :
+- Marker 0 PV : permet d'indiquer un nom de marker à appliquer au token lorsque le nombre de PV tombe à 0.
+
+#### Liaison par défaut des barres de tokens
+
+2. 🔵 : Défense
+3. 🔴 : Valeur des points de Vigueur courants/max (mook)
+
 ---
 
 [Retour]({{ site.baseurl }}/npc-main)

@@ -30,6 +30,40 @@ La ligne doit forcément comporter un <kbd>:</kbd> pour que la partie à gauche 
 
 Les lignes vides ou commençant par <kbd>//</kbd> (pour insérer un texte de commentaire) sont autorisées mais non traitées.
 
+## Autres scripts MOD
+
+La fiche COF2 peut interagir avec d'autres scripts MOD disponibles dans la bibliothèque Roll20.
+
+Il est nécessaire de disposer d'un compte payant <strong>Pro</strong> pour pouvoir utiliser les scripts MOD.
+
+### TokenMod
+
+Ce script permet de modifier les propriétés d'un token grâce à des commandes de chat Roll20.
+
+L'option <em>Players can use --ids</em> doit être activée dans la configuration du script pour que les joueurs puissent interagir avec le token de leur personnage.
+
+Lorsque le script est activé, trois boutons sont affichés sous le token du personnage dans l'entête de la fiche.
+- <kbd>-</kbd> permet de diminuer la taille du token de 10%
+- <kbd>🗸</kbd> permet de lier les barres du token aux attributs de la fiche (cf Liaison par défaut)
+- <kbd>-</kbd> permet d'augmenter la taille du token de 10%
+
+D'autres options peuvent être activées :
+- Marker 0 PV : permet d'indiquer un nom de marker à appliquer au token lorsque le nombre de PV tombe à 0.
+  
+  Le nom par défaut de ce marker est <kbd>dead</kbd> et il affiche une croix rouge sur le token. Si le nom est effacé, aucun marker n'est appliqué.
+
+- Markers états préjudiciables : permet d'ajouter et retirer des markers selon les états préjudiciables subis par le personnage.
+
+  Les markers des états préjudiciables doivent être nommés <kbd>cof2-affaibli</kbd>, <kbd>cof2-aveugle</kbd>, <kbd>cof2-effraye</kbd>, <kbd>cof2-essoufle</kbd>, <kbd>cof2-etourdi</kbd>, <kbd>cof2-immobilise</kbd>, <kbd>cof2-invalide</kbd>, <kbd>cof2-panique</kbd>, <kbd>cof2-paralyse</kbd>, <kbd>cof2-ralenti</kbd>, <kbd>cof2-renverse</kbd>, <kbd>cof2-surpris</kbd>.
+
+  <em>Un bug Roll20 empêche cette option de fonctionner correctement si l'une des barres du token est lié à la Défense du personnage et que l'état préjudiciable appliqué réduit la Défense. Lorsque c'est le cas, le marker ne s'affiche qu'une fois sur deux. Pour résoudre le problème, la seule solution est de ne pas assigner la Défense à une barre de token (Juillet 2025).</em>
+
+#### Liaison par défaut des barres de tokens
+
+1. 🟢 : Points de Mana courant/max (si le personnage en dispose)
+2. 🔵 : Défense
+3. 🔴 : Points de Vigueur courants/max
+
 ---
 
 [Retour]({{ site.baseurl }}/pc-main)
