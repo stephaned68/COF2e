@@ -396,6 +396,9 @@ div.path div.block-title {
 .cofmain .heading .token {
   width: 100%;
 }
+.cofmain .heading input[value="0"].token-mod ~ div.token-mod {
+  display: none;
+}
 
 .identity input[type="text"] {
   border-bottom: dashed 1px;
@@ -1058,16 +1061,24 @@ input[value="0"].show-paths-789 ~ div.abilities {
   border: 1px dotted var(--cof-dark);
 }
 
+.pc-script-tab div.pc-configs {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  gap: 2px;
+}
+
 .pc-version-tab details ul {
   padding-left: 0;
   margin-left: 10px;
 }
 
-.pc-version-tab details li {
-  font-size: smaller;
+.pc-version-tab details li,
+.pc-version-tab details li em {
+  font-size: small;
 }
 
-.npc-config-tab .npc-configs {
+.npc-config-tab .npc-configs,
+.npc-script-tab .npc-configs {
   display: grid;
   grid-template-columns: 25% 75%;
   gap: 2px;

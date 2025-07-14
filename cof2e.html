@@ -111,6 +111,18 @@
     <!-- Token -->
     <div>
       <img class="token" name="attr_character_token">
+      <input type="hidden" class="token-mod" name="attr_tokenmod" value="0">
+      <div class="d-flex d-flex-between token-mod">
+        <button type="action" class="flat-btn img-btn" name="act_token_min-btn" title="%{token_min-btn} Diminuer la taille de 10%">
+          <span class="img-btn">-</span>
+        </button>
+        <button type="action" class="flat-btn img-btn" name="act_token_def-btn" title="%{token_def-btn} Lier les barres du token">
+          <span class="img-btn">2</span>
+        </button>
+        <button type="action" class="flat-btn img-btn" name="act_token_max-btn" title="%{token_max-btn} Augmenter la taille de 10%">
+            <span class="img-btn">+</span>
+        </button>
+      </div>
     </div>
 
     <!-- Identité -->
@@ -806,6 +818,7 @@
         <div class="pc-cond-def">
   
           <div class="conditions">
+            <input type="hidden" name="attr_conditions_markers" value="">
             <div class="centered block-header block-title">
               Etats préjudiciables&nbsp;
               <button type="action" class="flat-btn img-btn" name="act_etats_menu-btn" title="%{etats_menu-btn} Menu des états préjudiciables">
@@ -5159,7 +5172,6 @@
 
         <input class="show-script" type="hidden" name="attr_script_show" value="0">
         <div class="show-script">
-
           <div class="sheet-2colrow">
   
             <div class="sheet-col">
@@ -5310,6 +5322,31 @@
           </div>
 
         </div>
+
+        <hr>
+
+        <h4>Autres scripts MOD</h4>
+        
+        <div class="sheet-2colrow">
+          <div class="sheet-col">
+            <input type="checkbox" name="attr_tokenmod" title="@{tokenmod}" value="1">
+            <span title="Pour autoriser les joueurs à modifier leur token, le MJ doit activer 'Players can use --ids' dans la configuration du script">Token Mod</span>
+            <div class="pc-configs m2">
+              <div>Marker 0 PV</div>
+              <div class="d-flex">
+                &nbsp;:&nbsp;<input type="text" name="attr_tkmarker_dead" title="@{tkmarker_dead}" value="dead">
+              </div>
+            </div>
+            <div class="pc-configs m2">
+              <div>Markers états préjudiciables</div>
+              <div class="d-flex">
+                <input type="checkbox" name="attr_tkmarker_cond" title="@{tkmarker_cond}" value="1">
+              </div>
+            </div>          </div>
+          <div class="sheet-col">
+          </div>
+        </div>
+
       </div>
 
       <!-- Fiche PJ, Onglet Version -->
@@ -5335,6 +5372,7 @@
                   <ul>
                     <li>Sous-onglet <em>Maîtrises</em> dans l'onglet <em>Capacités</em> pour les langues et les maîtrises spéciales d'armes / armures</li>
                     <li>Ajout d'un popup Roll20 sur le bouton DR pour choisir entre Récupération <em>Rapide</em> ou <em>Complète</em> ou <em>Se dépasser</em></li>
+                    <li>Ajout d'une option <em>Token Mod</em> dans l'onglet Script pour permettre aux joueurs d'interagir avec le token de leur personnage</li>
                   </ul>
                 </details>
               </li>
@@ -6480,6 +6518,28 @@
 
             </div>
   
+          </div>
+
+        </div>
+
+        <hr>
+        
+        <h4>Autres scripts MOD</h4>
+        
+        <div class="sheet-2colrow">
+
+          <div class="sheet-col">
+            <input type="checkbox" name="attr_tokenmod" title="@{tokenmod}" value="1">
+            <span title="Pour autoriser les joueurs à changer la taille de leur token, le MJ doit activer 'Players can use --ids' dans la configuration du script">Token Mod</span>
+            <div class="npc-configs m2">
+              <div>Marker 0 PV</div>
+              <div class="d-flex">
+                &nbsp;:&nbsp;<input type="text" name="attr_tkmarker_dead" title="@{tkmarker_dead}" value="dead">
+              </div>
+            </div>
+          </div>
+
+          <div class="sheet-col">
           </div>
 
         </div>
@@ -8867,6 +8927,7 @@ function diceRoll(roll) {
  * @param {string} chatCmd - command to send to chat
  */
 function sendChatCmd(chatCmd) {
+  console.log(chatCmd)
   startRoll(chatCmd, roll => {
     finishRoll(roll.rollId);
   });
@@ -9059,6 +9120,18 @@ function hasMODScript(values) {
   if (!values.scriptVersion)
     return false;
   return values.scriptVersion;
+}
+
+/**
+ * Returns Token Mod commande to complete
+ * @param {string} charName - character name
+ * @param {Object} [props={}] - properties name/value pairs
+ * @returns {string}
+ */
+function tokenMod(charName, props = {}) {
+  let tokenmod = `!token-mod --ignore-selected --ids @{${charName}|character_id} --set `;
+  tokenmod += Object.keys(props).map(prop => `${prop}|${props[prop]}`).join(" ");
+  return tokenmod.trim();
 }
 
 /**
@@ -10372,11 +10445,23 @@ on("clicked:vigloss-btn clicked:vigheal-btn", function (eventInfo) {
  * Change PV background color
  */
 on("change:pv", function () {
-  getAttrs([ "sheet_type", "pv", "pv_max" ], function (values) {
+  getAttrs([ "sheet_type", "pv", "pv_max", "character_name", "tokenmod", "tkmarker_dead" ], function (values) {
+    const tokenmod = boolval(values.tokenmod);
+    const markerDead = strval(values.tkmarker_dead);
+    const wounds = wounded(values);
+
+    let tokenmodCmd;
+    if (tokenmod && markerDead !== "") {
+      const deadOrAlive = wounds.condition_inconscient === 1 ? "+" : "-";
+      tokenmodCmd = tokenMod(strval(values.character_name), { 
+        statusmarkers: `${deadOrAlive}${markerDead}` 
+      });
+    }
+    if (tokenmodCmd)
+      sendChatCmd(tokenmodCmd);
+
     if (strval(values.sheet_type) === SWData.SHEET_TYPE.NPC)
       return;
-  
-    const wounds = wounded(values);
   
     setAttrs({ pvstatus: wounds.pvstatus });
   });
@@ -10738,16 +10823,28 @@ SWData.PC.CONDITIONS.forEach(condition => {
       const hasCondition = 1 - intval(values[attribute]);
       const updateAttrs = setCondition(hasCondition, effects, buffs, values);
       updateAttrs.set(attribute, hasCondition);
+      updateAttrs.set("conditions_markers", `${hasCondition}|${name}`);
       setAttrs(Object.fromEntries(updateAttrs));
     });
   });
 
   // Display enabled condition
   on(`change:condition_${name}`, function() {
-    getAttrs([ `condition_${name}`, "notif_conditions" ], function(values) {
+    getAttrs([ 
+      `condition_${name}`, "notif_conditions",
+      "character_name", "tokenmod", "tkmarker_cond"
+    ], function(values) {
       const [ attribute ] = Object.keys(values);
       const hasCondition = intval(values[attribute]);
       const notify = intval(values.notif_conditions);
+
+      const tokenmod = boolval(values.tokenmod);
+      const markConditions = boolval(values.tkmarker_cond);
+      if (tokenmod && markConditions) {
+        const setUnset = boolval(hasCondition) ? "+" : "-";
+        sendChatCmd(tokenMod(strval(values.character_name), { statusmarkers: `${setUnset}cof2-${name}` }));
+      }
+
       if (hasCondition === 1 && notify !== 0)
         displayCondition(label, effects, description, notify);
     });
@@ -15511,6 +15608,29 @@ on("change:pvig_max", function(eventInfo) {
   getAttrs([ "PVIG_max" ], function(values) {
     setAttrs({ pv_max: intval(values.PVIG_max) }, { silent: true });
   });
+});
+
+on("clicked:token_min-btn clicked:token_max-btn clicked:token_def-btn", function(eventInfo) {
+  getAttrs([ "sheet_type", "character_name", "pm_max" ], function(values) {
+    const [ bt ] = strval(eventInfo.triggerName).split("_");
+    const resize = bt === "min-btn" ? 0.9 : bt === "max-btn" ? 1.1 : 0;
+    const isNPC = strval(values.sheet_type) === SWData.SHEET_TYPE.NPC;
+    let props = {};
+    if (resize > 0) {
+      props = { width: resize, height: resize };
+    } else {
+      props = { bar2_link: "def" };
+      if (isNPC) {
+        props = { ...props, bar3_link: "", bar3: "@{PVIG}" };
+      } else {
+        props = { ...props, bar3_link: "PVIG" };
+      }
+      if (!isNPC && intval(values.pm_max) > 0)
+        props = { ...props, bar1_link: "pm" };
+    }
+    sendChatCmd(tokenMod(strval(values.character_name), props));
+  });
+
 });
 
 /**
