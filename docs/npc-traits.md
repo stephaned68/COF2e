@@ -66,7 +66,9 @@ Des paramètres optionnels peuvent être ajoutés :
 
 Un clic sur le bouton d20 permet de lancer le jet d'attaque et de DM dans le chat en tenant compte des divers paramètres. Si la case d'attaques multiples est cochée et que le nom de l'attaque contient le motif <kbd>(n attaques)</kbd>, le nombre n de jets d'attaque est effectué.
 
-Le texte d'effet spécial est traité par la fiche pour substituer les jets en ligne comme décrit pour la description des [capacités des PJs]({{ site.baseurl }}/pc-abilities).
+Le texte d'effet spécial est traité par la fiche pour substituer les jets en ligne comme décrit pour la description des [capacités des PJs]({{ site.baseurl }}/pc-abilities). 
+
+Il est également possible d'indiquer dans ce champ une référence à une ligne dans le sous-onglet _Capacités_ sous la forme <kbd>jet:N</kbd> où N est le numéro de la ligne souhaitée. La description de la capacité en question s'affiche dans le chat Roll20 avec l'attaque. Ceci est utile pour les attaques qui demandent un jet pour toucher contre la Défense de la cible mais ne font pas de DM classiques.
 
 Le bouton d20 de l'attaque peut être épinglé dans la barre d'actions de Roll20 par glisser-déposer.
 
