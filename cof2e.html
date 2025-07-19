@@ -5372,6 +5372,7 @@
                   <ul>
                     <li>Sous-onglet <em>Maîtrises</em> dans l'onglet <em>Capacités</em> pour les langues et les maîtrises spéciales d'armes / armures</li>
                     <li>Ajout d'un popup Roll20 sur le bouton DR pour choisir entre Récupération <em>Rapide</em> ou <em>Complète</em> ou <em>Se dépasser</em></li>
+                    <li>Ajout de la possibilité d'indiquer <em>jet:N</em> dans le champ Spécial d'une attaque de PNJ pour afficher la description du jet correspondant dans le chat</li>
                     <li>Ajout d'une option <em>Token Mod</em> dans l'onglet Script pour permettre aux joueurs d'interagir avec le token de leur personnage</li>
                   </ul>
                 </details>
@@ -5675,7 +5676,7 @@
                   <div class="block-title">
                     <span>PV</span>
                   </div>
-                  <div class="bordered">
+                  <div class="bordered centered">
                     <input type="number" class="two-digits" name="attr_pv" title="@{pv}" value="0">
                     /
                     <input type="number" class="two-digits" name="attr_pv_max" title="@{pv_max}" value="0">
@@ -5693,7 +5694,7 @@
                       Init.
                     </button>
                   </div>
-                  <div class="bordered">
+                  <div class="bordered centered">
                     <input type="number" class="two-digits" name="attr_init" title="@{init}" value="0">
                   </div>
                 </div>
@@ -5702,7 +5703,7 @@
                   <div class="block-title">
                     Défense
                   </div>
-                  <div class="bordered">
+                  <div class="bordered centered">
                     <input type="number" class="two-digits" name="attr_def" title="@{def}" value="0">
                   </div>
                 </div>
@@ -6530,11 +6531,11 @@
 
           <div class="sheet-col">
             <input type="checkbox" name="attr_tokenmod" title="@{tokenmod}" value="1">
-            <span title="Pour autoriser les joueurs à changer la taille de leur token, le MJ doit activer 'Players can use --ids' dans la configuration du script">Token Mod</span>
+            <span>Token Mod</span>
             <div class="npc-configs m2">
               <div>Marker 0 PV</div>
               <div class="d-flex">
-                &nbsp;:&nbsp;<input type="text" name="attr_tkmarker_dead" title="@{tkmarker_dead}" value="dead">
+                &nbsp;:&nbsp;<input type="text" class="w-auto" name="attr_tkmarker_dead" title="@{tkmarker_dead}" value="dead">
               </div>
             </div>
           </div>
@@ -8826,6 +8827,7 @@ function getSectionIDsOrdered(sectionName, callback) {
 };
 
 class Repeating {
+
   /**
    * @param {string} section - repeating section name
    * @param {string[]} list - list of attribute names
@@ -9123,15 +9125,15 @@ function hasMODScript(values) {
 }
 
 /**
- * Returns Token Mod commande to complete
+ * Returns Token Mod command to complete
  * @param {string} charName - character name
  * @param {Object} [props={}] - properties name/value pairs
  * @returns {string}
  */
 function tokenMod(charName, props = {}) {
-  let tokenmod = `!token-mod --ignore-selected --ids @{${charName}|character_id} --set `;
-  tokenmod += Object.keys(props).map(prop => `${prop}|${props[prop]}`).join(" ");
-  return tokenmod.trim();
+  const tokenmod = `!token-mod --current-page --ignore-selected --ids @{${charName}|character_id}`;
+  const tokenProps = Object.keys(props).map(prop => `${prop}|${props[prop]}`).join(" ");
+  return tokenmod + (tokenProps !== "" ? " --set " : "") + tokenProps;
 }
 
 /**
@@ -10251,13 +10253,15 @@ SWData.PC.STATS.forEach(stat => {
  * Used by PC & NPC sheet
  */
 on("clicked:init-btn", function () {
-  getAttrs([ "sheet_type", "cfg_init_mod", "per", "agi", "casque_eqp", "casque" ], function(values) {
+  getAttrs([ "sheet_type", "cfg_init_mod", "per", "agi", "casque_eqp", "casque", "tactique" ], function(values) {
     let initMod = "";
     if (boolval(values.cfg_init_mod))
       initMod = ` + [[(@{per}+@{agi})/10]][Distinct]`;
     let helmet = "";
-    if (strval(values.sheet_type) === SWData.SHEET_TYPE.PC)
+    const isNPC = strval(values.sheet_type) === SWData.SHEET_TYPE.NPC;
+    if (!isNPC)
       helmet = helmetMalus(values);
+    const tactique = isNPC ? strval(values.tactique) : "";
     const roll = `[[@{init}[Initiative]${helmet} + @{cfg_init_variable}[Dé(s)]${initMod} &{tracker} ]]`;
     const chatMsg = cof2RollTemplate({
       lsub: "Jet",
@@ -10265,6 +10269,15 @@ on("clicked:init-btn", function () {
       roll
     });
     sendChatMsg(chatMsg);
+
+    if (tactique !== "") {
+      const chatMsg = cof2RollTemplate({
+        lsub: "Combat",
+        rsub: "Tactique",
+        text: tactique
+      });
+      sendChatMsg(chatMsg, { whisper: "gm" });
+    }
   });
 });
 
@@ -10446,21 +10459,21 @@ on("clicked:vigloss-btn clicked:vigheal-btn", function (eventInfo) {
  */
 on("change:pv", function () {
   getAttrs([ "sheet_type", "pv", "pv_max", "character_name", "tokenmod", "tkmarker_dead" ], function (values) {
+    const isNPC = strval(values.sheet_type) === SWData.SHEET_TYPE.NPC;
     const tokenmod = boolval(values.tokenmod);
     const markerDead = strval(values.tkmarker_dead);
     const wounds = wounded(values);
 
     let tokenmodCmd;
     if (tokenmod && markerDead !== "") {
-      const deadOrAlive = wounds.condition_inconscient === 1 ? "+" : "-";
+      let deadOrAlive = wounds.condition_inconscient === 1 ? "+" : "-";
       tokenmodCmd = tokenMod(strval(values.character_name), { 
-        statusmarkers: `${deadOrAlive}${markerDead}` 
+        statusmarkers: `${deadOrAlive}${markerDead}`
       });
     }
     if (tokenmodCmd)
       sendChatCmd(tokenmodCmd);
-
-    if (strval(values.sheet_type) === SWData.SHEET_TYPE.NPC)
+    if (isNPC)
       return;
   
     setAttrs({ pvstatus: wounds.pvstatus });
@@ -11580,7 +11593,7 @@ on("change:usure_check", function() {
           }));
         }
       }
-    } 
+    }
     catch (e) {} 
     finally {
       updates.set("usure_check", "");
@@ -14614,7 +14627,15 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
         dmroll = "[[" + dmroll + " ]]";
     }
 
-    const special = insertRolls(strval(values[section + "special"]), { isNPC: true, companionOf });
+    let special = strval(values[section + "special"]);
+    special = insertRolls(special, { isNPC: true, companionOf });
+    while (true) {
+      const matched = special.match(/jet:([1-9]+)/i);
+      if (!matched)
+        break;
+      const [ matching, index ] = matched;
+      special = special.replace(matching, "@{" + rptAttr("npcrolls", "npcroll-desc", "$" + (intval(index) - 1) ) + "}");
+    }
 
     let dmMax = 0;
     const result = dm.match(/([0-9]*)[dD]([0-9]*)/);
@@ -14777,7 +14798,7 @@ function setCompanion(values) {
   let askValues = 
     `{{mounted=[[@{${companionOf}|en_selle}]] }} ` +
     `{{rider=[[@{${companionOf}|rang_cavalier}]] }} ` +
-    `{{defowner=[[@{${companionOf}|def}]] }} `
+    `{{defowner=[[@{${companionOf}|def}]] }} `;
   SWData.COMPANIONS.forEach(attr => {
     let expr = strval(values[`comp_${attr}`]);
     if (expr === "")
@@ -15430,7 +15451,7 @@ on("sheet:opened", function() {
     "debug_mode", "scriptVersion", "scriptVersion_max",
     "character_token",
     "sheet_type", "profil", "famille",
-    "compagnon", "comp_def", "comp_pv", "comp_init", "comp_pnjatk",
+    "compagnon", "comp_def", "comp_pv_max", "comp_init", "comp_pnjatk",
     "pnjatk",
     "pc_subtab1",
     "cfg_shadow",

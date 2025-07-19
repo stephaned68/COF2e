@@ -140,12 +140,14 @@ option.optgroup {
   --cof-font: "Merriweather Sans", "Verdana";
   --cof-color: burlywood;
   --cof-dark: #3d3121;
+  --cof-light: whitesmoke;
   --cof-hilite: #6f5b41;
+  --cof-click: tomato;
 
   /* General Styles */
   width: 100%;
   min-width: 850px;
-  background-color: whitesmoke;
+  background-color: var(--cof-light);
   border: 1px solid black;
   border-radius: 10px;
   margin: 5px;
@@ -256,7 +258,8 @@ span.img-btn-xl {
 }
 
 .img-btn:hover {
-  color: tomato;
+  color: var(--cof-click);
+  transition: all 0.2s ease;
 }
 
 img.bubble-img {
@@ -264,9 +267,10 @@ img.bubble-img {
 }
 
 img.bubble-img:hover {
-  width: 20px;
-  background-color: tomato;
+  transform: scale(1.5);
+  background-color: var(--cof-click);
   border-radius: 100%;
+  transition: all 0.2s ease;
 }
 
 /* Action button as Roll button */
@@ -294,7 +298,8 @@ button[type="action"].block-title {
 }
 
 button[type="action"].block-title:hover {
-  background-color: gray;
+  color: var(--cof-click);
+  transition: all 0.1s ease;
 }
 
 /* General Layout */
@@ -676,7 +681,7 @@ div.change-view {
 
 .pc-attributes .hits input[value="black"].pv-status ~ div.pv-color {
   background-color: firebrick;
-  color: whitesmoke;
+  color: var(--cof-light);
 }
 
 .pc-attributes .hit,
@@ -950,6 +955,7 @@ button.spell-concentration {
   margin: 0;
   height: 2rem;
   resize: vertical;
+  transition: all 0.2s ease;
 }
 
 .weapon button[type="action"].float-right {
