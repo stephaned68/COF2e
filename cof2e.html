@@ -8929,7 +8929,6 @@ function diceRoll(roll) {
  * @param {string} chatCmd - command to send to chat
  */
 function sendChatCmd(chatCmd) {
-  console.log(chatCmd)
   startRoll(chatCmd, roll => {
     finishRoll(roll.rollId);
   });
@@ -9049,7 +9048,7 @@ function cof2RollTemplate(props, options = {}) {
  * @param {object} callback - Callback function to process input
  */
 function askValue(prompt, callback) {
-  const askValue = `!{{ask=[[?{${prompt}}]]}}`;
+  const askValue = `! {{ask=[[?{${prompt}}]]}}`;
   startRoll(askValue, question => {
     const query = question.results.ask.result;
     if(query && callback) {
@@ -9070,7 +9069,7 @@ function ask(askParams, callback) {
   }
   const [ prompt, ...choices ] = askParams;
   const choice = choices.map((ch, ix) => `${ch},${ix + 1}`).join("|");
-  const ask = `!{{ask=[[?{${prompt}|${choice}}]]}}`;
+  const ask = `! {{ask=[[?{${prompt}|${choice}}]]}}`;
   startRoll(ask, question => {
       const query = question.results.ask.result;
       if(query && callback) {
@@ -14458,13 +14457,14 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
   getAttrs([
     "cfg_1attack_roll", "cfg_lowfan",
     "cfg_crit_diff", "cfg_tbl_crit", "cfg_tbl_critdie", "cfg_tbl_fumble",
-    "niveau", "compagnon",
+    "character_name", "niveau", "compagnon",
     "atkgroup", "nbgroup", "pnj_tact",
     ...specials,
     ...attackAttrs.map(attribute => `${section}${attribute}`)
   ], function (values) {
     const useOneRoll = boolval(values.cfg_1attack_roll);
     const useCritDiff = intval(values.cfg_crit_diff);
+    const charName = strval(values.character_name);
     let companionOf = strval(values.compagnon);
     companionOf = companionOf !== "" ? companionOf + "|" : "";
     const group = intval(values.atkgroup);
@@ -14627,6 +14627,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
         dmroll = "[[" + dmroll + " ]]";
     }
 
+    const specialCmd = [];
     let special = strval(values[section + "special"]);
     special = insertRolls(special, { isNPC: true, companionOf });
     while (true) {
@@ -14634,7 +14635,8 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
       if (!matched)
         break;
       const [ matching, index ] = matched;
-      special = special.replace(matching, "@{" + rptAttr("npcrolls", "npcroll-desc", "$" + (intval(index) - 1) ) + "}");
+      special = special.replace(matching, "Spécial : @{" + rptAttr("npcrolls", "npcroll-name", "$" + (intval(index) - 1) ) + "}");
+      specialCmd.push("%{" + charName + "|" + rptAttr("npcrolls", "npcroll", "$" + (intval(index) - 1) ) + "}");
     }
 
     let dmMax = 0;
@@ -14757,6 +14759,9 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
       }
     });
 
+    // Commands in special
+    if (specialCmd.length > 0)
+      sendChatCmd(specialCmd.join(" "));
   })
 });
 
