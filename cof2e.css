@@ -76,6 +76,14 @@ summary h4 {
   display: inline;
 }
 
+.cofmain textarea {
+  resize: vertical;
+}
+
+.cofmain textarea.no-resize {
+  resize: none;
+}
+
 .cofmain textarea.xx-large {
   height: 24rem;
 }
@@ -743,6 +751,11 @@ div.change-view {
   border-color: orange;
   border-width: 2px;
   border-style: dashed;
+  transition: all 0.2s ease-in-out;
+}
+
+input[type="hidden"][value="1"].has-buff + .has-buff {
+  font-weight: bolder;
 }
 
 .pc-luck-rd .luck {

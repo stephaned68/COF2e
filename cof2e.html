@@ -62,6 +62,8 @@
   <input type="hidden" name="attr_pc_base" value="2">
   <input type="hidden" name="attr_pc_buff" value="0">
 
+  <input type="hidden" name="attr_allroll_buff" value="0">
+
   <!-- Other hidden attributes -->
   <input type="hidden" name="attr_rangs_voies" value="">
   <input type="hidden" name="attr_noms_voies" value="">
@@ -4281,7 +4283,13 @@
                     <option value="dr">Dés de Récup.</option>
                     <option value="pm">Points de Mana</option>
                     <option value="pc">Points de Chance</option>
-                  </optgroup>
+                  </optgroup><!--
+                  <optgroup label="Autres">
+                    <option disabled class="optgroup">
+                      &nbsp;Autres
+                    </option>
+                    <option value="*">Tous les jets</option>
+                  </optgroup>-->
                 </select>
               </div>
   
@@ -5328,13 +5336,22 @@
         <h4>Autres scripts MOD</h4>
         
         <div class="sheet-2colrow">
+
           <div class="sheet-col">
             <input type="checkbox" name="attr_tokenmod" title="@{tokenmod}" value="1">
             <span title="Pour autoriser les joueurs à modifier leur token, le MJ doit activer 'Players can use --ids' dans la configuration du script">Token Mod</span>
             <div class="pc-configs m2">
               <div>Marker 0 PV</div>
               <div class="d-flex">
-                &nbsp;:&nbsp;<input type="text" name="attr_tkmarker_dead" title="@{tkmarker_dead}" value="dead">
+                <input type="checkbox" name="attr_tkmarker_dead_on" title="@{tkmarker_dead_on}" value="1">
+                &nbsp;<input type="text" name="attr_tkmarker_dead" title="@{tkmarker_dead}" value="dead">
+              </div>
+            </div>
+            <div class="pc-configs m2">
+              <div>Marker PC</div>
+              <div class="d-flex">
+                <input type="checkbox" name="attr_tkmarker_pc_on" title="@{tkmarker_pc_on}" value="1">
+                &nbsp;<input type="text" name="attr_tkmarker_pc" title="@{tkmarker_pc}" value="three-leaves">
               </div>
             </div>
             <div class="pc-configs m2">
@@ -5342,7 +5359,9 @@
               <div class="d-flex">
                 <input type="checkbox" name="attr_tkmarker_cond" title="@{tkmarker_cond}" value="1">
               </div>
-            </div>          </div>
+            </div>          
+          </div>
+          
           <div class="sheet-col">
           </div>
         </div>
@@ -5690,7 +5709,6 @@
                 <div class="npc-trait">
                   <div class="block-title">
                     <button class="block-title" type="action" name="act_init-btn">
-                      <span class="d20-btn">t</span>
                       Init.
                     </button>
                   </div>
@@ -5701,10 +5719,13 @@
                 
                 <div class="npc-trait">
                   <div class="block-title">
-                    Défense
+                    <button class="block-title" type="action" name="act_defsup-btn">
+                      Défense
+                    </button>
                   </div>
-                  <div class="bordered centered">
-                    <input type="number" class="two-digits" name="attr_def" title="@{def}" value="0">
+                  <div class="bordered">
+                    <input type="hidden" class="has-buff" name="attr_def_sup" value="0">
+                    <input type="number" class="has-buff" class="two-digits" name="attr_def" title="@{def}" value="0">
                   </div>
                 </div>
 
@@ -6082,7 +6103,7 @@
               <div class="block-title block-header">
                 Tactique
               </div>
-              <textarea class="xx-large" name="attr_tactique" title="@{tactique}"></textarea>
+              <textarea class="xx-large" name="attr_pnj_tactique" title="@{pnj_tactique}"></textarea>
 
             </div>
 
@@ -6279,6 +6300,29 @@
               <li class="config-check" title="Atlas & règles optionnelles, p. 162">
                 <input type="checkbox" name="attr_cfg_tbl_fumble" value="1">
                 <span>Table d'échec critique</span>
+              </li>
+
+            </ul>
+
+            <h4>Défense</h4>
+            <ul>
+
+              <li>
+                <div class="npc-configs m2">
+                  <div>Base</div>
+                  <div class="d-flex">
+                    : <input type="number" class="two-digits" name="attr_def_val" title="@{def_val}">
+                  </div>
+                </div>
+              </li>
+
+              <li>
+                <div class="npc-configs m2">
+                  <div>Supérieure</div>
+                  <div class="d-flex">
+                    : <input type="number" class="two-digits" name="attr_def_supval" title="@{def_supval}">
+                  </div>
+                </div>
               </li>
 
             </ul>
@@ -8766,10 +8810,11 @@ function eventList(eventName, attributeList, joinChar = "") {
  * @returns {string}
  */
 function rptAttr(section, name, id = "") {
-  const repeat = [ "repeating", strval(section), strval(name) ];
+  return Repeating.getName(section, name, id);
+  /*const repeat = [ "repeating", strval(section), strval(name) ];
   if (strval(id) !== "")
     repeat.splice(2, 0, id);
-  return repeat.join("_");
+  return repeat.join("_");*/
 }
 
 /**
@@ -8839,6 +8884,19 @@ class Repeating {
     this.data = new Map(list.map(attribute => [attribute, `repeating_${section}_${prefix}${attribute}`]));
   }
 
+  /**
+   * Return repeating attribute name
+   * @param {string} section - section name
+   * @param {string} name - attribute name
+   * @param {string} [id=""] - row Id
+   * @returns {string}
+   */
+  static getName(section, name, id = "") {
+    const repeat = [ "repeating", strval(section), strval(name) ];
+    if (strval(id) !== "")
+      repeat.splice(2, 0, id);
+    return repeat.join("_");
+  }
   /**
    * Get fully qualified attribute name
    * @param {string} name - attribute name
@@ -10252,7 +10310,7 @@ SWData.PC.STATS.forEach(stat => {
  * Used by PC & NPC sheet
  */
 on("clicked:init-btn", function () {
-  getAttrs([ "sheet_type", "cfg_init_mod", "per", "agi", "casque_eqp", "casque", "tactique" ], function(values) {
+  getAttrs([ "sheet_type", "cfg_init_mod", "per", "agi", "casque_eqp", "casque", "pnj_tactique" ], function(values) {
     let initMod = "";
     if (boolval(values.cfg_init_mod))
       initMod = ` + [[(@{per}+@{agi})/10]][Distinct]`;
@@ -10260,7 +10318,7 @@ on("clicked:init-btn", function () {
     const isNPC = strval(values.sheet_type) === SWData.SHEET_TYPE.NPC;
     if (!isNPC)
       helmet = helmetMalus(values);
-    const tactique = isNPC ? strval(values.tactique) : "";
+    const tactique = isNPC ? strval(values.pnj_tactique) : "";
     const roll = `[[@{init}[Initiative]${helmet} + @{cfg_init_variable}[Dé(s)]${initMod} &{tracker} ]]`;
     const chatMsg = cof2RollTemplate({
       lsub: "Jet",
@@ -10269,7 +10327,7 @@ on("clicked:init-btn", function () {
     });
     sendChatMsg(chatMsg);
 
-    if (tactique !== "") {
+    if (tactique.replaceAll("0", "") !== "") {
       const chatMsg = cof2RollTemplate({
         lsub: "Combat",
         rsub: "Tactique",
@@ -10457,10 +10515,10 @@ on("clicked:vigloss-btn clicked:vigheal-btn", function (eventInfo) {
  * Change PV background color
  */
 on("change:pv", function () {
-  getAttrs([ "sheet_type", "pv", "pv_max", "character_name", "tokenmod", "tkmarker_dead" ], function (values) {
+  getAttrs([ "sheet_type", "character_name", "tokenmod", "tkmarker_dead_on", "tkmarker_dead", "pv", "pv_max" ], function (values) {
     const isNPC = strval(values.sheet_type) === SWData.SHEET_TYPE.NPC;
     const tokenmod = boolval(values.tokenmod);
-    const markerDead = strval(values.tkmarker_dead);
+    const markerDead = boolval(values.tkmarker_dead_on) ? strval(values.tkmarker_dead).trim() : "";
     const wounds = wounded(values);
 
     let tokenmodCmd;
@@ -10913,8 +10971,8 @@ function insertRolls(text, options = {}) {
     return "";
   
   const { pathNames = [], isNPC = false, companionOf = "" } = options;
-  const devol = `@{${ isNPC ? companionOf : "" }devol}` ;
-
+  const devol = `@{${ isNPC ? companionOf + "|" : "" }devol}`;
+  
   // Search for " [#d4° + XXX] " or " [#dE + XXX] "
   matchRegExp(text, /([ ]*)\[([1-9])d(4°|E)[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL|rang voie [1-9])\]([ ]*)/gm).forEach(result => {
     let [ matched, sb, dice, , stat, sa ] = result;
@@ -12535,8 +12593,13 @@ function rebuildBuffLists() {
         const rowId = `${section}_${id}_buff-`;
         const enabled = intval(values[`${rowId}on`]);
         const name = strval(values[`${rowId}nom`]).replaceAll(":", "|");
-        const attribute = `${strval(values[`${rowId}attrib`])}_buff_list`;
+        const attrib = strval(values[`${rowId}attrib`]);
         const value = strval(values[`${rowId}value`]);
+        if (attrib === "*") {
+          setAttrs({ allroll_buff: value });
+          return;
+        }
+        const attribute = `${attrib}_buff_list`;
         if (enabled === 1 && name !== "" && value !== "") {
           const buffList = buffs[attribute] + `${name} : ${value}; `;
           buffs[attribute] = buffList;
@@ -14370,6 +14433,35 @@ SWData.PC.STATS.forEach(stat => {
 });
 
 /**
+ * On enabling superior DEF
+ */
+on("change:def_sup", function () {
+  getAttrs([ "def", "def_sup", "def_val", "def_supval" ], function (values) {
+    const def = intval(values.def);
+    const defSup = boolval(values.def_sup);
+    let defVal = intval(values.def_val);
+    const defSupVal = intval(values.def_supval);
+    const updates = {};
+    if (defVal === 0) {
+      defVal = def;
+      updates.def_val = defVal;
+    }
+    updates.def = defSup ? defSupVal: defVal;
+    setAttrs(updates);
+  });
+});
+
+/**
+ * Enable/Disable superior DEF
+ */
+on("clicked:defsup-btn", function() {
+  getAttrs([ "def_sup" ], function (values) {
+    const def_sup = 1 - intval(values.def_sup);
+    setAttrs({ def_sup });
+  });
+});
+
+/**
  * Set NPC attack score
  */
 on("change:pnjatk", function() {
@@ -14980,7 +15072,7 @@ function statBlockFromPDF(statblock) {
       let match;
       // name & nc
       if (lineNum === 0) {
-        match = sbLine.match(/(.*) \| NC ([0-9]*)/);
+        match = sbLine.match(/(.*) \| NC[ ]+([0-9]*)/);
         if (match) {
           const [ , character_name, nc ] = match;
           npcAttrs.set("character_name", character_name);
@@ -14988,24 +15080,34 @@ function statBlockFromPDF(statblock) {
         }
         return;
       }
-      // creature type & size
-      match = sbLine.match(/(CRÉATURE .*) .* TAILLE (.*)/);
+      
+      // creature type
+      match = sbLine.match(/CRÉATURE[ ]*(NON VIVANTE|HUMANOÏDE|VÉGÉTATIVE|VIVANTE)/);
       if (match) {
-        const [ , creature, taille ] = match;
-        if (creature)
-          npcAttrs.set("creature", creature);
-        if (taille)
+        const type = strval(match[1]);
+        if (type !== "")
+          npcAttrs.set("creature", "CRÉATURE " + type);
+      }
+
+      // size
+      match = sbLine.match(/TAILLE[ ]*(MINUSCULE|TRÈS PETITE|PETITE|MOYENNE|GRANDE|ÉNORME|COLOSSALE)/);
+      if (match) {
+        const taille = strval(match[1]);
+        if (taille !== "")
           npcAttrs.set("taille", taille);
-        return;
       }
 
       // défense
-      match = sbLine.match(/\(S\) Défense ([0-9]*)/);
+      match = sbLine.match(/\(S\) Défense ([0-9]*) \(([0-9]*)\)/);
       if (!match)
-        match = sbLine.match(/\(S\)DEF ([0-9]*)/);
+        match = sbLine.match(/\(S\)DEF ([0-9]*) \(([0-9]*)\)/);
       if (match) {
-        const [ , def ] = match;
+        const [ def, defSup ] = match.slice(1);
         npcAttrs.set("def", def);
+        npcAttrs.set("def_val", def);
+        if (strval(defSup) !== "") {
+          npcAttrs.set("def_supval", defSup);
+        }
       }
       
       // pv
@@ -15039,8 +15141,14 @@ function statBlockFromPDF(statblock) {
 
   abilities.forEach(ability => {
     const rowId = `repeating_npcrolls_${generateRowID()}_npcroll-`;
-    npcAttrs.set(rowId + "name", `${ability.name}${ ability.action !== "" ? " (" + ability.action + ")" : "" }`);
-    npcAttrs.set(rowId + "desc", ability.description);
+    let name = strval(ability.name);
+    name = name !== "" ? name.charAt(0).toUpperCase() + name.substring(1) : name;
+    let description = strval(ability.description);
+    description = description !== "" ? description.charAt(0).toUpperCase() + description.substring(1) : description;
+    if (name !== "" && description !== "") {
+      npcAttrs.set(rowId + "name", `${name}${ strval(ability.action) !== "" ? " (" + ability.action + ")" : "" }`);
+      npcAttrs.set(rowId + "desc", description);
+    }
   });
 
   return npcAttrs;
@@ -15580,9 +15688,28 @@ on("sheet:opened change:character_name", function() {
 });
 
 /**
+ * On opening sheet / changing luck points
+ * - Update status marker for luck, if any set
+ */
+on("sheet:opened change:pc", function() {
+  getAttrs([ "sheet_type", "character_name", "tokenmod", "tkmarker_pc_on", "tkmarker_pc", "pc" ], function (values) {
+    if (strval(values.sheet_type) === SWData.SHEET_TYPE.NPC)
+      return;
+    if (!boolval(values.tokenmod))
+      return;
+    const markerPC = boolval(values.tkmarker_pc_on) ? strval(values.tkmarker_pc).trim() : "";
+    if (markerPC === "")
+      return;
+    sendChatCmd(tokenMod(
+      strval(values.character_name), 
+      { statusmarkers: `${markerPC}:${ intval(values.pc) }` }
+    ));
+  });
+});
+
+/**
  * Sync pv <=> PVIG for token bars
  */
-
 on("change:pv", function(eventInfo) {
   if (strval(eventInfo.sourceType) !== "player")
     return;
