@@ -50,7 +50,11 @@ Lorsque le script est activé, trois boutons sont affichés sous le token du per
 D'autres options peuvent être activées :
 - Marker 0 PV : permet d'indiquer un nom de marker à appliquer au token lorsque le nombre de PV tombe à 0.
   
-  Le nom par défaut de ce marker est <kbd>dead</kbd> et il affiche une croix rouge sur le token. Si le nom est effacé, aucun marker n'est appliqué.
+  Le nom par défaut de ce marker est <kbd>dead</kbd> et il affiche une croix rouge sur le token.
+
+- Marker PC : permet d'indiquer un nom de marker à appliquer au token avec un compteur correspondant au nombre de points de chance restants.
+
+  Le nom par défaut de ce marker est <kbd>three-leaves</kbd>, il affiche 3 feuilles et le nombre de PC. Il est mis à jour à l'ouverture de la fiche et quand un PC est utilisé.
 
 - Markers états préjudiciables : permet d'ajouter et retirer des markers selon les états préjudiciables subis par le personnage.
 
