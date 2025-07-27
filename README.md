@@ -6,11 +6,11 @@ Consultez la [documentation](https://stephaned68.github.io/COF2e/)
 
 ## Version courante
 
-v1.6.0 [Screenshot](cof2e.png)
+v1.7.0 [Screenshot](cof2e.png)
 
 ## Notes de version
 
-### Version _1.7.0_ (2025-07)
+### Version _1.7.0_ (2025-07-27)
 
 - Sous-onglet _Maîtrises_ dans l'onglet _Capacités_ pour les langues et les maîtrises spéciales d'armes / armures
 - Ajout d'un popup Roll20 sur le bouton DR pour choisir Récupération _Rapide_ ou _Complète_ ou _Se dépasser_
