@@ -22,6 +22,10 @@ L'icone située à côté de **Caractéristiques** permet d'afficher un menu d'a
 
 Ces deux boutons/icones peuvtn être épinglés dans la barre d'action de Roll20 par glisser-déposer.
 
+La zone **Init.** est cliquable et permet de faire le jet d'initiative du PNJ au début d'un combat.
+
+La zone **Défense** est cliquable et permet de basculer d'une valeur de défense à une autre pour les créatures disposant d'une telle capacité.
+
 # Description
 
 Cette zone de texte libre permet de préciser des informations générales sur le PNJ ou la créature.

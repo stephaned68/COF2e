@@ -13,6 +13,13 @@ Les préférence et réglages possibles de la fiche sont configurés dans cet on
 - Départager les inits identiques : La valeur de <kbd>(AGI+PER)/10</kbd> est ajoutée au jet d'initiative.
 - Critiques différenciés : Les réussites critiques en combat provoquent des effets différenciés selon le type de DM de l'arme utilisée.
 
+## Défense
+
+Cette section permet de gérer certaines créatures dont le score Défense peut varier selon les circonstances.
+
+- Base : Il s'agit de la valeur de base de la Défense.
+- Supérieure : Il s'agit de la valeur supérieure de la Défense dont la créature peut éventuellement bénéficier via une de ses capacités
+
 ## Compagnon
 
 Cette section permet d'identifier le PNJ comme le compagnon ou familier d'un PJ, dans le cas où certains traits du PNJ sont calculés à partir de valeurs d'attributs du PJ.
