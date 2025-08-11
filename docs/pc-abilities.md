@@ -72,6 +72,12 @@ Les propriétés suivantes peuvent être appliquées aux capacités :
   - <kbd>evol2</kbd> (facultatif) est la nouvelle valeur du paramètre évolutif une fois le rang2 spécifié atteint
   
   Le texte de la capacité doit comporter le mot-clé <kbd>&#123;&#123;evol&#125;&#125;</kbd> là où la substitution avec la valeur de base ou la nouvelle valeur s'effectue selon le rang atteint.
+- <kbd>epic:</kbd> suivi d'un espace pour identifier la capacité comme épique. 
+
+## Capacités épiques
+
+Pour que le calcul des rangs atteints dans les voies, des PV et des points de capacités dépensés soit correct, une capacité épique ne doit <strong>PAS</strong> être cochée.
+
 
 # Jets de capacités
 

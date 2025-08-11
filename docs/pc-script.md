@@ -52,6 +52,10 @@ D'autres options peuvent être activées :
   
   Le nom par défaut de ce marker est <kbd>dead</kbd> et il affiche une croix rouge sur le token.
 
+- Teinte 1/2 PV : permet d'indiquer une teinte à appliquer au token lorsque le nombre de PV tombe à la moitié du nombre de PV maximum.
+
+  La teinte doit être indiquée sous la forme d'un code hexadécimal à 6 caractères (0-9, A-F). La valeur par défaut est ED2939.
+
 - Marker PC : permet d'indiquer un nom de marker à appliquer au token avec un compteur correspondant au nombre de points de chance restants.
 
   Le nom par défaut de ce marker est <kbd>three-leaves</kbd>, il affiche 3 feuilles et le nombre de PC. Il est mis à jour à l'ouverture de la fiche et quand un PC est utilisé.

@@ -20,7 +20,7 @@ Pour un fonctionnement correct de cette option, il est nécessaire de respecter 
 
 Les PV maximums sont calculés en faisant la somme des éléments suivants :
 - [niveau] x [CON]
-- pour toutes les capacités possédées (cochées) qui n'ont pas la propriété <kbd>doublon</kbd> (cf capacité en doublon, p. 171)
+- pour toutes les capacités possédées (cochées) qui n'ont pas la propriété <kbd>doublon</kbd> (cf capacité en doublon, p. 171) ni la propriété <kbd>epic</kbd> (cf capacités épiques, Atlas p. 185)
   - Si rang 1 de la voie 1 : 0 PV
   - Sinon si rang 1 de voie 2 ou 3 : [PV de voie]
   - Sinon si rang 2 de voie 1,2 ou 3 et propriété <kbd>initial</kbd> : 0 PV

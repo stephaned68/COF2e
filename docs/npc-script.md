@@ -45,8 +45,11 @@ Lorsque le script est activé, trois boutons sont affichés sous le token du PNJ
 
 D'autres options peuvent être activées :
 - Marker 0 PV : permet d'indiquer un nom de marker à appliquer au token lorsque le nombre de PV tombe à 0.
+- Teinte 1/2 PV : permet d'indiquer une teinte à appliquer au token lorsque le nombre de PV tombe à la moitié du nombre de PV maximum.
 
-  Cette option ne fonctionne que pour les PNJs importants qui ont leur propre fiche. Les PNJs de type _mook_ n'ont pas de barre de token liée à l'attribut <kbd>pv</kbd>, uniquement à sa valeur et par conséquent la fiche ne peut détecter que les PV sont tombés à 0.
+  La teinte doit être indiquée sous la forme d'un code hexadécimal à 6 caractères (0-9, A-F).
+
+  Ces options ne fonctionnent que pour les PNJs importants qui ont leur propre fiche. Les PNJs de type _mook_ n'ont pas de barre de token liée à l'attribut <kbd>pv</kbd>, uniquement à sa valeur et par conséquent la fiche ne peut détecter que les PV sont tombés à la moitié de leur maxium ou à 0.
 
 #### Liaison par défaut des barres de tokens
 

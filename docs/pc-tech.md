@@ -133,6 +133,7 @@ Ces attributs sont déclinés pour toutes les voies (1 à 9) et tous les rangs (
 
 - <kbd>noms_voies</kbd> : liste des noms de voies, séparés par des <kbd>|</kbd>
 - <kbd>rangs_voies</kbd> : liste des rangs dans les voies, séparés par des <kbd>,</kbd>
+- <kbd>noms_rangs</kbd> : liste des rangs dans les voies, sous forme de JSON sérialisé <kbd>[ { id: "v#r#", rank: "nom de la capacité", path: "nom de la voie" }, ... ]</kbd>
 
 ## Buffs / Debuffs
 
@@ -211,6 +212,9 @@ Certaines capacités de profil sont automatiquement prises en charge par la fich
   - Charisme héroïque (_Séduction rang 4_) : calcul des PM max basé sur le CHA
 - Chevalier :
   - Cavalier émérite (_Cavalier rang 2_) : bonus aux DM et DEF de la monture
+- Epiques :
+  - Défense héroïque : bonus à la DEF de base
+  - Mana épique : bonus aux PM max
 
 # Menus et macros
 

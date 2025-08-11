@@ -2,7 +2,7 @@
 
 Cette section permet de tenir à jour l'inventaire du matériel possédé par le personnage.
 
-Le trésor affiché est la somme de toutes les pièces dans la bourse du personnage, convertie en pièces d'argent.
+Le trésor affiché est la somme de toutes les pièces dans la bourse du personnage. Selon l'option choisie, cette somme est convertie en pièces d'argent ou en pièces d'or.
 
 Pour chaque élément de l'inventaire, vous indiquez :
 - Le nom de la pièce d'équipement.
