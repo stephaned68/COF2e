@@ -1,9 +1,9 @@
 <div class="cofmain">
 
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.7.0">
+  <input type="hidden" name="attr_verfdp" value="1.8.0">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.7.0">
+  <input type="hidden" name="attr_version" value="1.8.0">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
 
@@ -67,6 +67,7 @@
   <!-- Other hidden attributes -->
   <input type="hidden" name="attr_rangs_voies" value="">
   <input type="hidden" name="attr_noms_voies" value="">
+  <input type="hidden" name="attr_noms_rangs" value="">
 
   <input type="hidden" name="attr_rang_voie1" value="1">
   <input type="hidden" name="attr_rang_voie2" value="1">
@@ -105,7 +106,7 @@
     <div>
       <img
         class="logo"
-        title="Version 1.7.0 - ??/07/2025"
+        title="Version 1.8.0 - ??/08/2025"
         src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cof2e_logo.jpg"
       />
     </div>
@@ -993,7 +994,7 @@
 
             <div class="defense">
               <div class="block-title">DEF</div>
-              <div class="bordered centered"><span name="attr_def_base"></span>+</div>
+              <div class="bordered centered"><span name="attr_def_base"></span>&nbsp;+</div>
               <div class="bordered centered">
                 <input type="number" name="attr_armure" title="@{armure} Bonus d'armure" value="0">
               </div>
@@ -4551,8 +4552,10 @@
                   <summary>Bourse</summary>
                   <div class="d-flex">
                     PC:<input type="number" class="treasure" name="attr_tresor_pc">
-                    PA:<input type="number" class="treasure" name="attr_tresor_pa">
-                    PO:<input type="number" class="treasure" name="attr_tresor_po">
+                    <input type="radio" class="treasure" name="attr_tresor_monnaie" title="@{tresor_monnaie} Compter le trésor en PA" value="pa" checked>
+                    &nbsp;PA:<input type="number" class="treasure" name="attr_tresor_pa">
+                    <input type="radio" class="treasure" name="attr_tresor_monnaie" title="@{tresor_monnaie} Compter le trésor en PO" value="po">
+                    &nbsp;PO:<input type="number" class="treasure" name="attr_tresor_po">
                     PP:<input type="number" class="treasure" name="attr_tresor_pp">
                   </div>
                 </details>
@@ -5332,6 +5335,13 @@
               </div>
             </div>
             <div class="pc-configs m2">
+              <div>Teinte 1/2 PV</div>
+              <div class="d-flex">
+                <input type="checkbox" name="attr_token_tint_on" title="@{token_tint_on}" value="1">
+                &nbsp;<input type="text" name="attr_token_tint" title="@{token_tint}" value="ED2939">
+              </div>
+            </div>
+            <div class="pc-configs m2">
               <div>Marker PC</div>
               <div class="d-flex">
                 <input type="checkbox" name="attr_tkmarker_pc_on" title="@{tkmarker_pc_on}" value="1">
@@ -5370,7 +5380,20 @@
               <li>
                 <details>
                   <summary>
-                    <strong>Version 1.7.0</strong> (2025-07-jj)
+                    <strong>Version 1.8.0</strong> (2025-08)
+                  </summary>
+                  <ul>
+                    <li>Prise en compte des capacités épiques dans le calcul des rangs dans la voie et des PV (propriété <em>epic:</em>).</li>
+                    <li>Possibilité de compter le trésor en PA ou en PO</li>
+                    <li>Ajout d'une option dans la configuration <em>Token Mod</em> pour appliquer une teinte au token quand le nombre de PV tombe au-dessous de sa valeur maximum.</li>
+                  </ul>
+                </details>
+              </li>
+
+              <li>
+                <details>
+                  <summary>
+                    <strong>Version 1.7.0</strong> (2025-07-26)
                   </summary>
                   <ul>
                     <li>Sous-onglet <em>Maîtrises</em> dans l'onglet <em>Capacités</em> pour les langues et les maîtrises spéciales d'armes / armures</li>
@@ -6561,9 +6584,17 @@
             <input type="checkbox" name="attr_tokenmod" title="@{tokenmod}" value="1">
             <span>Token Mod</span>
             <div class="npc-configs m2">
+              <div>Teinte 1/2 PV</div>
+              <div class="d-flex">
+                <input type="checkbox" name="attr_token_tint_on" title="@{token_tint_on}" value="1">
+                &nbsp;<input type="text" name="attr_token_tint" title="@{token_tint}" value="ED2939">
+              </div>
+            </div>
+            <div class="npc-configs m2">
               <div>Marker 0 PV</div>
               <div class="d-flex">
-                &nbsp;:&nbsp;<input type="text" class="w-auto" name="attr_tkmarker_dead" title="@{tkmarker_dead}" value="dead">
+                <input type="checkbox" name="attr_tkmarker_dead_on" title="@{tkmarker_dead_on}" value="1">
+                &nbsp;<input type="text" class="w-auto" name="attr_tkmarker_dead" title="@{tkmarker_dead}" value="dead">
               </div>
             </div>
           </div>
@@ -7076,7 +7107,7 @@
 
 /**
  * COF2e Sheet Worker
- * v1.7.0
+ * v1.8.0
  */
 
 const SWData = {
@@ -8649,10 +8680,11 @@ function cleanText(t, clearTags = true) {
   t = t.replace(/æ/g,       "ae");
   t = t.replace(/’/g,       "'");
   if (clearTags) {
-    t = t.replace(/\(G\)/,  "");
-    t = t.replace(/\(M\)/,  "");
-    t = t.replace(/\(A\)/,  "");
-    t = t.replace(/\(L\)/,  "");
+    t = t.replace(/\(g\)/,  "");
+    t = t.replace(/\(m\)/,  "");
+    t = t.replace(/\(a\)/,  "");
+    t = t.replace(/\(l\)/,  "");
+    t = t.replace(/\(e\)/,  "");
     t = t.replace(/\*/,     "");
   }
   return t.trim();
@@ -8778,12 +8810,24 @@ function allPathRanks(attr) {
  * Return a list of event as array or as string
  * @param {string} eventName - Name of the event
  * @param {string[]} attributeList - List of attributes
- * @param {string} joinChar - Character to use for joining the items
+ * @param {string} [joinChar=""] - Character to use for items concatenation
  * @returns {string[]|string}
  */
 function eventList(eventName, attributeList, joinChar = "") {
   const result = attributeList.map(a => `${eventName}:${ a.toLowerCase() }`);
   return joinChar !== "" ? result.join(joinChar) : result;
+}
+
+/**
+ * Return a list of change: events as string
+ * @param {string[]} attributeList - List of attributes
+ * @param {string} [section=""] - Repeating section name
+ * @returns {string}
+ */
+function changeEvent(attributeList, section = "") {
+  if (section !== "")
+    attributeList = attributeList.map(attr => `repeating_${section}:${attr}`);
+  return eventList("change", attributeList, " ");
 }
 
 /**
@@ -9314,6 +9358,17 @@ function getPathRanks(rangs_voies) {
 }
 
 /**
+ * Return list of rank names
+ * @param {string} pathName - Name of path
+ * @param {object} values - getAttrs() Roll20 object
+ * @returns {string[]}
+ */
+function getRankNames(pathName, values) {
+  const rankNames = JSON.parse(strval(values.noms_rangs, "[]"));
+  return rankNames.filter(rn => rn.path === pathName).map(rn => rn.rank);
+}
+
+/**
  * Return list of owned abilities
  * @param {object} values - getAttrs() object
  * @returns {string[]}
@@ -9324,11 +9379,12 @@ function ownedAbilities(values) {
   getPathNames(strval(values.noms_voies)).forEach((pathName, ix) => {
     if (ranks[ix] === 0)
       return;
-    pathName = cleanText(pathName)
+    pathName = cleanText(pathName);
     const path = SWData.PVPATH.find(path => path.name === pathName);
     if (!path)
       return;
-    const owned = path.abilities.slice(0, ranks[ix]);
+    //const owned = path.abilities.slice(0, ranks[ix]);
+    const owned = getRankNames(pathName, values).slice(0, ranks[ix]);
     abilities = [ ...abilities, ...owned ];
   });
   return abilities;
@@ -9349,7 +9405,8 @@ function ownedAbilityTree(values) {
     const path = SWData.PVPATH.find(path => path.name === pathName);
     if (!path)
       return;
-    const owned = path.abilities.slice(0, ranks[ix]);
+    //const owned = path.abilities.slice(0, ranks[ix]);
+    const owned = getRankNames(pathName, values).slice(0, ranks[ix]);
     abilities.push({ name: pathName, profile: path.profile, abilities: owned });
   });
   return abilities;
@@ -9376,6 +9433,22 @@ function hasAbility(search, values) {
     owned = ownedAbilities(values);
   }
   return owned.includes(cleanText(name));
+}
+
+/**
+ * Search ability name 
+ * @param {string} search - ability name to search
+ * @param {object} values - getAttrs() object (should contain noms_rangs)
+ * @returns {boolean}
+ * @description Useful for epic abilities
+ */
+function hasAbilityName(search, values) {
+  try {
+    const rankNames = JSON.parse(strval(values.noms_rangs, "[]")).map(rn => rn.rank);
+    return rankNames.includes(search);
+  } catch (error) { 
+    return false;
+  }
 }
 
 /**
@@ -9803,10 +9876,14 @@ function getDEvol(level) {
 /**
  * On level change
  */
-on("change:niveau", function(eventInfo) {
+on(changeEvent([ 
+  "niveau", "noms_rangs",
+  "cfg_use_epic", "cfg_use_capped6", "cfg_atk_diff" 
+]), function(eventInfo) {
   getAttrs([ 
     "sheet_type", "niveau", "profil", "pc_max",
-    "cfg_use_epic", "cfg_use_capped6", "cfg_atk_diff"
+    "cfg_use_epic", "cfg_use_capped6", "cfg_atk_diff",
+    "noms_rangs"
   ], function(values) {
     if (strval(values.sheet_type) === SWData.SHEET_TYPE.NPC)
       return;
@@ -9837,10 +9914,11 @@ on("change:niveau", function(eventInfo) {
     if (level > levelCap && useEpic) {
       const oddLevel = (level %2 === 1) ? level : level -1;
       const epicBase = levelCap + Math.ceil((oddLevel - levelCap) / 2);
+      const heroicDef = hasAbilityName("defense heroique", values) ? 2 : 0;
       updateAttrs.set("atkcac_base", epicBase);
       updateAttrs.set("atktir_base", epicBase);
       updateAttrs.set("atkmag_base", epicBase);
-      updateAttrs.set("def_base", epicBase);
+      updateAttrs.set("def_base", epicBase + heroicDef);
     }
     logAndSet(Object.fromEntries(updateAttrs), logTitle(eventInfo));
   });
@@ -9875,7 +9953,7 @@ SWData.PC.STATS.forEach(stat => {
     `${short}_buff`,
     `t${short}_buff`,
   ];
-  on(eventList("change", attrs, " "), function (eventInfo) {
+  on(changeEvent(attrs), function (eventInfo) {
     getAttrs([ "sheet_type", ...attrs], function(values) {
       if (strval(values.sheet_type) === SWData.SHEET_TYPE.NPC)
         return;
@@ -9911,7 +9989,7 @@ function updateInit(eventInfo) {
 /**
  * On init components change
  */
-on(eventList("change", SWData.PC.COMBAT.init, " "), updateInit);
+on(changeEvent(SWData.PC.COMBAT.init), updateInit);
 
 /**
  * On attacks components change
@@ -9924,7 +10002,7 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
     `${attack}_cond`,
     `${attack}_buff`
   ];
-  on(eventList("change", changed, " "), function(eventInfo) {
+  on(changeEvent(changed), function(eventInfo) {
     getAttrs(changed, function(values) {
       const score = addValues(values);
       logAndSet({ [attack]: score }, logTitle(eventInfo));
@@ -10003,7 +10081,7 @@ function updatePVMax(eventInfo, changed = "") {
         return;
       
       const props = strval(values[`${ability}_props`]).toLowerCase();
-      if (hasProp(props, "doublon"))
+      if (hasProp(props, "doublon") || hasProp(props, "epic"))
         return;
 
       const { path, rank } = abilityInfo(ability);
@@ -10102,10 +10180,10 @@ function updatePMMax(eventInfo) {
   getAttrs([ 
     "cfg_use_mana", "pmmax_force",
     "vol", "pm_buff",
-    "cha", "rangs_voies", "noms_voies",
+    "cha", "rangs_voies", "noms_voies", "noms_rangs",
     ...spells,
     ...owned,
-    ...bRanks 
+    ...bRanks
   ], function(values) {
     if (boolval(values.pmmax_force))
       return;
@@ -10127,7 +10205,8 @@ function updatePMMax(eventInfo) {
         base = cha;
     }
 
-    const pm_max = spellPM > 0 ? base + spellPM + intval(values.pm_buff) : 0;
+    const epicMana = hasAbilityName("mana epique", values) ? 5 : 0;
+    const pm_max = spellPM > 0 ? base + spellPM + intval(values.pm_buff) + epicMana : 0;
     logAndSet({ pm_max }, logTitle(eventInfo));
   });
 }
@@ -10136,14 +10215,14 @@ function updatePMMax(eventInfo) {
  * On VOL & PM buff change
  * On CHA & ranks change
  */
-on("change:vol change:pm_buff change:cha change:rangs_voies", updatePMMax);
+on(changeEvent([ "vol","pm_buff","cha","rangs_voies","noms_voies","noms_rangs" ]), updatePMMax);
 
 /**
  * On change of an ability spell
  */
 seq(9).forEach(p => {
   seq(5).forEach(r => {
-    on(`change:v${p}r${r} change:v${p}r${r}_spell`, updatePMMax)
+    on(`change:v${p}r${r} change:v${p}r${r}_spell`, updatePMMax);
   });
 });
 
@@ -10167,7 +10246,7 @@ function updatePCMax(eventInfo) {
 /**
  * On PC components change
  */
-on("change:pc_base change:cha change:pc_buff change:cfg_pc_var", updatePCMax);
+on(changeEvent([ "pc_base","cha","pc_buff","cfg_pc_var" ]), updatePCMax);
 
 /**
  * Return list of attributes for luck roll button
@@ -10294,7 +10373,14 @@ SWData.PC.STATS.forEach(stat => {
  * Used by PC & NPC sheet
  */
 on("clicked:init-btn", function () {
-  getAttrs([ "sheet_type", "cfg_init_mod", "per", "agi", "casque_eqp", "casque", "pnj_tactique" ], function(values) {
+  getAttrs([ 
+    "sheet_type",
+    "cfg_init_mod",
+    "per", "agi",
+    "casque_eqp",
+    "casque",
+    "pnj_tactique" 
+  ], function(values) {
     let initMod = "";
     if (boolval(values.cfg_init_mod))
       initMod = ` + [[(@{per}+@{agi})/10]][Distinct]`;
@@ -10498,22 +10584,34 @@ on("clicked:vigloss-btn clicked:vigheal-btn", function (eventInfo) {
 /**
  * Change PV background color
  */
-on("change:pv", function () {
-  getAttrs([ "sheet_type", "character_name", "tokenmod", "tkmarker_dead_on", "tkmarker_dead", "pv", "pv_max" ], function (values) {
+on("change:pv change:pvig", function (eventInfo) {
+  const PV = strval(eventInfo.triggerName) === "pvig" ? "PVIG" : "pv";
+  getAttrs([ 
+    "sheet_type", "character_name", 
+    "tokenmod", "token_tint_on", "token_tint", "tkmarker_dead_on", "tkmarker_dead", 
+    "pv", "pv_max", "PVIG"
+  ], function (values) {
     const isNPC = strval(values.sheet_type) === SWData.SHEET_TYPE.NPC;
+    const tokenTint = boolval(values.token_tint_on);
     const tokenmod = boolval(values.tokenmod);
     const markerDead = boolval(values.tkmarker_dead_on) ? strval(values.tkmarker_dead).trim() : "";
     const wounds = wounded(values);
-
-    let tokenmodCmd;
+    
+    const tokenProps = {};
+    if (tokenTint) {
+      const tokenTintColor = strval(values.token_tint).split("").every(ch => ch.match(/[0-9A-Fa-f]/))
+      ? strval(values.token_tint)
+      : "ED2939";
+      tokenProps.tint_color = numval(values[PV]) <= Math.floor(numval(values.pv_max) / 2)
+      ? tokenTintColor
+      : "transparent";
+    }
     if (tokenmod && markerDead !== "") {
       let deadOrAlive = wounds.condition_inconscient === 1 ? "+" : "-";
-      tokenmodCmd = tokenMod(strval(values.character_name), { 
-        statusmarkers: `${deadOrAlive}${markerDead}`
-      });
+      tokenProps.statusmarkers = `${deadOrAlive}${markerDead}`;
     }
-    if (tokenmodCmd)
-      sendChatCmd(tokenmodCmd);
+    if (Object.keys(tokenProps).length > 0)
+      sendChatCmd(tokenMod(strval(values.character_name), tokenProps));
     if (isNPC)
       return;
   
@@ -10702,7 +10800,7 @@ function updateEquiped(attribute) {
 /**
  * On DEF components change
  */
-on(eventList("change", SWData.PC.COMBAT.def, " "), function(eventInfo) {
+on(changeEvent(SWData.PC.COMBAT.def), function(eventInfo) {
   updateDef(eventInfo);
   const attribute = strval(eventInfo.triggerName, "");
   if (attribute.endsWith("_eqp"))
@@ -12104,11 +12202,7 @@ function updatePathInfos(path) {
 /**
  * On check/un-check rank 2 for mages
  */
-on(eventList(
-  "change",
-  SWData.settings.level1Paths.map(p => `v${p}r2`),
-  " "
-), function(eventInfo) {
+on(changeEvent(SWData.settings.level1Paths.map(p => `v${p}r2`)), function(eventInfo) {
   const rank = eventInfo.triggerName;
   const rankProps = abilityInfo(rank).rankProps;
   const rank2Props = SWData.settings.level1Paths
@@ -12153,7 +12247,7 @@ on(eventList(
 seq(9).forEach(path => {
   seq(5).forEach(rank => {
     
-    const ability = `v${path}r${rank}`;
+    const ability = abilityInfo({ path, rank }).rankOwned; // `v${path}r${rank}`;
 
     // Handle ability buttons click
     on(`clicked:${ability}-btn`, function() {
@@ -13090,20 +13184,23 @@ function processAllGear(attributes, callback) {
  * Process coins & treasure
  */
 SWData.COINS.forEach(coin => {
-  on(`change:tresor_${coin}`, function() {
+  on(`change:tresor_${coin} change:tresor_monnaie`, function() {
     const coins = SWData.COINS.map(c => `tresor_${c}`);
-    getAttrs(coins, function(values) {
+    getAttrs([ "tresor_monnaie", ...coins ], function(values) {
+      const monnaie = strval(values.tresor_monnaie);
+      delete values.tresor_monnaie;
       const tresor_pieces = SWData.COINS
         .filter(c => intval(values[`tresor_${c}`]) !== 0)
         .map(c=> `${ c.toUpperCase() } : ${ intval(values[`tresor_${c}`]) }`)
         .join(", ");
-      values.tresor_pp = intval(values.tresor_pp) * 100;
-      values.tresor_po = intval(values.tresor_po) * 10;
+      const multiplier = monnaie === "pa" ? 1 : 0.1;
+      values.tresor_pp = intval(values.tresor_pp) * multiplier * 100;
+      values.tresor_po = intval(values.tresor_po) * multiplier * 10;
       const pc = intval(values.tresor_pc);
-      values.tresor_pa = intval(values.tresor_pa) + Math.floor(pc / 10);
+      values.tresor_pa = (intval(values.tresor_pa) + Math.floor(pc / 10)) * multiplier;
       values.tresor_pc = 0;
       const total = addValues(values);
-      const tresor = `${total} PA`;
+      const tresor = `${total} ${ monnaie.toUpperCase() }`;
       setAttrs({ tresor, tresor_pieces });
     });
   });
@@ -13304,11 +13401,11 @@ on("remove:repeating_equipement", function (eventInfo) {
 /**
  * Handle attacks 
  */
-on(eventList("change", [ 
+on(changeEvent([
   "props",
   "atk",
   "predicats"
-].map(a => `repeating_equipement:equip-${a}`), " "), function (eventInfo) {
+].map(a => `equip-${a}`), "equipement"), function (eventInfo) {
   const { rowId: gearId } = rptInfo(eventInfo.sourceAttribute);
   const gearAttrs = [
     "nom",
@@ -13671,6 +13768,7 @@ on("clicked:reset_all-btn", function() {
   abilityUsages(e);
   encumbrance(e);
   rebuildRanks(e);
+  updateAbilityList(e)
   rebuildBuffLists(e);
   rebuildBuffValues(e);
   rebuildCustom(e);
@@ -13704,7 +13802,7 @@ on("change:cfg_highfan change:cfg_lowfan", function (eventInfo) {
 /**
  * On changing one of high fantasy options
  */
-on(eventList("change", SWData.settings.highFan, " "), function () {
+on(changeEvent(SWData.settings.highFan), function () {
   getAttrs(SWData.settings.highFan, function (values) {
     if (Object.values(values).some(v => !boolval(v)))
       setAttrs({ cfg_highfan: 0 }, { silent: true });
@@ -13714,7 +13812,7 @@ on(eventList("change", SWData.settings.highFan, " "), function () {
 /**
  * On changing one of low fantasy options
  */
-on(eventList("change", SWData.settings.lowFan, " "), function () {
+on(changeEvent(SWData.settings.lowFan), function () {
   getAttrs(SWData.settings.lowFan, function (values) {
     if (Object.values(values).some(v => !boolval(v)))
       setAttrs({ cfg_lowfan: 0 }, { silent: true });
@@ -13893,8 +13991,8 @@ on("clicked:import_json-btn", function () {
  * On change of debug mode state
  */
 on("change:debug_mode", function() {
-  getAttrs([ "debug_mode" ], function(value) {
-    setDebugMode(value.debug_mode);
+  getAttrs([ "debug_mode" ], function(values) {
+    setDebugMode(values.debug_mode);
   });
 });
 
@@ -15139,7 +15237,7 @@ function statBlockFromPDF(statblock) {
 }
 
 /**
- * 
+ * On click of import NPC statblock button
  */
 on("clicked:importsb-btn", function() {
   
@@ -15198,8 +15296,9 @@ on("clicked:npc_menus-btn", function () {
 /**
  * Set/Unset Debug Mode
  * @param {string} debugMode - value of debug_mode attribute
+ * @param {function():void} [callback=null] - debug callback
  */
-function setDebugMode(debugMode) {
+function setDebugMode(debugMode, callback = null) {
   SWData.settings.debugMode = boolval(debugMode);
   clog(
     ` Running sheetworker... ${ SWData.settings.debugMode ? "DEBUG" : "PROD" } `,
@@ -15209,6 +15308,8 @@ function setDebugMode(debugMode) {
       backColor: "brown"
     }
   );
+  if (SWData.settings.debugMode && callback)
+    callback();
 }
 
 function migrateCOF1Value(attr, oldVal) {
@@ -15690,6 +15791,37 @@ on("sheet:opened change:pc", function() {
     ));
   });
 });
+
+/**
+ * Update the noms_rangs attribute
+ */
+function updateAbilityList() {
+  const allRanksOwned = allPathRanks("rankOwned");
+  const allRanks = [ 
+    ...allRanksOwned,
+    ...allPathRanks("rankName"),
+    ...allPathRanks("rankProps"),
+    ...nameSeq(9, abilityInfo().pathName)
+  ];
+  getAttrs(allRanks, function(values) {
+    const abilityList = allRanksOwned
+    .filter(owned => {
+      const { rankOwned, rankProps } = abilityInfo(owned);
+      return boolval(values[rankOwned]) || hasProp(strval(values[rankProps]), "epic");
+    })
+    .map(owned => {
+      const { pathName, rankName } = abilityInfo(owned);
+      return { id: owned, rank: cleanText(values[rankName]), path: cleanText(values[pathName]) };
+    });
+    setAttrs({ noms_rangs: JSON.stringify(abilityList) });
+  });
+}
+
+on("sheet:opened "
+  + changeEvent(allPathRanks("rankOwned")) 
+  + changeEvent(allPathRanks("rankName"))
+  + changeEvent(allPathRanks("rankProps"))
+  + changeEvent(nameSeq(9, abilityInfo().pathName)), updateAbilityList);
 
 /**
  * Sync pv <=> PVIG for token bars

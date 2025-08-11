@@ -1,4 +1,4 @@
-/* COF2e v1.7.0 */
+/* COF2e v1.8.0 */
 
 @import url('https://fonts.googleapis.com/css?family=Merriweather+Sans&display=swap');
 
@@ -446,6 +446,7 @@ input[value="npc"] ~ button[name="roll_checkup"] {
 /* Sheet types */
 .identity-pc,
 .identity-npc,
+.identity-gm,
 .cof-pc,
 .cof-npc,
 .weapon-opt,
@@ -457,8 +458,10 @@ input[value="npc"] ~ button[name="roll_checkup"] {
 
 .cof-head-toggle[value="pc"] ~ div.identity-pc,
 .cof-head-toggle[value="npc"] ~ div.identity-npc,
+.cof-head-toggle[value="gm"] ~ div.identity-npc,
 .cof-type-toggle[value="pc"] ~ div.cof-pc,
 .cof-type-toggle[value="npc"] ~ div.cof-npc,
+.cof-type-toggle[value="gm"] ~ div.cof-gm,
 .cof-wopt-toggle[value="1"] ~ div.weapon-opt,
 .cof-wopt-toggle[value="1"] ~ div.weapon-effects,
 .cof-inhand-toggle[value="1"] ~ div.weapon-hands,

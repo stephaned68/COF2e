@@ -10,6 +10,12 @@ v1.7.0 [Screenshot](cof2e.png)
 
 ## Notes de version
 
+### Version _1.8.0_ (2025-08-??)
+
+- Prise en compte des capacités épiques dans le calcul des rangs dans la voie et des PV (propriété <em>epic:</em>).
+- Possibilité de compter le trésor en PO ou en PA.
+- Ajout d'une option dans la configuration _Token Mod_ pour appliquer une teinte au token quand le nombre de PV tombe au-dessous de sa valeur maximum.
+
 ### Version _1.7.0_ (2025-07-27)
 
 - Sous-onglet _Maîtrises_ dans l'onglet _Capacités_ pour les langues et les maîtrises spéciales d'armes / armures
