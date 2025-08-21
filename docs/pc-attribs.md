@@ -126,6 +126,7 @@ Des paramètres optionnels peuvent être ajoutés :
   - <kbd>deMalus</kbd> : l'attaque est faite avec un dé malus
   - <kbd>explodeMax</kbd> : le dé de DM est _explosif_ (relance d'un nouveau dé de DM en cas de résultat maximum)
   - <kbd>reroll1</kbd> : le dé de DM est relancé jusqu'à ce que son résultat soit supérieur à 1
+  - <kbd>reroll1:1</kbd> : si le résultat initial est égal à 1, le dé de DM est relancé une seule fois
   - <kbd>poudre</kbd> : l'arme explose et inflige 1d4° DM à l'utilisateur s'il ne maîtrise pas les armes à poudre
   - <kbd>zone</kbd> : l'attaque est un sort de zone
   - <kbd>magie X</kbd> suivi de la valeur X du bonus au jet pour toucher et aux DM

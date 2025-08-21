@@ -111,7 +111,17 @@ Vous pouvez également modifier certains aspects des messages de chat :
 
 ## Premiers rangs
 
-Pour chaque voie du PJ, vous pouvez indiquer la valeur du premier rang (1 pour les voies de peuple et de profil, 3 ou 4 pour les voies de prestige).
+Pour chaque voie du PJ, vous pouvez indiquer la valeur du premier rang (1 pour les voies de peuple et de profil, 3 ou 4 pour les voies de prestige). La fiche stocke le nom du profil dont cette voie est issue.
+
+## Autres fonctions
+
+Plusieurs outils sont disponibles dans la partie supérieure droite de cet onglet.
+
+Une case permet d'activer le mode debug. Une fois cochée, un grand nombre d'événements se produisant dans la fiche inscrivent des informations techniques de débogage dans la console de développement du navigateur.
+
+Une première icone _Outils_ permet de copier les options de configuration par défaut depuis une fiche de personnage et nommée <kbd>PJBase</kbd>. Lorsqu'il crée cette fiche PJBase, le MJ de la partie doit également cliquer sur cette icone pour que tous les attributs traités aient une valeur, sans quoi la copie à partir d'autres fiches échouera.
+
+Une deuxième icone _Outils_ permet de ré-initialiser et re-calculer un certain nombre d'attributs dérivés dans la fiche. Ce bouton n'est utile qu'en cas de bug, et peut éventuellement corriger des comportements incorrects de la fiche. 
 
 ---
 
