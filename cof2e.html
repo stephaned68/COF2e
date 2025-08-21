@@ -1227,7 +1227,7 @@
                   </div>
                   <div class="bordered">
                     <input type="checkbox" name="attr_arme-active" title="@{arme-active} Attaque active" value="1" checked>
-                    <input type="text" name="attr_arme-atkmods" placeholder="Modificateurs d'attaque" title="@{arme-atkmods} Modificateurs séparés par des virgules&#10; deBonus: avec dé bonus&#10; deMalus: avec dé malus&#10; auto: réussite automatique&#10; choc: peut faire des attaques non léthales sans malus&#10; explodeMax: dés de dégâts explosifs&#10; pasDeDmg: l'attaque ne fait pas de DM&#10; poudre: arme à poudre&#10; reroll1: relance les 1 sur les dés de DM&#10; tempDmg: fait toujours des attaques non léthales&#10; zone: sort de zone&#10; magie: bonus att.+DM&#10; magieAtt: bonus att.&#10; magieDmg: bonus DM&#10; affutee: critiques améliorés&#10; fleau: bonus DM contre créature&#10; element: bonus DM élémentaires/substance" value="">
+                    <input type="text" name="attr_arme-atkmods" placeholder="Modificateurs d'attaque" title="@{arme-atkmods} Modificateurs séparés par des virgules&#10; deBonus: avec dé bonus&#10; deMalus: avec dé malus&#10; auto: réussite automatique&#10; choc: peut faire des attaques non léthales sans malus&#10; explodeMax: dés de dégâts explosifs&#10; pasDeDmg: l'attaque ne fait pas de DM&#10; poudre: arme à poudre&#10; reroll1: relance les 1 sur les dés de DM (:1 = une seule fois)&#10; tempDmg: fait toujours des attaques non léthales&#10; zone: sort de zone&#10; magie: bonus att.+DM&#10; magieAtt: bonus att.&#10; magieDmg: bonus DM&#10; affutee: critiques améliorés&#10; fleau: bonus DM contre créature&#10; element: bonus DM élémentaires/substance" value="">
                   </div>
                   <div class="bordered">
                     <textarea class="one-row" name="attr_arme-options" placeholder="Options d'attaque" title="@{arme-options} Options d'attaque"></textarea>
@@ -4896,7 +4896,6 @@
                   <span>Attaques différenciées</span>
                 </li>
                 <li class="config-check" title="Atlas & règles optionnelles, p. 206">
-                <li class="config-check" title="Atlas & règles optionnelles, p. 206">
                   <input type="checkbox" name="attr_cfg_usure" value="1">
                   <span>Usure des armes</span>
                 </li>
@@ -4929,22 +4928,22 @@
               </summary>
               <ul>
                 <li class="force-max">
-                  <input type="checkbox" class="force-max" name="attr_pvmax_force" title="@{pvmax_force}">
+                  <input type="checkbox" class="force-max" name="attr_pvmax_force" title="@{pvmax_force}" value="1">
                   <span>PV</span>:
                   <input type="number" class="two-digits" name="attr_pv_max" title="@{pv_max}">
                 </li>
                 <li class="force-max">
-                  <input type="checkbox" class="force-max" name="attr_drmax_force" title="@{drmax_force}">
+                  <input type="checkbox" class="force-max" name="attr_drmax_force" title="@{drmax_force}" value="1">
                   <span>DR</span>:
                   <input type="number" class="two-digits" name="attr_dr_max" title="@{dr_max}">
                 </li>
                 <li class="force-max">
-                  <input type="checkbox" class="force-max" name="attr_pcmax_force" title="@{pcmax_force}">
+                  <input type="checkbox" class="force-max" name="attr_pcmax_force" title="@{pcmax_force}" value="1">
                   <span>PC</span>:
                   <input type="number" class="two-digits" name="attr_pc_max" title="@{pc_max}">
                 </li>
                 <li class="force-max">
-                  <input type="checkbox" class="force-max" name="attr_pmmax_force" title="@{pmmax_force}">
+                  <input type="checkbox" class="force-max" name="attr_pmmax_force" title="@{pmmax_force}" value="1">
                   <span>PM</span>:
                   <input type="number" class="two-digits" name="attr_pm_max" title="@{pm_max}">
                 </li>
@@ -4968,6 +4967,9 @@
 
             <div class="float-right">
               <input type="checkbox" name="attr_debug_mode" value="1" title="Mode Debug">&nbsp;
+              <button type="action" class="flat-btn img-btn" name="act_def_config-btn" title="Importer la configuration&#10;Valider la configuration par défaut (fiche PJBase)">
+                <span class="img-btn">x</span>
+              </button>
               <button type="action" class="flat-btn img-btn" name="act_reset_all-btn" title="Re-calculer attributs&#10;DR, PM, PC, PV max.&#10;Initiative, Défense&#10;Encombrement&#10;Rangs et utilisations capacités&#10;Buffs / De-buffs&#10;Liens Att. <=> Equip.">
                 <span class="img-btn">x</span>
               </button>
@@ -5384,8 +5386,11 @@
                   </summary>
                   <ul>
                     <li>Prise en compte des capacités épiques dans le calcul des rangs dans la voie et des PV (propriété <em>epic:</em>).</li>
-                    <li>Possibilité de compter le trésor en PA ou en PO</li>
+                    <li>Prise en compte des capacités épiques <em>Défense héroïque</em> et <em>Mana épique</em> dans le calcul de la DEF et des PM.</li>
+                    <li>Possibilité de compter le trésor en PA ou en PO.</li>
                     <li>Ajout d'une option dans la configuration <em>Token Mod</em> pour appliquer une teinte au token quand le nombre de PV tombe au-dessous de sa valeur maximum.</li>
+                    <li>Ajout d'un bouton pour copier la configuration par défaut depuis une fiche nommée PJBase.</li>
+                    <li>Option <em>jet:N</em> déplacée du champ <em>Spécial</em> d'une attaque au champ <em>Modificateurs d'attaque</em></li>
                   </ul>
                 </details>
               </li>
@@ -5892,7 +5897,7 @@
                   </div>
                   <div class="bordered">
                     <input type="checkbox" name="attr_arme-active" title="@{arme-active} Attaque active" value="1" checked>
-                    <input type="text" name="attr_arme-atkmods" placeholder="Modificateurs d'attaque" title="@{arme-atkmods} Modificateurs séparés par des virgules&#10; deBonus: avec dé bonus&#10; deMalus: avec dé malus&#10; auto: réussite automatique&#10; choc: peut faire des attaques non léthales sans malus&#10; explodeMax: dés de dégâts explosifs&#10; pasDeDmg: l'attaque ne fait pas de DM&#10; poudre: arme à poudre&#10; reroll1: relance les 1 sur les dés de DM&#10; tempDmg: fait toujours des attaques non léthales&#10;" value="">
+                    <input type="text" name="attr_arme-atkmods" placeholder="Modificateurs d'attaque" title="@{arme-atkmods} Modificateurs séparés par des virgules&#10; deBonus: avec dé bonus&#10; deMalus: avec dé malus&#10; auto: réussite automatique&#10; choc: peut faire des attaques non léthales sans malus&#10; explodeMax: dés de dégâts explosifs&#10; pasDeDmg: l'attaque ne fait pas de DM&#10; poudre: arme à poudre&#10; reroll1: relance les 1 sur les dés de DM (:1 = une seule fois)&#10; tempDmg: fait toujours des attaques non léthales&#10;" value="">
                   </div>
                   <div class="bordered">
                     <textarea class="one-row" name="attr_arme-options" placeholder="Options d'attaque avec argument" title="@{arme-options} Options d'attaque"></textarea>
@@ -6155,8 +6160,10 @@
                   <summary>Bourse</summary>
                   <div class="d-flex">
                     PC:<input type="number" class="treasure" name="attr_tresor_pc">
-                    PA:<input type="number" class="treasure" name="attr_tresor_pa">
-                    PO:<input type="number" class="treasure" name="attr_tresor_po">
+                    <input type="radio" class="treasure" name="attr_tresor_monnaie" title="@{tresor_monnaie} Compter le trésor en PA" value="pa" checked>
+                    &nbsp;PA:<input type="number" class="treasure" name="attr_tresor_pa">
+                    <input type="radio" class="treasure" name="attr_tresor_monnaie" title="@{tresor_monnaie} Compter le trésor en PO" value="po">
+                    &nbsp;PO:<input type="number" class="treasure" name="attr_tresor_po">
                     PP:<input type="number" class="treasure" name="attr_tresor_pp">
                   </div>
                 </details>
@@ -7140,19 +7147,19 @@ const SWData = {
     template: "cof2"
   },
   COLORS: {
-    default:  [ "burlywood",  "#000" ],
-    blue:     [ "#0d6efd",    "#fff" ],
-    indigo:   [ "#6610f2",    "#fff" ],
-    purple:   [ "#6f42c1",    "#fff" ],
-    pink:     [ "#d63384",    "#fff" ],
-    red:      [ "#dc3545",    "#fff" ],
-    orange:   [ "#fd7e14",    "#000" ],
-    yellow:   [ "#ffc107",    "#000" ],
-    green:    [ "#198754",    "#fff" ],
-    teal:     [ "#20c997",    "#fff" ],
-    cyan:     [ "#0dcaf0",    "#fff" ],
-    gray:     [ "#6c757d",    "#fff" ],
-    dark:     [ "#343a40",    "#fff" ],
+    default:  [ "burlywood", "#000" ],
+    blue:     [ "#0d6efd", "#fff" ],
+    indigo:   [ "#6610f2", "#fff" ],
+    purple:   [ "#6f42c1", "#fff" ],
+    pink:     [ "#d63384", "#fff" ],
+    red:      [ "#dc3545", "#fff" ],
+    orange:   [ "#fd7e14", "#000" ],
+    yellow:   [ "#ffc107", "#000" ],
+    green:    [ "#198754", "#fff" ],
+    teal:     [ "#20c997", "#fff" ],
+    cyan:     [ "#0dcaf0", "#fff" ],
+    gray:     [ "#6c757d", "#fff" ],
+    dark:     [ "#343a40", "#fff" ],
   },
   PC: {
     PROFILES: {
@@ -8542,6 +8549,20 @@ function strval(value, onError = "") {
 }
 
 /**
+ * Get object from serialized JSON
+ * @param {string} value - stringified JSON value
+ * @param {object} onError - default value on parse error
+ * @returns {object}
+ */
+function objval(value, onError = {}) {
+  try {
+    return JSON.parse(value);
+  } catch (e) {
+    return onError;
+  }
+}
+
+/**
 * Capitalize string
 * @param {string} s - string to capitalize
 * @param {boolean} [forceLower=true] - force lower to end of string
@@ -8561,6 +8582,11 @@ function shorten(stat) {
   return stat.substring(0, 3);
 }
 
+/**
+ * Return stat upper short name
+ * @param {string} stat - stat name
+ * @returns {string}
+ */
 function upperShort(stat) {
   return shorten(stat).toUpperCase();
 }
@@ -8754,7 +8780,7 @@ function hasAtkMod(mods, modName) {
 
 /**
  * Get an attack modifier value
- * @param {string[]} data - comma-delimited list of attack modifiers
+ * @param {string[]} mods - comma-delimited list of attack modifiers
  * @param {string} modName - name of modifier to check
  * @returns {string}
  */
@@ -8762,7 +8788,7 @@ function getAtkMod(mods, modName) {
   const ix = findAtkMod(mods, modName);
   if (ix === -1)
     return "";
-  return strval(mods[ix]).replace(modName, "").trim();
+  return strval(mods[ix]).replace(modName, "").replace(/[:=]/g, "").trim();
 }
 
 /**
@@ -9364,7 +9390,7 @@ function getPathRanks(rangs_voies) {
  * @returns {string[]}
  */
 function getRankNames(pathName, values) {
-  const rankNames = JSON.parse(strval(values.noms_rangs, "[]"));
+  const rankNames = objval(strval(values.noms_rangs, "[]"));
   return rankNames.filter(rn => rn.path === pathName).map(rn => rn.rank);
 }
 
@@ -9444,7 +9470,7 @@ function hasAbility(search, values) {
  */
 function hasAbilityName(search, values) {
   try {
-    const rankNames = JSON.parse(strval(values.noms_rangs, "[]")).map(rn => rn.rank);
+    const rankNames = objval(strval(values.noms_rangs, "[]")).map(rn => rn.rank);
     return rankNames.includes(search);
   } catch (error) { 
     return false;
@@ -10577,12 +10603,13 @@ function changeVP(button) {
  * On PV change action buttons
  */
 on("clicked:vigloss-btn clicked:vigheal-btn", function (eventInfo) {
-  const [ button ] = eventInfo.triggerName.split(":").slice(1);
+  const [ button ] = strval(eventInfo.triggerName).split(":").slice(1);
   changeVP(button);
 });
 
 /**
  * Change PV background color
+ * + Token tint color if TokenMod installed
  */
 on("change:pv change:pvig", function (eventInfo) {
   const PV = strval(eventInfo.triggerName) === "pvig" ? "PVIG" : "pv";
@@ -11515,9 +11542,13 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
     let dmOpt = "";
     if (modifiers.includes("explodemax") && !dm.includes("!"))
       dmOpt += "!";
-    if (modifiers.includes("reroll1"))
-      dmOpt += "r";
-
+    if (modifiers.includes("reroll1")) {
+      if (numval(getAtkMod("reroll1")) === 1)
+        dmOpt += "ro";
+      else
+        dmOpt += "r";
+    }
+    
     // mounted extra DM
     if (mounted && atk === "atkcac") {
       if (hasAbility({ name: "monture fantastique", inPath: "cavalier" }, values)) {
@@ -11532,7 +11563,7 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
       let powderBonus = 0;
       if (hasAbility({ name: "poudre puissante", inPath: "explosifs" }, values)) {
         powderBonus = 1 + getPathsWithRank({ profile: "arquebusier", minRank: 5 }, values);
-        range = ` *(\`\`${ rangeWithUnits(portee, 10) }\`\`)*`;
+        range = " *(" + "``" + rangeWithUnits(portee, 10) + "``" + ")*";
       }
       if (powderBonus > 0)
         dmAbilities +=` + ${powderBonus}[Poudre puissante]`;
@@ -11604,10 +11635,10 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
           break;
         case "perforants":
           if (dice && faces)
-            dmcrit = `[[${dice * 2}d${faces}]] DM + hémorragie : [[1@{devol}]] DM/round pendant 4 rounds`;
+            dmcrit = `[[${dice * 2}d${faces}]] DM + hémorragie : [[1@{devol}]] DM pendant 4 rounds`;
           break;
         case "tranchants":
-          dmcrit = `[[${dmMax}]] DM et hémorragie : [[1@{devol}]] DM/round pendant 4 rounds`;
+          dmcrit = `[[${dmMax}]] DM et hémorragie : [[1@{devol}]] DM pendant 4 rounds`;
           break;
       }
     }
@@ -11719,7 +11750,7 @@ on("change:usure_check", function() {
     const updates = new Map();
 
     try {
-      let { attack, name, usure, roll } = JSON.parse(check);
+      let { attack, name, usure, roll } = objval(check);
       if (attack !== "") {
         usure = Math.max(0, usure - 1);
         updates.set(`repeating_armes_${attack}_arme-usure`, usure);
@@ -13247,7 +13278,7 @@ on("clicked:repeating_equipement:equipshow-btn", function () {
  */
 on("change:repeating_equipement:equip-nom", function() {
   const section = "equipement";
-  const gearAttrs = [ "nom", "props" ].map(a => rptAttr(section, `equip-${a}`));
+  const gearAttrs = rptAttrs(section, [ "equip-nom", "equip-props" ]);
   getAttrs(gearAttrs, function(values) {
     const name = strval(values[rptAttr(section, "equip-nom")]);
     const hasProps = strval(values[rptAttr(section, "equip-props")]);
@@ -13635,19 +13666,19 @@ on("change:repeating_ressources:res-props", function(eventInfo) {
  */
 on("change:repeating_ressources:res-val", function(eventInfo) {
   const section = "repeating_ressources";
-  const attrs = [ "desc", "val", "props" ].map(a => `${section}_res-${a}`)
+  const attrs = rptAttrs(section, [ "res-desc", "res-val", "res-props" ]);
   getAttrs([ "cfg_use_ammo", "cfg_ammo_alert", ...attrs ], function (values) {
     const useAmmo = boolval(values.cfg_use_ammo);
     if (!useAmmo)
       return;
     
     const ammoAlert = intval(values.cfg_ammo_alert);
-    const desc = strval(values[`${section}_res-desc`]);
-    const props = strval(values[`${section}_res-props`]);
+    const desc = strval(values[rptAttr(section, "res-desc")]);
+    const props = strval(values[rptAttr(section, "res-props")]);
     if (getProp(props, "type").toLowerCase() !== "munitions")
       return;
 
-    const value = intval(values[`${section}_res-val`]);
+    const value = intval(values[rptAttr(section, "res-val")]);
     if (value <= 0 || value <= ammoAlert) {
       const text = value <= 0 ? `Plus de ${desc}` : `Plus que ${value} ${desc}`;
       const textclass = value <= 0 ? "fumble" : "secondary";
@@ -13752,6 +13783,63 @@ on("clicked:appearance-btn clicked:description-btn", function() {
     if (avatar)
       sendChatCmd(avatar);
   })
+});
+
+/**
+ * On clicking the default configuration button
+ */
+on("clicked:def_config-btn", function() {
+  const allConfigs = [
+    "use_skills",
+    "cfg_init_mod",
+    "cfg_init_agi",
+    "cfg_use_encmb",
+    "cfg_pc_var",
+    "cfg_bouclier_malus",
+    "cfg_use_ammo",
+    "cfg_ammo_alert",
+    "cfg_crit_diff",
+    "cfg_tbl_crit",
+    "cfg_tbl_fumble",
+    "cfg_use_epic",
+    "cfg_use_drniv",
+    "cfg_use_mana",
+    "cfg_use_capped6",
+    "cfg_use_dronly",
+    "cfg_atk_diff",
+    "cfg_usure",
+    "cfg_use_fear",
+    "cfg_shadow",
+    "pvmax_force",
+    "drmax_force",
+    "pcmax_force",
+    "pmmax_force",
+    "cfg_1attack_roll",
+    "cfg_luck_btn",
+  ];
+  getAttrs([ "character_name", ...allConfigs ], function(values) {
+    
+    // PJBase : make sure all attributes are created
+    if (strval(values.character_name).trim() === "PJBase") {
+      const updates = new Map();
+      allConfigs.forEach(configAttr => updates.set(configAttr, intval(values[configAttr])));
+      setAttrs(Object.fromEntries(updates));
+      return;
+    }
+
+    // Other PCs : copy config
+    const askValues = allConfigs.map(a => `{{${a}=[[@{PJBase|${a}}]]}}`).join(" ");
+    startRoll("! " + askValues, values => {
+      const updates = new Map();
+      allConfigs.forEach(configAttr => {
+        const value = intval(values.results[configAttr].result);
+        updates.set(configAttr, value);
+      });
+      setAttrs(Object.fromEntries(updates));
+  
+      finishRoll(values.rollId);
+    });
+  });
 });
 
 /**
@@ -13968,7 +14056,7 @@ on("clicked:import_json-btn", function () {
 
     let attributes = new Map();
 
-    const profileData = JSON.parse(jsonData);
+    const profileData = objval(jsonData);
 
     if (profileData.character)
       attributes = importProfile(profileData.character, attributes);
@@ -14787,8 +14875,12 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     let dmOpt = "";
     if (modifiers.includes("explodemax") && !dm.includes("!"))
       dmOpt += "!";
-    if (modifiers.includes("reroll1"))
-      dmOpt += "r";
+    if (modifiers.includes("reroll1")) {
+      if (numval(getAtkMod("reroll1")) === 1)
+        dmOpt += "ro";
+      else
+        dmOpt += "r";
+    }
 
     let dmroll = "";
     if (dm !== "") {
@@ -14801,17 +14893,18 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
         dmroll = "[[" + dmroll + " ]]";
     }
 
-    const specialCmd = [];
     let special = strval(values[section + "special"]);
     special = insertRolls(special, { isNPC: true, companionOf });
-    while (true) {
-      const matched = special.match(/jet:([1-9]+)/i);
+
+    const specRolls = [];
+    strval(values[section + "atkmods"]).split(",").forEach(atkMod => {
+      const matched = atkMod.match(/jet:([0-9]+)/i);
       if (!matched)
-        break;
-      const [ matching, index ] = matched;
-      special = special.replace(matching, "Spécial : @{" + rptAttr("npcrolls", "npcroll-name", "$" + (intval(index) - 1) ) + "}");
-      specialCmd.push("%{" + charName + "|" + rptAttr("npcrolls", "npcroll", "$" + (intval(index) - 1) ) + "}");
-    }
+        return;
+      const [ index ] = matched.slice(1);
+      specRolls.push("%{" + charName + "|" + rptAttr("npcrolls", "npcroll", "$" + (intval(index) - 1) ) + "}");
+      special = "Spécial : @{" + rptAttr("npcrolls", "npcroll-name", "$" + (intval(index) - 1) ) + "}\n" + special;
+    });
 
     let dmMax = 0;
     const result = dm.match(/([0-9]*)[dD]([0-9]*)/);
@@ -14933,9 +15026,9 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
       }
     });
 
-    // Commands in special
-    if (specialCmd.length > 0)
-      sendChatCmd(specialCmd.join(" "));
+    // Special rolls
+    if (specRolls.length > 0)
+      sendChatCmd(specRolls.join(" "));
   })
 });
 
@@ -14993,7 +15086,7 @@ function setCompanion(values) {
 
   // retrieve values & update attributes
   if (askValues) {
-    startRoll("!" + askValues, values => {
+    startRoll("! " + askValues, values => {
       const updates = new Map();
       const mounted = boolval(values.results.mounted.result);
       const rider = intval(values.results.rider.result);
@@ -15010,6 +15103,8 @@ function setCompanion(values) {
         updates.set("def", defOwner);
       if (updates.size > 0)
         setAttrs(Object.fromEntries(updates));
+      
+      finishRoll(values.rollId);
     });
   }
 }
@@ -15842,6 +15937,9 @@ on("change:pv", function(eventInfo) {
   });
 });
 
+/**
+ * Sync PVIG <=> pv for token bars
+ */
 on("change:pvig", function(eventInfo) {
   if (strval(eventInfo.sourceType) !== "player")
     return;
@@ -15861,6 +15959,9 @@ on("change:pvig", function(eventInfo) {
   });
 });
 
+/**
+ * Sync pv_max <=> PVIG_max for token bars
+ */
 on("change:pv_max", function(eventInfo) {
   if (eventInfo.sourceType !== "player")
     return;
@@ -15870,6 +15971,9 @@ on("change:pv_max", function(eventInfo) {
   });
 });
 
+/**
+ * Sync PVIG_max <=> pv_max for token bars
+ */
 on("change:pvig_max", function(eventInfo) {
   if (eventInfo.sourceType !== "player")
     return;
@@ -15879,6 +15983,9 @@ on("change:pvig_max", function(eventInfo) {
   });
 });
 
+/**
+ * On clicking token adjust buttons (TokenMod)
+ */
 on("clicked:token_min-btn clicked:token_max-btn clicked:token_def-btn", function(eventInfo) {
   getAttrs([ "sheet_type", "character_name", "pm_max" ], function(values) {
     const [ bt ] = strval(eventInfo.triggerName).split("_");
@@ -15901,6 +16008,10 @@ on("clicked:token_min-btn clicked:token_max-btn clicked:token_def-btn", function
   });
 
 });
+
+// ======================
+// CHARACTERMANCER EVENTS
+// ======================
 
 /**
  * Run charactermancer

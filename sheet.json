@@ -56,6 +56,17 @@
       "value": "1",
       "default": "",
       "description": "Activer les options Low-Fantasy"
+    },
+    {
+      "attribute": "tresor_monnaie",
+      "displayname": "Trésor",
+      "type": "select",
+      "options": [
+        "PA|pa",
+        "PO|po"
+      ],
+      "default": "pa",
+      "description": "Monnaie de comptage du trésor"
     }
   ],
   "legacy": false
