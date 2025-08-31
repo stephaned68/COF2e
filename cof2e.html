@@ -106,7 +106,7 @@
     <div>
       <img
         class="logo"
-        title="Version 1.8.0 - ??/08/2025"
+        title="Version 1.8.0 - 31/08/2025"
         src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cof2e_logo.jpg"
       />
     </div>
@@ -121,6 +121,9 @@
         </button>
         <button type="action" class="flat-btn img-btn" name="act_token_def-btn" title="%{token_def-btn} Lier les barres du token">
           <span class="img-btn">2</span>
+        </button>
+        <button type="action" class="flat-btn img-btn" name="act_token_siz-btn" title="%{token_siz-btn} Forcer la taille">
+          <span class="img-btn">`</span>
         </button>
         <button type="action" class="flat-btn img-btn" name="act_token_max-btn" title="%{token_max-btn} Augmenter la taille de 10%">
             <span class="img-btn">+</span>
@@ -266,8 +269,7 @@
     <input type="hidden" class="cof-type-toggle" name="attr_sheet_type" value="pc"/> 
     <button type="action" class="hidden" name="act_pc_menus-btn"></button>
     <button type="action" class="hidden" name="act_npc_menus-btn"></button>
-
-    
+   
     <!-- Fiche PJ -->
     <div class="cof-pc">
       <input type="hidden" class="tabs-toggle" name="attr_pc_tab" value="main" />
@@ -4552,9 +4554,9 @@
                   <summary>Bourse</summary>
                   <div class="d-flex">
                     PC:<input type="number" class="treasure" name="attr_tresor_pc">
-                    <input type="radio" class="treasure" name="attr_tresor_monnaie" title="@{tresor_monnaie} Compter le trésor en PA" value="pa" checked>
+                    <input type="radio" class="treasure" name="attr_tresor_monnaie" title="@{tresor_monnaie} Compter le trésor en PA" value="1" checked>
                     &nbsp;PA:<input type="number" class="treasure" name="attr_tresor_pa">
-                    <input type="radio" class="treasure" name="attr_tresor_monnaie" title="@{tresor_monnaie} Compter le trésor en PO" value="po">
+                    <input type="radio" class="treasure" name="attr_tresor_monnaie" title="@{tresor_monnaie} Compter le trésor en PO" value="2">
                     &nbsp;PO:<input type="number" class="treasure" name="attr_tresor_po">
                     PP:<input type="number" class="treasure" name="attr_tresor_pp">
                   </div>
@@ -4588,6 +4590,7 @@
                   </div>
 
                   <div class="d-flex d-flex-middle">
+                    <input type="hidden" name="attr_equip-modprops" value="">
                     <textarea class="one-row" name="attr_equip-props" title="@{equip-props} Propriétés"></textarea>
                     &nbsp;<input type="checkbox" name="attr_equip-atk" title="@{equip-atk} A une attaque" value="1">
                     &nbsp;<span>A une attaque</span>
@@ -5355,7 +5358,10 @@
               <div class="d-flex">
                 <input type="checkbox" name="attr_tkmarker_cond" title="@{tkmarker_cond}" value="1">
               </div>
-            </div>          
+            </div>
+            <hr>
+            <input type="checkbox" name="attr_chatsetattr" title="@{chatsetattr}" value="1">
+            <span>ChatSetAttr</span>
           </div>
           
           <div class="sheet-col">
@@ -5382,7 +5388,7 @@
               <li>
                 <details>
                   <summary>
-                    <strong>Version 1.8.0</strong> (2025-08)
+                    <strong>Version 1.8.0</strong> (2025-08-31)
                   </summary>
                   <ul>
                     <li>Prise en compte des capacités épiques dans le calcul des rangs dans la voie et des PV (propriété <em>epic:</em>).</li>
@@ -5391,6 +5397,7 @@
                     <li>Ajout d'une option dans la configuration <em>Token Mod</em> pour appliquer une teinte au token quand le nombre de PV tombe au-dessous de sa valeur maximum.</li>
                     <li>Ajout d'un bouton pour copier la configuration par défaut depuis une fiche nommée PJBase.</li>
                     <li>Option <em>jet:N</em> déplacée du champ <em>Spécial</em> d'une attaque au champ <em>Modificateurs d'attaque</em></li>
+                    <li>Ajout d'une option dans les coups spéciaux des PNJ pour n'affecter que la prochaine attaque</li>
                   </ul>
                 </details>
               </li>
@@ -5737,7 +5744,7 @@
                   </div>
                   <div class="bordered">
                     <input type="hidden" class="has-buff" name="attr_def_sup" value="0">
-                    <input type="number" class="has-buff" class="two-digits" name="attr_def" title="@{def}" value="0">
+                    <input type="number" class="has-buff two-digits" name="attr_def" title="@{def}" value="0">
                   </div>
                 </div>
 
@@ -5752,7 +5759,7 @@
                   <span>RD</span>
                 </div>
                 <div class="bordered">
-                  <input type="text" name="attr_rd" title="@{rd}" value="">
+                  <textarea name="attr_rd" class="one-row" title="@{rd}" value=""></textarea>
                 </div>
               </div>
 
@@ -5897,7 +5904,7 @@
                   </div>
                   <div class="bordered">
                     <input type="checkbox" name="attr_arme-active" title="@{arme-active} Attaque active" value="1" checked>
-                    <input type="text" name="attr_arme-atkmods" placeholder="Modificateurs d'attaque" title="@{arme-atkmods} Modificateurs séparés par des virgules&#10; deBonus: avec dé bonus&#10; deMalus: avec dé malus&#10; auto: réussite automatique&#10; choc: peut faire des attaques non léthales sans malus&#10; explodeMax: dés de dégâts explosifs&#10; pasDeDmg: l'attaque ne fait pas de DM&#10; poudre: arme à poudre&#10; reroll1: relance les 1 sur les dés de DM (:1 = une seule fois)&#10; tempDmg: fait toujours des attaques non léthales&#10;" value="">
+                    <input type="text" name="attr_arme-atkmods" placeholder="Modificateurs d'attaque" title="@{arme-atkmods} Modificateurs séparés par des virgules&#10; deBonus: avec dé bonus&#10; deMalus: avec dé malus&#10; auto: réussite automatique&#10; choc: peut faire des attaques non léthales sans malus&#10; explodeMax: dés de dégâts explosifs&#10; pasDeDmg: l'attaque ne fait pas de DM&#10; poudre: arme à poudre&#10; reroll1: relance les 1 sur les dés de DM (:1 = une seule fois)&#10; tempDmg: fait toujours des attaques non léthales&#10; jet:N: lance le jet de capacité N&#10;" value="">
                   </div>
                   <div class="bordered">
                     <textarea class="one-row" name="attr_arme-options" placeholder="Options d'attaque avec argument" title="@{arme-options} Options d'attaque"></textarea>
@@ -6032,6 +6039,7 @@
                 &nbsp;<input type="checkbox" name="attr_cspec1_roll" title="@{cspec1_roll} Dé malus" value="2">
                 &nbsp;/&nbsp;<input type="number" name="attr_cspec1_bonus" title="@{cspec1_bonus} Bonus attaque" value="">
                 &nbsp;<input type="text" name="attr_cspec1_dm" title="@{cspec1_dm}" placeholder="Bonus DM 1" value="">
+                &nbsp;<input type="checkbox" name="attr_cspec1_next" title="@{cspec1_next} Prochaine attaque" value="1">
 
               </div>
 
@@ -6039,10 +6047,11 @@
 
                 <input type="radio" name="attr_pnj_spec" value="2">
                 &nbsp;<input type="text" name="attr_cspec2_nom" title="@{cspec2_nom}" placeholder="Coup spécial 2" value="">
-                &nbsp;<input type="checkbox" name="attr_cspec2_roll" title="@{cspec1_roll} Dé bonus" value="1">
-                &nbsp;<input type="checkbox" name="attr_cspec2_roll" title="@{cspec1_roll} Dé malus" value="2">
+                &nbsp;<input type="checkbox" name="attr_cspec2_roll" title="@{cspec2_roll} Dé bonus" value="1">
+                &nbsp;<input type="checkbox" name="attr_cspec2_roll" title="@{cspec2_roll} Dé malus" value="2">
                 &nbsp;/&nbsp;<input type="number" name="attr_cspec2_bonus" title="@{cspec2_bonus} Bonus attaque" value="">
                 &nbsp;<input type="text" name="attr_cspec2_dm" title="@{cspec2_dm}" placeholder="Bonus DM 2" value="">
+                &nbsp;<input type="checkbox" name="attr_cspec2_next" title="@{cspec2_next} Prochaine attaque" value="1">
 
               </div>
 
@@ -6050,10 +6059,11 @@
 
                 <input type="radio" name="attr_pnj_spec" value="3">
                 &nbsp;<input type="text" name="attr_cspec3_nom" title="@{cspec3_nom}" placeholder="Coup spécial 3" value="">
-                &nbsp;<input type="checkbox" name="attr_cspec3_roll" title="@{cspec1_roll} Dé bonus" value="1">
-                &nbsp;<input type="checkbox" name="attr_cspec3_roll" title="@{cspec1_roll} Dé malus" value="2">
+                &nbsp;<input type="checkbox" name="attr_cspec3_roll" title="@{cspec3_roll} Dé bonus" value="1">
+                &nbsp;<input type="checkbox" name="attr_cspec3_roll" title="@{cspec3_roll} Dé malus" value="2">
                 &nbsp;/&nbsp;<input type="number" name="attr_cspec3_bonus" title="@{cspec3_bonus} Bonus attaque" value="">
                 &nbsp;<input type="text" name="attr_cspec3_dm" title="@{cspec3_dm}" placeholder="Bonus DM 3" value="">
+                &nbsp;<input type="checkbox" name="attr_cspec3_next" title="@{cspec3_next} Prochaine attaque" value="1">
 
               </div>
 
@@ -6192,6 +6202,7 @@
                   </div>
 
                   <div class="d-flex d-flex-middle">
+                    <input type="hidden" name="attr_equip-modprops" value="">
                     <textarea class="one-row" name="attr_equip-props" title="@{equip-props} Propriétés" placeholder="Propriétés"></textarea>
                   </div>
 
@@ -6604,6 +6615,9 @@
                 &nbsp;<input type="text" class="w-auto" name="attr_tkmarker_dead" title="@{tkmarker_dead}" value="dead">
               </div>
             </div>
+            <hr>
+            <input type="checkbox" name="attr_chatsetattr" title="@{chatsetattr}" value="1">
+            <span>ChatSetAttr</span>
           </div>
 
           <div class="sheet-col">
@@ -7099,11 +7113,20 @@
       {{#title}}<div class="sheet-title">{{title}}</div>{{/title}}
       {{#subtitle}}<div class="sheet-subtitle">{{subtitle}}</div>{{/subtitle}}
     </div>
+    {{#text}}
+      <div class="sheet-content">
+        <div class="sheet-text">{{text}}</div>
+      </div>
+    {{/text}}
     <div class="sheet-content">
-      {{#allprops() title subtitle desc color token}}
+      {{#text}}
+      <div></div>
+      <div></div>
+      {{/text}}
+      {{#allprops() title subtitle desc text color token}}
       <div class="sheet-key">{{key}}</div>
       <div class="sheet-value">{{value}}</div>
-      {{/allprops() title subtitle desc color token}}
+      {{/allprops() title subtitle desc text color token}}
       {{#desc}}<div class="sheet-desc">{{desc}}</div>{{/desc}}
     </div>
   </div>
@@ -7820,6 +7843,7 @@ const SWData = {
     "bonus-def",
     "armure",
     "armure-malus",
+    "agi-max",
     "bouclier",
     "bouclier-malus",
     "casque",
@@ -9136,7 +9160,7 @@ function sendChatMsg(msg, options) {
  * @param {object} [options={}] - optional properties to add to roll
  * @returns {string[]}
  */
-function cof2RollTemplate(props, options = {}) {
+function rollTemplate(props, options = {}) {
   if (options.tags) {
     if (Array.isArray(options.tags)) {
       if (options.tags.length > 0)
@@ -9192,6 +9216,19 @@ function ask(askParams, callback) {
 };
 
 /**
+ * Extract string data from CRP roll object
+ * @param {object} rollInfo - startRoll roll object
+ * @param {string} name - name of roll to parse data from
+ * @returns {string}
+ */
+function getRollData(rollInfo, name) {
+  const expr = strval(rollInfo.results[name].expression);
+  if (expr === "")
+    return
+  return (expr.match(/^0\[(.*)\]\s*$/) || [])[1];
+}
+
+/**
  * Add numeric attributes values
  * @param {object} values - getAttrs object with numeric values
  * @returns - {number}
@@ -9245,6 +9282,25 @@ function tokenMod(charName, props = {}) {
   const tokenmod = `!token-mod --current-page --ignore-selected --ids @{${charName}|character_id}`;
   const tokenProps = Object.keys(props).map(prop => `${prop}|${props[prop]}`).join(" ");
   return tokenmod + (tokenProps !== "" ? " --set " : "") + tokenProps;
+}
+
+/**
+ * Build ChatSetAttr command
+ * @param { { select: string, from: string, header: string, content: string } } options - !setattr options
+ * @param {Object} attrs - attributes name/value pairs
+ * @returns {String}
+ */
+function chatSetAttr(options, attrs = {}) {
+  options = { select: "--sel", from: "COF2e", header: "", ...options };
+  if (!options.select)
+    return "";
+  const setattr = Object.keys(options).reduce((result, optk) => {
+    if ([ "from", "header", "content" ].includes(optk) && options[optk])
+      result += ` --fb-${optk} ${options[optk]}`;
+    return result;
+  }, `!setattr ${options.select}`);
+  const attribs = " " + Object.entries(attrs).map(([ name, value ]) => `--${name}|${value}`).join(" ");
+  return setattr + attribs;
 }
 
 /**
@@ -9904,10 +9960,10 @@ function getDEvol(level) {
  */
 on(changeEvent([ 
   "niveau", "noms_rangs",
-  "cfg_use_epic", "cfg_use_capped6", "cfg_atk_diff" 
+  "cfg_use_epic", "cfg_use_capped6", "cfg_atk_diff"
 ]), function(eventInfo) {
   getAttrs([ 
-    "sheet_type", "niveau", "profil", "pc_max",
+    "sheet_type", "niveau", "profil", "pc", "pc_max",
     "cfg_use_epic", "cfg_use_capped6", "cfg_atk_diff",
     "noms_rangs"
   ], function(values) {
@@ -9922,8 +9978,11 @@ on(changeEvent([
 
     let updateAttrs = new Map();
 
+    // reset PC
     if (intval(eventInfo.newValue) === intval(eventInfo.previousValue) + 1) {
-      updateAttrs.set("pc", intval(values.pc_max));
+      const pcMax = intval(values.pc_max);
+      if (intval(values.pc) < pcMax)
+        updateAttrs.set("pc", pcMax);
     }
 
     let atks = { cac: 1, tir: 1, mag: 1 };
@@ -9962,7 +10021,7 @@ on("clicked:alias-toggle", function() {
     if (alias !== "") {
       const cofantasy = JSON.stringify({ action: "alias", param: name });
       setAttrs({ character_name: alias, alias: "", notes, cofantasy });
-      sendChatMsg(cof2RollTemplate({
+      sendChatMsg(rollTemplate({
         text
       }));
     }
@@ -10146,7 +10205,7 @@ function updatePVMax(eventInfo, changed = "") {
     });
     
     if (unknowns.length > 0) {
-      sendChatMsg(cof2RollTemplate({
+      sendChatMsg(rollTemplate({
         lsub: "Erreur",
         rsub: "Calcul PV max",
         alert: `**Calcul impossible : Pas de PV indiqué pour la ou les voies ${ unknowns.join(", ") }**`,
@@ -10381,7 +10440,7 @@ SWData.PC.STATS.forEach(stat => {
       const defAction = intval(values.def_action);
       const text = defAction !== 0 ? `+ [[${defAction}]] Défense ${ defAction === 5 ? "totale" : "partielle" }` : "";
       const carac = `[[@{${roll}}[Dé] + @{${short}${ isNPC ? "" : "_test" }}[Bonus ${short.toUpperCase()}]${shadow.malus}${fear}${armor_malus}${shield_malus}${helmet_malus} ]] `;
-      const chatMsg = cof2RollTemplate({
+      const chatMsg = rollTemplate({
         lsub: "Test",
         rsub: capitalize(stat) + statMod,
         roll: carac,
@@ -10415,8 +10474,9 @@ on("clicked:init-btn", function () {
     if (!isNPC)
       helmet = helmetMalus(values);
     const tactique = isNPC ? strval(values.pnj_tactique) : "";
-    const roll = `[[@{init}[Initiative]${helmet} + @{cfg_init_variable}[Dé(s)]${initMod} &{tracker} ]]`;
-    const chatMsg = cof2RollTemplate({
+    const initBonus = isNPC ? " + ?{Bonus ?}[Bonus]" : "";
+    const roll = `[[@{init}[Initiative]${helmet}${initBonus} + @{cfg_init_variable}[Dé(s)]${initMod} &{tracker} ]]`;
+    const chatMsg = rollTemplate({
       lsub: "Jet",
       rsub: "Initiative",
       roll
@@ -10424,7 +10484,7 @@ on("clicked:init-btn", function () {
     sendChatMsg(chatMsg);
 
     if (tactique.replaceAll("0", "") !== "") {
-      const chatMsg = cof2RollTemplate({
+      const chatMsg = rollTemplate({
         lsub: "Combat",
         rsub: "Tactique",
         text: tactique
@@ -10466,7 +10526,7 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
       };
       if (roll === "1d20" && !useOneRoll)
         atkProps.broll = atkRoll;
-      const chatMsg = cof2RollTemplate(atkProps, { tags });
+      const chatMsg = rollTemplate(atkProps, { tags });
       sendChatMsg(chatMsg);
     });
   });
@@ -10568,7 +10628,7 @@ function updatePVDR(vp, lossOrGain, buttonClicked = true) {
     }*/
     
     if (notify > 0) {
-      const chatMsg = cof2RollTemplate({
+      const chatMsg = rollTemplate({
           lsub: "PV",
           rsub: `${ lossOrGain === -1 ? "Blessure" : "Soins" } `,
           text : `@{character_name} ${ lossOrGain === -1 ? "perd" : "regagne" } ${vp} PV${effects}${hasRD} `
@@ -10673,7 +10733,7 @@ on("clicked:drecup-btn", function() {
     let dr = intval(values.dr);
     let drMax = intval(values.dr_max);
     if (dr === 0 && drMax !== 0) {
-      const chatMsg = cof2RollTemplate({
+      const chatMsg = rollTemplate({
         lsub,
         rsub,
         text: "Plus de Dé de Récupération !",
@@ -10686,7 +10746,7 @@ on("clicked:drecup-btn", function() {
     const pvMax = intval(values.pv_max);
     let pv = intval(values.pv);
     if (pv === pvMax && !highFan) {
-      const chatMsg = cof2RollTemplate({
+      const chatMsg = rollTemplate({
         lsub,
         rsub,
         text: "@{character_name} est déjà à son maximum de PV !",
@@ -10727,7 +10787,7 @@ on("clicked:drecup-btn", function() {
       };
       if (typeRecup === 3 && rolls.length > 1)
         chatMsg = { ...chatMsg, broll: `[[${rolls[1]} + 1d10 + @{vol}[VOL] ]]` };
-      const chatCmd = buildChatMsg(cof2RollTemplate(chatMsg));
+      const chatCmd = buildChatMsg(rollTemplate(chatMsg));
       startRoll(chatCmd, roll => {
         finishRoll(roll.rollId);
         let updates = new Map([ [ "dr", dr ] ]);
@@ -10850,7 +10910,7 @@ on("clicked:luck_apply-btn", function() {
     const rsub = pcLabel;
     let pc = intval(values.pc);
     if (pc === pcMin) {
-      const chatMsg = cof2RollTemplate({
+      const chatMsg = rollTemplate({
         lsub,
         rsub,
         text: `Plus de ${pcLabel} !`,
@@ -10866,7 +10926,7 @@ on("clicked:luck_apply-btn", function() {
     let roll = "[[" + luck + (last_roll !== "" ? ` + ${last_roll} ` : "" ) + "]]";
     if (last_broll)
       roll += " | [[" + luck + ` + ${last_broll} ` + "]]";
-    const chatMsg = cof2RollTemplate({
+    const chatMsg = rollTemplate({
       lsub,
       rsub,
       roll,
@@ -10884,7 +10944,7 @@ on("clicked:luck_apply-btn", function() {
 on("clicked:luck_roll-btn", function() {
   getAttrs([ "cfg_shadow" ], function(values) {
     const pcLabel = boolval(values.cfg_shadow) ? "Choc" : "Chance";
-    const chatMsg = cof2RollTemplate({
+    const chatMsg = rollTemplate({
       lsub: "Jet",
       rsub: pcLabel,
       roll: `[[ 1d6![Dé] + @{pc}[Points de ${pcLabel} restants] ]]`,
@@ -10899,7 +10959,7 @@ on("clicked:luck_roll-btn", function() {
  */
 on("clicked:devol-btn", function() {
     askValue("Nombre de dés ?", function(dice) {
-    const chatMsg = cof2RollTemplate({
+    const chatMsg = rollTemplate({
       lsub: "Jet",
       rsub: "Dé évolutif",
       roll: `[[${dice}@{devol}]]`
@@ -10976,7 +11036,7 @@ function displayCondition(label, effects, description, notify) {
     malus.push(`${effects[attribute]} en ${name}`);
   });
   text = [ "@{character_name} subit les effets suivants :", ...malus, ...description ].join("\n");
-  const chatMsg = cof2RollTemplate({
+  const chatMsg = rollTemplate({
     lsub: "Condition",
     rsub: label,
     text
@@ -11118,8 +11178,9 @@ function insertRolls(text, options = {}) {
   // Search for "... #d# +/- X..."
   matchRegExp(text, /([0-9]+[dD][0-9]+)([ ]*[\+\-]*[ ]*[0-9]*)?/gm).forEach(result => {
     const [ matched, dice, mod ] = result;
-    const replace = `[[${dice}${ mod || "" }]]`;
+    const replace = `[[${dice}${ mod.trim() || "" }]] `;
     text = text.replace(matched, replace);
+    console.log(matched, replace, text)
   });
   
   return text;
@@ -11374,7 +11435,7 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
     // 2 mains & bouclier 
     const twoHanded = boolval(values[section + "2m"]);
     if (atk !== "atkmag" && twoHanded && shieldUsed) {
-      sendChatMsg(cof2RollTemplate({
+      sendChatMsg(rollTemplate({
         lsub: "Attaque",
         rsub: name,
         text: `@{character_name} ne peut pas manier ${name} avec son bouclier équipé !`,
@@ -11725,7 +11786,7 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
       atkProps.fumble = fumbleEffect;
     }
 
-    const chatMsg = cof2RollTemplate(atkProps, { tags: allTags });
+    const chatMsg = rollTemplate(atkProps, { tags: allTags });
     sendChatMsg(chatMsg, rollOptions);
 
     if (useAmmo && resourceId !== "") {
@@ -11755,7 +11816,7 @@ on("change:usure_check", function() {
         usure = Math.max(0, usure - 1);
         updates.set(`repeating_armes_${attack}_arme-usure`, usure);
         if (roll > usure) {
-          sendChatMsg(cof2RollTemplate({
+          sendChatMsg(rollTemplate({
             lsub: "Usure",
             rsub: name,
             text: `L'arme se brise (usure : ${usure}) !`,
@@ -12032,7 +12093,7 @@ function actionAbility(path, rank) {
       rollProps.alert = alert;
       rollProps.alertclass = alertCSS;
     }
-    const chatMsg = cof2RollTemplate(rollProps, { tags: allTags });
+    const chatMsg = rollTemplate(rollProps, { tags: allTags });
     sendChatMsg(chatMsg);
     
     // Update usages
@@ -12176,7 +12237,7 @@ function checkAbilityPoints(changed = "") {
       let text = usedPoints > maxPoints ? `${usedPoints} points utilisés mais ${maxPoints} au maximum` : "";
       if (alerts.length > 0)
         text += ( text !== "" ? "\n" : "") + alerts.join("\n");
-      const chatMsg = cof2RollTemplate({
+      const chatMsg = rollTemplate({
         lsub: "Contrôle",
         rsub: "Points de Capacités",
         text
@@ -12377,7 +12438,7 @@ on("clicked:reset_uses-btn", function() {
 
     // Nothing to process
     if (freqs.length === 1) {
-      const chatMsg = cof2RollTemplate({
+      const chatMsg = rollTemplate({
         lsub: "Capacités",
         rsub: "Utilisations",
         text: "Aucune capacité avec nombre d'utilisations à recharger"
@@ -12400,7 +12461,7 @@ on("clicked:reset_uses-btn", function() {
           const usage = intval(values[k]);
           text += title + " : " + usage + ` utilisation${ usage > 1 ? "s" : ""}\n`;
         });
-        const chatMsg = cof2RollTemplate({
+        const chatMsg = rollTemplate({
           lsub: "Capacités",
           rsub: `Par ${freq}`,
           text
@@ -12596,7 +12657,7 @@ on("clicked:repeating_rolls:roll-btn", function() {
       text = abilityDesc;
 
     // Send to chat
-    const chatMsg = cof2RollTemplate({
+    const chatMsg = rollTemplate({
       lsub,
       rsub: rollName + rollBonus,
       roll: rollCmd,
@@ -12664,7 +12725,7 @@ SWData.PC.SKILLS.forEach(skill => {
       rollCmd = "[[" + rollCmd + " ]]";
 
       // Send to chat
-      const chatMsg = cof2RollTemplate({
+      const chatMsg = rollTemplate({
         lsub: "Compétence",
         rsub: skillName + skillTotal,
         roll: rollCmd,
@@ -12952,7 +13013,7 @@ function encumbrance() {
         const text = "@{character_name} est encombré-e et subit les effets suivants :\n" 
         + (effects.length > 1 ? "- " : "")
         + effects.join("\n- ");
-        const chatMsg = cof2RollTemplate({
+        const chatMsg = rollTemplate({
           lsub: "Encombrement",
           rsub: "Limite dépassée",
           text
@@ -12989,13 +13050,14 @@ on("clicked:helpgear-btn", function() {
       selected === 2 ? "bonus-def:=Bonus DEF de l'armure ou du bouclier" : "",
       selected === 2 ? "armure:=Bonus DEF de l'armure" : "",
       selected === 2 ? "armure-malus:=Malus d'armure portée" : "",
+      selected === 2 ? "agi-max:=Bonus d'AGI maximum" : "",
       selected === 2 ? "bouclier:=Bonus DEF du bouclier" : "",
       selected === 2 ? "bouclier-malus:=Malus de bouclier porté" : "",
       selected === 2 ? "casque:=RD du casque contre les DM critiques" : "",
       selected === 2 ? "casque-malus:=Malus de PER et Init du casque porté" : "",
-      selected === 3 ? "bonus-magique:=Bonus pour toucher et DM" : "",
-      selected === 3 ? "magique-att:=Bonus magique pour toucher" : "",
-      selected === 3 ? "magique-dm:=Bonus magique aux DM" : "",
+      selected === 3 ? "magie:=Bonus magique pour toucher et DM" : "",
+      selected === 3 ? "magieAtt:=Bonus magique pour toucher" : "",
+      selected === 3 ? "magieDmg:=Bonus magique aux DM" : "",
       selected === 3 ? "affutee:=Arme affûtée" : "",
       selected === 3 ? "element:=Nom de l'élément (+' intense')" : "",
       selected === 3 ? "fleau:=Nom du type de créature" : "",
@@ -13218,7 +13280,7 @@ SWData.COINS.forEach(coin => {
   on(`change:tresor_${coin} change:tresor_monnaie`, function() {
     const coins = SWData.COINS.map(c => `tresor_${c}`);
     getAttrs([ "tresor_monnaie", ...coins ], function(values) {
-      const monnaie = strval(values.tresor_monnaie);
+      const monnaie = intval(values.tresor_monnaie) === 2 ? "po" : "pa";
       delete values.tresor_monnaie;
       const tresor_pieces = SWData.COINS
         .filter(c => intval(values[`tresor_${c}`]) !== 0)
@@ -13232,7 +13294,7 @@ SWData.COINS.forEach(coin => {
       values.tresor_pc = 0;
       const total = addValues(values);
       const tresor = `${total} ${ monnaie.toUpperCase() }`;
-      setAttrs({ tresor, tresor_pieces });
+      setAttrs({ tresor, tresor_pieces }, { silent: true });
     });
   });
 })
@@ -13249,27 +13311,50 @@ on("change:repeating_equipement remove:repeating_equipement", function() {
  */
 on("clicked:repeating_equipement:equipshow-btn", function () {
   const section = "equipement";
-  const gearAttrs = [ "nom", "detail", "props" ].map(a => rptAttr(section, `equip-${a}`));
-  getAttrs([ ...gearAttrs, "character_name" ], function(values) {
-    const nom = strval(values[rptAttr(section, "equip-nom")]);
+  const gearAttrs = [ "nom", "qte", "detail", "props" ].map(a => rptAttr(section, `equip-${a}`));
+  getAttrs([ ...gearAttrs, "character_name", "chatsetattr" ], function(values) {
+    const name = strval(values[rptAttr(section, "equip-nom")]);
+    const qty = numval(values[rptAttr(section, "equip-qte")]);
     const detail = strval(values[rptAttr(section, "equip-detail")]);
     const props = strval(values[rptAttr(section, "equip-props")]);
     if (detail === "" && props === "")
       return
     const chatMsg = [
       "title=Equipement",
-      `subtitle=${nom}`,
+      `subtitle=${ qty > 1 ? `${qty} x ` : "" }${name}`,
       `desc=${ strval(values.character_name) }`
     ];
     if (detail !== "")
-      chatMsg.push(`Description=${detail}`);
+      chatMsg.push(`text=${detail}`);
     if (props !== "") {
       props.split("\n").filter(prop => strval(prop) !== "").forEach(prop => {
         const [ code, value ] = strval(prop).split(":");
-        chatMsg.push(`Prop: ${code}=${value} `);
+        chatMsg.push(`Prop ${code}: =${value} `);
       });
     }
-    sendChatMsg(chatMsg, { template: "custom" });
+    if (boolval(values.chatsetattr)) {
+      const attrs = rptAttrs(
+        "equipement",
+        [ "nom", "detail", "modprops" ].map(a => `equip-${a}`),
+        "-CREATE"
+      );
+      const chatSetAttrs = { [attrs[0]]: name };
+      if (detail !== "")
+        chatSetAttrs[attrs[1]] = detail;
+      if (props !== "")
+        chatSetAttrs[attrs[2]] = props.replaceAll(":","=").replaceAll("\n", "~");
+      const setattrCmd = chatSetAttr({
+        header: "Objet ajouté",
+        content: "*" + name + "*"
+      }, chatSetAttrs);
+      const button = menuButton("default", { size: "1.1em" }, { 
+        class: "chat-button",
+        padding: "0px 5px;",
+        "border-radius": "5px;"
+      });
+      chatMsg.push(`Objet=[Equiper](${setattrCmd}${button})`);
+    }
+    sendChatMsg(chatMsg, { template: "custom", whisper: "" });
   });
 });
 
@@ -13285,10 +13370,29 @@ on("change:repeating_equipement:equip-nom", function() {
     if (name !== "" && hasProps === "") {
       const props = getGearProps(name);
       if (props.length > 0) {
-        setAttrs({ [rptAttr(section, "equip-props")]: props.join("\n") });
+        setAttrs({ [rptAttr(section, "equip-props")]: props.join("\n") }, { silent: true });
       }
     }
   })
+});
+
+/**
+ * Re-format props to LF-delimited list of 'name: value' pairs
+ */
+on("change:repeating_equipement:equip-modprops", function() {
+  const props = rptAttr("equipement", "equip-modprops");
+  getAttrs([ props ], function(values) {
+    let updated = strval(values[props]);
+    if (updated.includes("~"))
+      updated = updated.split("~").join("\n");
+    updated = updated.split("\n").map(prop => {
+      if (!prop.includes("="))
+        return prop;
+      const [ name, value ] = prop.split("=");
+      return name + ":" + value;
+    }).join("\n");
+    setAttrs({ [props.replace("-mod", "-")]: updated });
+  });
 });
 
 /**
@@ -13397,7 +13501,7 @@ on("change:repeating_equipement:equip-on", function(eventInfo) {
         setAttrs(Object.fromEntries(updates));
 
       if (unEquip2Hands) {
-        sendChatMsg(cof2RollTemplate({
+        sendChatMsg(rollTemplate({
           lsub: "En main",
           rsub: "Bouclier",
           text: "L'arme en main est rengainée pour lever le bouclier",
@@ -13682,7 +13786,7 @@ on("change:repeating_ressources:res-val", function(eventInfo) {
     if (value <= 0 || value <= ammoAlert) {
       const text = value <= 0 ? `Plus de ${desc}` : `Plus que ${value} ${desc}`;
       const textclass = value <= 0 ? "fumble" : "secondary";
-      const chatMsg = cof2RollTemplate({
+      const chatMsg = rollTemplate({
         lsub: "Attaque",
         rsub: "Munitions",
         text,
@@ -13775,7 +13879,7 @@ on("clicked:appearance-btn clicked:description-btn", function() {
     const text = strval(values.sheet_type) === SWData.SHEET_TYPE.PC 
     ? strval(values.apparence) 
     : strval(values.pnj_desc);
-    sendChatMsg(cof2RollTemplate({ text }), { whisper: "" } );
+    sendChatMsg(rollTemplate({ text }), { whisper: "" } );
     
     let avatar = strval(values.character_avatar);
     if (!avatar)
@@ -13816,24 +13920,36 @@ on("clicked:def_config-btn", function() {
     "pmmax_force",
     "cfg_1attack_roll",
     "cfg_luck_btn",
+    "$tresor_monnaie",
   ];
-  getAttrs([ "character_name", ...allConfigs ], function(values) {
-    
+  getAttrs([ "character_name", "sheet_type", ...allConfigs ], function(values) {
+    const sheetBase = strval(values.sheet_type) === SWData.SHEET_TYPE.NPC ? "PNJBase" : "PJBase";
+
     // PJBase : make sure all attributes are created
-    if (strval(values.character_name).trim() === "PJBase") {
+    if (strval(values.character_name).trim() === sheetBase) {
       const updates = new Map();
-      allConfigs.forEach(configAttr => updates.set(configAttr, intval(values[configAttr])));
+      allConfigs.filter(attr => !attr.startsWith("$")).forEach(attr => updates.set(attr, intval(values[attr])));
       setAttrs(Object.fromEntries(updates));
       return;
     }
 
     // Other PCs : copy config
-    const askValues = allConfigs.map(a => `{{${a}=[[@{PJBase|${a}}]]}}`).join(" ");
+    const askValues = allConfigs.map(attr => {
+      if (attr.startsWith("$"))
+        return `{{${attr.slice(1)}=[[0[@{${sheetBase}|${attr.slice(1)}}] ]]}}`;
+      else
+        return `{{${attr}=[[@{${sheetBase}|${attr}}]]}}`;
+    }).join(" ");
     startRoll("! " + askValues, values => {
       const updates = new Map();
       allConfigs.forEach(configAttr => {
-        const value = intval(values.results[configAttr].result);
-        updates.set(configAttr, value);
+        let value;
+        if (configAttr.startsWith("$"))
+          value = getRollData(values, configAttr.slice(1));
+        else
+          value = intval(values.results[configAttr].result);
+        if (value)
+          updates.set(configAttr.replace("$",""), value);
       });
       setAttrs(Object.fromEntries(updates));
   
@@ -14592,7 +14708,7 @@ SWData.PC.STATS.forEach(stat => {
       if (skills.length > 0)
         skill = `+ ?{Compétence ?|Aucune,0|${skills.join("|")}}`;
       const roll = `[[${ dieRoll(values[dType]) }[Dé] + (@{${short}})[Bonus ${short.toUpperCase()}]${skill} ]] `;
-      const chatMsg = cof2RollTemplate({
+      const chatMsg = rollTemplate({
         lsub: "Test",
         rsub: capitalize(stat),
         roll
@@ -14712,7 +14828,8 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
   const specials = [
     "pnj_spec",
     ...seq(3).map(t => `cspec${t}_nom`),
-    ...seq(3).map(t => `cspec${t}_roll`),
+    ...seq(3).map(t => `cspec${t}_next`),
+    ...seq(3).map(t => `cspec${t}_` + "roll"),
     ...seq(3).map(t => `cspec${t}_bonus`),
     ...seq(3).map(t => `cspec${t}_dm`),
   ];
@@ -14722,7 +14839,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     "character_name", "niveau", "compagnon",
     "atkgroup", "nbgroup", "pnj_tact",
     ...specials,
-    ...attackAttrs.map(attribute => `${section}${attribute}`)
+    ...attackAttrs.map(attribute => rptAttr(section.split("_")[1], `arme-${attribute}`))
   ], function (values) {
     const useOneRoll = boolval(values.cfg_1attack_roll);
     const useCritDiff = intval(values.cfg_crit_diff);
@@ -14738,6 +14855,9 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     const portee = strval(values[section + "portee"]);
     const range = (portee !== "") ? ` *(${ rangeWithUnits(portee) })*` : "";
     const crit = intval(values[section + "crit"], 20);
+    const atkMods = strval(values[section + "atkmods"]).split(",").map(mod => mod.trim().toLowerCase());
+
+    const resetValues = new Map();
 
     const grouped = "Attaque groupée";
     const bonus5 = { nb: 2, bonus: ` +5[${grouped}]` };
@@ -14805,14 +14925,23 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     }
 
     let specRoll = 0;
+    let specNext = false;
     let specBonus = "";
     let specDM = "";
     let specName = "";
 
     const specMove = intval(values.pnj_spec);
     if (specMove > 0) {
-      specRoll = intval(values[`cspec${specMove}_roll`]);
+      specRoll = intval(values[`cspec${specMove}_` + "roll"]);
+      specNext = boolval(values[`cspec${specMove}_next`]);
       specName = strval(values[`cspec${specMove}_nom`]);
+      const rollMatching = specName.match(/[ ]*jet:([0-9]*)[ ]*/);
+      if (rollMatching) {
+        const rollMatched = rollMatching[0];
+        specName = specName.replace(rollMatched, "").trim();
+        if (!atkMods.includes(rollMatched.trim()))
+          atkMods.push(rollMatched.trim());
+      }
       const bonus = intval(values[`cspec${specMove}_bonus`]);
       if (bonus > 0)
         specBonus = ` + [[${bonus}]][${specName}]`;
@@ -14832,7 +14961,10 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
       if (specRoll === 1)
         roll = "2d20kh1";
       if (specRoll === 2)
-        roll = "2d20kl1"; 
+        roll = "2d20kl1";
+
+      if (specNext)
+        resetValues.set("pnj_spec", 0);
     }
 
 
@@ -14863,9 +14995,8 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
       }
     }
 
-    const modifiers = strval(values[section + "atkmods"]).split(",").map(mod => mod.trim());
     if (boolval(values.cfg_lowfan))
-      modifiers.push("explodemax");
+      atkMods.push("explodemax");
 
     let [ dm, ...dmextra ] = strval(values[section + "dm"]).split(" ");
     const dmtype = strval(values[section + "dmtype"]);
@@ -14873,9 +15004,9 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     const dmdiv = strval(values[section + "dmdiv"]);
 
     let dmOpt = "";
-    if (modifiers.includes("explodemax") && !dm.includes("!"))
+    if (atkMods.includes("explodemax") && !dm.includes("!"))
       dmOpt += "!";
-    if (modifiers.includes("reroll1")) {
+    if (atkMods.includes("reroll1")) {
       if (numval(getAtkMod("reroll1")) === 1)
         dmOpt += "ro";
       else
@@ -14897,11 +15028,14 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     special = insertRolls(special, { isNPC: true, companionOf });
 
     const specRolls = [];
-    strval(values[section + "atkmods"]).split(",").forEach(atkMod => {
+
+    atkMods.forEach(atkMod => {
       const matched = atkMod.match(/jet:([0-9]+)/i);
       if (!matched)
         return;
-      const [ index ] = matched.slice(1);
+      const index = matched.slice(1)[0];
+      if (!index)
+        return;
       specRolls.push("%{" + charName + "|" + rptAttr("npcrolls", "npcroll", "$" + (intval(index) - 1) ) + "}");
       special = "Spécial : @{" + rptAttr("npcrolls", "npcroll-name", "$" + (intval(index) - 1) ) + "}\n" + special;
     });
@@ -15021,7 +15155,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
       for (let atk = 1; atk <= multiAttacks; atk++) {
         if (useMulti === 1)
           chatAtk = { ...chatAtk, lsub: `${atk}${ atk > 1 ? "ème" : "ère" } attaque` };
-        const chatMsg = cof2RollTemplate(chatAtk);
+        const chatMsg = rollTemplate(chatAtk);
         sendChatMsg(chatMsg, rollOptions);
       }
     });
@@ -15029,7 +15163,11 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     // Special rolls
     if (specRolls.length > 0)
       sendChatCmd(specRolls.join(" "));
-  })
+
+    // Reset attributes
+    if (resetValues.size > 0)
+      setAttrs(Object.fromEntries(resetValues));
+  });
 });
 
 /**
@@ -15040,14 +15178,14 @@ on("clicked:repeating_npcrolls:npcroll-btn", function() {
   getAttrs([ "compagnon", `${section}name`, `${section}desc` ], function (values) {
     const companionOf = strval(values.compagnon);
     let name = strval(values[section + "name"], "Capacité");
-    const action = name.match(/ \((G|M|A|L)\)$/);
+    const action = name.match(/ \((G|M|A|L)\)[ ]*$/);
     let actionType = "";
     if (action) {
       name = name.replace(action[0], "");
       actionType = " - " + action[1];
     }
     const text = insertRolls(strval(values[section + "desc"]), { isNPC: true, companionOf });
-    const chatMsg = cof2RollTemplate({
+    const chatMsg = rollTemplate({
       lsub: "Capacité" + actionType,
       rsub: capitalize(name),
       text
@@ -15246,10 +15384,11 @@ function statBlockFromPDF(statblock) {
         ability += sbLine + " ";
       }
     } else {
+      sbLine = sbLine.toUpperCase();
       let match;
       // name & nc
       if (lineNum === 0) {
-        match = sbLine.match(/(.*) \| NC[ ]+([0-9]*)/);
+        match = sbLine.match(/(.+)\|[ ]*NC[ ]+([0-9.,]+)/);
         if (match) {
           const [ , character_name, nc ] = match;
           npcAttrs.set("character_name", character_name);
@@ -15259,7 +15398,7 @@ function statBlockFromPDF(statblock) {
       }
       
       // creature type
-      match = sbLine.match(/CRÉATURE[ ]*(NON VIVANTE|HUMANOÏDE|VÉGÉTATIVE|VIVANTE)/);
+      match = sbLine.match(/CRÉATURE[ ]+(NON[ ]+VIVANTE|HUMANOÏDE|VÉGÉTATIVE|VIVANTE)/);
       if (match) {
         const type = strval(match[1]);
         if (type !== "")
@@ -15267,7 +15406,7 @@ function statBlockFromPDF(statblock) {
       }
 
       // size
-      match = sbLine.match(/TAILLE[ ]*(MINUSCULE|TRÈS PETITE|PETITE|MOYENNE|GRANDE|ÉNORME|COLOSSALE)/);
+      match = sbLine.match(/TAILLE[ ]+(MINUSCULE|TRÈS[ ]+PETITE|PETITE|MOYENNE|GRANDE|ÉNORME|COLOSSALE)/);
       if (match) {
         const taille = strval(match[1]);
         if (taille !== "")
@@ -15275,24 +15414,30 @@ function statBlockFromPDF(statblock) {
       }
 
       // défense
-      match = sbLine.match(/\(S\) Défense ([0-9]*) \(([0-9]*)\)/);
+      match = sbLine.match(/(\(S\))?[ ]*DÉFENSE[ ]+([0-9]+)([ ]+\(([0-9]+)\))?/);
       if (!match)
-        match = sbLine.match(/\(S\)DEF ([0-9]*) \(([0-9]*)\)/);
+        match = sbLine.match(/(\(S\))?[ ]*DEF[ ]+([0-9]+)([ ]\(([0-9]+)\))?/);
       if (match) {
-        const [ def, defSup ] = match.slice(1);
+        match = match.slice(1);
+        if (match[0] === "(S)")
+          match = match.slice(1);
+        const [ def, defSup, defSupVal ] = match;
         npcAttrs.set("def", def);
         npcAttrs.set("def_val", def);
-        if (strval(defSup) !== "") {
-          npcAttrs.set("def_supval", defSup);
+        if (defSup) {
+          npcAttrs.set("def_supval", defSupVal);
         }
       }
       
       // pv
-      match = sbLine.match(/\(V\) Points de vigueur ([0-9]*)([ ]\(RD ([0-9]*)\))?/);
+      match = sbLine.match(/(\(V\))?[ ]*POINTS[ ]+DE[ ]+VIGUEUR[ ]+([0-9]+)([ ]*\(RD[ ]*([0-9]+)\))?/);
       if (!match)
-        match = sbLine.match(/\(V\)PV ([0-9]*)([ ]\(RD ([0-9]*)\))?/);
+        match = sbLine.match(/(\(V\))?[ ]*PV[ ]+([0-9]+)([ ]*\(RD ([0-9]*)\))?/);
       if (match) {
-        const [ , pv, rd, rdValue ] = match;
+        match = match.slice(1);
+        if (match[0] === "(V)")
+          match = match.slice(1);
+        const [ pv, rd, rdValue ] = match;
         npcAttrs.set("pv", pv);
         npcAttrs.set("pv_max", pv);
         if (rd)
@@ -15300,11 +15445,14 @@ function statBlockFromPDF(statblock) {
       }
 
       // initiative
-      match = sbLine.match(/\(I\) Initiative ([0-9]*)/);
+      match = sbLine.match(/(\(I\))?[ ]*INITIATIVE[ ]+([0-9]+)/);
       if (!match)
-        match = sbLine.match(/\(I\)Init. ([0-9]*)/);
+        match = sbLine.match(/(\(I\))?[ ]*INIT[\.]?[ ]*([0-9]+)/);
       if (match) {
-        const [ , init ] = match;
+        match = match.slice(1);
+        if (match[0] === "(I)")
+          match = match.slice(1);
+        const [ init ] = match;
         npcAttrs.set("init", init);
       }
 
@@ -15986,14 +16134,18 @@ on("change:pvig_max", function(eventInfo) {
 /**
  * On clicking token adjust buttons (TokenMod)
  */
-on("clicked:token_min-btn clicked:token_max-btn clicked:token_def-btn", function(eventInfo) {
+on("clicked:token_min-btn clicked:token_max-btn clicked:token_siz-btn clicked:token_def-btn", function(eventInfo) {
   getAttrs([ "sheet_type", "character_name", "pm_max" ], function(values) {
-    const [ bt ] = strval(eventInfo.triggerName).split("_");
-    const resize = bt === "min-btn" ? 0.9 : bt === "max-btn" ? 1.1 : 0;
+    const bt = strval(eventInfo.triggerName.split("_")[1]);
+    const resize = strval(({
+      "min-btn": "0.9",
+      "max-btn": "1.1",
+      "siz-btn": "?{*Taille ?}",
+    })[bt]);
     const isNPC = strval(values.sheet_type) === SWData.SHEET_TYPE.NPC;
     let props = {};
-    if (resize > 0) {
-      props = { width: resize, height: resize };
+    if (resize !== "") {
+      props = { scale: "*" + resize };
     } else {
       props = { bar2_link: "def" };
       if (isNPC) {
