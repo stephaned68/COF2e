@@ -11180,7 +11180,6 @@ function insertRolls(text, options = {}) {
     const [ matched, dice, mod ] = result;
     const replace = `[[${dice}${ mod.trim() || "" }]] `;
     text = text.replace(matched, replace);
-    console.log(matched, replace, text)
   });
   
   return text;
