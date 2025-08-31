@@ -87,13 +87,15 @@ A partir de 5 créatures, la fiche effectue deux attaques, en répartissant le n
 ## Coups spéciaux
 
 Cette section permet de définir jusqu'à 3 coups spéciaux que la créature peut utiliser quand elle attaque.
+
 Pour chaque coup, vous devez indiquer :
 - Le nom de celui-ci
 - Si le jet d'attaque bénéficie d'un dé bonus ou subit un dé malus
-- Un éventuel bonus au jet d'attaque procuré par l'utilisation de ce coup spécial
+- Un éventuel bonus/malus au jet d'attaque procuré par l'utilisation de ce coup spécial
 - Un éventuel bonus au jet de DM procuré par l'utilisation de ce coup spécial
+- Une option pour n'affecter que la prochaine attaque
 
-La sélection d'un coup spécial applique les bonus spécifiés à toutes les attaques effectuées ensuite.
+La sélection d'un coup spécial applique les bonus spécifiés à toutes les attaques effectuées ensuite sauf si la case _Prochaine attaque_ est cochée.
 
 Vous pouvez également activer l'une des options tactiques (attaque assurée, précise ou violente) en cochant la case correspondante. Elles sont mutuellement exclusives.
 

@@ -72,6 +72,12 @@ D'autres options peuvent être activées :
 2. 🔵 : Défense
 3. 🔴 : Points de Vigueur courants/max
 
+### ChatSetAttr
+
+Ce script permet d'ajouter, de modifier ou de supprimer des attributs d'une fiche de personnage grâce à des commandes de chat Roll20.
+
+Ce script est utilisé par les fonctions de _Loot_ de la fiche de personnage.
+
 ---
 
 [Retour]({{ site.baseurl }}/pc-main)
