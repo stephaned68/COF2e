@@ -45,6 +45,7 @@ L'option <em>Players can use --ids</em> doit être activée dans la configuratio
 Lorsque le script est activé, trois boutons sont affichés sous le token du personnage dans l'entête de la fiche.
 - <kbd>-</kbd> permet de diminuer la taille du token de 10%
 - <kbd>🗸</kbd> permet de lier les barres du token aux attributs de la fiche (cf Liaison par défaut)
+- <kbd>⤧</kbd> permet d'appliquer un coefficient multiplicateur à la taille actuelle du token
 - <kbd>-</kbd> permet d'augmenter la taille du token de 10%
 
 D'autres options peuvent être activées :
