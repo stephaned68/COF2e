@@ -32,12 +32,12 @@ ou héroïque, H = supérieure et héroïque)
 - <kbd>pv</kbd> : PV courants
 - <kbd>pv_buff</kbd> : buffs au maximum de PV
 - <kbd>pv_max</kbd> : PV maximums
-- <kbd>pvmax_force</kbd> : 0/1 pour forcer la valeur max des PV
+- <kbd>pvmax_force</kbd> : 1 si la valeur max des PV est forcée, 0 sinon
 - <kbd>drecup</kbd> : valeur du dé de récupération (6/8/10)
 - <kbd>dr</kbd> : nombre courant de dés de récupération
 - <kbd>dr_buff</kbd> : buffs au maximum de DR
 - <kbd>dr_max</kbd> : nombre maximum de dés de récupération
-- <kbd>drmax_force</kbd> : 0/1 pour forcer la valeur max des DR
+- <kbd>drmax_force</kbd> : 1 si la valeur max des DR est forcée, 0 sinon
 - <kbd>temp_dm</kbd> : dommages temporaires
 
 ## Mana, Dé évolutif, Chance
@@ -45,24 +45,24 @@ ou héroïque, H = supérieure et héroïque)
 - <kbd>pm</kbd> : PM courants
 - <kbd>pm_buff</kbd> : buffs au maximum de PM
 - <kbd>pm_max</kbd> : PM maximums
-- <kbd>pmmax_force</kbd> : 0/1 pour forcer la valeur max des PM
+- <kbd>pmmax_force</kbd> : 1 si la valeur max des PM est forcée, 0 sinon
 - <kbd>devol</kbd> : dé évolutif (d4/d6/d8/d10/d12)
 - <kbd>pc</kbd> : PC courants
 - <kbd>pc_buff</kbd> : buffs au maximum de PC
 - <kbd>pc_max</kbd> : PC maximums
-- <kbd>pcmax_force</kbd> : 0/1 pour forcer la valeur max des PC
+- <kbd>pcmax_force</kbd> : 1 si la valeur max des PC est forcée, 0 sinon
 
 ## Défense
 
 - <kbd>def_base</kbd> : score de base de Défense
 - <kbd>armure</kbd> : bonus d'armure
-- <kbd>armure_eqp</kbd> : 0/1 selon que l'armure soit équipée ou pas
+- <kbd>armure_eqp</kbd> : 1 si l'armure est équipée, 0 sinon
 - <kbd>armure_malus</kbd> : malus d'armure
 - <kbd>bouclier</kbd> : bonus de bouclier
-- <kbd>bouclier_eqp</kbd> : 0/1 selon que le bouclier soit équipé ou pas
+- <kbd>bouclier_eqp</kbd> : 1 si le bouclier est équipé, 0 sinon
 - <kbd>bouclier_malus</kbd> : malus de bouclier (si l'option est activée)
 - <kbd>casque</kbd> : RD du casque contre les DM critiques
-- <kbd>casque_eqp</kbd> : 0/1 selon que le casque soit équipé ou pas
+- <kbd>casque_eqp</kbd> : 1 si le casque est équipé, 0 sinon
 - <kbd>def_car</kbd> : caractéristique bonus (agi ou con)
 - <kbd>def_car_max</kbd> : bonus de caractéristique maximum (selon armure)
 - <kbd>def_buff</kbd> : buffs à la Défense
@@ -71,18 +71,18 @@ ou héroïque, H = supérieure et héroïque)
 
 ## Etats préjudiciables
 
-- <kbd>condition_affaibli</kbd> : 0/1 selon que le personnage subit l'état préjudiciable _Affaibli_
-- <kbd>condition_aveugle</kbd> : 0/1 selon que le personnage subit l'état préjudiciable _Aveuglé_
-- <kbd>condition_effraye</kbd> : 0/1 selon que le personnage subit l'état préjudiciable _Effrayé_ (règles de Peur)
-- <kbd>condition_essoufle</kbd> : 0/1 selon que le personnage subit l'état préjudiciable _Essouflé_
-- <kbd>condition_etourdi</kbd> : 0/1 selon que le personnage subit l'état préjudiciable _Etourdi_
-- <kbd>condition_immobilise</kbd> : 0/1 selon que le personnage subit l'état préjudiciable _Immobilisé_
-- <kbd>condition_invalide</kbd> : 0/1 selon que le personnage subit l'état préjudiciable _Invalide_
-- <kbd>condition_panique</kbd> : 0/1 selon que le personnage subit l'état préjudiciable _Paniqué_ (règles de Peur)
-- <kbd>condition_paralyse</kbd> : 0/1 selon que le personnage subit l'état préjudiciable _Paralysé_
-- <kbd>condition_ralenti</kbd> : 0/1 selon que le personnage subit l'état préjudiciable _Ralenti_
-- <kbd>condition_renverse</kbd> : 0/1 selon que le personnage subit l'état préjudiciable _Renversé_
-- <kbd>condition_surpris</kbd> : 0/1 selon que le personnage subit l'état préjudiciable _Surpris_
+- <kbd>condition_affaibli</kbd> : 1 si le personnage subit l'état _Affaibli_, 0 sinon
+- <kbd>condition_aveugle</kbd> : 1 si le personnage subit l'état _Aveuglé_, 0 sinon
+- <kbd>condition_effraye</kbd> : 1 si le personnage subit l'état _Effrayé_ (règles de Peur), 0 sinon
+- <kbd>condition_essoufle</kbd> : 1 si le personnage subit l'état _Essouflé_, 0 sinon
+- <kbd>condition_etourdi</kbd> : 1 si le personnage subit l'état _Etourdi_, 0 sinon
+- <kbd>condition_immobilise</kbd> : 1 si le personnage subit l'état _Immobilisé_, 0 sinon
+- <kbd>condition_invalide</kbd> : 1 si le personnage subit l'état _Invalide_, 0 sinon
+- <kbd>condition_panique</kbd> : 1 si le personnage subit l'état _Paniqué_ (règles de Peur), 0 sinon
+- <kbd>condition_paralyse</kbd> : 1 si le personnage subit l'état _Paralysé_, 0 sinon
+- <kbd>condition_ralenti</kbd> : 1 si le personnage subit l'état _Ralenti_, 0 sinon
+- <kbd>condition_renverse</kbd> : 1 si le personnage subit l'état _Renversé_, 0 sinon
+- <kbd>condition_surpris</kbd> : 1 si le personnage subit l'état _Surpris_, 0 sinon
 
 ## Objets en main
 
@@ -102,16 +102,18 @@ ou héroïque, H = supérieure et héroïque)
   - <kbd>torche</kbd>
   - <kbd>bouclier</kbd> : coche ou décoche la case bouclier de la Défense
   - <kbd>autre</kbd>
-- <kbd>en_selle</kbd> : 0/1 selon que le personnage soit en selle ou pas (utile pour la voie du cavalier)
+- <kbd>en_selle</kbd> : 1 si le personnage est en selle, 0 sinon (utile pour la voie du cavalier)
 
 ### Arme en main
 
 Si une arme est en main, l'attribut correspondant prend une valeur composée de 3 éléments séparés par <kbd>~</kbd> :
 - <kbd>n</kbd> : no de label de l'attaque (**999** si le script COFantasy2 n'est pas installé et que les attaques ne sont pas auto-numérotées)
 - <kbd>xxxxxx</kbd> : id de la ligne d'attaque, pour jet si l'icone d20 est cliquée
-- <kbd>b</kbd> : 0/1 selon que l'arme est à deux mains
+- <kbd>b</kbd> : 1 si l'arme est à deux mains, 0 sinon
 
 ## Capacités
+
+Les attributs ci-dessous sont déclinés pour toutes les voies (1 à 9) et tous les rangs (1 à 5).
 
 - <kbd>voie1nom</kbd> : nom de la voie n°1
 - <kbd>voie1pv</kbd> : nombre de PV de la famille de profil de la voie n°1
@@ -119,8 +121,8 @@ Si une arme est en main, l'attribut correspondant prend une valeur composée de 
 - <kbd>v1br</kbd> : rang de base de la voie n°1 (*)
 - <kbd>v1profil</kbd> : profil d'appartenance de la voie n°1
 - <kbd>rang_voie1</kbd> : rang du personnage dans la voie n°1
-- <kbd>v1r1</kbd> : 1 si le rang 1 de la voie n°1 possédée
-- <kbd>v1r1_spell</kbd> 1 si le rang 1 de la voie n°1 est un sort
+- <kbd>v1r1</kbd> : 1 si le rang 1 de la voie n°1 possédée, 0 sinon
+- <kbd>v1r1_spell</kbd> 1 si le rang 1 de la voie n°1 est un sort, 0 sinon
 - <kbd>voie1-t1</kbd> : nom de la capacité de rang 1 de la voie n°1
 - <kbd>voie1-1</kbd> : description de la capacité de rang 1 de la voie n°1
 - <kbd>v1r1_use_max</kbd> : nombre d'utilisations maximum de la capacité s'il y a lieu
@@ -129,11 +131,19 @@ Si une arme est en main, l'attribut correspondant prend une valeur composée de 
 - <kbd>v1r1_param</kbd> : paramètre optionnel de la capacité
 - <kbd>v1r1_props</kbd> : propriétés optionnelles pour la capacité
 
-Ces attributs sont déclinés pour toutes les voies (1 à 9) et tous les rangs (1 à 5).
+Les attributs ci-dessous sont rechargés à chaque fois que la fiche de personnage est ouverte :
 
 - <kbd>noms_voies</kbd> : liste des noms de voies, séparés par des <kbd>|</kbd>
 - <kbd>rangs_voies</kbd> : liste des rangs dans les voies, séparés par des <kbd>,</kbd>
-- <kbd>noms_rangs</kbd> : liste des rangs dans les voies, sous forme de JSON sérialisé <kbd>[ { id: "v#r#", rank: "nom de la capacité", path: "nom de la voie" }, ... ]</kbd>
+- <kbd>noms_rangs</kbd> : liste des rangs dans les voies, sous forme de JSON sérialisé 
+
+<kbd>[ { id: "v#r#", rank: "nom de la capacité", path: "nom de la voie" }, ... ]</kbd>
+
+Les attributs ci-dessous servent à déterminer les effets de certaines capacités qui évoluent quand un certain rang est atteint dans d'autres voies du même profil (ex : attaque sournoise du voleur). Ils sont également rechargés à chaque fois que la fiche de personnage est ouverte :
+
+- <kbd>voies_rang3</kbd> : nombre de voies dans lesquelles le rang 3 est atteint
+- <kbd>voies_rang4</kbd> : nombre de voies dans lesquelles le rang 4 est atteint
+- <kbd>voies_rang5</kbd> : nombre de voies dans lesquelles le rang 5 est atteint
 
 ## Buffs / Debuffs
 
@@ -151,6 +161,8 @@ Ces attributs sont déclinés pour toutes les voies (1 à 9) et tous les rangs (
 - <kbd>tcha_buff_list</kbd> : liste des buffs/debuffs aux tests de CHA
 - <kbd>tint_buff_list</kbd> : liste des buffs/debuffs aux tests d'INT
 - <kbd>tvol_buff_list</kbd> : liste des buffs/debuffs aux tests de VOL
+- <kbd>allcaracs_buff</kbd> : valeur du buff global à tous les tests de caractéristiques
+- <kbd>allcaracs_desc</kbd> : libellé du buff global à tous les tests de caractéristiques
 - <kbd>init_buff_list</kbd> : liste des buffs/debuffs d'Initiative
 - <kbd>init_cond</kbd> : total des debuffs à l'Initiative dus aux états préjudiciables
 - <kbd>atkcac_buff_list</kbd> : liste des buffs/debuffs d'attaque au contact
@@ -159,6 +171,8 @@ Ces attributs sont déclinés pour toutes les voies (1 à 9) et tous les rangs (
 - <kbd>atktir_cond</kbd> : total des debuffs à l'attaque à distance dus aux états préjudiciables
 - <kbd>atkmag_buff_list</kbd> : liste des buffs/debuffs d'attaque magique
 - <kbd>atkmag_cond</kbd> : total des debuffs à l'attaque magique dus aux états préjudiciables
+- <kbd>allattacks_buff</kbd> : valeur du buff global à tous les tests d'attaque
+- <kbd>allattacks_desc</kbd> : libellé du buff global à tous les tests d'attaque
 - <kbd>def_buff_list</kbd> : liste des buffs/debuffs de Défense
 - <kbd>def_cond</kbd> : total des debuffs à la Défense dus aux états préjudiciables
 - <kbd>dm_buff_list</kbd> : liste des buffs/debuffs aux DM
@@ -171,7 +185,7 @@ Ces attributs sont déclinés pour toutes les voies (1 à 9) et tous les rangs (
 
 Un bouton situé à côté du type de fiche de personnage permet de lancer le Persomancien (CharacterMancer). Cette fonctionnalité expérimentale permet de simplifier la création d'un PJ.
 
-**Important** : Pour que ce bouton fonctionne, vous devez ajouter un compendium quelconque aux paramètres de la partie. Vous ne l'utiliserez pas dans le VTT, il permet juste que le bouton d'ouverture du Persomancien fonctionne.
+**Important** : Pour que ce bouton fonctionne, vous devez ajouter un compendium quelconque aux paramètres de la partie. Vous ne l'utiliserez pas dans le VTT, il permet juste que le bouton d'ouverture du Persomancien soit cliquable.
 
 - Sélectionnez le type de liste de valeurs de caractéristiques (polyvalent, expert ou spécialiste).
 - Choisissez une valeur pour chaque caractéristique

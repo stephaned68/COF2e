@@ -7,6 +7,7 @@ Les préférence et réglages possibles de la fiche sont configurés dans cet on
   - Avec token : Le token par défaut du personnage apparaît dans tous les messages envoyés dans le chat par la fiche.
 - Calcul automatique PV max. : Cette option permet que la fiche calcule automatiquement les PV maximums (cf. ci-dessous)
 - Contrôle points de capacités : Cette option permet que la fiche vérifie les dépassements de points de capacité (cf. ci-dessous)
+- Afficher voies 4-5-6 : Cette option est active par défaut mais elle peut être désactivée pour ne pas afficher les voies 4 à 6 pour des personnages de bas niveau
 - Afficher voies 7-8-9 : Cette option permet d'afficher les voies supplémentaires (voies de prestige)
 - Afficher compétences : Cette option permet d'activer ou de désactiver le sous-onglet _Compétences_ de l'onglet _Capacités_.
 
@@ -82,6 +83,12 @@ Si le nombre de points de capacités utilisé dépasse le nombre maximum disponb
 
 Cette section permet de fixer la valeur maximum des PV, DR, PC et PM et empêche la fiche de les calculer automatiquement.
 
+## Voies avec rangs acquis
+
+Cette section affiche le nombre de voies dans lesquelles le personnage a acquis les rangs 3, 4 et 5. Les attributs correspondant peuvent être utilisés pour calculer les effets des capacités qui évoluent quand le personnage acquiert un certain rang dans d'autres voies de profil.
+
+_Exemple :_ Nombre de dés de DM de l'_attaque sournoise_, nombre d'utilisation par jour du sort de _récupération mineure_.
+
 ## Attributs personnalisés
 
 Cette section permet de définir une liste d'attributs dans une zone de texte libre. La syntaxe de cette liste est la même que pour les [prédicats]({{ site.baseurl }}/pc-script).
@@ -90,7 +97,7 @@ Les attributs personnalisés sont créés avec la valeur indiquée. Ils peuvent 
 
 _Exemple :_ 
 
-<kbd>sournoise: 2d4°</kbd> sur la fiche d'un profil de voleur crée un attribut nommé <kbd>voleur_sournoise</kbd>. Cet attribut peut être utilisé dans une macro sous le nom <kbd>@{voleur_sournoise}</kbd>
+<kbd>sournoise: (2+@{voies_rang4})d4°</kbd> sur la fiche d'un profil de voleur crée un attribut nommé <kbd>voleur_sournoise</kbd>. La valeur de cet attribut sera résolue par Roll20 à l'utilisation, en ajoutant aux 2d4° de base le nombre de voies de voleur dans lequel le personnage a atteint le rang 4. Cet attribut peut être utilisé dans une macro sous le nom <kbd>@{voleur_sournoise}</kbd>
 
 ## Notifications
 
@@ -107,7 +114,8 @@ Vous pouvez sélectionner une couleur spécifique pour les messages de chat du p
 
 Vous pouvez également modifier certains aspects des messages de chat :
 - Un seul jet d'attaque (au lieu des deux jets effectués par défaut par la fiche).
-- Bouton Chance : Un bouton chance est affiché au bas des messages sur tous les jets de D20 et permet de dépenser instantanément un PC.
+- Un seul jet de compétence (au lieu des deux jets effectués par défaut par la fiche).
+- Bouton Chance : Un bouton chance est affiché au bas des messages sur tous les jets de D20 et permet de dépenser instantanément un PC en affichant les résultats précédents bonifiés (+10 ou +1d10 si l'option PC variables est active).
 
 ## Premiers rangs
 
@@ -117,9 +125,9 @@ Pour chaque voie du PJ, vous pouvez indiquer la valeur du premier rang (1 pour l
 
 Plusieurs outils sont disponibles dans la partie supérieure droite de cet onglet.
 
-Une case permet d'activer le mode debug. Une fois cochée, un grand nombre d'événements se produisant dans la fiche inscrivent des informations techniques de débogage dans la console de développement du navigateur.
+Une case permet d'activer le mode <kbd>debug</kbd>. Une fois cochée, un grand nombre d'événements se produisant dans la fiche inscrivent des informations techniques de débogage dans la console de développement du navigateur.
 
-Une première icone _Outils_ permet de copier les options de configuration par défaut depuis une fiche de personnage et nommée <kbd>PJBase</kbd>. Lorsqu'il crée cette fiche PJBase, le MJ de la partie doit également cliquer sur cette icone pour que tous les attributs traités aient une valeur, sans quoi la copie à partir d'autres fiches échouera.
+Une première icone _Outils_ permet de copier les options de configuration par défaut depuis une fiche de personnage et nommée <kbd>PJBase</kbd>. Lorsqu'il crée cette fiche, le MJ de la partie doit également cliquer sur cette icone pour que tous les attributs traités aient une valeur, sans quoi la copie à partir d'autres fiches échouera.
 
 Une deuxième icone _Outils_ permet de ré-initialiser et re-calculer un certain nombre d'attributs dérivés dans la fiche. Ce bouton n'est utile qu'en cas de bug, et peut éventuellement corriger des comportements incorrects de la fiche. 
 

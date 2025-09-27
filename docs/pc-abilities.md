@@ -63,21 +63,33 @@ Une troisième icone est affichée si le personnage possède au moins un sort (e
 Les propriétés suivantes peuvent être appliquées aux capacités :
 
 - <kbd>fx:</kbd> suivi du nom d'un effet spécial et d'un nombre éventuel de répétitions pour que la fiche joue un FX Roll20 (commande <kbd>/fx</kbd>) lorsque la capacité est utilisée.
-- <kbd>pm:</kbd> suivi d'un chiffre pour faire varier le nombre de PM consommés par cette capacité. Ce chiffre peut être absolu (<kbd>3</kbd> pour consommer 3 PM) ou relatif (<kbd>-1</kbd> pour consommer 1 PM de moins que la normale)
-- <kbd>evol: base rang1 evol1 rang2 evol2</kbd> suivi de 3 à 5 valeurs séparées par des espaces
-  - <kbd>base</kbd> est la valeur de base du paramètre évolutif (à l'acquisition de la capacité)
-  - <kbd>rang1</kbd> est le premier rang auquel la capacité évolue
-  - <kbd>evol1</kbd> est la nouvelle valeur du paramètre évolutif une fois le rang1 spécifié atteint
-  - <kbd>rang2</kbd> (facultatif) est le deuxième rang auquel la capacité évolue
-  - <kbd>evol2</kbd> (facultatif) est la nouvelle valeur du paramètre évolutif une fois le rang2 spécifié atteint
+- <kbd>pm:</kbd> suivi d'un chiffre pour faire varier le nombre de PM consommés par cette capacité. Ce chiffre peut être absolu (<kbd>3</kbd> pour consommer 3 PM) ou relatif (<kbd>-1</kbd> pour consommer 1 PM de moins que la normale).
+- <kbd>selonRang: valeur1,valeur2,valeur3,valeur4,valeur5</kbd> suivi de 5 valeurs séparées par des virgules pour indiquer qu'un paramètre de la capacité évolue selon le rang atteint dans la voie.
+  - <kbd>valeur1</kbd> est la valeur du paramètre évolutif au rang 1
+  - <kbd>valeur2</kbd> est la valeur du paramètre évolutif au rang 2
+  - <kbd>valeur3</kbd> est la valeur du paramètre évolutif au rang 3
+  - <kbd>valeur4</kbd> est la valeur du paramètre évolutif au rang 4
+  - <kbd>valeur5</kbd> est la valeur du paramètre évolutif au rang 5
   
-  Le texte de la capacité doit comporter le mot-clé <kbd>&#123;&#123;evol&#125;&#125;</kbd> là où la substitution avec la valeur de base ou la nouvelle valeur s'effectue selon le rang atteint.
-- <kbd>epic:</kbd> suivi d'un espace pour identifier la capacité comme épique. 
+  Le texte de la capacité doit comporter le marqueur <kbd>&#123;&#123;selonRang&#125;&#125;</kbd> pour que la fiche y insère la valeur dépendant du rang atteint.
+
+- <kbd>epic:</kbd> suivi d'un espace pour identifier la capacité comme épique.
+
+### Exemples :
+
+- Afficher une explosion de paillettes roses quand une capacité est utilisée en cliquant sur la bulle
+
+  <kbd>fx: nova-charm 6</kbd>
+
+- Paramétrer la capacité _Arc de feu_ de la voie de la _Magie destructrice_ avec son évolution au rang 4 :
+
+  Paramètre : <kbd>selonRang: 1d4°,1d4°,1d4°,2d4°,2d4°</kbd>
+
+  Description : _Des flammes jaillissent des doigts tendus du magicien. Jusqu’à 3 cibles au contact subissent [{{selonRang}}+INT] DM, les cibles peuvent faire un test d’AGI difficulté [10 + INT] pour ne subir que la moitié des DM_
 
 ## Capacités épiques
 
 Pour que le calcul des rangs atteints dans les voies, des PV et des points de capacités dépensés soit correct, une capacité épique ne doit <strong>PAS</strong> être cochée.
-
 
 # Jets de capacités
 
@@ -88,11 +100,11 @@ Ce sous-onglet permet de lister des jets liés aux capacités du PJ. Pour chaque
   - Le score de caractéristique éventuel à ajouter au jet. L'option _Demander_ permet d'afficher un popup Roll20 pour choisir la caractéristique selon les circonstances.
   - La voie dont le rang doit être ajouté au jet s'il y a lieu.
   - Un bonus fixe (_+2 pour les voies de profil, +3 pour les voies de peuple, +5 pour les voies de prestige_).
-- Une description ou un jet spécial
-  - Si cette description est vide mais que le nom du jet correspond au nom d'une capacité possédée par le personnage, le texte de cette capacité est récupéré s'il est renseigné.
-  - Avant envoi dans le chat, cette description est transformée par insertion de jets en ligne s'il y a lieu (voir paragraphe _Jets en ligne_ ci-dessous).
+- Une description ou un jet spécial. Avant envoi du jet dans le chat, cette description est transformée par insertion de jets en ligne s'il y a lieu (voir paragraphe _Jets en ligne_ ci-dessous).
 
 L'icone située à côté de **Nom** permet d'afficher un menu d'action dans le chat avec un bouton pour chaque jet de capacité.
+
+Si la description du jet est vide, mais que son nom correspond au nom d'une capacité possédée par le personnage, le texte de cette capacité est récupéré. **Attention** : si la capacité mise en correspondance par ce mécanisme est un sort, le nombre de PM n'est pas décompté lorsque le jet est effectué.
 
 Le bouton d20 du jet peut être épinglé dans la barre d'actions de Roll20 par glisser-déposer.
 
@@ -111,6 +123,8 @@ Ce sous-onglet n'apparaît que si la règle optionnelle est activée dans l'ongl
 - Le choix _Demander_ permet d'afficher un popup Roll20 pour sélectionner la caractéristique au moment du jet.
 - Indiquez le bonus de compétence qui s'ajoute au jet.
 
+A moins que l'option de configuration _Un seul jet de compétence_ ne soit active, deux jets distincts sont effectués, sauf si le PJ est _Affaibli_. Dans le cas général (jet normal), prenez en compte le jet de gauche. Prenez le plus élevé des deux jets si le PJ bénéficie d'un _dé bonus_ ou le moins élevé s'il subit un _dé malus_.
+
 # Buffs / Debuffs
 
 Ce sous-onglet permet de créer une liste de buffs / debuffs, c'est à dire des bonus ou malus obtenus par certaines capacités ou circonstances, qui peuvent s'ajouter de manière temporaire ou permanente à certains attributs du PJ.
@@ -118,9 +132,11 @@ Ce sous-onglet permet de créer une liste de buffs / debuffs, c'est à dire des 
 Pour chaque élément de la liste, vous pouvez indiquer :
 - Si le buff est actif ou pas (case à cocher)
 - Le nom ou origine du buff
+- Si ce buff est temporaire (case à cocher)
 - L'attribut auquel ce buff s'applique :
-  - Une caractéristique (_AGI_, _CON_, etc)
+  - Une caractéristique (_AGI_, _CON_, etc), éventuellement tous les jets de caractéristiques
   - Un score de combat (Initiative, Attaques, Défense, DM)
+  - Un score d'attaque (Contact, Distance, Magique), éventuellement tous les jets d'attaque
   - Une ressource (PV, DR, PM, PC)
 - La valeur du buff, qui peut s'exprimer :
   - Comme une valeur fixe, par exemple <kbd>+1</kbd>, <kbd>-2</kbd>
@@ -135,7 +151,23 @@ Plusieurs buffs peuvent s'appliquer au même attribut du PJ. Si c'est le cas, le
 
 Dans le cas d'un buff aux DM, celui-ci s'applique à tous les jets d'attaque effectuées à partir du moment où il est actif. Il est possible de le rendre optionnel en indiquant un <kbd>?</kbd> au début de son nom. La fiche demandera alors si ce buff s'applique quand un jet d'attaque est effectué.
 
-Une section dépliable _Détail par attribut_ permet de consulter la liste des buffs actuellement appliqués à chaque attribut et leur somme.
+_Exemple :_
+
+Pour créer un buff optionnel de DM d'attaque sournoise, indiquez <kdb>? Attaque sournoise</kbd> dans le nom du buff, <kbd>DM</kbd> dans l'attribut cible, <kbd>2d4°</kbd> dans la valeur, et cochez la case d'activation. A chaque fois que le voleur effectue une attaque, la fiche demandera s'il s'agit d'une attaque sournoise, et si oui, lancera les dés de DM supplémentaires.
+
+NB : Pour ne pas avoir à actualiser le nombre de d4° quand le voleur atteint le rang 4 dans une voie de profil, vous pouvez créer un attribut personnalisé <kbd>sournoise</kbd> (cf. onglet [Configuration]({{ site.baseurl }}/pc-config)) et indiquer <kbd>[voleur_sournoise]</kbd> dans la valeur du buff.
+
+## Activation / désactivation par nom
+
+Une icone _Interrupteur_ à côté du titre _Nom du buff_ permet une activation ou un désactivation rapide de plusieurs buffs. Un popup Roll20 affiche les noms des buffs de type temporaire qui ont plusieurs attributs cibles. Tous les buffs correspondants au nom sélectionné voient leur état basculer entre actif et inactif.
+
+_Exemple :_ 
+
+Pour gérer un buff pour le sort de _Bénédiction_ du prêtre, créer deux lignes avec le même nom, une avec _Tests de caracs_ et l'autre avec _Tests d'attaque_ en cible et la valeur du bonus octroyée par le sort. Cochez la case _Temporaire_ pour ces deux lignes. Lorsque vous cliquez sur l'icône _Interrupteur_, un popup Roll20 s'affiche avec une liste de choix dont _Bénédiction_. Sélectionnez-le, les deux lignes de buffs correspondantes sont activées ou désactivées.
+
+## Détail par attribut
+
+Cette section dépliable permet de consulter la liste des buffs actuellement appliqués à chaque attribut et leur somme.
 
 # Import
 
