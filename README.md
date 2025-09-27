@@ -19,6 +19,7 @@ v1.9.0 [Screenshot](cof2e.png)
 - Ajout des attributs `voies_rang3`, `voies_rang4`, `voies_rang5` avec le nombre de voies dans lesquelles les rangs 3 à 5 sont atteints.
 - Remplacement de la propriété de capacité `evol` par la propriété `selonRang`.
 - Ajout d'une option de configuration pour lancer un seul d20 dans les jets de compétence.
+- Harmonisation des icones d'états préjudiciables avec le token marker set du script MOD _COFantasy2_.
 
 ### Version _1.8.0_ (2025-08-31)
 
