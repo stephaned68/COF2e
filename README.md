@@ -6,9 +6,14 @@ Consultez la [documentation](https://stephaned68.github.io/COF2e/)
 
 ## Version courante
 
-v1.8.0 [Screenshot](cof2e.png)
+v1.9.0 [Screenshot](cof2e.png)
 
 ## Notes de version
+
+### Version _1.9.0_ (2025-09-30)
+
+- Possibilité de cacher aussi les voies 4, 5 et 6.
+- Ajout d'un type de buff _Tous les test de caracs_ et _Tous les jets d'attaque_.
 
 ### Version _1.8.0_ (2025-08-31)
 
