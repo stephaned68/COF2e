@@ -16244,18 +16244,19 @@ on("sheet:opened change:character_name", function() {
 });
 
 /**
- * On opening sheet / changing luck points
+ * On changing luck points or status marker luck options
  * - Update status marker for luck, if any set
  */
-on("sheet:opened change:pc", function() {
+on("change:pc change:tkmarker_pc_on change:tkmarker_pc", function() {
   getAttrs([ "sheet_type", "character_name", "tokenmod", "tkmarker_pc_on", "tkmarker_pc", "pc" ], function (values) {
     if (strval(values.sheet_type) === SWData.SHEET_TYPE.NPC)
       return;
     if (!boolval(values.tokenmod))
       return;
-    const markerPC = boolval(values.tkmarker_pc_on) ? strval(values.tkmarker_pc).trim() : "";
+    let markerPC = strval(values.tkmarker_pc).trim();
     if (markerPC === "")
       return;
+    markerPC = (boolval(values.tkmarker_pc_on) ? "" : "-") + markerPC;
     sendChatCmd(tokenMod(
       strval(values.character_name), 
       { statusmarkers: `${markerPC}:${ intval(values.pc) }` }
