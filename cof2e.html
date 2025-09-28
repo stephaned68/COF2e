@@ -5442,6 +5442,7 @@
                     <li>Remplacement de la propriété de capacité <em>evol</em> par la propriété <em>selonRang</em></li>
                     <li>Ajout d'une option de configuration pour lancer un seul d20 dans les jets de compétence</li>
                     <li>Harmonisation des icones d'états préjudiciables avec le token marker set du script COFantasy2</li>
+                    <li>Mise au point de l'option <em>Etats préjudiciables</em> de l'interface <em>Token Mod</em></li>
                   </ul>
                 </details>
               </li>
@@ -9153,6 +9154,7 @@ function diceRoll(roll) {
  */
 function sendChatCmd(chatCmd) {
   startRoll(chatCmd, roll => {
+    console.log(chatCmd)
     finishRoll(roll.rollId);
   });
 }
@@ -11182,36 +11184,47 @@ SWData.PC.CONDITIONS.forEach(condition => {
   // Set/Unset conditions
   on(`clicked:${name}-icon`, function () {
     const buffs = Object.entries(effects).map(([ attribute ]) => `${attribute}_cond`);
-    getAttrs([ `condition_${name}`, ...buffs ], function(values) {
-      const [ attribute, ...buffs ] = Object.keys(values);
+    getAttrs([ "conditions_markers", `condition_${name}`, ...buffs ], function(values) {
+      const [ markers, attribute, ...buffs ] = Object.keys(values);
       const hasCondition = 1 - intval(values[attribute]);
       const updateAttrs = setCondition(hasCondition, effects, buffs, values);
       updateAttrs.set(attribute, hasCondition);
-      updateAttrs.set("conditions_markers", `${hasCondition}|${name}`);
+      const updMarkers = strval(values[markers]).split("|").filter(m => !m.endsWith(name));
+      updMarkers.push(`${hasCondition === 1 ? "+" : "-" }cof-${name}`);
+      updateAttrs.set("conditions_markers", updMarkers.filter(m => m !== "").join("|"));
       setAttrs(Object.fromEntries(updateAttrs));
     });
   });
 
   // Display enabled condition
   on(`change:condition_${name}`, function() {
-    getAttrs([ 
-      `condition_${name}`, "notif_conditions",
-      "character_name", "tokenmod", "tkmarker_cond"
-    ], function(values) {
+    getAttrs([ `condition_${name}`, "notif_conditions" ], function(values) {
       const [ attribute ] = Object.keys(values);
       const hasCondition = intval(values[attribute]);
       const notify = intval(values.notif_conditions);
 
-      const tokenmod = boolval(values.tokenmod);
-      const markConditions = boolval(values.tkmarker_cond);
-      if (tokenmod && markConditions) {
-        const setUnset = boolval(hasCondition) ? "+" : "-";
-        sendChatCmd(tokenMod(strval(values.character_name), { statusmarkers: `${setUnset}cof2-${name}` }));
-      }
-
       if (hasCondition === 1 && notify !== 0)
         displayCondition(label, effects, description, notify);
     });
+  });
+});
+
+/**
+ * Update token markers
+ */
+on("change:conditions_markers", function() {
+  getAttrs([ 
+    "character_name", "conditions_markers",
+    "tokenmod", "tkmarker_cond"
+  ], function (values) {
+    const statusmarkers = strval(values.conditions_markers);
+    if (statusmarkers === "")
+      return;
+    const tokenmod = boolval(values.tokenmod);
+    const markConditions = boolval(values.tkmarker_cond);
+    if (!tokenmod || !markConditions)
+      return;
+    sendChatCmd(tokenMod(strval(values.character_name), { statusmarkers }));
   });
 });
 
@@ -14219,22 +14232,22 @@ on("change:cfg_highfan change:cfg_lowfan", function (eventInfo) {
 });
 
 /**
- * On changing one of high fantasy options
+ * On changing high fantasy options
  */
 on(changeEvent(SWData.settings.highFan), function () {
   getAttrs(SWData.settings.highFan, function (values) {
-    if (Object.values(values).some(v => !boolval(v)))
-      setAttrs({ cfg_highfan: 0 }, { silent: true });
+    if (Object.values(values).every(v => boolval(v)))
+      setAttrs({ cfg_highfan: 1 }, { silent: true });
   });
 });
 
 /**
- * On changing one of low fantasy options
+ * On changing low fantasy options
  */
 on(changeEvent(SWData.settings.lowFan), function () {
   getAttrs(SWData.settings.lowFan, function (values) {
-    if (Object.values(values).some(v => !boolval(v)))
-      setAttrs({ cfg_lowfan: 0 }, { silent: true });
+    if (Object.values(values).every(v => boolval(v)))
+      setAttrs({ cfg_lowfan: 1 }, { silent: true });
   });
 });
 
