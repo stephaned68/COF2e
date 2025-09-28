@@ -63,9 +63,7 @@ D'autres options peuvent être activées :
 
 - Markers états préjudiciables : permet d'ajouter et retirer des markers selon les états préjudiciables subis par le personnage.
 
-  Les markers des états préjudiciables doivent être nommés <kbd>cof2-affaibli</kbd>, <kbd>cof2-aveugle</kbd>, <kbd>cof2-effraye</kbd>, <kbd>cof2-essoufle</kbd>, <kbd>cof2-etourdi</kbd>, <kbd>cof2-immobilise</kbd>, <kbd>cof2-invalide</kbd>, <kbd>cof2-panique</kbd>, <kbd>cof2-paralyse</kbd>, <kbd>cof2-ralenti</kbd>, <kbd>cof2-renverse</kbd>, <kbd>cof2-surpris</kbd>.
-
-  <em>Un bug Roll20 empêche cette option de fonctionner correctement si l'une des barres du token est lié à la Défense du personnage et que l'état préjudiciable appliqué réduit la Défense. Lorsque c'est le cas, le marker ne s'affiche qu'une fois sur deux. Pour résoudre le problème, la seule solution est de ne pas assigner la Défense à une barre de token (Juillet 2025).</em>
+  Les markers de base des états préjudiciables doivent être nommés <kbd>cof-affaibli</kbd>, <kbd>cof-aveugle</kbd>, <kbd>cof-essoufle</kbd>, <kbd>cof-etourdi</kbd>, <kbd>cof-immobilise</kbd>, <kbd>cof-invalide</kbd>, <kbd>cof-paralyse</kbd>, <kbd>cof-ralenti</kbd>, <kbd>cof-renverse</kbd>, <kbd>cof-surpris</kbd>. Si vous jouez avec l'option Low-Fantasy de Peur, deux markers supplémentaires <kbd>cof-effraye</kbd> et <kbd>cof-panique</kbd> sont nécessaires.
 
 #### Liaison par défaut des barres de tokens
 
