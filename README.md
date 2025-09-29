@@ -10,7 +10,7 @@ v1.9.0 [Screenshot](cof2e.png)
 
 ## Notes de version
 
-### Version _1.9.0_ (2025-09-27)
+### Version _1.9.0_ (2025-09-28)
 
 - Possibilité de cacher les voies n° 4, 5 et 6.
 - Ajout d'un type de buff _Tous les test de caracs_ et _Tous les jets d'attaque_.
