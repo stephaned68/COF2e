@@ -10,6 +10,10 @@ v1.9.0 [Screenshot](cof2e.png)
 
 ## Notes de version
 
+### Version _1.10.0_ (2025-10-31)
+
+- Raz capacités utilisées par combat / par jour en cas de récupération rapide ou complète
+
 ### Version _1.9.0_ (2025-09-28)
 
 - Possibilité de cacher les voies n° 4, 5 et 6.

@@ -1,9 +1,9 @@
 <div class="cofmain">
 
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.9.0">
+  <input type="hidden" name="attr_verfdp" value="1.10.0">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.9.0">
+  <input type="hidden" name="attr_version" value="1.10.0">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
 
@@ -113,7 +113,7 @@
     <div>
       <img
         class="logo"
-        title="Version 1.9.0 - 28/09/2025"
+        title="Version 1.10.0 - 31/10/2025"
         src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cof2e_logo.jpg"
       />
     </div>
@@ -5060,8 +5060,7 @@
                   <option value="dark">Sombre</option>
                 </select>
               </li>
-              <li>
-                Contenu 
+              <li>Contenu
                 <ul>
                   <li class="config-check">
                     <input type="checkbox" name="attr_cfg_1attack_roll" value="1">
@@ -5424,6 +5423,17 @@
           <div class="sheet-col">
 
             <ul>
+
+              <li>
+                <details>
+                  <summary>
+                    <strong>Version 1.10.0</strong> (2025-10-31)
+                  </summary>
+                  <ul>
+                    <li>Raz capacités utilisées par combat / par jour en cas de récupération rapide ou complète</li>
+                  </ul>
+                </details>
+              </li>
 
               <li>
                 <details>
@@ -10850,7 +10860,11 @@ on("clicked:drecup-btn", function() {
     "cfg_use_dronly",
     "last_rolls",
   ];
-  getAttrs(recupAttrs, function(values) {
+  const owned = allPathRanks("rankOwned");
+  const abilities = allPathRanks("rankName");
+  const uses = allPathRanks("rankUseMax");
+  const freqs = allPathRanks("rankUseFreq");
+  getAttrs([ ...recupAttrs, ...owned, ...abilities, ...uses, ...freqs ], function(values) {
     const lsub = "Jet";
     let rsub = "Récupération";
     const highFan = boolval(values.cfg_highfan);
@@ -10882,6 +10896,20 @@ on("clicked:drecup-btn", function() {
       return;
     }
 
+    const combat = [];
+    const daily = [];
+    freqs.filter(attr => strval(values[attr]) !== "").forEach(attr => {
+      const vr = attr.split("_")[0];
+      if (!boolval(values[abilityInfo(vr).rankOwned]))
+        return;
+      const name = strval(values[abilityInfo(vr).rankName]);
+      const uses = numval(values[abilityInfo(vr).rankUseMax]);
+      if ([ "combat", "rencontre" ].includes(cleanText(values[attr])))
+        combat.push({ reset: abilityInfo(vr).rankUse, name, uses });
+      if ([ "jour", "journee", "repos long" ].includes(cleanText(values[attr])))
+        daily.push({ reset: abilityInfo(vr).rankUse, name, uses });
+    });
+
     const recups = [ "Rapide", "Complète" ];
     if (effort !== "")
       recups.push(effort);
@@ -10898,19 +10926,27 @@ on("clicked:drecup-btn", function() {
         bLevel = addLevel ? level : Math.ceil(level / 2);
         bRecup = `+ ${bLevel}[Niveau${ addLevel ? "" : "/2" }] `;
       }
+      let text = `${dr} DR restants`;
       let recup;
+      let resetAbilities;
       if (typeRecup === 3) {
         rsub = effort;
         recup = `[[${rolls[0]} + 1d10 + @{vol}[VOL] ]]`;
       } else {
         rsub += " *" + (typeRecup === 1 ? "Rapide" : "Complète") + "*"
         recup = `[[${dRecup}[DR] ${bRecup}]] PV récupérés`;
+        if (typeRecup === 1)
+          resetAbilities = combat;
+        else
+          resetAbilities = combat.concat(daily);
+        if (resetAbilities.length > 0)
+          text += "\n" + resetAbilities.map(a => `${a.name} : ${a.uses} ${ a.uses <= 1 ? "utilisation" : "utilisations" }`).join("\n");
       }
       let chatMsg = {
         lsub,
         rsub,
         roll: recup,
-        text: `${dr} DR restants`
+        text
       };
       if (typeRecup === 3 && rolls.length > 1)
         chatMsg = { ...chatMsg, broll: `[[${rolls[1]} + 1d10 + @{vol}[VOL] ]]` };
@@ -10921,7 +10957,9 @@ on("clicked:drecup-btn", function() {
         if (typeRecup !== 3) {
           pv += roll.results.roll.result;
           updates.set("pv", Math.min(pv, pvMax));
+          updates.set("PVIG", Math.min(pv, pvMax));
         }
+        resetAbilities.forEach(ability => updates.set(ability.reset, 0));
         setAttrs(Object.fromEntries(updates));
       });
     });
