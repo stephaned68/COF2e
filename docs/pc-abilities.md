@@ -23,8 +23,8 @@ Pour chaque voie, vous indiquez :
   - Le nom de la capacité,
   - S'il s'agit d'un sort (pour le calcul des PM maximum du PJ),
   - La description de la capacité,
-  - Le nombre d'utilisation maximum s'il y a lieu,
-  - La fréquence à laquelle ce nombre d'utilisation se renouvelle,
+  - Le nombre d'utilisations maximum s'il y a lieu,
+  - La fréquence à laquelle ce nombre d'utilisations se renouvelle (une liste avec combat / jour / aventure est proposée, mais il est possible de saisir librement une autre valeur),
   - Un paramètre optionnel, 
   
     _Exemples d'utilisation :_
@@ -35,7 +35,7 @@ Pour chaque voie, vous indiquez :
   
     La syntaxe de cette liste est la même que pour les [prédicats]({{ site.baseurl }}/pc-script).
 
-    Voir le paragraphe _Propriétés des capacités_ ci-dessous pour les propriétés de capacités supportées par la fiche
+    Voir le paragraphe _Propriétés des capacités_ ci-dessous pour les propriétés de capacités prises en charge directement par la fiche
 
 - Une icône située à côté des PV de voie permet d'importer la liste des capacités à partir du texte collé dans le sous-onglet Import.
 

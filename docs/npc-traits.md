@@ -12,7 +12,7 @@ Vous indiquez également :
 - Les PV courants et maximum,
 - Le score d'Initiative,
 - Le score de Défense,
-- Les différentes RD.
+- Les différentes RD et résistances aux DM.
 
 Des boutons permettent de faire des jets de caractéristiques et d'Initiative.
 
@@ -20,7 +20,7 @@ Le texte **Caractéristiques** est un bouton qui permet d'afficher une liste de 
 
 L'icone située à côté de **Caractéristiques** permet d'afficher un menu d'action dans le chat avec un bouton pour chaque jet de caractéristique.
 
-Ces deux boutons/icones peuvtn être épinglés dans la barre d'action de Roll20 par glisser-déposer.
+Ces deux boutons/icones peuvent être épinglés dans la barre d'action de Roll20 par glisser-déposer.
 
 La zone **Init.** est cliquable et permet de faire le jet d'initiative du PNJ au début d'un combat.
 

@@ -57,7 +57,7 @@ Les PV et DR max affichés tiennent compte de la famille du profil (+1 DR pour u
 
 Deux icones permettent de faire varier les PV en saisissant le gain ou la perte dans un popup Roll20. Une formule de dé peut être saisie dans ce popup (_ex_ : <kbd>1d8</kbd>) et le jet correspondant sera effectué. Si nécessaire en cas de perte de PV, la fiche applique l'état préjudiciable _Affaibli_ (1 PV) et la perte de DR (0 PV).
 
-On peut également cliquer sur <kbd>DR</kbd> pour effectuer un jet de Récupération _Rapide_ ou _Complète_, ce qui modifie le nombre de PV courants et décompte un DR du nombre disponible. Si l'option de configuration _High Fantasy_ est active, ce bouton permet aussi d'utiliser la règle optionnelle _Se dépasser_.
+On peut également cliquer sur <kbd>DR</kbd> pour effectuer un jet de Récupération _Rapide_ ou _Complète_, ce qui modifie le nombre de PV courants et décompte un DR du nombre disponible. Si l'option de configuration _High Fantasy_ est active, ce bouton permet aussi d'utiliser la règle optionnelle _Se dépasser_. Les nombres d'utilisations des capacités avec fréquence limitée sont également ré-initialisés : capacités _par combat_ pour une récupération rapide, _par jour_ pour une récupération complète.
 
 # Points de Mana
 
@@ -86,9 +86,9 @@ Si on clique sur l'icone de d20, la fiche récupère les derniers jets de d20 ef
 
 Si on clique sur l'icone de d6, la fiche effectue un test de chance (cf page 206).
 
-# Réduction des dommages
+# RD (Réduction et Résistance aux dommages)
 
-Cette zone de texte libre permet d'indiquer la ou les réductions et résistances aux dommages dont bénéficie le PJ. Elle s'affiche dans le chat quand le nombre de PV diminue pour rappeler au joueur de réduire les dommages reçus.
+Cette zone résume les différentes RD et résistances aux DM indiquées dans le sous-onglet _Résistances_. Elle s'affiche dans le chat quand le nombre de PV diminue pour rappeler au joueur de réduire les dommages reçus.
 
 # Sous-onglet _Attaques_
 
@@ -200,6 +200,10 @@ Selon qu'une arme est équipée ou non, un bouton _d20_ apparaît en regard de c
 **NB** : _Les listes déroulantes d'objet sont chargées à l'ouverture de la fiche. En cas de modification de la liste des attaques, il est nécessaire de fermer et ré-ouvrir la fiche._
 
 On peut également indiquer dans ce sous-onglet si le personnage est en selle ou pas.
+
+# Sous-onglet _Résistances_
+
+Ce sous-onglet permet de lister les réductions et résistances aux dommages dont bénéficie le personnage.
 
 ---
 
