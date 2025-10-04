@@ -13,6 +13,8 @@ v1.9.0 [Screenshot](cof2e.png)
 ### Version _1.10.0_ (2025-10-31)
 
 - Raz capacités utilisées par combat / par jour en cas de récupération rapide ou complète
+- Ajout d'un sous-onglet pour les RD et Résistances aux DM sur la fiche de PJ
+- Ajout d'une section dépliante pour les RD et Résistances aux DM sur la fiche de PNJ
 
 ### Version _1.9.0_ (2025-09-28)
 

@@ -1092,7 +1092,8 @@
           <div class="dmred">
             <div class="block-title">RD</div>
             <div class="bordered">
-              <input type="text" name="attr_rd" title="@{rd} Réduction des DM" value="">
+              <input type="hidden" name="attr_rrdm">
+              <span name="attr_rrdm" title="@{rrdm} Réductions et Résistances aux DM"></span>
             </div>
           </div>
 
@@ -1104,6 +1105,7 @@
           <button type="action" name="act_pc_attacks-btn" class="sub-tab tab-btn pc-attacks-btn">ATTAQUES</button>
           <button type="action" name="act_pc_otact-btn" class="sub-tab tab-btn pc-otact-btn">OPTIONS</button>
           <button type="action" name="act_pc_hands-btn" class="sub-tab tab-btn pc-hands-btn">EN MAIN</button>
+          <button type="action" name="act_pc_resdm-btn" class="sub-tab tab-btn pc-resdm-btn">RESISTANCES</button>
         </div>
       
         <hr>
@@ -1455,6 +1457,23 @@
                 <span>&nbsp;En selle</span>
               </div>
 
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Réductions & Résistances DM -->
+        <div class="pc-resdm-subtab">
+
+          <div class="sheet-2colrow">
+
+            <div class="sheet-col">
+              <textarea name="attr_rd" title="@{rd}" placeholder="Réductions DM..."></textarea>
+            </div>
+            
+            <div class="sheet-col">
+              <textarea name="attr_resdm" title="@{resdm}" placeholder="Résistances aux DM..."></textarea>
             </div>
 
           </div>
@@ -2583,6 +2602,11 @@
         </div>
 
         <!-- Fiche PJ, Onglet Capacités, Mode Edition -->
+        <datalist id="abilities-freqs">
+          <option value="combat"></option>
+          <option value="jour"></option>
+          <option value="aventure"></option>
+        </datalist>
         <div class="abilities-edit">
           <div class="d-flex d-flex-between">
             <div>
@@ -2616,7 +2640,7 @@
                 <textarea name="attr_voie1-1" title="@{voie1-1}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v1r1_use_max" title="@{v1r1_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v1r1_freq" title="@{v1r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v1r1_freq" title="@{v1r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text"  name="attr_v1r1_param" title="@{v1r1_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -2633,7 +2657,7 @@
                 <textarea name="attr_voie1-2" title="@{voie1-2}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v1r2_use_max" title="@{v1r2_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v1r2_freq" title="@{v1r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v1r2_freq" title="@{v1r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v1r2_param" title="@{v1r2_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -2650,7 +2674,7 @@
                 <textarea name="attr_voie1-3" title="@{voie1-3}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v1r3_use_max" title="@{v1r3_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v1r3_freq" title="@{v1r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v1r3_freq" title="@{v1r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v1r3_param" title="@{v1r3_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -2667,7 +2691,7 @@
                 <textarea name="attr_voie1-4" title="@{voie1-4}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v1r4_use_max" title="@{v1r4_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v1r4_freq" title="@{v1r4_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v1r4_freq" title="@{v1r4_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v1r4_param" title="@{v1r4_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -2684,7 +2708,7 @@
                 <textarea name="attr_voie1-5" title="@{voie1-5}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v1r5_use_max" title="@{v1r5_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v1r5_freq" title="@{v1r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v1r5_freq" title="@{v1r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v1r5_param" title="@{v1r5_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -2712,7 +2736,7 @@
                 <textarea name="attr_voie2-1" title="@{voie2-1}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v2r1_use_max" title="@{v2r1_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v2r1_freq" title="@{v2r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v2r1_freq" title="@{v2r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v2r1_param" title="@{v2r1_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -2729,7 +2753,7 @@
                 <textarea name="attr_voie2-2" title="@{voie2-2}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v2r2_use_max" title="@{v2r2_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v2r2_freq" title="@{v2r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v2r2_freq" title="@{v2r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v2r2_param" title="@{v2r2_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -2746,7 +2770,7 @@
                 <textarea name="attr_voie2-3" title="@{voie2-3}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v2r3_use_max" title="@{v2r3_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v2r3_freq" title="@{v2r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v2r3_freq" title="@{v2r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v2r3_param" title="@{v2r3_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -2763,7 +2787,7 @@
                 <textarea name="attr_voie2-4" title="@{voie2-4}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v2r4_use_max" title="@{v2r4_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v2r4_freq" title="@{v2r4_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v2r4_freq" title="@{v2r4_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v2r4_param" title="@{v2r4_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -2780,7 +2804,7 @@
                 <textarea name="attr_voie2-5" title="@{voie2-5}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v2r5_use_max" title="@{v2r5_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v2r5_freq" title="@{v2r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v2r5_freq" title="@{v2r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v2r5_param" title="@{v2r5_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -2808,7 +2832,7 @@
                 <textarea name="attr_voie3-1" title="@{voie3-1}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v3r1_use_max" title="@{v3r1_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v3r1_freq" title="@{v3r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v3r1_freq" title="@{v3r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v3r1_param" title="@{v3r1_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -2825,7 +2849,7 @@
                 <textarea name="attr_voie3-2" title="@{voie3-2}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v3r2_use_max" title="@{v3r2_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v3r2_freq" title="@{v3r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v3r2_freq" title="@{v3r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v3r2_param" title="@{v3r2_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -2842,7 +2866,7 @@
                 <textarea name="attr_voie3-3" title="@{voie3-3}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v3r3_use_max" title="@{v3r3_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v3r3_freq" title="@{v3r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v3r3_freq" title="@{v3r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v3r3_param" title="@{v3r3_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -2859,7 +2883,7 @@
                 <textarea name="attr_voie3-4" title="@{voie3-4}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v3r4_use_max" title="@{v3r4_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v3r4_freq" title="@{v3r4_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v3r4_freq" title="@{v3r4_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v3r4_param" title="@{v3r4_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -2876,7 +2900,7 @@
                 <textarea name="attr_voie3-5" title="@{voie3-5}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v3r5_use_max" title="@{v3r5_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v3r5_freq" title="@{v3r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v3r5_freq" title="@{v3r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v3r5_param" title="@{v3r5_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -2908,7 +2932,7 @@
                 <textarea name="attr_voie4-1" title="@{voie4-1}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v4r1_use_max" title="@{v4r1_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v4r1_freq" title="@{v4r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v4r1_freq" title="@{v4r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v4r1_param" title="@{v4r1_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -2925,7 +2949,7 @@
                 <textarea name="attr_voie4-2" title="@{voie4-2}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v4r2_use_max" title="@{v4r2_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v4r2_freq" title="@{v4r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v4r2_freq" title="@{v4r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v4r2_param" title="@{v4r2_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -2942,7 +2966,7 @@
                 <textarea name="attr_voie4-3" title="@{voie4-3}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v4r3_use_max" title="@{v4r3_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v4r3_freq" title="@{v4r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v4r3_freq" title="@{v4r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v4r3_param" title="@{v4r3_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -2959,7 +2983,7 @@
                 <textarea name="attr_voie4-4" title="@{voie4-4}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v4r4_use_max" title="@{v4r4_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v4r4_freq" title="@{v4r4_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v4r4_freq" title="@{v4r4_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v4r4_param" title="@{v4r4_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -2976,7 +3000,7 @@
                 <textarea name="attr_voie4-5" title="@{voie4-5}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v4r5_use_max" title="@{v4r5_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v4r5_freq" title="@{v4r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v4r5_freq" title="@{v4r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v4r5_param" title="@{v4r5_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -3004,7 +3028,7 @@
                 <textarea name="attr_voie5-1" title="@{voie5-1}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v5r1_use_max" title="@{v5r1_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v5r1_freq" title="@{v5r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v5r1_freq" title="@{v5r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v5r1_param" title="@{v5r1_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -3021,7 +3045,7 @@
                 <textarea name="attr_voie5-2" title="@{voie5-2}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v5r2_use_max" title="@{v5r2_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v5r2_freq" title="@{v5r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v5r2_freq" title="@{v5r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v5r2_param" title="@{v5r2_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -3038,7 +3062,7 @@
                 <textarea name="attr_voie5-3" title="@{voie5-3}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v5r3_use_max" title="@{v5r3_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v5r3_freq" title="@{v5r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v5r3_freq" title="@{v5r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v5r3_param" title="@{v5r3_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -3055,7 +3079,7 @@
                 <textarea name="attr_voie5-4" title="@{voie5-4}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v5r4_use_max" title="@{v5r4_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v5r4_freq" title="@{v5r4_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v5r4_freq" title="@{v5r4_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v5r4_param" title="@{v5r4_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -3072,7 +3096,7 @@
                 <textarea name="attr_voie5-5" title="@{voie5-5}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v5r5_use_max" title="@{v5r5_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v5r5_freq" title="@{v5r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v5r5_freq" title="@{v5r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v5r5_param" title="@{v5r5_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -3100,7 +3124,7 @@
                 <textarea name="attr_voie6-1" title="@{voie6-1}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v6r1_use_max" title="@{v6r1_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v6r1_freq" title="@{v6r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v6r1_freq" title="@{v6r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v6r1_param" title="@{v6r1_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -3117,7 +3141,7 @@
                 <textarea name="attr_voie6-2" title="@{voie6-2}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v6r2_use_max" title="@{v6r2_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v6r2_freq" title="@{v6r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v6r2_freq" title="@{v6r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v6r2_param" title="@{v6r2_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -3134,7 +3158,7 @@
                 <textarea name="attr_voie6-3" title="@{voie6-3}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v6r3_use_max" title="@{v6r3_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v6r3_freq" title="@{v6r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v6r3_freq" title="@{v6r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v6r3_param" title="@{v6r3_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -3151,7 +3175,7 @@
                 <textarea name="attr_voie6-4" title="@{voie6-4}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v6r4_use_max" title="@{v6r4_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v6r4_freq" title="@{v6r4_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v6r4_freq" title="@{v6r4_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v6r4_param" title="@{v6r4_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -3168,7 +3192,7 @@
                 <textarea name="attr_voie6-5" title="@{voie6-5}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v6r5_use_max" title="@{v6r5_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v6r5_freq" title="@{v6r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v6r5_freq" title="@{v6r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v6r5_param" title="@{v6r5_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -3200,7 +3224,7 @@
                 <textarea name="attr_voie7-1" title="@{voie7-1}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v7r1_use_max" title="@{v7r1_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v7r1_freq" title="@{v7r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v7r1_freq" title="@{v7r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v7r1_param" title="@{v7r1_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -3217,7 +3241,7 @@
                 <textarea name="attr_voie7-2" title="@{voie7-2}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v7r2_use_max" title="@{v7r2_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v7r2_freq" title="@{v7r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v7r2_freq" title="@{v7r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v7r2_param" title="@{v7r2_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -3234,7 +3258,7 @@
                 <textarea name="attr_voie7-3" title="@{voie7-3}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v7r3_use_max" title="@{v7r3_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v7r3_freq" title="@{v7r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v7r3_freq" title="@{v7r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v7r3_param" title="@{v7r3_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -3251,7 +3275,7 @@
                 <textarea name="attr_voie7-4" title="@{voie7-4}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v7r4_use_max" title="@{v7r4_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v7r4_freq" title="@{v7r4_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v7r4_freq" title="@{v7r4_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v7r4_param" title="@{v7r4_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -3268,7 +3292,7 @@
                 <textarea name="attr_voie7-5" title="@{voie7-5}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v7r5_use_max" title="@{v7r5_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v7r5_freq" title="@{v7r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v7r5_freq" title="@{v7r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v7r5_param" title="@{v7r5_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -3296,7 +3320,7 @@
                 <textarea name="attr_voie8-1" title="@{voie8-1}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v8r1_use_max" title="@{v8r1_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v8r1_freq" title="@{v8r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v8r1_freq" title="@{v8r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v8r1_param" title="@{v8r1_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -3313,7 +3337,7 @@
                 <textarea name="attr_voie8-2" title="@{voie8-2}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v8r2_use_max" title="@{v8r2_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v8r2_freq" title="@{v8r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v8r2_freq" title="@{v8r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v8r2_param" title="@{v8r2_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -3330,7 +3354,7 @@
                 <textarea name="attr_voie8-3" title="@{voie8-3}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v8r3_use_max" title="@{v8r3_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v8r3_freq" title="@{v8r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v8r3_freq" title="@{v8r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v8r3_param" title="@{v8r3_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -3347,7 +3371,7 @@
                 <textarea name="attr_voie8-4" title="@{voie8-4}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v8r4_use_max" title="@{v8r4_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v8r4_freq" title="@{v8r4_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v8r4_freq" title="@{v8r4_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v8r4_param" title="@{v8r4_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -3364,7 +3388,7 @@
                 <textarea name="attr_voie8-5" title="@{voie8-5}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v8r5_use_max" title="@{v8r5_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v8r5_freq" title="@{v8r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v8r5_freq" title="@{v8r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v8r5_param" title="@{v8r5_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -3392,7 +3416,7 @@
                 <textarea name="attr_voie9-1" title="@{voie9-1}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v9r1_use_max" title="@{v9r1_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v9r1_freq" title="@{v9r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v9r1_freq" title="@{v9r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v9r1_param" title="@{v9r1_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -3409,7 +3433,7 @@
                 <textarea name="attr_voie9-2" title="@{voie9-2}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v9r2_use_max" title="@{v9r2_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v9r2_freq" title="@{v9r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v9r2_freq" title="@{v9r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v9r2_param" title="@{v9r2_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -3426,7 +3450,7 @@
                 <textarea name="attr_voie9-3" title="@{voie9-3}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v9r3_use_max" title="@{v9r3_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v9r3_freq" title="@{v9r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v9r3_freq" title="@{v9r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v9r3_param" title="@{v9r3_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -3443,7 +3467,7 @@
                 <textarea name="attr_voie9-4" title="@{voie9-4}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v9r4_use_max" title="@{v9r4_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v9r4_freq" title="@{v9r4_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v9r4_freq" title="@{v9r4_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v9r4_param" title="@{v9r4_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -3460,7 +3484,7 @@
                 <textarea name="attr_voie9-5" title="@{voie9-5}" placeholder="Description"></textarea>
                 <div class="d-flex">
                   <input type="number" name="attr_v9r5_use_max" title="@{v9r5_use_max} Nombre d'utilisations maximum" value="">
-                  <input type="text"  name="attr_v9r5_freq" title="@{v6r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
+                  <input type="text" list="abilities-freqs" name="attr_v9r5_freq" title="@{v6r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." value="">
                 </div>
                 <div class="d-flex">
                   <input type="text" name="attr_v9r5_param" title="@{v9r5_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
@@ -5430,7 +5454,9 @@
                     <strong>Version 1.10.0</strong> (2025-10-31)
                   </summary>
                   <ul>
-                    <li>Raz capacités utilisées par combat / par jour en cas de récupération rapide ou complète</li>
+                    <li>Raz des capacités utilisées par combat / par jour en cas de récupération rapide ou complète</li>
+                    <li>Ajout d'un sous-onglet pour les RD et Résistances aux DM sur la fiche de PJ</li>
+                    <li>Ajout d'une section dépliante pour les RD et Résistances aux DM sur la fiche de PNJ</li>
                   </ul>
                 </details>
               </li>
@@ -5775,6 +5801,13 @@
                 </div>
               </div>
 
+              <div class="npc-trait">
+                <div class="block-title">Vitesse</div>
+                <div class="bordered">
+                  <input type="number" name="attr_vitesse" title="@{vitesse} Déplacement" value="">&nbsp;m
+                </div>
+              </div>
+
             </div>
 
           
@@ -5831,7 +5864,18 @@
                   <span>RD</span>
                 </div>
                 <div class="bordered">
-                  <textarea name="attr_rd" class="one-row" title="@{rd}" value=""></textarea>
+                  <details>
+                    <summary>
+                      <input type="hidden" name="attr_rrdm">
+                      <span name="attr_rrdm"></span>
+                    </summary>
+                    <div class="d-flex m2">
+                      <textarea class="one-row" name="attr_rd" title="@{rd}" placeholder="Réductions DM..."></textarea>
+                    </div>
+                    <div class="d-flex m2">
+                      <textarea class="one-row" name="attr_resdm" title="@{resdm}" placeholder="Résistances aux DM..."></textarea>
+                    </div>
+                  </details>
                 </div>
               </div>
 
@@ -5843,7 +5887,7 @@
             <button type="action" class="flat-btn img-btn" name="act_description-btn">
               <h4 class="img-btn">Description</h4>
             </button>
-            <textarea name="attr_pnj_desc" class="large" title="@{pnj_desc}"></textarea>  
+            <textarea name="attr_pnj_desc" class="x-large" title="@{pnj_desc}"></textarea>  
           </div>
   
         </div>
@@ -9848,7 +9892,7 @@ on("change:sheet_type", function() {
 /**
  * Change subtabs
  */
-[ "attacks", "otact", "hands" ].forEach(button => {
+[ "attacks", "otact", "hands", "resdm" ].forEach(button => {
   on(`clicked:pc_${button}-btn`, function() {
     setAttrs({ pc_subtab1: button });
   });
@@ -15010,6 +15054,23 @@ on("clicked:defsup-btn", function() {
   getAttrs([ "def_sup" ], function (values) {
     const def_sup = 1 - intval(values.def_sup);
     setAttrs({ def_sup });
+  });
+});
+
+/**
+ * Re-format damage reductions & damage resistances
+ */
+on("change:rd change:resdm sheet:opened", function() {
+  getAttrs([ "rd", "resdm" ], function (values) {
+    const rd = strval(values.rd),
+          resdm = strval(values.resdm);
+    let rrdm = "";
+    if (rd.length > 0)
+      rrdm += rd.split("\n").join(", ");
+    if (resdm.length > 0)
+      rrdm += ( rrdm !== "" ? ", " : "" ) + "DM " + resdm.split("\n").join(" + ") + " ÷ 2";
+    if (rrdm.length > 0)
+      setAttrs({ rrdm });
   });
 });
 
