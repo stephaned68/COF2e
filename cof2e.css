@@ -678,6 +678,13 @@ div.change-view {
   padding: 2px;
 }
 
+.pc-attributes .speed {
+  display: grid;
+  grid-template-columns: 3fr 5.7fr;
+  gap: 2px;
+  padding: 2px;
+}
+
 .pc-attributes .hits {
   display: grid;
   grid-template-columns: 3fr 5fr;
@@ -1083,6 +1090,19 @@ input[value="0"].show-paths-4to9 ~ div.abilities {
   display: grid;
   grid-template-columns: 60% 40%;
   gap: 2px;
+}
+
+.pc-config-tab div.pc-configs.first-rank {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  gap: 2px;
+}
+
+.pc-config-tab div.pc-configs.first-rank span {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .pc-config-tab li.force-max input.force-max:checked ~ input.two-digits {

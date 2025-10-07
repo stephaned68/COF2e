@@ -726,6 +726,17 @@
               </div>
             </div>
 
+            <div class="speed">
+              <div class="block-title">Déplacement</div>
+              <div class="bordered">
+                <input type="hidden" name="attr_vitesse_cases" value="7" />
+                <input type="hidden" name="attr_vitesse_pas" value="35" />
+                <input type="number" class="two-digits" name="attr_vitesse" title="@{vitesse} Vitesse de déplacement&#10;1 case = 1,5m = 5 pas" value="10">&nbsp;m&nbsp;
+                (cases : <span name="attr_vitesse_cases" title="Vitesse en cases"></span>,
+                pas : <span name="attr_vitesse_pas" title="Vitesse en pas"></span>)
+              </div>
+            </div>
+
           </div>
           
           <!-- VIGUEUR & MISC -->
@@ -1469,7 +1480,7 @@
           <div class="sheet-2colrow">
 
             <div class="sheet-col">
-              <textarea name="attr_rd" title="@{rd}" placeholder="Réductions DM..."></textarea>
+              <textarea name="attr_rd" title="@{rd}" placeholder="Réductions des DM..."></textarea>
             </div>
             
             <div class="sheet-col">
@@ -5108,7 +5119,7 @@
               </summary>
               <ul class="pc-configs">
                 <li>
-                  <div class="pc-configs">
+                  <div class="pc-configs first-rank">
                     <span name="attr_voie1nom"></span>
                     <div class="d-flex">
                       <input type="number" name="attr_v1br" title="@{v1br}" value="1">
@@ -5117,7 +5128,7 @@
                   </div>
                 </li>
                 <li>
-                  <div class="pc-configs">
+                  <div class="pc-configs first-rank">
                     <span name="attr_voie2nom"></span>
                     <div class="d-flex">
                       <input type="number" name="attr_v2br" title="@{v2br}" value="1">
@@ -5126,7 +5137,7 @@
                   </div>
                 </li>
                 <li>
-                  <div class="pc-configs">
+                  <div class="pc-configs first-rank">
                     <span name="attr_voie3nom"></span>
                     <div class="d-flex">
                       <input type="number" name="attr_v3br" title="@{v3br}" value="1">
@@ -5135,7 +5146,7 @@
                   </div>
                 </li>
                 <li>
-                  <div class="pc-configs">
+                  <div class="pc-configs first-rank">
                     <span name="attr_voie4nom"></span>
                     <div class="d-flex">
                       <input type="number" name="attr_v4br" title="@{v4br}" value="1">
@@ -5144,7 +5155,7 @@
                   </div>
                 </li>
                 <li>
-                  <div class="pc-configs">
+                  <div class="pc-configs first-rank">
                     <span name="attr_voie5nom"></span>
                     <div class="d-flex">
                       <input type="number" name="attr_v5br" title="@{v5br}" value="1">
@@ -5153,7 +5164,7 @@
                   </div>
                 </li>
                 <li>
-                  <div class="pc-configs">
+                  <div class="pc-configs first-rank">
                     <span name="attr_voie6nom"></span>
                     <div class="d-flex">
                       <input type="number" name="attr_v6br" title="@{v6br}" value="1">
@@ -5162,7 +5173,7 @@
                   </div>
                 </li>
                 <li>
-                  <div class="pc-configs">
+                  <div class="pc-configs first-rank">
                     <span name="attr_voie7nom"></span>
                     <div class="d-flex">
                       <input type="number" name="attr_v7br" title="@{v7br}" value="4">
@@ -5171,7 +5182,7 @@
                   </div>
                 </li>
                 <li>
-                  <div class="pc-configs">
+                  <div class="pc-configs first-rank">
                     <span name="attr_voie8nom"></span>
                     <div class="d-flex">
                       <input type="number" name="attr_v8br" title="@{v8br}" value="4">
@@ -5180,7 +5191,7 @@
                   </div>
                 </li>
                 <li>
-                  <div class="pc-configs">
+                  <div class="pc-configs first-rank">
                     <span name="attr_voie9nom"></span>
                     <div class="d-flex">
                       <input type="number" name="attr_v9br" title="@{v9br}" value="1">
@@ -5454,9 +5465,11 @@
                     <strong>Version 1.10.0</strong> (2025-10-31)
                   </summary>
                   <ul>
-                    <li>Raz des capacités utilisées par combat / par jour en cas de récupération rapide ou complète</li>
+                    <li>Réinitialisation des capacités utilisées par combat / par jour en cas de récupération rapide ou complète</li>
                     <li>Ajout d'un sous-onglet pour les RD et Résistances aux DM sur la fiche de PJ</li>
                     <li>Ajout d'une section dépliante pour les RD et Résistances aux DM sur la fiche de PNJ</li>
+                    <li>Ajout d'attributs vitesse pour les déplacements</li>
+                    <li>Prise en charge des valeurs de buffs qui changent à certains rangs dans une voie</li>
                   </ul>
                 </details>
               </li>
@@ -6068,7 +6081,7 @@
 
             <div class="sheet-col">
 
-              <h4>Attaque groupée</h4>
+              <h4>Attaque groupée (MJ)</h4>
 
               <div class="npc-tactic">
                 <div>
@@ -9208,7 +9221,8 @@ function diceRoll(roll) {
  */
 function sendChatCmd(chatCmd) {
   startRoll(chatCmd, roll => {
-    console.log(chatCmd)
+    if (chatCmd.startsWith("!"))
+      console.log(chatCmd)
     finishRoll(roll.rollId);
   });
 }
@@ -10710,6 +10724,18 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
       const chatMsg = rollTemplate(atkProps, { tags });
       sendChatMsg(chatMsg);
     });
+  });
+});
+
+/**
+ * On speed/m change, compute feet & square speed
+ */
+on("change:vitesse", function () {
+  getAttrs([ "vitesse" ], function(values) {
+    const vitesse = numval(values.vitesse);
+    const vitesse_cases = Math.ceil(vitesse / 1.5);
+    const vitesse_pas = vitesse_cases * 5;
+    setAttrs({ vitesse_pas, vitesse_cases });
   });
 });
 
@@ -12339,15 +12365,12 @@ function actionAbility(path, rank) {
  * @param {number} path - Path #
  */
 function setRank(path) {
-  rankAttrs = [
-    ...seq(5).map(rank => abilityInfo({ path, rank }).rankOwned),
-    ...seq(5).map(rank => abilityInfo({ path, rank }).rankName)
-  ];
+  const rankAttrs = seq(5).map(rank => abilityInfo({ path, rank }).rankOwned);
   getAttrs(rankAttrs, function (values) {
     let rank = 0;
-    Object.keys(values).filter(a => !a.startsWith("voie")).forEach(ability => {
+    rankAttrs.forEach(ability => {
       const owned = intval(values[ability]);
-      const hasRank = intval(ability.charAt(ability.length - 1)) * owned;
+      const hasRank = abilityInfo(ability).rank * owned;
       if (hasRank > rank)
         rank = hasRank;
     });
@@ -12376,6 +12399,33 @@ function updateAllRanks(path) {
     if (cleanText(names[path - 1], false) === "cavalier")
       updates.rang_cavalier = rank;
     setAttrs(updates);
+  });
+}
+
+/**
+ * Update the voieN_buff_xxx attribute value based on rank
+ * Update the buffs_voies attribute with the list of buff attribute names
+ * @param {number} path - path number changed
+ */
+function updateBuffsByRank(path) {
+  const rankProps = seq(5).map(rank => abilityInfo({ path, rank }).rankProps);
+  getAttrs([ `rang_voie${path}`, "buffs_voies", ...rankProps ], function(values) {
+    const rank = intval(values[`rang_voie${path}`]);
+    rankProps.filter(a => strval(values[a]) !== "").forEach(props => {
+      values[props].split("\n").filter(prop => prop.startsWith("buff:")).forEach(prop => {
+        const [ attr, buffs ] = prop.split(":").splice(1);
+        if (attr === "")
+          return;
+        try {
+          const byRank = JSON.parse(buffs.trim());
+          const buffAttr = `voie${path}_buff_${ attr.trim() }`;
+          const buffByRank = rank > 0 ? byRank[rank - 1] : 0;
+          const buffs_voies = JSON.parse(strval(values.buffs_voies, "{}"));
+          buffs_voies[buffAttr] = buffByRank;
+          setAttrs({ buffs_voies: JSON.stringify(buffs_voies) });
+        } catch (e) { }
+      });
+    });
   });
 }
 
@@ -12611,6 +12661,7 @@ seq(9).forEach(path => {
   // Update all ranks attribute
   on(`change:rang_voie${path} change:${ abilityInfo({ path }).rankBase }`, function () {
     updateAllRanks(path);
+    updateBuffsByRank(path);
   });
 
   on(`change:${ abilityInfo({ path }).pathName }`, function () {
@@ -13059,37 +13110,52 @@ on("change:repeating_buffs remove:repeating_buffs", function () {
  * @param {string} attribute - attribute name 
  */
 function parseBuffList(attribute) {
-  getAttrs([ `${attribute}_buff_list`, ...SWData.PC.BUFFS.From, "noms_voies" ], function(values) {
+  getAttrs([ 
+    `${attribute}_buff_list`,
+    ...SWData.PC.BUFFS.From,
+    "noms_voies",
+    "buffs_voies"
+  ], function(values) {
     const [ buff ] = Object.keys(values);
     const buffList = strval(values[buff]).split("; ");
     const allRanks = getPathRanks(values.rangs_voies);
+    let pathBuffs;
+    try {
+      pathBuffs = JSON.parse(strval(values.buffs_voies, "{}"));
+    } catch (e) { }
     let buffTotal = 0;
     buffList.forEach(buff => {
-      if (buff.trim() === "")
+      buff = buff.trim();
+      if (buff === "")
         return;
       let value = 0;
-      const expression = strval(buff.split(":")[1]).trim();
-      const attrBuff = SWData.PC.BUFFS.From.find(a => `[${a}]` === expression.toLowerCase());
-      if (attrBuff) {
-        value = intval(values[attrBuff]);
+      let expression = strval(buff.split(":")[1]).trim();
+      if (pathBuffs && Object.keys(pathBuffs).map(k => `[${k}]`).includes(expression)) {
+        expression = expression.replace("[", "").replace("]", "");
+        value = pathBuffs[expression] || 0;
       } else {
-        let result = expression.match(/\[rang[ ]*voie[ ]*([1-9])\][ ]*\+?[ ]*([0-9]*)?/i);
-        if (!result)
-          result = expression.match(/\[rang[ ]*(.*)\][ ]*\+?[ ]*([0-9]*)?/i);
-        if (result) {
-          const [ matched, path, bonus ] = result;
-          let pathNumber = intval(path);
-          if (pathNumber === 0) {
-            pathNumber = findPathByName("rang " + path, getPathNames(values.noms_voies));
-          }
-          if (matched && pathNumber > 0)
-            value = allRanks[pathNumber - 1];
-          if (bonus)
-            value += intval(bonus);
+        const attrBuff = SWData.PC.BUFFS.From.find(a => `[${a}]` === expression.toLowerCase());
+        if (attrBuff) {
+          value = intval(values[attrBuff]);
         } else {
-          value = intval(expression);
+          let result = expression.match(/\[rang[ ]*voie[ ]*([1-9])\][ ]*\+?[ ]*([0-9]*)?/i);
+          if (!result)
+            result = expression.match(/\[rang[ ]*(.*)\][ ]*\+?[ ]*([0-9]*)?/i);
+          if (result) {
+            const [ matched, path, bonus ] = result;
+            let pathNumber = intval(path);
+            if (pathNumber === 0) {
+              pathNumber = findPathByName("rang " + path, getPathNames(values.noms_voies));
+            }
+            if (matched && pathNumber > 0)
+              value = allRanks[pathNumber - 1];
+            if (bonus)
+              value += intval(bonus);
+          } else {
+            value = intval(expression);
+          }
         }
-      } 
+      }
       buffTotal += value;
     });
     setAttrs({ [`${attribute}_buff`]: buffTotal });
@@ -16484,14 +16550,14 @@ on("clicked:token_min-btn clicked:token_max-btn clicked:token_siz-btn clicked:to
     if (resize !== "") {
       props = { scale: "*" + resize };
     } else {
-      props = { bar2_link: "def" };
+      props = { bar2_link: "def", bar4_link: "vitesse_cases" };
       if (isNPC) {
-        props = { ...props, bar3_link: "", bar3: "@{PVIG}" };
+        props = { ...props, bar3_link: "", bar3: "@{pv}" };
       } else {
-        props = { ...props, bar3_link: "PVIG" };
+        props = { ...props, bar3_link: "pv" };
+        if (intval(values.pm_max) > 0)
+          props = { ...props, bar1_link: "pm" };
       }
-      if (!isNPC && intval(values.pm_max) > 0)
-        props = { ...props, bar1_link: "pm" };
     }
     sendChatCmd(tokenMod(strval(values.character_name), props));
   });
