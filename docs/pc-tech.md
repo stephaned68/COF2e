@@ -138,6 +138,9 @@ Les attributs ci-dessous sont rechargés à chaque fois que la fiche de personna
 - <kbd>noms_rangs</kbd> : liste des rangs dans les voies, sous forme de JSON sérialisé 
 
 <kbd>[ { id: "v#r#", rank: "nom de la capacité", path: "nom de la voie" }, ... ]</kbd>
+- <kbd>buffs_voies</kbd> : liste des valeurs de buffs selon le rang atteint dans les voies
+
+<kbd>{ voieN_buff_xxx: valeur, }</kbd>
 
 Les attributs ci-dessous servent à déterminer les effets de certaines capacités qui évoluent quand un certain rang est atteint dans d'autres voies du même profil (ex : attaque sournoise du voleur). Ils sont également rechargés à chaque fois que la fiche de personnage est ouverte :
 

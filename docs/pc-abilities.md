@@ -74,6 +74,7 @@ Les propriétés suivantes peuvent être appliquées aux capacités :
   Le texte de la capacité doit comporter le marqueur <kbd>&#123;&#123;selonRang&#125;&#125;</kbd> pour que la fiche y insère la valeur dépendant du rang atteint.
 
 - <kbd>epic:</kbd> suivi d'un espace pour identifier la capacité comme épique.
+- <kbd>buff: xxx:[valeur1,valeur2,valeur3,valeur4,valeur5]</kbd> permet de spécifier un buff qui évolue selon le rang atteint dans la voie. 
 
 ### Exemples :
 
@@ -83,9 +84,15 @@ Les propriétés suivantes peuvent être appliquées aux capacités :
 
 - Paramétrer la capacité _Arc de feu_ de la voie de la _Magie destructrice_ avec son évolution au rang 4 :
 
-  Paramètre : <kbd>selonRang: 1d4°,1d4°,1d4°,2d4°,2d4°</kbd>
+  Propriété : <kbd>selonRang: 1d4°,1d4°,1d4°,2d4°,2d4°</kbd>
 
   Description : _Des flammes jaillissent des doigts tendus du magicien. Jusqu’à 3 cibles au contact subissent [{{selonRang}}+INT] DM, les cibles peuvent faire un test d’AGI difficulté [10 + INT] pour ne subir que la moitié des DM_
+
+- Paramétrer le buff à la DEF octroyé par la capacité Peau de pierre selon le rang atteint dans la voie du pagne renseignée en voie n°3
+
+  Propriété : <kbd>buff: def:[0,1,1,2,2]</kbd>
+
+  Cette propriété crée une valeur nommée <kbd>voie3_buff_def</kbd>. Cette valeur change selon le rang atteint dans la voie n°3 en utilisant l'énumération indiquée entre <kbd>[]</kbd> : 0 au rang 1, 1 au rang 2, 2 à partir du rang 4. Cette valeur peut être indiquée comme une référence d'attribut dans une ligne de buff en spécifiant <kbd>[voie3_buff_def]</kbd>.
 
 ## Capacités épiques
 
