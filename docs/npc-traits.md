@@ -60,7 +60,7 @@ Des paramètres optionnels peuvent être ajoutés :
   - <kbd>reroll1</kbd> : le dé de DM est relancé jusqu'à ce que son résultat soit supérieur à 1
   - <kbd>reroll1:1</kbd> : si le résultat initial est égal à 1, le dé de DM est relancé une seule fois
   - <kbd>poudre</kbd> : l'arme explose et inflige 1d4° DM à l'utilisateur s'il ne maîtrise pas les armes à poudre
-  - <kbd>jet:N</kbd> : le Nième jet de la liste des capacités est envoyé dans le chat Roll20 en même temps que le jet d'attaque
+  - <kbd>jet:N</kbd> : le Nième jet de la liste du sous-onglet _Capacités_ est envoyé dans le chat Roll20 en même temps que le jet d'attaque. Vous pouvez ainsi gérer les attaques qui demandent un jet pour toucher contre la Défense de la cible mais ne font pas de DM classiques.
 
 - Options d'attaques avec arguments : ce paramètre est principalement utilisé par le script **COFantasy2**.
   
@@ -72,9 +72,7 @@ Des paramètres optionnels peuvent être ajoutés :
 
 Un clic sur le bouton d20 permet de lancer le jet d'attaque et de DM dans le chat en tenant compte des divers paramètres. Si la case d'attaques multiples est cochée et que le nom de l'attaque contient le motif <kbd>(n attaques)</kbd>, le nombre n de jets d'attaque est effectué.
 
-Le texte d'effet spécial est traité par la fiche pour substituer les jets en ligne comme décrit pour la description des [capacités des PJs]({{ site.baseurl }}/pc-abilities). 
-
-Il est également possible d'indiquer dans ce champ une référence à une ligne dans le sous-onglet _Capacités_ sous la forme <kbd>jet:N</kbd> où N est le numéro de la ligne souhaitée. La description de la capacité en question s'affiche dans le chat Roll20 avec l'attaque. Ceci est utile pour les attaques qui demandent un jet pour toucher contre la Défense de la cible mais ne font pas de DM classiques.
+Le texte d'effet spécial est traité par la fiche pour substituer les jets en ligne comme décrit pour la description des [capacités des PJs]({{ site.baseurl }}/pc-abilities).
 
 Le bouton d20 de l'attaque peut être épinglé dans la barre d'actions de Roll20 par glisser-déposer.
 

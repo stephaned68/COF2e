@@ -26,6 +26,9 @@ ou héroïque, H = supérieure et héroïque)
 - <kbd>atkmag_base</kbd> : base attaque magique
 - <kbd>atkmag_buff</kbd> : buffs attaque magique
 - <kbd>atkmag</kbd> : score d'attaque magique
+- <kbd>vitesse</kbd> : vitesse en mètres
+- <kbd>vitesse_cases</kbd> : vitesse en cases (1,5m = 1 case)
+- <kbd>vitesse_pas</kbd> : vitesse en pas (1,5m = 5 pas)
 
 ## Vigueur
 
