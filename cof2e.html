@@ -726,6 +726,9 @@
               </div>
             </div>
 
+            <!-- DEPLACEMENT, SENS -->
+            <h4 class="m2">Déplacement, Sens</h4>
+
             <div class="speed">
               <div class="block-title">Déplacement</div>
               <div class="bordered">
@@ -734,6 +737,19 @@
                 <input type="number" class="two-digits" name="attr_vitesse" title="@{vitesse} Vitesse de déplacement&#10;1 case = 1,5m = 5 pas" value="10">&nbsp;m&nbsp;
                 (cases : <span name="attr_vitesse_cases" title="Vitesse en cases"></span>,
                 pas : <span name="attr_vitesse_pas" title="Vitesse en pas"></span>)
+              </div>
+            </div>
+
+            <div class="speed">
+              <div class="block-title">Sens</div>
+              <div class="bordered">
+                <div class="d-flex">
+                  &nbsp;<input type="text" name="attr_sens" list="senses-list" title="@{sens}" placeholder="Sens spéciaux">
+                  <datalist id="senses-list">
+                    <option>Lumière des étoiles</option>
+                    <option title="portée 30 m">Vision dans le noir</option>
+                  </datalist>
+                </div>
               </div>
             </div>
 
@@ -1250,7 +1266,7 @@
                   </div>
                   <div class="bordered">
                     <input type="checkbox" name="attr_arme-active" title="@{arme-active} Attaque active" value="1" checked>
-                    <input type="text" name="attr_arme-atkmods" placeholder="Modificateurs d'attaque" title="@{arme-atkmods} Modificateurs séparés par des virgules&#10; deBonus: avec dé bonus&#10; deMalus: avec dé malus&#10; auto: réussite automatique&#10; choc: peut faire des attaques non léthales sans malus&#10; explodeMax: dés de dégâts explosifs&#10; pasDeDmg: l'attaque ne fait pas de DM&#10; poudre: arme à poudre&#10; reroll1: relance les 1 sur les dés de DM (:1 = une seule fois)&#10; tempDmg: fait toujours des attaques non léthales&#10; zone: sort de zone&#10; magie: bonus att.+DM&#10; magieAtt: bonus att.&#10; magieDmg: bonus DM&#10; affutee: critiques améliorés&#10; fleau: bonus DM contre créature&#10; element: bonus DM élémentaires/substance" value="">
+                    <input type="text" name="attr_arme-atkmods" placeholder="Modificateurs d'attaque" title="@{arme-atkmods} Modificateurs séparés par des virgules&#10; deBonus: avec dé bonus&#10; deMalus: avec dé malus&#10; auto: réussite automatique&#10; choc: peut faire des attaques non léthales sans malus&#10; explodeMax: dés de dégâts explosifs&#10; pasDeDmg: l'attaque ne fait pas de DM&#10; poudre: arme à poudre&#10; reroll1: relance les 1 sur les dés de DM (:1 = une seule fois)&#10; tempDmg: fait toujours des attaques non léthales&#10; zone: sort de zone&#10; magie: bonus att.+DM&#10; magieAtt: bonus att.&#10; magieDmg: bonus DM&#10; affutee: critiques améliorés&#10; fleau: bonus DM contre créature&#10; element: bonus DM élémentaires/substance&#10; manoeuvres: attaques spéciales" value="">
                   </div>
                   <div class="bordered">
                     <textarea class="one-row" name="attr_arme-options" placeholder="Options d'attaque" title="@{arme-options} Options d'attaque"></textarea>
@@ -7670,6 +7686,61 @@ const SWData = {
         "def_cond",
         "def_buff",
         "def_action"
+      ],
+      maneuvers: [
+        { 
+          name: "Distraire (CHA:{{cha}})",
+          mod: "{{cha}}",
+          effect: `La cible subit un malus de ‑10 à tous ses tests de PER et ‑5 en DEF pendant 1 round.
+          Elle est considérée comme surprise pour les attaques sournoises`
+        },
+        { 
+          name: "Gêner",
+          mod: "-",
+          effect: `Au choix, la cible est ralentie (une seule action M ou A) ou elle subit ‑5 en attaque pendant 1 round.`
+        },
+        { 
+          name: "Repousser",
+          mod: "-",
+          effect: `La cible recule de [FOR attaquant + 3] mètres et l’attaquant occupe le terrain libéré.
+          Si la cible est acculée (mur, précipice, adversaire), elle perd autant en DEF pour 1 round.
+          Cette action peut être précédée d’un déplacement de 10 m en direction de la cible.`
+        },
+        { 
+          name: "Bloquer",
+          mod: "-5",
+          effect: `La cible est immobilisée pendant 1 round (dé malus en attaque et pas de déplacement).
+          Contre une créature de NC inférieur au niveau de l’attaquant, ce dernier peut maintenir sa prise à chaque round qui suit en emportant un test opposé de FOR (action limitée, modifiée en cas de différence de taille).`
+        },
+        { 
+          name: "Désarmer",
+          mod: "-5",
+          effect: `La cible laisse tomber son arme au sol. 
+          Elle peut la ramasser avant tout le monde en sacrifiant son prochain tour (elle n’agira pas).`
+        },
+        { 
+          name: "Aveugler",
+          mod: "-5",
+          effect: `La cible est aveuglée pendant 1 round (‑5 en attaque au contact et en DEF, ‑10 contre une cible à distance).`
+        },
+        {
+          name: "Renverser",
+          mod: "-5",
+          effect: `La cible est renversée (‑5 en DEF et action d’attaque pour se relever). 
+          Cette action peut être précédée d’un déplacement de 10 m en direction de la cible.`
+        },
+        { 
+          name: "Renverser (quad.:-10)",
+          mod: "-10",
+          effect: `La cible est renversée (‑5 en DEF et action d’attaque pour se relever). 
+          Cette action peut être précédée d’un déplacement de 10 m en direction de la cible.`
+        },
+        { 
+          name: "Etourdir",
+          mod: "-10",
+          effect: `La cible est étourdie pendant 1 round (pas d’action et ‑5 en DEF). 
+          Si cette manoeuvre est réussie contre une cible surprise de NC inférieur au niveau de l’attaquant, elle doit réussir un test de CON difficulté 10 (15 si l’attaquant utilise une arme contondante) ou être assommée (inconsciente) pour 1d6 min.`
+        },
       ]
     },
     BUFFS: {
@@ -9210,7 +9281,7 @@ function diceRoll(roll) {
   } else {
     max = roll.dice[0];
   }
-  if (roll.expression.includes("2d20kl1"))
+  if (roll.expression && roll.expression.includes("2d20kl1"))
     return min;
   return max;
 }
@@ -9251,6 +9322,13 @@ function sendChatMsg(msg, options) {
       updates.set("last_rolls", last_rolls);
 
     const computed = {};
+
+    if (roll.results.roll) {
+      const rx = "\\[(" + SWData.PC.COMBAT.maneuvers.map(mn => mn.name.split(" ")[0]).join("|") + ")\\]\\)";
+      const match = roll.results.roll.expression.match(rx);
+      if (match)
+        updates.set("last_maneuver", `${ cleanText(match[1]) }|${roll.rollId}`); // make it unique
+    }
 
     // check TN
     const rollTN = intval(options.rollTN);
@@ -10699,7 +10777,8 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
       attack,
       "cfg_1attack_roll", "cfg_shadow", "pc",
       "condition_affaibli", "condition_immobilise",
-      ...luckButtonAttrs()
+      ...luckButtonAttrs(),
+      "cha"
       ], function (values) {
       const atkBonus = `${ displayMod(values[attack]) }`;
       const useOneRoll = boolval(values.cfg_1attack_roll);
@@ -10711,7 +10790,10 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
       let shadow = shadowValue(values);
       if (shadow.value > 0)
         tags.push(shadow.tag);
-      const atkRoll = `[[${roll}cs20cf1[Dé] + @{${attack}}[Bonus]${shadow.malus} ]]`;
+      const maneuvers = ([ "atkcac", "atktir" ].includes(attack)) 
+      ? maneuversRollQuery(intval(values.cha)) 
+      : "";
+      const atkRoll = `[[${roll}cs20cf1[Dé] + @{${attack}}[Bonus]${shadow.malus}${maneuvers} ]]`;
       const atkProps = {
         lsub: "Attaque",
         rsub: `${description} *(${atkBonus})*`,
@@ -11587,6 +11669,22 @@ function rangeWithUnits(portee, extra = 0) {
 }
 
 /**
+ * Return the roll query for maneuvers
+ * @param {number} cha - CHA stat value
+ * @returns {string}
+ */
+function maneuversRollQuery(cha) {
+  const maneuvers = SWData.PC.COMBAT.maneuvers.map(mn => {
+    const [ title ] = mn.name.split(" ");
+    mn.name = mn.name.replace("{{cha}}", cha);
+    mn.name += mn.name.includes("(") ? "" : " (" + mn.mod + ")";
+    mn.mod = mn.mod.replace("{{cha}}", cha);
+    return `${mn.name},[[${ mn.mod === "-" ? "0" : mn.mod }]][${title}]`;
+  }).join("|");
+  return " +(?{Manoeuvre ?|Aucune,0|" + maneuvers + "})";
+}
+
+/**
  * Roll an attack in chat
  */
 on("clicked:repeating_armes:attack-btn", function(eventInfo) {
@@ -11624,7 +11722,7 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
     "cfg_use_ammo", "cfg_usure",
     "cfg_lowfan", "cfg_shadow", "pc",
     "atkcac", "atktir", "atkmag",
-    "agi_dsup", "per_dsup",
+    "agi_dsup", "per_dsup", "cha",
     "bouclier_eqp",
     "condition_affaibli", "condition_immobilise",
     ...fearConditionsAttrs(),
@@ -11816,10 +11914,13 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
     // Valeur d'Ombre
     const shadow = shadowValue(values);
 
+    // Manoeuvres
+    const maneuvers = modifiers.includes("manoeuvres") ? maneuversRollQuery(intval(values.cha)) : "";
+
     // Attack roll
     let attack = "";
     if (atk !== "0")
-      attack = `[[${roll}cs>${crit}cf${fumble}[Dé] + @{${atk}}[Bonus]${magicHit}${fear}${shadow.malus} + ${atkdiv}[Divers]${allAtkBuffs}${tacticBonus}${modSit} ]]`;
+      attack = `[[${roll}cs>${crit}cf${fumble}[Dé] + @{${atk}}[Bonus]${magicHit}${fear}${shadow.malus} + ${atkdiv}[Divers]${allAtkBuffs}${tacticBonus}${modSit}${maneuvers} ]]`;
     
     // Damage roll
     let [ dm, ...dmextra ] = strval(values[section + "dm"]).split(" ");
@@ -12072,6 +12173,23 @@ on("change:usure_check", function() {
       setAttrs(Object.fromEntries(updates));
     }
 
+  });
+});
+
+/**
+ * Display effects of last maneuver used
+ */
+on("change:last_maneuver", function () {
+  getAttrs([ "last_maneuver" ], function(values) {
+    const [ maneuver ] = strval(values.last_maneuver).split("|");
+    const found = SWData.PC.COMBAT.maneuvers.find(mn => maneuver === cleanText(mn.name.split(" ")[0]));
+    if (found) {
+      sendChatMsg(rollTemplate({
+        lsub: "Manoeuvre",
+        rsub: found.name.split(" ")[0],
+        text: found.effect,
+      }), { whisper: "gm" });
+    }
   });
 });
 
