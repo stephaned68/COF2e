@@ -46,6 +46,8 @@ Pour les boutons de jets d'attaque, le jet de dé effectué dépend des circonst
 - Un jet de d20 avec _dé malus_ en cas d'état _Affaibli_,
 - Deux jets de d20 sinon. Dans le cas général (jet normal), prenez en compte le premier jet affiché. Prenez le plus élevé des deux jets si le PJ bénéficie d'un _dé bonus_ ou le moins élevé s'il subit un _dé malus_.
 
+Lorsque les boutons des jets d'attaque au contact et à distance sont cliqués, la fiche propose d'utiliser l'une des manoeuvres spéciales dans un popup Roll20 et applique le modificateur correspondant au résultat du jet. Les effets de la manoeuvre sont chuchotés dans le chat Roll20.
+
 # Déplacement et sens
 
 Cette section permet d'indiquer la vitesse de déplacement et les sens spéciaux du personnage.
@@ -143,7 +145,7 @@ Des paramètres optionnels peuvent être ajoutés :
   - <kbd>affutee</kbd> pour réduire de 1 le seuil de critique et ajouter 1d4° DM en cas de coup critique
   - <kbd>element xxx [intense]</kbd> suivi d'un nom d'élément/substance xxx : ajoute une ligne de 1d4° DM élémentaires (2d4° si le nom de l'élément est suivi d'un espace et du mot <kbd>intense</kbd>)
   - <kbd>fleau xxx</kbd> suivi du nom d'un type de créature xxx : Roll20 demande confirmation lors de l'attaque et une ligne de 1d4° DM est ajoutée si la créature ciblée est du même type
-  - <kbd>manoeuvres</kbd> : l'attaque propose de choisir une des 8 manoeuvres possibles (cf règles page 217) et d'appliquer le modificateur correspondant au jet pour toucher. La description des effets de la manouuvre s'affiche dans le chat Roll20. 
+  - <kbd>manoeuvres</kbd> : l'attaque propose de choisir une des 8 manoeuvres possibles (cf règles page 217) et d'appliquer le modificateur correspondant au jet pour toucher. La description des effets de la manoeuvre sont chuchotés dans le chat Roll20.
 
 - Options d'attaques avec arguments :
   
