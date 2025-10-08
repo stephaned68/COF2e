@@ -46,6 +46,14 @@ Pour les boutons de jets d'attaque, le jet de dé effectué dépend des circonst
 - Un jet de d20 avec _dé malus_ en cas d'état _Affaibli_,
 - Deux jets de d20 sinon. Dans le cas général (jet normal), prenez en compte le premier jet affiché. Prenez le plus élevé des deux jets si le PJ bénéficie d'un _dé bonus_ ou le moins élevé s'il subit un _dé malus_.
 
+# Déplacement et sens
+
+Cette section permet d'indiquer la vitesse de déplacement et les sens spéciaux du personnage.
+
+La vitesse de base est exprimée en mètres par round, et la fiche calcule automatiquement l'équivalent en nombre de cases et en pas (pieds). Les approximations adoptées sont de 1 case = 1,5 m = 5 pas (échelles les plus courantes). Il n'est pas possible pour la fiche de retrouver l'échelle de la carte actuellement affichée.
+
+Les sens spéciaux proposés par défaut sont _Lumière des étoiles_ et _Vision dans le noir_ mais il est possible de saisir autre chose.
+
 # Vigueur
 
 Dans cette section, on trouve :
@@ -133,8 +141,9 @@ Des paramètres optionnels peuvent être ajoutés :
   - <kbd>magieAtt X</kbd> suivi de la valeur X du bonus magique au jet pour toucher
   - <kbd>magieDmg X</kbd> suivi de la valeur du bonus magique aux DM (peut être un jet de dé)
   - <kbd>affutee</kbd> pour réduire de 1 le seuil de critique et ajouter 1d4° DM en cas de coup critique
-  - <kbd>element xxx [intense]</kbd> suivi d'un nom d'élément/substance xxx pour ajouter une ligne de 1d4° DM élémentaires (2d4° si le nom de l'élément est suivi d'un espace et du mot <kbd>intense</kbd>)
-  - <kbd>fleau xxx</kbd> suivi du nom d'un type de créature xxx pour que Roll20 demande confirmation lors de l'attaque et qu'une ligne de 1d4° DM soit ajoutée si la créature ciblée est du même type
+  - <kbd>element xxx [intense]</kbd> suivi d'un nom d'élément/substance xxx : ajoute une ligne de 1d4° DM élémentaires (2d4° si le nom de l'élément est suivi d'un espace et du mot <kbd>intense</kbd>)
+  - <kbd>fleau xxx</kbd> suivi du nom d'un type de créature xxx : Roll20 demande confirmation lors de l'attaque et une ligne de 1d4° DM est ajoutée si la créature ciblée est du même type
+  - <kbd>manoeuvres</kbd> : l'attaque propose de choisir une des 8 manoeuvres possibles (cf règles page 217) et d'appliquer le modificateur correspondant au jet pour toucher. La description des effets de la manouuvre s'affiche dans le chat Roll20. 
 
 - Options d'attaques avec arguments :
   
