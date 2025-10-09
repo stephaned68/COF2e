@@ -46,7 +46,7 @@ Pour les boutons de jets d'attaque, le jet de dé effectué dépend des circonst
 - Un jet de d20 avec _dé malus_ en cas d'état _Affaibli_,
 - Deux jets de d20 sinon. Dans le cas général (jet normal), prenez en compte le premier jet affiché. Prenez le plus élevé des deux jets si le PJ bénéficie d'un _dé bonus_ ou le moins élevé s'il subit un _dé malus_.
 
-Lorsque les boutons des jets d'attaque au contact et à distance sont cliqués, la fiche propose d'utiliser l'une des manoeuvres spéciales dans un popup Roll20 et applique le modificateur correspondant au résultat du jet. Les effets de la manoeuvre sont chuchotés dans le chat Roll20.
+Une icône en forme d'éclair à côté du mot Combat permet d'activer ou désactiver les maneouvres. Lorsque les boutons des jets d'attaque au contact et à distance sont cliqués, la fiche propose alors d'utiliser l'une des manoeuvres spéciales dans un popup Roll20 et applique le modificateur correspondant au résultat du jet. Les effets de la manoeuvre sont chuchotés au MJ dans le chat Roll20.
 
 # Déplacement et sens
 
