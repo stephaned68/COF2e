@@ -17,7 +17,7 @@ v1.9.0 [Screenshot](cof2e.png)
 - Ajout d'une section dépliante pour les RD et Résistances aux DM sur la fiche de PNJ
 - Ajout d'attributs vitesse pour les déplacements
 - Prise en charge des valeurs de buffs qui changent à certains rangs dans une voie
-
+- Prise en charge des manoeuvres spéciales dans les jets d'attaque
 
 ### Version _1.9.0_ (2025-09-28)
 
