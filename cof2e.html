@@ -625,7 +625,13 @@
           <div class="attacks">
 
             <div class="attack">
-              <h4>Combat</h4>
+              <h4>
+                Combat
+                <input type="hidden" class="attack-maneuvers" name="attr_manoeuvre" value="1">
+                <button type="action" class="flat-btn img-btn attack-maneuvers" name="act_maneuver-btn" title="@{manoeuvre} Manoeuvres (L)">
+                  <span class="img-btn">e</span>
+                </button>
+              </h4>
               <h4>Base</h4>
               <h4>Mod.</h4>
               <h4>Div.</h4>
@@ -10778,7 +10784,7 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
       "cfg_1attack_roll", "cfg_shadow", "pc",
       "condition_affaibli", "condition_immobilise",
       ...luckButtonAttrs(),
-      "cha"
+      "manoeuvre", "cha"
       ], function (values) {
       const atkBonus = `${ displayMod(values[attack]) }`;
       const useOneRoll = boolval(values.cfg_1attack_roll);
@@ -10790,7 +10796,7 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
       let shadow = shadowValue(values);
       if (shadow.value > 0)
         tags.push(shadow.tag);
-      const maneuvers = ([ "atkcac", "atktir" ].includes(attack)) 
+      const maneuvers = (boolval(values.manoeuvre) && [ "atkcac", "atktir" ].includes(attack)) 
       ? maneuversRollQuery(intval(values.cha)) 
       : "";
       const atkRoll = `[[${roll}cs20cf1[Dé] + @{${attack}}[Bonus]${shadow.malus}${maneuvers} ]]`;
@@ -10806,6 +10812,16 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
       const chatMsg = rollTemplate(atkProps, { tags });
       sendChatMsg(chatMsg);
     });
+  });
+});
+
+/** 
+ * Enable / Disable attack maneuvers
+ */
+on("clicked:maneuver-btn", function() {
+  getAttrs([ "manoeuvre" ], function (values) {
+    const manoeuvre = 1 - intval(values.manoeuvre);
+    setAttrs({ manoeuvre });
   });
 });
 

@@ -900,12 +900,19 @@ input[value="0"].spell-concentration-show ~ button.spell-concentration {
   display: none;
 }
 
+button.attack-maneuvers,
 button.spell-concentration {
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;
 }
 
+button.attack-maneuvers span,
+button.spell-concentration span {
+  font-weight: bolder;
+}
+
+.pc-main-tab input[value="1"].attack-maneuvers ~ button.attack-maneuvers,
 .pc-abilities-tab input[value="1"].spell-concentration ~ button.spell-concentration {
   background-color: orange;
 }
