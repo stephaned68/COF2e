@@ -221,14 +221,29 @@
         <div class="identity-row">
           <div><strong>Type</strong></div>
           <div>
-            <input type="text" name="attr_creature" title="@{creature}" value="">
+            <input type="text" name="attr_creature" list="creature-type" title="@{creature}" value="">
+            <datalist id="creature-type">
+              <option>Créature vivante</option>
+              <option>Créature humanoïde</option>
+              <option>Créature végétative</option>
+              <option>Créature non vivante</option>
+            </datalist>
           </div>
         </div>
 
         <div class="identity-row">
           <div><strong>Taille</strong></div>
           <div>
-            <input type="text" name="attr_taille" title="@{taille}" value="">
+            <input type="text" name="attr_taille" list="size-list" title="@{taille}" value="">
+            <datalist id="size-list">
+              <option>Minuscule</option>
+              <option>Très petite</option>
+              <option>Petite</option>
+              <option>Moyenne</option>
+              <option>Grande</option>
+              <option>Enorme</option>
+              <option>Colossale</option>
+            </datalist>
           </div>
         </div>
 
@@ -4854,6 +4869,10 @@
                 <input type="checkbox" name="attr_cfg_pts_capas" value="1">
                 <span>Contrôle des points de capacités</span>
               </li>
+              <!--<li>
+                <input type="checkbox" name="attr_cfg_target" value="1">
+                <span>Demander la cible des jets d'attaque</span>
+              </li>-->
             </ul>
 
             <h4>Affichage</h4>
@@ -5493,6 +5512,7 @@
                     <li>Ajout d'attributs vitesse pour les déplacements</li>
                     <li>Prise en charge des valeurs de buffs qui changent à certains rangs dans une voie</li>
                     <li>Prise en charge des manoeuvres spéciales dans les jets d'attaque</li>
+                    <li>Ajout de listes de tailles et de type de créatures sur la fiche de PNJ</li>
                   </ul>
                 </details>
               </li>
@@ -7312,7 +7332,30 @@ const SWData = {
       "cfg_atk_diff",
       "cfg_usure",
       "cfg_use_fear"
-    ]
+    ],
+    tokens: {
+      size: 70,
+      PC: {
+        bar1: "",
+        bar1_link: "pm",
+        bar2: "",
+        bar2_link: "def", 
+        bar3: "",
+        bar3_link: "pv",
+        bar4: "",
+        bar4_link: "vitesse_cases",
+      },
+      NPC: {
+        bar1: "",
+        bar1_link: "", 
+        bar2: "",
+        bar2_link: "def",
+        bar3: "@{pv}",
+        bar3_link: "",
+        bar4: "",
+        bar4_link: "vitesse_cases"
+      }
+    }
   },
   SHEET_TYPE: {
     PC: "pc",
@@ -15930,7 +15973,7 @@ function statBlockFromPDF(statblock) {
       if (match) {
         const type = strval(match[1]);
         if (type !== "")
-          npcAttrs.set("creature", "CRÉATURE " + type);
+          npcAttrs.set("creature", "Créature " + type.toLowerCase());
       }
 
       // size
@@ -15938,7 +15981,7 @@ function statBlockFromPDF(statblock) {
       if (match) {
         const taille = strval(match[1]);
         if (taille !== "")
-          npcAttrs.set("taille", taille);
+          npcAttrs.set("taille", taille.toLowerCase());
       }
 
       // défense
@@ -16673,7 +16716,7 @@ on("change:pvig_max", function(eventInfo) {
  * On clicking token adjust buttons (TokenMod)
  */
 on("clicked:token_min-btn clicked:token_max-btn clicked:token_siz-btn clicked:token_def-btn", function(eventInfo) {
-  getAttrs([ "sheet_type", "character_name", "pm_max" ], function(values) {
+  getAttrs([ "sheet_type", "character_name", "pm_max", "taille" ], function(values) {
     const bt = strval(eventInfo.triggerName.split("_")[1]);
     const resize = strval(({
       "min-btn": "0.9",
@@ -16685,13 +16728,22 @@ on("clicked:token_min-btn clicked:token_max-btn clicked:token_siz-btn clicked:to
     if (resize !== "") {
       props = { scale: "*" + resize };
     } else {
-      props = { bar2_link: "def", bar4_link: "vitesse_cases" };
+      const tk = SWData.settings.tokens;
+      Object.entries(tk[strval(values.sheet_type)]).forEach(([k, v]) => {
+        if (v !== "pm" || intval(values.pm_max) > 0)
+          props[k] = v;
+      });
       if (isNPC) {
-        props = { ...props, bar3_link: "", bar3: "@{pv}" };
-      } else {
-        props = { ...props, bar3_link: "pv" };
-        if (intval(values.pm_max) > 0)
-          props = { ...props, bar1_link: "pm" };
+        let tokenSize;
+        const size = strval(values.taille);
+        if (size !== "") {
+          tokenSize = ({
+            "Minuscule": tk.size * 0.5, "Très petite": tk.size * 0.5,
+            "Petite": tk.size, "Moyenne": tk.size,
+            "Grande": tk.size * 2, "Énorme": tk.size * 3, "Colossale": tk.size * 4
+          })[size] || 70;
+        }
+        props = { ...props, width: tokenSize, height: tokenSize };
       }
     }
     sendChatCmd(tokenMod(strval(values.character_name), props));
