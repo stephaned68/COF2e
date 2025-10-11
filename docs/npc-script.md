@@ -32,7 +32,7 @@ Les lignes vides ou commençant par <kbd>//</kbd> (pour insérer un texte de com
 
 La fiche COF2 peut interagir avec d'autres scripts MOD disponibles dans la bibliothèque Roll20.
 
-Il est nécessaire de disposer d'un compte payant <strong>Pro</strong> pour pouvoir utiliser les scripts MOD.
+Il est nécessaire de disposer d'un compte payant **Pro** pour pouvoir utiliser les scripts MOD.
 
 ### TokenMod
 
@@ -41,6 +41,7 @@ Ce script permet de modifier les propriétés d'un token grâce à des commandes
 Lorsque le script est activé, trois boutons sont affichés sous le token du PNJ dans l'entête de la fiche.
 - <kbd>-</kbd> permet de diminuer la taille du token de 10%
 - <kbd>🗸</kbd> permet de lier les barres du token aux attributs de la fiche (cf Liaison par défaut)
+- <kbd>⤧</kbd> permet d'appliquer un coefficient multiplicateur à la taille actuelle du token
 - <kbd>-</kbd> permet d'augmenter la taille du token de 10%
 
 D'autres options peuvent être activées :
@@ -49,12 +50,13 @@ D'autres options peuvent être activées :
 
   La teinte doit être indiquée sous la forme d'un code hexadécimal à 6 caractères (0-9, A-F).
 
-  Ces options ne fonctionnent que pour les PNJs importants qui ont leur propre fiche. Les PNJs de type _mook_ n'ont pas de barre de token liée à l'attribut <kbd>pv</kbd>, uniquement à sa valeur et par conséquent la fiche ne peut détecter que les PV sont tombés à la moitié de leur maxium ou à 0.
+  Ces options ne fonctionnent que pour les PNJs importants qui ont leur propre fiche. Les PNJs de type _mook_ n'ont pas de barre de token liée à l'attribut <kbd>pv</kbd>, uniquement à sa valeur et par conséquent la fiche ne peut détecter que les pertes de PV.
 
 #### Liaison par défaut des barres de tokens
 
 2. 🔵 : Défense
 3. 🔴 : Valeur des points de Vigueur courants/max (mook)
+4. 🟡 : Vitesse en cases (si la partie utilise **Jumpgate**)
 
 ### ChatSetAttr
 
