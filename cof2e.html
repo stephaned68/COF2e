@@ -4869,10 +4869,10 @@
                 <input type="checkbox" name="attr_cfg_pts_capas" value="1">
                 <span>Contrôle des points de capacités</span>
               </li>
-              <!--<li>
-                <input type="checkbox" name="attr_cfg_target" value="1">
-                <span>Demander la cible des jets d'attaque</span>
-              </li>-->
+              <li class="config-check">
+                <input type="checkbox" name="attr_cfg_cible" value="1">
+                <span>Attaques ciblées</span>
+              </li>
             </ul>
 
             <h4>Affichage</h4>
@@ -5513,6 +5513,7 @@
                     <li>Prise en charge des valeurs de buffs qui changent à certains rangs dans une voie</li>
                     <li>Prise en charge des manoeuvres spéciales dans les jets d'attaque</li>
                     <li>Ajout de listes de tailles et de type de créatures sur la fiche de PNJ</li>
+                    <li>Ajout d'une option pour cibler un token lors d'un jet d'attaque</li>
                   </ul>
                 </details>
               </li>
@@ -6455,6 +6456,11 @@
                 <span>Un seul jet d'attaque</span>
               </li>
               
+              <li class="config-check">
+                <input type="checkbox" name="attr_cfg_cible" value="1">
+                <span>Attaques ciblées</span>
+              </li>
+
             </ul>
 
             <h4>Règles optionnelles</h4>
@@ -7150,6 +7156,11 @@
     <span class="sheet-rt sheet-rt-tags">{{tags}}</span>
   </div>
   {{/tags}}
+  {{#tohit}}
+  <div class="sheet-rt sheet-rt-text sheet-rt-centered">
+    <span>Contre **{{target}}**</span>
+  </div>
+  {{/tohit}}
   {{#roll}}
   <div class="sheet-rt sheet-rt-roll">
     <span class="sheet-rt sheet-rt-roll">{{roll}}</span>
@@ -7157,6 +7168,23 @@
     | <span class="sheet-rt sheet-rt-roll">{{broll}}</span>
     {{/broll}}
   </div>
+  {{#tohit}}
+  {{#rollGreater() roll tohit}}
+  <div class="sheet-rt sheet-rt-text sheet-rt-centered">
+    <span class="sheet-rt sheet-rt-hit">SUCCÈS !</span>
+  </div>
+  {{/rollGreater() roll tohit}}
+  {{#rollEqual() roll tohit}}
+  <div class="sheet-rt sheet-rt-text sheet-rt-centered">
+    <span class="sheet-rt sheet-rt-hit">SUCCÈS !</span>
+  </div>
+  {{/rollEqual() roll tohit}}
+  {{#rollLess() roll tohit}}
+  <div class="sheet-rt sheet-rt-text sheet-rt-centered">
+    <span class="sheet-rt sheet-rt-miss">ÉCHEC !</span>
+  </div>
+  {{/rollLess() roll tohit}}
+  {{/tohit}}
   {{/roll}}
   {{#powder}}
     {{#rollWasFumble() roll}}
@@ -10825,7 +10853,8 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
   on(`clicked:${attack}-btn`, function () {
     getAttrs([
       attack,
-      "cfg_1attack_roll", "cfg_shadow", "pc",
+      "cfg_1attack_roll", "cfg_cible",
+      "cfg_shadow", "pc",
       "condition_affaibli", "condition_immobilise",
       ...luckButtonAttrs(),
       "manoeuvre", "cha"
@@ -10849,10 +10878,19 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
         rsub: `${description} *(${atkBonus})*`,
         roll: atkRoll,
         broll: "",
-        chance: addLuckButton(values)
+        chance: addLuckButton(values),
+        tohit: "",
+        target: ""
       };
+      
       if (roll === "1d20" && !useOneRoll)
         atkProps.broll = atkRoll;
+      
+      if (boolval(values.cfg_cible)) {
+        atkProps.tohit = "[[@{target|def}]]"
+        atkProps.target = "@{target|character_name}"
+      }
+      
       const chatMsg = rollTemplate(atkProps, { tags });
       sendChatMsg(chatMsg);
     });
@@ -11777,7 +11815,7 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
   getAttrs([
     "scriptVersion",
     "character_name",
-    "cfg_1attack_roll",
+    "cfg_1attack_roll", "cfg_cible",
     "cfg_crit_diff", "cfg_tbl_crit", "cfg_tbl_fumble",
     "cfg_use_ammo", "cfg_usure",
     "cfg_lowfan", "cfg_shadow", "pc",
@@ -12156,7 +12194,9 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
       crithit: "",
       critfail: "",
       fumbletest: "",
-      fumble: ""
+      fumble: "",
+      tohit: "",
+      target: ""
     };
 
     if (roll === "1d20" && bRoll)
@@ -12172,20 +12212,25 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
       }
     }
 
-    if(rollOptions.critical) {
+    if (rollOptions.critical) {
       atkProps.critsuccess = "[[0]]";
       atkProps.crithit = critHit;
       if (atkProps.broll !== "")
         atkProps.bcritsuccess = "[[0]]";
     }
 
-    if(rollOptions.fumble) {
+    if (rollOptions.fumble) {
       atkProps.critfail = "[[0]]";
       const stat = isRanged(atk, portee) ? "per" : "agi";
       const stat_dsup = `@{${stat}_dsup}`;
       const stat_mod = `@{${stat}}[${ stat.toUpperCase() }]`;
       atkProps.fumbletest = `[[${stat_dsup} + ${stat_mod} ]]`;
       atkProps.fumble = fumbleEffect;
+    }
+
+    if (boolval(values.cfg_cible)) {
+      atkProps.tohit = "[[@{target|def}]]"
+      atkProps.target = "@{target|character_name}"
     }
 
     const chatMsg = rollTemplate(atkProps, { tags: allTags });
@@ -15405,7 +15450,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     ...seq(3).map(t => `cspec${t}_dm`),
   ];
   getAttrs([
-    "cfg_1attack_roll", "cfg_lowfan",
+    "cfg_1attack_roll", "cfg_cible", "cfg_lowfan",
     "cfg_crit_diff", "cfg_tbl_crit", "cfg_tbl_critdie", "cfg_tbl_fumble",
     "character_name", "niveau", "compagnon",
     "atkgroup", "nbgroup", "pnj_tact",
@@ -15692,7 +15737,9 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
         crithit: "",
         critfail: "",
         fumbletest: "",
-        fumble: ""
+        fumble: "",
+        tohit: "",
+        target: ""
       };
       
       if(rollOptions.critical) {
@@ -15707,6 +15754,11 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
         const stat_mod = `@{${stat}}[${ stat.toUpperCase() }]`;
         chatAtk.fumbletest = `[[${stat_dsup} + ${stat_mod} ]]`;
         chatAtk.fumble = fumbleEffect;
+      }
+
+      if (boolval(values.cfg_cible)) {
+        chatAtk.tohit = "[[@{target|def}]]"
+        chatAtk.target = "@{target|character_name}"
       }
 
       if(extraDM.length > 0)

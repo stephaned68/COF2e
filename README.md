@@ -19,6 +19,7 @@ v1.9.0 [Screenshot](cof2e.png)
 - Prise en charge des valeurs de buffs qui changent à certains rangs dans une voie
 - Prise en charge des manoeuvres spéciales dans les jets d'attaque
 - Ajout de listes de tailles et de type de créatures sur la fiche de PNJ
+- Ajout d'une option pour cibler un token lors d'un jet d'attaque
 
 ### Version _1.9.0_ (2025-09-28)
 

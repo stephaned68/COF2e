@@ -1348,6 +1348,10 @@ textarea.migration {
   padding: 5px;
 }
 
+.sheet-rolltemplate-cof2 .sheet-rt-centered {
+  text-align: center;
+}
+
 .sheet-rolltemplate-cof2 .sheet-rt-text span > a.userscript-chat-button:hover {
   color: orange;
 }
@@ -1357,6 +1361,27 @@ textarea.migration {
   color: whitesmoke;
   border-radius: 5px;
   padding: 2px;
+}
+
+.sheet-rolltemplate-cof2 .sheet-rt-hit,
+.sheet-rolltemplate-cof2 .sheet-rt-miss {
+  display: inline-block;
+  background-color: whitesmoke;
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 2px;
+  font-size: 1.1em;
+}
+
+.sheet-rolltemplate-cof2 .sheet-rt-hit {
+  border-color: #198754;
+  color: #198754;
+}
+
+.sheet-rolltemplate-cof2 .sheet-rt-miss {
+  border-color: #dc3545;
+  color: #dc3545;
 }
 
 .sheet-rolltemplate-cof2 .inlinerollresult {
