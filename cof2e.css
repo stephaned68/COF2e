@@ -350,7 +350,6 @@ div.path div.block-title {
 
 .d-flex-between {
   justify-content: space-between;
-  /*align-content: space-between;*/
 }
 
 .d-flex-middle {
@@ -653,20 +652,17 @@ div.change-view {
 }
 
 .pc-attributes .trait details.trait-detail summary,
-/* .pc-luck-rd .luck details.trait-detail summary, */
 .pc-buffs-subtab summary.buffs-detail {
   list-style: none;
 }
 
 .pc-attributes .trait details.trait-detail summary:hover,
-/* .pc-luck-rd .luck details.trait-detail summary:hover, */
 .pc-buffs-subtab summary.buffs-detail:hover {
   color: orange;
   font-weight: bold;
 }
 
 .pc-attributes .trait details[open].trait-detail,
-/* .pc-luck-rd .luck details[open].trait-detail, */
 .pc-attributes .trait span.trait-detail {
   font-size: xx-small;
 }
@@ -809,8 +805,7 @@ input[type="hidden"][value="1"].has-buff + .has-buff {
 
 .pc-attacks .weapon {
   display: grid;
-  /*grid-template-columns: 25px 3fr 3fr 1fr 4.5fr 1fr 3.5fr;*/
-  grid-template-columns: 25px 3fr 2.75fr 1fr 4.25fr 1fr 4fr;
+  grid-template-columns: 25px 5fr 2.5fr 1fr 4fr 1fr;
   gap: 2px;
   margin-bottom: 2px;
 }
@@ -826,10 +821,17 @@ input[type="hidden"][value="1"].has-buff + .has-buff {
 }
 
 .pc-attacks .weapon-option,
-.npc-attacks .weapon-option {
+.pc-attacks .weapon-special,
+.npc-attacks .weapon-option,
+.npc-attacks .weapon-special {
   display: grid;
   gap: 2px;
   margin-bottom: 2px;
+}
+
+.pc-attacks .weapon-special,
+.npc-attacks .weapon-special {
+  grid-template-columns: 25px 1fr;
 }
 
 .pc-attacks .weapon-option {
@@ -1202,7 +1204,7 @@ input[value="0"].show-paths-4to9 ~ div.abilities {
 
 .npc-attacks .weapon {
   display: grid;
-  grid-template-columns: 25px 3.5fr 2fr 1fr 3fr 1fr 5fr;
+  grid-template-columns: 25px 4.5fr 3fr 1fr 3fr 1fr;
   gap: 2px;
   margin-bottom: 2px;
 }

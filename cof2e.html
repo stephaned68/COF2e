@@ -14,7 +14,9 @@
   <!-- Jets -->
   <input type="hidden" name="attr_devol" value="d4">
   <input type="hidden" name="attr_last_rolls" value="">
+  <input type="hidden" name="attr_last_maneuver" value="">
   <input type="hidden" name="attr_usure_check" value="">
+  <input type="hidden" name="attr_next_roll" value="">
 
   <!-- Buffs caracs PJ -->
   <input type="hidden" name="attr_agi_buff" value="0">
@@ -269,7 +271,7 @@
           </button>
           <input type="hidden" name="attr_checkup-btn" value="">
           <button type="action" class="hidden" name="act_checkup-btn"/>
-          <button type="roll" class="flat-btn img-btn" name="roll_checkup" value="@{checkup-btn}">
+          <button type="roll" class="flat-btn img-btn" name="roll_checkup" title="%{checkup-btn} Etat du personnage" value="@{checkup-btn}">
             <span class="img-btn align-self-center">Y</span>
           </button>
         </div>
@@ -289,6 +291,7 @@
   <!-- Fiches -->
   <div class="cofsheet">
     <input type="hidden" class="cof-type-toggle" name="attr_sheet_type" value="pc"/> 
+    <button type="action" class="hidden" name="act_pc_actions-btn"></button>
     <button type="action" class="hidden" name="act_pc_menus-btn"></button>
     <button type="action" class="hidden" name="act_npc_menus-btn"></button>
    
@@ -317,12 +320,12 @@
               <h4>
                 <input type="hidden" name="attr_caract_select-btn" value="">
                 <button type="action" class="hidden" name="act_caract_select-btn"/>
-                <button type="roll" class="flat-btn img-btn" name="roll_caractselect" value="@{caract_select-btn}">
+                <button type="roll" class="flat-btn img-btn" name="roll_caractselect" title="%{caract_select-btn} Choix d'une caractéristique" value="@{caract_select-btn}">
                   Carac
                 </button>
                 <input type="hidden" name="attr_caract_menu-btn" value="">
                 <button type="action" class="hidden" name="act_caract_menu-btn"/>
-                <button type="roll" class="flat-btn img-btn" name="roll_caractmenu" value="@{caract_menu-btn}">
+                <button type="roll" class="flat-btn img-btn" name="roll_caractmenu" title="%{caract_menu-btn} Menu des caractéristiques" value="@{caract_menu-btn}">
                   <span class="img-btn">l</span>
                 </button>
               </h4>
@@ -1175,7 +1178,7 @@
               <h4>CRIT.</h4>
               <h4>DM</h4>
               <h4>PORTEE</h4>
-              <h4>SPECIAL</h4>
+              <!--<h4>SPECIAL</h4>-->
             </div>
 
             <fieldset class="repeating_armes">
@@ -1187,13 +1190,15 @@
                   <button type="action" class="hidden" name="act_attack-btn">
                     <span class="d20-btn">t</span>
                   </button>
-                  <button type="roll" class="flat-btn" name="roll_attack" value="@{attack-btn}"/>
+                  <button type="roll" class="flat-btn" name="roll_attack" title="%{repeating_armes_ID_attack-btn} Jet d'attaque" value="@{attack-btn}"/>
                 </div>
                 <div class="d-flex d-flex-middle bordered">
                   <input type="hidden" name="attr_arme-label" value="">
                   <input type="hidden" class="arme-label" name="attr_arme-showlbl" value="0">
                   <span class="align-self-center arme-label" name="attr_arme-label"></span>&nbsp;
                   <input type="text" name="attr_arme-nom" title="@{arme-nom}" placeholder="Arme/attaque" value="">
+                  <span class="align-self-center">2M&nbsp;:&nbsp;</span>
+                  <input type="checkbox" name="attr_arme-2m" title="@{arme-2m} Arme à deux mains" value="1">
                 </div>
                 <div class="d-flex d-flex-middle bordered">
                   <select class="select-md" name="attr_arme-atk" title="@{arme-atk} Score d'attaque">
@@ -1203,14 +1208,13 @@
                     <option value="atkmag">MAGIE</option>
                   </select>
                   &nbsp;<span class="align-self-center">+</span>&nbsp;
-                  <input type="number" name="attr_arme-atkdiv" title="@{arme-atkdiv} Bonus divers" value="">
+                  <input type="number" class="two-digits" name="attr_arme-atkdiv" title="@{arme-atkdiv} Bonus divers" value="">
                   <input type="hidden" name="attr_arme-buffatk" value="0">
                 </div>
                 <div class="d-flex d-flex-middle bordered">
                   <input type="number" class="two-digits" name="attr_arme-crit" title="@{arme-crit} Seuil de Critique" value="20" min="16" max="20">
                 </div>
                 <div class="d-flex d-flex-middle bordered">
-                  <input type="checkbox" name="attr_arme-2m" title="@{arme-2m} Arme à deux mains" value="1">
                   <input type="text" name="attr_arme-dm" title="@{arme-dm} Dé(s) de DM&#10;Séparer les dés de DM à une main et deux mais par un / pour les armes polyvalentes" placeholder="1d8, 2d6..." value="">
                   <select class="select-xxs" name="attr_arme-dmtype" title="@{arme-dmtype} Type de dommages">
                     <optgroup label="Physiques">
@@ -1252,15 +1256,12 @@
                     <option value="@{vol}">VOL</option>
                   </select>
                   &nbsp;<span class="align-self-center">+</span>&nbsp;
-                  <input type="number" name="attr_arme-dmdiv" title="@{arme-dmdiv} Bonus DM divers" value="0">
+                  <input type="number" class="two-digits" name="attr_arme-dmdiv" title="@{arme-dmdiv} Bonus DM divers" value="0">
                   <input type="hidden" name="attr_arme-buffdm" value="0">
                 </div>
                 <div class="d-flex d-flex-middle bordered">
                   <input type="text" name="attr_arme-portee" title="@{arme-portee}" value="">
                   <input type="hidden" name="attr_arme-portees" value="">
-                </div>
-                <div class="d-flex d-flex-middle bordered">
-                  <textarea class="one-row" name="attr_arme-special" title="@{arme-special}" placeholder="Effet spécial..."></textarea>
                   <button type="action" class="flat-btn img-btn float-right" name="act_armeopt-btn">
                     <span class="img-btn">y</span>
                   </button>
@@ -1271,6 +1272,12 @@
               <input type="hidden" name="attr_arme-gearid" value=""/>
               <input type="hidden" class="cof-wopt-toggle" name="attr_armeopt" value="0"/>
               <div class="weapon-opt">
+                <div class="weapon-special">
+                  <div></div>
+                  <div class="bordered">
+                    <textarea class="one-row" name="attr_arme-special" title="@{arme-special}" placeholder="Effet spécial..."></textarea>
+                  </div>
+                </div>
                 <div class="weapon-option">
                   <div>
                   </div>
@@ -1286,10 +1293,10 @@
                     <input class="two-digits" type="number" name="attr_arme-usure" title="@{arme-usure} Usure">
                   </div>
                   <div class="bordered">
-                    <input type="checkbox" name="attr_arme-active" title="@{arme-active} Attaque active" value="1" checked>
                     <input type="text" name="attr_arme-atkmods" placeholder="Modificateurs d'attaque" title="@{arme-atkmods} Modificateurs séparés par des virgules&#10; deBonus: avec dé bonus&#10; deMalus: avec dé malus&#10; auto: réussite automatique&#10; choc: peut faire des attaques non léthales sans malus&#10; explodeMax: dés de dégâts explosifs&#10; pasDeDmg: l'attaque ne fait pas de DM&#10; poudre: arme à poudre&#10; reroll1: relance les 1 sur les dés de DM (:1 = une seule fois)&#10; tempDmg: fait toujours des attaques non léthales&#10; zone: sort de zone&#10; magie: bonus att.+DM&#10; magieAtt: bonus att.&#10; magieDmg: bonus DM&#10; affutee: critiques améliorés&#10; fleau: bonus DM contre créature&#10; element: bonus DM élémentaires/substance&#10; manoeuvres: attaques spéciales" value="">
                   </div>
                   <div class="bordered">
+                    <input type="checkbox" name="attr_arme-active" title="@{arme-active} Attaque active" value="1" checked>
                     <textarea class="one-row" name="attr_arme-options" placeholder="Options d'attaque" title="@{arme-options} Options d'attaque"></textarea>
                   </div>
 
@@ -1463,7 +1470,7 @@
                   <input type="hidden" name="attr_main_princ-btn" value="">
                   <button type="action" class="hidden" name="act_main_princ-btn"/>
                   <input type="hidden" class="pc-hand" name="attr_main_princ_btn" value="0">
-                  <button type="roll" class="flat-btn" name="roll_main_princ" value="@{main_princ-btn}"/>
+                  <button type="roll" class="flat-btn" name="roll_main_princ" title="%{main_princ-btn} Attaque main principale" value="@{main_princ-btn}"/>
                 </div>
 
                 <div class="block-title">
@@ -1483,7 +1490,7 @@
                   <input type="hidden" name="attr_main_autre-btn" value="">
                   <button type="action" class="hidden" name="act_main_autre-btn"/>
                   <input type="hidden" class="pc-hand" name="attr_main_autre_btn" value="0">
-                  <button type="roll" class="flat-btn" name="roll_main_autre" value="@{main_autre-btn}"/>
+                  <button type="roll" class="flat-btn" name="roll_main_autre" title="%{main_autre-btn} Attaque main secondaire" value="@{main_autre-btn}"/>
                 </div>
 
                 <div class="block-title">
@@ -1587,7 +1594,7 @@
                       <span class="rank-title" name="attr_voie1-t1"></span>
                       <input type="hidden" name="attr_v1r1-btn" value="">
                       <button type="action" class="hidden" name="act_v1r1-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v1r1" value="@{v1r1-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v1r1" title="%{v1r1-btn}" value="@{v1r1-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -1608,7 +1615,7 @@
                       <span class="rank-title" name="attr_voie1-t2"></span>
                       <input type="hidden" name="attr_v1r2-btn" value="">
                       <button type="action" class="hidden" name="act_v1r2-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v1r2" value="@{v1r2-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v1r2" title="%{v1r2-btn}" value="@{v1r2-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -1629,7 +1636,7 @@
                       <span class="rank-title" name="attr_voie1-t3"></span>
                       <input type="hidden" name="attr_v1r3-btn" value="">
                       <button type="action" class="hidden" name="act_v1r3-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v1r3" value="@{v1r3-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v1r3" title="%{v1r3-btn}" value="@{v1r3-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -1650,7 +1657,7 @@
                       <span class="rank-title" name="attr_voie1-t4"></span>
                       <input type="hidden" name="attr_v1r4-btn" value="">
                       <button type="action" class="hidden" name="act_v1r4-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v1r4" value="@{v1r4-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v1r4" title="%{v1r4-btn}" value="@{v1r4-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -1671,7 +1678,7 @@
                       <span class="rank-title" name="attr_voie1-t5"></span>
                       <input type="hidden" name="attr_v1r5-btn" value="">
                       <button type="action" class="hidden" name="act_v1r5-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v1r5" value="@{v1r5-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v1r5" title="%{v1r5-btn}" value="@{v1r5-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -1706,7 +1713,7 @@
                       <span class="rank-title" name="attr_voie2-t1"></span>
                       <input type="hidden" name="attr_v2r1-btn" value="">
                       <button type="action" class="hidden" name="act_v2r1-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v2r1" value="@{v2r1-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v2r1" title="%{v2r1-btn}" value="@{v2r1-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -1727,7 +1734,7 @@
                       <span class="rank-title" name="attr_voie2-t2"></span>
                       <input type="hidden" name="attr_v2r2-btn" value="">
                       <button type="action" class="hidden" name="act_v2r2-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v2r2" value="@{v2r2-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v2r2" title="%{v2r2-btn}" value="@{v2r2-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -1748,7 +1755,7 @@
                       <span class="rank-title" name="attr_voie2-t3"></span>
                       <input type="hidden" name="attr_v2r3-btn" value="">
                       <button type="action" class="hidden" name="act_v2r3-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v2r3" value="@{v2r3-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v2r3" title="%{v2r3-btn}" value="@{v2r3-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -1769,7 +1776,7 @@
                       <span class="rank-title" name="attr_voie2-t4"></span>
                       <input type="hidden" name="attr_v2r4-btn" value="">
                       <button type="action" class="hidden" name="act_v2r4-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v2r4" value="@{v2r4-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v2r4" title="%{v2r4-btn}" value="@{v2r4-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -1790,7 +1797,7 @@
                       <span class="rank-title" name="attr_voie2-t5"></span>
                       <input type="hidden" name="attr_v2r5-btn" value="">
                       <button type="action" class="hidden" name="act_v2r5-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v2r5" value="@{v2r5-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v2r5" title="%{v2r5-btn}" value="@{v2r5-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -1825,7 +1832,7 @@
                       <span class="rank-title" name="attr_voie3-t1"></span>
                       <input type="hidden" name="attr_v3r1-btn" value="">
                       <button type="action" class="hidden" name="act_v3r1-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v3r1" value="@{v3r1-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v3r1" title="%{v3r1-btn}" value="@{v3r1-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -1846,7 +1853,7 @@
                       <span class="rank-title" name="attr_voie3-t2"></span>
                       <input type="hidden" name="attr_v3r2-btn" value="">
                       <button type="action" class="hidden" name="act_v3r2-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v3r2" value="@{v3r2-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v3r2" title="%{v3r2-btn}" value="@{v3r2-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -1867,7 +1874,7 @@
                       <span class="rank-title" name="attr_voie3-t3"></span>
                       <input type="hidden" name="attr_v3r3-btn" value="">
                       <button type="action" class="hidden" name="act_v3r3-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v3r3" value="@{v3r3-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v3r3" title="%{v3r3-btn}" value="@{v3r3-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -1888,7 +1895,7 @@
                       <span class="rank-title" name="attr_voie3-t4"></span>
                       <input type="hidden" name="attr_v3r4-btn" value="">
                       <button type="action" class="hidden" name="act_v3r4-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v3r4" value="@{v3r4-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v3r4" title="%{v3r4-btn}" value="@{v3r4-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -1909,7 +1916,7 @@
                       <span class="rank-title" name="attr_voie3-t5"></span>
                       <input type="hidden" name="attr_v3r5-btn" value="">
                       <button type="action" class="hidden" name="act_v3r5-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v3r5" value="@{v3r5-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v3r5" title="%{v3r5-btn}" value="@{v3r5-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -1949,7 +1956,7 @@
                       <span class="rank-title" name="attr_voie4-t1"></span>
                       <input type="hidden" name="attr_v4r1-btn" value="">
                       <button type="action" class="hidden" name="act_v4r1-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v4r1" value="@{v4r1-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v4r1" title="%{v4r1-btn}" value="@{v4r1-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -1970,7 +1977,7 @@
                       <span class="rank-title" name="attr_voie4-t2"></span>
                       <input type="hidden" name="attr_v4r2-btn" value="">
                       <button type="action" class="hidden" name="act_v4r2-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v4r2" value="@{v4r2-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v4r2" title="%{v4r2-btn}" value="@{v4r2-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -1991,7 +1998,7 @@
                       <span class="rank-title" name="attr_voie4-t3"></span>
                       <input type="hidden" name="attr_v4r3-btn" value="">
                       <button type="action" class="hidden" name="act_v4r3-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v4r3" value="@{v4r3-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v4r3" title="%{v4r3-btn}" value="@{v4r3-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -2012,7 +2019,7 @@
                       <span class="rank-title" name="attr_voie4-t4"></span>
                       <input type="hidden" name="attr_v4r4-btn" value="">
                       <button type="action" class="hidden" name="act_v4r4-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v4r4" value="@{v4r4-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v4r4" title="%{v4r4-btn}" value="@{v4r4-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -2033,7 +2040,7 @@
                       <span class="rank-title" name="attr_voie4-t5"></span>
                       <input type="hidden" name="attr_v4r5-btn" value="">
                       <button type="action" class="hidden" name="act_v4r5-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v4r5" value="@{v4r5-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v4r5" title="%{v4r5-btn}" value="@{v4r5-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -2068,7 +2075,7 @@
                       <span class="rank-title" name="attr_voie5-t1"></span>
                       <input type="hidden" name="attr_v5r1-btn" value="">
                       <button type="action" class="hidden" name="act_v5r1-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v5r1" value="@{v5r1-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v5r1" title="%{v5r1-btn}" value="@{v5r1-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -2089,7 +2096,7 @@
                       <span class="rank-title" name="attr_voie5-t2"></span>
                       <input type="hidden" name="attr_v5r2-btn" value="">
                       <button type="action" class="hidden" name="act_v5r2-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v5r2" value="@{v5r2-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v5r2" title="%{v5r2-btn}" value="@{v5r2-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -2110,7 +2117,7 @@
                       <span class="rank-title" name="attr_voie5-t3"></span>
                       <input type="hidden" name="attr_v5r3-btn" value="">
                       <button type="action" class="hidden" name="act_v5r3-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v5r3" value="@{v5r3-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v5r3" title="%{v5r3-btn}" value="@{v5r3-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -2131,7 +2138,7 @@
                       <span class="rank-title" name="attr_voie5-t4"></span>
                       <input type="hidden" name="attr_v5r4-btn" value="">
                       <button type="action" class="hidden" name="act_v5r4-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v5r4" value="@{v5r4-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v5r4" title="%{v5r4-btn}" value="@{v5r4-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -2152,7 +2159,7 @@
                       <span class="rank-title" name="attr_voie5-t5"></span>
                       <input type="hidden" name="attr_v5r5-btn" value="">
                       <button type="action" class="hidden" name="act_v5r5-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v5r5" value="@{v5r5-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v5r5" title="%{v5r5-btn}" value="@{v5r5-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -2187,7 +2194,7 @@
                       <span class="rank-title" name="attr_voie6-t1"></span>
                       <input type="hidden" name="attr_v6r1-btn" value="">
                       <button type="action" class="hidden" name="act_v6r1-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v6r1" value="@{v6r1-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v6r1" title="%{v6r1-btn}" value="@{v6r1-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -2208,7 +2215,7 @@
                       <span class="rank-title" name="attr_voie6-t2"></span>
                       <input type="hidden" name="attr_v6r2-btn" value="">
                       <button type="action" class="hidden" name="act_v6r2-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v6r2" value="@{v6r2-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v6r2" title="%{v6r2-btn}" value="@{v6r2-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -2229,7 +2236,7 @@
                       <span class="rank-title" name="attr_voie6-t3"></span>
                       <input type="hidden" name="attr_v6r3-btn" value="">
                       <button type="action" class="hidden" name="act_v6r3-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v6r3" value="@{v6r3-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v6r3" title="%{v6r3-btn}" value="@{v6r3-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -2250,7 +2257,7 @@
                       <span class="rank-title" name="attr_voie6-t4"></span>
                       <input type="hidden" name="attr_v6r4-btn" value="">
                       <button type="action" class="hidden" name="act_v6r4-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v6r4" value="@{v6r4-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v6r4" title="%{v6r4-btn}" value="@{v6r4-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -2271,7 +2278,7 @@
                       <span class="rank-title" name="attr_voie6-t5"></span>
                       <input type="hidden" name="attr_v6r5-btn" value="">
                       <button type="action" class="hidden" name="act_v6r5-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v6r5" value="@{v6r5-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v6r5" title="%{v6r5-btn}" value="@{v6r5-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -2311,7 +2318,7 @@
                       <span class="rank-title" name="attr_voie7-t1"></span>
                       <input type="hidden" name="attr_v7r1-btn" value="">
                       <button type="action" class="hidden" name="act_v7r1-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v7r1" value="@{v7r1-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v7r1" title="%{v7r1-btn}" value="@{v7r1-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -2332,7 +2339,7 @@
                       <span class="rank-title" name="attr_voie7-t2"></span>
                       <input type="hidden" name="attr_v7r2-btn" value="">
                       <button type="action" class="hidden" name="act_v7r2-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v7r2" value="@{v7r2-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v7r2" title="%{v7r2-btn}" value="@{v7r2-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -2353,7 +2360,7 @@
                       <span class="rank-title" name="attr_voie7-t3"></span>
                       <input type="hidden" name="attr_v7r3-btn" value="">
                       <button type="action" class="hidden" name="act_v7r3-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v7r3" value="@{v7r3-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v7r3" title="%{v7r3-btn}" value="@{v7r3-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -2374,7 +2381,7 @@
                       <span class="rank-title" name="attr_voie7-t4"></span>
                       <input type="hidden" name="attr_v7r4-btn" value="">
                       <button type="action" class="hidden" name="act_v7r4-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v7r4" value="@{v7r4-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v7r4" title="%{v7r4-btn}" value="@{v7r4-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -2395,7 +2402,7 @@
                       <span class="rank-title" name="attr_voie7-t5"></span>
                       <input type="hidden" name="attr_v7r5-btn" value="">
                       <button type="action" class="hidden" name="act_v7r5-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v7r5" value="@{v7r5-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v7r5" title="%{v7r5-btn}" value="@{v7r5-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -2430,7 +2437,7 @@
                       <span class="rank-title" name="attr_voie8-t1"></span>
                       <input type="hidden" name="attr_v8r1-btn" value="">
                       <button type="action" class="hidden" name="act_v8r1-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v8r1" value="@{v8r1-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v8r1" title="%{v8r1-btn}" value="@{v8r1-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -2451,7 +2458,7 @@
                       <span class="rank-title" name="attr_voie8-t2"></span>
                       <input type="hidden" name="attr_v8r2-btn" value="">
                       <button type="action" class="hidden" name="act_v8r2-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v8r2" value="@{v8r2-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v8r2" title="%{v8r2-btn}" value="@{v8r2-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -2472,7 +2479,7 @@
                       <span class="rank-title" name="attr_voie8-t3"></span>
                       <input type="hidden" name="attr_v8r3-btn" value="">
                       <button type="action" class="hidden" name="act_v8r3-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v8r3" value="@{v8r3-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v8r3" title="%{v8r3-btn}" value="@{v8r3-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -2493,7 +2500,7 @@
                       <span class="rank-title" name="attr_voie8-t4"></span>
                       <input type="hidden" name="attr_v8r4-btn" value="">
                       <button type="action" class="hidden" name="act_v8r4-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v8r4" value="@{v8r4-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v8r4" title="%{v8r4-btn}" value="@{v8r4-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -2514,7 +2521,7 @@
                       <span class="rank-title" name="attr_voie8-t5"></span>
                       <input type="hidden" name="attr_v8r5-btn" value="">
                       <button type="action" class="hidden" name="act_v8r5-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v8r5" value="@{v8r5-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v8r5" title="%{v8r5-btn}" value="@{v8r5-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -2549,7 +2556,7 @@
                       <span class="rank-title" name="attr_voie9-t1"></span>
                       <input type="hidden" name="attr_v9r1-btn" value="">
                       <button type="action" class="hidden" name="act_v9r1-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v9r1" value="@{v9r1-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v9r1" title="%{v9r1-btn}" value="@{v9r1-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -2570,7 +2577,7 @@
                       <span class="rank-title" name="attr_voie9-t2"></span>
                       <input type="hidden" name="attr_v9r2-btn" value="">
                       <button type="action" class="hidden" name="act_v9r2-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v9r2" value="@{v9r2-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v9r2" title="%{v9r2-btn}" value="@{v9r2-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -2591,7 +2598,7 @@
                       <span class="rank-title" name="attr_voie9-t3"></span>
                       <input type="hidden" name="attr_v9r3-btn" value="">
                       <button type="action" class="hidden" name="act_v9r3-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v9r3" value="@{v9r3-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v9r3" title="%{v9r3-btn}" value="@{v9r3-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -2612,7 +2619,7 @@
                       <span class="rank-title" name="attr_voie9-t4"></span>
                       <input type="hidden" name="attr_v9r4-btn" value="">
                       <button type="action" class="hidden" name="act_v9r4-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v9r4" value="@{v9r4-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v9r4" title="%{v9r4-btn}" value="@{v9r4-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -2633,7 +2640,7 @@
                       <span class="rank-title" name="attr_voie9-t5"></span>
                       <input type="hidden" name="attr_v9r5-btn" value="">
                       <button type="action" class="hidden" name="act_v9r5-btn">
-                      <button type="roll" class="flat-btn img-btn" name="roll_v9r5" value="@{v9r5-btn}">
+                      <button type="roll" class="flat-btn img-btn" name="roll_v9r5" title="%{v9r5-btn}" value="@{v9r5-btn}">
                         <span class="img-btn">w</span>
                       </button>
                     </div>
@@ -3583,7 +3590,7 @@
                 <button class="hidden" type="action" name="act_roll-btn">
                   <span class="d20-btn">t</span>
                 </button>
-                <button type="roll" class="flat-btn" name="roll_roll" value="@{roll-btn}"/>
+                <button type="roll" class="flat-btn" name="roll_roll" title="%{repeating_rolls_ID_roll-btn}" value="@{roll-btn}"/>
               </div>
 
               <div class="d-flex d-flex-middle bordered">
@@ -4712,6 +4719,9 @@
                     <input type="text" name="attr_res-desc" title="@{res-desc}" placeholder="Nom de la ressource" value="">
                     Nombre :
                     <input type="number" class="two-digits" name="attr_res-val" title="@{res-val}" value="1">
+                    <button type="action" class="flat-btn img-btn" name="act_resconso-btn" title="Utiliser un consommable">
+                      <span class="img-btn">-</span>
+                    </button>
                   </div>
   
                   <div class="d-flex">
@@ -5507,6 +5517,7 @@
                   </summary>
                   <ul>
                     <li>Réinitialisation des capacités utilisées par combat / par jour en cas de récupération rapide ou complète</li>
+                    <li>Réinitialisation des PM maximum ec cas de récupération complète</li>
                     <li>Ajout d'un sous-onglet pour les RD et Résistances aux DM sur la fiche de PJ</li>
                     <li>Ajout d'une section dépliante pour les RD et Résistances aux DM sur la fiche de PNJ</li>
                     <li>Ajout d'attributs vitesse pour les déplacements</li>
@@ -5514,6 +5525,9 @@
                     <li>Prise en charge des manoeuvres spéciales dans les jets d'attaque</li>
                     <li>Ajout de listes de tailles et de type de créatures sur la fiche de PNJ</li>
                     <li>Ajout d'une option pour cibler un token lors d'un jet d'attaque</li>
+                    <li>Effacement de l'option tactique choisie après un jet d'attaque</li>
+                    <li>Prise en charge des ressources consommables de type <em>soins</em></li>
+                    <li>Ajout d'un bouton <em>Consommable</em> à la liste des ressources</li>
                   </ul>
                 </details>
               </li>
@@ -5751,12 +5765,12 @@
             <h4>
               <input type="hidden" name="attr_caract_select-btn" value="">
               <button type="action" class="hidden" name="act_caract_select-btn"/>
-              <button type="roll" class="flat-btn img-btn" name="roll_caractselect" value="@{caract_select-btn}">
+              <button type="roll" class="flat-btn img-btn" name="roll_caractselect" title="%{caract_select-btn} Choix d'une caractéristique" value="@{caract_select-btn}">
                 Caractéristiques
               </button>
               <input type="hidden" name="attr_caract_menu-btn" value="">
               <button type="action" class="hidden" name="act_caract_menu-btn"/>
-              <button type="roll" class="flat-btn img-btn" name="roll_caractmenu" value="@{caract_menu-btn}">
+              <button type="roll" class="flat-btn img-btn" name="roll_caractmenu" title="%{caract_menu-btn} Menu des caractéristiques" value="@{caract_menu-btn}">
                 <span class="img-btn">l</span>
               </button>
             </h4>
@@ -5975,7 +5989,7 @@
               <h4>CRIT.</h4>
               <h4>DM</h4>
               <h4>PORTEE</h4>
-              <h4>SPECIAL</h4>
+              <!--<h4>SPECIAL</h4>-->
             </div>
   
             <input type="hidden" name="attr_pnjatk">
@@ -5990,7 +6004,7 @@
                   <button type="action" class="hidden" name="act_npcatk-btn">
                     <span class="d20-btn">t</span>
                   </button>
-                  <button type="roll" class="flat-btn" name="roll_npcatk" value="@{npcatk-btn}" />
+                  <button type="roll" class="flat-btn" name="roll_npcatk" title="%{repeating_npcarmes_ID_npcatk-btn}" value="@{npcatk-btn}" />
                 </div>
                 <div class="d-flex d-flex-middle bordered">
                   <input type="hidden" name="attr_arme-label" value="">
@@ -5999,11 +6013,12 @@
                   <input type="text" name="attr_arme-nom" title="@{arme-nom}" placeholder="Arme/attaque" value="">
                 </div>
                 <div class="d-flex d-flex-middle bordered">
+                  <span class="align-self-center">Att*&nbsp;:&nbsp;</span>
                   <input type="checkbox" name="attr_arme-multi" title="@{arme-multi} Attaques multiples" value="1">&nbsp;
-                  <select class="select-xs" name="attr_arme-roll" title="@{arme-roll} Type de jet">
-                    <option value="1d20" selected>No - Normal</option>
-                    <option value="2d20kh1">Db - Dé bonus</option>
-                    <option value="2d20kl1">Dm - Dé malus</option>
+                  <select class="select-md" name="attr_arme-roll" title="@{arme-roll} Type de jet">
+                    <option value="1d20" selected>Normal</option>
+                    <option value="2d20kh1">Dé bonus</option>
+                    <option value="2d20kl1">Dé malus</option>
                   </select>&nbsp;
                   <input type="number" class="two-digits" name="attr_arme-atk" title="@{arme-atk} Bonus d'attaque" value="">
                 </div>
@@ -6051,9 +6066,6 @@
                 </div>
                 <div class="d-flex d-flex-middle bordered">
                   <input type="text" name="attr_arme-portee" title="@{arme-portee}" value="">
-                </div>
-                <div class="d-flex d-flex-middle bordered">
-                  <textarea class="one-row" name="attr_arme-special" title="@{arme-special}" placeholder="Effet, capacités spéciales..."></textarea>
                   <button type="action" class="flat-btn img-btn float-right" name="act_armeopt-btn">
                     <span class="img-btn">y</span>
                   </button>
@@ -6063,6 +6075,12 @@
   
               <input type="hidden" class="cof-wopt-toggle" name="attr_armeopt" value="0"/>
               <div class="weapon-opt">
+                <div class="weapon-special">
+                  <div></div>
+                  <div class="bordered">
+                    <textarea class="one-row" name="attr_arme-special" title="@{arme-special}" placeholder="Effet, capacités spéciales..."></textarea>
+                  </div>
+                </div>
                 <div class="weapon-option">
                   <div></div>
                   <div class="bordered">
@@ -6268,7 +6286,7 @@
                 <div>
                   <input type="hidden" name="attr_npcroll-btn" value="">
                   <button type="action" class="hidden" name="act_npcroll-btn"/>
-                  <button type="roll" class="flat-btn img-btn" name="roll_npcroll" value="@{npcroll-btn}">
+                  <button type="roll" class="flat-btn img-btn" name="roll_npcroll" title="%{repeating_npcrolls_ID_npcroll-btn}" value="@{npcroll-btn}">
                     <span class="img-btn img-btn-lg">w</span>
                   </button>
                 </div>
@@ -7156,11 +7174,6 @@
     <span class="sheet-rt sheet-rt-tags">{{tags}}</span>
   </div>
   {{/tags}}
-  {{#tohit}}
-  <div class="sheet-rt sheet-rt-text sheet-rt-centered">
-    <span>Contre **{{target}}**</span>
-  </div>
-  {{/tohit}}
   {{#roll}}
   <div class="sheet-rt sheet-rt-roll">
     <span class="sheet-rt sheet-rt-roll">{{roll}}</span>
@@ -7171,16 +7184,19 @@
   {{#tohit}}
   {{#rollGreater() roll tohit}}
   <div class="sheet-rt sheet-rt-text sheet-rt-centered">
+    <span>Contre *{{target}}* :</span>
     <span class="sheet-rt sheet-rt-hit">SUCCÈS !</span>
   </div>
   {{/rollGreater() roll tohit}}
   {{#rollEqual() roll tohit}}
   <div class="sheet-rt sheet-rt-text sheet-rt-centered">
+    <span>Contre *{{target}}* :</span>
     <span class="sheet-rt sheet-rt-hit">SUCCÈS !</span>
   </div>
   {{/rollEqual() roll tohit}}
   {{#rollLess() roll tohit}}
   <div class="sheet-rt sheet-rt-text sheet-rt-centered">
+    <span>Contre *{{target}}* :</span>
     <span class="sheet-rt sheet-rt-miss">ÉCHEC !</span>
   </div>
   {{/rollLess() roll tohit}}
@@ -7288,6 +7304,11 @@
       {{/rollTotal() computed::brollf 1}}
     {{/broll}}
   {{/roll}}
+  {{#heal}}
+  <div class="sheet-rt sheet-rt-roll">
+    <span class="sheet-rt sheet-rt-roll">{{heal}} PV récupérés</span>
+  </div>
+  {{/heal}}
   {{#text}}
   <div class="sheet-rt sheet-rt-text">
     <span class="sheet-rt-{{textclass}}">{{text}}</span>
@@ -7337,7 +7358,7 @@
 
 /**
  * COF2e Sheet Worker
- * v1.8.0
+ * v1.10.0
  */
 
 const SWData = {
@@ -7363,6 +7384,10 @@ const SWData = {
     ],
     tokens: {
       size: 70,
+      target: {
+        def: "[[@{target|def}]]",
+        name: "@{target|token_name}",
+      },
       PC: {
         bar1: "",
         bar1_link: "pm",
@@ -7384,6 +7409,12 @@ const SWData = {
         bar4_link: "vitesse_cases"
       }
     }
+  },
+  emojis: {
+    "atkcac": "&#9876;&#65039;",  // crossed-swords
+    "atktir": "&#127993;",        // bow and arrow
+    "atkmag": "&#129668;",        // magic wand
+    "actions": "&#10024;"         // sparkles
   },
   SHEET_TYPE: {
     PC: "pc",
@@ -9309,17 +9340,18 @@ class Repeating {
 
 /**
  * @typedef MsgOptions
- * @property {string} title - Title of the message
- * @property {string} template - Name of roll template
- * @property {string} whisper - Target for whispered message 
- * @property {number} rollTN - Target number for special roll effect
- * @property {boolean} critical - Use critical effect
- * @property {integer} crit - Critical value threshold
- * @property {boolean} fumble - Use fumble effect
- * @property {object} usure - Has usure effects
- * @property {string} usure.attackId - Row id of repeating attack item
- * @property {string} usure.name - Weapon name
- * @property {integer} usure.value - Current usure value
+ * @property {string}   title           - Title of the message
+ * @property {string}   template        - Name of roll template
+ * @property {string}   whisper         - Target for whispered message 
+ * @property {number}   rollTN          - Target number for special roll effect
+ * @property {boolean}  critical        - Use critical effect
+ * @property {integer}  crit            - Critical value threshold
+ * @property {boolean}  fumble          - Use fumble effect
+ * @property {object}   usure           - Has usure effects
+ * @property {string}   usure.attackId  - Row id of repeating attack item
+ * @property {string}   usure.name      - Weapon name
+ * @property {integer}  usure.value     - Current usure value
+ * @property {string}   nextRoll        - Next chat roll command
  */
 
 /**
@@ -9405,7 +9437,7 @@ function sendChatMsg(msg, options) {
       const rx = "\\[(" + SWData.PC.COMBAT.maneuvers.map(mn => mn.name.split(" ")[0]).join("|") + ")\\]\\)";
       const match = roll.results.roll.expression.match(rx);
       if (match)
-        updates.set("last_maneuver", `${ cleanText(match[1]) }|${roll.rollId}`); // make it unique
+        updates.set("last_maneuver", `${ cleanText(match[1]) }~${roll.rollId}`); // make it unique
     }
 
     // check TN
@@ -9459,6 +9491,10 @@ function sendChatMsg(msg, options) {
           updates.set("usure_check", JSON.stringify({ attack: attackId, name, usure, roll: roll.results.usure.result }));
       }
     }
+
+    // additional chat roll
+    if (strval(options.nextRoll) !== "")
+      updates.set("next_roll", `${ options.nextRoll }~${ roll.rollId }`);
 
     if (updates.size > 0)
       setAttrs(Object.fromEntries(updates));
@@ -10887,8 +10923,8 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
         atkProps.broll = atkRoll;
       
       if (boolval(values.cfg_cible)) {
-        atkProps.tohit = "[[@{target|def}]]"
-        atkProps.target = "@{target|character_name}"
+        atkProps.tohit = SWData.settings.tokens.target.def;
+        atkProps.target = SWData.settings.tokens.target.name;
       }
       
       const chatMsg = rollTemplate(atkProps, { tags });
@@ -11103,8 +11139,8 @@ on("clicked:drecup-btn", function() {
     "drecup",
     "niveau",
     "vol",
-    "pv",               
-    "pv_max",
+    "pv", "pv_max",
+    "pm", "pm_max",
     "cfg_highfan",
     "cfg_use_drniv",
     "cfg_use_dronly",
@@ -11146,6 +11182,9 @@ on("clicked:drecup-btn", function() {
       return;
     }
 
+    const pm = intval(values.pm);
+    const pmMax = intval(values.pm_max);
+
     const combat = [];
     const daily = [];
     freqs.filter(attr => strval(values[attr]) !== "").forEach(attr => {
@@ -11175,8 +11214,10 @@ on("clicked:drecup-btn", function() {
       if (!drOnly) {
         bLevel = addLevel ? level : Math.ceil(level / 2);
         bRecup = `+ ${bLevel}[Niveau${ addLevel ? "" : "/2" }] `;
-      }
+      }  
       let text = `${dr} DR restants`;
+      if (typeRecup === 2 && pmMax > 0)
+        text = `${ pmMax - pm } PM récupérés, ` + text;
       let recup;
       let resetAbilities;
       if (typeRecup === 3) {
@@ -11209,6 +11250,8 @@ on("clicked:drecup-btn", function() {
           updates.set("pv", Math.min(pv, pvMax));
           updates.set("PVIG", Math.min(pv, pvMax));
         }
+        if (typeRecup === 2 && pmMax > 0)
+          updates.set("pm", pmMax);
         resetAbilities.forEach(ability => updates.set(ability.reset, 0));
         setAttrs(Object.fromEntries(updates));
       });
@@ -11258,7 +11301,7 @@ function updateDef(eventInfo) {
  */
 function updateEquiped(attribute) {
   processAllGear([ "on", "nom", "props" ], function(gearIds, allGears) {
-    const section = "repeating_equipement";
+    const section = "equipement";
     const defense = attribute.replace("_eqp", "");
     getAttrs([ attribute, defense, ...allGears ], function(values) {
       const equiped = intval(values[attribute]);
@@ -11278,7 +11321,7 @@ function updateEquiped(attribute) {
 
       // un-equip all armor | shields
       gears.keys().forEach(id => {
-        updates.set(`${section}_${id}_equip-on`, 0);
+        updates.set(rptAttr(section, "equip-on", id), 0);
       });
 
       // equip armor | shield | helmet with def bonus
@@ -11290,7 +11333,7 @@ function updateEquiped(attribute) {
             equipId = id;
         });
         if (equipId !== "")
-          updates.set(`${section}_${equipId}_equip-on`, 1);
+          updates.set(rptAttr(section, "equip-on", equipId), 1);
       }
 
       if (updates.size > 0)
@@ -11595,8 +11638,12 @@ function insertRolls(text, options = {}) {
   });
 
   // Search for " [XXX] "
-  matchRegExp(text, /([ ]+)\[(AGI|CON|FOR|PER|CHA|INT|VOL)\]([ ]+)/gm).forEach(result => {
+  matchRegExp(text, /([ ]+)\[(AGI|CON|FOR|PER|CHA|INT|VOL|NIV|NIVEAU|NC|NOM)\]([ ]+)/gm).forEach(result => {
     let [ matched, sb, ability, sa ] = result;
+    if (ability === "NIV")
+      ability = "niveau";
+    if (ability === "NOM")
+      ability = "character_name";
     const replace = `${sb}[[@{${ability.toLowerCase()}}]]${sa}`;
     text = text.replace(matched, replace);
   });
@@ -11620,15 +11667,15 @@ on("change:repeating_armes:arme-nom clicked:renum_atk-btn", function(eventInfo) 
   if (!renumber)
     atkId = strval(eventInfo.triggerName.split("_")[2]);
   getSectionIDsOrdered("repeating_armes", function (rowIds) {
-    const labels = rowIds.map(id => `repeating_armes_${id}_arme-label`);
+    const labels = rowIds.map(id => rptAttr("armes", "arme-label", id));
     getAttrs([ "character_name", "max_attack_label", "scriptVersion", ...labels ], function (values) {
       const updates = new Map();
 
       if (!renumber) {
         // display attack options row if script detected
-        updates.set("repeating_armes_armeopt", hasMODScript(values) ? 1 : 0);
+        updates.set(rptAttr("armes", "armeopt"), hasMODScript(values) ? 1 : 0);
         // update roll button linked attribute
-        const atkBtn = `repeating_armes_${atkId}_attack-btn`;
+        const atkBtn = rptAttr("armes", "attack-btn", atkId);
         updates.set(atkBtn, `%{${ strval(values.character_name) }|${atkBtn}}`);
       }
       
@@ -11653,9 +11700,10 @@ on("change:repeating_armes:arme-nom clicked:renum_atk-btn", function(eventInfo) 
  */
 on("clicked:repeating_armes:armeopt-btn clicked:repeating_npcarmes:armeopt-btn", function(eventInfo) {
   const { section } = rptInfo(eventInfo.triggerName);
-  getAttrs([`repeating_${section}_armeopt`], function(values) {
-    const option = 1 - intval(values[`repeating_${section}_armeopt`]);
-    setAttrs({ [`repeating_${section}_armeopt`]: option });
+  const toggle = rptAttr(section, "armeopt");
+  getAttrs([ toggle ], function(values) {
+    const option = 1 - intval(values[toggle]);
+    setAttrs({ [toggle]: option });
   });
 });
 
@@ -11710,10 +11758,9 @@ function isThrown(type) {
  * @returns {boolean}
  */
 function useCriticalHit(values, npc = "") {
-  const section = `repeating_${npc}armes_arme-`;
   const useCritTable = boolval(values.cfg_tbl_crit);
-  const attack = (npc === "npc") ? "atkcac" : strval(values[section + "atk"]);
-  const dmType = strval(values[section + "dmtype"]);
+  const attack = (npc === "npc") ? "atkcac" : strval(values[rptAttr(`${npc}armes`, "arme-atk")]);
+  const dmType = strval(values[rptAttr(`${npc}armes`, "arme-dmtype")]);
   return useCritTable && isCombat(attack) && (SWData.ATTACKS.CS[dmType]);
 }
 
@@ -11724,7 +11771,7 @@ function useCriticalHit(values, npc = "") {
  * @returns {string}
  */
 function criticalHit(values, npc = "") {
-  const dmType = strval(values[`repeating_${npc}armes_arme-dmtype`]);
+  const dmType = strval(values[rptAttr(`${npc}armes`, "arme-dmtype")]);
   const critDie = strval(values.cfg_tbl_critdie, "20");
   const roll = critDie === "20b" ? Math.max(getRandom(20), getRandom(20)) : getRandom(numval(critDie));
   const effect = SWData.ATTACKS.CS[dmType][roll - 1];
@@ -11740,7 +11787,7 @@ function criticalHit(values, npc = "") {
  */
 function useFumbleTable(values, npc = "") {
   const useFumbleTable = boolval(values.cfg_tbl_fumble);
-  const attack = (npc === "npc") ? "atkcac" : strval(values["repeating_armes_arme-atk"]);
+  const attack = (npc === "npc") ? "atkcac" : strval(values[rptAttr("armes", "arme-atk")]);
   return useFumbleTable && isCombat(attack);
 }
 
@@ -11790,21 +11837,10 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
   const section = "repeating_armes_arme-"
   const thrown = "repeating_armes_jet-"
   const attackAttrs = [
-    "nom",
-    "atk",
-    "atkdiv",
-    "crit",
-    "2m",
-    "dm",
-    "dmtype",
-    "bonus",
-    "dmdiv",
-    "portee",
-    "special",
-    "atktype",
-    "atkmods",
-    "options",
-    "usure"
+    "nom", "atk", "atkdiv", "crit", "2m",
+    "dm", "dmtype", "bonus", "dmdiv",
+    "portee", "special",
+    "atktype", "atkmods", "options", "usure"
   ];
   const sitModAttrs = [
     "couvert",
@@ -11829,8 +11865,8 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
     "en_selle",
     ...luckButtonAttrs(),
     ...sitModAttrs.map(a => `modsit_${a}`),
-    ...attackAttrs.map(a => `${section}${a}`),
-    ...[ "resid", "nbre" ].map(a => `${thrown}${a}`),
+    ...attackAttrs.map(a => rptAttr("armes", `arme-${a}`)),
+    ...[ "resid", "nbre" ].map(a => rptAttr("armes", `jet-${a}`)),
     "dm_buff_list", "allattacks_buff", "allattacks_desc"
   ], function (values) {
     
@@ -11995,6 +12031,7 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
           break;
       }
     }
+
     if (bRoll && useOneRoll)
       bRoll = false;
     
@@ -12081,7 +12118,17 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
       buffDM = replaceDevol(buffDM);
       if (buffName.charAt(0) === "?") {
         buffName = buffName.slice(1).trim();
-        buffDM = `?{${buffName}|Non,0|Oui,${buffDM}}`;
+        const delim = "&";
+        let moreDM = buffDM;
+        buffDM = buffDM.split(delim)[0];
+        let buffMore = "";
+        while (moreDM.includes(delim)) {
+          const [ dm, ...dms ] = moreDM.split(delim).slice(1);
+          const [ label, value ] = dm.split("=").map(v => v.trim());
+          buffMore += `|${label},${value}`;
+          moreDM = [ ...dms ].join(delim);
+        }
+        buffDM = `?{${buffName} (DM)|Non,0|Oui,${buffDM}${buffMore}}`;
       }
       const matched = buffDM.match(/\[(.+)\]/);
       if (matched) {
@@ -12229,20 +12276,23 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
     }
 
     if (boolval(values.cfg_cible)) {
-      atkProps.tohit = "[[@{target|def}]]"
-      atkProps.target = "@{target|character_name}"
+      atkProps.tohit = SWData.settings.tokens.target.def;
+      atkProps.target = SWData.settings.tokens.target.name;
     }
 
     const chatMsg = rollTemplate(atkProps, { tags: allTags });
     sendChatMsg(chatMsg, rollOptions);
     
+    if (tactics > 0)
+      setAttrs({ tactique: "0" });
+
     if (useAmmo && resourceId !== "") {
       const resVal = rptAttr("ressources", "res-val", resourceId);
       getAttrs([ resVal ], function(values) {
         const munitions = Math.max(0, intval(values[resVal]) - resourceNbr);
         setAttrs({ [resVal]: munitions });
       });
-    }    
+    }
   });
 });
 
@@ -12261,7 +12311,7 @@ on("change:usure_check", function() {
       let { attack, name, usure, roll } = objval(check);
       if (attack !== "") {
         usure = Math.max(0, usure - 1);
-        updates.set(`repeating_armes_${attack}_arme-usure`, usure);
+        updates.set(rptAttr("armes", "arme-usure", attack), usure);
         if (roll > usure) {
           sendChatMsg(rollTemplate({
             lsub: "Usure",
@@ -12286,7 +12336,7 @@ on("change:usure_check", function() {
  */
 on("change:last_maneuver", function () {
   getAttrs([ "last_maneuver" ], function(values) {
-    const [ maneuver ] = strval(values.last_maneuver).split("|");
+    const [ maneuver ] = strval(values.last_maneuver).split("~");
     const found = SWData.PC.COMBAT.maneuvers.find(mn => maneuver === cleanText(mn.name.split(" ")[0]));
     if (found) {
       sendChatMsg(rollTemplate({
@@ -12305,7 +12355,7 @@ on("change:last_maneuver", function () {
  */
 function getWeaponGearAttr(data) {
   const [ label, weaponId ] = strval(data).split("~");
-  return intval(label) > 0 ? `repeating_armes_${weaponId}_arme-gearid` : "";
+  return intval(label) > 0 ? rptAttr("armes", "arme-gearid", weaponId) : "";
 }
 
 /**
@@ -12337,17 +12387,17 @@ on("change:main_princ change:main_autre", function(eventInfo) {
     const hasShield = boolval(values.bouclier_eqp);
     
     const updates = new Map();
-
+    
     if (offWeaponGear !== "") {
       const equipId = strval(values[offWeaponGear]);
       if (equipId !== "")
-        updates.set(`repeating_equipement_${equipId}_equip-on`, 0);
+        updates.set(rptAttr("equipement", "equip-on", equipId), 0);
     }
     
     if (onWeaponGear !== "") {
       const equipId = strval(values[onWeaponGear]);
       if (equipId !== "")
-        updates.set(`repeating_equipement_${equipId}_equip-on`, 1);
+        updates.set(rptAttr("equipement", "equip-on", equipId), 1);
     }
 
     const [ rowId, twoHands ] = inHand.split("~").splice(1);
@@ -12382,7 +12432,7 @@ on("clicked:main_princ-btn clicked:main_autre-btn", function (eventInfo) {
     const [ rowId ] = strval(values[hand]).split("~").slice(1);
     if (!rowId)
       return;
-    const attack = `%{${charName}|repeating_armes_${rowId}_attack-btn}`;
+    const attack = `%{${charName}|${ rptAttr("armes", "attack-btn", rowId) }`;
     sendChatCmd(attack);
   });
 });
@@ -12428,6 +12478,17 @@ function paramByRank(description, path, values, abilityProps) {
   }
   return description;
 }
+
+/**
+ * Send an additional roll to chat
+ */
+on("change:next_roll", function () {
+  getAttrs([ "next_roll" ], function(values) {
+    const [ chatCmd ] = strval(values.next_roll).split("~");
+    if (chatCmd)
+      sendChatCmd(chatCmd);
+  });
+});
 
 /**
  * Display ability text with inline rolls
@@ -12553,6 +12614,25 @@ function actionAbility(path, rank) {
     if (alert !== "" && alertCSS === "")
       text += "\n" + alert
 
+
+    // Do another roll
+    let nextRoll = "";
+    if (hasProp(abilityProps, "roll")) {
+      const search = [
+        { atk: "atkcac", alias: "contact" },
+        { atk: "atktir", alias: "distance" },
+        { atk: "atkmag", alias: "magie" }
+      ];
+      let roll = getProp(abilityProps, "roll");
+      search.forEach(s => {
+        if (cleanText(roll).includes(s.alias))
+          roll = s.atk;
+        if (roll === s.atk)
+          roll += "-btn";
+      });
+      nextRoll = `%{${charName}|${roll}}`;
+    }
+
     // send to chat
     const rollProps = {
       lsub: `${pathName} - ${rank}`,
@@ -12564,21 +12644,15 @@ function actionAbility(path, rank) {
       rollProps.alertclass = alertCSS;
     }
     const chatMsg = rollTemplate(rollProps, { tags: allTags });
-    sendChatMsg(chatMsg);
+    sendChatMsg(chatMsg, { nextRoll });
     
     // Update usages
     if (maxUses > 0 && nbUsed <= maxUses)
       updates.set(used, nbUsed);
-    
+
     // Update attributes
     if (updates.size > 0)
       setAttrs(Object.fromEntries(updates));
-
-    // Do another roll
-    if (hasProp(abilityProps, "roll")) {
-      const chatCmd = `%{${charName}|${ getProp(abilityProps, "roll")}}`;
-      sendChatCmd(chatCmd);
-    }
 
   });
 }
@@ -12636,9 +12710,11 @@ function updateBuffsByRank(path) {
     const rank = intval(values[`rang_voie${path}`]);
     rankProps.filter(a => strval(values[a]) !== "").forEach(props => {
       values[props].split("\n").filter(prop => prop.startsWith("buff:")).forEach(prop => {
-        const [ attr, buffs ] = prop.split(":").splice(1);
+        const value = prop.split(":")[1].replace(/\s+/g, " ");
+        let [ attr, ...buffs ] = value.split(" ");
         if (attr === "")
           return;
+        buffs = buffs.join(" ");
         try {
           const byRank = JSON.parse(buffs.trim());
           const buffAttr = `voie${path}_buff_${ attr.trim() }`;
@@ -13043,7 +13119,7 @@ on("change:repeating_rolls:roll-nom change:repeating_npcrolls:npcroll-name", fun
   const [ section, rollId, btName ] = strval(eventInfo.triggerName).split("_").slice(1);
   getAttrs([ "character_name" ], function(values) {
     const charName = strval(values.character_name);
-    const rollBtn = `repeating_${section}_${rollId}_${ btName.split("-")[0] }-btn`;
+    const rollBtn = rptAttr(section, `${ btName.split("-")[0] }-btn`, rollId);
     setAttrs({ [rollBtn]: `%{${charName}|${rollBtn}}` })
   });
 });
@@ -13764,9 +13840,9 @@ function isWeapon(props, filter = "") {
 function getDefGear(values, rowIds, type = "armors") {
   const gears = new Map();
   rowIds.forEach(rowId => {
-    const equiped = intval(values[`repeating_equipement_${rowId}_equip-on`]);
-    const name = strval(values[`repeating_equipement_${rowId}_equip-nom`]);
-    const props = strval(values[`repeating_equipement_${rowId}_equip-props`]);
+    const equiped = intval(values[rptAttr("equipement", "equip-on", rowId)]);
+    const name = strval(values[rptAttr("equipement", "equip-nom", rowId)]);
+    const props = strval(values[rptAttr("equipement", "equip-props", rowId)]);
     if (type === "armors" && isArmor(name, props))
       gears.set(rowId, { name, equiped, props });
     if (type === "shields" && isShield(name, props))
@@ -13817,9 +13893,9 @@ function getHelmets(values, rowIds) {
 function getWeapons(values, rowIds, filter = "") {
   const gears = new Map();
   rowIds.forEach(rowId => {
-    const equiped = intval(values[`repeating_equipement_${rowId}_equip-on`]);
-    const name = strval(values[`repeating_equipement_${rowId}_equip-nom`]);
-    const props = strval(values[`repeating_equipement_${rowId}_equip-props`]);
+    const equiped = intval(values[rptAttr("equipement", "equip-on", rowId)]);
+    const name = strval(values[rptAttr("equipement", "equip-nom", rowId)]);
+    const props = strval(values[rptAttr("equipement", "equip-props", rowId)]);
     if (isWeapon(props, filter))
       gears.set(rowId, { name, equiped, props });
   });
@@ -13845,7 +13921,7 @@ function processAllAttacks(section, attributes, callback) {
     const allAttacks = [];
     rowIds.forEach(rowId => {
       attributes.forEach(attribute => {
-        allAttacks.push(`repeating_${section}_${rowId}_arme-${attribute}`);
+        allAttacks.push(rptAttr(section, `arme-${attribute}`, rowId));
       });
     });
     callback(rowIds, allAttacks);
@@ -13863,7 +13939,7 @@ function processAllGear(attributes, callback) {
     const allGears = [];
     rowIds.forEach(rowId => {
       attributes.forEach(attribute => {
-        allGears.push(`repeating_${section}_${rowId}_equip-${attribute}`);
+        allGears.push(rptAttr(section, `equip-${attribute}`, rowId));
       });
     });
     callback(rowIds, allGears);
@@ -13916,6 +13992,7 @@ on("clicked:repeating_equipement:equipshow-btn", function () {
     const props = strval(values[rptAttr(section, "equip-props")]);
     if (detail === "" && props === "")
       return
+
     const chatMsg = [
       "title=Equipement",
       `subtitle=${ qty > 1 ? `${qty} x ` : "" }${name}`,
@@ -14146,7 +14223,7 @@ on(changeEvent([
     "atk",
     "atkid",
     "predicats"
-  ].map(a => `repeating_equipement_equip-${a}`);
+  ].map(a => rptAttr("equipement", `equip-${a}`));
   getAttrs([ "cfg_usure", ...gearAttrs ], function(values) {
     const usure = boolval(values.cfg_usure);
     const [ name, detail, props, atk, atkid, pred ] = Object.keys(values).slice(1);
@@ -14163,7 +14240,7 @@ on(changeEvent([
     if (eventInfo.sourceAttribute.endsWith("equip-atk") && !hasAttack) {
       if (attackId) {
         removeRepeatingRow(`repeating_armes_${attackId}`);
-        setAttrs({ ["repeating_equipement_equip-atkid"]: "" });
+        setAttrs({ [rptAttr("equipement", "equip-atkid")]: "" });
       }
       return;
     }
@@ -14211,8 +14288,8 @@ on(changeEvent([
           thrownId = generateRowID();
       }
 
-      attributes.set("repeating_equipement_equip-atkid", attackId);
-      const rowId = "repeating_armes_" + attackId + "_arme-";
+      attributes.set(rptAttr("equipement", "equip-atkid"), attackId);
+      const rowId = rptAttr("armes", "arme-", attackId);
       attributes.set(rowId + "nom", equipment);
       const atk = attackRow.has("portee") ? "atktir" : "atkcac";
       attributes.set(rowId + "atk", atk);
@@ -14308,14 +14385,12 @@ on("clicked:profequip-btn", function() {
     const [ profile ] = strval(values.profil).split("/");
     if (profile === "")
       return;
-
-    loadBaseGear(profile);
+    ask(`Ajouter l'équipement de base pour ${profile} ?`, function(answer) {
+      if (answer === 2)
+        loadBaseGear(profile);
+    });
   });
 });
-
-function repeating(section, list, prefix = "") {
-  return new Map(list.map(attribute => [ attribute, `repeating_${section}_${prefix}${attribute}` ]));
-}
 
 /**
  * On set resource = ammo
@@ -14394,6 +14469,40 @@ on("change:repeating_ressources:res-val", function(eventInfo) {
   });
 });
 
+on("clicked:repeating_ressources:resconso-btn", function () {
+  const section = "ressources";
+  getAttrs(rptAttrs(section, [ "res-desc", "res-val", "res-props" ]), function (values) {
+    const updates = new Map();
+    const value = intval(values[rptAttr(section, "res-val")]);
+    if (value === 0)
+      return;
+    updates.set(rptAttr(section, "res-val"), value - 1);
+    let text = "";
+    let heal = "";
+    const rsub = strval(values[rptAttr(section, "res-desc")]);
+    const props = strval(values[rptAttr(section, "res-props")]);
+    const type = getProp(props, "type");
+    if (type.toLowerCase().startsWith("soins")) {
+      let [ roll ] = type.split("=").slice(1);
+      if (!roll)
+        roll = "1d4°";
+      heal = insertRolls(roll);
+    }
+
+    if (heal !== "" || text !== "") {
+      const chatMsg = rollTemplate({
+        lsub: "Consommable",
+        rsub,
+        heal,
+        text
+      });
+      sendChatMsg(chatMsg);
+    }
+
+    setAttrs(Object.fromEntries(updates));
+  });
+});
+
 /**
  * Rebuild all ranks in path
  */
@@ -14437,22 +14546,22 @@ function linkAttacks() {
       const allAttacks = [];
       atkIds.forEach(id => {
         [ "nom", "atktype", "gearid" ].forEach(attr => {
-          allAttacks.push(`repeating_armes_${id}_arme-${attr}`);
+          allAttacks.push(rptAttr("armes", `arme-${attr}`, id));
         });
       });
-      const allGears = gearIds.map(id => `repeating_equipement_${id}_equip-nom`);
+      const allGears = gearIds.map(id => rptAttr("equipement", "equip-nom", id));
       getAttrs([ ...allAttacks, ...allGears ], function (values) {
         const links = new Map();
         atkIds.forEach(id => {
-          const type = strval(values[`repeating_armes_${id}_arme-atktype`]);
+          const type = strval(values[rptAttr("armes", "arme-atktype", id)]);
           if ([ "sort", "naturel" ].includes(type))
             return;
-          const nom = strval(values[`repeating_armes_${id}_arme-nom`]);
+          const nom = strval(values[rptAttr("armes", "arme-nom", id)]);
           const gear = allGears.find(gear => cleanText(nom, false).includes(cleanText(strval(values[gear]), false)));
           if (gear) {
             const gearId = rptInfo(gear).rowId;
             if (gearId)
-              links.set(`repeating_armes_${id}_arme-gearid`, gearId);
+              links.set(rptAttr("armes", "arme-gearid", id), gearId);
           }
         });
         if (links.size > 0)
@@ -14576,7 +14685,7 @@ on("clicked:reset_all-btn", function() {
   rebuildBuffValues(e);
   rebuildCustom(e);
   ask("Lier attaques et équipements ?", function(answer) {
-    if (answer === 1)
+    if (answer === 2)
       linkAttacks();
   });
 });
@@ -14815,6 +14924,14 @@ on("clicked:helpdoc-btn", function() {
  */
 function menuButton(color, font = {}, extraCSS = {}) {
   color = color || "default";
+  let border = "none";
+  let radius = "3";
+  if (color && color[0].match(/[1-9]/)) {
+    radius = color.charAt(0);
+    color = color.slice(1);
+    border = `${radius}px solid ${color}`;
+    color = [ "whitesmoke", color ];
+  }
   font = { size: "0.8rem", weight: "bold", ...font };
   let backColor, textColor;
   if (Array.isArray(color))
@@ -14828,8 +14945,8 @@ function menuButton(color, font = {}, extraCSS = {}) {
   }
   const props = Object.keys(extraCSS).map(prop => `${prop}: ${ extraCSS[prop] }`);
   return `\"${buttonClass} style=\"` + [
-    "border: none",
-    "border-radius: 3px",
+    `border: ${border}`,
+    `border-radius: ${radius}px`,
     `background-color: ${backColor}`,
     `color: ${textColor}`,
     "padding: 2px",
@@ -14939,30 +15056,43 @@ on("clicked:etats_menu-btn", function() {
  * @param {string} [npc=""] - PC ("") or NPC ("npc") attacks
  */
 function attackRollsMenu(npc = "") {
-  const section = `repeating_${npc}armes`;
-  getSectionIDsOrdered(section, function (rowIds) {
-    const attackNames = rowIds.map(rowId => `${section}_${rowId}_arme-nom`);
+  const section = `${npc}armes`;
+  getSectionIDsOrdered("repeating_" + section, function (rowIds) {
+    const attackNames = rowIds.map(rowId => rptAttr(section, "arme-nom", rowId));
+    const atkType = rowIds.map(rowId => rptAttr(section, "arme-atk", rowId));
+    const atkRange = rowIds.map(rowId => rptAttr(section, "arme-portee", rowId));
     const attackBtn = (npc === "") ? "attack" : "npcatk";
-    getAttrs([ "character_name", "couleur_pj", ...attackNames ], function (values) {
+    getAttrs([
+      "character_name",
+      "couleur_pj",
+      ...attackNames,
+      ...atkType,
+      ...atkRange
+    ], function (values) {
       const charName = strval(values.character_name);
       const color = strval(values.couleur_pj);
       if (npc === "npc") {
         if (attackNames.length === 0)
           return;
         if (attackNames.length === 1) {
-          const action = `%{${charName}|repeating_npcarmes_${ rowIds[0] }_npcatk-btn}`;
+          const action = `%{${charName}|${ rptAttr("npcarmes", "npcatk-btn", rowIds[0]) }}`;
           sendChatCmd(action);
         } else {
-          const attackSelect = rowIds.map((rowId,ix) => values[`${section}_${rowId}_arme-nom`] + `,${ix + 1}`);
+          const attackSelect = rowIds.map((rowId,ix) => values[rptAttr(section, "arme-nom", rowId)] + `,${ix + 1}`);
           ask([ "Attaque ?", ...attackSelect ], (attack) => {
-            const action = `%{${charName}|repeating_npcarmes_${ rowIds[attack - 1] }_npcatk-btn}`;
+            const action = `%{${charName}|${ rptAttr("npcarmes", "npcatk-btn", rowIds[attack - 1]) }}`;
             sendChatCmd(action);
           });
         }
       } else {
-        const button = menuButton(color, {}, { padding: "0px 5px;" });
-        const chatMsg = rowIds.map((rowId, ix) => `${ix + 1}. ${values[`${section}_${rowId}_arme-nom`]}=[Jet](~${charName}|${section}_${rowId}_${attackBtn}-btn${button})`);
-        if (chatMsg === 0)
+        const button = menuButton("1" + color, {}, { padding: "0px 5px;" });
+        const chatMsg = rowIds.map((rowId, ix) => {
+          const type = strval(values[rptAttr(section, "arme-atk", rowId)]);
+          const range = strval(values[rptAttr(section, "arme-portee", rowId)]);
+          const emoji = type === "atkmag" ? SWData.emojis.atkmag : isRanged(type, range) ? SWData.emojis.atktir : SWData.emojis.atkcac;
+          return `${ix + 1}. ${ values[rptAttr(section, "arme-nom", rowId)] }=[${emoji}](~${charName}|${ rptAttr(section, attackBtn + "-btn", rowId) }${button})`;
+        });
+        if (chatMsg === "")
           return;
         sendChatMsg([
           `title=${charName}`,
@@ -15017,17 +15147,27 @@ on("clicked:abilities_menu-btn", function () {
  */
 seq(9).forEach(path => {
   on(`clicked:voie${path}_menu-btn`, function () {
-    const abilities = seq(5).map(rank => `voie${path}-t${rank}`);
-    getAttrs([ "character_name", "couleur_pj", "rangs_voies", "noms_voies", ...abilities ], function (values) {
+    const abilities = seq(5).map(rank => abilityInfo({ path, rank }).rankName);
+    const spells = seq(5).map(rank => abilityInfo({ path, rank }).rankSpell);
+    getAttrs([
+      "character_name",
+      "couleur_pj",
+      "rangs_voies",
+      "noms_voies",
+      ...abilities,
+      ...spells
+    ], function (values) {
       const charName = strval(values.character_name);
       const color = strval(values.couleur_pj);
       const pathRank = intval(strval(values.rangs_voies).split(",")[path - 1]);
       const pathName = strval(strval(values.noms_voies).split("|")[path -1]);
       const chatMsg = seq(5).reduce((result, rank) => {
         if (rank <= pathRank) {
-          const abilityName = values[`voie${path}-t${rank}`];
-          const button = menuButton(color, {}, { padding: "0px 5px;" });
-          result.push(`${abilityName}=[Jet](~${charName}|v${path}r${rank}-btn${button})`);
+          const abilityName = values[abilityInfo({ path, rank }).rankName];
+          const spell = boolval(values[abilityInfo({ path, rank }).rankSpell]);
+          const emoji = spell ? SWData.emojis.atkmag : SWData.emojis.actions;
+          const button = menuButton("1" + color, {}, { padding: "0px 5px;" });
+          result.push(`${abilityName}=[${emoji}](~${charName}|v${path}r${rank}-btn${button})`);
         }
         return result;
       }, []);
@@ -15075,6 +15215,9 @@ function abilityRollsMenu(npc = "") {
   });
 }
 
+/**
+ * Ability rolls menu
+ */
 on("clicked:rolls_menu-btn", function () {
   abilityRollsMenu();
 });
@@ -15135,6 +15278,94 @@ on("clicked:pc_menus-btn", function () {
   allRollsMenu();
 });
 
+on("clicked:pc_actions-btn", function() {
+  getSectionIDsOrdered("repeating_armes", function (rowIds) {
+    const section = "armes";
+    const attackNames = rowIds.map(rowId => rptAttr(section, "arme-nom", rowId));
+    const atkType = rowIds.map(rowId => rptAttr(section, "arme-atk", rowId));
+    const atkRange = rowIds.map(rowId => rptAttr(section, "arme-portee", rowId));
+    const attackBtn = "attack";
+    const allRankNames = [];
+    const allRankSpells = [];
+    const allRankProps = [];
+    seq(9).forEach((path) => {
+      seq(5).forEach((rank) => {
+        allRankNames.push(abilityInfo({ path, rank }).rankName);
+        allRankSpells.push(abilityInfo({ path, rank }).rankSpell);
+        allRankProps.push(abilityInfo({ path, rank }).rankProps);
+      });
+    });
+    getAttrs([
+      "character_name", "couleur_pj",
+      ...attackNames, ...atkType, ...atkRange,
+      "rangs_voies", "noms_voies",
+      ...allRankNames, ...allRankSpells, ...allRankProps,
+      "use_skills"
+    ], function (values) {
+      const charName = strval(values.character_name);
+      const color = strval(values.couleur_pj);
+      const chatMsg = [];
+
+      // Stats
+      const stats = SWData.PC.STATS.map(stat => {
+        const short = shorten(stat);
+        const button = menuButton(color, {}, { width: "2rem", ["text-align"]: "center" });
+        return `[${short.toUpperCase()}](~${charName}|${short}-btn${button})`;
+      }).join(" ");
+      chatMsg.push("Caractéristiques=" + stats);
+
+      const button = menuButton("1" + color, {}, { padding: "0px 5px;" });
+
+      // Attacks
+      const attacks = rowIds.map((rowId) => {
+        const type = strval(values[rptAttr(section, "arme-atk", rowId)]);
+        const range = strval(values[rptAttr(section, "arme-portee", rowId)]);
+        const emoji = type === "atkmag" ? SWData.emojis.atkmag : isRanged(type, range) ? SWData.emojis.atktir : SWData.emojis.atkcac;
+        return `${ values[rptAttr(section, "arme-nom", rowId)] } [${emoji}](~${charName}|${ rptAttr(section, attackBtn + "-btn", rowId) }${button})`;
+      }).join("\n");
+      if (attacks.length > 0)
+        chatMsg.push("Attaques=" + attacks);
+
+      // Abilities
+      const pathRanks = strval(values.rangs_voies).split(",");
+      const pathNames = strval(values.noms_voies).split("|");
+      pathNames.forEach((pathName, ix) => {
+        const pathRank = intval(pathRanks[ix])
+        if (pathRank === 0)
+          return;
+        const path = ix + 1;
+        const abilities = seq(pathRank).map((rank) => {
+          const name = strval(values[abilityInfo({ path, rank }).rankName]);
+          const spell = boolval(values[abilityInfo({ path, rank }).rankSpell]);
+          const props = strval(values[abilityInfo({ path, rank }).rankProps]);
+          const action = (spell || hasProp(props, "action"))
+          ? ` [${SWData.emojis.atkmag}](~${charName}|${ abilityInfo({ path, rank }).rankOwned }-btn${button})`
+          : "";
+          return name + action;
+        }).join("\n");
+        if (abilities)
+          chatMsg.push(pathName + "=" + abilities);
+      });
+
+      // Skills
+      if (boolval(values.use_skills)) {
+        chatMsg.push(`Compétences=[Choix](~${charName}|skills_menu-btn${menuButton(color, {}, { padding: "0px 5px;" })})`);
+      }
+
+      // Send all
+      sendChatMsg([
+        `title=${charName}`,
+        "subtitle=Actions",
+        "color=" + color,
+        ...chatMsg
+      ], {
+        template: "custom",
+        whisper: "\"" + charName + "\""
+      });
+    });
+  });
+});
+
 /**
  * Return object held in hand
  * @param {string} hand - main_ attribute suffix (princ|autre)
@@ -15163,7 +15394,7 @@ function holding(hand, values) {
       break;
     default:
       const [ atkId ] = inHand.split("~").splice(1);
-      holding = strval(values[`repeating_armes_${atkId}_arme-nom`]);
+      holding = strval(values[rptAttr("armes", "arme-nom", atkId)]);
       break;
   }
   return holding;
@@ -15368,7 +15599,7 @@ on("change:rd change:resdm sheet:opened", function() {
  */
 on("change:pnjatk", function() {
   getSectionIDs("npcarmes", function(rowIds) {
-    const attacks = rowIds.map(id => `repeating_npcarmes_${id}_arme-atk`);
+    const attacks = rowIds.map(id => rptAttr("npcarmes", "arme-atk", id));
     getAttrs([ "pnjatk", ...attacks ], function(values) {
       const npcAtk = intval(values.pnjatk);
       const updates = new Map();
@@ -15392,15 +15623,15 @@ on("change:repeating_npcarmes:arme-nom clicked:renum_npcatk-btn", function(event
   if (!renumber)
     atkId = strval(eventInfo.triggerName.split("_")[2]);
   getSectionIDsOrdered("repeating_npcarmes", function (rowIds) {
-    const labels = rowIds.map(id => `repeating_npcarmes_${id}_arme-label`);
+    const labels = rowIds.map(id => rptAttr("npcarmes", "arme-label", id));
     getAttrs([ "character_name", "max_attack_label", "scriptVersion", ...labels ], function (values) {
       const updates = new Map();
 
       if (!renumber) {
         // display attack options row if script detected
-        updates.set("repeating_npcarmes_armeopt", hasMODScript(values) ? 1 : 0);
+        updates.set(rptAttr("npcarmes", "armeopt"), hasMODScript(values) ? 1 : 0);
         // update roll button linked attribute
-        const atkBtn = `repeating_npcarmes_${atkId}_npcatk-btn`;
+        const atkBtn = rptAttr("npcarmes", "npcatk-btn", atkId);
         updates.set(atkBtn, `%{${ strval(values.character_name) }|${atkBtn}}`);
       }
             
@@ -15590,7 +15821,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
       if (result) {
         [ multiAttacks ] = result.slice(1);
       }
-      if (intval(multiAttacks) <= 0 )
+      if (intval(multiAttacks) <= 0)
         multiAttacks = 1;
     }
 
@@ -15696,7 +15927,6 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     // Fumble table
     rollOptions.fumble = useFumbleTable(values, "npc");
     const fumbleEffect = rollOptions.fumble ? fumbleRoll(values) : "";
-
     
     // Check special effect on die roll
     let rollEffect = "";
@@ -15757,8 +15987,8 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
       }
 
       if (boolval(values.cfg_cible)) {
-        chatAtk.tohit = "[[@{target|def}]]"
-        chatAtk.target = "@{target|character_name}"
+        chatAtk.tohit = SWData.settings.tokens.target.def;
+        chatAtk.target = SWData.settings.tokens.target.name;
       }
 
       if(extraDM.length > 0)
@@ -15934,7 +16164,7 @@ function importNPCAttack(sbLine, npcAttrs) {
   if (special !== "")
     special = " + " + special;
   
-  const rowId = `repeating_npcarmes_${generateRowID()}_arme-`;
+  const rowId = rptAttr("npcarmes", "arme-", generateRowID());
   npcAttrs.set(rowId + "nom", name);
   npcAttrs.set(rowId + "roll", "1d20");
   npcAttrs.set(rowId + "atk", bonus);
@@ -16088,7 +16318,7 @@ function statBlockFromPDF(statblock) {
   }
 
   abilities.forEach(ability => {
-    const rowId = `repeating_npcrolls_${generateRowID()}_npcroll-`;
+    const rowId = rptAttr("npcrolls", "npcroll-", generateRowID());
     let name = strval(ability.name);
     name = name !== "" ? name.charAt(0).toUpperCase() + name.substring(1) : name;
     let description = strval(ability.description);
@@ -16248,7 +16478,7 @@ function migrateCOF1Sheet(sheetType, verCOF1) {
     ];
     atkIds.forEach(id => {
       oldAtkAttrs.map(a => a.split(":")[0]).forEach(attr => {
-        oldAtks.push(`repeating_${section}_${id}_arme${attr}`);
+        oldAtks.push(rptAttr(section, `arme${attr}`, id));
       });
     });
 
@@ -16317,14 +16547,14 @@ function migrateCOF1Sheet(sheetType, verCOF1) {
             return;
           if (!newAttr)
             newAttr = oldAttr;
-          const oldValue = strval(values[`repeating_armes_${id}_arme${oldAttr}`]);
+          const oldValue = strval(values[rptAttr("armes", `arme${oldAttr}`,id)]);
           const newValue = migrateCOF1Value(oldAttr, oldValue);
-          migrated.set(`repeating_${section}_${id}_arme-${newAttr}`, newValue);
+          migrated.set(rptAttr(section, `arme-${newAttr}`,id), newValue);
           if (oldAttr === "nom")
             chatMsg.push(`Attaque n° ${ix + 1}=${oldValue}`);
         });
-        const dm = strval(values[`repeating_armes_${id}_armedmnbde`], "1")+"d"+strval(values[`repeating_armes_${id}_armedmde`], "4");
-        migrated.set(`repeating_${section}_${id}_arme-dm`, dm);
+        const dm = strval(values[rptAttr("armes", "armedmnbde", id)], "1")+"d"+strval(values[rptAttr("armes", "armedmde", id)], "4");
+        migrated.set(rptAttr(section, "arme-dm", id), dm);
       });
   
       migrated.set("version_max", "v" + verCOF1);
@@ -16432,12 +16662,12 @@ function loadAttackLists(section) {
       const otherHand = strval(values.main_autre);
       const shield = boolval(values.bouclier_eqp);
       rowIds.forEach(id => {
-        const type = strval(values[`repeating_${section}_${id}_arme-atktype`]);
+        const type = strval(values[rptAttr(section, "arme-atktype", id)]);
         if (type === "sort")
           return;
-        const label = strval(values[`repeating_${section}_${id}_arme-label`], "999");
-        const name = strval(values[`repeating_${section}_${id}_arme-nom`]);
-        const twoHands = intval(values[`repeating_${section}_${id}_arme-2m`]);
+        const label = strval(values[rptAttr(section, "arme-label", id)], "999");
+        const name = strval(values[rptAttr(section, "arme-nom", id)]);
+        const twoHands = intval(values[rptAttr(section, "arme-2m", id)]);
         attackList.push({
           label: name,
           value: `${label}~${id}~${twoHands}`,
@@ -16596,7 +16826,7 @@ function updateActionButtons(options) {
         return;
       const updates = new Map();
       rowIds.forEach(rowId => {
-        const atkBtn = `repeating_${section}_${rowId}_${button}`;
+        const atkBtn = rptAttr(section, button, rowId);
         updates.set(atkBtn, `%{${charName}|${atkBtn}}`);
       });
       if (updates.size > 0)
