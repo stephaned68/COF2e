@@ -241,6 +241,7 @@ Certaines capacités de profil sont automatiquement prises en charge par la fich
 Divers boutons disséminés dans la fiche permettent d'afficher dans le chat Roll20 des menus avec des listes d'actions. Ces boutons peuvent être configurés en tant que macros Roll20 et insérés dans la barre rapide des macros et/ou configurés en tant qu'action de jetons.
 
 Les macros à configurer sont les suivantes :
+- <kbd>%{selected|pc_actions-btn}</kbd> : menu complet des actions de PJ : jets de caractéristiques, jets d'attaque, liste des capacités par voies avec jet pour les sorts et capacités actives, jet de compétence via un popup de sélection
 - <kbd>%{selected|pc_menus-btn}</kbd> : menu de tous les autres sous-menus possibles
 - <kbd>%{selected|caract_menu-btn}</kbd> : menu des jets de caractéristiques
 - <kbd>%{selected|caract_select-btn}</kbd> : popup Roll20 de sélection d'un jet de caractéristique

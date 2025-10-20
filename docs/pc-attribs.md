@@ -117,9 +117,9 @@ Pour chacune, vous indiquez :
 - La caractéristique ajoutée aux DM,
 - Un bonus optionnel de DM
 - La portée pour une arme à distance
-- Un effet spécial ou une description affichée dans le chat Roll20.
 
 Des paramètres optionnels peuvent être ajoutés :
+- Un effet spécial ou une description affichée dans le chat Roll20. Ce texte peut comporter des commandes de chat Roll20. Les références à certains attributs du personnage peuvent être reconnues et remplacées par leurs valeurs effectives.
 - Type d'attaque : vous pouvez indiquer le type de cette attaque en choisissant parmi
   - Arme en main
   - Arme de jet
@@ -182,7 +182,7 @@ Le bouton d20 de l'attaque peut être épinglé dans la barre d'actions de Roll2
 
 ## Options tactiques
 
-Cette section permet de prendre en compte les options tactiques des attaques. Après sélection de l'option choisie, les effets de celle-ci sont appliqués à n'importe quel jet d'attaque.
+Cette section permet de prendre en compte les options tactiques des attaques. Après sélection de l'option choisie, les effets de celle-ci sont appliqués au prochain jet d'attaque.
 
 ## Modificateurs situationnels
 

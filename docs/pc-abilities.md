@@ -62,7 +62,7 @@ Une troisième icone est affichée si le personnage possède au moins un sort (e
 
 Les propriétés suivantes peuvent être appliquées aux capacités :
 
-- <kbd>fx:</kbd> suivi du nom d'un effet spécial et d'un nombre éventuel de répétitions pour que la fiche joue un FX Roll20 (commande <kbd>/fx</kbd>) lorsque la capacité est utilisée.
+- <kbd>fx: xxxxx N</kbd> suivi du nom d'un effet spécial xxxxxx et d'un nombre éventuel N de répétitions pour que la fiche joue un FX Roll20 (commande <kbd>/fx</kbd>) lorsque la capacité est utilisée.
 - <kbd>pm:</kbd> suivi d'un chiffre pour faire varier le nombre de PM consommés par cette capacité. Ce chiffre peut être absolu (<kbd>3</kbd> pour consommer 3 PM) ou relatif (<kbd>-1</kbd> pour consommer 1 PM de moins que la normale).
 - <kbd>selonRang: valeur1,valeur2,valeur3,valeur4,valeur5</kbd> suivi de 5 valeurs séparées par des virgules pour indiquer qu'un paramètre de la capacité évolue selon le rang atteint dans la voie.
   - <kbd>valeur1</kbd> est la valeur du paramètre évolutif au rang 1
@@ -71,10 +71,12 @@ Les propriétés suivantes peuvent être appliquées aux capacités :
   - <kbd>valeur4</kbd> est la valeur du paramètre évolutif au rang 4
   - <kbd>valeur5</kbd> est la valeur du paramètre évolutif au rang 5
   
-  Le texte de la capacité doit comporter le marqueur <kbd>&#123;&#123;selonRang&#125;&#125;</kbd> pour que la fiche y insère la valeur dépendant du rang atteint.
+  Le texte de la capacité doit comporter l'expression <kbd>&#123;&#123;selonRang&#125;&#125;</kbd> pour que la fiche y insère la valeur dépendant du rang atteint.
 
 - <kbd>epic:</kbd> suivi d'un espace pour identifier la capacité comme épique.
-- <kbd>buff: xxx:[valeur1,valeur2,valeur3,valeur4,valeur5]</kbd> permet de spécifier un buff qui évolue selon le rang atteint dans la voie. 
+- <kbd>buff: xxx [valeur1,valeur2,valeur3,valeur4,valeur5]</kbd> permet de spécifier un buff qui évolue selon le rang atteint dans la voie.
+- <kbd>roll: xxx</kbd> où xxx peut prendre les valeurs `contact` ou `distance` ou `magie` permet de demander à la fiche de faire le jet d'attaque correspondant lors de l'utilisation de la capacité. Un autre type de jet peut être indiqué, en spécifiant le nom du bouton (généralement suffixé par `-btn` et affiché au survol de la souris sur les différentes rubriques de la fiche).
+- <kbd>action:</kbd> suivi d'un espace pour identifier la capacité comme active afin qu'un bouton d'action lui soit assigné dans le menu d'actions dans le chat.
 
 ### Exemples :
 
@@ -82,7 +84,7 @@ Les propriétés suivantes peuvent être appliquées aux capacités :
 
   <kbd>fx: nova-charm 6</kbd>
 
-- Paramétrer la capacité _Arc de feu_ de la voie de la _Magie destructrice_ avec son évolution au rang 4 :
+- Paramétrer la capacité de sort _Arc de feu_ avec son évolution au rang 4 :
 
   Propriété : <kbd>selonRang: 1d4°,1d4°,1d4°,2d4°,2d4°</kbd>
 
@@ -90,13 +92,17 @@ Les propriétés suivantes peuvent être appliquées aux capacités :
 
 - Paramétrer le buff à la DEF octroyé par la capacité Peau de pierre selon le rang atteint dans la voie du pagne renseignée en voie n°3
 
-  Propriété : <kbd>buff: def:[0,1,1,2,2]</kbd>
+  Propriété : <kbd>buff: def [0,1,1,2,2]</kbd>
 
   Cette propriété crée une valeur nommée <kbd>voie3_buff_def</kbd>. Cette valeur change selon le rang atteint dans la voie n°3 en utilisant l'énumération indiquée entre <kbd>[]</kbd> : 0 au rang 1, 1 au rang 2, 2 à partir du rang 4. Cette valeur peut être indiquée comme une référence d'attribut dans une ligne de buff en spécifiant <kbd>[voie3_buff_def]</kbd>.
 
+- Paramétrer la capacité de sort _Flèche de feu_ pour effectuer le jet d'attaque magique
+
+  Propriété : <kbd>roll: magie</kbd>
+
 ## Capacités épiques
 
-Pour que le calcul des rangs atteints dans les voies, des PV et des points de capacités dépensés soit correct, une capacité épique ne doit <strong>PAS</strong> être cochée.
+Pour que les calculs des rangs atteints dans les voies, des PV et des points de capacités dépensés soient corrects, une capacité épique ne doit <strong>PAS</strong> être cochée.
 
 # Jets de capacités
 
@@ -130,7 +136,7 @@ Ce sous-onglet n'apparaît que si la règle optionnelle est activée dans l'ongl
 - Le choix _Demander_ permet d'afficher un popup Roll20 pour sélectionner la caractéristique au moment du jet.
 - Indiquez le bonus de compétence qui s'ajoute au jet.
 
-A moins que l'option de configuration _Un seul jet de compétence_ ne soit active, deux jets distincts sont effectués, sauf si le PJ est _Affaibli_. Dans le cas général (jet normal), prenez en compte le jet de gauche. Prenez le plus élevé des deux jets si le PJ bénéficie d'un _dé bonus_ ou le moins élevé s'il subit un _dé malus_.
+A moins que l'option de configuration _Un seul jet de compétence_ ne soit active ou que le PJ ne soit _Affaibli_, deux jets distincts sont effectués. Dans le cas général (jet normal), prenez en compte le jet de gauche. Prenez le plus élevé des deux jets si le PJ bénéficie d'un _dé bonus_ ou le moins élevé s'il subit un _dé malus_.
 
 # Buffs / Debuffs
 
@@ -152,21 +158,37 @@ Pour chaque élément de la liste, vous pouvez indiquer :
   - Comme le rang dans une voie, éventuellement ajusté d'un bonus <kbd>X</kbd>, en référençant celle-ci sous l'une des formes suivantes :
     - <kbd>[rang voie N]</kbd> ou <kbd>[rang voie N] + X</kbd> pour la voie no <kbd>N</kbd>
     - <kbd>[rang nom]</kbd> ou <kbd>[rang nom] + X</kbd> pour la voie <kbd>nom</kbd>
-  - Comme une expression de dés (principalement pour les buffs aux DM)
+  - Comme une formule de jet de dés (principalement pour les buffs aux DM)
 
 Plusieurs buffs peuvent s'appliquer au même attribut du PJ. Si c'est le cas, le total des buffs actuellement actifs (cochés) est calculé.
 
-Dans le cas d'un buff aux DM, celui-ci s'applique à tous les jets d'attaque effectuées à partir du moment où il est actif. Il est possible de le rendre optionnel en indiquant un <kbd>?</kbd> au début de son nom. La fiche demandera alors si ce buff s'applique quand un jet d'attaque est effectué.
+Dans le cas d'un buff aux DM, celui-ci s'applique à tous les jets d'attaque effectuées à partir du moment où il est actif. Il est possible de le rendre optionnel en indiquant un <kbd>?</kbd> au début de son nom. La fiche demandera alors si ce buff s'applique quand un jet d'attaque est effectué. Il est possible d'indiquer une liste de DM différents pour un même buff. Voir exemple ci-dessous.
 
-_Exemple :_
+## Exemples de buffs optionnels
 
-Pour créer un buff optionnel de DM d'attaque sournoise, indiquez <kdb>? Attaque sournoise</kbd> dans le nom du buff, <kbd>DM</kbd> dans l'attribut cible, <kbd>2d4°</kbd> dans la valeur, et cochez la case d'activation. A chaque fois que le voleur effectue une attaque, la fiche demandera s'il s'agit d'une attaque sournoise, et si oui, lancera les dés de DM supplémentaires.
+### Attaque sournoise
+
+Pour créer un buff optionnel de DM d'_Attaque sournoise_, indiquez :
+- <kbd>? Attaque sournoise</kbd> dans le nom du buff,
+- <kbd>DM</kbd> dans l'attribut cible,
+- <kbd>2d4°</kbd> dans la valeur
+
+Cochez la case d'activation. A chaque fois que le voleur effectue une attaque, la fiche demandera s'il s'agit d'une attaque sournoise, et si oui, lancera les dés de DM supplémentaires.
 
 NB : Pour ne pas avoir à actualiser le nombre de d4° quand le voleur atteint le rang 4 dans une voie de profil, vous pouvez créer un attribut personnalisé <kbd>sournoise</kbd> (cf. onglet [Configuration]({{ site.baseurl }}/pc-config)) et indiquer <kbd>[voleur_sournoise]</kbd> dans la valeur du buff.
 
+### Dans le mille
+
+Pour créer un buff optionnel de DM d'attaque _Dans le mille_, indiquez :
+- <kbd>? Dans le mille</kbd> dans le nom du buff,
+- <kbd>DM</kbd> dans l'attribut cible,
+- <kbd>2d4° &amp; Action limitée=3d4°</kbd> dans la valeur
+
+Cochez la case d'activation. A chaque fois que le rôdeur effectue une attaque, la fiche proposera 3 possibilités d'utilisation pour _Dans le mille_ : _Non_, _Oui_, _Action Limitée_, et lancera les dés de DM supplémentaires selon le choix effectué.
+
 ## Activation / désactivation par nom
 
-Une icone _Interrupteur_ à côté du titre _Nom du buff_ permet une activation ou un désactivation rapide de plusieurs buffs. Un popup Roll20 affiche les noms des buffs de type temporaire qui ont plusieurs attributs cibles. Tous les buffs correspondants au nom sélectionné voient leur état basculer entre actif et inactif.
+Une icone _Interrupteur_ à côté du titre _Nom du buff_ permet l'activation et désactivation rapide de plusieurs buffs. Un popup Roll20 affiche les noms des buffs de type temporaire qui ont plusieurs attributs cibles. Tous les buffs correspondants au nom sélectionné voient leur état basculer entre actif et inactif.
 
 _Exemple :_ 
 
@@ -189,8 +211,10 @@ Il suffit ensuite de cliquer sur le bouton d'import de la voie pour insérer le 
 
 # Jets en ligne (Inline-Rolls)
 
-Avant d'être envoyé dans le chat, les descriptions des capacités sont analysées et des cartains motifs de texte sont remplacés par des jets en ligne (_in-line rolls_) :
+Avant d'être envoyé dans le chat, les descriptions des capacités sont analysées et certaines expressions sont remplacées par des jets en ligne (_in-line rolls_) :
 - <kbd>[AGI]</kbd>, <kbd>[CON]</kbd>, <kbd>[FOR]</kbd>, etc... sont remplacés par le score de la caractéristique correspondante.
+- <kbd>[NIV]</kbd> ou <kbd>[NIVEAU]</kbd> ou <kbd>[NC]</kbd> sont remplacés par le niveau du personnage.
+- <kbd>[NOM]</kbd> est remplacé par le nom du personnage.
 - <kbd>[nombre +/- XXX]</kbd>, où <kbd>XXX</kbd> est un nom de caractéristique, sont remplacés par le résultat du calcul.
 - <kbd>[rang voie N]</kbd> est remplacé par la valeur du rang dans la voie indiquée par N.
 - <kbd>Nd4°</kbd> ou <kbd>NdE</kbd> est remplacé par un jet du nombre <kbd>N</kbd> de dés évolutifs.
@@ -199,7 +223,7 @@ Avant d'être envoyé dans le chat, les descriptions des capacités sont analys�
 
 Si vous connaissez le langage de macro de Roll20, vous pouvez indiquer ces inline-rolls vous-même dans le texte de la capacité.
 
-Exemples : 
+## Exemples
 
 <kbd>[[1d8 + @{for}]]</kbd> pour lancer un d8 et ajouter le score de Force du personnage.
 
