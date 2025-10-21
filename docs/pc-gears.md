@@ -83,7 +83,7 @@ Si l'arme possède la propriété <kbd>lancer</kbd>, la fiche crée deux lignes 
 
 # Ressources
 
-Dans cette section, vous pouvez renseigner une liste de ressources ou de consommables.
+Dans cette section, vous pouvez renseigner une liste de ressources et de consommables.
 
 Pour chaque élément de la liste, vous indiquez :
 - Le nom de la ressource,
@@ -92,9 +92,9 @@ Pour chaque élément de la liste, vous indiquez :
 
 Un bouton permet de décompter un consommable et éventuellement d'envoyer un message dans le chat Roll20 selon le type de consommable.
 
-Si vous spécifiez une propriété <kbd>type</kbd> avec la valeur <kbd>munitions</kbd>, la fiche recherche dans les armes une ligne dont le type d'attaque est _Trait_ et dont le nom de munition correspond au nom de la ressource. Elle établit la relation entre les deux éléments pour décrémenter la ressource à chaque attaque et afficher un message d'avertissement lorsque le personnage est à court de munitions.
+Si vous spécifiez une propriété <kbd>type: munition</kbd>, la fiche recherche dans les armes une ligne dont le type d'attaque est _Trait_ et dont le nom de munition correspond au nom de la ressource. Elle établit la relation entre les deux éléments pour décrémenter la ressource à chaque attaque et afficher un message d'avertissement lorsque le personnage est à court de munitions.
 
-Si vous spécifiez une propriété <kbd>type</kbd> avec la valeur <kbd>soins</kbd>, et que vous cliquez sur le bouton _Consommable_, un message de chat indiquant le nombre de PV récupérés s'affiche. Par défaut, il s'agit d'une potion de soins standard permettant de récupérer 1d4° PV. Vous pouvez si besoin indiquer une formule de dés différente avec un signe égal à la suite du mot <kbd>soins</kbd>. _Ex :_ : pour paramétrer les Elixir de guérison du Forgesort, indiquez <kbd>soins=[2d4°+INT]</kbd>.
+Si vous spécifiez une propriété <kbd>type: soins</kbd>, et que vous cliquez sur le bouton _Consommable_, un message de chat indiquant le nombre de PV récupérés s'affiche. Par défaut, il s'agit d'une potion de soins standard permettant de récupérer 1d4° PV. Vous pouvez si besoin indiquer une formule de dés différente à la suite du mot <kbd>soins</kbd>. _Ex :_ : pour paramétrer les Elixirs de guérison du Forgesort, indiquez <kbd>type: soins [2d4°+INT]</kbd>.
 
 # Munitions
 
