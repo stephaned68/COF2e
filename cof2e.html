@@ -12614,7 +12614,6 @@ function actionAbility(path, rank) {
     if (alert !== "" && alertCSS === "")
       text += "\n" + alert
 
-
     // Do another roll
     let nextRoll = "";
     if (hasProp(abilityProps, "roll")) {
@@ -14483,10 +14482,10 @@ on("clicked:repeating_ressources:resconso-btn", function () {
     const props = strval(values[rptAttr(section, "res-props")]);
     const type = getProp(props, "type");
     if (type.toLowerCase().startsWith("soins")) {
-      let [ roll ] = type.split("=").slice(1);
-      if (!roll)
-        roll = "1d4°";
-      heal = insertRolls(roll);
+      let [ ...roll ] = type.trim().split(" ").slice(1);
+      if (roll.length === 0)
+        roll.push("1d4°");
+      heal = insertRolls(roll.join(""));
     }
 
     if (heal !== "" || text !== "") {
