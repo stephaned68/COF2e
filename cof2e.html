@@ -14468,6 +14468,9 @@ on("change:repeating_ressources:res-val", function(eventInfo) {
   });
 });
 
+/**
+ * On click of consumable button
+ */
 on("clicked:repeating_ressources:resconso-btn", function () {
   const section = "ressources";
   getAttrs(rptAttrs(section, [ "res-desc", "res-val", "res-props" ]), function (values) {
@@ -14485,7 +14488,7 @@ on("clicked:repeating_ressources:resconso-btn", function () {
       let [ ...roll ] = type.trim().split(" ").slice(1);
       if (roll.length === 0)
         roll.push("1d4°");
-      heal = insertRolls(roll.join(""));
+      heal = insertRolls(roll.join(" "));
     }
 
     if (heal !== "" || text !== "") {
