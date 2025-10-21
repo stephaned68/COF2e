@@ -116,13 +116,17 @@ summary h4 {
 }
 
 /* Redefine Roll20 repeating sections buttons */
-.charsheet .repcontrol button.repcontrol_edit,
-.charsheet .repcontrol button.repcontrol_add {
+.charsheet .repcontrol button.repcontrol_add,
+.charsheet .repcontrol button.repcontrol_edit {
   border-radius: 5px;
   margin: 5px;
   padding-top: 0px;
   padding-bottom: 0px;
-  font-size: small;
+}
+
+.charsheet .repcontrol button.repcontrol_add:hover,
+.charsheet .repcontrol button.repcontrol_edit:hover {
+  color: var(--cof-click);
 }
 
 button[type="roll"] {
