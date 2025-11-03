@@ -89,7 +89,7 @@
   <input type="hidden" name="attr_rang_voie9" value="0">
 
   <input type="hidden" name="attr_rang_cavalier" value="0">
-  
+    
   <!-- COFantasy MOD interaction -->
   <input type="hidden" name="attr_script_title" value="">
   <input type="hidden" name="attr_cofantasy" value="">
@@ -102,6 +102,10 @@
   <input type="hidden" name="attr_max_actions4_label" value="">
   <input type="hidden" name="attr_max_actions5_label" value="">
 
+  <!-- Rolls -->
+  <input type="hidden" name="attr_d20roll" value="">
+
+  <!-- PVIG = pv first in dropdown -->
   <input type="hidden" name="attr_PVIG" value="0">
   <input type="hidden" name="attr_PVIG_max" value="0">
 
@@ -118,6 +122,22 @@
         title="Version 1.10.0 - 31/10/2025"
         src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cof2e_logo.jpg"
       />
+      <input type="hidden" class="d20roll-btns" name="attr_cfg_d20roll" value="0">
+      <div class="d20roll-btns d-flex m2">
+        <input type="hidden" class="d20-toggle" name="attr_d20roll" value="1d20"/>
+        <div>
+          <span>Jet :</span>&nbsp;
+          <button type="action" class="img-btn d20roll_db" name="act_d20roll_db-btn">
+            <span class="img-btn">&</span>&nbsp;Dé bonus
+          </button>
+          <button type="action" class="img-btn d20roll_1d" name="act_d20roll_1d-btn">
+            Normal
+          </button>
+          <button type="action" class="img-btn d20roll_dm" name="act_d20roll_dm-btn">
+            <span class="img-btn">_</span>&nbsp;Dé malus
+          </button>
+        </div>
+      </div>
     </div>
 
     <!-- Token -->
@@ -5162,6 +5182,18 @@
                   </li>
                 </ul>
               </li>
+              <li>Dé bonus/Dé malus
+                <ul>
+                  <li class="config-check">
+                    <input type="checkbox" name="attr_cfg_d20roll" value="1">
+                    <span>Boutons</span>
+                  </li>
+                  <li class="config-check">
+                    <input type="checkbox" name="attr_cfg_d20roll" value="2">
+                    <span>Demander</span>
+                  </li>
+                </ul>
+              </li>
             </ul>
     
             <details>
@@ -5526,8 +5558,10 @@
                     <li>Ajout de listes de tailles et de type de créatures sur la fiche de PNJ</li>
                     <li>Ajout d'une option pour cibler un token lors d'un jet d'attaque</li>
                     <li>Effacement de l'option tactique choisie après un jet d'attaque</li>
+                    <li>Ajout d'une macro <em>pc_actions-btn</em> pour une liste d'actions dans le chat</li>
                     <li>Prise en charge des ressources consommables de type <em>soins</em></li>
                     <li>Ajout d'un bouton <em>Consommable</em> à la liste des ressources</li>
+                    <li>Ajout du nombre d'utilisations par jour/combat aux capacités de PNJ</li>
                   </ul>
                 </details>
               </li>
@@ -6276,6 +6310,7 @@
                   <span class="img-btn">l</span>
                 </button>
               </h4>
+              <h4>UTILISATIONS</h4>
               <h4>DESCRIPTION</h4>
             </div>
   
@@ -6291,11 +6326,24 @@
                   </button>
                 </div>
   
-                <div class="bordered">
+                <div class="bordered d-flex">
                   <input type="text" name="attr_npcroll-name" title="@{npcroll-name}" placeholder="Nom de la capacité" value="">
                 </div>
+
+                <div class="bordered d-flex">
+                  <input type="number" name="attr_npcroll-uses" title="@{npcroll-uses} Nombre d'utilisations" value="">
+                  /
+                  <input type="number" name="attr_npcroll-max" title="@{npcroll-max} Nombre d'utilisations max"value="">
+                  &nbsp;
+                  <input type="text" list="npcroll-freqs" name="attr_npcroll-freq" title="@{npcroll-freq} Fréquence d'utilisation" placeholder="Par ..." value="">
+                  <datalist id="npcroll-freqs">
+                    <option value="combat"></option>
+                    <option value="jour"></option>
+                  </datalist>
+
+                </div>
   
-                <div class="bordered">
+                <div class="bordered d-flex">
                   <textarea class="one-row" name="attr_npcroll-desc" title="@{npcroll-desc}" placeholder="Description de la capacité"></textarea>
                 </div>
   
@@ -7182,18 +7230,12 @@
     {{/broll}}
   </div>
   {{#tohit}}
-  {{#rollGreater() roll tohit}}
+  {{#^rollLess() roll tohit}}
   <div class="sheet-rt sheet-rt-text sheet-rt-centered">
     <span>Contre *{{target}}* :</span>
     <span class="sheet-rt sheet-rt-hit">SUCCÈS !</span>
   </div>
-  {{/rollGreater() roll tohit}}
-  {{#rollEqual() roll tohit}}
-  <div class="sheet-rt sheet-rt-text sheet-rt-centered">
-    <span>Contre *{{target}}* :</span>
-    <span class="sheet-rt sheet-rt-hit">SUCCÈS !</span>
-  </div>
-  {{/rollEqual() roll tohit}}
+  {{/^rollLess() roll tohit}}
   {{#rollLess() roll tohit}}
   <div class="sheet-rt sheet-rt-text sheet-rt-centered">
     <span>Contre *{{target}}* :</span>
@@ -7411,10 +7453,10 @@ const SWData = {
     }
   },
   emojis: {
-    "atkcac": "&#9876;&#65039;",  // crossed-swords
-    "atktir": "&#127993;",        // bow and arrow
-    "atkmag": "&#129668;",        // magic wand
-    "actions": "&#10024;"         // sparkles
+    "atkcac":   "&#9876;&#65039;",  // crossed-swords
+    "atktir":   "&#127993;",        // bow and arrow
+    "atkmag":   "&#129668;",        // magic wand
+    "actions":  "&#128262;",        // bright
   },
   SHEET_TYPE: {
     PC: "pc",
@@ -8872,6 +8914,88 @@ const SWData = {
 // =================
 
 /**
+ * Async/Await functions
+ * https://github.com/onyxring/orcsAsync/blob/master/orcsAsync.min.js
+ */
+function isRunningOnServer() { return self.dispatchEvent == undefined; }
+function setActiveCharacterId(charId){
+    var oldAcid=getActiveCharacterId();
+    var msg={"id":"0", "type":"setActiveCharacter", "data":charId};
+    
+    if(isRunningOnServer()==false){ //if in a browser, use "dispatchEvent" to process the message
+        var ev = new CustomEvent("message");
+        ev.data=msg; 
+        self.dispatchEvent(ev);
+    }else{ //otherwise, use the API (server) message processor, "onmessage"
+        self.onmessage({data:msg});
+    }
+    return oldAcid; //return what the value used to be, so calling code can be a little cleaner 
+} 
+var _sIn=setInterval;
+setInterval=function(callback, timeout){
+    var acid=getActiveCharacterId();
+    _sIn(
+        function(){
+            var prevAcid=setActiveCharacterId(acid);
+            callback();
+            setActiveCharacterId(prevAcid);
+        }
+    ,timeout);
+}
+var _sto=setTimeout
+setTimeout=function(callback, timeout){
+    var acid=getActiveCharacterId();
+    _sto(
+        function(){
+            var prevAcid=setActiveCharacterId(acid);
+            callback();
+            setActiveCharacterId(prevAcid);
+        }
+    ,timeout);
+}
+async function getAttrsAsync(props){
+    var acid=getActiveCharacterId(); //save the current activeCharacterID in case it has changed when the promise runs 
+    var prevAcid=null;               //local variable defined here, because it needs to be shared across the promise callbacks defined below
+    return new Promise((resolve,reject)=>{
+            prevAcid=setActiveCharacterId(acid);  //in case the activeCharacterId has changed, restore it to what we were expecting and save the current value to restore later
+            try{
+                getAttrs(props,(values)=>{  resolve(values); }); 
+            }
+            catch{ reject(); }
+    }).finally(()=>{
+        setActiveCharacterId(prevAcid); //restore activeCharcterId to what it was when the promise first ran
+    });
+}
+//use the same pattern for each of the following...
+async function setAttrsAsync(propObj, options){
+    var acid=getActiveCharacterId(); 
+    var prevAcid=null;               
+    return new Promise((resolve,reject)=>{
+            prevAcid=setActiveCharacterId(acid);  
+            try{
+                setAttrs(propObj,options,(values)=>{ resolve(values); });
+            }
+            catch{ reject(); }
+    }).finally(()=>{
+        setActiveCharacterId(prevAcid); 
+    });
+}
+
+async function getSectionIDsAsync(sectionName){
+    var acid = getActiveCharacterId(); 
+    var prevAcid=null;               
+    return new Promise((resolve,reject)=>{
+            prevAcid = setActiveCharacterId(acid);  
+            try{
+                getSectionIDs(sectionName,(values)=>{ resolve(values); });
+            }
+            catch{ reject(); }
+    }).finally(()=>{
+        setActiveCharacterId(prevAcid); 
+    });
+}
+
+/**
 * Convert to integer
 * @param {string} value - value to cast
 * @param {number} onError - default value on error
@@ -9282,7 +9406,21 @@ function getSectionIDsOrdered(sectionName, callback) {
       callback(ids);
     });
   });
-};
+}
+
+/**
+ * Return ordered array of row ids for a repeating section
+ * @param {string} sectionName - repeating section name (repeating_ prefix optional)
+ * @returns string[]
+ */
+async function getSectionIDsOrderedAsync(sectionName) {
+  if (!sectionName.startsWith("repeating_"))
+    sectionName = "repeating_" + sectionName;
+  const values = await getAttrsAsync([`_reporder_${sectionName}`]);
+  const idArray = await getSectionIDsAsync(sectionName);
+  const reporderArray = values[`_reporder_${sectionName}`] ? values[`_reporder_${sectionName}`].toLowerCase().split(',') : [];
+  return [...new Set(reporderArray.filter(x => idArray.includes(x)).concat(idArray))];
+}
 
 class Repeating {
 
@@ -9589,22 +9727,68 @@ function addValues(values) {
 }
 
 /**
+ * Return die expression with cf/cs options
+ * @param {string} dice - Die roll
+ * @param {{ cf: number, cs: number }} options - Critical failure/success target numbers
+ * @returns {string}
+ */
+function rollCfCs(dice, options = {}) {
+  const { cf, cs } = { cf: 1, cs: 20, ...options };
+  return dice + `cf${cf}cs${cs}`;
+}
+
+/**
  * Return the die roll formula for type
  * @param {string} type - Type of d20 roll
  * @param {number} [weakened=0] - Has weakened condition
+ * @param {{cf: number, cs: number }} [cfcs={}] - Critical failure/success target numbers
  * @returns - {string}
  */
-function dieRoll(type, weakened = 0) {
+function dieRoll(type, weakened = 0, cfcs = {}) {
   let roll = "";
-  switch (type) {
+  switch (strval(type)) {
     case "S":
-      roll = (weakened === 1) ? "1d20" : "2d20kh1";
+      roll = (weakened === 1) ? rollCfCs("1d20", cfcs) : rollCfCs("2d20kh1", cfcs);
       break;
     case "H":
-      roll = (weakened === 1) ? "2d20kh1" : "{2d20kh1, 0d20+10}kh1";
+      roll = (weakened === 1) ? rollCfCs("2d20kh1", cfcs) : "{" + rollCfCs("2d20kh1", cfcs) + ", 0d0 + 10}kh1";
       break;
     default:
-      roll = (weakened === 1) ? "2d20kl1" : "1d20";
+      roll = (weakened === 1) ? rollCfCs("2d20kl1", cfcs) : rollCfCs("1d20", cfcs);
+      break;
+  }
+  return roll;
+}
+
+/**
+ * Return the actual d20 roll
+ * @param {string} base - Base d20 roll
+ * @param {string} d20Roll - Type of roll selected
+ * @param {{cf: number, cs: number }} [cfcs={}] - Critical failure/success target numbers
+ * @returns {string}
+ */
+function d20Roll(base, d20Roll, cfcs = {}) {
+  let roll = base;
+  switch (roll) {
+    case "1d20":
+    case rollCfCs("1d20"):
+      if (d20Roll !== "1d20")
+        return rollCfCs(d20Roll, cfcs);
+      break;
+    case "2d20kh1":
+    case rollCfCs("2d20kh1"):
+      if (d20Roll === "2d20kl1")
+        return rollCfCs("1d20", cfcs);
+      break;
+    case "2d20kl1":
+    case rollCfCs("2d20kl1"):
+      if (d20Roll === "2d20kh1")
+        return rollCfCs("1d20", cfcs);
+      break;
+    case "{2d20kh1, 0d0 + 10}kh1":
+    case "{" + rollCfCs("2d20kh1") +", 0d0 + 10}kh1":
+      if (d20Roll === "2d20kl1")
+        return rollCfCs("2d20kh1", cfcs);
       break;
   }
   return roll;
@@ -10068,7 +10252,8 @@ function replaceDevol(expr) {
 on("change:sheet_type", function() {
   getAttrs([ "sheet_type" ], function(value) {
     const sheet_type = strval(value.sheet_type);
-    if (!sheet_type) return;
+    if (!sheet_type) 
+      return;
 
     Object.values(SWData.SHEET_TYPE).forEach(type => {
       if (type === sheet_type) {
@@ -10078,6 +10263,25 @@ on("change:sheet_type", function() {
       }
     })
 
+  });
+});
+
+/**
+ * Change d20 roll
+ */
+[ "1d", "db", "dm" ].forEach(button => {
+  on(`clicked:d20roll_${button}-btn`, function() {
+    const d20roll = ({ "1d": "1d20", db: "2d20kh1", dm: "2d20kl1" })[button];
+    setAttrs({ d20roll });
+  });
+});
+
+on("change:cfg_d20roll", function() {
+  getAttrs([ "cfg_d20roll" ], function(values) {
+    const d20roll = intval(values.cfg_d20roll) === 2
+    ? "?{Jet ?|Normal,1d20|Dé bonus,2d20kh1|Dé malus,2d20kl1}"
+    : "1d20";
+    setAttrs({ d20roll });
   });
 });
 
@@ -10796,7 +11000,8 @@ SWData.PC.STATS.forEach(stat => {
       ...fearConditionsAttrs(),
       ...luckButtonAttrs(),
       ...defGearAttrs, 
-      "def_action",,
+      "def_action",
+      "d20roll",
       "allcaracs_desc", "allcaracs_buff"
     ], function(values) {
       // Play FX !
@@ -10813,7 +11018,8 @@ SWData.PC.STATS.forEach(stat => {
       const shadow = shadowValue(values);
       
       // Roll ability
-      const [ roll, mod, test ] = Object.keys(values);
+      const [ kroll, mod, test ] = Object.keys(values);
+      const roll = d20Roll(strval(values[kroll]), strval(values.d20roll));
       const isNPC = strval(values.sheet_type) === SWData.SHEET_TYPE.NPC;
       const statMod = ` *(${ displayMod(values[isNPC ? mod : test]) })*`;
       const armure_eqp = intval(values.armure_eqp);
@@ -10826,7 +11032,7 @@ SWData.PC.STATS.forEach(stat => {
       const defAction = intval(values.def_action);
       const text = defAction !== 0 ? `+ [[${defAction}]] Défense ${ defAction === 5 ? "totale" : "partielle" }` : "";
       const allRolls = allRollsBuff(values, "caracs");
-      const carac = `[[@{${roll}}[Dé] + @{${short}${ isNPC ? "" : "_test" }}[Bonus ${short.toUpperCase()}]${allRolls}${shadow.malus}${fear}${armor_malus}${shield_malus}${helmet_malus} ]] `;
+      const carac = `[[${roll}[Dé] + @{${short}${ isNPC ? "" : "_test" }}[Bonus ${short.toUpperCase()}]${allRolls}${shadow.malus}${fear}${armor_malus}${shield_malus}${helmet_malus} ]] `;
       const chatMsg = rollTemplate({
         lsub: "Test",
         rsub: capitalize(stat) + statMod,
@@ -10890,17 +11096,21 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
     getAttrs([
       attack,
       "cfg_1attack_roll", "cfg_cible",
+      "cfg_d20roll", "d20roll",
       "cfg_shadow", "pc",
       "condition_affaibli", "condition_immobilise",
       ...luckButtonAttrs(),
       "manoeuvre", "cha"
       ], function (values) {
       const atkBonus = `${ displayMod(values[attack]) }`;
-      const useOneRoll = boolval(values.cfg_1attack_roll);
+      const useOneRoll = intval(values.cfg_d20roll) === 0
+      ? boolval(values.cfg_1attack_roll)
+      : true;
       const weakened = intval(values.condition_affaibli);
       const restrained = intval(values.condition_immobilise);
-      const hasMalusDie = (weakened === 1) || (restrained === 1);
-      const roll = hasMalusDie ? "2d20kl1" : "1d20";
+      const withMalusDie = (weakened === 1) || (restrained === 1);
+      let roll = withMalusDie ? rollCfCs("2d20kl1") : rollCfCs("1d20");
+      roll = d20Roll(roll, strval(values.d20roll));
       const tags = [];
       let shadow = shadowValue(values);
       if (shadow.value > 0)
@@ -10908,7 +11118,7 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
       const maneuvers = (boolval(values.manoeuvre) && [ "atkcac", "atktir" ].includes(attack)) 
       ? maneuversRollQuery(intval(values.cha)) 
       : "";
-      const atkRoll = `[[${roll}cs20cf1[Dé] + @{${attack}}[Bonus]${shadow.malus}${maneuvers} ]]`;
+      const atkRoll = `[[${roll}[Dé] + @{${attack}}[Bonus]${shadow.malus}${maneuvers} ]]`;
       const atkProps = {
         lsub: "Attaque",
         rsub: `${description} *(${atkBonus})*`,
@@ -11609,7 +11819,9 @@ function insertRolls(text, options = {}) {
     return "";
   
   const { pathNames = [], isNPC = false, companionOf = "" } = options;
-  const devol = `@{${ isNPC ? companionOf + "|" : "" }devol}`;
+  if (isNPC && companionOf !== "")
+    companionOf += "|";
+  const devol = `@{${ isNPC ? companionOf : "" }devol}`;
   
   // Search for " [#d4° + XXX] " or " [#dE + XXX] "
   matchRegExp(text, /([ ]*)\[([1-9])d(4°|E)[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL|rang voie [1-9])\]([ ]*)/gm).forEach(result => {
@@ -11651,7 +11863,7 @@ function insertRolls(text, options = {}) {
   // Search for "... #d# +/- X..."
   matchRegExp(text, /([0-9]+[dD][0-9]+)([ ]*[\+\-]*[ ]*[0-9]*)?/gm).forEach(result => {
     const [ matched, dice, mod ] = result;
-    const replace = `[[${dice}${ mod.trim() || "" }]] `;
+    const replace = `[[${dice}${ strval(mod).trim() }]] `;
     text = text.replace(matched, replace);
   });
   
@@ -11852,6 +12064,7 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
     "scriptVersion",
     "character_name",
     "cfg_1attack_roll", "cfg_cible",
+    "cfg_d20roll", "d20roll",
     "cfg_crit_diff", "cfg_tbl_crit", "cfg_tbl_fumble",
     "cfg_use_ammo", "cfg_usure",
     "cfg_lowfan", "cfg_shadow", "pc",
@@ -11871,7 +12084,10 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
   ], function (values) {
     
     // general options
-    const useOneRoll = boolval(values.cfg_1attack_roll);
+    //const useOneRoll = boolval(values.cfg_1attack_roll);
+    const useOneRoll = intval(values.cfg_d20roll) === 0
+    ? boolval(values.cfg_1attack_roll)
+    : true;
     const useCritDiff = intval(values.cfg_crit_diff);
     const useAmmo = boolval(values.cfg_use_ammo);
     const useWear = boolval(values.cfg_usure);
@@ -12009,7 +12225,9 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
     let bRoll = !withMalusDie;
     if (isRanged(atk, portee) && modContact === 1)
       roll = "2d20kl1";
-    if (modifiers.includes("debonus") && !modifiers.includes("demalus")) {
+    const hasBonusDie = modifiers.includes("debonus");
+    const hasMalusDie = modifiers.includes("demalus");
+    if (hasBonusDie && !hasMalusDie) {
       switch(roll) {
         case "2d20kl1":
           roll = "1d20";
@@ -12020,7 +12238,7 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
           break;
       }
     }
-    if (modifiers.includes("demalus") && !modifiers.includes("debonus")) {
+    if (hasMalusDie && !hasBonusDie) {
       switch(roll) {
         case "1d20":
           roll = "2d20kl1";
@@ -12054,8 +12272,12 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
 
     // Attack roll
     let attack = "";
+    if (!hasMalusDie && !hasBonusDie)
+      roll = d20Roll(roll, strval(values.d20roll), { cf: fumble, cs: `>${crit}` });
+    else
+      roll = rollCfCs(roll, { cf: fumble, cs: `>${crit}` });
     if (atk !== "0")
-      attack = `[[${roll}cs>${crit}cf${fumble}[Dé] + @{${atk}}[Bonus]${magicHit}${fear}${shadow.malus} + ${atkdiv}[Divers]${allAtkBuffs}${tacticBonus}${modSit}${maneuvers} ]]`;
+      attack = `[[${roll}[Dés] + @{${atk}}[Bonus]${magicHit}${fear}${shadow.malus} + ${atkdiv}[Divers]${allAtkBuffs}${tacticBonus}${modSit}${maneuvers} ]]`;
     
     // Damage roll
     let [ dm, ...dmextra ] = strval(values[section + "dm"]).split(" ");
@@ -13141,7 +13363,7 @@ function statRollQuery() {
 on("clicked:repeating_rolls:roll-btn", function() {
   const section = "repeating_rolls_roll-";
   const statsAttrs = SWData.PC.STATS.map(stat => `${ shorten(stat) }_test`);
-  const rollAttrs = rptAttrs(section.split("_")[1], [
+  const rollAttrs = rptAttrs(rptInfo(section).section, [
     "nom",
     "cmd",
     "type",
@@ -13158,6 +13380,7 @@ on("clicked:repeating_rolls:roll-btn", function() {
     [
       "rangs_voies", "noms_voies",
       "condition_affaibli",
+      "cfg_d20roll", "d20roll",
       "cfg_shadow", "pc",
       "allcaracs_desc", "allcaracs_buff",
       ...fearConditionsAttrs(),
@@ -13169,7 +13392,7 @@ on("clicked:repeating_rolls:roll-btn", function() {
     const rollName = strval(values[section + "nom"]);
     let type = strval(values[section + "type"]);
     let carac = strval(values[section + "carac"]);
-    let path = intval(values[section + "voie"]);
+    const rankInPath = intval(values[section + "voie"]);
     const bonus = intval(values[section + "bonus"]);
     let rollCmd = strval(values[section + "cmd"]);
 
@@ -13182,7 +13405,7 @@ on("clicked:repeating_rolls:roll-btn", function() {
     .filter(a => a.includes("-t"))
     .find(a => cleanText(strval(values[a]), true) === cleanText(rollName));
     if (abilityMatch) {
-      path = abilityMatch.charAt(4);
+      const path = abilityMatch.charAt(4);
       const rank = abilityMatch.charAt(abilityMatch.length - 1);
       abilityDesc = strval(values[abilityInfo({ path, rank }).rankDesc]);
       abilityProps = strval(values[abilityInfo({ path, rank }).rankProps]);
@@ -13217,7 +13440,7 @@ on("clicked:repeating_rolls:roll-btn", function() {
       mark = "rang ";
     else
       mark = "+";
-    const rollBonus = carac !== "?" ? ` *(${mark}${ intval(values[carac.slice(2, 2 + 3 + 5)]) + (ranks[path - 1] || 0) + bonus })*` : "";
+    const rollBonus = carac !== "?" ? ` *(${mark}${ intval(values[carac.slice(2, 2 + 3 + 5)]) + (ranks[rankInPath - 1] || 0) + bonus })*` : "";
 
     let lsub = "Capacité";
     let text = "";
@@ -13226,6 +13449,10 @@ on("clicked:repeating_rolls:roll-btn", function() {
       text = insertRolls(rollCmd, { pathNames: names });
       let carTip = "";
       // d20
+      if (type === "1d20")
+        type = d20Roll(type, strval(values.d20roll));
+      else
+        type = rollCfCs(type);
       rollCmd = `${type}[Dés]`;
       // + Carac
       if (carac !== "") {
@@ -13237,8 +13464,8 @@ on("clicked:repeating_rolls:roll-btn", function() {
         rollCmd += ` + (${carac})${carTip}`;
       }
       // + Rang
-      if (path > 0) {
-        rollCmd += ` + (${ranks[path - 1]})[Rang ${names[path - 1]}]`;
+      if (rankInPath > 0) {
+        rollCmd += ` + (${ranks[rankInPath - 1]})[Rang ${names[rankInPath - 1]}]`;
       }
       // + Bonus
       if (bonus !== 0)
@@ -13284,7 +13511,8 @@ SWData.PC.SKILLS.forEach(skill => {
       ...skillAttrs,
       ...statsAttrs,
       "condition_affaibli",
-      "pc", "cfg_shadow", "cfg_1skill_roll",
+      "pc", "cfg_shadow", 
+      "cfg_1skill_roll", "cfg_d20roll", "d20roll",
       "allcaracs_desc", "allcaracs_buff",
       ...fearConditionsAttrs(),
       ...luckButtonAttrs()
@@ -13310,10 +13538,15 @@ SWData.PC.SKILLS.forEach(skill => {
         rollCmd = "2d20kl1";
       }
 
-      rollCmd += "cs20cf1[Dés]";
-
       // Single roll
-      const useOneRoll = boolval(values.cfg_1skill_roll);
+      const useOneRoll = intval(values.cfg_d20roll) === 0
+      ? boolval(values.cfg_1skill_roll)
+      : true;
+
+      if (rollCmd === "1d20")
+        rollCmd = d20Roll(rollCfCs(rollCmd), strval(values.d20roll));
+
+      rollCmd += "[Dés]"
 
       let carTip = "";
       if (caracBonus === "?") {
@@ -13335,7 +13568,7 @@ SWData.PC.SKILLS.forEach(skill => {
       rollCmd = "[[" + rollCmd + " ]]";
 
       let broll = "";
-      if (rollCmd.includes("1d20") && !useOneRoll)
+      if (rollCmd.startsWith("[[1d20") && !useOneRoll)
         broll = rollCmd;
 
       // Send to chat
@@ -13507,7 +13740,7 @@ on("clicked:multibuff-btn", function () {
       });
       const askBuff = [];
       multiBuffs.forEach(v => {
-        if (v.ids.length > 1)
+        if (v.ids.length > 0)
           askBuff.push(v.name);
       });
       if (askBuff.length === 0)
@@ -13515,8 +13748,11 @@ on("clicked:multibuff-btn", function () {
       ask([ "Buff ?", "Aucun", ...askBuff.sort() ], function(selected, choices) {
         if (selected < 2)
           return;
+        const [ kbuff ] = [ ...multiBuffs ].find(([ k, v]) => v.name === choices[selected - 1]);
+        if (!kbuff)
+          return;
         const updates = {};
-        buffIds = multiBuffs.get(choices[selected - 1]).forEach(id => {
+        buffIds = multiBuffs.get(kbuff).ids.forEach(id => {
           const rptOn = rptAttr(section, "buff-on", id);
           updates[rptOn] = 1 - intval(values[rptOn]);
         });
@@ -14542,7 +14778,39 @@ function rebuildRanks() {
 /**
  * Link attacks to gears (by name)
  */
-function linkAttacks() {
+async function linkAttacks() {
+  // attack rows
+  const atkIds = await getSectionIDsAsync("armes");
+  const allAttacks = [];
+  atkIds.forEach(id => {
+    [ "nom", "atktype", "gearid" ].forEach(attr => {
+      allAttacks.push(rptAttr("armes", `arme-${attr}`, id));
+    });
+  });
+
+  // gear rows
+  const gearIds = await getSectionIDsAsync("equipement");
+  const allGears = gearIds.map(id => rptAttr("equipement", "equip-nom", id));
+
+  getAttrs([ ...allAttacks, ...allGears ], function (values) {
+    const links = new Map();
+    atkIds.forEach(id => {
+      const type = strval(values[rptAttr("armes", "arme-atktype", id)]);
+      if ([ "sort", "naturel" ].includes(type))
+        return;
+      const nom = strval(values[rptAttr("armes", "arme-nom", id)]);
+      const gear = allGears.find(gear => cleanText(nom, false).includes(cleanText(strval(values[gear]), false)));
+      if (gear) {
+        const gearId = rptInfo(gear).rowId;
+        if (gearId)
+          links.set(rptAttr("armes", "arme-gearid", id), gearId);
+      }
+    });
+    if (links.size > 0)
+      setAttrs(Object.fromEntries(links));
+  });
+
+  /*
   getSectionIDs("armes", atkIds => {
     getSectionIDs("equipement", gearIds => {
       const allAttacks = [];
@@ -14552,25 +14820,8 @@ function linkAttacks() {
         });
       });
       const allGears = gearIds.map(id => rptAttr("equipement", "equip-nom", id));
-      getAttrs([ ...allAttacks, ...allGears ], function (values) {
-        const links = new Map();
-        atkIds.forEach(id => {
-          const type = strval(values[rptAttr("armes", "arme-atktype", id)]);
-          if ([ "sort", "naturel" ].includes(type))
-            return;
-          const nom = strval(values[rptAttr("armes", "arme-nom", id)]);
-          const gear = allGears.find(gear => cleanText(nom, false).includes(cleanText(strval(values[gear]), false)));
-          if (gear) {
-            const gearId = rptInfo(gear).rowId;
-            if (gearId)
-              links.set(rptAttr("armes", "arme-gearid", id), gearId);
-          }
-        });
-        if (links.size > 0)
-          setAttrs(Object.fromEntries(links));
-      });
     });
-  });
+  });*/
 }
 
 /**
@@ -14602,6 +14853,9 @@ on("clicked:appearance-btn clicked:description-btn", function() {
  */
 on("clicked:def_config-btn", function() {
   const allConfigs = [
+    "cfg_pvmax_auto",
+    "cfg_pts_capas",
+    "cfg_cible",
     "voies_456",
     "voies_789",
     "use_skills",
@@ -14629,6 +14883,8 @@ on("clicked:def_config-btn", function() {
     "pcmax_force",
     "pmmax_force",
     "cfg_1attack_roll",
+    "cfg_1skill_roll",
+    "cfg_d20roll",
     "cfg_luck_btn",
     "$tresor_monnaie",
   ];
@@ -14921,42 +15177,91 @@ on("clicked:helpdoc-btn", function() {
  * Return CSS style for chat menu buttons
  * @param {string|string[]} color - PC color name | [ bckg, text ] color array
  * @param {object} [font={}] - font properties object
- * @param {{}} [extraCSS={}] - extra properties object
+ * @param {object} [extraCSS={}] - extra properties object
+ * @param {object} [attributes={}] - extra attributes object
  * @returns {string}
  */
-function menuButton(color, font = {}, extraCSS = {}) {
+function menuButton(color, font = {}, extraCSS = {}, attributes = {}) {
+  
   color = color || "default";
-  let border = "none";
-  let radius = "3";
-  if (color && color[0].match(/[1-9]/)) {
-    radius = color.charAt(0);
-    color = color.slice(1);
-    border = `${radius}px solid ${color}`;
-    color = [ "whitesmoke", color ];
-  }
-  font = { size: "0.8rem", weight: "bold", ...font };
   let backColor, textColor;
   if (Array.isArray(color))
     [ backColor, textColor = "white" ] = color;
   else
     [ backColor, textColor ] = SWData.COLORS[color];
+  if (Object.keys(extraCSS).includes("color")) {
+    textColor = extraCSS.color;
+    delete extraCSS.color;
+  }
+  if (Object.keys(extraCSS).includes("background-color")) {
+    backColor = extraCSS["background-color"];
+    delete extraCSS["background-color"];
+  }
+
+  font = { size: "0.8rem", weight: "bold", ...font };
+  
+  let border = "none";
+  let radius = "3px";
+  if (Object.keys(extraCSS).includes("border")) {
+    border = extraCSS.border;
+    delete extraCSS.border;
+  }
+  if (Object.keys(extraCSS).includes("border-radius")) {
+    radius = extraCSS["border-radius"];
+    delete extraCSS["border-radius"];
+  }
+
+  let padding = "2px";
+  if (Object.keys(extraCSS).includes("padding")) {
+    padding = extraCSS.padding;
+    delete extraCSS.padding;
+  }
+
+  let margin = "1px";
+  if (Object.keys(extraCSS).includes("margin")) {
+    margin = extraCSS.margin;
+    delete extraCSS.margin;
+  }
+  
+  const buttonTitle = (attributes.title) ? ` title=\"${attributes.title}\"` : "";
+
   let buttonClass = "";
   if (extraCSS.class) {
     buttonClass = ` class=\"${extraCSS.class}\"`;
     delete extraCSS.class;
   }
+  
   const props = Object.keys(extraCSS).map(prop => `${prop}: ${ extraCSS[prop] }`);
-  return `\"${buttonClass} style=\"` + [
+  return `\"${buttonTitle}${buttonClass} style=\"` + [
     `border: ${border}`,
-    `border-radius: ${radius}px`,
+    `border-radius: ${radius}`,
     `background-color: ${backColor}`,
     `color: ${textColor}`,
-    "padding: 2px",
-    "margin: 1px",
+    `padding: ${padding}`,
+    `margin: ${margin}`,
     `font-size: ${font.size}`,
     `font-weight: ${font.weight}`,
     ...props
   ].join("; ");
+}
+
+/**
+ * Return CSS style for chat outline menu buttons
+ * @param {string} color - PC color name
+ * @param {object} [font={}] - font properties object
+ * @param {object} [extraCSS={}] - extra properties object
+ * @param {object} [attributes={}] - extra attributes object
+ * @returns {string}
+ */
+function menuButtonOutline(color, font = {}, extraCSS = {}, attributes = {}) {
+  if (!Object.keys(SWData.COLORS).includes(color))
+    color = "default";
+  const reverse = [ "whitesmoke", SWData.COLORS[color][0] ];
+  return menuButton(reverse, font, {
+    border: `1px ${ reverse[1] } solid`,
+    color: "#333",
+    ...extraCSS
+  }, attributes);
 }
 
 /**
@@ -15072,7 +15377,7 @@ function attackRollsMenu(npc = "") {
       ...atkRange
     ], function (values) {
       const charName = strval(values.character_name);
-      const color = strval(values.couleur_pj);
+      const color = strval(values.couleur_pj, "default");
       if (npc === "npc") {
         if (attackNames.length === 0)
           return;
@@ -15087,7 +15392,7 @@ function attackRollsMenu(npc = "") {
           });
         }
       } else {
-        const button = menuButton("1" + color, {}, { padding: "0px 5px;" });
+        const button = menuButtonOutline(color, {}, { padding: "0px 5px;" });
         const chatMsg = rowIds.map((rowId, ix) => {
           const type = strval(values[rptAttr(section, "arme-atk", rowId)]);
           const range = strval(values[rptAttr(section, "arme-portee", rowId)]);
@@ -15160,7 +15465,7 @@ seq(9).forEach(path => {
       ...spells
     ], function (values) {
       const charName = strval(values.character_name);
-      const color = strval(values.couleur_pj);
+      const color = strval(values.couleur_pj, "default");
       const pathRank = intval(strval(values.rangs_voies).split(",")[path - 1]);
       const pathName = strval(strval(values.noms_voies).split("|")[path -1]);
       const chatMsg = seq(5).reduce((result, rank) => {
@@ -15168,7 +15473,7 @@ seq(9).forEach(path => {
           const abilityName = values[abilityInfo({ path, rank }).rankName];
           const spell = boolval(values[abilityInfo({ path, rank }).rankSpell]);
           const emoji = spell ? SWData.emojis.atkmag : SWData.emojis.actions;
-          const button = menuButton("1" + color, {}, { padding: "0px 5px;" });
+          const button = menuButtonOutline(color, {}, { padding: "0px 5px;" });
           result.push(`${abilityName}=[${emoji}](~${charName}|v${path}r${rank}-btn${button})`);
         }
         return result;
@@ -15199,9 +15504,9 @@ function abilityRollsMenu(npc = "") {
     const rollNames = rowIds.map(rowId => `${section}_${rowId}_${rollNameAttr}`);
     getAttrs([ "character_name", "couleur_pj", ...rollNames ], function (values) {
       const charName = strval(values.character_name);
-      const color = strval(values.couleur_pj);
-      const button = menuButton(color, {}, { padding: "0px 5px;" });
-      const chatMsg = rowIds.map((rowId, ix) => `${ix + 1}. ${values[`${section}_${rowId}_${rollNameAttr}`]}=[Jet](~${charName}|${section}_${rowId}_${npc}roll-btn${button})`);
+      const color = strval(values.couleur_pj, "default");
+      const button = menuButtonOutline(color, {}, { padding: "0px 5px;" });
+      const chatMsg = rowIds.map((rowId, ix) => `${ix + 1}. ${values[`${section}_${rowId}_${rollNameAttr}`]}=[${ SWData.emojis.actions }](~${charName}|${section}_${rowId}_${npc}roll-btn${button})`);
       if (chatMsg.length === 0)
         return;
       sendChatMsg([
@@ -15280,90 +15585,161 @@ on("clicked:pc_menus-btn", function () {
   allRollsMenu();
 });
 
-on("clicked:pc_actions-btn", function() {
-  getSectionIDsOrdered("repeating_armes", function (rowIds) {
-    const section = "armes";
-    const attackNames = rowIds.map(rowId => rptAttr(section, "arme-nom", rowId));
-    const atkType = rowIds.map(rowId => rptAttr(section, "arme-atk", rowId));
-    const atkRange = rowIds.map(rowId => rptAttr(section, "arme-portee", rowId));
-    const attackBtn = "attack";
-    const allRankNames = [];
-    const allRankSpells = [];
-    const allRankProps = [];
-    seq(9).forEach((path) => {
-      seq(5).forEach((rank) => {
-        allRankNames.push(abilityInfo({ path, rank }).rankName);
-        allRankSpells.push(abilityInfo({ path, rank }).rankSpell);
-        allRankProps.push(abilityInfo({ path, rank }).rankProps);
-      });
+/**
+ * Display a PC actions menu
+ */
+on("clicked:pc_actions-btn", async function() {
+
+  // weapons
+  const weaponRpt = "armes";
+  const weaponIds = await getSectionIDsOrderedAsync(weaponRpt);
+  //console.log(weaponIds)
+  const attackNames = weaponIds.map(id => rptAttr(weaponRpt, "arme-nom", id));
+  const atkType = weaponIds.map(id => rptAttr(weaponRpt, "arme-atk", id));
+  const atkRange = weaponIds.map(id => rptAttr(weaponRpt, "arme-portee", id));
+
+  // abilities
+  const allRankNames = [];
+  const allRankSpells = [];
+  const allRankProps = [];
+  seq(9).forEach((path) => {
+    seq(5).forEach((rank) => {
+      allRankNames.push(abilityInfo({ path, rank }).rankName);
+      allRankSpells.push(abilityInfo({ path, rank }).rankSpell);
+      allRankProps.push(abilityInfo({ path, rank }).rankProps);
     });
-    getAttrs([
-      "character_name", "couleur_pj",
-      ...attackNames, ...atkType, ...atkRange,
-      "rangs_voies", "noms_voies",
-      ...allRankNames, ...allRankSpells, ...allRankProps,
-      "use_skills"
-    ], function (values) {
-      const charName = strval(values.character_name);
-      const color = strval(values.couleur_pj);
-      const chatMsg = [];
+  });
 
-      // Stats
-      const stats = SWData.PC.STATS.map(stat => {
-        const short = shorten(stat);
-        const button = menuButton(color, {}, { width: "2rem", ["text-align"]: "center" });
-        return `[${short.toUpperCase()}](~${charName}|${short}-btn${button})`;
-      }).join(" ");
-      chatMsg.push("Caractéristiques=" + stats);
+  // rolls
+  const rollRpt = "rolls";
+  let rollIds = await getSectionIDsOrderedAsync(rollRpt);
+  const rollNames = rollIds.map(id => rptAttr(rollRpt, "roll-nom", id));
 
-      const button = menuButton("1" + color, {}, { padding: "0px 5px;" });
+  // buffs
+  const buffRpt = "buffs";
+  let buffIds = await getSectionIDsOrderedAsync(buffRpt);
+  const buffTemp = buffIds.map(id => rptAttr(buffRpt, "buff-temp", id));
 
-      // Attacks
-      const attacks = rowIds.map((rowId) => {
-        const type = strval(values[rptAttr(section, "arme-atk", rowId)]);
-        const range = strval(values[rptAttr(section, "arme-portee", rowId)]);
-        const emoji = type === "atkmag" ? SWData.emojis.atkmag : isRanged(type, range) ? SWData.emojis.atktir : SWData.emojis.atkcac;
-        return `${ values[rptAttr(section, "arme-nom", rowId)] } [${emoji}](~${charName}|${ rptAttr(section, attackBtn + "-btn", rowId) }${button})`;
-      }).join("\n");
-      if (attacks.length > 0)
-        chatMsg.push("Attaques=" + attacks);
+  getAttrs([
+    "character_name", "couleur_pj",
+    "cfg_d20roll", "d20roll",
+    ...attackNames, ...atkType, ...atkRange,
+    "rangs_voies", "noms_voies",
+    ...allRankNames, ...allRankSpells, ...allRankProps,
+    ...rollNames,
+    ...buffTemp,
+    "use_skills"
+  ], function (values) {
 
-      // Abilities
-      const pathRanks = strval(values.rangs_voies).split(",");
-      const pathNames = strval(values.noms_voies).split("|");
-      pathNames.forEach((pathName, ix) => {
-        const pathRank = intval(pathRanks[ix])
-        if (pathRank === 0)
-          return;
-        const path = ix + 1;
-        const abilities = seq(pathRank).map((rank) => {
-          const name = strval(values[abilityInfo({ path, rank }).rankName]);
-          const spell = boolval(values[abilityInfo({ path, rank }).rankSpell]);
-          const props = strval(values[abilityInfo({ path, rank }).rankProps]);
-          const action = (spell || hasProp(props, "action"))
-          ? ` [${SWData.emojis.atkmag}](~${charName}|${ abilityInfo({ path, rank }).rankOwned }-btn${button})`
+    /**
+     * Build extra properties & CSS for chat menu outline buttons
+     * @param {object} css - CSS properties
+     * @param {object} attrs - Extra button attributes
+     * @returns {string}
+     */
+    const button = (css = {}, attrs = {}) => menuButtonOutline(color, {}, { padding: "0px 5px", ...css }, attrs);
+
+    const charName = strval(values.character_name);
+    const color = strval(values.couleur_pj, "default");
+    const d20Roll = numval(values.cfg_d20roll);
+    const chatMsg = [];
+    
+    // Stats
+    const stats = SWData.PC.STATS.map(stat => {
+      const short = shorten(stat);
+      const button = menuButton(color, {}, { width: "2rem", ["text-align"]: "center" });
+      return `[${short.toUpperCase()}](~${charName}|${short}-btn${button})`;
+    }).join(" ");
+    chatMsg.push("Caractéristiques=" + stats);
+
+    // Attacks
+    const attacks = SWData.PC.COMBAT.attacks.map((attack) => {
+      const emoji = SWData.emojis[attack[0]];
+      return `[${emoji}](~${charName}|${ attack[0] }-btn${ button({}, { title: attack[2] }) })`;
+    }).join(" ");
+    chatMsg.push("Attaques=" + attacks);
+
+    // Weapons
+    const weapons = weaponIds.map((id) => {
+      const type = strval(values[rptAttr(weaponRpt, "arme-atk", id)]);
+      const range = strval(values[rptAttr(weaponRpt, "arme-portee", id)]);
+      const emoji = type === "atkmag" ? SWData.emojis.atkmag : isRanged(type, range) ? SWData.emojis.atktir : SWData.emojis.atkcac;
+      return `[${emoji}](~${charName}|${ rptAttr(weaponRpt, "attack-btn", id) }${ button() }) ${ values[rptAttr(weaponRpt, "arme-nom", id)] }`;
+    }).join("\n");
+    if (weapons.length > 0)
+      chatMsg.push("Armes=" + weapons);
+
+    // Abilities
+    const pathRanks = strval(values.rangs_voies).split(",");
+    const pathNames = strval(values.noms_voies).split("|");
+    pathNames.forEach((pathName, ix) => {
+      const pathRank = intval(pathRanks[ix])
+      if (pathRank === 0)
+        return;
+      const path = ix + 1;
+      const abilities = seq(pathRank).reduce((all, rank) => {
+        const name = strval(values[abilityInfo({ path, rank }).rankName]);
+        const spell = boolval(values[abilityInfo({ path, rank }).rankSpell]);
+        const props = strval(values[abilityInfo({ path, rank }).rankProps]);
+        const active = (hasProp(props, "action") || hasProp(props, "roll"));  
+        let action = "";
+        const rollIdx = rollNames.findIndex(r => cleanText(values[r]) === cleanText(name));
+        if (!active && rollIdx > -1) {
+          const [ roll ] = rollNames.splice(rollIdx, 1);
+          rollIds = rollIds.filter(id => id !== rptInfo(roll).rowId);
+          const rollBtn = rptAttr(rollRpt, "roll-btn", rptInfo(roll).rowId);
+          action = ` [${ SWData.emojis.actions }](~${charName}|${rollBtn}${ button() })`;
+        } else {
+          const emoji = spell ? SWData.emojis.atkmag : SWData.emojis.actions;
+          action = (spell || active)
+          ? ` [${emoji}](~${charName}|${ abilityInfo({ path, rank }).rankOwned }-btn${ button() })`
           : "";
-          return name + action;
-        }).join("\n");
-        if (abilities)
-          chatMsg.push(pathName + "=" + abilities);
-      });
+        }
+        if (action !== "")
+          all.push(action + name);
+        return all;
+      }, []).join("\n");
+      if (abilities)
+        chatMsg.push(pathName + "=" + abilities);
+    });
 
-      // Skills
-      if (boolval(values.use_skills)) {
-        chatMsg.push(`Compétences=[Choix](~${charName}|skills_menu-btn${menuButton(color, {}, { padding: "0px 5px;" })})`);
-      }
+    // Rolls
+    const rolls = rollIds.map((id) => `[${SWData.emojis.actions}](~${charName}|${ rptAttr(rollRpt, "roll-btn", id) }${ button() }) ${ values[rptAttr(rollRpt, "roll-nom", id)] }` ).join("\n");
+    if (rolls.length > 0)
+      chatMsg.push("Autres capacités=" + rolls);
 
-      // Send all
-      sendChatMsg([
-        `title=${charName}`,
-        "subtitle=Actions",
-        "color=" + color,
-        ...chatMsg
-      ], {
-        template: "custom",
-        whisper: "\"" + charName + "\""
-      });
+    // Buffs
+    const buffs = buffIds.filter((id) => boolval(values[rptAttr(buffRpt, "buff-temp", id)]));
+    if (buffs.length > 0)
+      chatMsg.push(`Buffs=[Choix](~${charName}|multibuff-btn${menuButton(color, {}, { padding: "0px 5px;" })})`);
+
+    // Skills
+    if (boolval(values.use_skills)) {
+      chatMsg.push(`Compétences=[Choix](~${charName}|skills_menu-btn${menuButton(color, {}, { padding: "0px 5px;" })})`);
+    }
+
+    // Roll type
+    let desc = "";
+    if (d20Roll === 1) {
+      const roll = strval(values.d20roll);
+      const activeBt = button({ "font-style": "italic" });
+      desc = [
+        `[Dé Malus](~${charName}|d20roll_dm-btn${ roll === "2d20kl1" ? activeBt : button() })`,
+        `[Normal](~${charName}|d20roll_1d-btn${ roll === "1d20" ? activeBt : button() })`,
+        `[Dé Bonus](~${charName}|d20roll_db-btn${ roll === "2d20kh1" ? activeBt : button() })`
+      ].join("&nbsp;");
+    }
+
+    // Send all
+    sendChatMsg([
+      `title=${charName}`,
+      "subtitle=Actions",
+      "color=" + color,
+      "desc=" + desc,
+      ...chatMsg
+    ], {
+      template: "custom",
+      whisper: "\"" + charName + "\""
     });
   });
 });
@@ -15771,6 +16147,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
         tactBonus = ` + ([[${tactBonus}]])[${name}]`;
       if (tactDM !== "")
         extraDM.push(` + [[${tactDM}]] ${name}`);
+      resetValues.set("pnj_tact", 0);
     }
 
     let specRoll = 0;
@@ -15815,7 +16192,6 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
       if (specNext)
         resetValues.set("pnj_spec", 0);
     }
-
 
     let multiAttacks = 1;
     if (useMulti === 1) {
@@ -16030,7 +16406,8 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
  */
 on("clicked:repeating_npcrolls:npcroll-btn", function() {
   const section = "repeating_npcrolls_npcroll-";
-  getAttrs([ "compagnon", `${section}name`, `${section}desc` ], function (values) {
+  const rollAttrs = [ "name", "uses", "max", "freq", "desc" ].map(a => `${section}${a}`);
+  getAttrs([ "compagnon", ...rollAttrs ], function (values) {
     const companionOf = strval(values.compagnon);
     let name = strval(values[section + "name"], "Capacité");
     const action = name.match(/ \((G|M|A|L)\)[ ]*$/);
@@ -16039,11 +16416,34 @@ on("clicked:repeating_npcrolls:npcroll-btn", function() {
       name = name.replace(action[0], "");
       actionType = " - " + action[1];
     }
-    const text = insertRolls(strval(values[section + "desc"]), { isNPC: true, companionOf });
+
+    let text = "";
+    let alert = "";
+    let alertCSS = "";
+    const maxUses = numval(values[section + "max"]);
+    const freq = strval(values[section + "freq"]);
+    if (freq !== "" && maxUses !== 0) {
+      let nbUsed = numval(values[section + "uses"]) + 1;
+      if (nbUsed > maxUses) {
+        text = "";
+        alert = `Nombre d'utilisations par ${freq} atteint`;
+        alertCSS = "fumble";
+      } else {
+        alert = `Utilisée ${nbUsed} fois`;
+        alertCSS = "secondary";
+      }
+      setAttrs({ [`${section}uses`]: Math.min(nbUsed, maxUses) });
+    }
+
+    if (text === "")
+      text = insertRolls(strval(values[section + "desc"]), { isNPC: true, companionOf });
+
     const chatMsg = rollTemplate({
       lsub: "Capacité" + actionType,
       rsub: capitalize(name),
-      text
+      text,
+      alert,
+      alertclass: alertCSS
     });
     sendChatMsg(chatMsg);
   });

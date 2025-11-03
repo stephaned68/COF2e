@@ -6,7 +6,7 @@ Consultez la [documentation](https://stephaned68.github.io/COF2e/)
 
 ## Version courante
 
-v1.9.0 [Screenshot](cof2e.png)
+v1.10.0 [Screenshot](cof2e.png)
 
 ## Notes de version
 
@@ -25,6 +25,7 @@ v1.9.0 [Screenshot](cof2e.png)
 - Ajout d'un bouton caché à utiliser en [macro](https://stephaned68.github.io/COF2e/pc-tech#menus-et-macros) pour un menu des actions du personnage dans le chat
 - Prise en charge de ressources consommables de type `soins`
 - Ajout d'un bouton _Consommable_ à la liste des ressources
+- Ajout du nombre d'utilisations par jour/combat aux capacités de PNJ
 
 ### Version _1.9.0_ (2025-09-28)
 
