@@ -33,53 +33,53 @@ La syntaxe de cette liste est la même que pour les [prédicats]({{ site.baseurl
 Les codes et valeurs correspondantes que vous pouvez indiquer sont :
 
 - Pour les armes :
-  - <kbd>critique</kbd> : seuil de réussite critique
-  - <kbd>dm-1m</kbd> : jet de DM quand l'arme est maniée à une main
-  - <kbd>dm-2m</kbd> : jet de  DM quand l'arme est maniée à deux mains
-  - <kbd>type-dm</kbd> : type de DM
-  - <kbd>portee</kbd> : portée de l'arme à distance
-  - <kbd>lancer</kbd> : portée de l'arme lancée
-  - <kbd>usure</kbd> : seuil d'usure
+  - `critique` : seuil de réussite critique
+  - `dm-1m` : jet de DM quand l'arme est maniée à une main
+  - `dm-2m` : jet de  DM quand l'arme est maniée à deux mains
+  - `type-dm` : type de DM
+  - `portee` : portée de l'arme à distance
+  - `lancer` : portée de l'arme lancée
+  - `usure` : seuil d'usure
 - Pour les protections (armures et boucliers) :
-  - <kbd>bonus-def</kbd> : bonus apporté à la DEF par l'armure ou le bouclier
-  - <kbd>armure</kbd> : bonus apporté à la DEF par l'armure
-  - <kbd>armure-malus</kbd> : malus à l'AGI de l'armure portée
-  - <kbd>bouclier</kbd> : bonus apporté à la DEF par le bouclier
-  - <kbd>bouclier-malus</kbd> : malus à l'AGI du bouclier porté
-  - <kbd>casque</kbd> : RD du casque contre les DM critiques
-  - <kbd>casque-malus</kbd> : malus à la PER & Init du casque porté
-  - <kbd>agi-max</kbd> : valeur maximum d'AGI pour port de l'armure
+  - `bonus-def` : bonus apporté à la DEF par l'armure ou le bouclier
+  - `armure` : bonus apporté à la DEF par l'armure
+  - `armure-malus` : malus à l'AGI de l'armure portée
+  - `bouclier` : bonus apporté à la DEF par le bouclier
+  - `bouclier-malus` : malus à l'AGI du bouclier porté
+  - `casque` : RD du casque contre les DM critiques
+  - `casque-malus` : malus à la PER & Init du casque porté
+  - `agi-max` : valeur maximum d'AGI pour port de l'armure
 - Pour les armes magiques :
-  - <kbd>magie</kbd> : valeur du bonus au jet pour toucher et DM
-  - <kbd>magieAtt</kbd> : valeur du bonus magique au jet pour toucher
-  - <kbd>magieDmg</kbd> : valeur du bonus magique aux DM (peut être un jet de dé)
-  - <kbd>affutee</kbd> : pour réduire de 1 le seuil de critique et ajouter 1d4° DM en cas de coup critique
-  - <kbd>element</kbd> : nom d'élément/substance pour ajouter une ligne de 1d4° DM élémentaires (2d4° si le nom de l'élément est suivi d'un espace et du mot <kbd>intense</kbd>)
-  - <kbd>fleau</kbd> : nom d'un type de créature pour que Roll20 demande confirmation lors de l'attaque et qu'une ligne de 1d4° DM soit ajoutée si la créature ciblée est du même type
+  - `magie` : valeur du bonus au jet pour toucher et DM
+  - `magieAtt` : valeur du bonus magique au jet pour toucher
+  - `magieDmg` : valeur du bonus magique aux DM (peut être un jet de dé)
+  - `affutee` : pour réduire de 1 le seuil de critique et ajouter 1d4° DM en cas de coup critique
+  - `element` : nom d'élément/substance pour ajouter une ligne de 1d4° DM élémentaires (2d4° si le nom de l'élément est suivi d'un espace et du mot `intense`)
+  - `fleau` : nom d'un type de créature pour que Roll20 demande confirmation lors de l'attaque et qu'une ligne de 1d4° DM soit ajoutée si la créature ciblée est du même type
 
 ## Equipement lié à la défense
 
-Si vous cochez la case <kbd>Equipment porté</kbd> d'une armure ou d'un bouclier ou d'un casque, tout autre équipement de même nature qui était précédemment coché est décoché (une seule pièce portée à la fois), et les paramètres de calcul de la Défense sont automatiquement mis à jour à partir des propriétés.
+Si vous cochez la case `Equipment porté` d'une armure ou d'un bouclier ou d'un casque, tout autre équipement de même nature qui était précédemment coché est décoché (une seule pièce portée à la fois), et les paramètres de calcul de la Défense sont automatiquement mis à jour à partir des propriétés.
 
 Si aucune armure, aucun bouclier ou aucun casque n'est porté, la case correspondante de la Défense est décochée.
 
 ### Détermination de la nature de l'équipement
 
 - Une pièce d'équipement est une armure
-  - si elle a une propriété <kbd>armure</kbd> avec son bonus
-  - ou si elle a une propriété <kbd>bonus-def</kbd> et que son nom ne contient pas le mot <kbd>bouclier</kbd>
+  - si elle a une propriété `armure` avec son bonus
+  - ou si elle a une propriété `bonus-def` et que son nom ne contient pas le mot `bouclier`
 - Une pièce d'équipement est un bouclier
-  - si elle a une propriété <kbd>bouclier</kbd> avec son bonus
-  - ou si elle a une propriété <kbd>bonus-def</kbd> et que son nom contient le mot <kbd>bouclier</kbd>
-- Une pièce d'équipement est un casque si elle a une propriété <kbd>casque</kbd> avec sa RD
+  - si elle a une propriété `bouclier` avec son bonus
+  - ou si elle a une propriété `bonus-def` et que son nom contient le mot `bouclier`
+- Une pièce d'équipement est un casque si elle a une propriété `casque` avec sa RD
 
 ## Equipement lié à une attaque
 
-Si vous cochez la case <kbd>A une attaque</kbd>, une ligne d'attaque est automatiquement ajoutée à la liste des attaques/armes du PJ. Elle est supprimée de cette liste si vous décochez la case.
+Si vous cochez la case `A une attaque`, une ligne d'attaque est automatiquement ajoutée à la liste des attaques/armes du PJ. Elle est supprimée de cette liste si vous décochez la case.
 
 La ligne d'attaque est créée en fonction des propriétés d'équipement que vous avez indiqué pour l'arme.
 
-Si l'arme possède la propriété <kbd>lancer</kbd>, la fiche crée deux lignes d'attaque : une pour le maniement au contact et une pour le lancer.
+Si l'arme possède la propriété `lancer`, la fiche crée deux lignes d'attaque : une pour le maniement au contact et une pour le lancer.
 
 # Ressources
 
@@ -92,9 +92,9 @@ Pour chaque élément de la liste, vous indiquez :
 
 Un bouton permet de décompter un consommable et éventuellement d'envoyer un message dans le chat Roll20 selon le type de consommable.
 
-Si vous spécifiez une propriété <kbd>type: munition</kbd>, la fiche recherche dans les armes une ligne dont le type d'attaque est _Trait_ et dont le nom de munition correspond au nom de la ressource. Elle établit la relation entre les deux éléments pour décrémenter la ressource à chaque attaque et afficher un message d'avertissement lorsque le personnage est à court de munitions.
+Si vous spécifiez une propriété `type: munition`, la fiche recherche dans les armes une ligne dont le type d'attaque est _Trait_ et dont le nom de munition correspond au nom de la ressource. Elle établit la relation entre les deux éléments pour décrémenter la ressource à chaque attaque et afficher un message d'avertissement lorsque le personnage est à court de munitions.
 
-Si vous spécifiez une propriété <kbd>type: soins</kbd>, et que vous cliquez sur le bouton _Consommable_, un message de chat indiquant le nombre de PV récupérés s'affiche. Par défaut, il s'agit d'une potion de soins standard permettant de récupérer 1d4° PV. Vous pouvez si besoin indiquer une formule de dés différente à la suite du mot <kbd>soins</kbd>. _Ex :_ : pour paramétrer les Elixirs de guérison du Forgesort, indiquez <kbd>type: soins [2d4°+INT]</kbd>.
+Si vous spécifiez une propriété `type: soins`, et que vous cliquez sur le bouton _Consommable_, un message de chat indiquant le nombre de PV récupérés s'affiche. Par défaut, il s'agit d'une potion de soins standard permettant de récupérer 1d4° PV. Vous pouvez si besoin indiquer une formule de dés différente à la suite du mot `soins`. _Ex :_ : pour paramétrer les Elixirs de guérison du Forgesort, indiquez `type: soins [2d4°+INT]`.
 
 # Munitions
 

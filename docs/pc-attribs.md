@@ -17,7 +17,9 @@ Ce bouton peut être épinglé dans la barre d'action de Roll20 par glisser-dép
 
 Pour chaque caractéristique, vous pouvez indiquer :
 - Son score de base,
-- S'il s'agit d'une caractéristique supérieure ou héroïque voire les deux,
+- S'il s'agit d'une caractéristique supérieure ou héroïque voire les deux
+
+Deux case supplémentaires sont calculées par la fiche :
 - La somme des buffs/debuffs temporaires ou permanents appliqués au score,
 - Le score total (base + divers).
 
@@ -43,10 +45,10 @@ Cette section présente les scores d'initiative et d'attaques du PJ (contact, di
 Lorsque le bouton d'initiative est cliqué, si le token du PJ est sélectionné sur la map, le jet est ajouté au _Turn Order_.
 
 Pour les boutons de jets d'attaque, le jet de dé effectué dépend des circonstances :
-- Un jet de d20 avec _dé malus_ en cas d'état _Affaibli_,
-- Deux jets de d20 sinon. Dans le cas général (jet normal), prenez en compte le premier jet affiché. Prenez le plus élevé des deux jets si le PJ bénéficie d'un _dé bonus_ ou le moins élevé s'il subit un _dé malus_.
+- Un jet de d20 avec _dé malus_ en cas d'état _Affaibli_ ou _Immobilisé_,
+- Deux jets de d20 sinon. En cas de jet normal, prenez en compte le premier jet affiché. Prenez le plus élevé des deux jets si le PJ bénéficie d'un _dé bonus_ ou le moins élevé s'il subit un _dé malus_.
 
-Une icône en forme d'éclair à côté du mot Combat permet d'activer ou désactiver les manoeuvres. Lorsque les boutons des jets d'attaque au contact et à distance sont cliqués, la fiche propose alors d'utiliser l'une des manoeuvres spéciales dans un popup Roll20 et applique le modificateur approprié au résultat du jet. Les effets de la manoeuvre sont chuchotés au MJ dans le chat Roll20.
+Une icône en forme d'éclair à côté du mot Combat permet d'activer ou désactiver les manoeuvres. Lorsque les boutons des jets d'attaque au contact ou à distance sont cliqués, la fiche propose alors d'utiliser l'une des manoeuvres spéciales dans un popup Roll20 et applique le modificateur approprié au résultat du jet. Les effets de la manoeuvre sont chuchotés au MJ dans le chat Roll20.
 
 Si l'option _Attaques ciblées_ est active, cliquer sur l'un des boutons d'attaque demande au joueur de sélectionner le token de la cible et le résultat du jet d'attaque est comparé à sa Défense pour en déterminer le succès ou l'échec.
 
@@ -164,7 +166,7 @@ Des paramètres optionnels peuvent être ajoutés :
 
 Un clic sur le bouton d20 permet de lancer le jet d'attaque et de DM dans le chat en tenant compte des divers paramètres. 
 
-A moins que l'option de configuration _Un seul jet d'attaque_ ne soit active, deux jets distincts d'attaque sont effectués, sauf si le PJ est _Affaibli_. Dans le cas général (jet normal), prenez en compte le jet de gauche. Prenez le plus élevé des deux jets si le PJ bénéficie d'un _dé bonus_ ou le moins élevé s'il subit un _dé malus_.
+A moins que l'option de configuration _Un seul jet d'attaque_ ne soit active, deux jets distincts d'attaque sont effectués, sauf si le PJ est _Affaibli_ ou _Immobilisé_. En cas de jet normal, prenez en compte le premier jet affiché. Prenez le plus élevé des deux jets si le PJ bénéficie d'un _dé bonus_ ou le moins élevé s'il subit un _dé malus_.
 
 Si l'arme est maniée à deux mains et que le bouclier est équipé, le jet d'attaque n'est pas effectué, un message d'avertissement s'affiche à la place.
 

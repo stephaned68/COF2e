@@ -54,23 +54,23 @@ Des paramètres optionnels peuvent être ajoutés :
   Ce paramètre est utilisé par le script COFantasy2
 
 - Modificateurs d'attaque : vous pouvez spécifier une série de mentions spéciales permettant de régler le comportement du jet d'attaque. Séparez les différentes mentions par des virgules.
-  - <kbd>deBonus</kbd> : l'attaque est faite avec un dé bonus, sauf si le personnage est _Affaibli_
-  - <kbd>deMalus</kbd> : l'attaque est faite avec un dé malus
-  - <kbd>explodeMax</kbd> : le dé de DM est _explosif_ (relance d'un nouveau dé de DM en cas de résultat maximum)
-  - <kbd>reroll1</kbd> : le dé de DM est relancé jusqu'à ce que son résultat soit supérieur à 1
-  - <kbd>reroll1:1</kbd> : si le résultat initial est égal à 1, le dé de DM est relancé une seule fois
-  - <kbd>poudre</kbd> : l'arme explose et inflige 1d4° DM à l'utilisateur s'il ne maîtrise pas les armes à poudre
-  - <kbd>jet:N</kbd> : le Nième jet de la liste du sous-onglet _Capacités_ est envoyé dans le chat Roll20 en même temps que le jet d'attaque. Vous pouvez ainsi gérer les attaques qui demandent un jet pour toucher contre la Défense de la cible mais ne font pas de DM classiques.
+  - `deBonus` : l'attaque est faite avec un dé bonus, sauf si le personnage est _Affaibli_
+  - `deMalus` : l'attaque est faite avec un dé malus
+  - `explodeMax` : le dé de DM est _explosif_ (relance d'un nouveau dé de DM en cas de résultat maximum)
+  - `reroll1` : le dé de DM est relancé jusqu'à ce que son résultat soit supérieur à 1
+  - `reroll1:1` : si le résultat initial est égal à 1, le dé de DM est relancé une seule fois
+  - `poudre` : l'arme explose et inflige 1d4° DM à l'utilisateur s'il ne maîtrise pas les armes à poudre
+  - `jet:N` : le Nième jet de la liste du sous-onglet _Capacités_ est envoyé dans le chat Roll20 en même temps que le jet d'attaque. Vous pouvez ainsi gérer les attaques qui demandent un jet pour toucher contre la Défense de la cible mais ne font pas de DM classiques.
 
 - Options d'attaques avec arguments : ce paramètre est principalement utilisé par le script **COFantasy2**.
   
   Vous pouvez toutefois y indiquer l'option suivante reconnue par la fiche :
   
-  - <kbd>fx: </kbd> suivi du nom d'un FX Roll20 et d'un nombre facultatif de répétition
+  - `fx: ` suivi du nom d'un FX Roll20 et d'un nombre facultatif de répétition
   
 - Cible : vous indiquez un texte à afficher si le jet de D20 atteint ou dépasse la valeur cible
 
-Un clic sur le bouton d20 permet de lancer le jet d'attaque et de DM dans le chat en tenant compte des divers paramètres. Si la case d'attaques multiples est cochée et que le nom de l'attaque contient le motif <kbd>(n attaques)</kbd>, le nombre n de jets d'attaque est effectué.
+Un clic sur le bouton d20 permet de lancer le jet d'attaque et de DM dans le chat en tenant compte des divers paramètres. Si la case d'attaques multiples est cochée et que le nom de l'attaque contient le motif `(n attaques)`, le nombre n de jets d'attaque est effectué.
 
 Le texte d'effet spécial est traité par la fiche pour substituer les jets en ligne comme décrit pour la description des [capacités des PJs]({{ site.baseurl }}/pc-abilities).
 
@@ -99,9 +99,9 @@ Vous pouvez également activer l'une des options tactiques (attaque assurée, pr
 
 # Sous-onglet _Capacités_
 
-Cette liste contient les capacités spéciales du PNJ. Pour chacune, vous indiquez son nom et sa description.
+Cette liste contient les capacités spéciales du PNJ. Pour chacune, vous indiquez son nom et sa description, et éventuellement le nombre maximum et la fréquence d'utilisations.
 
-Un clic sur le bouton d20 envoie un message dans le chat Roll20 avec le nom et la description. Le texte de la description est traité par la fiche pour substituer les jets en ligne comme décrit pour la description des [capacités des PJs]({{ site.baseurl }}/pc-abilities).
+Un clic sur le bouton d20 envoie un message dans le chat Roll20 avec le nom et la description. Le texte de la description est traité par la fiche pour substituer les jets en ligne comme décrit pour la description des [capacités des PJs]({{ site.baseurl }}/pc-abilities). Un contrôle du nombre d'utilisations maximum est effectué et un message s'affiche si la limite est atteinte.
 
 Le bouton d20 de la capacité peut être épinglé dans la barre d'actions de Roll20 par glisser-déposer.
 

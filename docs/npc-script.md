@@ -22,11 +22,11 @@ Un champs de texte libre permet de saisir la liste des prédicats pour le person
 
 ### Syntaxe des prédicats
 
-Chaque ligne de prédicat est constituée d'un code et d'une valeur, séparés par <kbd>:</kbd> et d'un nombre quelconque d'espaces.
+Chaque ligne de prédicat est constituée d'un code et d'une valeur, séparés par `:` et d'un nombre quelconque d'espaces.
 
-La ligne peut ne comporter qu'un code sans <kbd>:</kbd> ni valeur, pour activer une option booléenne.
+La ligne peut ne comporter qu'un code sans `:` ni valeur, pour activer une option booléenne.
 
-Les lignes vides ou commençant par <kbd>//</kbd> (pour insérer un texte de commentaire) sont autorisées mais non traitées.
+Les lignes vides ou commençant par `//` (pour insérer un texte de commentaire) sont autorisées mais non traitées.
 
 ## Autres scripts MOD
 
@@ -39,10 +39,10 @@ Il est nécessaire de disposer d'un compte payant **Pro** pour pouvoir utiliser 
 Ce script permet de modifier les propriétés d'un token grâce à des commandes de chat Roll20.
 
 Lorsque le script est activé, trois boutons sont affichés sous le token du PNJ dans l'entête de la fiche.
-- <kbd>-</kbd> permet de diminuer la taille du token de 10%
-- <kbd>🗸</kbd> permet de lier les barres du token aux attributs de la fiche (cf Liaison par défaut)
-- <kbd>⤧</kbd> permet d'appliquer un coefficient multiplicateur à la taille actuelle du token
-- <kbd>-</kbd> permet d'augmenter la taille du token de 10%
+- `-` permet de diminuer la taille du token de 10%
+- `🗸` permet de lier les barres du token aux attributs de la fiche (cf Liaison par défaut)
+- `⤧` permet d'appliquer un coefficient multiplicateur à la taille actuelle du token
+- `-` permet d'augmenter la taille du token de 10%
 
 D'autres options peuvent être activées :
 - Marker 0 PV : permet d'indiquer un nom de marker à appliquer au token lorsque le nombre de PV tombe à 0.
@@ -50,7 +50,7 @@ D'autres options peuvent être activées :
 
   La teinte doit être indiquée sous la forme d'un code hexadécimal à 6 caractères (0-9, A-F).
 
-  Ces options ne fonctionnent que pour les PNJs importants qui ont leur propre fiche. Les PNJs de type _mook_ n'ont pas de barre de token liée à l'attribut <kbd>pv</kbd>, uniquement à sa valeur et par conséquent la fiche ne peut détecter que les pertes de PV.
+  Ces options ne fonctionnent que pour les PNJs importants qui ont leur propre fiche. Les PNJs de type _mook_ n'ont pas de barre de token liée à l'attribut `pv`, uniquement à sa valeur et par conséquent la fiche ne peut détecter que les pertes de PV.
 
 #### Liaison par défaut des barres de tokens
 

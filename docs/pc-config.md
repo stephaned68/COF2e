@@ -17,15 +17,15 @@ Les préférence et réglages possibles de la fiche sont configurés dans cet on
 Pour un fonctionnement correct de cette option, il est nécessaire de respecter les contraintes suivantes :
 - La voie n°1 est la voie de peuple ou du mage
 - Les voies n°2 et 3 sont les voies où sont choisies les deux capacités au niveau 1
-- La capacité supplémentaire prise par les profils de mages au niveau 1 doit avoir la propriété <kbd>initial</kbd>
+- La capacité supplémentaire prise par les profils de mages au niveau 1 doit avoir la propriété `initial`
 - Les PV de la voie (qui sont ceux de la famille de profil auquel appartient la voie) doivent être spécifiés. Ceux-ci sont initialisés automatiquement si le nom de la voie est reconnu par la fiche.
 
 Les PV maximums sont calculés en faisant la somme des éléments suivants :
 - [niveau] x [CON]
-- pour toutes les capacités possédées (cochées) qui n'ont pas la propriété <kbd>doublon</kbd> (cf capacité en doublon, p. 171) ni la propriété <kbd>epic</kbd> (cf capacités épiques, Atlas p. 185)
+- pour toutes les capacités possédées (cochées) qui n'ont pas la propriété `doublon` (cf capacité en doublon, p. 171) ni la propriété `epic` (cf capacités épiques, Atlas p. 185)
   - Si rang 1 de la voie 1 : 0 PV
   - Sinon si rang 1 de voie 2 ou 3 : [PV de voie]
-  - Sinon si rang 2 de voie 1,2 ou 3 et propriété <kbd>initial</kbd> : 0 PV
+  - Sinon si rang 2 de voie 1,2 ou 3 et propriété `initial` : 0 PV
   - Sinon si rang 1 ou 2 : [PV de voie]/2
   - Sinon (rang >2) : [PV de voie]
 
@@ -34,12 +34,12 @@ Les PV maximums sont calculés en faisant la somme des éléments suivants :
 Pour un fonctionnement correct de cette option, il est nécessaire de respecter les mêmes contraintes que ci-dessus :
 - La voie n°1 est la voie de peuple ou du mage
 - Les voies n°2 et 3 sont les voies où sont choisies les deux capacités au niveau 1
-- La capacité supplémentaire prise par les profils de mages au niveau 1 doit avoir la propriété <kbd>initial</kbd>
+- La capacité supplémentaire prise par les profils de mages au niveau 1 doit avoir la propriété `initial`
 
 La fiche décompte pour les capacités possédées (cochées) :
 - Si rang 1 de la voie 1 : 0 point
 - Sinon si rang 1 de voie 2 ou 3 : 1 point
-- Sinon si rang 2 de voie 1,2 ou 3 et propriété <kbd>initial</kbd> : 0 point
+- Sinon si rang 2 de voie 1,2 ou 3 et propriété `initial` : 0 point
 - Sinon si rang 1 ou 2 : 1 point
 - Sinon (rang >2) : 2 points
 
@@ -48,7 +48,7 @@ Si le nombre de points de capacités utilisé dépasse le nombre maximum disponb
 ## Initiative
 
 - Initiative variable : Un jet de 1d6 sans limite est ajouté au score d'initiative en début de combat.
-- Départager les inits identiques : La valeur de <kbd>(AGI+PER)/10</kbd> est ajoutée au jet d'initiative.
+- Départager les inits identiques : La valeur de `(AGI+PER)/10` est ajoutée au jet d'initiative.
 - Initiative + AGI : Le score d'Initiative est calculé en ajoutant l'AGI à la somme 10 + PER.
 
 ## Règles optionnelles
@@ -94,11 +94,11 @@ _Exemple :_ Nombre de dés de DM de l'_attaque sournoise_, nombre d'utilisation 
 
 Cette section permet de définir une liste d'attributs dans une zone de texte libre. La syntaxe de cette liste est la même que pour les [prédicats]({{ site.baseurl }}/pc-script).
 
-Les attributs personnalisés sont créés avec la valeur indiquée. Ils peuvent être utilisés dans des macros Roll20 ou à d'autres emplacements de la fiche sous le nom <kbd>{nom profil}_{nom attribut}</kbd>.
+Les attributs personnalisés sont créés avec la valeur indiquée. Ils peuvent être utilisés dans des macros Roll20 ou à d'autres emplacements de la fiche sous le nom `{nom profil}_{nom attribut}`.
 
 _Exemple :_ 
 
-<kbd>sournoise: (2+@{voies_rang4})d4°</kbd> sur la fiche d'un profil de voleur crée un attribut nommé <kbd>voleur_sournoise</kbd>. La valeur de cet attribut sera résolue par Roll20 à l'utilisation, en ajoutant aux 2d4° de base le nombre de voies de voleur dans lequel le personnage a atteint le rang 4. Cet attribut peut être utilisé dans une macro sous le nom <kbd>@{voleur_sournoise}</kbd>
+`sournoise: (2+@{voies_rang4})d4°` sur la fiche d'un profil de voleur crée un attribut nommé `voleur_sournoise`. La valeur de cet attribut sera résolue par Roll20 à l'utilisation, en ajoutant aux 2d4° de base le nombre de voies de voleur dans lequel le personnage a atteint le rang 4. Cet attribut peut être utilisé dans une macro sous le nom `@{voleur_sournoise}`
 
 ## Notifications
 
@@ -107,30 +107,80 @@ Pour chaque type de notification, vous pouvez choisir entre aucun affichage, un 
 - Conditions : Les effets des états préjudiciables sont affichés ou pas dans le chat Roll20.
 - Gain/Perte de PV : Les effets des gains ou des pertes de PV lors du clic sur les deux icones sont affichés ou pas dans le chat Roll20.
 
-- FX (caract.) : Vous pouvez indiquer ici le nom d'un FX Roll20 qui sera joué lors d'un jet de caractéristique (commande <kbd>/fx</kbd>).
+- FX (caract.) : Vous pouvez indiquer ici le nom d'un FX Roll20 qui sera joué lors d'un jet de caractéristique (commande `/fx`).
 
 ## Apparence des messages
 
 Vous pouvez sélectionner une couleur spécifique pour les messages de chat du personnage.
 
 Vous pouvez également modifier certains aspects des messages de chat :
-- Un seul jet d'attaque (au lieu des deux jets effectués par défaut par la fiche).
-- Un seul jet de compétence (au lieu des deux jets effectués par défaut par la fiche).
+- Un seul jet d'attaque (cf _Jets de d20_ ci-dessous).
+- Un seul jet de compétence (cf _Jets de d20_ ci-dessous).
 - Bouton Chance : Un bouton chance est affiché au bas des messages sur tous les jets de D20 et permet de dépenser instantanément un PC en affichant les résultats précédents bonifiés (+10 ou +1d10 si l'option PC variables est active).
+
+## Dés bonus / dé malus
+
+Vous pouvez choisir d'autres options pour les lancers de d20 :
+- Boutons : pour afficher trois boutons sous le logo de la fiche permettant de choisir entre un jet normal, avec dé bonus ou avec dé malus avant de cliquer sur un bouton d'action.
+- Demander : pour afficher un popup Roll20 permettant de choisir si le jet est normal, avec dé bonus ou malus après avoir cliqué sur un bouton d'action.
+
+### Jets de d20 
+
+#### Par défaut
+
+Un jet de caractéristique _sec_ n'est lancé qu'une fois. Les dés effectivement lancés varient selon que la caractéristique soit _Supérieure_ et/ou _Héroïque_ et si le personnage subit l'état _Affaibli_.
+
+Un jet d'attaque _sec_ n'est lancé qu'une fois et les états _Affaibli_ et _Immobilisé_ font varier les dés lancés.
+
+Un jet d'arme ou de compétences est lancé une seule fois si le personnage subit l'état _Affaibli_ ou _Immobilisé_.
+
+Sinon, il est lancé deux fois, avec les même bonus appliqués au d20 :
+- Soit le jet est normal et vous prenez le premier résultat affiché
+- Soit le jet est avec dé bonus ou malus, et vous prenez le meilleur résultat ou le pire
+
+Un jet de capacité est configuré avec la possibilité de faire un jet normal ou avec dé bonus / malus
+
+#### Un seul jet d'attaque
+
+Vous pouvez activer une option de configuration pour que la fiche fasse un seul jet d'attaque avec une arme. Ce jet est normal, à moins que l'attaque soit configurée avec les modificateurs `deBonus` ou `deMalus`. Les états _Affaibli_ ou _Immobilisé_ font varier les dés effectivement lancés.
+
+#### Un seul jet de compétence
+
+Vous pouvez activer une option de configuration pour que la fiche fasse un seul jet normal de compétence.
+
+#### Choisir le type de dés avant le jet
+
+Vous pouvez activer une option de configuration pour avoir trois boutons affichés en permanence sous le logo COF2. Ces boutons basculent entre jet normal, jet avec dé bonus ou jet avec dé malus. 
+
+Selon que la caractéristique soit _Supérieure_ et/ou _Héroïque_ et les états préjudiciables subis, la fiche adapte les dés effectivement lancés. 
+
+_Exemples : le jet d'une caractéristique **supérieure** et **héroïque** effectué avec **dé malus** est réalisé avec **dé bonus** mais sans résultat minimum de **10** ; un jet d'attaque effectué avec **dé bonus** alors que le personnage est immobilisé (**dé malus**) réalise un jet **normal** avec un seul d20_.
+
+Une logique similaire s'applique pour les jets d'attaque selon les états préjudiciables subis. 
+
+Pour les jets d'armes, les états préjudiciables et la présence des modificateurs `deBonus` ou `deMalus` sont également pris en compte.
+
+#### Choisir le type de dés pendant le jet
+
+Vous pouvez activer une option de configuration pour que lorsqu'un bouton d'action est cliqué, un popup Roll20 s'ouvre et la fiche demande au joueur le type de jet à effectuer. Cette demande ne s'affiche que si le jet devrait être normal.
 
 ## Premiers rangs
 
 Pour chaque voie du PJ, vous pouvez indiquer la valeur du premier rang (1 pour les voies de peuple et de profil, 3 ou 4 pour les voies de prestige). La fiche stocke le nom du profil dont cette voie est issue.
 
+Ne pas oublier d'indiquer la valeur de **3** pour le rang de base la voie de prestige du _familier fantastique_.
+
+Le rang de base peut aussi être utilisé pour implémenter la magie rare du mode **low-fantasy**, en changeant le rang de base des voies de magie par 2, 3 ou 4 selon la rareté souhaitée
+
 ## Autres fonctions
 
 Plusieurs outils sont disponibles dans la partie supérieure droite de cet onglet.
 
-Une case permet d'activer le mode <kbd>debug</kbd>. Une fois cochée, un grand nombre d'événements se produisant dans la fiche inscrivent des informations techniques de débogage dans la console de développement du navigateur.
+Une case permet d'activer le mode `debug`. Une fois cochée, un grand nombre d'événements se produisant dans la fiche inscrivent des informations techniques de débogage dans la console de développement du navigateur.
 
-Une première icone _Outils_ permet de copier les options de configuration par défaut depuis une fiche de personnage et nommée <kbd>PJBase</kbd>. Lorsqu'il crée cette fiche, le MJ de la partie doit également cliquer sur cette icone pour que tous les attributs traités aient une valeur, sans quoi la copie à partir d'autres fiches échouera.
+Une première icone _Outils_ permet de copier les options de configuration par défaut depuis une fiche de personnage et nommée `PJBase`. Après avoir créé et configuré cette fiche, le MJ de la partie doit également cliquer sur cette icone pour que tous les attributs traités soient créés avec une valeur dans l'onglet _Attributes & Abilities_, sans quoi la copie à partir d'autres fiches échouera.
 
-Une deuxième icone _Outils_ permet de ré-initialiser et re-calculer un certain nombre d'attributs dérivés dans la fiche. Ce bouton n'est utile qu'en cas de bug, et peut éventuellement corriger des comportements incorrects de la fiche. 
+Une deuxième icone _Outils_ permet de re-calculer un certain nombre d'attributs dérivés dans la fiche. Ce bouton n'est utile qu'en cas de bug, et peut éventuellement corriger des comportements incorrects de la fiche. 
 
 ---
 
