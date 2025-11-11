@@ -263,7 +263,7 @@ Ce menu permet d'afficher un message de chat avec des boutons d'accès rapide au
 - Jets de capacités supplémentaires (dont le nom ne correspond pas à une capacité possédée)
 - Activation ou désactivation de buffs temporaires via un popup Roll20 de sélection
 - Jets de compétences via un popup Roll20 de sélection, si l'option est active
-- Modification du type de jet de d20 (normal, dé bonus, dé malus)
+- Récupérations et consommables de soins.
 
 # Roll Templates
 

@@ -13,28 +13,23 @@ Les préférence et réglages possibles de la fiche sont configurés dans cet on
 - Départager les inits identiques : La valeur de `(AGI+PER)/10` est ajoutée au jet d'initiative.
 - Critiques différenciés : Les réussites critiques en combat provoquent des effets différenciés selon le type de DM de l'arme utilisée.
 
+## Attaques
+
+Cette section optionnelle permet d'indiquer des scores d'attaque de base du PNJ.
+
+- Combat : Il s'agit du score d'attaque au contact.
+- Magique : Il s'agit du score d'attaque magique.
+
+Si la case _Utiliser les scores de base_ est cochée, les scores d'attaques indiqués serviront de base au bonus d'attaque, et les bonus indiqués sur chaque ligne d'attaque leur seront ajoutés. Pour prendre en compte le score de base approprié, le type d'attaque doit être correctement spécifié dans les lignes d'attaque :
+- Pour le type _Sort_, le score d'attaque de base est le score d'attaque magique.
+- Pour tous les autres types, c'est le score d'attaque au contact.
+
 ## Défense
 
 Cette section permet de gérer certaines créatures dont le score Défense peut varier selon les circonstances.
 
 - Base : Il s'agit de la valeur de base de la Défense.
 - Supérieure : Il s'agit de la valeur supérieure de la Défense dont la créature peut éventuellement bénéficier via une de ses capacités
-
-## Compagnon
-
-Cette section permet d'identifier le PNJ comme le compagnon ou familier d'un PJ, dans le cas où certains traits du PNJ sont calculés à partir de valeurs d'attributs du PJ.
-
-Pour ce faire, il faut indiquer le nom **exact** du PJ dans le PNJ est le compagnon, puis définir une expression pour le calcul des traits du PNJ, en spécifiant le nom d'un attribut du PJ dont il dépend entre `[ ... ]`. Comme il s'agit d'expressions mathématiques interprétées par du code Javascript, la multiplication est représentée par le signe `*` et la division par le signe `/`.
-
-_Exemple : Loup (rôdeur)_
-
-- Défense : `12 + [rang_voie?]` _(ex : \[rang\_voie3\] si "compagnon animal" est en voie n°3)_
-  
-  _En remplaçant ? par le no de la voie du compagnon animal_ sur la fiche du rôdeur.
-
-- Vigueur : `[niveau]*4`
-- Initiative : `[init]`
-- Attaque : `[atkmag]`
 
 ## Compétences
 
@@ -51,6 +46,22 @@ où
 `+bonus` est le bonus qui s'ajoute au score de la caractéristique, suivi d'un espace
 
 Lorsqu'un test de caractéristique est effectué et que une ou plusieurs compétences sont associées à celle-ci, la fiche affiche un popup Roll20 pour choisir une compétence ou faire un jet "sec".
+
+## Compagnon
+
+Cette section permet d'identifier le PNJ comme le compagnon ou familier d'un PJ, dans le cas où certains traits du PNJ sont calculés à partir de valeurs d'attributs du PJ.
+
+Pour ce faire, il faut indiquer le nom **exact** du PJ dans le PNJ est le compagnon, puis définir une expression pour le calcul des traits du PNJ, en spécifiant le nom d'un attribut du PJ dont il dépend entre `[ ... ]`. Comme il s'agit d'expressions mathématiques interprétées par du code Javascript, la multiplication est représentée par le signe `*` et la division par le signe `/`.
+
+_Exemple : Loup (rôdeur)_
+
+- Défense : `12 + [rang_voie?]` _(ex : \[rang\_voie3\] si "compagnon animal" est en voie n°3)_
+  
+  _En remplaçant ? par le no de la voie du compagnon animal_ sur la fiche du rôdeur.
+
+- Vigueur : `[niveau]*4`
+- Initiative : `[init]`
+- Attaque : `[atkmag]`
 
 ## Importer un statblock
 

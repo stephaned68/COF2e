@@ -63,7 +63,7 @@ Une troisième icone est affichée si le personnage possède au moins un sort (e
 Les propriétés suivantes peuvent être appliquées aux capacités :
 
 - `fx: xxxxx N` suivi du nom d'un effet spécial xxxxxx et d'un nombre éventuel N de répétitions pour que la fiche joue un FX Roll20 (commande `/fx`) lorsque la capacité est utilisée.
-- `pm:` suivi d'un chiffre pour faire varier le nombre de PM consommés par cette capacité. Ce chiffre peut être absolu (`3` pour consommer 3 PM) ou relatif (`-1` pour consommer 1 PM de moins que la normale).
+- `pm:` suivi d'un chiffre pour faire varier le nombre de PM consommés par cette capacité. Ce chiffre peut être absolu (`pm: 3` pour consommer 3 PM) ou relatif (`pm: -1` pour consommer 1 PM de moins que la normale).
 - `selonRang: valeur1,valeur2,valeur3,valeur4,valeur5` suivi de 5 valeurs séparées par des virgules pour indiquer qu'un paramètre de la capacité évolue selon le rang atteint dans la voie.
   - `valeur1` est la valeur du paramètre évolutif au rang 1
   - `valeur2` est la valeur du paramètre évolutif au rang 2
@@ -71,10 +71,10 @@ Les propriétés suivantes peuvent être appliquées aux capacités :
   - `valeur4` est la valeur du paramètre évolutif au rang 4
   - `valeur5` est la valeur du paramètre évolutif au rang 5
   
-  Le texte de la capacité doit comporter l'expression `&#123;&#123;selonRang&#125;&#125;` pour que la fiche y insère la valeur dépendant du rang atteint.
+  Le texte de la capacité doit comporter l'expression `{{selonRang}}` pour que la fiche y insère la valeur dépendant du rang atteint.
 
 - `epic:` suivi d'un espace pour identifier la capacité comme épique.
-- `buff: xxx [valeur1,valeur2,valeur3,valeur4,valeur5]` permet de spécifier un buff qui évolue selon le rang atteint dans la voie.
+- `buff: xxx [valeur1,valeur2,valeur3,valeur4,valeur5]` permet de spécifier un buff nommé xxx qui évolue selon le rang atteint dans la voie.
 - `roll: xxx` où xxx peut prendre les valeurs `contact` ou `distance` ou `magie` permet de demander à la fiche de faire le jet d'attaque correspondant lors de l'utilisation de la capacité. Un autre type de jet peut être indiqué, en spécifiant le nom du bouton (généralement suffixé par `-btn` et affiché au survol de la souris sur les différentes rubriques de la fiche).
 - `action:` suivi d'un espace pour identifier la capacité comme active afin qu'un bouton d'action lui soit assigné dans le menu d'actions dans le chat.
 
@@ -90,7 +90,7 @@ Les propriétés suivantes peuvent être appliquées aux capacités :
 
   Description : _Des flammes jaillissent des doigts tendus du magicien. Jusqu’à 3 cibles au contact subissent [{{selonRang}}+INT] DM, les cibles peuvent faire un test d’AGI difficulté [10 + INT] pour ne subir que la moitié des DM_
 
-- Paramétrer le buff à la DEF octroyé par la capacité Peau de pierre selon le rang atteint dans la voie du pagne renseignée en voie n°3
+- Paramétrer le buff à la DEF octroyé par la capacité _Peau de pierre_ selon le rang atteint dans la _voie du Pagne_ renseignée en voie n°3
 
   Propriété : `buff: def [0,1,1,2,2]`
 
@@ -102,7 +102,7 @@ Les propriétés suivantes peuvent être appliquées aux capacités :
 
 ## Capacités épiques
 
-Pour que les calculs des rangs atteints dans les voies, des PV et des points de capacités dépensés soient corrects, une capacité épique ne doit <strong>PAS</strong> être cochée.
+Pour que les calculs des rangs atteints dans les voies, des PV et des points de capacités dépensés soient corrects, une capacité épique ne doit **pas** être cochée.
 
 # Jets de capacités
 
@@ -112,7 +112,7 @@ Ce sous-onglet permet de lister des jets liés aux capacités du PJ. Pour chaque
   - Soit un jet de d20 normal, soit un jet avec _dé bonus_ ou _dé malus_, soit un autre type de jet.
   - Le score de caractéristique éventuel à ajouter au jet. L'option _Demander_ permet d'afficher un popup Roll20 pour choisir la caractéristique selon les circonstances.
   - La voie de profil dont le rang doit être ajouté au jet s'il y a lieu.
-  - Un bonus fixe (_+2_ pour un voie de profil, _+3_ pour la voie de peuple, _+5_ pour la voie de prestige).
+  - Un bonus fixe (_+2_ pour une voie de profil, _+3_ pour la voie de peuple, _+5_ pour la voie de prestige).
 - Une description ou un jet spécial. Avant envoi du jet dans le chat, cette description est transformée par insertion de jets en ligne s'il y a lieu (voir paragraphe _Jets en ligne_ ci-dessous).
 
 L'icone située à côté de **Nom** permet d'afficher un menu d'action dans le chat avec un bouton pour chaque jet de capacité.
@@ -175,14 +175,14 @@ Pour créer un buff optionnel de DM d'_Attaque sournoise_, indiquez :
 
 Cochez la case d'activation. A chaque fois que le voleur effectue une attaque, la fiche demandera s'il s'agit d'une attaque sournoise, et si oui, lancera les dés de DM supplémentaires.
 
-NB : Pour ne pas avoir à actualiser le nombre de d4° quand le voleur atteint le rang 4 dans une voie de profil, vous pouvez créer un attribut personnalisé `sournoise` (cf. onglet [Configuration]({{ site.baseurl }}/pc-config)) et indiquer `[voleur_sournoise]` dans la valeur du buff.
+NB : Pour ne pas avoir à actualiser le nombre de d4° quand le voleur atteint le rang 4 dans une voie de profil, vous pouvez commencer par créer un attribut personnalisé `sournoise` (cf. onglet [Configuration]({{ site.baseurl }}/pc-config)) dont la valeur est calculée à partir de l'attribut standard `voies_rang4`, et va donc suivre l'évolution des rangs acquis dans les voies. Puis indiquez `[voleur_sournoise]` dans la valeur du buff.
 
 ### Dans le mille
 
 Pour créer un buff optionnel de DM d'attaque _Dans le mille_, indiquez :
 - `? Dans le mille` dans le nom du buff,
 - `DM` dans l'attribut cible,
-- `2d4° &amp; Action limitée=3d4°` dans la valeur
+- `2d4° & Action limitée=3d4°` dans la valeur
 
 Cochez la case d'activation. A chaque fois que le rôdeur effectue une attaque, la fiche proposera 3 possibilités d'utilisation pour _Dans le mille_ : _Non_, _Oui_, _Action Limitée_, et lancera les dés de DM supplémentaires selon le choix effectué.
 

@@ -114,7 +114,7 @@ Pour chacune, vous indiquez :
 - Un éventuel bonus pour toucher propre à cette attaque,
 - Le score de critique du jet (_20_ par défaut),
 - Si l'arme est maniée à deux mains uniquement,
-- Les dés de DM (ex : <kbd>1d8</kbd>, <kbd>2d6</kbd>, <kbd>1d6/1d10</kbd> pour les armes à une ou deux mains),
+- Les dés de DM (ex : `1d8`, `2d6`, `1d6/1d10` pour les armes à une ou deux mains),
 - Le type de DM (_ex : contondants, perforants_)
 - La caractéristique ajoutée aux DM,
 - Un bonus optionnel de DM
@@ -136,20 +136,20 @@ Des paramètres optionnels peuvent être ajoutés :
 - Attaque active : ce paramètre est utilisé par le script **COFantasy2** pour afficher la liste des actions du tour.
 
 - Modificateurs d'attaque : vous pouvez spécifier une série de mentions spéciales permettant de régler le comportement du jet d'attaque. Séparez les différentes mentions par des virgules.
-  - <kbd>deBonus</kbd> : l'attaque est faite avec un dé bonus, sauf si le personnage est _Affaibli_
-  - <kbd>deMalus</kbd> : l'attaque est faite avec un dé malus
-  - <kbd>explodeMax</kbd> : le dé de DM est _explosif_ (relance d'un nouveau dé de DM en cas de résultat maximum)
-  - <kbd>reroll1</kbd> : le dé de DM est relancé jusqu'à ce que son résultat soit supérieur à 1
-  - <kbd>reroll1:1</kbd> : si le résultat initial est égal à 1, le dé de DM est relancé une seule fois
-  - <kbd>poudre</kbd> : l'arme explose et inflige 1d4° DM à l'utilisateur s'il ne maîtrise pas les armes à poudre
-  - <kbd>zone</kbd> : l'attaque est un sort de zone
-  - <kbd>magie X</kbd> suivi de la valeur X du bonus au jet pour toucher et aux DM
-  - <kbd>magieAtt X</kbd> suivi de la valeur X du bonus magique au jet pour toucher
-  - <kbd>magieDmg X</kbd> suivi de la valeur du bonus magique aux DM (peut être un jet de dé)
-  - <kbd>affutee</kbd> pour réduire de 1 le seuil de critique et ajouter 1d4° DM en cas de coup critique
-  - <kbd>element xxx [intense]</kbd> suivi d'un nom d'élément/substance xxx : ajoute une ligne de 1d4° DM élémentaires (2d4° si le nom de l'élément est suivi d'un espace et du mot <kbd>intense</kbd>)
-  - <kbd>fleau xxx</kbd> suivi du nom d'un type de créature xxx : Roll20 demande confirmation lors de l'attaque et une ligne de 1d4° DM est ajoutée si la créature ciblée est du même type
-  - <kbd>manoeuvres</kbd> : l'attaque propose de choisir une des 8 manoeuvres possibles (cf règles page 217) et d'appliquer le modificateur correspondant au jet pour toucher. La description des effets de la manoeuvre sont chuchotés dans le chat Roll20.
+  - `deBonus` : l'attaque est faite avec un dé bonus, sauf si le personnage est _Affaibli_
+  - `deMalus` : l'attaque est faite avec un dé malus
+  - `explodeMax` : le dé de DM est _explosif_ (relance d'un nouveau dé de DM en cas de résultat maximum)
+  - `reroll1` : le dé de DM est relancé jusqu'à ce que son résultat soit supérieur à 1
+  - `reroll1:1` : si le résultat initial est égal à 1, le dé de DM est relancé une seule fois
+  - `poudre` : l'arme explose et inflige 1d4° DM à l'utilisateur s'il ne maîtrise pas les armes à poudre
+  - `zone` : l'attaque est un sort de zone
+  - `magie X` suivi de la valeur X du bonus au jet pour toucher et aux DM
+  - `magieAtt X` suivi de la valeur X du bonus magique au jet pour toucher
+  - `magieDmg X` suivi de la valeur du bonus magique aux DM (peut être un jet de dé)
+  - `affutee` pour réduire de 1 le seuil de critique et ajouter 1d4° DM en cas de coup critique
+  - `element xxx [intense]` suivi d'un nom d'élément/substance xxx : ajoute une ligne de 1d4° DM élémentaires (2d4° si le nom de l'élément est suivi d'un espace et du mot `intense`)
+  - `fleau xxx` suivi du nom d'un type de créature xxx : Roll20 demande confirmation lors de l'attaque et une ligne de 1d4° DM est ajoutée si la créature ciblée est du même type
+  - `manoeuvres` : l'attaque propose de choisir une des 8 manoeuvres possibles (cf règles page 217) et d'appliquer le modificateur correspondant au jet pour toucher. La description des effets de la manoeuvre sont chuchotés dans le chat Roll20.
 
 - Options d'attaques avec arguments :
   
@@ -157,8 +157,8 @@ Des paramètres optionnels peuvent être ajoutés :
   
   Vous pouvez toutefois y indiquer les options suivantes reconnues par la fiche :
   
-  - <kbd>fx: </kbd> suivi du nom d'un FX Roll20 et d'un nombre facultatif de répétition
-  - <kbd>effet: X xxx</kbd> suivi d'un texte xxx à afficher si le jet de D20 atteint ou dépasse la valeur cible X
+  - `fx: ` suivi du nom d'un FX Roll20 et d'un nombre facultatif de répétition
+  - `effet: X xxx` suivi d'un texte xxx à afficher si le jet de D20 atteint ou dépasse la valeur cible X
 
 - Pour les armes de type _En main_, vous pouvez spécifier une liste de prédicats si l'arme est portée. Ce paramètre est utilisé par le script **COFantasy2**.
 - Pour les armes de type _Trait_, vous pouvez spécifier le nom de la munition (utile si le suivi simplifié des munitions est activé dans la configuration) ainsi que le nombre dépensé par chaque attaque
@@ -170,7 +170,7 @@ A moins que l'option de configuration _Un seul jet d'attaque_ ne soit active, de
 
 Si l'arme est maniée à deux mains et que le bouclier est équipé, le jet d'attaque n'est pas effectué, un message d'avertissement s'affiche à la place.
 
-Si l'arme peut être maniée à une main ou à deux mains, les dés de DM peuvent être indiqués sous la forme <kbd>DM 1m/DM 2m</kbd> (_Ex. : <kbd>1d8/1d12</kbd>_). Un popup Roll20 s'affiche pour demander comment l'arme est maniée, à moins que le bouclier soit équipé, auquel cas ce sont les DM à une main qui sont pris en compte.
+Si l'arme peut être maniée à une main ou à deux mains, les dés de DM peuvent être indiqués sous la forme `DM 1m/DM 2m` (_Ex. : `1d8/1d12`_). Un popup Roll20 s'affiche pour demander comment l'arme est maniée, à moins que le bouclier soit équipé, auquel cas ce sont les DM à une main qui sont pris en compte.
 
 Le texte d'effet spécial est traité par la fiche pour substituer les jets en ligne comme décrit pour la description des [capacités]({{ site.baseurl }}/pc-abilities).
 
@@ -184,7 +184,9 @@ Le bouton d20 de l'attaque peut être épinglé dans la barre d'actions de Roll2
 
 ## Options tactiques
 
-Cette section permet de prendre en compte les options tactiques des attaques. Après sélection de l'option choisie, les effets de celle-ci sont appliqués au prochain jet d'attaque.
+Cette section permet de prendre en compte les options tactiques des attaques. Après sélection de l'option choisie, les effets de celle-ci sont appliqués au prochain jet d'attaque uniquement.
+
+On peut paramétrer une tactique spécifique au PJ à activer en même temps que les autres. On indique son nom, un bonus ou malus à l'attaque, si le jet d'attaque se fait avec dé bonus ou dé malus, et d'éventuels DM complémentaires.
 
 ## Modificateurs situationnels
 
