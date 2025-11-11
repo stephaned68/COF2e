@@ -119,7 +119,7 @@
     <div>
       <img
         class="logo"
-        title="Version 1.11.0 - 30/11/2025"
+        title="Version 1.11.0 - 11/11/2025"
         src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cof2e_logo.jpg"
       />
       <input type="hidden" class="d20roll-btns" name="attr_cfg_d20roll" value="0">
@@ -5548,7 +5548,7 @@
               <li>
                 <details>
                   <summary>
-                    <strong>Version 1.11.0</strong> (2025-11-30)
+                    <strong>Version 1.11.0</strong> (2025-11-11)
                   </summary>
                   <ul>
                     <li>Correction DM x 2 si le seuil de critique est inférieur à 20</li>
@@ -5556,6 +5556,7 @@
                     <li>Ajout d'une mention pour les manoeuvres avec modificateur de tailles</li>
                     <li>Ajout du jet opposé sur l'utilisation d'une manoeuvre</li>
                     <li>Ajout de champs pour les scores d'attaque au contact (jet de manoeuvre opposé) et magique aux fiches de PNJ</li>
+                    <li>Possibilité de combiner les options tactiques avec une option spécifique au PJ</li>
                   </ul>
                 </details>
               </li>
@@ -12308,13 +12309,7 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
         atkTitle = "Attaque violente";
         tacticBonus = ` -7[${atkTitle}]`;
         extraDM.push(` + [[2@{devol}]] ${atkTitle}`);
-        break;/*
-      case 4:
-        if (tactBM !== 0)
-          tacticBonus = ` + (${tactBM})[${tactName}]`;
-        if (tactDM !== "")
-          extraDM.push(` + ([[${ replaceDevol(tactDM) }]]) ${tactName}`);
-        break;*/
+        break;
     }
     if (tactOther) {
       if (tactBM !== 0)
