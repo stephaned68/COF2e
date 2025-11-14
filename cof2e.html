@@ -1,5 +1,4 @@
 <div class="cofmain">
-
   <!-- Nouvelle version fiche -->
   <input type="hidden" name="attr_verfdp" value="1.11.0">
   <!-- Version courante fiche -->
@@ -359,7 +358,8 @@
             <!-- AGI -->
             <div class="trait">
               <div class="block-title">
-                <button  type="action" class="block-title" name="act_agi-btn">
+                <button type="action" class="hidden" name="act_agi-btn"></button>
+                <button type="action" class="block-title" name="act_agi_select-btn">
                   <span class="d20-btn">t</span>
                   AGI
                 </button>
@@ -402,7 +402,8 @@
             <!-- CON -->
             <div class="trait">
               <div class="block-title">
-                <button class="block-title" type="action" name="act_con-btn">
+                <button type="action" class="hidden" name="act_con-btn"></button>
+                <button type="action" class="block-title" name="act_con_select-btn">
                   <span class="d20-btn">t</span>
                   CON
                 </button>
@@ -445,7 +446,8 @@
             <!-- FOR -->
             <div class="trait">
               <div class="block-title">
-                <button class="block-title" type="action" name="act_for-btn">
+                <button type="action" class="hidden" name="act_for-btn"></button>
+                <button type="action" class="block-title" name="act_for_select-btn">
                   <span class="d20-btn">t</span>
                   FOR
                 </button>
@@ -488,7 +490,8 @@
             <!-- PER -->
             <div class="trait">
               <div class="block-title">
-                <button class="block-title" type="action" name="act_per-btn">
+                <button type="action" class="hidden" name="act_per-btn"></button>
+                <button type="action" class="block-title" name="act_per_select-btn">
                   <span class="d20-btn">t</span>
                   PER
                 </button>
@@ -531,7 +534,8 @@
             <!-- CHA -->
             <div class="trait">
               <div class="block-title">
-                <button class="block-title" type="action" name="act_cha-btn">
+                <button type="action" class="hidden" name="act_cha-btn"></button>
+                <button type="action" class="block-title" name="act_cha_select-btn">
                   <span class="d20-btn">t</span>
                   CHA
                 </button>
@@ -574,7 +578,8 @@
             <!-- INT -->
             <div class="trait">
               <div class="block-title">
-                <button class="block-title" type="action" name="act_int-btn">
+                <button type="action" class="hidden" name="act_int-btn"></button>
+                <button type="action" class="block-title" name="act_int_select-btn">
                   <span class="d20-btn">t</span>
                   INT
                 </button>
@@ -617,7 +622,8 @@
             <!-- VOL -->
             <div class="trait">
               <div class="block-title">
-                <button class="block-title" type="action" name="act_vol-btn">
+                <button type="action" class="hidden" name="act_vol-btn"></button>
+                <button type="action" class="block-title" name="act_vol_select-btn">
                   <span class="d20-btn">t</span>
                   VOL
                 </button>
@@ -7513,6 +7519,7 @@ const SWData = {
     "atktir":   "&#127993;",        // bow and arrow
     "atkmag":   "&#129668;",        // magic wand
     "actions":  "&#128262;",        // bright
+    "skills":   "&#128170;",        // flexed biceps
     "heal":     "&#129505;",        // red heart
   },
   SHEET_TYPE: {
@@ -9644,6 +9651,7 @@ function sendChatMsg(msg, options) {
   startRoll(chatCmd, roll => {
 
     const updates = new Map();
+    const computed = {};
 
     let save = 1;
     if (roll.results.save) 
@@ -9651,12 +9659,12 @@ function sendChatMsg(msg, options) {
     let last_rolls = "";
     if (roll.results.roll)
       last_rolls += roll.results.roll.result;
+      
     if (roll.results.broll)
       last_rolls += "|" + roll.results.broll.result;
+
     if (last_rolls !== "" && save)
       updates.set("last_rolls", last_rolls);
-
-    const computed = {};
 
     if (roll.results.roll) {
       const rx = "\\[(" + SWData.PC.COMBAT.maneuvers.map(mn => mn.name.split(" ")[0]).join("|") + ")\\]\\)";
@@ -11139,6 +11147,49 @@ SWData.PC.STATS.forEach(stat => {
         chance: addLuckButton(values)
       }, { tags: allTags });
       sendChatMsg(chatMsg);
+    });
+  });
+
+  // Stat & ability roll select
+  on(`clicked:${short}_select-btn`, async function() {
+    const rollIds = await getSectionIDsAsync("rolls");
+    const abilityRolls = [];
+    rollIds.forEach(id => {
+      abilityRolls.push(rptAttr("rolls", "roll-nom", id));
+      abilityRolls.push(rptAttr("rolls", "roll-carac", id));
+    });
+    const skillMods = SWData.PC.SKILLS.map(skill => `${ skill.name }_bonus`);
+    getAttrs([ 
+      "character_name", "use_skills",
+      ...abilityRolls,
+      ...skillMods
+    ], function(values) {
+      const charName = strval(values.character_name);
+      const actions = [ `%{${charName}|${short}-btn}` ];
+      let rolls = rollIds
+      .filter(id => strval(values[rptAttr("rolls", "roll-carac", id)]) === `@{${short}_test}`)
+      .map(id => {
+        actions.push(`%{${charName}|${ rptAttr("rolls", "roll-btn", id) }}`);
+        return `${SWData.emojis.actions} ${ strval(values[rptAttr("rolls", "roll-nom", id)]) }`;
+      });
+      const skills = [];
+      if (boolval(values.use_skills)) {
+        SWData.PC.SKILLS
+        .filter(skill => skill.ability === short)
+        .forEach(skill => {
+          const skillMod = intval(values[`${ skill.name }_bonus`]);
+          const skillBonus = skillMod > 0 ? ` (+${skillMod})` : "";
+          skills.push(SWData.emojis.skills + getSkillName(skill) + skillBonus);
+          actions.push(`%{${charName}|skill-${ skill.name }}`);
+        });
+      }
+      if (rolls.length === 0 && skills.length === 0) {
+        sendChatCmd(actions[0]);
+        return;
+      }
+      ask([ "Jet ?", short.toUpperCase(), ...rolls, ...skills ], (selected) => {
+        sendChatCmd(actions[selected - 1]);
+      });
     });
   });
 
@@ -13629,11 +13680,20 @@ on("clicked:repeating_rolls:roll-btn", function() {
 })
 
 /**
+ * Return skill name
+ * @param {{ label: string, name: string, ability: string }} skill - Skill object
+ * @returns {string}
+ */
+function getSkillName(skill) {
+  return (skill.label !== "") ? skill.label : capitalize(skill.name);
+}
+
+/**
  * On skill 'button' click
  */
 SWData.PC.SKILLS.forEach(skill => {
   on(`clicked:skill-${skill.name}`, function () {
-    const skillName = (skill.label !== "") ? skill.label : capitalize(skill.name);
+    const skillName = getSkillName(skill);
     const statsAttrs = SWData.PC.STATS.map(stat => shorten(stat));
     const skillAttrs = [ "carac", "bonus", "def" ].map(a => `${skill.name}_${a}`);
     getAttrs([
@@ -15678,13 +15738,15 @@ on("clicked:rolls_menu-btn", function () {
  * Skill rolls popup
  */
 on("clicked:skills_menu-btn", function () {
-  const skillProfs = SWData.PC.SKILLS.map((skill) => `${skill.name}_prof`);
-  getAttrs([ "character_name", ...skillProfs ], function (values) {
+  const skillMods = SWData.PC.SKILLS.map((skill) => `${ skill.name }_bonus`);
+  getAttrs([ "character_name", ...skillMods ], function (values) {
     const charName = strval(values.character_name);
     const skillSelect = SWData.PC.SKILLS.map((skill, ix) => {
-      const skillLabel = skill.label !== "" ? skill.label : capitalize(skill.name);
-      const proficient = boolval(values[`${skill.name}_prof`]) ? "*" : "";
-      return `${skillLabel}${proficient},${ix + 1}`;
+      const skillLabel = getSkillName(skill);
+      const skillStat = skill.ability === "?" ? "" : " " + skill.ability.toUpperCase();
+      const skillBonus = intval(values[`${ skill.name }_bonus`]);
+      const skillMod = skillBonus > 0 ? ` (+${skillBonus})` : "";
+      return `${skillLabel}${skillStat}${skillMod},${ix + 1}`;
     });
     ask([ "Compétence ?", ...skillSelect ], (skill) => {
       const skillName = SWData.PC.SKILLS[skill -1].name;
