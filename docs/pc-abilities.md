@@ -88,7 +88,7 @@ Les propriétés suivantes peuvent être appliquées aux capacités :
 
   Propriété : `selonRang: 1d4°,1d4°,1d4°,2d4°,2d4°`
 
-  Description : _Des flammes jaillissent des doigts tendus du magicien. Jusqu’à 3 cibles au contact subissent [{{selonRang}}+INT] DM, les cibles peuvent faire un test d’AGI difficulté [10 + INT] pour ne subir que la moitié des DM_
+  Description : _Des flammes jaillissent des doigts tendus du magicien. Jusqu’à 3 cibles au contact subissent [\{\{selonRang\}\}+INT] DM, les cibles peuvent faire un test d’AGI difficulté [10 + INT] pour ne subir que la moitié des DM_
 
 - Paramétrer le buff à la DEF octroyé par la capacité _Peau de pierre_ selon le rang atteint dans la _voie du Pagne_ renseignée en voie n°3
 
