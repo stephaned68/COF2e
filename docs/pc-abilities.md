@@ -71,7 +71,7 @@ Les propriétés suivantes peuvent être appliquées aux capacités :
   - `valeur4` est la valeur du paramètre évolutif au rang 4
   - `valeur5` est la valeur du paramètre évolutif au rang 5
   
-  Le texte de la capacité doit comporter l'expression `&#123;&#123;selonRang&#125;&#125;` pour que la fiche y insère la valeur dépendant du rang atteint.
+  Le texte de la capacité doit comporter l'expression `{ {selonRang} }` pour que la fiche y insère la valeur dépendant du rang atteint.
 
 - `epic:` suivi d'un espace pour identifier la capacité comme épique.
 - `buff: xxx [valeur1,valeur2,valeur3,valeur4,valeur5]` permet de spécifier un buff nommé xxx qui évolue selon le rang atteint dans la voie.
