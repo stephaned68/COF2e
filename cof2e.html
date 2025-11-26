@@ -1,8 +1,8 @@
 <div class="cofmain">
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.11.0">
+  <input type="hidden" name="attr_verfdp" value="1.12.0">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.11.0">
+  <input type="hidden" name="attr_version" value="1.12.0">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
 
@@ -118,7 +118,7 @@
     <div>
       <img
         class="logo"
-        title="Version 1.11.0 - 11/11/2025"
+        title="Version 1.12.0 - 30/11/2025"
         src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cof2e_logo.jpg"
       />
       <input type="hidden" class="d20roll-btns" name="attr_cfg_d20roll" value="0">
@@ -309,9 +309,12 @@
 
   <!-- Fiches -->
   <div class="cofsheet">
-    <input type="hidden" class="cof-type-toggle" name="attr_sheet_type" value="pc"/> 
+    <input type="hidden" class="cof-type-toggle" name="attr_sheet_type" value="pc"/>
+
     <button type="action" class="hidden" name="act_pc_actions-btn"></button>
     <button type="action" class="hidden" name="act_pc_menus-btn"></button>
+    
+    <button type="action" class="hidden" name="act_npc_actions-btn"></button>
     <button type="action" class="hidden" name="act_npc_menus-btn"></button>
    
     <!-- Fiche PJ -->
@@ -353,7 +356,6 @@
               <h4>Mod</h4>
               <h4>Test</h4>
             </div>
-
 
             <!-- AGI -->
             <div class="trait">
@@ -1629,9 +1631,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie1-1" title="@{voie1-1}"></span>
-                  <br>
-                  <input type="number" name="attr_v1r1_use" title="@{v1r1_use} Utilisations">
-                  / <span name="attr_v1r1_use_max" title="@{v1r1_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v1r1_freq" title="@{v1r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v1r1_use_max" value="0">
+                  <div class="ability-uses">
+                    <input type="number" name="attr_v1r1_use" title="@{v1r1_use} Utilisations">
+                    / <span name="attr_v1r1_use_max" title="@{v1r1_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v1r1_freq" title="@{v1r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 2 -->
@@ -1650,9 +1654,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie1-2" title="@{voie1-2}"></span>
-                  <br>
-                  <input type="number" name="attr_v1r2_use" title="@{v1r2_use} Utilisations">
-                  / <span name="attr_v1r2_use_max" title="@{v1r2_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v1r2_freq" title="@{v1r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v1r2_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v1r2_use" title="@{v1r2_use} Utilisations">
+                    / <span name="attr_v1r2_use_max" title="@{v1r2_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v1r2_freq" title="@{v1r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 3 -->  
@@ -1671,9 +1677,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie1-3" title="@{voie1-3}"></span>
-                  <br>
-                  <input type="number" name="attr_v1r3_use" title="@{v1r3_use} Utilisations">
-                  / <span name="attr_v1r3_use_max" title="@{v1r3_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v1r3_freq" title="@{v1r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v1r3_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v1r3_use" title="@{v1r3_use} Utilisations">
+                    / <span name="attr_v1r3_use_max" title="@{v1r3_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v1r3_freq" title="@{v1r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 4 -->
@@ -1692,9 +1700,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie1-4" title="@{voie1-4}"></span>
-                  <br>
-                  <input type="number" name="attr_v1r4_use" title="@{v1r4_use} Utilisations" >
-                  / <span name="attr_v1r4_use_max" title="@{v1r4_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v1r4_freq" title="@{v1r4_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v1r4_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v1r4_use" title="@{v1r4_use} Utilisations" >
+                    / <span name="attr_v1r4_use_max" title="@{v1r4_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v1r4_freq" title="@{v1r4_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 5 -->
@@ -1713,9 +1723,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie1-5" title="@{voie1-5}"></span>
-                  <br>
-                  <input type="number" name="attr_v1r5_use" title="@{v1r5_use} Utilisations" >
-                  / <span name="attr_v1r5_use_max" title="@{v1r5_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v1r5_freq" title="@{v1r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v1r5_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v1r5_use" title="@{v1r5_use} Utilisations" >
+                    / <span name="attr_v1r5_use_max" title="@{v1r5_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v1r5_freq" title="@{v1r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
             </div>
@@ -1748,9 +1760,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie2-1" title="@{voie2-1}"></span>
-                  <br>
-                  <input type="number" name="attr_v2r1_use" title="@{v2r1_use} Utilisations" >
-                  / <span name="attr_v2r1_use_max" title="@{v2r1_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v2r1_freq" title="@{v2r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v2r1_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v2r1_use" title="@{v2r1_use} Utilisations" >
+                    / <span name="attr_v2r1_use_max" title="@{v2r1_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v2r1_freq" title="@{v2r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 2 -->
@@ -1769,9 +1783,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie2-2" title="@{voie2-2}"></span>
-                  <br>
-                  <input type="number" name="attr_v2r2_use" title="@{v2r2_use} Utilisations" >
-                  / <span name="attr_v2r2_use_max" title="@{v2r2_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v2r2_freq" title="@{v2r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v2r2_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v2r2_use" title="@{v2r2_use} Utilisations" >
+                    / <span name="attr_v2r2_use_max" title="@{v2r2_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v2r2_freq" title="@{v2r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 3 -->
@@ -1790,9 +1806,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie2-3" title="@{voie2-3}"></span>
-                  <br>
-                  <input type="number" name="attr_v2r3_use" title="@{v2r3_use} Utilisations" >
-                  / <span name="attr_v2r3_use_max" title="@{v2r3_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v2r3_freq" title="@{v2r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v2r3_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v2r3_use" title="@{v2r3_use} Utilisations" >
+                    / <span name="attr_v2r3_use_max" title="@{v2r3_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v2r3_freq" title="@{v2r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 4 -->
@@ -1811,9 +1829,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie2-4" title="@{voie2-4}"></span>
-                  <br>
-                  <input type="number" name="attr_v2r4_use" title="@{v2r4_use} Utilisations" >
-                  / <span name="attr_v2r4_use_max" title="@{v2r4_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v2r4_freq" title="@{v2r4_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v2r4_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v2r4_use" title="@{v2r4_use} Utilisations" >
+                    / <span name="attr_v2r4_use_max" title="@{v2r4_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v2r4_freq" title="@{v2r4_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 5 -->
@@ -1832,9 +1852,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie2-5" title="@{voie2-5}"></span>
-                  <br>
-                  <input type="number" name="attr_v2r5_use" title="@{v2r5_use} Utilisations" >
-                  / <span name="attr_v2r5_use_max" title="@{v2r5_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v2r5_freq" title="@{v2r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v2r5_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v2r5_use" title="@{v2r5_use} Utilisations" >
+                    / <span name="attr_v2r5_use_max" title="@{v2r5_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v2r5_freq" title="@{v2r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
             </div>
@@ -1867,9 +1889,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie3-1" title="@{voie3-1}"></span>
-                  <br>
-                  <input type="number" name="attr_v3r1_use" title="@{v3r1_use} Utilisations" >
-                  / <span name="attr_v3r1_use_max" title="@{v3r1_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v3r1_freq" title="@{v3r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v3r1_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v3r1_use" title="@{v3r1_use} Utilisations" >
+                    / <span name="attr_v3r1_use_max" title="@{v3r1_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v3r1_freq" title="@{v3r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 2 -->
@@ -1888,9 +1912,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie3-2" title="@{voie3-2}"></span>
-                  <br>
-                  <input type="number" name="attr_v3r2_use" title="@{v3r2_use} Utilisations" >
-                  / <span name="attr_v3r2_use_max" title="@{v3r2_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v3r2_freq" title="@{v3r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v3r2_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v3r2_use" title="@{v3r2_use} Utilisations" >
+                    / <span name="attr_v3r2_use_max" title="@{v3r2_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v3r2_freq" title="@{v3r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 3 -->
@@ -1909,9 +1935,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie3-3" title="@{voie3-3}"></span>
-                  <br>
-                  <input type="number" name="attr_v3r3_use" title="@{v3r3_use} Utilisations" >
-                  / <span name="attr_v3r3_use_max" title="@{v3r3_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v3r3_freq" title="@{v3r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v3r3_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v3r3_use" title="@{v3r3_use} Utilisations" >
+                    / <span name="attr_v3r3_use_max" title="@{v3r3_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v3r3_freq" title="@{v3r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 4 -->
@@ -1930,9 +1958,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie3-4" title="@{voie3-4}"></span>
-                  <br>
-                  <input type="number" name="attr_v3r4_use" title="@{v3r4_use} Utilisations" >
-                  / <span name="attr_v3r4_use_max" title="@{v3r4_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v3r1_freq" title="@{v3r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v3r4_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v3r4_use" title="@{v3r4_use} Utilisations" >
+                    / <span name="attr_v3r4_use_max" title="@{v3r4_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v3r1_freq" title="@{v3r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 5 -->
@@ -1951,9 +1981,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie3-5" title="@{voie3-5}"></span>
-                  <br>
-                  <input type="number" name="attr_v3r5_use" title="@{v3r5_use} Utilisations" >
-                  / <span name="attr_v3r5_use_max" title="@{v3r5_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v3r5_freq" title="@{v3r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v3r5_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v3r5_use" title="@{v3r5_use} Utilisations" >
+                    / <span name="attr_v3r5_use_max" title="@{v3r5_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v3r5_freq" title="@{v3r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
             </div>
@@ -1991,9 +2023,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie4-1" title="@{voie4-1}"></span>
-                  <br>
-                  <input type="number" name="attr_v4r1_use" title="@{v4r1_use} Utilisations" >
-                  / <span name="attr_v4r1_use_max" title="@{v4r1_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v4r1_freq" title="@{v4r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v4r1_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v4r1_use" title="@{v4r1_use} Utilisations" >
+                    / <span name="attr_v4r1_use_max" title="@{v4r1_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v4r1_freq" title="@{v4r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 2 -->
@@ -2012,9 +2046,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie4-2" title="@{voie4-2}"></span>
-                  <br>
-                  <input type="number" name="attr_v4r2_use" title="@{v4r2_use} Utilisations" >
-                  / <span name="attr_v4r2_use_max" title="@{v4r2_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v4r2_freq" title="@{v4r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v4r2_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v4r2_use" title="@{v4r2_use} Utilisations" >
+                    / <span name="attr_v4r2_use_max" title="@{v4r2_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v4r2_freq" title="@{v4r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 3 -->
@@ -2033,9 +2069,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie4-3" title="@{voie4-3}"></span>
-                  <br>
-                  <input type="number" name="attr_v4r3_use" title="@{v4r3_use} Utilisations" >
-                  / <span name="attr_v4r3_use_max" title="@{v4r3_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v4r3_freq" title="@{v4r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v4r3_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v4r3_use" title="@{v4r3_use} Utilisations" >
+                    / <span name="attr_v4r3_use_max" title="@{v4r3_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v4r3_freq" title="@{v4r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 4 -->
@@ -2054,9 +2092,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie4-4" title="@{voie4-4}"></span>
-                  <br>
-                  <input type="number" name="attr_v4r4_use" title="@{v4r4_use} Utilisations" >
-                  / <span name="attr_v4r4_use_max" title="@{v4r4_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v4r4_freq" title="@{v4r4_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v4r4_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v4r4_use" title="@{v4r4_use} Utilisations" >
+                    / <span name="attr_v4r4_use_max" title="@{v4r4_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v4r4_freq" title="@{v4r4_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 5 -->
@@ -2075,9 +2115,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie4-5" title="@{voie4-5}"></span>
-                  <br>
-                  <input type="number" name="attr_v4r5_use" title="@{v4r5_use} Utilisations" >
-                  / <span name="attr_v4r5_use_max" title="@{v4r5_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v4r5_freq" title="@{v4r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v4r5_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v4r5_use" title="@{v4r5_use} Utilisations" >
+                    / <span name="attr_v4r5_use_max" title="@{v4r5_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v4r5_freq" title="@{v4r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
             </div>
@@ -2110,9 +2152,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie5-1" title="@{voie5-1}"></span>
-                  <br>
-                  <input type="number" name="attr_v5r1_use" title="@{v5r1_use} Utilisations" >
-                  / <span name="attr_v5r1_use_max" title="@{v5r1_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v5r1_freq" title="@{v5r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v5r1_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v5r1_use" title="@{v5r1_use} Utilisations" >
+                    / <span name="attr_v5r1_use_max" title="@{v5r1_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v5r1_freq" title="@{v5r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 2 -->
@@ -2131,9 +2175,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie5-2" title="@{voie5-2}"></span>
-                  <br>
-                  <input type="number" name="attr_v5r2_use" title="@{v5r2_use} Utilisations" >
-                  / <span name="attr_v5r2_use_max" title="@{v5r2_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v5r2_freq" title="@{v5r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v5r2_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v5r2_use" title="@{v5r2_use} Utilisations" >
+                    / <span name="attr_v5r2_use_max" title="@{v5r2_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v5r2_freq" title="@{v5r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 3 -->
@@ -2152,9 +2198,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie5-3" title="@{voie5-3}"></span>
-                  <br>
-                  <input type="number" name="attr_v5r3_use" title="@{v5r3_use} Utilisations" >
-                  / <span name="attr_v5r3_use_max" title="@{v5r3_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v5r3_freq" title="@{v5r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v5r3_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v5r3_use" title="@{v5r3_use} Utilisations" >
+                    / <span name="attr_v5r3_use_max" title="@{v5r3_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v5r3_freq" title="@{v5r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 4 -->
@@ -2173,9 +2221,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie5-4" title="@{voie5-4}"></span>
-                  <br>
-                  <input type="number" name="attr_v5r4_use" title="@{v5r4_use} Utilisations" >
-                  / <span name="attr_v5r4_use_max" title="@{v5r4_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v5r4_freq" title="@{v5r4_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v5r4_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v5r4_use" title="@{v5r4_use} Utilisations" >
+                    / <span name="attr_v5r4_use_max" title="@{v5r4_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v5r4_freq" title="@{v5r4_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 5 -->
@@ -2194,9 +2244,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie5-5" title="@{voie5-5}"></span>
-                  <br>
-                  <input type="number" name="attr_v5r5_use" title="@{v5r5_use} Utilisations" >
-                  / <span name="attr_v5r5_use_max" title="@{v5r5_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v5r5_freq" title="@{v5r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v5r5_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v5r5_use" title="@{v5r5_use} Utilisations" >
+                    / <span name="attr_v5r5_use_max" title="@{v5r5_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v5r5_freq" title="@{v5r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
             </div>
@@ -2229,9 +2281,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie6-1" title="@{voie6-1}"></span>
-                  <br>
-                  <input type="number" name="attr_v6r1_use" title="@{v6r1_use} Utilisations" >
-                  / <span name="attr_v6r1_use_max" title="@{v6r1_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v6r1_freq" title="@{v6r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v6r1_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v6r1_use" title="@{v6r1_use} Utilisations" >
+                    / <span name="attr_v6r1_use_max" title="@{v6r1_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v6r1_freq" title="@{v6r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 2 -->
@@ -2250,9 +2304,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie6-2" title="@{voie6-2}"></span>
-                  <br>
-                  <input type="number" name="attr_v6r2_use" title="@{v6r2_use} Utilisations" >
-                  / <span name="attr_v6r2_use_max" title="@{v6r2_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v6r2_freq" title="@{v6r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v6r2_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v6r2_use" title="@{v6r2_use} Utilisations" >
+                    / <span name="attr_v6r2_use_max" title="@{v6r2_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v6r2_freq" title="@{v6r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 3 -->
@@ -2271,9 +2327,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie6-3" title="@{voie6-3}"></span>
-                  <br>
-                  <input type="number" name="attr_v6r3_use" title="@{v6r3_use} Utilisations" >
-                  / <span name="attr_v6r3_use_max" title="@{v6r3_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v6r3_freq" title="@{v6r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v6r3_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v6r3_use" title="@{v6r3_use} Utilisations" >
+                    / <span name="attr_v6r3_use_max" title="@{v6r3_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v6r3_freq" title="@{v6r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 4 -->
@@ -2292,9 +2350,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie6-4" title="@{voie6-4}"></span>
-                  <br>
-                  <input type="number" name="attr_v6r4_use" title="@{v6r4_use} Utilisations" >
-                  / <span name="attr_v6r4_use_max" title="@{v6r4_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v6r4_freq" title="@{v6r4_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v6r4_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v6r4_use" title="@{v6r4_use} Utilisations" >
+                    / <span name="attr_v6r4_use_max" title="@{v6r4_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v6r4_freq" title="@{v6r4_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 5 -->
@@ -2313,9 +2373,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie6-5" title="@{voie6-5}"></span>
-                  <br>
-                  <input type="number" name="attr_v6r5_use" title="@{v6r5_use} Utilisations" >
-                  / <span name="attr_v6r5_use_max" title="@{v6r5_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v6r5_freq" title="@{v6r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v6r5_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v6r5_use" title="@{v6r5_use} Utilisations" >
+                    / <span name="attr_v6r5_use_max" title="@{v6r5_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v6r5_freq" title="@{v6r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
             </div>
@@ -2353,9 +2415,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie7-1" title="@{voie7-1}"></span>
-                  <br>
-                  <input type="number" name="attr_v7r1_use" title="@{v7r1_use} Utilisations" >
-                  / <span name="attr_v7r1_use_max" title="@{v7r1_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v7r1_freq" title="@{v7r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v7r1_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v7r1_use" title="@{v7r1_use} Utilisations" >
+                    / <span name="attr_v7r1_use_max" title="@{v7r1_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v7r1_freq" title="@{v7r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 2 -->
@@ -2374,9 +2438,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie7-2" title="@{voie7-2}"></span>
-                  <br>
-                  <input type="number" name="attr_v7r2_use" title="@{v7r2_use} Utilisations" >
-                  / <span name="attr_v7r2_use_max" title="@{v7r2_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v7r2_freq" title="@{v7r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v7r2_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v7r2_use" title="@{v7r2_use} Utilisations" >
+                    / <span name="attr_v7r2_use_max" title="@{v7r2_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v7r2_freq" title="@{v7r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 3 -->
@@ -2395,9 +2461,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie7-3" title="@{voie7-3}"></span>
-                  <br>
-                  <input type="number" name="attr_v7r3_use" title="@{v7r3_use} Utilisations" >
-                  / <span name="attr_v7r3_use_max" title="@{v7r3_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v7r3_freq" title="@{v7r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v7r3_use_max" value="0">
+                  <div class="ability-uses">
+                    <input type="number" name="attr_v7r3_use" title="@{v7r3_use} Utilisations" >
+                    / <span name="attr_v7r3_use_max" title="@{v7r3_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v7r3_freq" title="@{v7r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 4 -->
@@ -2416,9 +2484,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie7-4" title="@{voie7-4}"></span>
-                  <br>
-                  <input type="number" name="attr_v7r4_use" title="@{v7r4_use} Utilisations" >
-                  / <span name="attr_v7r4_use_max" title="@{v7r4_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v7r4_freq" title="@{v7r4_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v7r4_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v7r4_use" title="@{v7r4_use} Utilisations" >
+                    / <span name="attr_v7r4_use_max" title="@{v7r4_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v7r4_freq" title="@{v7r4_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 5 -->
@@ -2437,9 +2507,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie7-5" title="@{voie7-5}"></span>
-                  <br>
-                  <input type="number" name="attr_v7r5_use" title="@{v7r5_use} Utilisations" >
-                  / <span name="attr_v7r5_use_max" title="@{v7r5_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v7r5_freq" title="@{v7r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v7r5_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v7r5_use" title="@{v7r5_use} Utilisations" >
+                    / <span name="attr_v7r5_use_max" title="@{v7r5_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v7r5_freq" title="@{v7r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
             </div>
@@ -2472,9 +2544,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie8-1" title="@{voie8-1}"></span>
-                  <br>
-                  <input type="number" name="attr_v8r1_use" title="@{v8r1_use} Utilisations" >
-                  / <span name="attr_v8r1_use_max" title="@{v8r1_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v8r1_freq" title="@{v8r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v8r1_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v8r1_use" title="@{v8r1_use} Utilisations" >
+                    / <span name="attr_v8r1_use_max" title="@{v8r1_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v8r1_freq" title="@{v8r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 2 -->
@@ -2493,9 +2567,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie8-2" title="@{voie8-2}"></span>
-                  <br>
-                  <input type="number" name="attr_v8r2_use" title="@{v8r2_use} Utilisations" >
-                  / <span name="attr_v8r2_use_max" title="@{v8r2_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v8r2_freq" title="@{v8r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v8r2_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v8r2_use" title="@{v8r2_use} Utilisations" >
+                    / <span name="attr_v8r2_use_max" title="@{v8r2_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v8r2_freq" title="@{v8r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 3 -->
@@ -2514,9 +2590,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie8-3" title="@{voie8-3}"></span>
-                  <br>
-                  <input type="number" name="attr_v8r3_use" title="@{v8r3_use} Utilisations" >
-                  / <span name="attr_v8r3_use_max" title="@{v8r3_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v8r3_freq" title="@{v8r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v8r3_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v8r3_use" title="@{v8r3_use} Utilisations" >
+                    / <span name="attr_v8r3_use_max" title="@{v8r3_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v8r3_freq" title="@{v8r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 4 -->
@@ -2535,9 +2613,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie8-4" title="@{voie8-4}"></span>
-                  <br>
-                  <input type="number" name="attr_v8r4_use" title="@{v8r4_use} Utilisations" >
-                  / <span name="attr_v8r4_use_max" title="@{v8r4_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v8r4_freq" title="@{v8r4_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v8r4_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v8r4_use" title="@{v8r4_use} Utilisations" >
+                    / <span name="attr_v8r4_use_max" title="@{v8r4_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v8r4_freq" title="@{v8r4_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 5 -->
@@ -2556,9 +2636,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie8-5" title="@{voie8-5}"></span>
-                  <br>
-                  <input type="number" name="attr_v8r5_use" title="@{v8r5_use} Utilisations" >
-                  / <span name="attr_v8r5_use_max" title="@{v8r5_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v8r5_freq" title="@{v8r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v8r5_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v8r5_use" title="@{v8r5_use} Utilisations" >
+                    / <span name="attr_v8r5_use_max" title="@{v8r5_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v8r5_freq" title="@{v8r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
             </div>
@@ -2591,9 +2673,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie9-1" title="@{voie9-1}"></span>
-                  <br>
-                  <input type="number" name="attr_v9r1_use" title="@{v9r1_use} Utilisations" >
-                  / <span name="attr_v9r1_use_max" title="@{v9r1_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v9r1_freq" title="@{v9r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v9r1_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v9r1_use" title="@{v9r1_use} Utilisations" >
+                    / <span name="attr_v9r1_use_max" title="@{v9r1_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v9r1_freq" title="@{v9r1_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 2 -->
@@ -2612,9 +2696,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie9-2" title="@{voie9-2}"></span>
-                  <br>
-                  <input type="number" name="attr_v9r2_use" title="@{v9r2_use} Utilisations" >
-                  / <span name="attr_v9r2_use_max" title="@{v9r2_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v9r2_freq" title="@{v9r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v9r2_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v9r2_use" title="@{v9r2_use} Utilisations" >
+                    / <span name="attr_v9r2_use_max" title="@{v9r2_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v9r2_freq" title="@{v9r2_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 3 -->
@@ -2633,9 +2719,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie9-3" title="@{voie9-3}"></span>
-                  <br>
-                  <input type="number" name="attr_v9r3_use" title="@{v9r3_use} Utilisations" >
-                  / <span name="attr_v9r3_use_max" title="@{v9r3_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v9r3_freq" title="@{v9r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v9r3_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v9r3_use" title="@{v9r3_use} Utilisations" >
+                    / <span name="attr_v9r3_use_max" title="@{v9r3_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v9r3_freq" title="@{v9r3_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 4 -->
@@ -2654,9 +2742,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie9-4" title="@{voie9-4}"></span>
-                  <br>
-                  <input type="number" name="attr_v9r4_use" title="@{v9r4_use} Utilisations" >
-                  / <span name="attr_v9r4_use_max" title="@{v9r4_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v9r4_freq" title="@{v9r4_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v9r4_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v9r4_use" title="@{v9r4_use} Utilisations" >
+                    / <span name="attr_v9r4_use_max" title="@{v9r4_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v9r4_freq" title="@{v9r4_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
               <!-- Rang 5 -->
@@ -2675,9 +2765,11 @@
                     </div>
                   </summary>
                   <span name="attr_voie9-5" title="@{voie9-5}"></span>
-                  <br>
-                  <input type="number" name="attr_v9r5_use" title="@{v9r5_use} Utilisations" >
-                  / <span name="attr_v9r5_use_max" title="@{v9r5_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v9r5_freq" title="@{v9r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  <input type="hidden" class="ability-uses" name="attr_v9r5_use_max" value="0">
+                  <div class="ability-uses">                  
+                    <input type="number" name="attr_v9r5_use" title="@{v9r5_use} Utilisations" >
+                    / <span name="attr_v9r5_use_max" title="@{v9r5_use_max} Nombre d'utilisations maximum" ></span> par <span name="attr_v9r5_freq" title="@{v9r5_freq} Fréquence d'utilisation" placeholder="Par combat, par jour..." ></span>
+                  </div>
                 </details>
               </div>
             </div>
@@ -5554,6 +5646,20 @@
               <li>
                 <details>
                   <summary>
+                    <strong>Version 1.12.0</strong> (2025-11-30)
+                  </summary>
+                  <ul>
+                    <li>Sélection d'un jet sec, de capacité ou de compétence au clic sur une caractéristique</li>
+                    <li>Plus d'insertion automatique d'inline-roll [[ ]] dans le texte d'une capacité si ce dernier en comporte déjà</li>
+                    <li>Effacement de la liaison entre une ligne d'arme et de munition quand le type d'attaque n'est pas <em>trait</em></li>
+                    <li>Pas d'affichage des champs fréquence d'utilisation pour les capacités dont le nombre d'utilisation maximum est 0</li>
+                  </ul>
+                </details>
+              </li>
+
+              <li>
+                <details>
+                  <summary>
                     <strong>Version 1.11.0</strong> (2025-11-11)
                   </summary>
                   <ul>
@@ -7461,7 +7567,7 @@
 
 /**
  * COF2e Sheet Worker
- * v1.11.0
+ * v1.12.0
  */
 
 const SWData = {
@@ -11987,6 +12093,9 @@ function insertRolls(text, options = {}) {
   if (!text)
     return "";
   
+  if (text.match(/\[\[.+\]\]/))
+    return text;
+
   const { pathNames = [], isNPC = false, companionOf = "" } = options;
   if (isNPC && companionOf !== "")
     companionOf += "|";
@@ -12096,10 +12205,14 @@ on("change:repeating_armes:arme-atktype change:repeating_npcarmes:arme-atktype",
   const attr = rptAttr(section, "arme-atktype");
   getAttrs([ attr, "scriptVersion" ], function(values) {
     const type = strval(values[attr]);
+    let reset = {};
+    if (type !== "trait")
+      reset = { [rptAttr(section, "jet-resid")]: "" };
     setAttrs({
       [rptAttr(section, "arme-main")]: (type === "main" && hasMODScript(values)) ? 1 : 0,
       [rptAttr(section, "arme-jet")]: type === "jet" ? 1 : 0,
-      [rptAttr(section, "arme-trait")]: type === "trait" ? 1 : 0
+      [rptAttr(section, "arme-trait")]: type === "trait" ? 1 : 0,
+      ...reset
     });
   });
 });
@@ -12684,7 +12797,7 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
     if (tactics > 0)
       setAttrs({ tactique: "0" });
 
-    if (useAmmo && resourceId !== "") {
+    if (useAmmo && resourceId !== "" && resourceNbr > 0) {
       const resVal = rptAttr("ressources", "res-val", resourceId);
       getAttrs([ resVal ], function(values) {
         const munitions = Math.max(0, intval(values[resVal]) - resourceNbr);
@@ -15795,10 +15908,12 @@ on("clicked:pc_menus-btn", function () {
 /**
  * Display a PC actions menu
  */
-on("clicked:pc_actions-btn", async function() {
+on("clicked:pc_actions-btn clicked:npc_actions-btn", async function(eventInfo) {
+
+  const isNPC = strval(eventInfo.triggerName).split(":")[1].startsWith("npc");
 
   // weapons
-  const weaponRpt = "armes";
+  const weaponRpt = isNPC ? "npcarmes" : "armes";
   const weaponIds = await getSectionIDsOrderedAsync(weaponRpt);
   const attackNames = weaponIds.map(id => rptAttr(weaponRpt, "arme-nom", id));
   const atkType = weaponIds.map(id => rptAttr(weaponRpt, "arme-atk", id));
@@ -15817,9 +15932,10 @@ on("clicked:pc_actions-btn", async function() {
   });
 
   // rolls
-  const rollRpt = "rolls";
+  const rollRpt = isNPC ? "npcrolls" : "rolls";
+  const rollNameAttr = isNPC ? "npcroll-name" : "roll-nom";
   let rollIds = await getSectionIDsOrderedAsync(rollRpt);
-  const rollNames = rollIds.map(id => rptAttr(rollRpt, "roll-nom", id));
+  const rollNames = rollIds.map(id => rptAttr(rollRpt, rollNameAttr, id));
 
   // buffs
   const buffRpt = "buffs";
@@ -15865,76 +15981,89 @@ on("clicked:pc_actions-btn", async function() {
     chatMsg.push("Caractéristiques=" + stats);
 
     // Attacks
-    const attacks = SWData.PC.COMBAT.attacks.map((attack) => {
-      const emoji = SWData.emojis[attack[0]];
-      return `[${emoji}](~${charName}|${ attack[0] }-btn${ button({}, { title: attack[2] }) })`;
-    }).join(" ");
-    chatMsg.push("Attaques=" + attacks);
+    if (!isNPC) {
+      const attacks = SWData.PC.COMBAT.attacks.map((attack) => {
+        const emoji = SWData.emojis[attack[0]];
+        return `[${emoji}](~${charName}|${ attack[0] }-btn${ button({}, { title: attack[2] }) })`;
+      }).join(" ");
+      chatMsg.push("Attaques=" + attacks);
+    }
 
     // Weapons
     const weapons = weaponIds.map((id) => {
       const type = strval(values[rptAttr(weaponRpt, "arme-atk", id)]);
       const range = strval(values[rptAttr(weaponRpt, "arme-portee", id)]);
       const emoji = type === "atkmag" ? SWData.emojis.atkmag : isRanged(type, range) ? SWData.emojis.atktir : SWData.emojis.atkcac;
-      return `[${emoji}](~${charName}|${ rptAttr(weaponRpt, "attack-btn", id) }${ button() }) ${ values[rptAttr(weaponRpt, "arme-nom", id)] }`;
+      const atkBtn = isNPC ? "npcatk-btn" : "attack-btn";
+      return `[${emoji}](~${charName}|${ rptAttr(weaponRpt, atkBtn, id) }${ button() }) ${ values[rptAttr(weaponRpt, "arme-nom", id)] }`;
     }).join("\n");
     if (weapons.length > 0)
       chatMsg.push("Armes=" + weapons);
 
     // Abilities
-    const pathRanks = strval(values.rangs_voies).split(",");
-    const pathNames = strval(values.noms_voies).split("|");
-    pathNames.forEach((pathName, ix) => {
-      const pathRank = intval(pathRanks[ix])
-      if (pathRank === 0)
-        return;
-      const path = ix + 1;
-      const abilities = seq(pathRank).reduce((all, rank) => {
-        const name = strval(values[abilityInfo({ path, rank }).rankName]);
-        const spell = boolval(values[abilityInfo({ path, rank }).rankSpell]);
-        const props = strval(values[abilityInfo({ path, rank }).rankProps]);
-        const active = (hasProp(props, "action") || hasProp(props, "roll"));  
-        let action = "";
-        const rollIdx = rollNames.findIndex(r => cleanText(values[r]) === cleanText(name));
-        if (!active && rollIdx > -1) {
-          const [ roll ] = rollNames.splice(rollIdx, 1);
-          rollIds = rollIds.filter(id => id !== rptInfo(roll).rowId);
-          const rollBtn = rptAttr(rollRpt, "roll-btn", rptInfo(roll).rowId);
-          action = ` [${ SWData.emojis.actions }](~${charName}|${rollBtn}${ button() })`;
-        } else {
-          const emoji = spell ? SWData.emojis.atkmag : SWData.emojis.actions;
-          action = (spell || active)
-          ? ` [${emoji}](~${charName}|${ abilityInfo({ path, rank }).rankOwned }-btn${ button() })`
-          : "";
-        }
-        if (action !== "")
-          all.push(action + name);
-        return all;
-      }, []).join("\n");
-      if (abilities)
-        chatMsg.push(pathName + "=" + abilities);
-    });
+    if (!isNPC) {
+      const pathRanks = strval(values.rangs_voies).split(",");
+      const pathNames = strval(values.noms_voies).split("|");
+      pathNames.forEach((pathName, ix) => {
+        const pathRank = intval(pathRanks[ix])
+        if (pathRank === 0)
+          return;
+        const path = ix + 1;
+        const abilities = seq(pathRank).reduce((all, rank) => {
+          const name = strval(values[abilityInfo({ path, rank }).rankName]);
+          const spell = boolval(values[abilityInfo({ path, rank }).rankSpell]);
+          const props = strval(values[abilityInfo({ path, rank }).rankProps]);
+          const active = (hasProp(props, "action") || hasProp(props, "roll"));  
+          let action = "";
+          const rollIdx = rollNames.findIndex(r => cleanText(values[r]) === cleanText(name));
+          if (!active && rollIdx > -1) {
+            const [ roll ] = rollNames.splice(rollIdx, 1);
+            rollIds = rollIds.filter(id => id !== rptInfo(roll).rowId);
+            const rollBtn = rptAttr(rollRpt, "roll-btn", rptInfo(roll).rowId);
+            action = ` [${ SWData.emojis.actions }](~${charName}|${rollBtn}${ button() })`;
+          } else {
+            const emoji = spell ? SWData.emojis.atkmag : SWData.emojis.actions;
+            action = (spell || active)
+            ? ` [${emoji}](~${charName}|${ abilityInfo({ path, rank }).rankOwned }-btn${ button() })`
+            : "";
+          }
+          if (action !== "")
+            all.push(action + name);
+          return all;
+        }, []).join("\n");
+        if (abilities)
+          chatMsg.push(pathName + "=" + abilities);
+      });
+    }
 
     // Rolls
-    const rolls = rollIds.map((id) => `[${SWData.emojis.actions}](~${charName}|${ rptAttr(rollRpt, "roll-btn", id) }${ button() }) ${ values[rptAttr(rollRpt, "roll-nom", id)] }` ).join("\n");
+    const rolls = rollIds.map((id) => {
+      const rollBtn = isNPC ? "npcroll-btn" : "roll-btn";
+      return `[${SWData.emojis.actions}](~${charName}|${ rptAttr(rollRpt, rollBtn, id) }${ button() }) ${ values[rptAttr(rollRpt, rollNameAttr, id)] }`;
+    }).join("\n");
     if (rolls.length > 0)
       chatMsg.push("Autres capacités=" + rolls);
 
     // Buffs
-    const buffs = buffIds.filter((id) => boolval(values[rptAttr(buffRpt, "buff-temp", id)]));
-    if (buffs.length > 0)
-      chatMsg.push(`Buffs=[Choix](~${charName}|multibuff-btn${menuButton(color, {}, { padding: "0px 5px;" })})`);
+    if (!isNPC) {
+      const buffs = buffIds.filter((id) => boolval(values[rptAttr(buffRpt, "buff-temp", id)]));
+      if (buffs.length > 0)
+        chatMsg.push(`Buffs=[Choix](~${charName}|multibuff-btn${menuButton(color, {}, { padding: "0px 5px;" })})`);
+    }
 
     // Skills
-    if (boolval(values.use_skills)) {
+    if (!isNPC && boolval(values.use_skills)) {
       chatMsg.push(`Compétences=[Choix](~${charName}|skills_menu-btn${menuButton(color, {}, { padding: "0px 5px;" })})`);
     }
 
     // Recovery + Healing
-    let desc = "Récup. " + [ "fast", "full" ].map(r => {
-      const recup = ({ fast: "Rapide", full: "Complète" })[r];
-      return `[${recup}](~${charName}|recovery_${r}-btn${ button({ "font-weight": "bolder" }) })`;
-    }).join("&nbsp;");
+    let desc = "";
+    if (!isNPC) {
+      desc = "Récup. " + [ "fast", "full" ].map(r => {
+        const recup = ({ fast: "Rapide", full: "Complète" })[r];
+        return `[${recup}](~${charName}|recovery_${r}-btn${ button({ "font-weight": "bolder" }) })`;
+      }).join("&nbsp;");
+    }
 
     desc += resIds
     .filter(id => {
