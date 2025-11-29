@@ -12,7 +12,8 @@ Vous indiquez également :
 - Les PV courants et maximum,
 - Le score d'Initiative,
 - Le score de Défense,
-- Les différentes RD et résistances aux DM.
+- Les différentes RD et résistances aux DM,
+- Eventuellement, les PC courants et maximum.
 
 Des boutons permettent de faire des jets de caractéristiques et d'Initiative.
 
