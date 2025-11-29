@@ -5653,6 +5653,7 @@
                     <li>Plus d'insertion automatique d'inline-roll [[ ]] dans le texte d'une capacité si ce dernier en comporte déjà</li>
                     <li>Effacement de la liaison entre une ligne d'arme et de munition quand le type d'attaque n'est pas <em>trait</em></li>
                     <li>Pas d'affichage des champs fréquence d'utilisation pour les capacités dont le nombre d'utilisation maximum est 0</li>
+                    <li>Ajout gestion des Points de Chance à la fiche de PNJ</li>
                   </ul>
                 </details>
               </li>
@@ -6053,7 +6054,7 @@
 
                 <div class="npc-trait">
                   <div class="block-title">
-                    <span>PV</span>
+                    <span>Points de Vigueur</span>
                   </div>
                   <div class="bordered centered">
                     <input type="number" class="two-digits" name="attr_pv" title="@{pv}" value="0">
@@ -6113,6 +6114,25 @@
                     </div>
                   </details>
                 </div>
+              </div>
+
+            </div>
+
+            <div class="npc-2colrow">
+
+              <div class="npc-row">
+  
+                <div class="npc-trait">
+                  <div class="block-title">
+                    <span>Points de Chance</span>
+                  </div>
+                  <div class="bordered centered">
+                    <input type="number" name="attr_pc" title="@{pc}" value="0">
+                    /
+                    <input type="number" name="attr_pc_max" title="@{pc_max}" value="0">
+                  </div>
+                </div>
+                  
               </div>
 
             </div>
@@ -11245,12 +11265,13 @@ SWData.PC.STATS.forEach(stat => {
       const text = defAction !== 0 ? `+ [[${defAction}]] Défense ${ defAction === 5 ? "totale" : "partielle" }` : "";
       const allRolls = allRollsBuff(values, "caracs");
       const carac = `[[${roll}[Dé] + @{${short}${ isNPC ? "" : "_test" }}[Bonus ${short.toUpperCase()}]${allRolls}${shadow.malus}${fear}${armor_malus}${shield_malus}${helmet_malus} ]] `;
+
       const chatMsg = rollTemplate({
         lsub: "Test",
         rsub: capitalize(stat) + statMod,
         roll: carac,
         text,
-        chance: addLuckButton(values)
+        chance: addLuckButton(values),
       }, { tags: allTags });
       sendChatMsg(chatMsg);
     });
@@ -11895,6 +11916,10 @@ on("clicked:luck_roll-btn", function() {
     });
     sendChatMsg(chatMsg);
   });
+});
+
+on("clicked:help_other-btn", function() {
+
 });
 
 /**
@@ -16246,13 +16271,20 @@ on("clicked:checkup-btn", function() {
 // NPC SHEET EVENTS
 // ================
 
+function npcLuckButton(values) {
+  const button = intval(values.pc_max) > 0 
+  ? addLuckButton({ ...values, cfg_luck_btn: 1, cfg_shadow: 0, couleur_pj: "default" })
+  : "";
+  return button;
+}
+
 /**
  * On NPC ability button click
  */
 SWData.PC.STATS.forEach(stat => {
   const short = shorten(stat);
   on(`clicked:pnj_${short}-btn`, function() {
-    getAttrs([ `${short}_sup`, "pnj_comp" ], function(values) {
+    getAttrs([ `${short}_sup`, "pnj_comp", "character_name", "pc", "pc_max" ], function(values) {
       const [ dType ] = Object.keys(values);
       const skills = strval(values.pnj_comp).split("\n")
       .filter(r => r.startsWith(short.toUpperCase()))
@@ -16267,7 +16299,8 @@ SWData.PC.STATS.forEach(stat => {
       const chatMsg = rollTemplate({
         lsub: "Test",
         rsub: capitalize(stat),
-        roll
+        roll,
+        chance: npcLuckButton(values),
       });
       sendChatMsg(chatMsg);
     });
@@ -16410,7 +16443,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
   getAttrs([
     "cfg_1attack_roll", "cfg_cible", "cfg_lowfan",
     "cfg_crit_diff", "cfg_tbl_crit", "cfg_tbl_critdie", "cfg_tbl_fumble",
-    "character_name", "niveau", "compagnon",
+    "character_name", "niveau", "compagnon", "pc", "pc_max",
     "atkgroup", "nbgroup", "pnj_tact",
     "atkbase_pnj", "atkcac", "atkmag",
     ...specials,
@@ -16705,7 +16738,8 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
         fumbletest: "",
         fumble: "",
         tohit: "",
-        target: ""
+        target: "",
+        chance: npcLuckButton(values)
       };
       
       if(rollOptions.critical) {
