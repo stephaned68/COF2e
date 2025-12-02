@@ -1,4 +1,4 @@
-/* COF2e v1.12.0 */
+/* COF2e v1.13.0 */
 
 @import url('https://fonts.googleapis.com/css?family=Merriweather+Sans&display=swap');
 
@@ -500,7 +500,8 @@ input[value="npc"] ~ button[name="roll_checkup"] {
   font-size: small;
 }
 
-input[value="0"].pc-skills-btn ~ button.pc-skills-btn {
+input[value="0"].pc-skills-btn ~ button.pc-skills-btn,
+input[value=""].custom-skill ~ div.custom-skill {
   display: none;
 }
 

@@ -1,8 +1,8 @@
 <div class="cofmain">
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.12.0">
+  <input type="hidden" name="attr_verfdp" value="1.13.0">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.12.0">
+  <input type="hidden" name="attr_version" value="1.13.0">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
 
@@ -108,6 +108,10 @@
   <input type="hidden" name="attr_PVIG" value="0">
   <input type="hidden" name="attr_PVIG_max" value="0">
 
+  <!-- Help action -->
+  <input type="hidden" name="attr_help_roll" value="">
+  <input type="hidden" name="attr_help_roll_all" value="">
+
   <!-- Charmancer
   <input type="hidden" name="attr_charmancer" value=""> -->
 
@@ -118,7 +122,7 @@
     <div>
       <img
         class="logo"
-        title="Version 1.12.0 - 30/11/2025"
+        title="Version 1.13.0 - 31/12/2025"
         src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cof2e_logo.jpg"
       />
       <input type="hidden" class="d20roll-btns" name="attr_cfg_d20roll" value="0">
@@ -316,7 +320,9 @@
     
     <button type="action" class="hidden" name="act_npc_actions-btn"></button>
     <button type="action" class="hidden" name="act_npc_menus-btn"></button>
-   
+    
+    <button type="action" class="hidden" name="act_help_other-btn"></button>
+       
     <!-- Fiche PJ -->
     <div class="cof-pc">
       <input type="hidden" class="tabs-toggle" name="attr_pc_tab" value="main" />
@@ -4125,10 +4131,6 @@
                   <input type="number" class="two-digits" name="attr_empathie_bonus" value="0">
                 </div>
               </div>
-
-            </div>
-
-            <div class="sheet-col">
               
               <div class="d-flex d-flex-between">
                 <div>
@@ -4180,6 +4182,10 @@
                 </div>
               </div>
               
+            </div>
+
+            <div class="sheet-col">
+
               <div class="d-flex d-flex-between">
                 <div>
                   <input type="checkbox" name="attr_natation_prof" value="1">
@@ -4402,6 +4408,110 @@
                   </select>
                   <span>+</span>
                   <input type="number" class="two-digits" name="attr_vigilance_bonus" value="0">
+                </div>
+              </div>
+
+              <input type="hidden" class="custom-skill" name="attr_custom1_skillname" value="">
+              <div class="custom-skill d-flex d-flex-between">
+                <div>
+                  <input type="checkbox" name="attr_custom1_prof" value="1">
+                  <button type="action" class="flat-btn img-btn" name="act_skill-custom1">
+                    <span class="img-btn"></span><span name="attr_custom1_skillname"></span>
+                  </button>
+                </div>
+                <div>
+                  <input type="hidden" name="attr_custom1_def" value="?">
+                  <select class="select-md" name="attr_custom1_carac" title="@{custom1_carac} Bonus de caractéristique">
+                    <option value="0">-</option>
+                    <option value="@{agi}">AGI</option>
+                    <option value="@{con}">CON</option>
+                    <option value="@{for}">FOR</option>
+                    <option value="@{per}">PER</option>
+                    <option value="@{cha}">CHA</option>
+                    <option value="@{int}">INT</option>
+                    <option value="@{vol}">VOL</option>
+                    <option value="?" selected>Demander</option>
+                  </select>
+                  <span>+</span>
+                  <input type="number" class="two-digits" name="attr_custom1_bonus" value="0">
+                </div>
+              </div>
+
+              <input type="hidden" class="custom-skill" name="attr_custom2_skillname" value="">
+              <div class="custom-skill d-flex d-flex-between">
+                <div>
+                  <input type="checkbox" name="attr_custom2_prof" value="1">
+                  <button type="action" class="flat-btn img-btn" name="act_skill-custom2">
+                    <span class="img-btn"></span><span name="attr_custom2_skillname"></span>
+                  </button>
+                </div>
+                <div>
+                  <input type="hidden" name="attr_custom2_def" value="?">
+                  <select class="select-md" name="attr_custom2_carac" title="@{custom2_carac} Bonus de caractéristique">
+                    <option value="0">-</option>
+                    <option value="@{agi}">AGI</option>
+                    <option value="@{con}">CON</option>
+                    <option value="@{for}">FOR</option>
+                    <option value="@{per}">PER</option>
+                    <option value="@{cha}">CHA</option>
+                    <option value="@{int}">INT</option>
+                    <option value="@{vol}">VOL</option>
+                    <option value="?" selected>Demander</option>
+                  </select>
+                  <span>+</span>
+                  <input type="number" class="two-digits" name="attr_custom2_bonus" value="0">
+                </div>
+              </div>
+              
+              <input type="hidden" class="custom-skill" name="attr_custom3_skillname" value="">
+              <div class="custom-skill d-flex d-flex-between">
+                <div>
+                  <input type="checkbox" name="attr_custom3_prof" value="1">
+                  <button type="action" class="flat-btn img-btn" name="act_skill-custom3">
+                    <span class="img-btn"></span><span name="attr_custom3_skillname"></span>
+                  </button>
+                </div>
+                <div>
+                  <input type="hidden" name="attr_custom3_def" value="?">
+                  <select class="select-md" name="attr_custom3_carac" title="@{custom3_carac} Bonus de caractéristique">
+                    <option value="0">-</option>
+                    <option value="@{agi}">AGI</option>
+                    <option value="@{con}">CON</option>
+                    <option value="@{for}">FOR</option>
+                    <option value="@{per}">PER</option>
+                    <option value="@{cha}">CHA</option>
+                    <option value="@{int}">INT</option>
+                    <option value="@{vol}">VOL</option>
+                    <option value="?" selected>Demander</option>
+                  </select>
+                  <span>+</span>
+                  <input type="number" class="two-digits" name="attr_custom3_bonus" value="0">
+                </div>
+              </div>
+              
+              <input type="hidden" class="custom-skill" name="attr_custom4_skillname" value="">
+              <div class="custom-skill d-flex d-flex-between">
+                <div>
+                  <input type="checkbox" name="attr_custom4_prof" value="1">
+                  <button type="action" class="flat-btn img-btn" name="act_skill-custom4">
+                    <span class="img-btn"></span><span name="attr_custom4_skillname"></span>
+                  </button>
+                </div>
+                <div>
+                  <input type="hidden" name="attr_custom4_def" value="?">
+                  <select class="select-md" name="attr_custom4_carac" title="@{custom4_carac} Bonus de caractéristique">
+                    <option value="0">-</option>
+                    <option value="@{agi}">AGI</option>
+                    <option value="@{con}">CON</option>
+                    <option value="@{for}">FOR</option>
+                    <option value="@{per}">PER</option>
+                    <option value="@{cha}">CHA</option>
+                    <option value="@{int}">INT</option>
+                    <option value="@{vol}">VOL</option>
+                    <option value="?" selected>Demander</option>
+                  </select>
+                  <span>+</span>
+                  <input type="number" class="two-digits" name="attr_custom4_bonus" value="0">
                 </div>
               </div>
 
@@ -5207,6 +5317,26 @@
               ></textarea>
             </details>
 
+            <details>
+              <summary>
+                <h4>Compétences personnalisées</h4>
+              </summary>
+              <ol>
+                <li>
+                  <input type="text" name="attr_custom1_skillname" title="@{custom1_skillname}" value="">
+                </li>
+                <li>
+                  <input type="text" name="attr_custom2_skillname" title="@{custom2_skillname}" value="">
+                </li>
+                <li>
+                  <input type="text" name="attr_custom3_skillname" title="@{custom3_skillname}" value="">
+                </li>
+                <li>
+                  <input type="text" name="attr_custom4_skillname" title="@{custom4_skillname}" value="">
+                </li>
+              </ol>
+            </details>
+
           </div>
 
           <div class="sheet-col">
@@ -5642,6 +5772,18 @@
           <div class="sheet-col">
 
             <ul>
+
+              <li>
+                <details>
+                  <summary>
+                    <strong>Version 1.13.0</strong> (2025-12-31)
+                  </summary>
+                  <ul>
+                    <li>Prise en charge de la règle <em>Aider</em> (script MOD SetChatAttr nécessaire)</li>
+                    <li>Ajout de 4 compétences personnalisées optionnelles</li>
+                  </ul>
+                </details>
+              </li>
 
               <li>
                 <details>
@@ -7546,7 +7688,17 @@
   {{#chance}}
   <div class="sheet-rt sheet-rt-text">
     <span>{{chance}}</span>
+    {{#aide}}
+    <span>{{aide}}</span>
+    {{/aide}}
   </div>
+  {{/chance}}
+  {{^chance}}
+  {{#aide}}
+  <div class="sheet-rt sheet-rt-text">
+    <span>{{aide}}</span>
+  </div>
+  {{/aide}}
   {{/chance}}
   {{#alert}}
   <div class="sheet-rt sheet-rt-text">
@@ -7587,7 +7739,7 @@
 
 /**
  * COF2e Sheet Worker
- * v1.12.0
+ * v1.13.0
  */
 
 const SWData = {
@@ -8365,6 +8517,26 @@ const SWData = {
         name: "vigilance",
         label: "",
         ability: "per"
+      },
+      {
+        name: "custom1",
+        label: "",
+        ability: "?"
+      },
+      {
+        name: "custom2",
+        label: "",
+        ability: "?"
+      },
+      {
+        name: "custom3",
+        label: "",
+        ability: "?"
+      },
+      {
+        name: "custom4",
+        label: "",
+        ability: "?"
       },
     ]
   },
@@ -10042,7 +10214,7 @@ function tokenMod(charName, props = {}) {
 
 /**
  * Build ChatSetAttr command
- * @param { { select: string, from: string, header: string, content: string } } options - !setattr options
+ * @param { { silent: boolean, mute: boolean, select: string, from: string, header: string, content: string } } options - !setattr options
  * @param {Object} attrs - attributes name/value pairs
  * @returns {String}
  */
@@ -10051,6 +10223,8 @@ function chatSetAttr(options, attrs = {}) {
   if (!options.select)
     return "";
   const setattr = Object.keys(options).reduce((result, optk) => {
+    if ([ "silent", "mute" ].includes(optk))
+      result += ` --${optk}`;
     if ([ "from", "header", "content" ].includes(optk) && options[optk])
       result += ` --fb-${optk} ${options[optk]}`;
     return result;
@@ -11167,6 +11341,19 @@ function addLuckButton(values) {
 }
 
 /**
+ * Return roll template field for help button
+ * @param {Object} values - getAttrs() object
+ * @returns {string}
+ */
+function addHelpButton(values) {
+  if (!boolval(values.chatsetattr))
+    return "";
+  const charName = strval(values.character_name);
+  const color = strval(values.couleur_pj);
+  return `[Aider](~${charName}|help_other-btn${menuButton(color, { size: "1.3em" }, { class: "chat-button" }, { title: "Cliquer le token du destinataire de l'aide" })})`;
+}
+
+/**
  * Limit PC loss
  */
 on("change:pc", function() {
@@ -11222,9 +11409,10 @@ SWData.PC.STATS.forEach(stat => {
     getAttrs([
       `${short}_dsup`, short, `${short}_test`,
       "sheet_type",
+      "cfg_shadow", "pc", 
       "notif_fx",
+      "chatsetattr", "help_roll_all",
       "condition_affaibli",
-      "cfg_shadow", "pc",
       ...fearConditionsAttrs(),
       ...luckButtonAttrs(),
       ...defGearAttrs, 
@@ -11264,7 +11452,8 @@ SWData.PC.STATS.forEach(stat => {
       const defAction = intval(values.def_action);
       const text = defAction !== 0 ? `+ [[${defAction}]] Défense ${ defAction === 5 ? "totale" : "partielle" }` : "";
       const allRolls = allRollsBuff(values, "caracs");
-      const carac = `[[${roll}[Dé] + @{${short}${ isNPC ? "" : "_test" }}[Bonus ${short.toUpperCase()}]${allRolls}${shadow.malus}${fear}${armor_malus}${shield_malus}${helmet_malus} ]] `;
+      const helpAllRolls = strval(values.help_roll_all);
+      const carac = `[[${roll}[Dé] + @{${short}${ isNPC ? "" : "_test" }}[Bonus ${short.toUpperCase()}]${allRolls}${helpAllRolls}${shadow.malus}${fear}${armor_malus}${shield_malus}${helmet_malus} ]] `;
 
       const chatMsg = rollTemplate({
         lsub: "Test",
@@ -11272,8 +11461,12 @@ SWData.PC.STATS.forEach(stat => {
         roll: carac,
         text,
         chance: addLuckButton(values),
+        aide: addHelpButton(values),
       }, { tags: allTags });
       sendChatMsg(chatMsg);
+
+      if (helpAllRolls !== "")
+        setAttrs({ help_roll_all: "" });
     });
   });
 
@@ -11918,8 +12111,34 @@ on("clicked:luck_roll-btn", function() {
   });
 });
 
+/**
+ * On Help button click (assistant character)
+ */
 on("clicked:help_other-btn", function() {
+  getAttrs([ "character_name", "last_rolls" ], function(values) {
+    const helpRoll = numval(strval(values.last_rolls).split("|")[0]);
+    const helpBonus = helpRoll < 10 ? 0 : helpRoll >= 20 ? 4 : 2;
+    if (helpBonus === 0)
+      return;
+    const help_roll = `${helpBonus}~${ strval(values.character_name) }~${ new Date().toISOString() }`; // make it unique with datetime
+    const chatCmd = chatSetAttr({ silent: true, select: "--charid @{target|character_id}" }, { help_roll });
+    sendChatCmd(chatCmd);
+  });
+});
 
+/**
+ * On Help field change (assisted character)
+ */
+on("change:help_roll", function() {
+  getAttrs([ "help_roll", "help_roll_all" ], function(values) {
+    const [ bonus, charName ] = strval(values.help_roll).split("~");
+    const helpRoll = ` +[[${bonus}]][Aide ${charName}]`;
+    let helpAllRolls = strval(values.help_roll_all);
+    if (!helpAllRolls.includes(helpRoll)) {
+      helpAllRolls += helpRoll;
+      setAttrs({ help_roll_all: helpAllRolls });
+    }
+  });
 });
 
 /**
@@ -13700,7 +13919,8 @@ on("clicked:repeating_rolls:roll-btn", function() {
       "condition_affaibli",
       "cfg_d20roll", "d20roll",
       "cfg_shadow", "pc",
-      "allcaracs_desc", "allcaracs_buff",
+      "allcaracs_desc", "allcaracs_buff", 
+      "help_roll_all",
       ...fearConditionsAttrs(),
       ...luckButtonAttrs(),
       ...statsAttrs,
@@ -13772,6 +13992,7 @@ on("clicked:repeating_rolls:roll-btn", function() {
       else
         type = rollCfCs(type);
       rollCmd = `${type}[Dés]`;
+      const helpAllRolls = strval(values.help_roll_all);
       // + Carac
       if (carac !== "") {
         if (carac === "?") {
@@ -13790,6 +14011,11 @@ on("clicked:repeating_rolls:roll-btn", function() {
         rollCmd += ` + (${bonus})[Bonus]`;
       // + All rolls buff
       rollCmd += allRollsBuff(values, "caracs");
+      // + Help
+      if (helpAllRolls !== "") {
+        rollCmd += helpAllRolls;
+        setAttrs({ help_roll_all: "" });
+      }
       // - Ombre
       rollCmd += shadow.malus;
       // - Peur
@@ -13831,16 +14057,19 @@ function getSkillName(skill) {
  */
 SWData.PC.SKILLS.forEach(skill => {
   on(`clicked:skill-${skill.name}`, function () {
-    const skillName = getSkillName(skill);
+    let skillName = getSkillName(skill);
     const statsAttrs = SWData.PC.STATS.map(stat => shorten(stat));
     const skillAttrs = [ "carac", "bonus", "def" ].map(a => `${skill.name}_${a}`);
+    const customNames = nameSeq(4, "custom#_skillname");
     getAttrs([
       ...skillAttrs,
       ...statsAttrs,
+      ...customNames,
       "condition_affaibli",
       "pc", "cfg_shadow", 
       "cfg_1skill_roll", "cfg_d20roll", "d20roll",
       "allcaracs_desc", "allcaracs_buff",
+      "help_roll_all",
       ...fearConditionsAttrs(),
       ...luckButtonAttrs()
     ], function (values) {
@@ -13849,6 +14078,9 @@ SWData.PC.SKILLS.forEach(skill => {
       const skillBonus = intval(values[bonus]);
       const skillDef = strval(values[def]);
       const skillTotal = ` *(+${ intval(values[caracBonus.slice(2, 5)]) + skillBonus })*`;
+
+      if (skill.name.startsWith("custom"))
+        skillName = capitalize(strval(values[`${ skill.name }_skillname`]));
 
       let rollCmd = "1d20";
       
@@ -13888,6 +14120,10 @@ SWData.PC.SKILLS.forEach(skill => {
 
       rollCmd += allRollsBuff(values, "caracs");
 
+      const helpAllRolls = strval(values.help_roll_all);
+      if (helpAllRolls !== "")
+        rollCmd += helpAllRolls;
+
       rollCmd += fear;
 
       rollCmd += shadow.malus;
@@ -13908,9 +14144,14 @@ SWData.PC.SKILLS.forEach(skill => {
       }, { tags: allTags });
       sendChatMsg(chatMsg);
 
-      // Restore default carac
+      // Restore default carac & clear help rolls
+      const updates = new Map();
       if (caracBonus !== skillDef)
-        setAttrs({ [`${skill.name}_carac`]: skillDef });
+        updates.set(`${skill.name}_carac`, skillDef);
+      if (helpAllRolls !== "")
+        updates.set("help_roll_all", "");
+      if (updates.size > 0)
+        setAttrs(Object.fromEntries(updates));
     });
   });
 });
