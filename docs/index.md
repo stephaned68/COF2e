@@ -1,6 +1,6 @@
 # CO Fantasy 2ème édition
 
-Cette documentation concerne la version **1.12.0** de la fiche
+Cette documentation concerne la version **1.13.0** de la fiche
 
 [Fiche de personnage]({{ site.baseurl }}/pc-main)
 

@@ -100,6 +100,10 @@ _Exemple :_
 
 `sournoise: (2+@{voies_rang4})d4°` sur la fiche d'un profil de voleur crée un attribut nommé `voleur_sournoise`. La valeur de cet attribut sera résolue par Roll20 à l'utilisation, en ajoutant aux 2d4° de base le nombre de voies de voleur dans lequel le personnage a atteint le rang 4. Cet attribut peut être utilisé dans une macro sous le nom `@{voleur_sournoise}`
 
+## Compétences personnalisées
+
+Cette section permet de définir les noms de 1 à 4 compétences personnalisées qui s'ajoutent à la liste standard de 22 compétences définies dans l'_Atlas d'Osgild_.
+
 ## Notifications
 
 Pour chaque type de notification, vous pouvez choisir entre aucun affichage, un affichage pour tous les joueurs, ou un affichage privé pour le joueur et le MJ.

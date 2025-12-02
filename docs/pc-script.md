@@ -76,7 +76,9 @@ D'autres options peuvent être activées :
 
 Ce script permet d'ajouter, de modifier ou de supprimer des attributs d'une fiche de personnage grâce à des commandes de chat Roll20.
 
-Ce script est utilisé par les fonctions de _Loot_ de la fiche de personnage.
+Ce script est utilisé :
+- Par les fonctionnalités de _Loot_,
+- Pour la règle d'Aide entre personnages.
 
 ---
 

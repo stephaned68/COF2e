@@ -187,6 +187,13 @@ Les attributs ci-dessous servent à déterminer les effets de certaines capacit�
 - `pm_buff_list` : liste des buffs/debuffs aux PM
 - `pc_buff_list` : liste des buffs/debuffs aux PC
 
+## Compétences
+
+- `custom1_skillname` : nom de la compétence personnalisée n° 1
+- `custom2_skillname` : nom de la compétence personnalisée n° 2
+- `custom3_skillname` : nom de la compétence personnalisée n° 3
+- `custom4_skillname` : nom de la compétence personnalisée n° 4
+
 # Persomancien
 
 Un bouton situé à côté du type de fiche de personnage permet de lancer le Persomancien (CharacterMancer). Cette fonctionnalité expérimentale permet de simplifier la création d'un PJ.

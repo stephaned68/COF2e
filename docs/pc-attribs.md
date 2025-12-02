@@ -36,6 +36,14 @@ L'icone située à côté de **Carac** permet d'afficher un menu d'action dans l
 
 Ces deux boutons/icones peuvent être épinglés dans la barre d'action de Roll20 par glisser-déposer.
 
+## Aider
+
+Si le script MOD _ChatSetAttr_ est activé dans la configuration de la fiche, un bouton _Aider_ s'affiche dans le message de chat lorsqu'un jet de caractéristique est effectué. Cliquer sur ce bouton affiche un popup Roll20 qui demande de cliquer sur le token du personnage qui doit recevoir le bonus d'aide.
+
+Plusieurs personnages peuvent ainsi faire un jet puis cliquer sur _Aider_, les bonus obtenus sont mémorisés dans la fiche du personnage qui reçoit l'assistance. 
+
+Dès que le personnage assisté fait lui-même un jet de caractéristique, de capacité ou de compétence, tous les bonus reçus sont ajoutés à son jet, puis effacés.
+
 # Combat
 
 Cette section présente les scores d'initiative et d'attaques du PJ (contact, distance et magique). Pour chaque attribut :
