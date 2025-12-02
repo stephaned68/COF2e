@@ -12,7 +12,7 @@ v1.12.0 [Screenshot](cof2e.png)
 
 ### Version _1.13.0_ (Next)
 
-- Prise en charge de l'actiob _Aider_ (script MOD SetChatAttr nécessaire)
+- Prise en charge de l'action _Aider_ (script MOD SetChatAttr nécessaire)
 - Ajout de 4 compétences personnalisées optionnelles
 
 ### Version _1.12.0_ (2025-11-30)
