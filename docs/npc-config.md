@@ -15,14 +15,12 @@ Les préférence et réglages possibles de la fiche sont configurés dans cet on
 
 ## Attaques
 
-Cette section optionnelle permet d'indiquer des scores d'attaque de base du PNJ.
-
-- Combat : Il s'agit du score d'attaque au contact.
-- Magique : Il s'agit du score d'attaque magique.
+Cette section optionnelle permet d'indiquer des scores d'attaque de base du PNJ (contact, distance et magique).
 
 Si la case _Utiliser les scores de base_ est cochée, les scores d'attaques indiqués serviront de base au bonus d'attaque, et les bonus indiqués sur chaque ligne d'attaque leur seront ajoutés. Pour prendre en compte le score de base approprié, le type d'attaque doit être correctement spécifié dans les lignes d'attaque :
 - Pour le type _Sort_, le score d'attaque de base est le score d'attaque magique.
-- Pour tous les autres types, c'est le score d'attaque au contact.
+- Pour le type _Jet_ et _Trait_, c'est le score d'attaque à distance.
+- Pour le type _En main_ et _Naturel_, c'est le score d'attaque au contact.
 
 ## Défense
 

@@ -14,6 +14,8 @@ Une section dépliante permet d'ajouter plus de détail :
 
 Une icone "bulle" permet d'afficher dans le chat Roll20 un message descriptif de l'objet avec la liste éventuelle de ses propriétés. Ce message est **toujours** public même si la fiche du PNJ est configurée pour chuchoter les messages au MJ.
 
+Les propriétés indiquées pour l'équipement ne modifient pas les différents scores du PNJ qui sont données dans le statblock. Elles sont toutefois copiées dans la fiche d'un personnage en cas de _loot_.
+
 ## Fonctions _Loot_
 
 Si le script ChatSetAttr est installé dans la partie et que l'option de configuration correspondante est active, un bouton est ajouté dans ce message de chat afin qu'un joueur puisse cliquer et ajouter cet objet à l'inventaire de son personnage.
