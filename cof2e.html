@@ -16560,7 +16560,7 @@ SWData.PC.STATS.forEach(stat => {
       .filter(r => r.startsWith(short.toUpperCase()))
       .map(r => {
         const [ bonus, ...name ] = strval(r.split(":")[1]).trim().replace(/\s\s+/g, " ").split(" ");
-        return `${ name.join(" ") },[[${bonus}]][${ name.join(" ") }]`;
+        return `${ SWData.emojis.skills }${ name.join(" ") } (${bonus}),[[${bonus}]][${ name.join(" ") }]`;
       });
       let skill = "";
       if (skills.length > 0)
