@@ -6901,10 +6901,20 @@
 
               <li>
                 <div class="npc-configs m2">
-                  <div>Combat</div>
+                  <div>Contact</div>
                   <div class="d-flex">
                     : <input type="number" class="two-digits" name="attr_atkcac_pnj" title="@{atkcac_pnj} Bonus d'attaque au contact">
                     <input type="hidden" name="attr_atkcac">
+                  </div>
+                </div>
+              </li>
+
+              <li>
+                <div class="npc-configs m2">
+                  <div>Distance</div>
+                  <div class="d-flex">
+                    : <input type="number" class="two-digits" name="attr_atktir_pnj" title="@{atktir_pnj} Bonus d'attaque à distance">
+                    <input type="hidden" name="attr_atktir">
                   </div>
                 </div>
               </li>
@@ -16715,7 +16725,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     "cfg_crit_diff", "cfg_tbl_crit", "cfg_tbl_critdie", "cfg_tbl_fumble",
     "character_name", "niveau", "compagnon", "pc", "pc_max",
     "atkgroup", "nbgroup", "pnj_tact",
-    "atkbase_pnj", "atkcac", "atkmag",
+    "atkbase_pnj", "atkcac", "atktir", "atkmag",
     ...specials,
     ...attackAttrs,
   ], function (values) {
@@ -16728,6 +16738,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     const groupNb = intval(values.nbgroup);
     const atkBase = boolval(values.atkbase_pnj);
     const atkCac = intval(values.atkcac);
+    const atkTir = intval(values.atktir);
     const atkMag = intval(values.atkmag);
     const name = capitalize(strval(values[section + "nom"], "Attaque"));
     const useMulti = intval(values[section + "multi"]);
@@ -16861,8 +16872,13 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     }
 
     let atkBonus = strval(atk, "0");
-    if (atkBase && atkType !== "")
-      atkBonus = "(" + (atkType === "sort" ? `${atkMag}` : `${atkCac}` ) + "+" + atkBonus + ")";
+    if (atkBase && atkType !== "") {
+      const atkScore = atkType === "sort" 
+      ? atkMag 
+      : atkType === "main" || atkType === "naturel" 
+      ? atkCac : atkTir;
+      atkBonus = "(" + atkScore + "+" + atkBonus + ")";
+    }
 
     const attacks = [];
     if (!atkMods.includes("auto") && atkgrp[0].nb !== 4) {
@@ -17117,12 +17133,13 @@ on("clicked:repeating_npcrolls:npcroll-btn", function() {
 /**
  * Set NPC attack scores
  */
-on("change:atkbase_pnj change:atkcac_pnj change:atkmag_pnj", function() {
-  getAttrs([ "atkbase_pnj", "atkcac_pnj", "atkmag_pnj" ], function (values) {
+on("change:atkbase_pnj change:atkcac_pnj change:atktir_pnj change:atkmag_pnj", function() {
+  getAttrs([ "atkbase_pnj", "atkcac_pnj", "atktir_pnj", "atkmag_pnj" ], function (values) {
     const base = numval(values.atkbase_pnj);
     const atkcac = numval(values.atkcac_pnj) * base;
+    const atktir = numval(values.atktir_pnj) * base;
     const atkmag = numval(values.atkmag_pnj) * base;
-    setAttrs({ atkcac, atkmag });
+    setAttrs({ atkcac, atktir, atkmag });
   });
 });
 
@@ -17701,7 +17718,22 @@ function migrateSheetToV1_11(sheetType, curVer = { major: 1, minor: 10, patch: 0
   }
 
   setAttrs(Object.fromEntries(updates));
-};
+}
+
+/**
+ * Migrate to Version 1.13.0
+ * @param {string} sheetType - type of sheet
+ * @param {{ major: number, minor: number, patch: number }} curVer - semantic version parts
+ */
+function migrateSheetToV1_13(sheetType, curVer = { major: 1, minor: 12, patch: 0 }) {
+  const updates = new Map();
+
+  if (sheetType === SWData.SHEET_TYPE.NPC) {
+    updates.set("atktir", 0);
+  }
+
+  setAttrs(Object.fromEntries(updates));
+}
 
 /**
  * Apply sheet migrations
@@ -17717,6 +17749,9 @@ function migrateSheet(sheetType, curVer) {
   if (curVer.major === 1 && curVer.minor < 11)
     migrateSheetToV1_11(sheetType, curVer);
 
+  if (curVer.major === 1 && curVer.minor < 13)
+    migrateSheetToV1_13(sheetType, curVer);
+  
   return;
 }
 
