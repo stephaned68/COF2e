@@ -3916,6 +3916,9 @@
               <div class="d-flex d-flex-between">
                 <div>
                   <input type="checkbox" name="attr_athletisme_prof" value="1">
+                  <button type="action" class="hidden" name="act_skill-athletisme-agi" />
+                  <button type="action" class="hidden" name="act_skill-athletisme-con" />
+                  <button type="action" class="hidden" name="act_skill-athletisme-for" />
                   <button type="action" class="flat-btn img-btn" name="act_skill-athletisme"
                   title="Courir et sauter (AGI)&#10;Lancer loin ou soulever (FOR)&#10;Marcher ou courir longtemps (CON)">
                     <span class="img-btn"></span>Athlétisme
@@ -4046,6 +4049,8 @@
               <div class="d-flex d-flex-between">
                 <div>
                   <input type="checkbox" name="attr_equitation_prof" value="1">
+                  <button type="action" class="hidden" name="act_skill-equitation-agi" />
+                  <button type="action" class="hidden" name="act_skill-equitation-cha" />
                   <button type="action" class="flat-btn img-btn" name="act_skill-equitation"
                   title="Monter à cheval (AGI)&#10;Maîtriser et calmer une monture (CHA)">
                     <span class="img-btn"></span>Equitation
@@ -4441,6 +4446,13 @@
               <div class="custom-skill d-flex d-flex-between">
                 <div>
                   <input type="checkbox" name="attr_custom1_prof" value="1">
+                  <button type="action" class="hidden" name="act_skill-custom1-agi" />
+                  <button type="action" class="hidden" name="act_skill-custom1-con" />
+                  <button type="action" class="hidden" name="act_skill-custom1-for" />
+                  <button type="action" class="hidden" name="act_skill-custom1-per" />
+                  <button type="action" class="hidden" name="act_skill-custom1-cha" />
+                  <button type="action" class="hidden" name="act_skill-custom1-int" />
+                  <button type="action" class="hidden" name="act_skill-custom1-vol" />
                   <button type="action" class="flat-btn img-btn" name="act_skill-custom1">
                     <span class="img-btn"></span><span name="attr_custom1_skillname"></span>
                   </button>
@@ -4467,6 +4479,13 @@
               <div class="custom-skill d-flex d-flex-between">
                 <div>
                   <input type="checkbox" name="attr_custom2_prof" value="1">
+                  <button type="action" class="hidden" name="act_skill-custom2-agi" />
+                  <button type="action" class="hidden" name="act_skill-custom2-con" />
+                  <button type="action" class="hidden" name="act_skill-custom2-for" />
+                  <button type="action" class="hidden" name="act_skill-custom2-per" />
+                  <button type="action" class="hidden" name="act_skill-custom2-cha" />
+                  <button type="action" class="hidden" name="act_skill-custom2-int" />
+                  <button type="action" class="hidden" name="act_skill-custom2-vol" />
                   <button type="action" class="flat-btn img-btn" name="act_skill-custom2">
                     <span class="img-btn"></span><span name="attr_custom2_skillname"></span>
                   </button>
@@ -4493,6 +4512,13 @@
               <div class="custom-skill d-flex d-flex-between">
                 <div>
                   <input type="checkbox" name="attr_custom3_prof" value="1">
+                  <button type="action" class="hidden" name="act_skill-custom3-agi" />
+                  <button type="action" class="hidden" name="act_skill-custom3-con" />
+                  <button type="action" class="hidden" name="act_skill-custom3-for" />
+                  <button type="action" class="hidden" name="act_skill-custom3-per" />
+                  <button type="action" class="hidden" name="act_skill-custom3-cha" />
+                  <button type="action" class="hidden" name="act_skill-custom3-int" />
+                  <button type="action" class="hidden" name="act_skill-custom3-vol" />
                   <button type="action" class="flat-btn img-btn" name="act_skill-custom3">
                     <span class="img-btn"></span><span name="attr_custom3_skillname"></span>
                   </button>
@@ -4519,6 +4545,13 @@
               <div class="custom-skill d-flex d-flex-between">
                 <div>
                   <input type="checkbox" name="attr_custom4_prof" value="1">
+                  <button type="action" class="hidden" name="act_skill-custom4-agi" />
+                  <button type="action" class="hidden" name="act_skill-custom4-con" />
+                  <button type="action" class="hidden" name="act_skill-custom4-for" />
+                  <button type="action" class="hidden" name="act_skill-custom4-per" />
+                  <button type="action" class="hidden" name="act_skill-custom4-cha" />
+                  <button type="action" class="hidden" name="act_skill-custom4-int" />
+                  <button type="action" class="hidden" name="act_skill-custom4-vol" />
                   <button type="action" class="flat-btn img-btn" name="act_skill-custom4">
                     <span class="img-btn"></span><span name="attr_custom4_skillname"></span>
                   </button>
@@ -5350,15 +5383,47 @@
               <ol>
                 <li>
                   <input type="text" name="attr_custom1_skillname" title="@{custom1_skillname}" value="">
+                  <br>Carac(s)
+                  &nbsp;<input type="checkbox" name="attr_custom1_agi" title="@{custom1_agi} AGI" value="1">
+                  &nbsp;<input type="checkbox" name="attr_custom1_con" title="@{custom1_con} CON" value="1">
+                  &nbsp;<input type="checkbox" name="attr_custom1_for" title="@{custom1_for} FOR" value="1">
+                  &nbsp;<input type="checkbox" name="attr_custom1_per" title="@{custom1_per} PER" value="1">
+                  &nbsp;<input type="checkbox" name="attr_custom1_cha" title="@{custom1_cha} CHA" value="1">
+                  &nbsp;<input type="checkbox" name="attr_custom1_int" title="@{custom1_int} INT" value="1">
+                  &nbsp;<input type="checkbox" name="attr_custom1_vol" title="@{custom1_vol} VOL" value="1">
                 </li>
                 <li>
                   <input type="text" name="attr_custom2_skillname" title="@{custom2_skillname}" value="">
+                  <br>Carac(s)
+                  &nbsp;<input type="checkbox" name="attr_custom2_agi" title="@{custom2_agi} AGI" value="1">
+                  &nbsp;<input type="checkbox" name="attr_custom2_con" title="@{custom2_con} CON" value="1">
+                  &nbsp;<input type="checkbox" name="attr_custom2_for" title="@{custom2_for} FOR" value="1">
+                  &nbsp;<input type="checkbox" name="attr_custom2_per" title="@{custom2_per} PER" value="1">
+                  &nbsp;<input type="checkbox" name="attr_custom2_cha" title="@{custom2_cha} CHA" value="1">
+                  &nbsp;<input type="checkbox" name="attr_custom2_int" title="@{custom2_int} INT" value="1">
+                  &nbsp;<input type="checkbox" name="attr_custom2_vol" title="@{custom2_vol} VOL" value="1">
                 </li>
                 <li>
                   <input type="text" name="attr_custom3_skillname" title="@{custom3_skillname}" value="">
+                  <br>Carac(s)
+                  &nbsp;<input type="checkbox" name="attr_custom3_agi" title="@{custom3_agi} AGI" value="1">
+                  &nbsp;<input type="checkbox" name="attr_custom3_con" title="@{custom3_con} CON" value="1">
+                  &nbsp;<input type="checkbox" name="attr_custom3_for" title="@{custom3_for} FOR" value="1">
+                  &nbsp;<input type="checkbox" name="attr_custom3_per" title="@{custom3_per} PER" value="1">
+                  &nbsp;<input type="checkbox" name="attr_custom3_cha" title="@{custom3_cha} CHA" value="1">
+                  &nbsp;<input type="checkbox" name="attr_custom3_int" title="@{custom3_int} INT" value="1">
+                  &nbsp;<input type="checkbox" name="attr_custom3_vol" title="@{custom3_vol} VOL" value="1">
                 </li>
                 <li>
                   <input type="text" name="attr_custom4_skillname" title="@{custom4_skillname}" value="">
+                  <br>Carac(s)
+                  &nbsp;<input type="checkbox" name="attr_custom4_agi" title="@{custom4_agi} AGI" value="1">
+                  &nbsp;<input type="checkbox" name="attr_custom4_con" title="@{custom4_con} CON" value="1">
+                  &nbsp;<input type="checkbox" name="attr_custom4_for" title="@{custom4_for} FOR" value="1">
+                  &nbsp;<input type="checkbox" name="attr_custom4_per" title="@{custom4_per} PER" value="1">
+                  &nbsp;<input type="checkbox" name="attr_custom4_cha" title="@{custom4_cha} CHA" value="1">
+                  &nbsp;<input type="checkbox" name="attr_custom4_int" title="@{custom4_int} INT" value="1">
+                  &nbsp;<input type="checkbox" name="attr_custom4_vol" title="@{custom4_vol} VOL" value="1">
                 </li>
               </ol>
             </details>
@@ -5806,7 +5871,8 @@
                   </summary>
                   <ul>
                     <li>Prise en charge de l'action <em>Aider</em> (script MOD SetChatAttr nécessaire)</li>
-                    <li>Ajout de 4 compétences personnalisées optionnelles</li>
+                    <li>Ajout de 4 compétences personnalisées optionnelles avec caractéristiques associées</li>
+                    <li>Ajout d'un champ pour le score d'attaque à distance de base à la fiche de PNJ</li>
                   </ul>
                 </details>
               </li>
@@ -8447,7 +8513,7 @@ const SWData = {
       {
         name: "acrobaties",
         label: "",
-        ability: "agi"
+        ability: "agi",
       },
       {
         name: "artisanat",
@@ -8457,7 +8523,7 @@ const SWData = {
       {
         name: "athletisme",
         label: "Athlétisme",
-        ability: "?"
+        ability: [ "agi", "con", "for" ]
       },
       {
         name: "commerce",
@@ -8482,7 +8548,7 @@ const SWData = {
       {
         name: "equitation",
         label: "",
-        ability: "?"
+        ability: [ "agi", "cha" ]
       },
       {
         name: "escalade",
@@ -8557,22 +8623,22 @@ const SWData = {
       {
         name: "custom1",
         label: "",
-        ability: "?"
+        ability: [ "agi", "con", "for", "per", "cha", "int", "vol" ]
       },
       {
         name: "custom2",
         label: "",
-        ability: "?"
+        ability: [ "agi", "con", "for", "per", "cha", "int", "vol" ]
       },
       {
         name: "custom3",
         label: "",
-        ability: "?"
+        ability: [ "agi", "con", "for", "per", "cha", "int", "vol" ]
       },
       {
         name: "custom4",
         label: "",
-        ability: "?"
+        ability: [ "agi", "con", "for", "per", "cha", "int", "vol" ]
       },
     ]
   },
@@ -11424,7 +11490,7 @@ function allRollsBuff(values, type) {
  */
 SWData.PC.STATS.forEach(stat => {
   const short = shorten(stat);
-  
+
   // Set the stat die rolls
   on(`change:${short}_sup change:condition_affaibli`, function(eventInfo) {
     getAttrs([ `${short}_sup`, "condition_affaibli" ], function(values) {
@@ -11518,7 +11584,8 @@ SWData.PC.STATS.forEach(stat => {
     getAttrs([ 
       "character_name", "use_skills",
       ...abilityRolls,
-      ...skillMods
+      ...skillMods,
+      ...nameSeq(4, "custom#_skillname")
     ], function(values) {
       const charName = strval(values.character_name);
       const actions = [ `%{${charName}|${short}-btn}` ];
@@ -11531,12 +11598,22 @@ SWData.PC.STATS.forEach(stat => {
       const skills = [];
       if (boolval(values.use_skills)) {
         SWData.PC.SKILLS
-        .filter(skill => skill.ability === short)
+        .filter(skill => {
+          if (Array.isArray(skill.ability))
+            return skill.ability.includes(short);
+          else
+            return skill.ability === short;
+        })
         .filter(skill => intval(values[`${ skill.name }_bonus`]) > 0)
         .forEach(skill => {
           const skillBonus = ` (+${ intval(values[`${ skill.name }_bonus`]) })`;
+          if (skill.name.startsWith("custom"))
+            skill.label = strval(values[skill.name + "_skillname"]);
           skills.push(SWData.emojis.skills + getSkillName(skill) + skillBonus);
-          actions.push(`%{${charName}|skill-${ skill.name }}`);
+          if (Array.isArray(skill.ability))
+            actions.push(`%{${charName}|skill-${ skill.name }-${short}}`);
+          else
+            actions.push(`%{${charName}|skill-${ skill.name }}`);
         });
       }
       if (rolls.length === 0 && skills.length === 0) {
@@ -13920,11 +13997,17 @@ on("change:repeating_rolls:roll-nom change:repeating_npcrolls:npcroll-name", fun
 
 /**
  * Build a roll query for ability selection
+ * @param {Array} ability - list of abilities
  * @returns {string}
  */
-function statRollQuery() {
+function statRollQuery(ability) {
   return "?{Carac ?|" 
   + SWData.PC.STATS
+  .filter(stat => {
+    if (Array.isArray(ability) && !ability.includes(shorten(stat)))
+      return false;
+    return true;
+  })
   .map(stat => `${ upperShort(stat) },@{${ shorten(stat) }_test}`)
   .join("|")
   + "}";
@@ -14092,15 +14175,24 @@ function getSkillName(skill) {
  * On skill 'button' click
  */
 SWData.PC.SKILLS.forEach(skill => {
-  on(`clicked:skill-${skill.name}`, function () {
+  let events = `clicked:skill-${skill.name}`;
+  if (Array.isArray(skill.ability))
+    events += " " + eventList("clicked", skill.ability.map(ability => `skill-${skill.name}-${ability}`), " ");
+  on(events, function (eventInfo) {
+    const useCarac = strval(eventInfo.triggerName.split("-")[2]);
     let skillName = getSkillName(skill);
     const statsAttrs = SWData.PC.STATS.map(stat => shorten(stat));
     const skillAttrs = [ "carac", "bonus", "def" ].map(a => `${skill.name}_${a}`);
     const customNames = nameSeq(4, "custom#_skillname");
+    const customCaracs = nameSeq(4, "custom#").reduce((all, custom) => {
+      all.push(...SWData.PC.STATS.map(stat => `${custom}_${ shorten(stat) }`));
+      return all;
+    }, []);
     getAttrs([
       ...skillAttrs,
       ...statsAttrs,
       ...customNames,
+      ...customCaracs,
       "condition_affaibli",
       "pc", "cfg_shadow", 
       "cfg_1skill_roll", "cfg_d20roll", "d20roll",
@@ -14111,15 +14203,27 @@ SWData.PC.SKILLS.forEach(skill => {
     ], function (values) {
       const [ carac, bonus, def ] = Object.keys(values);
       let caracBonus = strval(values[carac]);
+      
+      if (skill.name.startsWith("custom")) {
+        skillName = capitalize(strval(values[`${ skill.name }_skillname`]));
+        skill.ability = customCaracs.reduce((result, custom) => {
+          const [ custName, custCarac ] = custom.split("_");
+          if (skill.name === custName && boolval(values[custom]))
+            result.push(custCarac);
+          return result;
+        }, []);
+        if (skill.ability.length === 1)
+          caracBonus = "@{" + skill.ability[0] + "}";
+      }
+
+      if (useCarac !== "")
+        caracBonus = "@{" + useCarac + "}";
       let short = "";
       if (caracBonus !== "0" && caracBonus !== "?")
         short = caracBonus.slice(2,5).toUpperCase() + " + ";
       const skillBonus = intval(values[bonus]);
       const skillDef = strval(values[def]);
       const skillTotal = ` *(+${ intval(values[caracBonus.slice(2, 5)]) + skillBonus })*`;
-
-      if (skill.name.startsWith("custom"))
-        skillName = capitalize(strval(values[`${ skill.name }_skillname`]));
 
       let rollCmd = "1d20";
       
@@ -14148,7 +14252,7 @@ SWData.PC.SKILLS.forEach(skill => {
 
       let carTip = "";
       if (caracBonus === "?") {
-        caracBonus = statRollQuery();
+        caracBonus = statRollQuery(skill.ability);
       } else {
         carTip = `[${ caracBonus.substring(2,2+3).toUpperCase() }]`;
       }
@@ -14185,7 +14289,7 @@ SWData.PC.SKILLS.forEach(skill => {
 
       // Restore default carac & clear help rolls
       const updates = new Map();
-      if (caracBonus !== skillDef)
+      if (!skill.name.startsWith("custom") && caracBonus !== skillDef)
         updates.set(`${skill.name}_carac`, skillDef);
       if (helpAllRolls !== "")
         updates.set("help_roll_all", "");
@@ -15644,6 +15748,25 @@ function rebuildCustom() {
 on("change:custom", rebuildCustom);
 
 /**
+ * On changing the stats associated with custom skills
+ */
+nameSeq(4, "custom#").forEach(custom => {
+  const custSkillStats = SWData.PC.STATS.map(stat => `${custom}_${ shorten(stat) }`);
+  const events = eventList("change", custSkillStats, " ");
+  on(events, function() {
+    getAttrs(custSkillStats, function(values) {
+      const stats = custSkillStats.filter(custStat => boolval(values[custStat]));
+      let useStat = "";
+      if (stats.length === 1)
+        useStat = "@{" + stats[0].split("_")[1] + "}";
+      else
+        useStat = "?";
+      setAttrs({ [custom + "_carac"]: useStat });
+    });
+  });
+});
+
+/**
  * Return an updated Map of attributes
  * @param {object} charData - character data
  * @param {Map} attributes - Map of attributes to update
@@ -16161,7 +16284,7 @@ on("clicked:skills_menu-btn", function () {
     const charName = strval(values.character_name);
     const skillSelect = SWData.PC.SKILLS.map((skill, ix) => {
       const skillLabel = getSkillName(skill);
-      const skillStat = skill.ability === "?" ? "" : " " + skill.ability.toUpperCase();
+      const skillStat = Array.isArray(skill.ability) ? "" : " " + skill.ability.toUpperCase();
       const skillBonus = intval(values[`${ skill.name }_bonus`]);
       const skillMod = skillBonus > 0 ? ` (+${skillBonus})` : "";
       return `${skillLabel}${skillStat}${skillMod},${ix + 1}`;
