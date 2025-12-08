@@ -104,6 +104,8 @@ _Exemple :_
 
 Cette section permet de définir les noms de 1 à 4 compétences personnalisées qui s'ajoutent à la liste standard de 22 compétences définies dans l'_Atlas d'Osgild_.
 
+Une ou plusieurs caractéristiques associées peuvent être cochées pour chaque compétence personnalisées. Le jet de compétence effectué demandera la caractéristique à utiliser si nécessaire.
+
 ## Notifications
 
 Pour chaque type de notification, vous pouvez choisir entre aucun affichage, un affichage pour tous les joueurs, ou un affichage privé pour le joueur et le MJ.
