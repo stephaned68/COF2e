@@ -806,11 +806,12 @@
               <div class="block-title">Sens</div>
               <div class="bordered">
                 <div class="d-flex">
-                  &nbsp;<input type="text" name="attr_sens" list="senses-list" title="@{sens}" placeholder="Sens spéciaux">
+                  <input type="text" name="attr_sens" list="senses-list" title="@{sens}" placeholder="Sens spéciaux">
                   <datalist id="senses-list">
                     <option>Lumière des étoiles</option>
-                    <option title="portée 30 m">Vision dans le noir</option>
+                    <option>Vision dans le noir</option>
                   </datalist>
+                  &nbsp;<input type="number" class="two-digits" name="attr_sens_portee" title="@{sens_portee}">&nbsp;m
                 </div>
               </div>
             </div>
@@ -10980,6 +10981,23 @@ on("change:peuple", function(eventInfo) {
         updates.set(abilityInfo({ path, rank: ix + 1 }).rankName, capitalize(peopleInfo.abilities[ix]));
     });
 
+    const sens = ({
+      "demiorc": "Vision dans le noir",
+      "demieorc": "Vision dans le noir",
+      "demieorque": "Vision dans le noir",
+      "elfehaut": "Lumière des étoiles",
+      "elfehaute": "Lumière des étoiles",
+      "elfesylvain": "Lumière des étoiles",
+      "elfesylvaine": "Lumière des étoiles",
+      "elfesylvestre": "Lumière des étoiles",
+      "elfedesbois": "Lumière des étoiles",
+      "gnome": "Vision dans le noir",
+      "nain": "Vision dans le noir",
+      "naine": "Vision dans le noir"
+    })[people.replaceAll("-", "").replaceAll(" ", "").trim().toLowerCase()];
+    if (sens)
+      updates.set("sens", sens);
+
     setAttrs(Object.fromEntries(updates));
   });
 });
@@ -11753,6 +11771,31 @@ on("change:vitesse", function () {
     setAttrs({ vitesse_pas, vitesse_cases });
   });
 });
+
+/**
+ * On special sense change, set range based on species
+ */
+on("change:sens", function () {
+  getAttrs([ "sens", "sens_portee", "peuple" ], function(values) {
+    if (numval(values.sens_portee) !== 0)
+      return;
+    let sens_portee = 0;
+    switch (strval(values.peuple.toLowerCase()) + "," + strval(values.sens).toLowerCase()) {
+      case "demi-orc,vision dans le noir":
+      case "demie-orc,vision dans le noir":
+      case "demie-orque,vision dans le noir":
+      case "nain,vision dans le noir":
+      case "naine,vision dans le noir":
+        sens_portee = 30;
+        break;
+      case "gnome,vision dans le noir":
+        sens_portee = 10;
+        break;
+    }
+    if (sens_portee > 0)
+      setAttrs({ sens_portee });
+  })
+})
 
 /**
  * Return object for wounds conditions
