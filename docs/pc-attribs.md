@@ -2,6 +2,7 @@
 
 - Vous pouvez indiquer pour votre PJ un nom "connu" mais aussi son vrai nom dans le champ Alias. En cliquant sur le label Alias, ce dernier vient remplacer son nom connu. Un message de notification s'affiche dans le chat Roll20.
 - Lorsque vous sélectionnez une famille, une liste des profils correspondants est disponible. Si un profil est indiqué, vous devez l'effacer pour voir de nouveau la liste. Vous pouvez indiquer votre profile primaire suivi de / et d'un second profil si votre PJ dispose d'un profil hybride.
+- Lorsque vous spécifiez un peuple, la fiche vérifie si ce peuple dispose d'un sens spécial (_Lumière des étoiles_ ou _Vision dans le noir_) et le charge automatiquement ainsi que sa portée.
 
 ## Persomancien
 
@@ -68,7 +69,7 @@ Cette section permet d'indiquer la vitesse de déplacement et les sens spéciaux
 
 La vitesse de base est exprimée en mètres par round, et la fiche calcule automatiquement l'équivalent en nombre de cases et en pas (pieds). Les approximations adoptées sont de 1 case = 1,5 m = 5 pas (échelles les plus courantes). Il n'est pas possible pour la fiche de retrouver l'échelle de la carte actuellement affichée.
 
-Les sens spéciaux proposés par défaut sont _Lumière des étoiles_ et _Vision dans le noir_ mais il est possible de saisir autre chose.
+Les sens spéciaux proposés par défaut sont _Lumière des étoiles_ et _Vision dans le noir_ mais il est possible de saisir autre chose. La portée du sens _Vision dans le noir_ est automatiquement chargée en fonction du peuple.
 
 # Vigueur
 
