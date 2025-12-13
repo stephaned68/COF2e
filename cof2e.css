@@ -501,8 +501,12 @@ input[value="npc"] ~ button[name="roll_checkup"] {
 }
 
 input[value="0"].pc-skills-btn ~ button.pc-skills-btn,
-input[value=""].custom-skill ~ div.custom-skill {
+input[value=""].custom-skill + div.custom-skill {
   display: none;
+}
+
+input:not([value=""]).custom-skill + div.custom-skill.custom-skill-top {
+  border-top: 1px solid grey;
 }
 
 /* Hide all tabs */

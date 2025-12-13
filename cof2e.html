@@ -308,7 +308,7 @@
           </button>
         </div>
         <div class="d-flex d-flex-middle">
-          <input type="text" name="attr_alias" title="@{alias} Alias du personnage" value="">
+          <input type="text" name="attr_alias" title="@{alias} Alias (vrai nom) du personnage&#10;Cliquer sur Alias pour remplacer le nom 'connu' du personnage par son alias" value="">
         </div>
       </div>
       
@@ -854,7 +854,7 @@
                 <button class="hidden" type="action" name="act_recovery_fast-btn"></button>
                 <button class="hidden" type="action" name="act_recovery_full-btn"></button>
                 <button class="flat-btn img-btn" type="action" name="act_drecup-btn">
-                  <span>DR</span>
+                  <span title="Récupération rapide / complète">DR</span>
                 </button>
                 <select name="attr_drecup" class="select-xs" title="@{drecup} Type de DR">
                   <option value="6">d6</option>
@@ -4152,6 +4152,76 @@
                   <input type="number" class="two-digits" name="attr_empathie_bonus" value="0">
                 </div>
               </div>
+
+              <input type="hidden" class="custom-skill" name="attr_custom1_skillname" value="">
+              <div class="custom-skill custom-skill-top d-flex d-flex-between">
+                <div>
+                  <input type="checkbox" name="attr_custom1_prof" value="1">
+                  <button type="action" class="hidden" name="act_skill-custom1-agi" />
+                  <button type="action" class="hidden" name="act_skill-custom1-con" />
+                  <button type="action" class="hidden" name="act_skill-custom1-for" />
+                  <button type="action" class="hidden" name="act_skill-custom1-per" />
+                  <button type="action" class="hidden" name="act_skill-custom1-cha" />
+                  <button type="action" class="hidden" name="act_skill-custom1-int" />
+                  <button type="action" class="hidden" name="act_skill-custom1-vol" />
+                  <button type="action" class="flat-btn img-btn" name="act_skill-custom1">
+                    <span class="img-btn"></span><span name="attr_custom1_skillname"></span>
+                  </button>
+                </div>
+                <div>
+                  <input type="hidden" name="attr_custom1_def" value="?">
+                  <select class="select-md" name="attr_custom1_carac" title="@{custom1_carac} Bonus de caractéristique">
+                    <option value="0">-</option>
+                    <option value="@{agi}">AGI</option>
+                    <option value="@{con}">CON</option>
+                    <option value="@{for}">FOR</option>
+                    <option value="@{per}">PER</option>
+                    <option value="@{cha}">CHA</option>
+                    <option value="@{int}">INT</option>
+                    <option value="@{vol}">VOL</option>
+                    <option value="?" selected>Demander</option>
+                  </select>
+                  <span>+</span>
+                  <input type="number" class="two-digits" name="attr_custom1_bonus" value="0">
+                </div>
+              </div>
+
+              <input type="hidden" class="custom-skill" name="attr_custom3_skillname" value="">
+              <div class="custom-skill d-flex d-flex-between">
+                <div>
+                  <input type="checkbox" name="attr_custom3_prof" value="1">
+                  <button type="action" class="hidden" name="act_skill-custom3-agi" />
+                  <button type="action" class="hidden" name="act_skill-custom3-con" />
+                  <button type="action" class="hidden" name="act_skill-custom3-for" />
+                  <button type="action" class="hidden" name="act_skill-custom3-per" />
+                  <button type="action" class="hidden" name="act_skill-custom3-cha" />
+                  <button type="action" class="hidden" name="act_skill-custom3-int" />
+                  <button type="action" class="hidden" name="act_skill-custom3-vol" />
+                  <button type="action" class="flat-btn img-btn" name="act_skill-custom3">
+                    <span class="img-btn"></span><span name="attr_custom3_skillname"></span>
+                  </button>
+                </div>
+                <div>
+                  <input type="hidden" name="attr_custom3_def" value="?">
+                  <select class="select-md" name="attr_custom3_carac" title="@{custom3_carac} Bonus de caractéristique">
+                    <option value="0">-</option>
+                    <option value="@{agi}">AGI</option>
+                    <option value="@{con}">CON</option>
+                    <option value="@{for}">FOR</option>
+                    <option value="@{per}">PER</option>
+                    <option value="@{cha}">CHA</option>
+                    <option value="@{int}">INT</option>
+                    <option value="@{vol}">VOL</option>
+                    <option value="?" selected>Demander</option>
+                  </select>
+                  <span>+</span>
+                  <input type="number" class="two-digits" name="attr_custom3_bonus" value="0">
+                </div>
+              </div>
+              
+            </div>
+
+            <div class="sheet-col">
               
               <div class="d-flex d-flex-between">
                 <div>
@@ -4204,10 +4274,6 @@
                   <input type="number" class="two-digits" name="attr_medecine_bonus" value="0">
                 </div>
               </div>
-              
-            </div>
-
-            <div class="sheet-col">
 
               <div class="d-flex d-flex-between">
                 <div>
@@ -4443,41 +4509,8 @@
                 </div>
               </div>
 
-              <input type="hidden" class="custom-skill" name="attr_custom1_skillname" value="">
-              <div class="custom-skill d-flex d-flex-between">
-                <div>
-                  <input type="checkbox" name="attr_custom1_prof" value="1">
-                  <button type="action" class="hidden" name="act_skill-custom1-agi" />
-                  <button type="action" class="hidden" name="act_skill-custom1-con" />
-                  <button type="action" class="hidden" name="act_skill-custom1-for" />
-                  <button type="action" class="hidden" name="act_skill-custom1-per" />
-                  <button type="action" class="hidden" name="act_skill-custom1-cha" />
-                  <button type="action" class="hidden" name="act_skill-custom1-int" />
-                  <button type="action" class="hidden" name="act_skill-custom1-vol" />
-                  <button type="action" class="flat-btn img-btn" name="act_skill-custom1">
-                    <span class="img-btn"></span><span name="attr_custom1_skillname"></span>
-                  </button>
-                </div>
-                <div>
-                  <input type="hidden" name="attr_custom1_def" value="?">
-                  <select class="select-md" name="attr_custom1_carac" title="@{custom1_carac} Bonus de caractéristique">
-                    <option value="0">-</option>
-                    <option value="@{agi}">AGI</option>
-                    <option value="@{con}">CON</option>
-                    <option value="@{for}">FOR</option>
-                    <option value="@{per}">PER</option>
-                    <option value="@{cha}">CHA</option>
-                    <option value="@{int}">INT</option>
-                    <option value="@{vol}">VOL</option>
-                    <option value="?" selected>Demander</option>
-                  </select>
-                  <span>+</span>
-                  <input type="number" class="two-digits" name="attr_custom1_bonus" value="0">
-                </div>
-              </div>
-
               <input type="hidden" class="custom-skill" name="attr_custom2_skillname" value="">
-              <div class="custom-skill d-flex d-flex-between">
+              <div class="custom-skill custom-skill-top d-flex d-flex-between">
                 <div>
                   <input type="checkbox" name="attr_custom2_prof" value="1">
                   <button type="action" class="hidden" name="act_skill-custom2-agi" />
@@ -4506,39 +4539,6 @@
                   </select>
                   <span>+</span>
                   <input type="number" class="two-digits" name="attr_custom2_bonus" value="0">
-                </div>
-              </div>
-              
-              <input type="hidden" class="custom-skill" name="attr_custom3_skillname" value="">
-              <div class="custom-skill d-flex d-flex-between">
-                <div>
-                  <input type="checkbox" name="attr_custom3_prof" value="1">
-                  <button type="action" class="hidden" name="act_skill-custom3-agi" />
-                  <button type="action" class="hidden" name="act_skill-custom3-con" />
-                  <button type="action" class="hidden" name="act_skill-custom3-for" />
-                  <button type="action" class="hidden" name="act_skill-custom3-per" />
-                  <button type="action" class="hidden" name="act_skill-custom3-cha" />
-                  <button type="action" class="hidden" name="act_skill-custom3-int" />
-                  <button type="action" class="hidden" name="act_skill-custom3-vol" />
-                  <button type="action" class="flat-btn img-btn" name="act_skill-custom3">
-                    <span class="img-btn"></span><span name="attr_custom3_skillname"></span>
-                  </button>
-                </div>
-                <div>
-                  <input type="hidden" name="attr_custom3_def" value="?">
-                  <select class="select-md" name="attr_custom3_carac" title="@{custom3_carac} Bonus de caractéristique">
-                    <option value="0">-</option>
-                    <option value="@{agi}">AGI</option>
-                    <option value="@{con}">CON</option>
-                    <option value="@{for}">FOR</option>
-                    <option value="@{per}">PER</option>
-                    <option value="@{cha}">CHA</option>
-                    <option value="@{int}">INT</option>
-                    <option value="@{vol}">VOL</option>
-                    <option value="?" selected>Demander</option>
-                  </select>
-                  <span>+</span>
-                  <input type="number" class="two-digits" name="attr_custom3_bonus" value="0">
                 </div>
               </div>
               
@@ -5383,7 +5383,7 @@
               </summary>
               <ol>
                 <li>
-                  <input type="text" name="attr_custom1_skillname" title="@{custom1_skillname}" value="">
+                  <input type="text" name="attr_custom1_skillname" title="@{custom1_skillname}" maxlength="30" value="">
                   <br>Carac(s)
                   &nbsp;<input type="checkbox" name="attr_custom1_agi" title="@{custom1_agi} AGI" value="1">
                   &nbsp;<input type="checkbox" name="attr_custom1_con" title="@{custom1_con} CON" value="1">
@@ -5394,7 +5394,7 @@
                   &nbsp;<input type="checkbox" name="attr_custom1_vol" title="@{custom1_vol} VOL" value="1">
                 </li>
                 <li>
-                  <input type="text" name="attr_custom2_skillname" title="@{custom2_skillname}" value="">
+                  <input type="text" name="attr_custom2_skillname" title="@{custom2_skillname}" maxlength="30" value="">
                   <br>Carac(s)
                   &nbsp;<input type="checkbox" name="attr_custom2_agi" title="@{custom2_agi} AGI" value="1">
                   &nbsp;<input type="checkbox" name="attr_custom2_con" title="@{custom2_con} CON" value="1">
@@ -5405,7 +5405,7 @@
                   &nbsp;<input type="checkbox" name="attr_custom2_vol" title="@{custom2_vol} VOL" value="1">
                 </li>
                 <li>
-                  <input type="text" name="attr_custom3_skillname" title="@{custom3_skillname}" value="">
+                  <input type="text" name="attr_custom3_skillname" title="@{custom3_skillname}" maxlength="30" value="">
                   <br>Carac(s)
                   &nbsp;<input type="checkbox" name="attr_custom3_agi" title="@{custom3_agi} AGI" value="1">
                   &nbsp;<input type="checkbox" name="attr_custom3_con" title="@{custom3_con} CON" value="1">
@@ -5416,7 +5416,7 @@
                   &nbsp;<input type="checkbox" name="attr_custom3_vol" title="@{custom3_vol} VOL" value="1">
                 </li>
                 <li>
-                  <input type="text" name="attr_custom4_skillname" title="@{custom4_skillname}" value="">
+                  <input type="text" name="attr_custom4_skillname" title="@{custom4_skillname}" maxlength="30" value="">
                   <br>Carac(s)
                   &nbsp;<input type="checkbox" name="attr_custom4_agi" title="@{custom4_agi} AGI" value="1">
                   &nbsp;<input type="checkbox" name="attr_custom4_con" title="@{custom4_con} CON" value="1">
@@ -5427,6 +5427,13 @@
                   &nbsp;<input type="checkbox" name="attr_custom4_vol" title="@{custom4_vol} VOL" value="1">
                 </li>
               </ol>
+            </details>
+
+            <details>
+              <summary>
+                <h4>Pense-bête</h4>
+              </summary>
+              <textarea class="medium" name="attr_pense_bete"></textarea>
             </details>
 
           </div>
@@ -5824,6 +5831,12 @@
               <div class="d-flex">
                 <input type="checkbox" name="attr_token_tint_on" title="@{token_tint_on}" value="1">
                 &nbsp;<input type="text" name="attr_token_tint" title="@{token_tint}" value="ED2939">
+              </div>
+            </div>
+            <div class="pc-configs m2">
+              <div>Pense-bête (Tooltip)</div>
+              <div class="d-flex">
+                <input type="checkbox" name="attr_token_tooltip_on" title="@{token_tooltip_on}" value="1">
               </div>
             </div>
             <div class="pc-configs m2">
@@ -8515,111 +8528,133 @@ const SWData = {
         name: "acrobaties",
         label: "",
         ability: "agi",
+        emoji: "&#129336;"
       },
       {
         name: "artisanat",
         label: "",
-        ability: "int"
+        ability: "int",
+        emoji: "&#128296;"
       },
       {
         name: "athletisme",
         label: "Athlétisme",
-        ability: [ "agi", "con", "for" ]
+        ability: [ "agi", "con", "for" ],
+        emoji: "&#127939;"
       },
       {
         name: "commerce",
         label: "",
-        ability: "cha"
+        ability: "cha",
+        emoji: "&#128176;"
       },
       {
         name: "connaissance",
         label: "",
-        ability: "int"
+        ability: "int",
+        emoji: "&#129504;"
       },
       {
         name: "discretion",
         label: "Discrétion",
-        ability: "agi"
+        ability: "agi",
+        emoji: "&#128100;"
       },
       {
         name: "divertissement",
         label: "",
-        ability: "cha"
+        ability: "cha",
+        emoji: "&#129337;"
       },
       {
         name: "equitation",
         label: "",
-        ability: [ "agi", "cha" ]
+        ability: [ "agi", "cha" ],
+        emoji: "&#128014;"
       },
       {
         name: "escalade",
         label: "",
-        ability: "agi"
+        ability: "agi",
+        emoji: "&#129495;"
       },
       {
         name: "effraction",
         label: "",
-        ability: "agi"
+        ability: "agi",
+        emoji: "&#128275;"
       },
       {
         name: "empathie",
         label: "",
-        ability: "per"
+        ability: "per",
+        emoji: "&#128149;"
       },
       {
         name: "intimidation",
         label: "",
-        ability: "cha"
+        ability: "cha",
+        emoji: "&#128162;"
       },
       {
         name: "medecine",
         label: "Médecine",
-        ability: "per"
+        ability: "per",
+        emoji: "&#128150;"
       },
       {
         name: "natation",
         label: "",
-        ability: "con"
+        ability: "con",
+        emoji: "&#127754;"
       },
       {
         name: "occultisme",
         label: "",
-        ability: "int"
+        ability: "int",
+        emoji: "&#128302;"
       },
       {
         name: "persuasion",
         label: "",
-        ability: "cha"
+        ability: "cha",
+        emoji: "&#128483;"
       },
       {
         name: "religion",
         label: "",
-        ability: "int"
+        ability: "int",
+        emoji: "&#128327;"
       },
       {
         name: "renseignement",
         label: "",
-        ability: "cha"
+        ability: "cha",
+        emoji: "&#128269;"
       },
       {
         name: "sciences",
         label: "",
-        ability: "int"
+        ability: "int",
+        emoji: "&#129514;"
       },
       {
         name: "tromperie",
         label: "",
-        ability: "cha"
+        ability: "cha",
+        emoji: "&#127917;"
       },
       {
         name: "survie",
         label: "",
-        ability: "per"
+        ability: "per",
+        emoji: "&#128293;"
       },
       {
         name: "vigilance",
         label: "",
-        ability: "per"
+        ability: "per",
+        emoji: "&#128065;"
       },
       {
         name: "custom1",
@@ -10310,9 +10345,9 @@ function hasMODScript(values) {
  * @returns {string}
  */
 function tokenMod(charName, props = {}) {
-  const tokenmod = `!token-mod --current-page --ignore-selected --ids @{${charName}|character_id}`;
+  const tokenmod = `!token-mod {{ --current-page --ignore-selected --ids @{${charName}|character_id}`;
   const tokenProps = Object.keys(props).map(prop => `${prop}|${props[prop]}`).join(" ");
-  return tokenmod + (tokenProps !== "" ? " --set " : "") + tokenProps;
+  return tokenmod + (tokenProps !== "" ? " --set " : "") + tokenProps + " }}";
 }
 
 /**
@@ -11468,6 +11503,8 @@ function addLuckButton(values) {
 function addHelpButton(values) {
   if (!boolval(values.chatsetattr))
     return "";
+  if (strval(values.sheet_type) !== SWData.SHEET_TYPE.PC)
+    return "";
   const charName = strval(values.character_name);
   const color = strval(values.couleur_pj);
   return `[Aider](~${charName}|help_other-btn${menuButton(color, { size: "1.3em" }, { class: "chat-button" }, { title: "Cliquer le token du destinataire de l'aide" })})`;
@@ -11569,10 +11606,13 @@ SWData.PC.STATS.forEach(stat => {
       const shield_malus = (short === "agi" && boolval(values.cfg_bouclier_malus)) ? ` - ${bouclier_malus}[Malus bouclier]` : "";
       const helmet_malus = short === "per" ? helmetMalus(values) : "";
 
-      const defAction = intval(values.def_action);
-      const text = defAction !== 0 ? `+ [[${defAction}]] Défense ${ defAction === 5 ? "totale" : "partielle" }` : "";
-      const allRolls = allRollsBuff(values, "caracs");
       const helpAllRolls = strval(values.help_roll_all);
+      const defAction = intval(values.def_action);
+      const text = ( defAction !== 0
+      ? `+ [[${defAction}]] Défense ${ defAction === 5 ? "totale" : "partielle" }`
+      : "" )
+      + helpAllRolls !== "" ? "\n" + helpAllRolls : "";
+      const allRolls = allRollsBuff(values, "caracs");
       const carac = `[[${roll}[Dé] + @{${short}${ isNPC ? "" : "_test" }}[Bonus ${short.toUpperCase()}]${allRolls}${helpAllRolls}${shadow.malus}${fear}${armor_malus}${shield_malus}${helmet_malus} ]] `;
 
       const chatMsg = rollTemplate({
@@ -11603,7 +11643,8 @@ SWData.PC.STATS.forEach(stat => {
       "character_name", "use_skills",
       ...abilityRolls,
       ...skillMods,
-      ...nameSeq(4, "custom#_skillname")
+      ...nameSeq(4, "custom#_skillname"),
+      ...nameSeq(4, `custom#_${short}`),
     ], function(values) {
       const charName = strval(values.character_name);
       const actions = [ `%{${charName}|${short}-btn}` ];
@@ -11625,9 +11666,15 @@ SWData.PC.STATS.forEach(stat => {
         .filter(skill => intval(values[`${ skill.name }_bonus`]) > 0)
         .forEach(skill => {
           const skillBonus = ` (+${ intval(values[`${ skill.name }_bonus`]) })`;
-          if (skill.name.startsWith("custom"))
+          if (skill.name.startsWith("custom")) {
+            if (!boolval(values[skill.name + "_" + short]))
+              return;
             skill.label = strval(values[skill.name + "_skillname"]);
-          skills.push(SWData.emojis.skills + getSkillName(skill) + skillBonus);
+            if (skill.label.trim() === "")
+              return;
+          }
+          const emoji = skill.emoji || SWData.emojis.skills;
+          skills.push(emoji + getSkillName(skill) + skillBonus);
           if (Array.isArray(skill.ability))
             actions.push(`%{${charName}|skill-${ skill.name }-${short}}`);
           else
@@ -14326,7 +14373,8 @@ SWData.PC.SKILLS.forEach(skill => {
         rsub: short + skillName + skillTotal,
         roll: rollCmd,
         broll,
-        chance: addLuckButton(values)
+        chance: addLuckButton(values),
+        text: helpAllRolls
       }, { tags: allTags });
       sendChatMsg(chatMsg);
 
@@ -15809,6 +15857,21 @@ nameSeq(4, "custom#").forEach(custom => {
   });
 });
 
+on("change:pense_bete change:tokenmod change:token_tooltip_on", function() {
+  getAttrs([ "character_name", "pense_bete", "tokenmod", "token_tooltip_on" ], function(values) {
+    const tokenmod = boolval(values.tokenmod);
+    if (!tokenmod)
+      return;
+    const charName = strval(values.character_name).trim();
+    const reminder = strval(values.pense_bete).trim().split("\n")
+    .map((r, ix) => `${ix + 1}) ${r}`).join("; ");
+    const tokenTip = boolval(values.token_tooltip_on);
+    if (!tokenTip || charName === "" || reminder === "")
+      return;
+    sendChatCmd(tokenMod(strval(values.character_name), { tooltip: "'" + reminder + "'" }));
+  });
+});
+
 /**
  * Return an updated Map of attributes
  * @param {object} charData - character data
@@ -16071,7 +16134,8 @@ on("clicked:caract_select-btn", function () {
     });
     ask([ "Carac. ?", ...statSelect ], (selected) => {
       const stat = shorten(SWData.PC.STATS[selected -1]);
-      sendChatCmd(`%{${charName}|${stat}-btn}`);
+      const select = isNPC ? "" : "_select";
+      sendChatCmd(`%{${charName}|${stat}${select}-btn}`);
     });
   });
 });
@@ -16088,9 +16152,10 @@ on("clicked:caract_menu-btn", function () {
     const color = strval(values.couleur_pj);
     const chatMsg = SWData.PC.STATS.map(stat => {
       const short = shorten(stat);
+      const select = isNPC ? "" : "_select";
       const test = isNPC ? "" : "_test";
       const button = menuButton(color, {}, { width: "3.5rem", ["text-align"]: "center" });
-      return `${capitalize(stat)}=[${short.toUpperCase()} (${ values[`${short}${test}`] })](~${charName}|${short}-btn${button})`;
+      return `${capitalize(stat)}=[${short.toUpperCase()} (${ values[`${short}${test}`] })](~${charName}|${short}${select}-btn${button})`;
     });
     sendChatMsg([
       `title=${charName}`,
@@ -17370,6 +17435,20 @@ SWData.COMPANIONS.forEach(attr => {
     getAttrs([ "compagnon", "pnjatk", `comp_${attr}` ], function(values) {
       setCompanion(values);
     });
+  });
+});
+
+/**
+ * On inserting PDF text statblock to import - clean it
+ */
+on("change:statblock", function() {
+  getAttrs([ "statblock" ], function(values) {
+    let text = strval(values.statblock);
+    if (text === "")
+      return;
+    const stripped = [];
+    text.split("\n").forEach(l => stripped.push(stripNonPrintable(l)));
+    setAttrs({ statblock: stripped.join("\n")});
   });
 });
 
