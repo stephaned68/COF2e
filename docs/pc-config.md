@@ -184,7 +184,7 @@ Plusieurs outils sont disponibles dans la partie supérieure droite de cet ongle
 
 Une case permet d'activer le mode `debug`. Une fois cochée, un grand nombre d'événements se produisant dans la fiche inscrivent des informations techniques de débogage dans la console de développement du navigateur.
 
-Une première icone _Outils_ permet de copier les options de configuration par défaut depuis une fiche de personnage et nommée `PJBase`. Après avoir créé et configuré cette fiche, le MJ de la partie doit également cliquer sur cette icone pour que tous les attributs traités soient créés avec une valeur dans l'onglet _Attributes & Abilities_, sans quoi la copie à partir d'autres fiches échouera.
+Une première icone _Outils_ permet de copier les options de configuration par défaut depuis une fiche de personnage nommée `PJBase`. Après avoir créé et configuré cette fiche, le MJ de la partie doit également cliquer sur cette icone pour que tous les attributs traités soient créés avec une valeur dans l'onglet _Attributes & Abilities_, sans quoi la copie à partir d'autres fiches échouera.
 
 Une deuxième icone _Outils_ permet de re-calculer un certain nombre d'attributs dérivés dans la fiche. Ce bouton n'est utile qu'en cas de bug, et peut éventuellement corriger des comportements incorrects de la fiche. 
 

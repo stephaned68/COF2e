@@ -73,8 +73,17 @@ Les macros à configurer sont les suivantes :
 - `%{selected|npc_menus-btn}` : menu de tous les autres sous-menus possibles
 - `%{selected|caract_menu-btn}` : menu pour les jets de caractéristiques
 - `%{selected|caract_select-btn}` : popup Roll20 de sélection d'un jet de caractéristique
-- `%{selected|npcatks_menu-btn}` : popup Roll20 de sélection d'un jet d'attaque (ou jet si le PNJ a une seule attaque)
+- `%{selected|npcatks_menu-btn}` : popup Roll20 de sélection d'un jet d'attaque (ou jet direct si le PNJ a une seule attaque)
 - `%{selected|npcrolls_menu-btn}` : menu des jets de capacités
+
+
+## Autres fonctions
+
+Plusieurs outils sont disponibles dans la partie supérieure droite de cet onglet.
+
+Une case permet d'activer le mode `debug`. Une fois cochée, un grand nombre d'événements se produisant dans la fiche inscrivent des informations techniques de débogage dans la console de développement du navigateur.
+
+Une icone _Outils_ permet de copier les options de configuration et de script par défaut depuis une fiche de personnage nommée `PNJBase`. Après avoir créé et configuré cette fiche, le MJ de la partie doit également cliquer sur cette icone pour que tous les attributs traités soient créés avec une valeur dans l'onglet _Attributes & Abilities_, sans quoi la copie à partir d'autres fiches échouera.
 
 ---
 
