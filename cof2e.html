@@ -7038,6 +7038,13 @@
           </div>
 
           <div class="sheet-col">
+            
+            <div class="float-right">
+              <input type="checkbox" name="attr_debug_mode" value="1" title="Mode Debug">&nbsp;
+              <button type="action" class="flat-btn img-btn" name="act_def_config-btn" title="Importer la configuration&#10;Valider la configuration par défaut (fiche PNJBase)">
+                <span class="img-btn">x</span>
+              </button>
+            </div>
 
             <h4>Compétences</h4>
             <textarea class="large" name="attr_pnj_comp" title="@{pnj_comp}" placeholder="XXX: +bonus Nom de la compétence" value=""></textarea>
@@ -15677,6 +15684,7 @@ on("clicked:def_config-btn", function() {
     "voies_456",
     "voies_789",
     "use_skills",
+    "$cfg_init_variable",
     "cfg_init_mod",
     "cfg_init_agi",
     "cfg_use_encmb",
@@ -15704,12 +15712,23 @@ on("clicked:def_config-btn", function() {
     "cfg_1skill_roll",
     "cfg_d20roll",
     "cfg_luck_btn",
+    "cfg_d20roll",
+    "tokenmod",
+    "tkmarker_dead_on",
+    "$tkmarker_dead",
+    "token_tint_on",
+    "$token_tint",
+    "tkmarker_tooltip_on",
+    "tkmarker_pc_on",
+    "$tkmarker_pc",
+    "tkmarker_cond",
+    "chatsetattr",
     "$tresor_monnaie",
   ];
   getAttrs([ "character_name", "sheet_type", ...allConfigs ], function(values) {
-    const sheetBase = strval(values.sheet_type) === SWData.SHEET_TYPE.NPC ? "PNJBase" : "PJBase";
+    const sheetBase = strval(values.sheet_type) === SWData.SHEET_TYPE.PC ? "PJBase" : "PNJBase";
 
-    // PJBase : make sure all attributes are created
+    // PJBase / PNJBase : make sure all attributes are created
     if (strval(values.character_name).trim() === sheetBase) {
       const updates = new Map();
       allConfigs.filter(attr => !attr.startsWith("$")).forEach(attr => updates.set(attr, intval(values[attr])));
