@@ -9,11 +9,12 @@ Pour chacune des 7 caractéristiques, vous indiquez :
 - S'il s'agit d'une caractéristique _supérieure_ (les jets de d20 sont effectués avec un _dé bonus_).
 
 Vous indiquez également :
-- Les PV courants et maximum,
 - Le score d'Initiative,
 - Le score de Défense,
-- Les différentes RD et résistances aux DM,
-- Eventuellement, les PC courants et maximum.
+- La vitesse de déplacement,
+- Les PV courants et maximum,
+- Les PC courants et maximum s'il y a lieu,
+- Les différentes RD et résistances aux DM.
 
 Des boutons permettent de faire des jets de caractéristiques et d'Initiative.
 
@@ -29,7 +30,7 @@ La zone **Défense** est cliquable et permet de basculer d'une valeur de défens
 
 # Description
 
-Cette zone de texte libre permet de préciser des informations générales sur le PNJ ou la créature.
+Cette zone de texte libre permet de préciser des informations générales sur le PNJ ou la créature. Le texte **Description** est cliquable et envoie dans le chat cette description en tant que message public agrémenté de l'avatar ou à défaut de l'image du token du PNJ. Il est donc recommandé de se limiter à l'apparence physique du PNJ et de ne pas y noter d'informations qui doivent rester inconnues des joueurs.
 
 # Sous-onglet _Attaques_
 
