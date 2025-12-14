@@ -6286,6 +6286,33 @@
                 </div>
               </div>
 
+            </div>
+
+            <div class="npc-4colrow">
+
+              <div class="npc-trait">
+                <div class="block-title">
+                  <button class="block-title" type="action" name="act_init-btn">
+                    Init.
+                  </button>
+                </div>
+                <div class="bordered centered">
+                  <input type="number" class="two-digits" name="attr_init" title="@{init}" value="0">
+                </div>
+              </div>
+              
+              <div class="npc-trait">
+                <div class="block-title">
+                  <button class="block-title" type="action" name="act_defsup-btn">
+                    Défense
+                  </button>
+                </div>
+                <div class="bordered">
+                  <input type="hidden" class="has-buff" name="attr_def_sup" value="0">
+                  <input type="number" class="has-buff two-digits" name="attr_def" title="@{def}" value="0">
+                </div>
+              </div>
+
               <div class="npc-trait">
                 <div class="block-title">Vitesse</div>
                 <div class="bordered">
@@ -6294,50 +6321,29 @@
               </div>
 
             </div>
-
           
             <div class="npc-2colrow">
               
-              <div class="npc-row">
-
-                <div class="npc-trait">
-                  <div class="block-title">
-                    <span>Points de Vigueur</span>
-                  </div>
-                  <div class="bordered centered">
-                    <input type="number" class="two-digits" name="attr_pv" title="@{pv}" value="0">
-                    /
-                    <input type="number" class="two-digits" name="attr_pv_max" title="@{pv_max}" value="0">
-                  </div>
+              <div class="npc-trait">
+                <div class="block-title">
+                  <span>Points de Vigueur</span>
                 </div>
-                
+                <div class="bordered centered">
+                  <input type="number" class="two-digits" name="attr_pv" title="@{pv}" value="0">
+                  /
+                  <input type="number" class="two-digits" name="attr_pv_max" title="@{pv_max}" value="0">
+                </div>
               </div>
-
-              <div class="npc-2colrow">
-
-                <div class="npc-trait">
-                  <div class="block-title">
-                    <button class="block-title" type="action" name="act_init-btn">
-                      Init.
-                    </button>
-                  </div>
-                  <div class="bordered centered">
-                    <input type="number" class="two-digits" name="attr_init" title="@{init}" value="0">
-                  </div>
+              
+              <div class="npc-trait">
+                <div class="block-title">
+                  <span>Points de Chance</span>
                 </div>
-                
-                <div class="npc-trait">
-                  <div class="block-title">
-                    <button class="block-title" type="action" name="act_defsup-btn">
-                      Défense
-                    </button>
-                  </div>
-                  <div class="bordered">
-                    <input type="hidden" class="has-buff" name="attr_def_sup" value="0">
-                    <input type="number" class="has-buff two-digits" name="attr_def" title="@{def}" value="0">
-                  </div>
+                <div class="bordered centered">
+                  <input type="number" name="attr_pc" title="@{pc}" value="0">
+                  /
+                  <input type="number" name="attr_pc_max" title="@{pc_max}" value="0">
                 </div>
-
               </div>
               
             </div>
@@ -6362,25 +6368,6 @@
                     </div>
                   </details>
                 </div>
-              </div>
-
-            </div>
-
-            <div class="npc-2colrow">
-
-              <div class="npc-row">
-  
-                <div class="npc-trait">
-                  <div class="block-title">
-                    <span>Points de Chance</span>
-                  </div>
-                  <div class="bordered centered">
-                    <input type="number" name="attr_pc" title="@{pc}" value="0">
-                    /
-                    <input type="number" name="attr_pc_max" title="@{pc_max}" value="0">
-                  </div>
-                </div>
-                  
               </div>
 
             </div>
@@ -7046,10 +7033,10 @@
               </button>
             </div>
 
-            <h4>Compétences</h4>
+            <h4 title="Permet de choisir un jet de caractéristique ou de compétence">Compétences</h4>
             <textarea class="large" name="attr_pnj_comp" title="@{pnj_comp}" placeholder="XXX: +bonus Nom de la compétence" value=""></textarea>
 
-            <h4>Compagnon</h4>
+            <h4 title="Permet de calculer les attributs du compagnon selon ceux de son propriétaire">Compagnon</h4>
             <ul>
 
               <li>
@@ -18034,6 +18021,8 @@ function getTokenURL(updates, values) {
     [ token_url ] = url.split("?");
     if (token_url)
       updates.set("token_url", token_url);
+    else
+      updates.set("token_dsp", "");
   }
   return updates;
 }
