@@ -17282,7 +17282,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
         chatAtk.fumble = fumbleEffect;
       }
 
-      if (boolval(values.cfg_cible)) {
+      if (boolval(values.cfg_cible && multiAttacks === 1)) {
         chatAtk.tohit = SWData.settings.tokens.target.def;
         chatAtk.target = SWData.settings.tokens.target.name;
       }
