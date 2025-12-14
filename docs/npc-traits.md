@@ -72,7 +72,9 @@ Des paramètres optionnels peuvent être ajoutés :
   
 - Cible : vous indiquez un texte à afficher si le jet de D20 atteint ou dépasse la valeur cible
 
-Un clic sur le bouton d20 permet de lancer le jet d'attaque et de DM dans le chat en tenant compte des divers paramètres. Si la case d'attaques multiples est cochée et que le nom de l'attaque contient le motif `(n attaques)`, le nombre n de jets d'attaque est effectué.
+Un clic sur le bouton d20 permet de lancer le jet d'attaque et de DM dans le chat en tenant compte des divers paramètres.
+
+Si la case d'attaques multiples est cochée et que le nom de l'attaque contient l'expression `(n attaques)`, le nombre n de jets d'attaque est effectué. **Attention** : cette fonction n'est pas compatible avec l'option de configuration _Attaques ciblées_, le popup de sélection du token cible des attaques ne s'affiche pas en cas d'attaques multiples.
 
 Le texte d'effet spécial est traité par la fiche pour substituer les jets en ligne comme décrit pour la description des [capacités des PJs]({{ site.baseurl }}/pc-abilities).
 

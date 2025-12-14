@@ -6,6 +6,7 @@ Les préférence et réglages possibles de la fiche sont configurés dans cet on
   - Chuchotés au MJ : Seul le joueur et le MJ voient les jets (uniquement le MJ pour une fiche de PNJ non partagées aux joueurs).
   - Avec token : Le token par défaut du PNJ apparaît dans tous les messages envoyés dans le chat par la fiche.
 - Un seul jet d'attaque, au lieu des deux jets effectués par défaut par la fiche.
+- Attaques ciblées : Cette option permet de pointer sur la map le token cible d'un jet d'attaque, de comparer le résultat avec la Défense du PJ ou du PNJ lié à ce token, et afficher si l'attaque est un succès ou un échec. **Elle n'est pas compatible** avec les attaques multiples dont bénéficient certaines créatures.
 
 ## Règles optionnelles
 
