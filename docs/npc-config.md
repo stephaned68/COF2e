@@ -64,7 +64,7 @@ _Exemple : Loup (rôdeur)_
 
 ## Importer un statblock
 
-Cette section dépliable permet d'importer les données techniques du PNJ en copiant un statblock depuis un document PDF. Le bouton `Importer` analyse le texte collé dans le champ de texte, et en extrait les données utilisables.
+Cette section dépliable permet d'importer les données techniques du PNJ en copiant un statblock depuis un document PDF ou depuis le DRS officiel de Black Book Editions. Le bouton `Importer` analyse le texte collé dans le champ de texte, et en extrait les données utilisables.
 
 # Menus et macros
 

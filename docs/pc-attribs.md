@@ -133,6 +133,13 @@ Pour chacune, vous indiquez :
 
 Des paramètres optionnels peuvent être ajoutés :
 - Un effet spécial ou une description affichée dans le chat Roll20. Ce texte peut comporter des commandes de chat Roll20. Les références à certains attributs du personnage peuvent être reconnues et remplacées par leurs valeurs effectives.
+- Un effet prolongé propre à cette attaque (par exemple, des DM ou un état préjudiciable sur plusieurs rounds). Vous pouvez indiquer jusqu'à 4 paramètres textuels dont les 3 derniers sont optionnels :
+  - l'effet prolongé. Il peut contenir une formule de dé pour des DM
+  - le nom de l'effet, si vous souhaitez qu'il soit différent du nom de l'attaque
+  - la durée de l'effet. Elle peut être spécifiée sous forme d'une valeur fixe ou d'une expression faisant référence à un attribut du personnage (_ex: `[INT]` rounds pour la durée d'un sort_)
+  - un texte permettant de rappeler les conditions dans lesquelles l'effet stoppe, si aucune durée n'est indiquée
+
+  Si un effet prolongé est paramétré sur une attaque, un bouton avec une icone _Recycler_ apparait afin d'effectuer un jet pour cet effet. De plus, si le script MOD **AddCustomTurn** est disponible, une entrée personnalisée est ajoutée au Turn-Order Roll20 lorsque l'attaque est effectuée.
 - Type d'attaque : vous pouvez indiquer le type de cette attaque en choisissant parmi
   - Arme en main
   - Arme de jet

@@ -80,6 +80,12 @@ Ce script est utilisé :
 - Par les fonctionnalités de _Loot_,
 - Pour la règle d'Aide entre personnages.
 
+### AddCustomTurn
+
+Ce script permet d'ajouter des entrées personnalisées dans le Turn Order Roll20.
+
+Il est utilisé pour gérer les effets prolongés des attaques ou capacités.
+
 ---
 
 [Retour]({{ site.baseurl }}/pc-main)

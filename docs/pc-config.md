@@ -94,11 +94,11 @@ _Exemple :_ Nombre de dés de DM de l'_attaque sournoise_, nombre d'utilisation 
 
 Cette section permet de définir une liste d'attributs dans une zone de texte libre. La syntaxe de cette liste est la même que pour les [prédicats]({{ site.baseurl }}/pc-script).
 
-Les attributs personnalisés sont créés avec la valeur indiquée. Ils peuvent être utilisés dans des macros Roll20 ou à d'autres emplacements de la fiche sous le nom `{nom profil}_{nom attribut}`.
+Les attributs personnalisés sont créés avec la valeur indiquée. Ils peuvent être utilisés dans des macros Roll20 ou à d'autres emplacements de la fiche sous le nom `@{nom attribut}`.
 
 _Exemple :_ 
 
-`sournoise: (2+@{voies_rang4})d4°` sur la fiche d'un profil de voleur crée un attribut nommé `voleur_sournoise`. La valeur de cet attribut sera résolue par Roll20 à l'utilisation, en ajoutant aux 2d4° de base le nombre de voies de voleur dans lequel le personnage a atteint le rang 4. Cet attribut peut être utilisé dans une macro sous le nom `@{voleur_sournoise}`
+`att_sournoise: (2+@{voies_rang4})d4°` sur la fiche d'un profil de voleur crée un attribut nommé `att_sournoise`. La valeur de cet attribut sera résolue par Roll20 à l'utilisation, en ajoutant aux 2d4° de base le nombre de voies de voleur dans lequel le personnage a atteint le rang 4. Cet attribut peut être utilisé dans une macro sous le nom `@{att_sournoise}`
 
 ## Compétences personnalisées
 
@@ -124,7 +124,7 @@ Vous pouvez également modifier certains aspects des messages de chat :
 - Un seul jet de compétence (cf _Jets de d20_ ci-dessous).
 - Bouton Chance : Un bouton chance est affiché au bas des messages sur tous les jets de D20 et permet de dépenser instantanément un PC en affichant les résultats précédents bonifiés (+10 ou +1d10 si l'option PC variables est active).
 
-## Dés bonus / dé malus
+## Dé bonus / Dé malus
 
 Vous pouvez choisir d'autres options pour les lancers de d20 :
 - Boutons : pour afficher trois boutons sous le logo de la fiche permettant de choisir entre un jet normal, avec dé bonus ou avec dé malus avant de cliquer sur un bouton d'action.

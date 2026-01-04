@@ -52,11 +52,12 @@ Pour chaque rang :
 
 Le texte de la capacité est transformé par insertion de jets en ligne s'il y a lieu (voir paragraphe _Jets en ligne_ ci-dessous).
 
-Deux icônes sont situées à côté de **Editer** :
+Trois icones sont situées à côté de **Editer** :
 - L'icône _Horloge_ permet de ré-initialiser le nombre d'utilisation des capacités pour un type de fréquence donné (_ex : pour ré-initialiser toutes les capacités "par jour" à la fin d'une récupération longue_).
+- L'icône _Recycler_ permet de choisir une capacité dont les effets se prolongent sur la durée et d'effectuer un jet pour cet effet.
 - L'icône _Options_ permet d'afficher un menu d'action dans le chat avec un bouton pour chaque voie. Chacun de ces boutons affiche ensuite un sous-menu avec un bouton d'action pour chaque capacité possédée dans cette voie.
 
-Une troisième icone est affichée si le personnage possède au moins un sort (et donc dispose d'une valeur maximum de Points de Mana). Ce bouton permet d'appliquer la règle de Concentration accrue à l'utilisation d'une capacité de sort.
+Une quatrième icone est affichée si le personnage possède au moins un sort (et donc dispose d'une valeur maximum de Points de Mana). Ce bouton permet d'appliquer la règle de Concentration accrue à l'utilisation d'une capacité de sort.
 
 ## Propriétés des capacités
 
@@ -77,6 +78,10 @@ Les propriétés suivantes peuvent être appliquées aux capacités :
 - `buff: xxx [valeur1,valeur2,valeur3,valeur4,valeur5]` permet de spécifier un buff nommé xxx qui évolue selon le rang atteint dans la voie.
 - `roll: xxx` où xxx peut prendre les valeurs `contact` ou `distance` ou `magie` permet de demander à la fiche de faire le jet d'attaque correspondant lors de l'utilisation de la capacité. Un autre type de jet peut être indiqué, en spécifiant le nom du bouton (généralement suffixé par `-btn` et affiché au survol de la souris sur les différentes rubriques de la fiche).
 - `action:` suivi d'un espace pour identifier la capacité comme active afin qu'un bouton d'action lui soit assigné dans le menu d'actions dans le chat.
+- `etendu:` suivi d'un texte décrivant un effet prolongé. Il peut contenir une formule de dé pour des DM.
+- `etendu-duree:` suivi d'un texte spécifiant la durée de l'effet. Il peut être spécifié sous forme d'une valeur fixe ou d'une expression faisant référence à un attribut du personnage (_ex: `[INT]` rounds pour la durée d'un sort_).
+- `etendu-nom:` suivi du nom de l'effet, si vous souhaitez qu'il soit différent du nom de la capacité.
+- `etendu-stop:` suivi d'un texte permettant de rappeler les conditions dans lesquelles l'effet stoppe, si aucune durée n'est indiquée.
 
 ### Exemples :
 
@@ -99,6 +104,14 @@ Les propriétés suivantes peuvent être appliquées aux capacités :
 - Paramétrer la capacité de sort _Flèche de feu_ pour effectuer le jet d'attaque magique
 
   Propriété : `roll: magie`
+
+- Paramétrer la capacité de sort _Flèche de feu_ pour indiquer son effet prolongé 
+  
+  Propriété : `etendu: [[1d6cf<2]]` pour lancer 1d6 et afficher le résultat en rouge si le jet est de 1 ou 2 (ce qui signifie que l'effet s'interrompt)
+  
+  Propriété : `etendu-nom: DM flèche de feu` pour afficher le texte indiqué au lieu du nom de la capacité
+
+Si une capacité est paramétrée avec des propriétés de type `etendu` et que le script MOD **AddCustomTurn** est disponible, une entrée personnalisée est ajoutée au Turn-Order Roll20 lorsque cette capacité est utilisée.
 
 ## Capacités épiques
 
@@ -200,14 +213,14 @@ Cette section dépliable permet de consulter la liste des buffs actuellement app
 
 # Import
 
-Ce sous-onglet permet de coller le texte d'une voie copié depuis le PDF des règles. 
+Ce sous-onglet permet de coller le texte d'une voie copié depuis le PDF des règles ou depuis le DRS officiel de Black Book Editions. Cliquez la case correspondante si vous utilisez le DRS.
 
 Il suffit ensuite de cliquer sur le bouton d'import de la voie pour insérer le texte des capacités dans la fiche de personnage.
 - La voie en question est remplie avec le texte copié, toutes les données précédemment saisies sont **écrasées** !
 - La première ligne du texte doit être le nom de la voie, l'import efface le préfixe (_"Voie du..."_, _"Voie de la ..."_, etc...)
-- Une ligne qui commence par un chiffre et se termine par `:` marque le nom d'une capacité, les lignes suivantes sont rassemblées pour former la description.
+- Une ligne qui commence par un chiffre et se termine par `:` marque le nom d'une capacité, les lignes suivantes sont assemblées pour former la description complète.
 - Cette description est analysée pour trouver des références à un nombre d'utilisations limité (ex : _"une fois par combat, ..."_)
-- Si le nom d'une capacité comporte un astérisque `*`, celle-ci est considérée comme un sort
+- Si le nom d'une capacité comporte un astérisque `*`, celle-ci est considérée comme un sort. _Attention_ : ce caractère n'existe pas dans les textes copiés depuis le DRS, il n'est donc pas possible d'identifier les sorts.
 
 # Jets en ligne (Inline-Rolls)
 
