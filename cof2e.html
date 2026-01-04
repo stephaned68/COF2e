@@ -16,6 +16,7 @@
   <input type="hidden" name="attr_last_maneuver" value="">
   <input type="hidden" name="attr_usure_check" value="">
   <input type="hidden" name="attr_next_roll" value="">
+  <input type="hidden" name="attr_last_target" value="">
 
   <!-- Buffs caracs PJ -->
   <input type="hidden" name="attr_agi_buff" value="0">
@@ -107,10 +108,14 @@
   <!-- PVIG = pv first in dropdown -->
   <input type="hidden" name="attr_PVIG" value="0">
   <input type="hidden" name="attr_PVIG_max" value="0">
+  <input type="hidden" name="attr_healing" value="">
 
   <!-- Help action -->
   <input type="hidden" name="attr_help_roll" value="">
   <input type="hidden" name="attr_help_roll_all" value="">
+
+  <!-- Ongoing effects -->
+  <input type="hidden" name="attr_ongoing_actmod" value="">
 
   <!-- Charmancer
   <input type="hidden" name="attr_charmancer" value=""> -->
@@ -122,7 +127,7 @@
     <div>
       <img
         class="logo"
-        title="Version 1.13.0 - 31/12/2025"
+        title="Version 1.13.0 - 04/01/2026"
         src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cof2e_logo.jpg"
       />
       <input type="hidden" class="d20roll-btns" name="attr_cfg_d20roll" value="0">
@@ -240,6 +245,10 @@
           <div><strong>Nom</strong></div>
           <div>
             <input type="text" name="attr_character_name" title="@{character_name}" value="">
+          </div>
+          <div><strong>Genre</strong></div>
+          <div>
+            <input type="text" name="attr_genre" title="@{genre}" value="">
           </div>
         </div>
 
@@ -1315,8 +1324,21 @@
               <div class="weapon-opt">
                 <div class="weapon-special">
                   <div></div>
-                  <div class="bordered">
+                  <div class="bordered weapon-special-ongoing">
                     <textarea class="one-row" name="attr_arme-special" title="@{arme-special}" placeholder="Effet spécial..."></textarea>
+                    <details>
+                      <summary>
+                        <span name="attr_arme-etendu" title="@{arme-etendu} Effet prolongé"></span>
+                        <input type="hidden" class="ongoing" name="attr_arme-etendu" value="">
+                        <button type="action" class="flat-btn img-btn ongoing" name="act_ongoing-btn" title="%{ongoing-btn} Effets prolongés">
+                          <span class="img-btn">0</span>
+                        </button>
+                      </summary>
+                      <input type="text" name="attr_etendu-effet" title="@{etendu-effet} Peut contenir une formule" placeholder="Effet">
+                      <input type="text" name="attr_etendu-nom" title="@{etendu-nom} Si différent de l'arme/attaque" placeholder="Nom">
+                      <input type="text" name="attr_etendu-duree" title="@{etendu-duree} Peut contenir une formule" placeholder="Durée de l'effet">
+                      <input type="text" name="attr_etendu-stop" title="@{etendu-stop} Si pas de durée spécifiée" placeholder="Conditions de fin">
+                    </details>
                   </div>
                 </div>
                 <div class="weapon-option">
@@ -1596,6 +1618,9 @@
               <button type="action" class="flat-btn img-btn" name="act_abilities_menu-btn" title="%{abilities_menu-btn} Menu des voies et capacités">
                 <span class="img-btn">l</span>
               </button>
+              <button type="action" class="flat-btn img-btn" name="act_ongoing-btn" title="%{ongoing-btn} Effets prolongés">
+                <span class="img-btn">0</span>
+              </button>
               <button type="action" class="flat-btn img-btn" name="act_reset_uses-btn" title="Ré-initialiser l'usage des capacités">
                 <span class="img-btn">t</span>
               </button>
@@ -1635,6 +1660,7 @@
                       <input type="hidden" class="spell" name="attr_v1r1_spell">
                       <span class="rank-title" name="attr_voie1-t1"></span>
                       <input type="hidden" name="attr_v1r1-btn" value="">
+                      <button type="action" class="hidden" name="act_x1r1-btn">
                       <button type="action" class="hidden" name="act_v1r1-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v1r1" title="%{v1r1-btn}" value="@{v1r1-btn}">
                         <span class="img-btn">w</span>
@@ -1658,6 +1684,7 @@
                       <input type="hidden" class="spell" name="attr_v1r2_spell">
                       <span class="rank-title" name="attr_voie1-t2"></span>
                       <input type="hidden" name="attr_v1r2-btn" value="">
+                      <button type="action" class="hidden" name="act_x1r2-btn">
                       <button type="action" class="hidden" name="act_v1r2-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v1r2" title="%{v1r2-btn}" value="@{v1r2-btn}">
                         <span class="img-btn">w</span>
@@ -1681,6 +1708,7 @@
                       <input type="hidden" class="spell" name="attr_v1r3_spell">
                       <span class="rank-title" name="attr_voie1-t3"></span>
                       <input type="hidden" name="attr_v1r3-btn" value="">
+                      <button type="action" class="hidden" name="act_x1r3-btn">
                       <button type="action" class="hidden" name="act_v1r3-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v1r3" title="%{v1r3-btn}" value="@{v1r3-btn}">
                         <span class="img-btn">w</span>
@@ -1704,6 +1732,7 @@
                       <input type="hidden" class="spell" name="attr_v1r4_spell">
                       <span class="rank-title" name="attr_voie1-t4"></span>
                       <input type="hidden" name="attr_v1r4-btn" value="">
+                      <button type="action" class="hidden" name="act_x1r4-btn">
                       <button type="action" class="hidden" name="act_v1r4-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v1r4" title="%{v1r4-btn}" value="@{v1r4-btn}">
                         <span class="img-btn">w</span>
@@ -1727,6 +1756,7 @@
                       <input type="hidden" class="spell" name="attr_v1r5_spell">
                       <span class="rank-title" name="attr_voie1-t5"></span>
                       <input type="hidden" name="attr_v1r5-btn" value="">
+                      <button type="action" class="hidden" name="act_x1r5-btn">
                       <button type="action" class="hidden" name="act_v1r5-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v1r5" title="%{v1r5-btn}" value="@{v1r5-btn}">
                         <span class="img-btn">w</span>
@@ -1764,6 +1794,7 @@
                       <input type="hidden" class="spell" name="attr_v2r1_spell">
                       <span class="rank-title" name="attr_voie2-t1"></span>
                       <input type="hidden" name="attr_v2r1-btn" value="">
+                      <button type="action" class="hidden" name="act_x2r1-btn">
                       <button type="action" class="hidden" name="act_v2r1-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v2r1" title="%{v2r1-btn}" value="@{v2r1-btn}">
                         <span class="img-btn">w</span>
@@ -1787,6 +1818,7 @@
                       <input type="hidden" class="spell" name="attr_v2r2_spell">
                       <span class="rank-title" name="attr_voie2-t2"></span>
                       <input type="hidden" name="attr_v2r2-btn" value="">
+                      <button type="action" class="hidden" name="act_x2r2-btn">
                       <button type="action" class="hidden" name="act_v2r2-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v2r2" title="%{v2r2-btn}" value="@{v2r2-btn}">
                         <span class="img-btn">w</span>
@@ -1810,6 +1842,7 @@
                       <input type="hidden" class="spell" name="attr_v2r3_spell">
                       <span class="rank-title" name="attr_voie2-t3"></span>
                       <input type="hidden" name="attr_v2r3-btn" value="">
+                      <button type="action" class="hidden" name="act_x2r3-btn">
                       <button type="action" class="hidden" name="act_v2r3-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v2r3" title="%{v2r3-btn}" value="@{v2r3-btn}">
                         <span class="img-btn">w</span>
@@ -1833,6 +1866,7 @@
                       <input type="hidden" class="spell" name="attr_v2r4_spell">
                       <span class="rank-title" name="attr_voie2-t4"></span>
                       <input type="hidden" name="attr_v2r4-btn" value="">
+                      <button type="action" class="hidden" name="act_x2r4-btn">
                       <button type="action" class="hidden" name="act_v2r4-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v2r4" title="%{v2r4-btn}" value="@{v2r4-btn}">
                         <span class="img-btn">w</span>
@@ -1856,6 +1890,7 @@
                       <input type="hidden" class="spell" name="attr_v2r5_spell">
                       <span class="rank-title" name="attr_voie2-t5"></span>
                       <input type="hidden" name="attr_v2r5-btn" value="">
+                      <button type="action" class="hidden" name="act_x2r5-btn">
                       <button type="action" class="hidden" name="act_v2r5-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v2r5" title="%{v2r5-btn}" value="@{v2r5-btn}">
                         <span class="img-btn">w</span>
@@ -1893,6 +1928,7 @@
                       <input type="hidden" class="spell" name="attr_v3r1_spell">
                       <span class="rank-title" name="attr_voie3-t1"></span>
                       <input type="hidden" name="attr_v3r1-btn" value="">
+                      <button type="action" class="hidden" name="act_x3r1-btn">
                       <button type="action" class="hidden" name="act_v3r1-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v3r1" title="%{v3r1-btn}" value="@{v3r1-btn}">
                         <span class="img-btn">w</span>
@@ -1916,6 +1952,7 @@
                       <input type="hidden" class="spell" name="attr_v3r2_spell">
                       <span class="rank-title" name="attr_voie3-t2"></span>
                       <input type="hidden" name="attr_v3r2-btn" value="">
+                      <button type="action" class="hidden" name="act_x3r2-btn">
                       <button type="action" class="hidden" name="act_v3r2-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v3r2" title="%{v3r2-btn}" value="@{v3r2-btn}">
                         <span class="img-btn">w</span>
@@ -1939,6 +1976,7 @@
                       <input type="hidden" class="spell" name="attr_v3r3_spell">
                       <span class="rank-title" name="attr_voie3-t3"></span>
                       <input type="hidden" name="attr_v3r3-btn" value="">
+                      <button type="action" class="hidden" name="act_x3r3-btn">
                       <button type="action" class="hidden" name="act_v3r3-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v3r3" title="%{v3r3-btn}" value="@{v3r3-btn}">
                         <span class="img-btn">w</span>
@@ -1962,6 +2000,7 @@
                       <input type="hidden" class="spell" name="attr_v3r4_spell">
                       <span class="rank-title" name="attr_voie3-t4"></span>
                       <input type="hidden" name="attr_v3r4-btn" value="">
+                      <button type="action" class="hidden" name="act_x3r4-btn">
                       <button type="action" class="hidden" name="act_v3r4-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v3r4" title="%{v3r4-btn}" value="@{v3r4-btn}">
                         <span class="img-btn">w</span>
@@ -1985,6 +2024,7 @@
                       <input type="hidden" class="spell" name="attr_v3r5_spell">
                       <span class="rank-title" name="attr_voie3-t5"></span>
                       <input type="hidden" name="attr_v3r5-btn" value="">
+                      <button type="action" class="hidden" name="act_x3r5-btn">
                       <button type="action" class="hidden" name="act_v3r5-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v3r5" title="%{v3r5-btn}" value="@{v3r5-btn}">
                         <span class="img-btn">w</span>
@@ -2027,6 +2067,7 @@
                       <input type="hidden" class="spell" name="attr_v4r1_spell">
                       <span class="rank-title" name="attr_voie4-t1"></span>
                       <input type="hidden" name="attr_v4r1-btn" value="">
+                      <button type="action" class="hidden" name="act_x4r1-btn">
                       <button type="action" class="hidden" name="act_v4r1-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v4r1" title="%{v4r1-btn}" value="@{v4r1-btn}">
                         <span class="img-btn">w</span>
@@ -2050,6 +2091,7 @@
                       <input type="hidden" class="spell" name="attr_v4r2_spell">
                       <span class="rank-title" name="attr_voie4-t2"></span>
                       <input type="hidden" name="attr_v4r2-btn" value="">
+                      <button type="action" class="hidden" name="act_x4r2-btn">
                       <button type="action" class="hidden" name="act_v4r2-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v4r2" title="%{v4r2-btn}" value="@{v4r2-btn}">
                         <span class="img-btn">w</span>
@@ -2073,6 +2115,7 @@
                       <input type="hidden" class="spell" name="attr_v4r3_spell">
                       <span class="rank-title" name="attr_voie4-t3"></span>
                       <input type="hidden" name="attr_v4r3-btn" value="">
+                      <button type="action" class="hidden" name="act_x4r3-btn">
                       <button type="action" class="hidden" name="act_v4r3-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v4r3" title="%{v4r3-btn}" value="@{v4r3-btn}">
                         <span class="img-btn">w</span>
@@ -2096,6 +2139,7 @@
                       <input type="hidden" class="spell" name="attr_v4r4_spell">
                       <span class="rank-title" name="attr_voie4-t4"></span>
                       <input type="hidden" name="attr_v4r4-btn" value="">
+                      <button type="action" class="hidden" name="act_x4r4-btn">
                       <button type="action" class="hidden" name="act_v4r4-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v4r4" title="%{v4r4-btn}" value="@{v4r4-btn}">
                         <span class="img-btn">w</span>
@@ -2119,6 +2163,7 @@
                       <input type="hidden" class="spell" name="attr_v4r5_spell">
                       <span class="rank-title" name="attr_voie4-t5"></span>
                       <input type="hidden" name="attr_v4r5-btn" value="">
+                      <button type="action" class="hidden" name="act_x4r5-btn">
                       <button type="action" class="hidden" name="act_v4r5-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v4r5" title="%{v4r5-btn}" value="@{v4r5-btn}">
                         <span class="img-btn">w</span>
@@ -2156,6 +2201,7 @@
                       <input type="hidden" class="spell" name="attr_v5r1_spell">
                       <span class="rank-title" name="attr_voie5-t1"></span>
                       <input type="hidden" name="attr_v5r1-btn" value="">
+                      <button type="action" class="hidden" name="act_x5r1-btn">
                       <button type="action" class="hidden" name="act_v5r1-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v5r1" title="%{v5r1-btn}" value="@{v5r1-btn}">
                         <span class="img-btn">w</span>
@@ -2179,6 +2225,7 @@
                       <input type="hidden" class="spell" name="attr_v5r2_spell">
                       <span class="rank-title" name="attr_voie5-t2"></span>
                       <input type="hidden" name="attr_v5r2-btn" value="">
+                      <button type="action" class="hidden" name="act_x5r2-btn">
                       <button type="action" class="hidden" name="act_v5r2-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v5r2" title="%{v5r2-btn}" value="@{v5r2-btn}">
                         <span class="img-btn">w</span>
@@ -2202,6 +2249,7 @@
                       <input type="hidden" class="spell" name="attr_v5r3_spell">
                       <span class="rank-title" name="attr_voie5-t3"></span>
                       <input type="hidden" name="attr_v5r3-btn" value="">
+                      <button type="action" class="hidden" name="act_x5r3-btn">
                       <button type="action" class="hidden" name="act_v5r3-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v5r3" title="%{v5r3-btn}" value="@{v5r3-btn}">
                         <span class="img-btn">w</span>
@@ -2225,6 +2273,7 @@
                       <input type="hidden" class="spell" name="attr_v5r4_spell">
                       <span class="rank-title" name="attr_voie5-t4"></span>
                       <input type="hidden" name="attr_v5r4-btn" value="">
+                      <button type="action" class="hidden" name="act_x5r4-btn">
                       <button type="action" class="hidden" name="act_v5r4-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v5r4" title="%{v5r4-btn}" value="@{v5r4-btn}">
                         <span class="img-btn">w</span>
@@ -2248,6 +2297,7 @@
                       <input type="hidden" class="spell" name="attr_v5r5_spell">
                       <span class="rank-title" name="attr_voie5-t5"></span>
                       <input type="hidden" name="attr_v5r5-btn" value="">
+                      <button type="action" class="hidden" name="act_x5r5-btn">
                       <button type="action" class="hidden" name="act_v5r5-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v5r5" title="%{v5r5-btn}" value="@{v5r5-btn}">
                         <span class="img-btn">w</span>
@@ -2285,6 +2335,7 @@
                       <input type="hidden" class="spell" name="attr_v6r1_spell">
                       <span class="rank-title" name="attr_voie6-t1"></span>
                       <input type="hidden" name="attr_v6r1-btn" value="">
+                      <button type="action" class="hidden" name="act_x6r1-btn">
                       <button type="action" class="hidden" name="act_v6r1-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v6r1" title="%{v6r1-btn}" value="@{v6r1-btn}">
                         <span class="img-btn">w</span>
@@ -2308,6 +2359,7 @@
                       <input type="hidden" class="spell" name="attr_v6r2_spell">
                       <span class="rank-title" name="attr_voie6-t2"></span>
                       <input type="hidden" name="attr_v6r2-btn" value="">
+                      <button type="action" class="hidden" name="act_x6r2-btn">
                       <button type="action" class="hidden" name="act_v6r2-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v6r2" title="%{v6r2-btn}" value="@{v6r2-btn}">
                         <span class="img-btn">w</span>
@@ -2331,6 +2383,7 @@
                       <input type="hidden" class="spell" name="attr_v6r3_spell">
                       <span class="rank-title" name="attr_voie6-t3"></span>
                       <input type="hidden" name="attr_v6r3-btn" value="">
+                      <button type="action" class="hidden" name="act_x6r3-btn">
                       <button type="action" class="hidden" name="act_v6r3-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v6r3" title="%{v6r3-btn}" value="@{v6r3-btn}">
                         <span class="img-btn">w</span>
@@ -2354,6 +2407,7 @@
                       <input type="hidden" class="spell" name="attr_v6r4_spell">
                       <span class="rank-title" name="attr_voie6-t4"></span>
                       <input type="hidden" name="attr_v6r4-btn" value="">
+                      <button type="action" class="hidden" name="act_x6r4-btn">
                       <button type="action" class="hidden" name="act_v6r4-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v6r4" title="%{v6r4-btn}" value="@{v6r4-btn}">
                         <span class="img-btn">w</span>
@@ -2377,6 +2431,7 @@
                       <input type="hidden" class="spell" name="attr_v6r5_spell">
                       <span class="rank-title" name="attr_voie6-t5"></span>
                       <input type="hidden" name="attr_v6r5-btn" value="">
+                      <button type="action" class="hidden" name="act_x6r5-btn">
                       <button type="action" class="hidden" name="act_v6r5-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v6r5" title="%{v6r5-btn}" value="@{v6r5-btn}">
                         <span class="img-btn">w</span>
@@ -2419,6 +2474,7 @@
                       <input type="hidden" class="spell" name="attr_v7r1_spell">
                       <span class="rank-title" name="attr_voie7-t1"></span>
                       <input type="hidden" name="attr_v7r1-btn" value="">
+                      <button type="action" class="hidden" name="act_x7r1-btn">
                       <button type="action" class="hidden" name="act_v7r1-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v7r1" title="%{v7r1-btn}" value="@{v7r1-btn}">
                         <span class="img-btn">w</span>
@@ -2442,6 +2498,7 @@
                       <input type="hidden" class="spell" name="attr_v7r2_spell">
                       <span class="rank-title" name="attr_voie7-t2"></span>
                       <input type="hidden" name="attr_v7r2-btn" value="">
+                      <button type="action" class="hidden" name="act_x7r2-btn">
                       <button type="action" class="hidden" name="act_v7r2-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v7r2" title="%{v7r2-btn}" value="@{v7r2-btn}">
                         <span class="img-btn">w</span>
@@ -2465,6 +2522,7 @@
                       <input type="hidden" class="spell" name="attr_v7r3_spell">
                       <span class="rank-title" name="attr_voie7-t3"></span>
                       <input type="hidden" name="attr_v7r3-btn" value="">
+                      <button type="action" class="hidden" name="act_x7r3-btn">
                       <button type="action" class="hidden" name="act_v7r3-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v7r3" title="%{v7r3-btn}" value="@{v7r3-btn}">
                         <span class="img-btn">w</span>
@@ -2488,6 +2546,7 @@
                       <input type="hidden" class="spell" name="attr_v7r4_spell">
                       <span class="rank-title" name="attr_voie7-t4"></span>
                       <input type="hidden" name="attr_v7r4-btn" value="">
+                      <button type="action" class="hidden" name="act_x7r4-btn">
                       <button type="action" class="hidden" name="act_v7r4-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v7r4" title="%{v7r4-btn}" value="@{v7r4-btn}">
                         <span class="img-btn">w</span>
@@ -2511,6 +2570,7 @@
                       <input type="hidden" class="spell" name="attr_v7r5_spell">
                       <span class="rank-title" name="attr_voie7-t5"></span>
                       <input type="hidden" name="attr_v7r5-btn" value="">
+                      <button type="action" class="hidden" name="act_x7r5-btn">
                       <button type="action" class="hidden" name="act_v7r5-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v7r5" title="%{v7r5-btn}" value="@{v7r5-btn}">
                         <span class="img-btn">w</span>
@@ -2548,6 +2608,7 @@
                       <input type="hidden" class="spell" name="attr_v8r1_spell">
                       <span class="rank-title" name="attr_voie8-t1"></span>
                       <input type="hidden" name="attr_v8r1-btn" value="">
+                      <button type="action" class="hidden" name="act_x8r1-btn">
                       <button type="action" class="hidden" name="act_v8r1-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v8r1" title="%{v8r1-btn}" value="@{v8r1-btn}">
                         <span class="img-btn">w</span>
@@ -2571,6 +2632,7 @@
                       <input type="hidden" class="spell" name="attr_v8r2_spell">
                       <span class="rank-title" name="attr_voie8-t2"></span>
                       <input type="hidden" name="attr_v8r2-btn" value="">
+                      <button type="action" class="hidden" name="act_x8r2-btn">
                       <button type="action" class="hidden" name="act_v8r2-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v8r2" title="%{v8r2-btn}" value="@{v8r2-btn}">
                         <span class="img-btn">w</span>
@@ -2594,6 +2656,7 @@
                       <input type="hidden" class="spell" name="attr_v8r3_spell">
                       <span class="rank-title" name="attr_voie8-t3"></span>
                       <input type="hidden" name="attr_v8r3-btn" value="">
+                      <button type="action" class="hidden" name="act_x8r3-btn">
                       <button type="action" class="hidden" name="act_v8r3-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v8r3" title="%{v8r3-btn}" value="@{v8r3-btn}">
                         <span class="img-btn">w</span>
@@ -2617,6 +2680,7 @@
                       <input type="hidden" class="spell" name="attr_v8r4_spell">
                       <span class="rank-title" name="attr_voie8-t4"></span>
                       <input type="hidden" name="attr_v8r4-btn" value="">
+                      <button type="action" class="hidden" name="act_x8r4-btn">
                       <button type="action" class="hidden" name="act_v8r4-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v8r4" title="%{v8r4-btn}" value="@{v8r4-btn}">
                         <span class="img-btn">w</span>
@@ -2640,6 +2704,7 @@
                       <input type="hidden" class="spell" name="attr_v8r5_spell">
                       <span class="rank-title" name="attr_voie8-t5"></span>
                       <input type="hidden" name="attr_v8r5-btn" value="">
+                      <button type="action" class="hidden" name="act_x8r5-btn">
                       <button type="action" class="hidden" name="act_v8r5-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v8r5" title="%{v8r5-btn}" value="@{v8r5-btn}">
                         <span class="img-btn">w</span>
@@ -2677,6 +2742,7 @@
                       <input type="hidden" class="spell" name="attr_v9r1_spell">
                       <span class="rank-title" name="attr_voie9-t1"></span>
                       <input type="hidden" name="attr_v9r1-btn" value="">
+                      <button type="action" class="hidden" name="act_x9r1-btn">
                       <button type="action" class="hidden" name="act_v9r1-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v9r1" title="%{v9r1-btn}" value="@{v9r1-btn}">
                         <span class="img-btn">w</span>
@@ -2700,6 +2766,7 @@
                       <input type="hidden" class="spell" name="attr_v9r2_spell">
                       <span class="rank-title" name="attr_voie9-t2"></span>
                       <input type="hidden" name="attr_v9r2-btn" value="">
+                      <button type="action" class="hidden" name="act_x9r2-btn">
                       <button type="action" class="hidden" name="act_v9r2-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v9r2" title="%{v9r2-btn}" value="@{v9r2-btn}">
                         <span class="img-btn">w</span>
@@ -2723,6 +2790,7 @@
                       <input type="hidden" class="spell" name="attr_v9r3_spell">
                       <span class="rank-title" name="attr_voie9-t3"></span>
                       <input type="hidden" name="attr_v9r3-btn" value="">
+                      <button type="action" class="hidden" name="act_x9r3-btn">
                       <button type="action" class="hidden" name="act_v9r3-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v9r3" title="%{v9r3-btn}" value="@{v9r3-btn}">
                         <span class="img-btn">w</span>
@@ -2746,6 +2814,7 @@
                       <input type="hidden" class="spell" name="attr_v9r4_spell">
                       <span class="rank-title" name="attr_voie9-t4"></span>
                       <input type="hidden" name="attr_v9r4-btn" value="">
+                      <button type="action" class="hidden" name="act_x9r4-btn">
                       <button type="action" class="hidden" name="act_v9r4-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v9r4" title="%{v9r4-btn}" value="@{v9r4-btn}">
                         <span class="img-btn">w</span>
@@ -2769,6 +2838,7 @@
                       <input type="hidden" class="spell" name="attr_v9r5_spell">
                       <span class="rank-title" name="attr_voie9-t5"></span>
                       <input type="hidden" name="attr_v9r5-btn" value="">
+                      <button type="action" class="hidden" name="act_x9r5-btn">
                       <button type="action" class="hidden" name="act_v9r5-btn">
                       <button type="roll" class="flat-btn img-btn" name="roll_v9r5" title="%{v9r5-btn}" value="@{v9r5-btn}">
                         <span class="img-btn">w</span>
@@ -4897,7 +4967,12 @@
                 <li>Une ligne commençant par un chiffre marque le début d'une capacité</li>
                 <li>Les lignes suivantes constituent la description de la capacité</li>
               </ul>
-              
+
+              <input type="checkbox" name="attr_from_drs" title="@{from_drs}" value="1">
+              &nbsp;Texte copié depuis le DRS de Chroniques Oubliées
+              <br>
+              <input type="text" value="https://drs.chroniques-oubliees.fr/fantasy/voies" readonly>
+
             </div>
 
           </div>
@@ -5016,7 +5091,7 @@
                   </div>
   
                   <div class="d-flex">
-                    <textarea class="one-row" name="attr_res-props" title="@{res-props} Propriétés" placeholder="Propriétés"></textarea>
+                    <textarea class="one-row" name="attr_res-props" title="@{res-props} Propriétés&#10;type: munitions&#10;type: soins [formule si différent de 1d4°]" placeholder="Propriétés nom: valeur"></textarea>
                   </div>
   
                 </fieldset>
@@ -5373,7 +5448,7 @@
               <textarea 
                 name="attr_custom"
                 placeholder="nom_attribut: valeur"
-                title="Un nom d'attribut et sa valeur par ligne &#10;Les attributs sont créés sous le nom @{<profil>_<nom_attribut>} &#10;Les lignes commençant par // sont des commentaires et ne sont pas traitées"
+                title="Un nom d'attribut et sa valeur par ligne &#10;Les attributs sont créés sous le nom @{nom_attribut} &#10;Les lignes commençant par // sont des commentaires et ne sont pas traitées"
               ></textarea>
             </details>
 
@@ -5855,6 +5930,9 @@
             <hr>
             <input type="checkbox" name="attr_chatsetattr" title="@{chatsetattr}" value="1">
             <span>ChatSetAttr</span>
+            <hr>
+            <input type="checkbox" name="attr_addcustrn" title="@{addcustrn}" value="1">
+            <span>AddCustomTurn</span>
           </div>
           
           <div class="sheet-col">
@@ -5881,12 +5959,16 @@
               <li>
                 <details>
                   <summary>
-                    <strong>Version 1.13.0</strong> (2025-12-31)
+                    <strong>Version 1.13.0</strong> (2026-01-04)
                   </summary>
                   <ul>
                     <li>Prise en charge de l'action <em>Aider</em> (script MOD SetChatAttr nécessaire)</li>
                     <li>Ajout de 4 compétences personnalisées optionnelles avec caractéristiques associées</li>
                     <li>Ajout d'un champ pour le score d'attaque à distance de base à la fiche de PNJ</li>
+                    <li>Ajout d'un champ Genre à la fiche de PNJ</li>
+                    <li>Mise à jour automatique des PV en cas d'utilisation d'un consommable de soins</li>
+                    <li>Gestion des effets prolongés des attaques et capacités</li>
+                    <li>Prise en charge du script MOD <em>AddCustomTurn</em> pour améliorer les effets prolongés</li>
                   </ul>
                 </details>
               </li>
@@ -6409,7 +6491,6 @@
               <h4>CRIT.</h4>
               <h4>DM</h4>
               <h4>PORTEE</h4>
-              <!--<h4>SPECIAL</h4>-->
             </div>
   
             <input type="hidden" name="attr_pnjatk">
@@ -7096,13 +7177,18 @@
           <summary>Importer un statblock</summary>
           <div class="npc-2colrow">
             <div>
-              <textarea name="attr_statblock" class="stat-block" placeholder="Coller ici un statblock copié depuis le PDF"></textarea>
+              <textarea name="attr_statblock" class="stat-block" placeholder="Coller ici un statblock copié depuis le PDF ou le DRS"></textarea>
             </div>
             <div>
               <button type="action" name="act_importsb-btn" class="flat-btn img-btn" title="Importer le statblock">
                 <span class="img-btn">W</span>&nbsp;Import
               </button>
-              <textarea class="import-result" name="attr_resultsb"></textarea>
+              <br>
+              &nbsp;<input type="checkbox" name="attr_from_drs" title="@{from_drs}" value="1">
+              &nbsp;Texte copié depuis le DRS de Chroniques Oubliées
+              <br>
+              <input type="text" value="https://drs.chroniques-oubliees.fr/fantasy/creatures" readonly>              
+              <textarea class="import-result medium" name="attr_resultsb"></textarea>
             </div>
           </div>
         </details>
@@ -9544,14 +9630,23 @@ function objval(value, onError = {}) {
 }
 
 /**
-* Capitalize string
-* @param {string} s - string to capitalize
-* @param {boolean} [forceLower=true] - force lower to end of string
-* @returns capitalized string
+ * Capitalize string
+ * @param {string} s - string to capitalize
+ * @param {boolean} [forceLower=true] - force lower to end of string
+ * @returns {string}
 */
 function capitalize(s, forceLower = true) {
   if (s && s !== "")
     return s.charAt(0).toUpperCase() + (forceLower ? s.substring(1).toLowerCase() : s.substring(1));
+}
+
+/**
+ * Convert camelCase string to kebab-case
+ * @param {string} s - string to kebabize
+ * @returns {string}
+ */
+function toKebabCase(s) {
+    return s.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
 }
 
 /**
@@ -10065,7 +10160,7 @@ function diceRoll(roll) {
 function sendChatCmd(chatCmd) {
   startRoll(chatCmd, roll => {
     if (chatCmd.startsWith("!"))
-      console.log(chatCmd)
+      console.log(chatCmd);
     finishRoll(roll.rollId);
   });
 }
@@ -10155,9 +10250,17 @@ function sendChatMsg(msg, options) {
       }
     }
 
+    // store healing result
+    if (roll.results.heal) {
+      updates.set("healing", `${ roll.results.heal.result }~${ roll.rollId }`); // make it unique
+    }
+
     // additional chat roll
     if (strval(options.nextRoll) !== "")
-      updates.set("next_roll", `${ options.nextRoll }~${ roll.rollId }`);
+      updates.set("next_roll", `${ options.nextRoll }~${ roll.rollId }`); // make it unique
+
+    if (roll.results.targetname)
+      updates.set("last_target", getRollData(roll, "targetname"));
 
     if (updates.size > 0)
       setAttrs(Object.fromEntries(updates));
@@ -10236,7 +10339,7 @@ function ask(askParams, callback) {
 function getRollData(rollInfo, name) {
   const expr = strval(rollInfo.results[name].expression);
   if (expr === "")
-    return
+    return;
   return (expr.match(/^0\[(.*)\]\s*$/) || [])[1];
 }
 
@@ -10348,7 +10451,7 @@ function tokenMod(charName, props = {}) {
  * Build ChatSetAttr command
  * @param { { silent: boolean, mute: boolean, select: string, from: string, header: string, content: string } } options - !setattr options
  * @param {Object} attrs - attributes name/value pairs
- * @returns {String}
+ * @returns {string}
  */
 function chatSetAttr(options, attrs = {}) {
   options = { select: "--sel", from: "COF2e", header: "", ...options };
@@ -10363,6 +10466,28 @@ function chatSetAttr(options, attrs = {}) {
   }, `!setattr ${options.select}`);
   const attribs = " " + Object.entries(attrs).map(([ name, value ]) => `--${name}|${value}`).join(" ");
   return setattr + attribs;
+}
+
+/**
+ * Build addCustomTurn command
+ * @param { { formula: number, initial: string|number, name: string } } options - !act options
+ * @returns {string}
+ */
+function addCustomTurn(options) {
+  options = { formula: -1, ...options };
+  const actCmd = Object.keys(options).reduce((result, optk) => {
+    if (optk === "formula")
+      return result;
+    if (optk === "initial")
+      return result += ` ${options[optk]}`;
+    if (optk === "index")
+      return result += ` --index ${options[optk]}`;
+    if (optk === "name")
+      return result += ` --${options[optk]}`;
+    else
+      return result += ` --${toKebabCase(optk)}`;
+  }, `!act ${options.formula}`);
+  return actCmd;
 }
 
 /**
@@ -11276,7 +11401,9 @@ function updatePVMax(eventInfo, changed = "") {
     
     // Won't update if changing rank 2 for Mages profiles
     if (changed !== "")
-      if (level === 1 && strval(values.famille) === "Mages" && abilityInfo(changed).rank === 2)
+      if (level === 1
+          && strval(values.famille) === "Mages" 
+          && abilityInfo(changed).rank === 2)
         return;
       
     let pv = intval(values.pv);
@@ -11305,7 +11432,9 @@ function updatePVMax(eventInfo, changed = "") {
         return;
       }
 
-      if (SWData.settings.level1Paths.includes(path) && rank === 2 && hasProp(props, "initial"))
+      if (SWData.settings.level1Paths.includes(path) 
+          && rank === 2 
+          && hasProp(props, "initial"))
         return;
       
       if (pathPV === 0) {
@@ -11768,7 +11897,8 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
         chance: addLuckButton(values),
         tohit: "",
         opposed: "",
-        target: ""
+        target: "",
+        targetname: ""
       };
       
       if (roll.startsWith("1d20") && !useOneRoll)
@@ -11783,6 +11913,7 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
           atkProps.opposed = "[[1]]";
         }
         atkProps.target = SWData.settings.tokens.target.name;
+        atkProps.targetname = `[[0[${atkProps.target}] ]]`;
       }
       
       const chatMsg = rollTemplate(atkProps, { tags });
@@ -12580,7 +12711,7 @@ function insertRolls(text, options = {}) {
   });
 
   // Search for "... #d# +/- X..."
-  matchRegExp(text, /([0-9]+[dD][0-9]+)([ ]*[\+\-]*[ ]*[0-9]*)?/gm).forEach(result => {
+  matchRegExp(text, /([0-9]+d[0-9]+)([ ]*[\+\-]*[ ]*[0-9]*)?/gm).forEach(result => {
     const [ matched, dice, mod ] = result;
     const replace = `[[${dice}${ strval(mod).trim() }]] `;
     text = text.replace(matched, replace);
@@ -12635,6 +12766,57 @@ on("clicked:repeating_armes:armeopt-btn clicked:repeating_npcarmes:armeopt-btn",
   getAttrs([ toggle ], function(values) {
     const option = 1 - intval(values[toggle]);
     setAttrs({ [toggle]: option });
+  });
+});
+
+/**
+ * Return list of ongoing effect attributes
+ * @returns {string[]}
+ */
+function ongoingAttrs() {
+  return [ "effet", "nom", "duree", "stop" ];
+}
+
+/**
+ * Update ongoing effect for attack
+ */
+on(ongoingAttrs().map(attr => `change:repeating_armes:etendu-${attr}`).join(" "), function() {
+  getAttrs(ongoingAttrs().map(attr => rptAttr("armes", "etendu-" + attr)), function(values) {
+    const ongoing = Object.keys(values)
+    .map(k => strval(values[k]))
+    .filter(v => v !== "")
+    .join(" ");
+    setAttrs({ [rptAttr("armes", "arme-etendu")]: ongoing });
+  });
+})
+
+/**
+ * Roll ongoing effect for attack
+ */
+on("clicked:repeating_armes:ongoing-btn", function() {
+  const rptName = rptAttr("armes", "arme-nom");
+  getAttrs([
+    rptName,
+    ...ongoingAttrs().map(attr => rptAttr("armes", "etendu-" + attr))
+  ], function(values) {
+    let effect = strval(values[rptAttr("armes", "etendu-effet")]);
+    effect = insertRolls(" " + effect + " ").trim();
+    let name = strval(values[rptAttr("armes", "etendu-nom")]);
+    if (name === "")
+      name = strval(values[rptName]);
+    let stop = strval(values[rptAttr("armes", "etendu-stop")]);
+    if (stop === "")
+      stop = "Pendant " + strval(values[rptAttr("armes", "etendu-duree")]);
+    const text = [ effect, stop ].filter(v => v !== "").join("\n");
+
+    // send to chat
+    const rollProps = {
+      lsub: "Effet",
+      rsub: name,
+      text
+    };
+    
+    sendChatMsg(rollTemplate(rollProps));
   });
 });
 
@@ -12769,8 +12951,9 @@ function maneuversRollQuery(cha) {
  */
 on("clicked:repeating_armes:attack-btn", function(eventInfo) {
   const { rowId: attackId } = rptInfo(eventInfo.triggerName);
-  const section = "repeating_armes_arme-"
-  const thrown = "repeating_armes_jet-"
+  const section = "repeating_armes_arme-";
+  const rptThrown = "repeating_armes_jet-";
+  const rptOngoing = "repeating_armes_etendu-";
   const attackAttrs = [
     "nom", "atk", "atkdiv", "crit", "2m",
     "dm", "dmtype", "bonus", "dmdiv",
@@ -12801,14 +12984,14 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
     "noms_voies", "rangs_voies",
     "en_selle",
     ...luckButtonAttrs(),
-    ...sitModAttrs.map(a => `modsit_${a}`),
-    ...attackAttrs.map(a => rptAttr("armes", `arme-${a}`)),
-    ...[ "resid", "nbre" ].map(a => rptAttr("armes", `jet-${a}`)),
-    "dm_buff_list", "allattacks_buff", "allattacks_desc"
+    ...sitModAttrs.map(attr => `modsit_${attr}`),
+    ...attackAttrs.map(attr => rptAttr("armes", `arme-${attr}`)),
+    ...[ "resid", "nbre" ].map(attr => rptAttr("armes", `jet-${attr}`)),
+    "dm_buff_list", "allattacks_buff", "allattacks_desc",
+    ...ongoingAttrs().map(attr => rptAttr("armes", `etendu-${attr}`)),
   ], function (values) {
     
     // general options
-    //const useOneRoll = boolval(values.cfg_1attack_roll);
     const useOneRoll = intval(values.cfg_d20roll) === 0
     ? boolval(values.cfg_1attack_roll)
     : true;
@@ -12845,8 +13028,8 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
     const modifiers = strval(values[section + "atkmods"]).split(",").map(mod => mod.trim().toLowerCase());
     const options = strval(values[section + "options"]);
     const usure = strval(values[section + "usure"]);
-    const resourceId = strval(values[`${thrown}resid`]);
-    const resourceNbr = Math.max(1, intval(values[`${thrown}nbre`]));
+    const resourceId = strval(values[`${rptThrown}resid`]);
+    const resourceNbr = Math.max(1, intval(values[`${rptThrown}nbre`]));
 
     // DM + all attacks buffs 
     const dmBuffs = strval(values.dm_buff_list).split(";").map(b => b.trim());
@@ -13195,7 +13378,8 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
       fumbletest: "",
       fumble: "",
       tohit: "",
-      target: ""
+      target: "",
+      targetname: ""
     };
 
     if (roll.startsWith("1d20") && bRoll)
@@ -13230,8 +13414,9 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
     if (boolval(values.cfg_cible)) {
       atkProps.tohit = SWData.settings.tokens.target.def;
       atkProps.target = SWData.settings.tokens.target.name;
+      atkProps.targetname = `[[0[${atkProps.target}] ]]`;
     }
-
+    
     const chatMsg = rollTemplate(atkProps, { tags: allTags });
     sendChatMsg(chatMsg, rollOptions);
     
@@ -13245,6 +13430,21 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
         setAttrs({ [resVal]: munitions });
       });
     }
+
+    const ongoingPrms = ongoingAttrs().map(attr => strval(values[rptOngoing + attr]));
+    if(ongoingPrms.some(v => v !== "")) {
+      const [ ogEff, ogName, ogTime ] = ongoingPrms;
+      let effectName = name;
+      if (ogName !== "")
+        effectName = ogName;
+      effectName += " " + ogEff;
+      let timeSpan = "";
+      if (ogTime !== "")
+        timeSpan = insertRolls(" " + ogTime + " ").trim();
+      const ongoing_actmod = effectName + "~" + timeSpan + "~" + new Date().toISOString();
+      setAttrs({ ongoing_actmod });
+    }
+
   });
 });
 
@@ -13464,11 +13664,15 @@ function actionAbility(path, rank) {
     abilityInfo({ path, rank }).rankUseMax,
     abilityInfo({ path, rank }).rankUseFreq,
     abilityInfo({ path, rank }).rankProps,
-    abilityInfo({ path, rank }).rankParam,
+    //abilityInfo({ path, rank }).rankParam,
     abilityInfo({ path, rank }).rankBase
   ];
-  getAttrs([ ...abilityAttrs, "character_name", "pm", "concentration", "rangs_voies" ], function(values) {
-    const [ name, ability, desc, owned, spell, used, uses, freq, props, param, br ] = Object.keys(values);
+  getAttrs([
+    ...abilityAttrs, 
+    "character_name",
+    "pm", "concentration", "rangs_voies",
+  ], function(values) {
+    const [ name, ability, desc, owned, spell, used, uses, freq, props, br ] = Object.keys(values);
     const pathName = strval(values[name]);
     let abilityName = strval(values[ability]);
     const abilityOwned = boolval(values[owned]);
@@ -13565,11 +13769,25 @@ function actionAbility(path, rank) {
     // change rolls based on rank
     description = paramByRank(description, path, values, abilityProps);
 
+    // check ongoing effect
+    let ongoing = strval(getProp(abilityProps, "etendu"));
+    if (ongoing) {
+      let effectName = strval(getProp(abilityProps, "etendu-nom"));
+      if (effectName === "")
+        effectName = abilityName;
+      effectName += " " + ongoing;
+      let timeSpan = strval(getProp(abilityProps, "etendu-duree"));
+      if (timeSpan !== "")
+        timeSpan = insertRolls(" " + timeSpan + " ").trim();
+      const ongoing_actmod = effectName + "~" + timeSpan + "~" + new Date().toISOString();
+      updates.set("ongoing_actmod", ongoing_actmod);
+    }
+
     // build text
     let text = insertRolls(description);
     if (alert !== "" && alertCSS === "")
       text += "\n" + alert
-
+    
     // Do another roll
     let nextRoll = "";
     if (hasProp(abilityProps, "roll")) {
@@ -13598,6 +13816,7 @@ function actionAbility(path, rank) {
       rollProps.alert = alert;
       rollProps.alertclass = alertCSS;
     }
+    
     const chatMsg = rollTemplate(rollProps, { tags: allTags });
     sendChatMsg(chatMsg, { nextRoll });
     
@@ -13611,6 +13830,41 @@ function actionAbility(path, rank) {
 
   });
 }
+
+/**
+ * Display ongoing effect for abilities
+ * @param {number} path - path #
+ * @param {number} rank - rank #
+ */
+function ongoingEffect(path, rank) {
+  getAttrs([ 
+    abilityInfo({ path, rank }).pathName,
+    abilityInfo({ path, rank }).rankName,
+    abilityInfo({ path, rank }).rankProps
+  ], function(values) {
+    const [ kpath, kname, kprops ] = Object.keys(values);
+    const pathName = strval(values[kpath]);
+    const props = strval(values[kprops]);
+    const effect = insertRolls(" " + getProp(props, "etendu") + " ").trim();
+    let name = strval(getProp(props, "etendu-nom"));
+    if (name === "")
+      name = strval(values[kname]);
+    let stop = strval(getProp(props, "etendu-stop"));
+    if (stop === "")
+      stop = "Pendant " + strval(getProp(props, "etendu-duree"));
+    const text = [ effect, stop ].join("\n");
+
+    // send to chat
+    const rollProps = {
+      lsub: `${pathName} - ${rank}`,
+      rsub: name,
+      text
+    };
+    
+    sendChatMsg(rollTemplate(rollProps));
+  });
+}
+
 
 /**
  * Update rank in path
@@ -13889,6 +14143,11 @@ seq(9).forEach(path => {
       actionAbility(path, rank);
     });
 
+    // Handle ability ongoing effect
+    on(`clicked:x${ ability.slice(1) }-btn`, function() {
+      ongoingEffect(path, rank);
+    });
+
     on(`change:${ability} change:${ abilityInfo(ability).rankParam }`, function(eventInfo) {
       
       // Update rank in path
@@ -13940,6 +14199,45 @@ on("clicked:concentration-btn", function () {
   getAttrs([ "concentration" ], function (values) {
     setAttrs({ concentration: 1 - intval(values.concentration) });
   })
+});
+
+/**
+ * On click of ongoing effect button
+ */
+on("clicked:ongoing-btn", function() {
+  const allOwned = allPathRanks("rankOwned");
+  const allNames = allPathRanks("rankName");
+  const allProps = allPathRanks("rankProps");
+  getAttrs([ 
+    "character_name",
+    ...allOwned,
+    ...allNames,
+    ...allProps
+  ], function(values) {
+    const ongoing = [ "Aucune" ];
+    const action = [];
+    allOwned.forEach(attr => {
+      if (!boolval(values[attr]))
+        return;
+
+      const { path, rank } = abilityInfo(attr);
+      const props = strval(values[abilityInfo({ path, rank }).rankProps]);
+      if (!hasProp(props, "etendu"))
+        return;
+      let name = getProp(props, "etendu-nom");
+      if (name === "")
+        name = capitalize(cleanText(strval(values[abilityInfo({ path, rank }).rankName]), true));
+      ongoing.push(name);
+      action.push(`%{${ strval(values.character_name) }|x${path}r${rank}-btn}`);
+    });
+    if (ongoing.length === 1)
+      return;
+
+    ask([ "Effet prolongé ?", ...ongoing ], function(selected) {
+      if (selected > 1)
+        sendChatCmd(action[selected - 2]);
+    });
+  });
 });
 
 /**
@@ -14584,14 +14882,73 @@ on("clicked:helpbuff-btn", function() {
  * @param {number} [base=1] - base rank number
  * @returns {Map<string,string|number>} Map object of attributes to update
  */
-function importFromDRS(data, path, base) {
+function importJsonDRS(data, path, base) {
   const updates = new Map();
   // TODO
   return updates;
 }
 
 /**
- * Parse abilities path text
+ * Parse abilities path text from DRS
+ * @param {string} text - text of abilities path
+ * @param {number} path - path number
+ * @param {number} [base=1] - base rank number
+ * @returns {Map<string,string|number>} Map object of attributes to update
+ */
+function importFromDRS(text, path, base = 1) {
+  const updates = new Map();
+
+  let ability = `voie${path}notes`;
+  let abilityTitle = "";
+
+  const lines = text.replaceAll("\r\n", "\n").split("\n");
+
+  lines.forEach((line, index) => {
+    // first line
+    if (index === 0) {
+      let pathName = simplePathName(line.toLowerCase(), false);
+      if (pathName !== "")
+        updates.set(`voie${path}nom`, capitalize(pathName));
+      return;
+    }
+
+    if (strval(line).replace(/[^\x00-\xFF]/g, "") === "")
+      return;
+    if (strval(line).toLowerCase() === "bordure")
+      return;
+    
+    // Found ability title
+    const matchTitle = line.match(/^([1-9])[ ]+·[ ]+(.*)$/);
+    if (matchTitle) {
+      let [ rank, title ] = matchTitle.slice(1);
+      rank = intval(rank) - base + 1;
+      /* cannot identify spells
+      updates.set(`v${path}r${rank}_spell`, title.includes("*") ? 1 : 0); 
+      title = title.replace("*", "");
+      */
+      abilityTitle = `voie${path}-t${rank}`;
+      updates.set(abilityTitle, title.trim());
+      ability = `voie${path}-${rank}`;
+      return;
+    }
+    
+    // Found action type
+    const matchAction = line.match(/^(G|M|A|L)$/);
+    if (matchAction && abilityTitle !== "") {
+      const [ action ] = matchAction.slice(1);
+      updates.set(abilityTitle, updates.get(abilityTitle) + " (" + action + ")");
+      return;
+    }
+
+    const desc = updates.has(ability) ? updates.get(ability) + " " : "";
+    updates.set(ability, desc + line.trim());
+  });
+
+  return updates;
+}
+
+/**
+ * Parse abilities path text from PDF
  * @param {string} text - text of abilities path
  * @param {number} path - path number
  * @param {number} [base=1] - base rank number
@@ -14650,7 +15007,7 @@ function importFromPDF(text, path, base = 1) {
 seq(9).forEach(path => {
   
   on(`clicked:import_v${path}-btn`, function() {
-    getAttrs([ "voie_pdf", `v${path}br` ], function(values) {
+    getAttrs([ "voie_pdf", "from_drs", `v${path}br` ], function(values) {
       const text = strval(values.voie_pdf);
       if (text === "")
         return;
@@ -14659,9 +15016,11 @@ seq(9).forEach(path => {
       let updates;
       try {
         const data = JSON.parse(text);
-        updates = importFromDRS(data, path, base);
+        updates = importJsonDRS(data, path, base);
       } catch (error) {
-        updates = importFromPDF(text, path, base); 
+        updates = boolval(values.from_drs)
+        ? importFromDRS(text, path, base)
+        : importFromPDF(text, path, base); 
       }
   
       if (updates.size > 0) {
@@ -15530,7 +15889,7 @@ on("clicked:repeating_ressources:resconso-btn", function () {
     let heal = "";
     const rsub = capitalize(strval(values[rptAttr(section, "res-desc")]));
     const props = strval(values[rptAttr(section, "res-props")]);
-    const type = getProp(props, "type");
+    const type = strval(getProp(props, "type"));
     if (type.toLowerCase().startsWith("soins")) {
       let [ ...roll ] = type.trim().split(" ").slice(1);
       if (roll.length === 0)
@@ -15820,7 +16179,7 @@ on(changeEvent(SWData.settings.lowFan), function () {
  * Rebuild custom attributes 
  */
 function rebuildCustom() {
-  getAttrs([ "custom", "profil" ], function (values) {
+  getAttrs([ "custom" ], function (values) {
     const rows = strval(values.custom)
       .split("\n")
       .map(r => strval(r).trim())
@@ -15828,13 +16187,12 @@ function rebuildCustom() {
     if (rows.length === 0)
       return;
     
-    const [ profile ] = cleanText(values.profil).split("/");
     const updates = new Map();
     rows.forEach(row => {
       const { name, value } = parseNameValue(row);
       if (!name)
         return;
-      updates.set(`${profile}_${name}`, replaceDevol(value));
+      updates.set(`${name}`, replaceDevol(value));
     });
 
     if (updates.size > 0)
@@ -16787,6 +17145,42 @@ on("clicked:checkup-btn", function() {
   displayCheckup();
 });
 
+/**
+ * On healing in message
+ */
+on("change:healing", function() {
+  getAttrs([ "healing", "pv", "pv_max" ], function(values) {
+    const healing = intval(strval(values.healing).split("~")[0]);
+    if (healing === 0)
+      return;
+    const pvMax = intval(values.pv_max);
+    const pv = Math.min(intval(values.pv) + healing, pvMax);
+    setAttrs({ pv, PVIG: pv });
+  });
+});
+
+/**
+ * On new ongoing effect & !act mod script
+ */
+on("change:ongoing_actmod", function() {
+  getAttrs([ "addcustrn", "ongoing_actmod" ], function(values) {
+    if (!boolval(values.addcustrn))
+      return;
+
+    let [ name, timeSpan ] = strval(values.ongoing_actmod).split("~");
+    const actOptions = { 
+      formula: timeSpan !== "" ? -1 : 0,
+      initial: timeSpan !== "" ? timeSpan.trim().split(" ")[0] : "0",
+      name,
+      index: 0,
+      //after: true,
+    };
+    if (actOptions.formula === -1)
+      actOptions.deleteOnZero = true;
+    sendChatCmd(addCustomTurn(actOptions));
+  });
+});
+
 // ================
 // NPC SHEET EVENTS
 // ================
@@ -16868,8 +17262,7 @@ on("change:rd change:resdm sheet:opened", function() {
       rrdm += rd.split("\n").join(", ");
     if (resdm.length > 0)
       rrdm += ( rrdm !== "" ? ", " : "" ) + "DM " + resdm.split("\n").join(" + ") + " ÷ 2";
-    if (rrdm.length > 0)
-      setAttrs({ rrdm });
+    setAttrs({ rrdm });
   });
 });
 
@@ -17265,6 +17658,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
         fumble: "",
         tohit: "",
         target: "",
+        targetname: "",
         chance: npcLuckButton(values)
       };
       
@@ -17285,6 +17679,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
       if (boolval(values.cfg_cible && multiAttacks === 1)) {
         chatAtk.tohit = SWData.settings.tokens.target.def;
         chatAtk.target = SWData.settings.tokens.target.name;
+        chatAtk.targetname = `[[0[${chatAtk.target}] ]]`;
       }
 
       if(extraDM.length > 0)
@@ -17402,13 +17797,15 @@ function setCompanion(values) {
     let expr = strval(values[`comp_${attr}`]);
     if (expr === "")
       return;
-    const matching = expr.match(/\[.*\]/);
-    if (matching) {
+    while (true) {
+      const matching = expr.match(/\[.*?\]/);
+      if (!matching)
+        break;
       const [ matched ] = matching;
       const attribute = "@{" + companionOf + "|" + matched.split("[")[1].split("]")[0] + "}";
       expr = expr.replace(matched, attribute);
-      askValues += `{{${attr}=[[${expr}]]}} `;
     }
+    askValues += `{{${attr}=[[${expr}]]}} `;
   });
 
   // retrieve values & update attributes
@@ -17532,12 +17929,200 @@ function importNPCAttack(sbLine, npcAttrs) {
  * @param {object} data - parsed JSON blob
  * @returns {Map<string,string|number>} Map object of attributes to update
  */
-function statBlockFromDRS(data) {
+function jsonFromDRS(data) {
   
   const npcAttrs = new Map();
   
   // TODO
   
+  return npcAttrs;
+}
+
+function statBlockFromDRS(statblock) {
+  
+  let npcAttrs = new Map();
+  
+  let parseAttacks = false;
+  
+  const abilities = [];
+  let parseAbilities = false;
+  let emptyLine = 0;
+
+  (statblock + "\n").split("\n").forEach((sbLine, lineNum, sb) => {
+    let match;
+
+    // name
+    if (lineNum === 0) {
+      npcAttrs.set("character_name", sbLine);
+      return;
+    }
+    
+    // NC
+    match = sbLine.match(/^NC[ ]+([0-9]+)( 1)?(\/2)?$/);
+    if (match) {
+      const [ nc, half1, half2 ] = match.slice(1);
+      if (nc + half1 === "1/2")
+        nc = "0.5";
+      if (half1 + half2 === " 1/2")
+        nc = intval(nc) + .5;
+      npcAttrs.set("niveau", nc);
+      return;
+    }
+
+    // creature type
+    match = sbLine.toUpperCase().match(/CR[ÉE]ATURE[ ]+(NON[ ]+VIVANTE|HUMANO[ÏI]DE|V[ÉE]G[ÉE]TATIVE|VIVANTE)/);
+    if (match) {
+      const type = strval(match[1]);
+      if (type !== "")
+        npcAttrs.set("creature", "Créature " + type.toLowerCase());
+      return;
+    }
+    
+    // size
+    match = sbLine.toLowerCase().match(/taille[ ]+(minuscule|tr[èe]s[ ]+petite|petite|moyenne|grande|[ée]norme|colossale)/);
+    if (match) {
+      const taille = strval(match[1]);
+      if (taille !== "")
+        npcAttrs.set("taille", taille);
+      return;
+    }
+
+    match = sbLine.toUpperCase().match(/^(AGI|CON|FOR|PER|CHA|INT|VOL|DEF|PV|INIT)$/);
+    if (match) {
+      const attr = strval(match[1]).toLowerCase();
+      const value = strval(sb[lineNum + 1]);
+      
+      // stat
+      if (SWData.PC.STATS.map(s => shorten(s)).includes(attr)) {
+        npcAttrs.set(attr + "_sup", value.endsWith("*") ? "S" : "0");
+        npcAttrs.set(attr, intval(value.replace("*", "")));
+        return;
+      }
+
+      // DEF
+      if (attr === "def") {
+        const [ def, defSup ] = value.replace(/\s+/g, " ").split(" ");
+        npcAttrs.set("def", intval(def));
+        npcAttrs.set("def_val", intval(def));
+        if (defSup)
+          npcAttrs.set("def_supval", intval(defSup.split("(")[1].split(")")[0]));
+        return;
+      }
+
+      // PV
+      if (attr === "pv") {
+        const [ pv, rd, rdVal ] = value.replace(/\s+/g, " ").split(" ");
+        npcAttrs.set("pv", intval(pv));
+        npcAttrs.set("pv_max", intval(pv));
+        if (rd === "(RD")
+          npcAttrs.set("rd", intval(rdVal.split(")")[0]));
+        return;
+      }
+
+      // INIT
+      if (attr === "init") {
+        npcAttrs.set("init", intval(value));
+        return;
+      }
+    }
+    
+    if (sbLine.toLowerCase() === "attaques") {
+      parseAttacks = true;
+      return;
+    }
+
+    if (parseAbilities) {
+      if (sbLine === "")
+        emptyLine++;
+      else
+        return;
+      switch (emptyLine) {
+        case 1:
+          const prior = sb[lineNum - 1];
+          let name = prior;
+          if ([ "G", "M", "A", "L"].includes(prior)) {
+            name = sb[lineNum - 2] + " ("+ prior + ")";
+          }
+          abilities.push({ name });
+          break;
+        case 2:
+          const desc = sb[lineNum - 1];
+          abilities[abilities.length - 1] = { 
+            name: abilities[abilities.length - 1].name,
+            desc
+          }
+          emptyLine = 0;
+          break;
+      }
+      return;
+    }
+
+    if (parseAttacks) {
+      if (sbLine === "")
+        return;
+  
+      if (!sbLine.includes(" DM ")) {
+        parseAbilities = true;
+        parseAttacks = false;
+        return;
+      }
+
+      match = sbLine.match(/(.+?)([\+\-][0-9]+)[ ]+·[ ]+DM[ ]+([1-9][dD][0-9]+([\+\-][0-9]+)?)([ ]+\+[ ]+.+)?/);
+      if (match) {
+        let submatch;
+        let [ name, bonus, dm, dmdiv, special ] = match.slice(1);
+        if (dmdiv)
+          dm = dm.replace(dmdiv, "");
+        let range = "";
+        submatch = name.match(/(.+?)\(([0-9]+[ ]+m)\)/);
+        if (submatch)
+          [ name, range ] = submatch.slice(1);
+        let multi = "";
+        submatch = name.match(/(.+?)\(([0-9]+[ ]+attaques)\)/);
+        if (submatch)
+          [ name, multi ] = submatch.slice(1);
+
+        const rowId = rptAttr("npcarmes", "arme-", generateRowID());
+        npcAttrs.set(rowId + "nom", name);
+        if (multi !== "")
+          npcAttrs.set(rowId + "multi", 1);
+        npcAttrs.set(rowId + "roll", "1d20");
+        npcAttrs.set(rowId + "atk", intval(bonus));
+        npcAttrs.set(rowId + "crit", "20");
+        npcAttrs.set(rowId + "dm", dm);
+        npcAttrs.set(rowId + "dmtype", "tranchants");
+        if (dmdiv)
+          npcAttrs.set(rowId + "dmdiv", intval(dmdiv));
+        if (range)
+          npcAttrs.set(rowId + "portee", rangeWithUnits(range));
+        if (special)
+          npcAttrs.set(rowId + "special", special);
+        return;
+      }
+    }
+
+    // description
+    if (lineNum === 1) {
+      npcAttrs.set("pnj_desc", sbLine);
+      return;
+    }
+  });
+
+  abilities.forEach(ability => {
+    const rowId = rptAttr("npcrolls", "npcroll-", generateRowID());
+    npcAttrs.set(rowId + "name", ability.name);
+    npcAttrs.set(rowId + "desc", ability.desc);
+    const submatch = ability.desc.toLowerCase().match(/(une|deux|trois)[ ]+fois[ ]+par[ ]+(combat|jour)/);
+    if (submatch) {
+      const [ nb, freq ] = submatch.slice(1);
+      const uses = [ "une", "deux", "trois" ].findIndex(n => n === nb);
+      if (uses > -1 && freq) {
+        npcAttrs.set(rowId + "max", uses + 1);
+        npcAttrs.set(rowId + "freq", freq);
+      }
+    }
+  });
+
   return npcAttrs;
 }
 
@@ -17692,9 +18277,9 @@ on("clicked:importsb-btn", function() {
   removeRepeatingAll("npcrolls");
 
   // add new
-  getAttrs(["statblock"], function (value) {
+  getAttrs(["statblock", "from_drs"], function (values) {
     
-    const statblock = strval(value.statblock);
+    const statblock = strval(values.statblock);
     if (statblock === "")
       return;
     
@@ -17702,9 +18287,11 @@ on("clicked:importsb-btn", function() {
 
     try {
       const data = JSON.parse(statblock);
-      updates = statBlockFromDRS(data);
+      updates = jsonFromDRS(data);
     } catch (error) {
-      updates = statBlockFromPDF(statblock);
+      updates = boolval(values.from_drs)
+      ? statBlockFromDRS(statblock)
+      : statBlockFromPDF(statblock);
     }
 
     if (updates.size > 0) {

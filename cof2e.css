@@ -19,13 +19,17 @@ button,
 }
 
 input:hover:read-write,
-input:hover:read-write,
 select:hover {
   background-color: white;
 }
 
 .cofmain input[type="text"] {
   width: 100%;
+}
+
+.cofmain input:hover:read-write,
+.cofmain select:hover {
+  border: 1px solid orange;
 }
 
 .cofmain .pc-gears input[type="text"],
@@ -849,6 +853,7 @@ input[type="hidden"][value="1"].has-buff + .has-buff {
 
 .pc-attacks .weapon-option,
 .pc-attacks .weapon-special,
+.pc-attacks .weapon-special-ongoing,
 .npc-attacks .weapon-option,
 .npc-attacks .weapon-special {
   display: grid;
@@ -859,6 +864,13 @@ input[type="hidden"][value="1"].has-buff + .has-buff {
 .pc-attacks .weapon-special,
 .npc-attacks .weapon-special {
   grid-template-columns: 25px 1fr;
+}
+.pc-attacks .weapon-special-ongoing {
+  grid-template-columns: 60% calc(40% - 5px);
+}
+
+.pc-attacks .weapon-special-ongoing input[value=""].ongoing + button.ongoing {
+  display: none;
 }
 
 .pc-attacks .weapon-option {
