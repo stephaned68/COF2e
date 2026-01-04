@@ -17,6 +17,7 @@ v1.13.0 [Screenshot](cof2e.png)
 - Ajout d'un champ pour le score d'attaque à distance de base à la fiche de PNJ
 - Ajout d'un champ Genre à la fiche de PNJ
 - Mise à jour automatique des PV en cas d'utilisation d'un consommable de soins
+- Prise en charge de l'import de texte (voies et créatures) depuis le DRS officiel
 - Gestion des effets prolongés des attaques et capacités
 - Prise en charge du script MOD AddCustomTurn pour les effets prolongés
 
