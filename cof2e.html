@@ -1,8 +1,8 @@
 <div class="cofmain">
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.13.0">
+  <input type="hidden" name="attr_verfdp" value="1.14.0">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.13.0">
+  <input type="hidden" name="attr_version" value="1.14.0">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
 
@@ -1245,8 +1245,12 @@
                 <div class="d-flex d-flex-middle bordered">
                   <input type="hidden" name="attr_arme-label" value="">
                   <input type="hidden" class="arme-label" name="attr_arme-showlbl" value="0">
-                  <span class="align-self-center arme-label" name="attr_arme-label"></span>&nbsp;
-                  <input type="text" name="attr_arme-nom" title="@{arme-nom}" placeholder="Arme/attaque" value="">
+                  <span class="align-self-center arme-label" name="attr_arme-label"></span>
+                  <input type="hidden" class="ongoing" name="attr_arme-etendu" value="">
+                  <button type="action" class="flat-btn img-btn ongoing" name="act_ongoing-btn" title="%{ongoing-btn} Effets prolongés">
+                    <span class="img-btn">0</span>
+                  </button>
+                  &nbsp;<input type="text" name="attr_arme-nom" title="@{arme-nom}" placeholder="Arme/attaque" value="">
                   <span class="align-self-center">2M&nbsp;:&nbsp;</span>
                   <input type="checkbox" name="attr_arme-2m" title="@{arme-2m} Arme à deux mains" value="1">
                 </div>
@@ -1327,12 +1331,8 @@
                   <div class="bordered weapon-special-ongoing">
                     <textarea class="one-row" name="attr_arme-special" title="@{arme-special}" placeholder="Effet spécial..."></textarea>
                     <details>
-                      <summary>
+                      <summary class="ellipsis">
                         <span name="attr_arme-etendu" title="@{arme-etendu} Effet prolongé"></span>
-                        <input type="hidden" class="ongoing" name="attr_arme-etendu" value="">
-                        <button type="action" class="flat-btn img-btn ongoing" name="act_ongoing-btn" title="%{ongoing-btn} Effets prolongés">
-                          <span class="img-btn">0</span>
-                        </button>
                       </summary>
                       <input type="text" name="attr_etendu-effet" title="@{etendu-effet} Peut contenir une formule" placeholder="Effet">
                       <input type="text" name="attr_etendu-nom" title="@{etendu-nom} Si différent de l'arme/attaque" placeholder="Nom">
@@ -1419,8 +1419,8 @@
           <div class="sheet-2colrow">
             
             <div class="sheet-col">
-              <h4 title="DM doublés en cas de coup critique">Options Tactiques</h4>
-
+              <h4 title="DM non doublés en cas de coup critique">Options Tactiques</h4>
+<!--
               <div class="pc-tactic">
                 <div>
                   <input type="radio" name="attr_tactique" value="0" checked>
@@ -1472,6 +1472,38 @@
                   <input type="text" class="w-auto align-self-center" name="attr_tactdmdiv" placeholder="DM supplémentaires" value="">
                 </div>
               </div>
+-->
+              <div class="pc-tactic">
+                <div class="d-flex">
+                  <select class="select-lg" name="attr_tactique" title="@{attr_tactique}">
+                    <option value="0">Aucune</option>
+                    <option value="1">Attaque assurée</option>
+                    <option value="2">Attaque précise</option>
+                    <option value="3">Attaque violente</option>
+                  </select>
+                </div>
+                <div class="d-flex">
+                  <input type="hidden" name="attr_tactdesc">
+                  <span name="attr_tactdesc"></span>
+                </div>
+              </div>
+
+              <fieldset class="repeating_tactic">
+
+                <div class="pc-tactic">
+                  <div class="d-flex">
+                    <input type="checkbox" name="attr_tact-on" value="1">
+                    <input type="text" class="align-self-center" name="attr_tact-name" placeholder="Autre tactique" value="">
+                  </div>
+                  <div class="d-flex">
+                    <input type="number" class="align-self-center" name="attr_tact-div" title="@{tact-div} Bonus pour toucher" value="0">
+                    &nbsp;<input type="checkbox" name="attr_tact-roll" title="@{tact-roll} Avec dé bonus" value="1">
+                    &nbsp;<input type="checkbox" name="attr_tact-roll" title="@{tact-roll} Avec dé malus" value="2">
+                    <input type="text" class="w-auto align-self-center" name="attr_tact-dmdiv" title="@{tact-dmdiv} DM supplémentaires" placeholder="DM supplémentaires" value="">
+                  </div>
+                </div>
+
+              </fieldset>
 
             </div>
 
@@ -7936,7 +7968,7 @@
 
 /**
  * COF2e Sheet Worker
- * v1.13.0
+ * v1.14.0
  */
 
 const SWData = {
@@ -10904,7 +10936,7 @@ function replaceDevol(expr) {
 /**
  * Change identity heading
  */
-on("change:sheet_type", function() {
+on("change:sheet_type", function(eventInfo) {
   getAttrs([ "sheet_type" ], function(values) {
     const sheetType = strval(values.sheet_type);
     if (!sheetType) 
@@ -10918,8 +10950,12 @@ on("change:sheet_type", function() {
       }
     });
 
-    if (sheetType === SWData.SHEET_TYPE.NPC)
-      setAttrs({ atkcac: 0, atkmag: 0 });
+    if (sheetType === SWData.SHEET_TYPE.NPC) {
+      let updates = { atkcac: 0, atkmag: 0 };
+      if (strval(eventInfo.previousValue) === SWData.SHEET_TYPE.PC)
+        updates = { ...updates, pc: 0, pc_max: 0 };
+      setAttrs(updates);
+    }
 
   });
 });
@@ -11108,7 +11144,7 @@ on("change:peuple", function(eventInfo) {
   getAttrs([ "peuple", ...rankNames ], function(values) {
     const updates = new Map();
     const people = strval(values.peuple);
-
+    
     if (people.trim() === "") {
       updates.set(abilityInfo({ path }).pathName, "");
       // reset abilities
@@ -11130,7 +11166,8 @@ on("change:peuple", function(eventInfo) {
     const peopleInfo = SWData.HERITAGE.find(p => p.name.includes(cleanText(people)));
     if (!peopleInfo)
       return;
-
+    
+    updates.set(abilityInfo({ path }).pathName, people);
     rankNames.forEach((rank, ix) => {
       if (strval(values[rank]) === "")
         updates.set(abilityInfo({ path, rank: ix + 1 }).rankName, capitalize(peopleInfo.abilities[ix]));
@@ -11226,7 +11263,10 @@ on(changeEvent([
     let updateAttrs = new Map();
 
     // reset PC
-    if (intval(eventInfo.newValue) === intval(eventInfo.previousValue) + 1) {
+    if (
+      strval(eventInfo.sourceAttribute) === "niveau" &&
+      intval(eventInfo.newValue) === intval(eventInfo.previousValue) + 1
+    ) {
       const pcMax = intval(values.pc_max);
       if (intval(values.pc) < pcMax)
         updateAttrs.set("pc", pcMax);
@@ -12805,9 +12845,12 @@ on("clicked:repeating_armes:ongoing-btn", function() {
     let name = strval(values[rptAttr("armes", "etendu-nom")]);
     if (name === "")
       name = strval(values[rptName]);
+    let duree = strval(values[rptAttr("armes", "etendu-duree")]);
+    if (!duree.match(/[0-9]+d[0-9]+/))
+      duree = insertRolls(" " + duree + " ").trim();
     let stop = strval(values[rptAttr("armes", "etendu-stop")]);
-    if (stop === "")
-      stop = "Pendant " + strval(values[rptAttr("armes", "etendu-duree")]);
+    if (stop === "" && duree !== "")
+      stop = "Pendant " + duree;
     const text = [ effect, stop ].filter(v => v !== "").join("\n");
 
     // send to chat
@@ -12950,11 +12993,20 @@ function maneuversRollQuery(cha) {
 /**
  * Roll an attack in chat
  */
-on("clicked:repeating_armes:attack-btn", function(eventInfo) {
+on("clicked:repeating_armes:attack-btn", async function(eventInfo) {
   const { rowId: attackId } = rptInfo(eventInfo.triggerName);
   const section = "repeating_armes_arme-";
   const rptThrown = "repeating_armes_jet-";
   const rptOngoing = "repeating_armes_etendu-";
+  const tacticIds = await getSectionIDsAsync("repeating_tactic");
+  const rptTacticAll = [];
+  tacticIds.forEach(id => {
+    rptTacticAll.push(...rptAttrs(
+      "tactic", 
+      [ "on", "name", "div", "roll", "dmdiv" ].map(attr => `tact-${attr}`),
+      id)
+    );
+  });
   const attackAttrs = [
     "nom", "atk", "atkdiv", "crit", "2m",
     "dm", "dmtype", "bonus", "dmdiv",
@@ -12981,7 +13033,7 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
     "condition_affaibli", "condition_immobilise",
     ...fearConditionsAttrs(),
     "tactique",
-    "tactautre", "tactroll", "tactname", "tactdiv", "tactdmdiv",
+    ...rptTacticAll,
     "noms_voies", "rangs_voies",
     "en_selle",
     ...luckButtonAttrs(),
@@ -13001,11 +13053,6 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
     const useWear = boolval(values.cfg_usure);
     const shieldUsed = boolval(values.bouclier_eqp);
     const tactics = intval(values.tactique);
-    const tactOther = boolval(values.tactautre);
-    const tactName = strval(values.tactname, "Option tactique");
-    const tactBM = intval(values.tactdiv);
-    const tactRoll = intval(values.tactroll);
-    const tactDM = strval(values.tactdmdiv);
     const weakened = intval(values.condition_affaibli);
     const restrained = intval(values.condition_immobilise);
     const pathNames = getPathNames(strval(values.noms_voies));
@@ -13026,7 +13073,7 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
     let range = (portee !== "") ? ` *(${ rangeWithUnits(portee) })*` : "";
     let crit = intval(values[section + "crit"], 20);
     const atkType = strval(values[section + "atktype"]);
-    const modifiers = strval(values[section + "atkmods"]).split(",").map(mod => mod.trim().toLowerCase());
+    let modifiers = strval(values[section + "atkmods"]).split(",").map(mod => mod.trim().toLowerCase());
     const options = strval(values[section + "options"]);
     const usure = strval(values[section + "usure"]);
     const resourceId = strval(values[`${rptThrown}resid`]);
@@ -13100,16 +13147,31 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
         extraDM.push(` + [[2@{devol}]] ${atkTitle}`);
         break;
     }
-    if (tactOther) {
+    
+    tacticIds.forEach(id => {
+      if (!boolval(values[rptAttr("tactic", "tact-on", id)]))
+        return;
+      const tactName = strval(values[rptAttr("tactic", "tact-name", id)]);
+      const tactBM = intval(values[rptAttr("tactic", "tact-div", id)]);
       if (tactBM !== 0)
-          tacticBonus += ` + (${tactBM})[${tactName}]`;
+        tacticBonus += ` + (${tactBM})[${tactName}]`;
+      const tactDM = strval(values[rptAttr("tactic", "tact-dmdiv", id)]);
       if (tactDM !== "")
-        extraDM.push(` + ([[${ replaceDevol(tactDM) }]]) ${tactName}`);
-      if (tactRoll === 1)
-        modifiers.push("debonus");
-      if (tactRoll === 2)
-        modifiers.push("demalus");
-    }
+        extraDM.push(` + [[${ replaceDevol(tactDM) }]] ${tactName}`);
+      const tactRoll = intval(values[rptAttr("tactic", "tact-roll", id)]);
+      if (tactRoll === 1) {
+        if (modifiers.includes("demalus"))
+          modifiers = modifiers.filter(m => m !== "demalus");
+        else
+          modifiers.push("debonus");
+      }
+      if (tactRoll === 2) {
+        if (modifiers.includes("debonus"))
+          modifiers = modifiers.filter(m => m !== "debonus");
+        else
+          modifiers.push("demalus");
+      }
+    });
 
     // Build situational modifiers
     let modSit = "";
@@ -13446,6 +13508,22 @@ on("clicked:repeating_armes:attack-btn", function(eventInfo) {
       setAttrs({ ongoing_actmod });
     }
 
+  });
+});
+
+/**
+ * Display tactical option description
+ */
+on("change:tactique", function() {
+  getAttrs([ "tactique" ], function(values) {
+    const tactique = numval(values.tactique);
+    const tactdesc = [
+      "",
+      "+5 en attaque, DM divisés par 2",
+      "-3 en attaque, +1d4° DM",
+      "-7 en attaque, +2d4° DM",
+    ][tactique];
+    setAttrs({ tactdesc });
   });
 });
 
@@ -13846,13 +13924,16 @@ function ongoingEffect(path, rank) {
     const [ kpath, kname, kprops ] = Object.keys(values);
     const pathName = strval(values[kpath]);
     const props = strval(values[kprops]);
-    const effect = insertRolls(" " + getProp(props, "etendu") + " ").trim();
+    const effect = insertRolls(" " + strval(getProp(props, "etendu")) + " ").trim();
     let name = strval(getProp(props, "etendu-nom"));
     if (name === "")
       name = strval(values[kname]);
+    let duree = strval(getProp(props, "etendu-duree"));
+    if (!duree.match(/[0-9]+d[0-9]+/))
+      duree = insertRolls(" " + duree + " ").trim();
     let stop = strval(getProp(props, "etendu-stop"));
-    if (stop === "")
-      stop = "Pendant " + strval(getProp(props, "etendu-duree"));
+    if (stop === "" && duree !== "")
+      stop = "Pendant " + duree;
     const text = [ effect, stop ].join("\n");
 
     // send to chat
@@ -14561,6 +14642,21 @@ SWData.PC.SKILLS.forEach(skill => {
   let events = `clicked:skill-${skill.name}`;
   if (Array.isArray(skill.ability))
     events += " " + eventList("clicked", skill.ability.map(ability => `skill-${skill.name}-${ability}`), " ");
+
+  const skillBonusAttr = `${skill.name}_bonus`;
+  on("change:" + skillBonusAttr, function() {
+    getAttrs([ "character_name", "niveau", skillBonusAttr ], function(values) {
+      const charName = strval(values.character_name);
+      const level = intval(values.niveau);
+      const skillMax = Math.min(level + 5, 15);
+      let skillBonus = intval(values[skillBonusAttr]);
+      if (skillBonus > skillMax) {
+        sendChatCmd(`/w "${charName}" Le bonus de compétence est limité à **${skillMax}**`);
+        setAttrs({ [skillBonusAttr]: skillMax });
+      }
+    });
+  });
+
   on(events, function (eventInfo) {
     const useCarac = strval(eventInfo.triggerName.split("-")[2]);
     let skillName = getSkillName(skill);
@@ -14681,6 +14777,7 @@ SWData.PC.SKILLS.forEach(skill => {
         setAttrs(Object.fromEntries(updates));
     });
   });
+
 });
 
 /**
@@ -16225,18 +16322,25 @@ nameSeq(4, "custom#").forEach(custom => {
   });
 });
 
-on("change:pense_bete change:tokenmod change:token_tooltip_on", function() {
-  getAttrs([ "character_name", "pense_bete", "tokenmod", "token_tooltip_on" ], function(values) {
+function toolTipAttrs() {
+  return [ "tokenmod", "token_tooltip_on", "pense_bete" ];
+}
+
+on("sheet:opened " + eventList("change", toolTipAttrs(), " "), function() {
+  getAttrs([ "character_name", ...toolTipAttrs() ], function(values) {
     const tokenmod = boolval(values.tokenmod);
     if (!tokenmod)
       return;
     const charName = strval(values.character_name).trim();
-    const reminder = strval(values.pense_bete).trim().split("\n")
+    let reminder = strval(values.pense_bete).trim()
+    .split("\n").filter(v => strval(v) !== "")
     .map((r, ix) => `${ix + 1}) ${r}`).join("; ");
     const tokenTip = boolval(values.token_tooltip_on);
-    if (!tokenTip || charName === "" || reminder === "")
+    if (!tokenTip || charName === "")
       return;
-    sendChatCmd(tokenMod(strval(values.character_name), { tooltip: "'" + reminder + "'" }));
+    if (reminder !== "")
+      reminder = "'" + reminder + "'";
+    sendChatCmd(tokenMod(strval(values.character_name), { tooltip: reminder }));
   });
 });
 
@@ -18539,7 +18643,7 @@ function migrateSheetToV1_3(sheetType, curVer = { major: 1, minor: 2, patch: 0 }
     Object.keys(values).forEach(attr => {
       const base = `${attr}_base`;
       updates.set(base, intval(values[attr]));
-      migration = migrateLog(migration, "1.3.0", `${base} = ${ updates.get(base) }`)
+      migration = migrateLog(migration, "1.3.0", `${base} = ${ updates.get(base) }`);
     });
     updates.set("migration", migration);
     setAttrs(Object.fromEntries(updates));
@@ -18578,6 +18682,36 @@ function migrateSheetToV1_13(sheetType, curVer = { major: 1, minor: 12, patch: 0
 }
 
 /**
+ * Migrate to Version 1.14.0
+ * @param {string} sheetType - type of sheet
+ * @param {{ major: number, minor: number, patch: number }} curVer - semantic version parts
+ */
+function migrateSheetToV1_14(sheetType, curVer = { major: 1, minor: 13, patch: 0 }) {
+  if (sheetType !== SWData.SHEET_TYPE.PC)
+    return;
+
+  getAttrs([ 
+    "tactautre",
+    "tactname",
+    "tactdiv",
+    "tactroll",
+    "tactdmdiv"
+  ], function(values) {
+    const tactName = strval(values.tactname);
+    if (tactName !== "") {
+      const updates = new Map();
+      const rowId = rptAttr("tactic", "tact-", generateRowID());
+      updates.set(rowId + "on", numval(values.tactautre));
+      updates.set(rowId + "name", tactName);
+      updates.set(rowId + "div", numval(values.tactdiv));
+      updates.set(rowId + "roll", numval(values.tactroll));
+      updates.set(rowId + "dmdiv", strval(values.tactdmdiv));
+      setAttrs(Object.fromEntries(updates));
+    }
+  });
+}
+
+/**
  * Apply sheet migrations
  * @param {string} sheetType - character sheet type
  * @param {object} curVer - current version
@@ -18593,7 +18727,10 @@ function migrateSheet(sheetType, curVer) {
 
   if (curVer.major === 1 && curVer.minor < 13)
     migrateSheetToV1_13(sheetType, curVer);
-  
+
+  if (curVer.major === 1 && curVer.minor < 14)
+    migrateSheetToV1_14(sheetType, curVer);
+
   return;
 }
 

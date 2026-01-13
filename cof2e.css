@@ -1,4 +1,4 @@
-/* COF2e v1.13.0 */
+/* COF2e v1.14.0 */
 
 @import url('https://fonts.googleapis.com/css?family=Merriweather+Sans&display=swap');
 
@@ -395,6 +395,12 @@ div.path div.block-title {
   font-weight: bold;
   margin-left: 5px;
   margin-right: 5px;
+}
+
+.ellipsis {
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis;
 }
 
 .cofmain input[value="0"].has-script textarea.has-script,
@@ -869,7 +875,7 @@ input[type="hidden"][value="1"].has-buff + .has-buff {
   grid-template-columns: 60% calc(40% - 5px);
 }
 
-.pc-attacks .weapon-special-ongoing input[value=""].ongoing + button.ongoing {
+.pc-attacks input[value=""].ongoing + button.ongoing {
   display: none;
 }
 
