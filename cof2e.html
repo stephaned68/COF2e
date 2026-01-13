@@ -18686,28 +18686,55 @@ function migrateSheetToV1_13(sheetType, curVer = { major: 1, minor: 12, patch: 0
  * @param {string} sheetType - type of sheet
  * @param {{ major: number, minor: number, patch: number }} curVer - semantic version parts
  */
-function migrateSheetToV1_14(sheetType, curVer = { major: 1, minor: 13, patch: 0 }) {
+async function migrateSheetToV1_14(sheetType, curVer = { major: 1, minor: 13, patch: 0 }) {
   if (sheetType !== SWData.SHEET_TYPE.PC)
     return;
+
+  const buffIds = await getSectionIDsAsync("buffs");
+  const allBuffs = [];
+  buffIds.forEach(id => {
+    allBuffs.push(...rptAttrs("buffs", [ 
+      "buff-on",
+      "buff-nom",
+      "buff-attrib",
+      "buff-value"
+    ], id));
+  });
 
   getAttrs([ 
     "tactautre",
     "tactname",
     "tactdiv",
     "tactroll",
-    "tactdmdiv"
+    "tactdmdiv",
+    ...allBuffs
   ], function(values) {
+    const updates = new Map();
+
+    // extra tactic => repeating item
     const tactName = strval(values.tactname);
     if (tactName !== "") {
-      const updates = new Map();
       const rowId = rptAttr("tactic", "tact-", generateRowID());
       updates.set(rowId + "on", numval(values.tactautre));
       updates.set(rowId + "name", tactName);
       updates.set(rowId + "div", numval(values.tactdiv));
       updates.set(rowId + "roll", numval(values.tactroll));
       updates.set(rowId + "dmdiv", strval(values.tactdmdiv));
-      setAttrs(Object.fromEntries(updates));
     }
+
+    // DM buffs => repeating items
+    buffIds
+    .filter(id => strval(values[rptAttr("buffs", "buff-attrib", id)]) === "dm")
+    .forEach(id => {
+      const rowId = rptAttr("tactic", "tact-", generateRowID());
+      updates.set(rowId + "on", numval(values[rptAttr("buffs", "buff-on", id)]));
+      updates.set(rowId + "name", strval(values[rptAttr("buffs", "buff-nom", id)]));
+      updates.set(rowId + "dmdiv", strval(values[rptAttr("buffs", "buff-value", id)]));
+      removeRepeatingRow("repeating_buffs_" + id);
+    });
+    
+    if (updates.size > 0) 
+      setAttrs(Object.fromEntries(updates));
   });
 }
 
