@@ -161,7 +161,7 @@ Pour chaque élément de la liste, vous pouvez indiquer :
 - Si ce buff est temporaire (case à cocher)
 - L'attribut auquel ce buff s'applique :
   - Une caractéristique (_AGI_, _CON_, etc), éventuellement tous les jets de caractéristiques
-  - Un score de combat (Initiative, Attaques, Défense, DM)
+  - Un score de combat (Initiative, Défense, DM)
   - Un score d'attaque (Contact, Distance, Magique), éventuellement tous les jets d'attaque
   - Une ressource (PV, DR, PM, PC)
 - La valeur du buff, qui peut s'exprimer :
@@ -176,28 +176,6 @@ Pour chaque élément de la liste, vous pouvez indiquer :
 Plusieurs buffs peuvent s'appliquer au même attribut du PJ. Si c'est le cas, le total des buffs actuellement actifs (cochés) est calculé.
 
 Dans le cas d'un buff aux DM, celui-ci s'applique à tous les jets d'attaque effectuées à partir du moment où il est actif. Il est possible de le rendre optionnel en indiquant un `?` au début de son nom. La fiche demandera alors si ce buff s'applique quand un jet d'attaque est effectué. Il est possible d'indiquer une liste de DM différents pour un même buff. Voir exemple ci-dessous.
-
-## Exemples de buffs optionnels
-
-### Attaque sournoise
-
-Pour créer un buff optionnel de DM d'_Attaque sournoise_, indiquez :
-- `? Attaque sournoise` dans le nom du buff,
-- `DM` dans l'attribut cible,
-- `2d4°` dans la valeur
-
-Cochez la case d'activation. A chaque fois que le voleur effectue une attaque, la fiche demandera s'il s'agit d'une attaque sournoise, et si oui, lancera les dés de DM supplémentaires.
-
-NB : Pour ne pas avoir à actualiser le nombre de d4° quand le voleur atteint le rang 4 dans une voie de profil, vous pouvez commencer par créer un attribut personnalisé `sournoise` (cf. onglet [Configuration]({{ site.baseurl }}/pc-config)) dont la valeur est calculée à partir de l'attribut standard `voies_rang4`, et va donc suivre l'évolution des rangs acquis dans les voies. Puis indiquez `[voleur_sournoise]` dans la valeur du buff.
-
-### Dans le mille
-
-Pour créer un buff optionnel de DM d'attaque _Dans le mille_, indiquez :
-- `? Dans le mille` dans le nom du buff,
-- `DM` dans l'attribut cible,
-- `2d4° & Action limitée=3d4°` dans la valeur
-
-Cochez la case d'activation. A chaque fois que le rôdeur effectue une attaque, la fiche proposera 3 possibilités d'utilisation pour _Dans le mille_ : _Non_, _Oui_, _Action Limitée_, et lancera les dés de DM supplémentaires selon le choix effectué.
 
 ## Activation / désactivation par nom
 

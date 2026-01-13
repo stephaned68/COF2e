@@ -202,9 +202,42 @@ Le bouton d20 de l'attaque peut être épinglé dans la barre d'actions de Roll2
 
 ## Options tactiques
 
-Cette section permet de prendre en compte les options tactiques des attaques. Après sélection de l'option choisie, les effets de celle-ci sont appliqués au prochain jet d'attaque uniquement.
+Cette section permet de prendre en compte les options tactiques des attaques. Après sélection de l'option choisie, les effets de celle-ci sont appliqués _au prochain jet d'attaque uniquement_.
 
-On peut paramétrer une tactique spécifique au PJ à activer en même temps que les autres. On indique son nom, un bonus ou malus à l'attaque, si le jet d'attaque se fait avec dé bonus ou dé malus, et d'éventuels DM complémentaires.
+On peut également paramétrer une ou plusieurs options tactiques ou capacités spécifiques au PJ.
+
+Pour chaque option, on indique :
+- son nom, 
+- un bonus ou malus fixe à l'attaque,
+- si le jet d'attaque se fait avec un dé bonus ou un dé malus,
+- d'éventuels DM supplémentaires (qui ne sont pas doublés en cas de coup critique).
+
+On peut activer une ou plusieurs options simultanément. Elles restent actives pour toutes les attaques tant qu'elles n'ont pas été désactivées.
+
+Le nombre de D20 lancés par la fiche dépend des options activées : si une option procure un dé bonus et une autre inflige un dé malus, un jet normal est effectué.
+
+### Exemples d'options tactiques
+
+#### Attaque sournoise
+
+Pour créer l'option d'_Attaque sournoise_, indiquez :
+- `Attaque sournoise` dans le nom de l'option,
+- `2d4°` dans les DM supplémentaires.
+
+Cochez la case d'activation. A chaque fois que le voleur effectue une attaque, la fiche lancera les dés de DM supplémentaires.
+
+NB : Pour ne pas avoir à actualiser le nombre de d4° quand le voleur atteint le rang 4 dans une voie de profil, vous pouvez commencer par créer un attribut personnalisé `dm-sournoise` (cf. onglet [Configuration]({{ site.baseurl }}/pc-config)) dont la valeur est calculée à partir de l'attribut standard `voies_rang4`, et va donc suivre l'évolution des rangs acquis dans les voies. Puis indiquez `@{dm-sournoise}` dans le champ de DM.
+
+#### Dans le mille
+
+Pour créer l'option _Dans le mille_, indiquez :
+- `Dans le mille` dans le nom de l'option,
+- Cochez la case `Avec dé malus`,
+- `?{Action ?|(A)ttaque,2d4°|(L)imitée,3d4°}` dans les DM supplémentaires.
+
+Cochez la case d'activation. A chaque fois que le rôdeur effectue une attaque, la fiche demandera le type d'action utilisée, effectuera le jet d'attaque avec un dé malus, et lancera les dés de DM supplémentaires selon le choix effectué.
+
+Vous pouvez aussi créer deux options distinctes `Dans le mille (A)` et `Dans le mille (L)` avec les dés de DM supplémentaires correspondants et activer l'une ou l'autre.
 
 ## Modificateurs situationnels
 

@@ -98,7 +98,7 @@ Les attributs personnalisés sont créés avec la valeur indiquée. Ils peuvent 
 
 _Exemple :_ 
 
-`att_sournoise: (2+@{voies_rang4})d4°` sur la fiche d'un profil de voleur crée un attribut nommé `att_sournoise`. La valeur de cet attribut sera résolue par Roll20 à l'utilisation, en ajoutant aux 2d4° de base le nombre de voies de voleur dans lequel le personnage a atteint le rang 4. Cet attribut peut être utilisé dans une macro sous le nom `@{att_sournoise}`
+`dm-sournoise: (2+@{voies_rang4})d4°` sur la fiche d'un profil de voleur crée un attribut nommé `dm-sournoise`. La valeur de cet attribut sera résolue par Roll20 à l'utilisation, en ajoutant aux 2d4° de base le nombre de voies de voleur dans lequel le personnage a atteint le rang 4. Cet attribut peut être utilisé ailleurs dans la fiche ou bien dans une macro sous le nom `@{dm-sournoise}`.
 
 ## Compétences personnalisées
 
