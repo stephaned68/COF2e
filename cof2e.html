@@ -4744,7 +4744,7 @@
                     </option>
                     <option value="init">Initiative</option>
                     <option value="def">Défense</option>
-                    <option value="dm" title="DM non doublés si coup critique">DM</option>
+                    <!-- <option value="dm">DM</option> -->
                   </optgroup>
                   <optgroup label="Attaques">
                     <option disabled class="optgroup">
@@ -4775,7 +4775,6 @@
 
             </div>
 
-
           </fieldset>
 
           <hr>
@@ -4799,7 +4798,7 @@
           <input type="hidden" name="attr_atkmag_buff_list" value="">
           <input type="hidden" name="attr_init_buff_list" value="">
           <input type="hidden" name="attr_def_buff_list" value="">
-          <input type="hidden" name="attr_dm_buff_list" value="">
+          <!-- <input type="hidden" name="attr_dm_buff_list" value=""> -->
           <input type="hidden" name="attr_pv_buff_list" value="">
           <input type="hidden" name="attr_dr_buff_list" value="">
           <input type="hidden" name="attr_pm_buff_list" value="">
@@ -4937,11 +4936,11 @@
                 <div class="bordered"><span name="attr_def_buff"></span></div>
               </div>
 
-              <div class="buff-detail">
+              <!-- <div class="buff-detail">
                 <div class="bordered">DM</div>
                 <div class="bordered"><span name="attr_dm_buff_list"></span></div>
                 <div class="bordered"><span name="attr_dm_buff"></span></div>
-              </div>
+              </div> -->
 
             </details>
 
@@ -8474,7 +8473,7 @@ const SWData = {
         "atktir",
         "atkmag",
         "def",
-        "dm",
+        // "dm",
         "pv",
         "dr",
         "pm",
@@ -9724,7 +9723,8 @@ function clog(data, options = {}) {
     return;
 
   title = strval(title);
-  if (title !== "") title = ` Sheet-Worker > ${title} `;
+  if (title !== "")
+    title = ` Sheet-Worker > ${title} `;
   const titleStyle = `color:${textColor}; background-color:${backColor}; ${headerStyle} text-decoration:underline;`;
   const textStyle = `color:${textColor}; background-color:${backColor}; ${style}`;
 
@@ -13040,7 +13040,7 @@ on("clicked:repeating_armes:attack-btn", async function(eventInfo) {
     ...sitModAttrs.map(attr => `modsit_${attr}`),
     ...attackAttrs.map(attr => rptAttr("armes", `arme-${attr}`)),
     ...[ "resid", "nbre" ].map(attr => rptAttr("armes", `jet-${attr}`)),
-    "dm_buff_list", "allattacks_buff", "allattacks_desc",
+    "allattacks_buff", "allattacks_desc",
     ...ongoingAttrs().map(attr => rptAttr("armes", `etendu-${attr}`)),
   ], function (values) {
     
@@ -13079,8 +13079,7 @@ on("clicked:repeating_armes:attack-btn", async function(eventInfo) {
     const resourceId = strval(values[`${rptThrown}resid`]);
     const resourceNbr = Math.max(1, intval(values[`${rptThrown}nbre`]));
 
-    // DM + all attacks buffs 
-    const dmBuffs = strval(values.dm_buff_list).split(";").map(b => b.trim());
+    // all attacks buffs 
     const allAtkBuffs = allRollsBuff(values, "attacks");
 
     // 2 mains & bouclier 
@@ -13309,32 +13308,6 @@ on("clicked:repeating_armes:attack-btn", async function(eventInfo) {
       if (powderBonus > 0)
         dmAbilities +=` + ${powderBonus}[Poudre puissante]`;
     }
-
-    // DM buffs
-    dmBuffs.filter(b => b !== "").forEach(buff => {
-      let [ buffName, buffDM ] = buff.split(":").map(s => s.replaceAll("|", " ").trim());
-      buffDM = replaceDevol(buffDM);
-      if (buffName.charAt(0) === "?") {
-        buffName = buffName.slice(1).trim();
-        const delim = "&";
-        let moreDM = buffDM;
-        buffDM = buffDM.split(delim)[0];
-        let buffMore = "";
-        while (moreDM.includes(delim)) {
-          const [ dm, ...dms ] = moreDM.split(delim).slice(1);
-          const [ label, value ] = dm.split("=").map(v => v.trim());
-          buffMore += `|${label},${value}`;
-          moreDM = [ ...dms ].join(delim);
-        }
-        buffDM = `?{${buffName} (DM)|Non,0|Oui,${buffDM}${buffMore}}`;
-      }
-      const matched = buffDM.match(/\[(.+)\]/);
-      if (matched) {
-        const [ match, name ] = matched;
-        buffDM = buffDM.replace(match, `@{${ name.toLowerCase() }}`);
-      }
-      extraDM.push(` + [[${buffDM}]] ${buffName}`);
-    });
 
     let dmroll = "";
     if (dm !== "" )
@@ -16322,6 +16295,10 @@ nameSeq(4, "custom#").forEach(custom => {
   });
 });
 
+/**
+ * Return the list of attributes for setting reminder as token tooltip
+ * @returns {string[]}
+ */
 function toolTipAttrs() {
   return [ "tokenmod", "token_tooltip_on", "pense_bete" ];
 }
@@ -16331,16 +16308,18 @@ on("sheet:opened " + eventList("change", toolTipAttrs(), " "), function() {
     const tokenmod = boolval(values.tokenmod);
     if (!tokenmod)
       return;
-    const charName = strval(values.character_name).trim();
-    let reminder = strval(values.pense_bete).trim()
-    .split("\n").filter(v => strval(v) !== "")
-    .map((r, ix) => `${ix + 1}) ${r}`).join("; ");
     const tokenTip = boolval(values.token_tooltip_on);
+    const charName = strval(values.character_name).trim();
     if (!tokenTip || charName === "")
       return;
-    if (reminder !== "")
-      reminder = "'" + reminder + "'";
-    sendChatCmd(tokenMod(strval(values.character_name), { tooltip: reminder }));
+    const reminder = strval(values.pense_bete).split("\n")
+    .filter(r => strval(r).trim() !== "")
+    .map((r, ix) => `${ix + 1}) ${r}`)
+    .join(" ; ");
+    let tooltip = reminder;
+     if (tooltip !== "")
+      tooltip = "\"" + tooltip + "\"";
+    sendChatCmd(tokenMod(charName, { show_tooltip: 1, tooltip }));
   });
 });
 
@@ -18701,7 +18680,8 @@ async function migrateSheetToV1_14(sheetType, curVer = { major: 1, minor: 13, pa
     ], id));
   });
 
-  getAttrs([ 
+  getAttrs([
+    "migration",
     "tactautre",
     "tactname",
     "tactdiv",
@@ -18709,6 +18689,7 @@ async function migrateSheetToV1_14(sheetType, curVer = { major: 1, minor: 13, pa
     "tactdmdiv",
     ...allBuffs
   ], function(values) {
+    let migration = strval(values.migration);
     const updates = new Map();
 
     // extra tactic => repeating item
@@ -18731,7 +18712,10 @@ async function migrateSheetToV1_14(sheetType, curVer = { major: 1, minor: 13, pa
       updates.set(rowId + "name", strval(values[rptAttr("buffs", "buff-nom", id)]));
       updates.set(rowId + "dmdiv", strval(values[rptAttr("buffs", "buff-value", id)]));
       removeRepeatingRow("repeating_buffs_" + id);
+      migration = migrateLog(migration, "1.14.0", `Buff DM ${ updates.get(rowId + "name") } = Option tactique`);
     });
+    if (migration !== strval(values.migration))
+      updates.set("migration", migration);
     
     if (updates.size > 0) 
       setAttrs(Object.fromEntries(updates));
