@@ -76,7 +76,7 @@ Les propriétés suivantes peuvent être appliquées aux capacités :
 
 - `epic:` suivi d'un espace pour identifier la capacité comme épique.
 - `buff: xxx [valeur1,valeur2,valeur3,valeur4,valeur5]` permet de spécifier un buff nommé xxx qui évolue selon le rang atteint dans la voie.
-- `roll: xxx` où xxx peut prendre les valeurs `contact` ou `distance` ou `magie` permet de demander à la fiche de faire le jet d'attaque correspondant lors de l'utilisation de la capacité. Un autre type de jet peut être indiqué, en spécifiant le nom du bouton (généralement suffixé par `-btn` et affiché au survol de la souris sur les différentes rubriques de la fiche).
+- `roll: xxxxx`, où xxxxx peut prendre les valeurs `contact` ou `distance` ou `magie` permet de demander à la fiche de faire le jet d'attaque correspondant lors de l'utilisation de la capacité. Vous pouvez indiquer un autre jet, en spécifiant le nom du bouton souhaité. Les noms des boutons d'action sont affichés au survol de la souris sur les éléments cliquables de la fiche (boutons, icones, certains textes) et sont généralement de la forme `%{xxxxx-btn}`. Spécifiez le nom du bouton en omettant `%{}`.
 - `action:` suivi d'un espace pour identifier la capacité comme active afin qu'un bouton d'action lui soit assigné dans le menu d'actions dans le chat.
 - `etendu:` suivi d'un texte décrivant un effet prolongé. Il peut contenir une formule de dé pour des DM.
 - `etendu-duree:` suivi d'un texte spécifiant la durée de l'effet. Il peut être spécifié sous forme d'une valeur fixe ou d'une expression faisant référence à un attribut du personnage (_ex: `[INT]` rounds pour la durée d'un sort_).
