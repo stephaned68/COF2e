@@ -380,7 +380,7 @@
             <div class="trait">
               <div class="block-title">
                 <button type="action" class="hidden" name="act_agi-btn"></button>
-                <button type="action" class="block-title" name="act_agi_select-btn">
+                <button type="action" class="block-title" name="act_agi_select-btn" title="%{agi_select-btn}">
                   <span class="d20-btn">t</span>
                   AGI
                 </button>
@@ -424,7 +424,7 @@
             <div class="trait">
               <div class="block-title">
                 <button type="action" class="hidden" name="act_con-btn"></button>
-                <button type="action" class="block-title" name="act_con_select-btn">
+                <button type="action" class="block-title" name="act_con_select-btn" title="%{con_select-btn}">
                   <span class="d20-btn">t</span>
                   CON
                 </button>
@@ -468,7 +468,7 @@
             <div class="trait">
               <div class="block-title">
                 <button type="action" class="hidden" name="act_for-btn"></button>
-                <button type="action" class="block-title" name="act_for_select-btn">
+                <button type="action" class="block-title" name="act_for_select-btn" title="%{for_select-btn}">
                   <span class="d20-btn">t</span>
                   FOR
                 </button>
@@ -512,7 +512,7 @@
             <div class="trait">
               <div class="block-title">
                 <button type="action" class="hidden" name="act_per-btn"></button>
-                <button type="action" class="block-title" name="act_per_select-btn">
+                <button type="action" class="block-title" name="act_per_select-btn" title="%{per_select-btn}">
                   <span class="d20-btn">t</span>
                   PER
                 </button>
@@ -556,7 +556,7 @@
             <div class="trait">
               <div class="block-title">
                 <button type="action" class="hidden" name="act_cha-btn"></button>
-                <button type="action" class="block-title" name="act_cha_select-btn">
+                <button type="action" class="block-title" name="act_cha_select-btn" title="%{cha_select-btn}">
                   <span class="d20-btn">t</span>
                   CHA
                 </button>
@@ -600,7 +600,7 @@
             <div class="trait">
               <div class="block-title">
                 <button type="action" class="hidden" name="act_int-btn"></button>
-                <button type="action" class="block-title" name="act_int_select-btn">
+                <button type="action" class="block-title" name="act_int_select-btn" title="%{int_select-btn}">
                   <span class="d20-btn">t</span>
                   INT
                 </button>
@@ -644,7 +644,7 @@
             <div class="trait">
               <div class="block-title">
                 <button type="action" class="hidden" name="act_vol-btn"></button>
-                <button type="action" class="block-title" name="act_vol_select-btn">
+                <button type="action" class="block-title" name="act_vol_select-btn" title="%{vol_select-btn}">
                   <span class="d20-btn">t</span>
                   VOL
                 </button>
@@ -706,7 +706,7 @@
             <!-- Init -->
             <div class="attack">
               <div class="block-title">
-                <button class="block-title" type="action" name="act_init-btn">
+                <button class="block-title" type="action" name="act_init-btn" title="%{init-btn}">
                   <span class="d20-btn">t</span>
                   INITIATIVE
                 </button>
@@ -731,7 +731,7 @@
             <!-- CONTACT -->
             <div class="attack">
               <div class="block-title">
-                <button class="block-title" type="action" name="act_atkcac-btn">
+                <button class="block-title" type="action" name="act_atkcac-btn" title="%{atkcac-btn}">
                   <span class="d20-btn">t</span>
                   AU CONTACT
                 </button>
@@ -754,7 +754,7 @@
             <!-- DISTANCE -->
             <div class="attack">
               <div class="block-title">
-                <button class="block-title" type="action" name="act_atktir-btn">
+                <button class="block-title" type="action" name="act_atktir-btn" title="%{atktir-btn}">
                   <span class="d20-btn">t</span>
                   A DISTANCE
                 </button>
@@ -777,7 +777,7 @@
             <!-- MAGIE -->
             <div class="attack">
               <div class="block-title">
-                <button class="block-title" type="action" name="act_atkmag-btn">
+                <button class="block-title" type="action" name="act_atkmag-btn" title="%{atkmag-btn}">
                   <span class="d20-btn">t</span>
                   MAGIE
                 </button>
@@ -838,11 +838,11 @@
             <div class="hits hit">
 
               <div class="block-title centered">
-                <button class="flat-btn img-btn img-btn-lg" type="action" name="act_vigloss-btn">
+                <button class="flat-btn img-btn img-btn-lg" type="action" name="act_vigloss-btn" title="%{vigloss-btn}">
                   <span class="img-btn">e</span>
                 </button>
                 PV
-                <button class="flat-btn img-btn img-btn-lg" type="action" name="act_vigheal-btn">
+                <button class="flat-btn img-btn img-btn-lg" type="action" name="act_vigheal-btn" title="%{vigheal-btn}">
                   <span class="img-btn">k</span>
                 </button>
               </div>
@@ -863,7 +863,7 @@
                 <button class="hidden" type="action" name="act_recovery_fast-btn"></button>
                 <button class="hidden" type="action" name="act_recovery_full-btn"></button>
                 <button class="flat-btn img-btn" type="action" name="act_drecup-btn">
-                  <span title="Récupération rapide / complète">DR</span>
+                  <span title="%{drecup-btn} Lancer DR&#10;%{recovery_fast-btn} Récupération rapide&#10;%{recovery_full-btn} Récupération complète">DR</span>
                 </button>
                 <select name="attr_drecup" class="select-xs" title="@{drecup} Type de DR">
                   <option value="6">d6</option>
@@ -912,7 +912,7 @@
             <div class="hits hit">
 
               <div class="block-title centered">
-                <button class="flat-btn img-btn" type="action" name="act_devol-btn">
+                <button class="flat-btn img-btn" type="action" name="act_devol-btn" title="%{devol-btn}">
                   <span>D4°</span>
                 </button>
               </div>
@@ -1156,18 +1156,18 @@
 
           </div>
   
-        </div>
+        </div>%{drecup-btn} Lancer DR&#10;%{recovery_fast-btn} Récupération rapide&#10;%{recovery_full-btn} Récupération complète
 
         <!-- PC & RD -->
         <div class="pc-luck-rd">
 
           <div class="luck">
             <div class="block-title">
-              <button class="block-title" type="action" name="act_luck_apply-btn">
+              <button class="block-title" type="action" name="act_luck_apply-btn" title="%{luck_apply-btn} Appliquer un PC aux derniers jets">
                 <span class="d20-btn">t</span>
               </button>
               PC
-              <button class="block-title" type="action" name="act_luck_roll-btn">
+              <button class="block-title" type="action" name="act_luck_roll-btn" title="%{luck_roll-btn} Faire un Jet de Chance">
                 <span class="d6-btn">r</span>
               </button>
             </div>
@@ -1247,7 +1247,7 @@
                   <input type="hidden" class="arme-label" name="attr_arme-showlbl" value="0">
                   <span class="align-self-center arme-label" name="attr_arme-label"></span>
                   <input type="hidden" class="ongoing" name="attr_arme-etendu" value="">
-                  <button type="action" class="flat-btn img-btn ongoing" name="act_ongoing-btn" title="%{ongoing-btn} Effets prolongés">
+                  <button type="action" class="flat-btn img-btn ongoing" name="act_ongoing-btn" title="%{repeating_armes_ID_ongoing-btn} Effets prolongés">
                     <span class="img-btn">0</span>
                   </button>
                   &nbsp;<input type="text" name="attr_arme-nom" title="@{arme-nom}" placeholder="Arme/attaque" value="">
@@ -1653,12 +1653,12 @@
               <button type="action" class="flat-btn img-btn" name="act_ongoing-btn" title="%{ongoing-btn} Effets prolongés">
                 <span class="img-btn">0</span>
               </button>
-              <button type="action" class="flat-btn img-btn" name="act_reset_uses-btn" title="Ré-initialiser l'usage des capacités">
+              <button type="action" class="flat-btn img-btn" name="act_reset_uses-btn" title="%{reset_uses-btn} Ré-initialiser l'usage des capacités">
                 <span class="img-btn">t</span>
               </button>
               <input type="hidden" class="spell-concentration" name="attr_concentration" value="0">
               <input type="hidden" class="spell-concentration-show" name="attr_pm_max" value="0">
-              <button type="action" class="flat-btn img-btn spell-concentration" name="act_concentration-btn" title="Concentration (L)">
+              <button type="action" class="flat-btn img-btn spell-concentration" name="act_concentration-btn" title="%{concentration-btn} Concentration (L)">
                 <span class="img-btn">E</span>
               </button>
               <button type="action" class="flat-btn img-btn" name="act_edit_view-btn" title="Editer les voies et capacités">
@@ -3968,7 +3968,7 @@
                 <div>
                   <input type="checkbox" name="attr_acrobaties_prof" value="1">
                   <button type="action" class="flat-btn img-btn" name="act_skill-acrobaties"
-                  title="Esquiver&#10;Garder son équilibre&#10;Chuter sans danger&#10;Faire un roulé-boulé">
+                  title="%{skill-acrobaties} Esquiver&#10;Garder son équilibre&#10;Chuter sans danger&#10;Faire un roulé-boulé">
                     <span class="img-btn"></span>Acrobaties
                   </button>
                 </div>
@@ -3994,7 +3994,7 @@
                 <div>
                   <input type="checkbox" name="attr_artisanat_prof" value="1">
                   <button type="action" class="flat-btn img-btn" name="act_skill-artisanat"
-                  title="Concevoir et fabriquer des objets (forgeron, armurier, cuisinier...)">
+                  title="%{skill-artisanat} Concevoir et fabriquer des objets (forgeron, armurier, cuisinier...)">
                     <span class="img-btn"></span>Artisanat
                   </button>
                 </div>
@@ -4023,7 +4023,7 @@
                   <button type="action" class="hidden" name="act_skill-athletisme-con" />
                   <button type="action" class="hidden" name="act_skill-athletisme-for" />
                   <button type="action" class="flat-btn img-btn" name="act_skill-athletisme"
-                  title="Courir et sauter (AGI)&#10;Lancer loin ou soulever (FOR)&#10;Marcher ou courir longtemps (CON)">
+                  title="%{skill-athletisme} Courir et sauter (AGI)&#10;Lancer loin ou soulever (FOR)&#10;Marcher ou courir longtemps (CON)">
                     <span class="img-btn"></span>Athlétisme
                   </button>
                 </div>
@@ -4049,7 +4049,7 @@
                 <div>
                   <input type="checkbox" name="attr_commerce_prof" value="1">
                   <button type="action" class="flat-btn img-btn" name="act_skill-commerce"
-                  title="Estimer la valeur d'un objet&#10;Trouver un article rare&#10;Négocier son prix">
+                  title="%{skill-commerce} Estimer la valeur d'un objet&#10;Trouver un article rare&#10;Négocier son prix">
                     <span class="img-btn"></span>Commerce
                   </button>
                 </div>
@@ -4075,7 +4075,7 @@
                 <div>
                   <input type="checkbox" name="attr_connaissance_prof" value="1">
                   <button type="action" class="flat-btn img-btn" name="act_skill-connaissance"
-                  title="Histoire, Géographie, Erudition">
+                  title="%{skill-connaissance} Histoire, Géographie, Erudition">
                     <span class="img-btn"></span>Connaissance
                   </button>
                 </div>
@@ -4101,7 +4101,7 @@
                 <div>
                   <input type="checkbox" name="attr_discretion_prof" value="1">
                   <button type="action" class="flat-btn img-btn" name="act_skill-discretion"
-                  title="Se cacher en forêt&#10;Se fondre dans la foule&#10;Marcher silencieusement">
+                  title="%{skill-discretion} Se cacher en forêt&#10;Se fondre dans la foule&#10;Marcher silencieusement">
                     <span class="img-btn"></span>Discrétion
                   </button>
                 </div>
@@ -4127,7 +4127,7 @@
                 <div>
                   <input type="checkbox" name="attr_divertissement_prof" value="1">
                   <button type="action" class="flat-btn img-btn" name="act_skill-divertissement"
-                  title="Arts vivants (danse, chant, poésie, théâtre)">
+                  title="%{skill-divertissement} Arts vivants (danse, chant, poésie, théâtre)">
                     <span class="img-btn"></span>Divertissement
                   </button>
                 </div>
@@ -4155,7 +4155,7 @@
                   <button type="action" class="hidden" name="act_skill-equitation-agi" />
                   <button type="action" class="hidden" name="act_skill-equitation-cha" />
                   <button type="action" class="flat-btn img-btn" name="act_skill-equitation"
-                  title="Monter à cheval (AGI)&#10;Maîtriser et calmer une monture (CHA)">
+                  title="%{skill-equitation} Monter à cheval (AGI)&#10;Maîtriser et calmer une monture (CHA)">
                     <span class="img-btn"></span>Equitation
                   </button>
                 </div>
@@ -4181,7 +4181,7 @@
                 <div>
                   <input type="checkbox" name="attr_escalade_prof" value="1">
                   <button type="action" class="flat-btn img-btn" name="act_skill-escalade"
-                  title="Grimper à la corde, dans un arbre, une façade ou une falaise">
+                  title="%{skill-escalade} Grimper à la corde, dans un arbre, une façade ou une falaise">
                     <span class="img-btn"></span>Escalade
                   </button>
                 </div>
@@ -4207,7 +4207,7 @@
                 <div>
                   <input type="checkbox" name="attr_effraction_prof" value="1">
                   <button type="action" class="flat-btn img-btn" name="act_skill-effraction"
-                  title="Crocheter une serrure&#10;Désamorcer un piège&#10;Pickpocket">
+                  title="%{skill-effraction} Crocheter une serrure&#10;Désamorcer un piège&#10;Pickpocket">
                     <span class="img-btn"></span>Effraction
                   </button>
                 </div>
@@ -4233,7 +4233,7 @@
                 <div>
                   <input type="checkbox" name="attr_empathie_prof" value="1">
                   <button type="action" class="flat-btn img-btn" name="act_skill-empathie"
-                  title="Jauger l'état émotionnel d'un interlocuteur&#10;Discerner un mensonge">
+                  title="%{skill-empathie} Jauger l'état émotionnel d'un interlocuteur&#10;Discerner un mensonge">
                     <span class="img-btn"></span>Empathie
                   </button>
                 </div>
@@ -4266,7 +4266,7 @@
                   <button type="action" class="hidden" name="act_skill-custom1-cha" />
                   <button type="action" class="hidden" name="act_skill-custom1-int" />
                   <button type="action" class="hidden" name="act_skill-custom1-vol" />
-                  <button type="action" class="flat-btn img-btn" name="act_skill-custom1">
+                  <button type="action" class="flat-btn img-btn" name="act_skill-custom1" title="%{skill-custom1} ">
                     <span class="img-btn"></span><span name="attr_custom1_skillname"></span>
                   </button>
                 </div>
@@ -4299,7 +4299,7 @@
                   <button type="action" class="hidden" name="act_skill-custom3-cha" />
                   <button type="action" class="hidden" name="act_skill-custom3-int" />
                   <button type="action" class="hidden" name="act_skill-custom3-vol" />
-                  <button type="action" class="flat-btn img-btn" name="act_skill-custom3">
+                  <button type="action" class="flat-btn img-btn" name="act_skill-custom3" title="%{skill-custom3} ">
                     <span class="img-btn"></span><span name="attr_custom3_skillname"></span>
                   </button>
                 </div>
@@ -4329,7 +4329,7 @@
                 <div>
                   <input type="checkbox" name="attr_intimidation_prof" value="1">
                   <button type="action" class="flat-btn img-btn" name="act_skill-intimidation"
-                  title="Impressionner un interlocuteur&#10;Commander des troupes">
+                  title="%{skill-intimidation} Impressionner un interlocuteur&#10;Commander des troupes">
                     <span class="img-btn"></span>Intimidation
                   </button>
                 </div>
@@ -4355,7 +4355,7 @@
                 <div>
                   <input type="checkbox" name="attr_medecine_prof" value="1">
                   <button type="action" class="flat-btn img-btn" name="act_skill-medecine"
-                  title="Premiers soins&#10;Diagnostiquer ou soigner une maladie, un empoisonnement">
+                  title="%{skill-medecine} Premiers soins&#10;Diagnostiquer ou soigner une maladie, un empoisonnement">
                     <span class="img-btn"></span>Médecine
                   </button>
                 </div>
@@ -4381,7 +4381,7 @@
                 <div>
                   <input type="checkbox" name="attr_natation_prof" value="1">
                   <button type="action" class="flat-btn img-btn" name="act_skill-natation"
-                  title="Ne pas se noyer, lutter contre les flots, retenir sa respiration&#10;Manoeuvrer à bord d'un navire">
+                  title="%{skill-natation} Ne pas se noyer, lutter contre les flots, retenir sa respiration&#10;Manoeuvrer à bord d'un navire">
                     <span class="img-btn"></span>Natation
                   </button>
                 </div>
@@ -4407,7 +4407,7 @@
                 <div>
                   <input type="checkbox" name="attr_occultisme_prof" value="1">
                   <button type="action" class="flat-btn img-btn" name="act_skill-occultisme"
-                  title="Connaissance de la magie, des arts occultes et créatures magiques">
+                  title="%{skill-occultisme} Connaissance de la magie, des arts occultes et créatures magiques">
                     <span class="img-btn"></span>Occultisme
                   </button>
                 </div>
@@ -4433,7 +4433,7 @@
                 <div>
                   <input type="checkbox" name="attr_persuasion_prof" value="1">
                   <button type="action" class="flat-btn img-btn" name="act_skill-persuasion"
-                  title="Négociations, commandement et autres interactions sociales">
+                  title="%{skill-persuasion} Négociations, commandement et autres interactions sociales">
                     <span class="img-btn"></span>Persuasion
                   </button>
                 </div>
@@ -4459,7 +4459,7 @@
                 <div>
                   <input type="checkbox" name="attr_religion_prof" value="1">
                   <button type="action" class="flat-btn img-btn" name="act_skill-religion"
-                  title="Connaissance des dieux et de la théologie&#10;Peut être utilisé à la place de persuasion auprès d'un prêtre">
+                  title="%{skill-religion} Connaissance des dieux et de la théologie&#10;Peut être utilisé à la place de persuasion auprès d'un prêtre">
                     <span class="img-btn"></span>Religion
                   </button>
                 </div>
@@ -4485,7 +4485,7 @@
                 <div>
                   <input type="checkbox" name="attr_renseignement_prof" value="1">
                   <button type="action" class="flat-btn img-btn" name="act_skill-renseignement"
-                  title="Obtenir une information ou rumeur&#10;Ecouter une conversation&#10;Interroger un suspect ou un témoin">
+                  title="%{skill-renseignement} Obtenir une information ou rumeur&#10;Ecouter une conversation&#10;Interroger un suspect ou un témoin">
                     <span class="img-btn"></span>Renseignement
                   </button>
                 </div>
@@ -4511,7 +4511,7 @@
                 <div>
                   <input type="checkbox" name="attr_sciences_prof" value="1">
                   <button type="action" class="flat-btn img-btn" name="act_skill-sciences"
-                  title="Mathématiques, sciences physiques, cartographie, énigmes">
+                  title="%{skill-sciences} Mathématiques, sciences physiques, cartographie, énigmes">
                     <span class="img-btn"></span>Sciences
                   </button>
                 </div>
@@ -4537,7 +4537,7 @@
                 <div>
                   <input type="checkbox" name="attr_tromperie_prof" value="1">
                   <button type="action" class="flat-btn img-btn" name="act_skill-tromperie"
-                  title="Se déguiser, imiter une voix, mentir, faire diversion">
+                  title="%{skill-tromperie} Se déguiser, imiter une voix, mentir, faire diversion">
                     <span class="img-btn"></span>Tromperie
                   </button>
                 </div>
@@ -4563,7 +4563,7 @@
                 <div>
                   <input type="checkbox" name="attr_survie_prof" value="1">
                   <button type="action" class="flat-btn img-btn" name="act_skill-survie"
-                  title="Pister, s'orienter, éviter les dangers des milieux naturels&#10;Connaissances des créatures sauvages et animaux fantastiques">
+                  title="%{skill-survie} Pister, s'orienter, éviter les dangers des milieux naturels&#10;Connaissances des créatures sauvages et animaux fantastiques">
                     <span class="img-btn"></span>Survie
                   </button>
                 </div>
@@ -4589,7 +4589,7 @@
                 <div>
                   <input type="checkbox" name="attr_vigilance_prof" value="1">
                   <button type="action" class="flat-btn img-btn" name="act_skill-vigilance"
-                  title="Monter la garde, détecter un embuscade, un passage secret ou un piège">
+                  title="%{skill-vigilance} Monter la garde, détecter un embuscade, un passage secret ou un piège">
                     <span class="img-btn"></span>Vigilance
                   </button>
                 </div>
@@ -4622,7 +4622,7 @@
                   <button type="action" class="hidden" name="act_skill-custom2-cha" />
                   <button type="action" class="hidden" name="act_skill-custom2-int" />
                   <button type="action" class="hidden" name="act_skill-custom2-vol" />
-                  <button type="action" class="flat-btn img-btn" name="act_skill-custom2">
+                  <button type="action" class="flat-btn img-btn" name="act_skill-custom2" title="%{skill-custom2} ">
                     <span class="img-btn"></span><span name="attr_custom2_skillname"></span>
                   </button>
                 </div>
@@ -4655,7 +4655,7 @@
                   <button type="action" class="hidden" name="act_skill-custom4-cha" />
                   <button type="action" class="hidden" name="act_skill-custom4-int" />
                   <button type="action" class="hidden" name="act_skill-custom4-vol" />
-                  <button type="action" class="flat-btn img-btn" name="act_skill-custom4">
+                  <button type="action" class="flat-btn img-btn" name="act_skill-custom4" title="%{skill-custom4} ">
                     <span class="img-btn"></span><span name="attr_custom4_skillname"></span>
                   </button>
                 </div>
@@ -5116,7 +5116,7 @@
                     <input type="text" name="attr_res-desc" title="@{res-desc}" placeholder="Nom de la ressource" value="">
                     Nombre :
                     <input type="number" class="two-digits" name="attr_res-val" title="@{res-val}" value="1">
-                    <button type="action" class="flat-btn img-btn" name="act_resconso-btn" title="Utiliser un consommable">
+                    <button type="action" class="flat-btn img-btn" name="act_resconso-btn" title="%{repeating_ressources_ID_resconso-btn} Utiliser un consommable">
                       <span class="img-btn">-</span>
                     </button>
                   </div>
@@ -5990,6 +5990,18 @@
               <li>
                 <details>
                   <summary>
+                    <strong>Version 1.14.0</strong> (next)
+                  </summary>
+                  <ul>
+                    <li>Ajout d'une liste d'options tactiques activables avec bonus d'attaque, dé bonus/malus, DM supplémentaires</li>
+                    <li>Suppression des buffs au DM et conversion en options tactiques</li>
+                  </ul>
+                </details>
+              </li>
+
+              <li>
+                <details>
+                  <summary>
                     <strong>Version 1.13.0</strong> (2026-01-04)
                   </summary>
                   <ul>
@@ -6307,7 +6319,7 @@
               
               <div class="npc-trait">
                 <div class="block-title">
-                  <button class="block-title" type="action" name="act_pnj_agi-btn">
+                  <button class="block-title" type="action" name="act_pnj_agi-btn" title="%{pnj_agi-btn}">
                     <span class="d20-btn">t</span>
                     AGI
                   </button>
@@ -6320,7 +6332,7 @@
 
               <div class="npc-trait">
                 <div class="block-title">
-                  <button class="block-title" type="action" name="act_pnj_con-btn">
+                  <button class="block-title" type="action" name="act_pnj_con-btn" title="%{pnj_con-btn}">
                     <span class="d20-btn">t</span>
                     CON
                   </button>
@@ -6333,7 +6345,7 @@
 
               <div class="npc-trait">
                 <div class="block-title">
-                  <button class="block-title" type="action" name="act_pnj_for-btn">
+                  <button class="block-title" type="action" name="act_pnj_for-btn" title="%{pnj_for-btn}">
                     <span class="d20-btn">t</span>
                     FOR
                   </button>
@@ -6346,7 +6358,7 @@
 
               <div class="npc-trait">
                 <div class="block-title">
-                  <button class="block-title" type="action" name="act_pnj_per-btn">
+                  <button class="block-title" type="action" name="act_pnj_per-btn" title="%{pnj_per-btn}">
                     <span class="d20-btn">t</span>
                     PER
                   </button>
@@ -6363,7 +6375,7 @@
               
               <div class="npc-trait">
                 <div class="block-title">
-                  <button class="block-title" type="action" name="act_pnj_cha-btn">
+                  <button class="block-title" type="action" name="act_pnj_cha-btn" title="%{pnj_cha-btn}">
                     <span class="d20-btn">t</span>
                     CHA
                   </button>
@@ -6376,7 +6388,7 @@
               
               <div class="npc-trait">
                 <div class="block-title">
-                  <button class="block-title" type="action" name="act_pnj_int-btn">
+                  <button class="block-title" type="action" name="act_pnj_int-btn" title="%{pnj_int-btn}">
                     <span class="d20-btn">t</span>
                     INT
                   </button>
@@ -6389,7 +6401,7 @@
 
               <div class="npc-trait">
                 <div class="block-title">
-                  <button class="block-title" type="action" name="act_pnj_vol-btn">
+                  <button class="block-title" type="action" name="act_pnj_vol-btn" title="%{pnj_vol-btn}">
                     <span class="d20-btn">t</span>
                     VOL
                   </button>
@@ -6406,7 +6418,7 @@
 
               <div class="npc-trait">
                 <div class="block-title">
-                  <button class="block-title" type="action" name="act_init-btn">
+                  <button class="block-title" type="action" name="act_init-btn" title="%{init-btn}">
                     Init.
                   </button>
                 </div>
@@ -6417,7 +6429,7 @@
               
               <div class="npc-trait">
                 <div class="block-title">
-                  <button class="block-title" type="action" name="act_defsup-btn">
+                  <button class="block-title" type="action" name="act_defsup-btn" title="%{defsup-btn}">
                     Défense
                   </button>
                 </div>
@@ -6489,7 +6501,7 @@
           </div>
 
           <div>
-            <button type="action" class="flat-btn img-btn" name="act_description-btn">
+            <button type="action" class="flat-btn img-btn" name="act_description-btn" title="%{description-btn}">
               <h4 class="img-btn">Description</h4>
             </button>
             <textarea name="attr_pnj_desc" class="x-large" title="@{pnj_desc}"></textarea>  
