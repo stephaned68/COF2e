@@ -152,7 +152,7 @@ Vous pouvez indiquer que la capacité a un effet qui se prolongent sur plusieurs
 
 _Exemples_
 
-_Paramétrer la capacité de sort __Flèche de feu__
+_Paramétrer la capacité de sort __Flèche de feu__ :_
   
 `etendu: [[1d6cf<2]]` pour lancer 1d6 et afficher le résultat en rouge si le jet est de 1 ou 2 (ce qui signifie que l'effet s'interrompt)
   
