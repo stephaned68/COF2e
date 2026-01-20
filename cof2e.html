@@ -127,7 +127,7 @@
     <div>
       <img
         class="logo"
-        title="Version 1.13.0 - 04/01/2026"
+        title="Version 1.14.0 - 01/2026"
         src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cof2e_logo.jpg"
       />
       <input type="hidden" class="d20roll-btns" name="attr_cfg_d20roll" value="0">
@@ -5995,6 +5995,9 @@
                   <ul>
                     <li>Ajout d'une liste d'options tactiques activables avec bonus d'attaque, dé bonus/malus, DM supplémentaires</li>
                     <li>Suppression des buffs au DM et conversion en options tactiques</li>
+                    <li>Meilleure prise en charge des jets liés aux capacités (propriété 'roll:')</li>
+                    <li>Amélioration des buffs de capacités (propriété 'buff:')</li>
+                    <li>Ajout d'un bouton de réinitialisation des utilisation de capacités dans la fiche de PNJ</li>
                   </ul>
                 </details>
               </li>
@@ -6821,7 +6824,12 @@
                   <span class="img-btn">l</span>
                 </button>
               </h4>
-              <h4>UTILISATIONS</h4>
+              <h4>
+                UTILISATIONS
+                <button type="action" class="flat-btn img-btn" name="act_reset_npcuses-btn" title="%{reset_npcuses-btn} Ré-initialiser l'usage des capacités">
+                  <span class="img-btn">t</span>
+                </button>
+              </h4>
               <h4>DESCRIPTION</h4>
             </div>
   
@@ -10355,17 +10363,29 @@ function askValue(prompt, callback) {
 }
 
 /**
- * Send a drop-down roll query to chat and process response
- * @param {string|string[]} askParams - Parameters of the roll query 
- * @param {(query:integer, choices:string[]) => void} callback - Callback function to process input
+ * Build ask roll query 
+ * @param {string|string[]} askParams - Parameters of the roll query
+ * @returns {{ ask: string, choices: string[] }}
  */
-function ask(askParams, callback) {
+function askCommand(askParams) {
   if (!Array.isArray(askParams)) {
     askParams = [ askParams, "Non", "Oui" ];
   }
   const [ prompt, ...choices ] = askParams;
   const choice = choices.map((ch, ix) => `${ch},${ix + 1}`).join("|");
-  const ask = `! {{ask=[[?{${prompt}|${choice}}]]}}`;
+  return { 
+    ask: `! {{ask=[[?{${prompt}|${choice}}]]}}`,
+    choices
+  };
+}
+
+/**
+ * Send a drop-down roll query to chat and process response
+ * @param {string|string[]} askParams - Parameters of the roll query 
+ * @param {(query:integer, choices:string[]) => void} callback - Callback function to process input
+ */
+function ask(askParams, callback) {
+  const { ask, choices } = askCommand(askParams);
   startRoll(ask, question => {
       const query = question.results.ask.result;
       if(query && callback) {
@@ -10374,6 +10394,20 @@ function ask(askParams, callback) {
       finishRoll(question.rollId);
   });
 };
+
+/**
+ * Send a drop-down roll query to chat and return response
+ * @async
+ * @param {string|string[]} askParams - Parameters of the roll query 
+ * @returns {Promise<{ selected: number, choices: string[] }>}
+ */
+async function askAsync(askParams) {
+  const { ask, choices } = askCommand(askParams);
+  const question = await startRoll(ask);
+  const selected = question.results.ask.result;
+  finishRoll(question.rollId);
+  return ({ selected, choices });
+}
 
 /**
  * Extract string data from CRP roll object
@@ -10577,7 +10611,6 @@ function playFX(fxValue) {
       fxChat += "\n" + fxCmd;
     }
   });
-
   if (fxChat !== "")
     sendChatCmd(fxChat);
 }
@@ -11861,6 +11894,7 @@ SWData.PC.STATS.forEach(stat => {
         sendChatCmd(actions[0]);
         return;
       }
+
       ask([ "Jet ?", short.toUpperCase(), ...rolls, ...skills ], (selected) => {
         sendChatCmd(actions[selected - 1]);
       });
@@ -12164,7 +12198,7 @@ on("clicked:vigloss-btn clicked:vigheal-btn", function (eventInfo) {
 on("change:pv change:pvig", function (eventInfo) {
   const PV = strval(eventInfo.triggerName) === "pvig" ? "PVIG" : "pv";
   getAttrs([ 
-    "sheet_type", "character_name", 
+    "sheet_type", "character_name",
     "tokenmod", "token_tint_on", "token_tint", "tkmarker_dead_on", "tkmarker_dead", 
     "pv", "pv_max", "PVIG"
   ], function (values) {
@@ -12173,7 +12207,7 @@ on("change:pv change:pvig", function (eventInfo) {
     const tokenmod = boolval(values.tokenmod);
     const markerDead = boolval(values.tkmarker_dead_on) ? strval(values.tkmarker_dead).trim() : "";
     const wounds = wounded(values);
-    
+
     const tokenProps = {};
     if (tokenTint) {
       const tokenTintColor = strval(values.token_tint).split("").every(ch => ch.match(/[0-9A-Fa-f]/))
@@ -12195,10 +12229,6 @@ on("change:pv change:pvig", function (eventInfo) {
     setAttrs({ pvstatus: wounds.pvstatus });
   });
 });
-
-function recovery(typeRecup) {
-
-}
 
 /**
  * On Recup button click
@@ -13735,7 +13765,7 @@ function actionAbility(path, rank) {
     ...abilityAttrs, 
     "character_name",
     "pm", "concentration", "rangs_voies",
-  ], function(values) {
+  ], async function(values) {
     const [ name, ability, desc, owned, spell, used, uses, freq, props, br ] = Object.keys(values);
     const pathName = strval(values[name]);
     let abilityName = strval(values[ability]);
@@ -13867,6 +13897,14 @@ function actionAbility(path, rank) {
         if (roll === s.atk)
           roll += "-btn";
       });
+      let [ ...rptRoll ] = roll.split("_");
+      if (rptRoll[2].charAt(0) === "$")
+        rptRoll[2] = strval(intval(rptRoll[2].slice(1)) + 1);
+      if (rptRoll[0] === "repeating" && intval(rptRoll[2]) !== 0) {
+        const rowIds = await getSectionIDsOrderedAsync("armes");
+        rptRoll[2] = rowIds[intval(rptRoll[2]) - 1];
+        roll = rptRoll.join("_");
+      }
       nextRoll = `%{${charName}|${roll}}`;
     }
 
@@ -13976,7 +14014,6 @@ function updateAllRanks(path) {
 }
 
 /**
- * Update the voieN_buff_xxx attribute value based on rank
  * Update the buffs_voies attribute with the list of buff attribute names
  * @param {number} path - path number changed
  */
@@ -13986,8 +14023,8 @@ function updateBuffsByRank(path) {
     const rank = intval(values[`rang_voie${path}`]);
     rankProps.filter(a => strval(values[a]) !== "").forEach(props => {
       values[props].split("\n").filter(prop => prop.startsWith("buff:")).forEach(prop => {
-        const value = prop.split(":")[1].replace(/\s+/g, " ");
-        let [ attr, ...buffs ] = value.split(" ");
+        const propValue = prop.split(":")[1].replace(/\s+/g, " ");
+        let [ attr, ...buffs ] = propValue.trim().split(" ");
         if (attr === "")
           return;
         buffs = buffs.join(" ");
@@ -14260,6 +14297,22 @@ seq(9).forEach(path => {
 });
 
 /**
+ * On change of buffs_voies
+ * Create custom attributes
+ */
+on("change:buffs_voies", function() {
+  getAttrs([ "buffs_voies" ], function (values) {
+    const buffs = objval(strval(values.buffs_voies));
+    const updates = new Map();
+    Object.entries(buffs).forEach(([ attribute, value ]) => {
+      updates.set(attribute, value);
+    });
+    if (updates.size > 0)
+      setAttrs(Object.fromEntries(updates));
+  });
+});
+
+/**
  * On click on concentration button
  */
 on("clicked:concentration-btn", function () {
@@ -14383,6 +14436,32 @@ on("clicked:reset_uses-btn", function() {
         setAttrs(reset);
       });
     });
+  });
+});
+
+/**
+ * On click of NPC reset abilities usage button
+ */
+on("clicked:reset_npcuses-btn", async function() {
+  const rptRolls = "npcrolls";
+  const rollIds = await getSectionIDsAsync("repeating_" + rptRolls);
+  if (rollIds.length === 0)
+    return;
+  const { selected } = await askAsync([ "Capacités ?", "Par combat", "Par jour" ]);
+  const daily = (selected === 2);
+  const allFreqs = rollIds.map(id => rptAttr(rptRolls, "npcroll-freq", id));
+  getAttrs(allFreqs, function (values) {
+    const updates = new Map();
+    rollIds.forEach(id => {
+      const freq = strval(values[rptAttr(rptRolls, "npcroll-freq", id)]);
+      const uses = rptAttr(rptRolls, "npcroll-uses", id);
+      if (freq.toLowerCase() === "combat")
+        updates.set(uses, 0);
+      if (daily && freq.toLowerCase() === "jour")
+        updates.set(uses, 0);
+    });
+    if (updates.size > 0)
+      setAttrs(Object.fromEntries(updates));
   });
 });
 
@@ -14828,9 +14907,11 @@ function parseBuffList(attribute) {
     const buffList = strval(values[buff]).split("; ");
     const allRanks = getPathRanks(values.rangs_voies);
     let pathBuffs;
+    let pathBuffList = [];
     try {
       pathBuffs = JSON.parse(strval(values.buffs_voies, "{}"));
-    } catch (e) { }
+      pathBuffList = Object.keys(pathBuffs).map(k => `[${k}]`);
+    } catch (e) { };
     let buffTotal = 0;
     buffList.forEach(buff => {
       buff = buff.trim();
@@ -14838,7 +14919,7 @@ function parseBuffList(attribute) {
         return;
       let value = 0;
       let expression = strval(buff.split(":")[1]).trim();
-      if (pathBuffs && Object.keys(pathBuffs).map(k => `[${k}]`).includes(expression)) {
+      if (pathBuffs && pathBuffList.includes(expression)) {
         expression = expression.replace("[", "").replace("]", "");
         value = pathBuffs[expression] || 0;
       } else {
@@ -15189,43 +15270,43 @@ function encumbrance() {
 /**
  * On click on the gear props help button
  */
-on("clicked:helpgear-btn", function() {
-  ask([
+on("clicked:helpgear-btn", async function() {
+  const { selected, choices } = await askAsync([
     "Type ?",
     "Armes",
     "Défense",
     "Armes magiques"
-  ], function(selected, choices) {
-    if (selected === 0)
-      return;
-    sendChatMsg([
-      "title=Propriétés d'équipement",
-      `subtitle=Liste des codes et valeurs (${choices[selected - 1]})`,
-      selected === 1 ? "dm-1m:=Dés de DM à une main" : "",
-      selected === 1 ? "dm-2m:=Dés de DM à deux mains" : "",
-      selected === 1 ? "type-dm:=Types de dommages" : "",
-      selected === 1 ? "critique:=Seuil de critique" : "",
-      selected === 1 ? "portee:=Portée arme à distance" : "",
-      selected === 1 ? "usure:=Seuil d'usure" : "",
-      selected === 2 ? "bonus-def:=Bonus DEF de l'armure ou du bouclier" : "",
-      selected === 2 ? "armure:=Bonus DEF de l'armure" : "",
-      selected === 2 ? "armure-malus:=Malus d'armure portée" : "",
-      selected === 2 ? "agi-max:=Bonus d'AGI maximum" : "",
-      selected === 2 ? "bouclier:=Bonus DEF du bouclier" : "",
-      selected === 2 ? "bouclier-malus:=Malus de bouclier porté" : "",
-      selected === 2 ? "casque:=RD du casque contre les DM critiques" : "",
-      selected === 2 ? "casque-malus:=Malus de PER et Init du casque porté" : "",
-      selected === 3 ? "magie:=Bonus magique pour toucher et DM" : "",
-      selected === 3 ? "magieAtt:=Bonus magique pour toucher" : "",
-      selected === 3 ? "magieDmg:=Bonus magique aux DM" : "",
-      selected === 3 ? "affutee:=Arme affûtée" : "",
-      selected === 3 ? "element:=Nom de l'élément (+' intense')" : "",
-      selected === 3 ? "fleau:=Nom du type de créature" : "",
-      "desc=Une propriété par ligne"
-    ].filter(t => t !== ""), {
-      template: "custom",
-      whisper: "gm"
-    });
+  ]);
+  if (selected === 0)
+    return;
+
+  sendChatMsg([
+    "title=Propriétés d'équipement",
+    `subtitle=Liste des codes et valeurs (${choices[selected - 1]})`,
+    selected === 1 ? "dm-1m:=Dés de DM à une main" : "",
+    selected === 1 ? "dm-2m:=Dés de DM à deux mains" : "",
+    selected === 1 ? "type-dm:=Types de dommages" : "",
+    selected === 1 ? "critique:=Seuil de critique" : "",
+    selected === 1 ? "portee:=Portée arme à distance" : "",
+    selected === 1 ? "usure:=Seuil d'usure" : "",
+    selected === 2 ? "bonus-def:=Bonus DEF de l'armure ou du bouclier" : "",
+    selected === 2 ? "armure:=Bonus DEF de l'armure" : "",
+    selected === 2 ? "armure-malus:=Malus d'armure portée" : "",
+    selected === 2 ? "agi-max:=Bonus d'AGI maximum" : "",
+    selected === 2 ? "bouclier:=Bonus DEF du bouclier" : "",
+    selected === 2 ? "bouclier-malus:=Malus de bouclier porté" : "",
+    selected === 2 ? "casque:=RD du casque contre les DM critiques" : "",
+    selected === 2 ? "casque-malus:=Malus de PER et Init du casque porté" : "",
+    selected === 3 ? "magie:=Bonus magique pour toucher et DM" : "",
+    selected === 3 ? "magieAtt:=Bonus magique pour toucher" : "",
+    selected === 3 ? "magieDmg:=Bonus magique aux DM" : "",
+    selected === 3 ? "affutee:=Arme affûtée" : "",
+    selected === 3 ? "element:=Nom de l'élément (+' intense')" : "",
+    selected === 3 ? "fleau:=Nom du type de créature" : "",
+    "desc=Une propriété par ligne"
+  ].filter(t => t !== ""), {
+    template: "custom",
+    whisper: "gm"
   });
 });
 
@@ -15868,14 +15949,13 @@ function loadBaseGear(profile, attacks = false) {
  * Base gear for profile
  */
 on("clicked:profequip-btn", function() {
-  getAttrs(["profil"], function(values) {
+  getAttrs(["profil"], async function(values) {
     const [ profile ] = strval(values.profil).split("/");
     if (profile === "")
       return;
-    ask(`Ajouter l'équipement de base pour ${profile} ?`, function(answer) {
-      if (answer === 2)
+    const { selected } = await askAsync(`Ajouter l'équipement de base du profil (${profile}) ?`);
+    if (selected === 2)
         loadBaseGear(profile);
-    });
   });
 });
 
@@ -16196,7 +16276,7 @@ on("clicked:def_config-btn", function() {
 /**
 * On clicking the Reset button
 */
-on("clicked:reset_all-btn", function() {
+on("clicked:reset_all-btn", async function() {
   const e = { triggerName: "RESET" };
   updateDRMax(e);
   updatePMMax(e);
@@ -16207,14 +16287,13 @@ on("clicked:reset_all-btn", function() {
   abilityUsages(e);
   encumbrance(e);
   rebuildRanks(e);
-  updateAbilityList(e)
+  updateAbilityList(e);
   rebuildBuffLists(e);
   rebuildBuffValues(e);
   rebuildCustom(e);
-  ask("Lier attaques et équipements ?", function(answer) {
-    if (answer === 2)
-      linkAttacks();
-  });
+  const { selected } = await askAsync("Lier attaques et équipements ?");
+  if (selected === 2)
+    linkAttacks();
 });
 
 /**
@@ -16275,7 +16354,7 @@ function rebuildCustom() {
       const { name, value } = parseNameValue(row);
       if (!name)
         return;
-      updates.set(`${name}`, replaceDevol(value));
+      updates.set(name.replace(" ", "-"), replaceDevol(value));
     });
 
     if (updates.size > 0)
@@ -16586,7 +16665,12 @@ on("clicked:caract_select-btn", function () {
   const allStats = SWData.PC.STATS.map(stat => `${shorten(stat)}`);
   const allTests = SWData.PC.STATS.map(stat => `${shorten(stat)}_test`);
   const allSupH = SWData.PC.STATS.map(stat => `${shorten(stat)}_sup`);
-  getAttrs([ "sheet_type", "character_name", ...allStats, ...allTests, ...allSupH ], function (values) {
+  getAttrs([ 
+    "sheet_type", "character_name", 
+    ...allStats,
+    ...allTests,
+    ...allSupH 
+  ], function (values) {
     const isNPC = strval(values.sheet_type) === SWData.SHEET_TYPE.NPC;
     const charName = strval(values.character_name);
     const statSelect = SWData.PC.STATS.map((stat, ix) => {
