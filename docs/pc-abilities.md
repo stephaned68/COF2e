@@ -61,55 +61,102 @@ Une quatrième icone est affichée si le personnage possède au moins un sort (e
 
 ## Propriétés des capacités
 
-Les propriétés suivantes peuvent être appliquées aux capacités :
+Les propriétés suivantes peuvent être configurées dans les capacités. Le nom de la propriété doit être immédiatement suivi de `:` et d'un espace.
 
-- `fx: xxxxx N` suivi du nom d'un effet spécial xxxxxx et d'un nombre éventuel N de répétitions pour que la fiche joue un FX Roll20 (commande `/fx`) lorsque la capacité est utilisée.
-- `pm:` suivi d'un chiffre pour faire varier le nombre de PM consommés par cette capacité. Ce chiffre peut être absolu (`pm: 3` pour consommer 3 PM) ou relatif (`pm: -1` pour consommer 1 PM de moins que la normale).
-- `selonRang: valeur1,valeur2,valeur3,valeur4,valeur5` suivi de 5 valeurs séparées par des virgules pour indiquer qu'un paramètre de la capacité évolue selon le rang atteint dans la voie.
-  - `valeur1` est la valeur du paramètre évolutif au rang 1
-  - `valeur2` est la valeur du paramètre évolutif au rang 2
-  - `valeur3` est la valeur du paramètre évolutif au rang 3
-  - `valeur4` est la valeur du paramètre évolutif au rang 4
-  - `valeur5` est la valeur du paramètre évolutif au rang 5
+### Animation `fx: xxxxx N`
+
+Vous pouvez indiquer le nom d'une animation `xxxxxx` et un nombre éventuel `N` de répétitions pour que la fiche joue un FX Roll20 (commande `/fx`) lorsque la capacité est utilisée.
+
+_Exemple :_
+
+_Afficher une explosion de paillettes roses quand une capacité est utilisée en cliquant sur la bulle_
+
+`fx: nova-charm 6`
+
+### Points de Mana `pm: N` 
+
+Vous pouvez indiquer un nombre pour faire varier le nombre de PM consommés par cette capacité. Ce nombre peut être absolu (`pm: 3` pour consommer 3 PM) ou relatif (`pm: -1` pour consommer 1 PM de moins que la normale).
+
+### Effet selon le rang `selonRang: valeur1,valeur2,valeur3,valeur4,valeur5` 
+
+Vous pouvez indiquer une suite de 5 valeurs séparées par des virgules pour indiquer qu'un paramètre de la capacité évolue selon le rang atteint dans la voie.
+- `valeur1` est la valeur du paramètre évolutif au rang 1
+- `valeur2` est la valeur du paramètre évolutif au rang 2
+- `valeur3` est la valeur du paramètre évolutif au rang 3
+- `valeur4` est la valeur du paramètre évolutif au rang 4
+- `valeur5` est la valeur du paramètre évolutif au rang 5
   
-  Le texte de la capacité doit comporter l'expression `{ {selonRang} }` pour que la fiche y insère la valeur dépendant du rang atteint.
+Le texte de la capacité doit comporter l'expression `{ {selonRang} }` pour que la fiche y insère la valeur dépendant du rang atteint.
 
-- `epic:` suivi d'un espace pour identifier la capacité comme épique.
-- `buff: xxx [valeur1,valeur2,valeur3,valeur4,valeur5]` permet de spécifier un buff nommé xxx qui évolue selon le rang atteint dans la voie.
-- `roll: xxxxx`, où xxxxx peut prendre les valeurs `contact` ou `distance` ou `magie` permet de demander à la fiche de faire le jet d'attaque correspondant lors de l'utilisation de la capacité. Vous pouvez indiquer un autre jet, en spécifiant le nom du bouton souhaité. Les noms des boutons d'action sont affichés au survol de la souris sur les éléments cliquables de la fiche (boutons, icones, certains textes) et sont généralement de la forme `%{xxxxx-btn}`. Spécifiez le nom du bouton en omettant `%{}`.
-- `action:` suivi d'un espace pour identifier la capacité comme active afin qu'un bouton d'action lui soit assigné dans le menu d'actions dans le chat.
-- `etendu:` suivi d'un texte décrivant un effet prolongé. Il peut contenir une formule de dé pour des DM.
-- `etendu-duree:` suivi d'un texte spécifiant la durée de l'effet. Il peut être spécifié sous forme d'une valeur fixe ou d'une expression faisant référence à un attribut du personnage (_ex: `[INT]` rounds pour la durée d'un sort_).
-- `etendu-nom:` suivi du nom de l'effet, si vous souhaitez qu'il soit différent du nom de la capacité.
-- `etendu-stop:` suivi d'un texte permettant de rappeler les conditions dans lesquelles l'effet stoppe, si aucune durée n'est indiquée.
+_Exemple :_
 
-### Exemples :
+_Paramétrer la capacité de sort __Arc de feu__ avec son évolution au rang 4 :_
 
-- Afficher une explosion de paillettes roses quand une capacité est utilisée en cliquant sur la bulle
+`selonRang: 1d4°,1d4°,1d4°,2d4°,2d4°`
 
-  `fx: nova-charm 6`
+_Dans la description, indiquez :_
 
-- Paramétrer la capacité de sort _Arc de feu_ avec son évolution au rang 4 :
+_Des flammes jaillissent des doigts tendus du magicien. Jusqu’à 3 cibles au contact subissent [\{\{selonRang\}\}+INT] DM, les cibles peuvent faire un test d’AGI difficulté [10 + INT] pour ne subir que la moitié des DM_
 
-  Propriété : `selonRang: 1d4°,1d4°,1d4°,2d4°,2d4°`
+### Capacité épique `epic: ` 
 
-  Description : _Des flammes jaillissent des doigts tendus du magicien. Jusqu’à 3 cibles au contact subissent [\{\{selonRang\}\}+INT] DM, les cibles peuvent faire un test d’AGI difficulté [10 + INT] pour ne subir que la moitié des DM_
+Vous pouvez identifier la capacité comme étant de type _épique_.
 
-- Paramétrer le buff à la DEF octroyé par la capacité _Peau de pierre_ selon le rang atteint dans la _voie du Pagne_ renseignée en voie n°3
+### Buff selon rang `buff: xxx [valeur1,valeur2,valeur3,valeur4,valeur5]` 
 
-  Propriété : `buff: def [0,1,1,2,2]`
+Vous pouvez indiquer un identifiant xxx suivi d'un espace et d'une série de 5 valeurs entre crochets séparées par des virgules. La fiche crée un attribut nommé `voieN_buff_xxxx`, où `N` correspond au no de la voie où figure la capacité, et dont la valeur évolue selon le rang atteint dans la voie.
 
-  Cette propriété crée une valeur nommée `voie3_buff_def`. Cette valeur change selon le rang atteint dans la voie n°3 en utilisant l'énumération indiquée entre `[]` : 0 au rang 1, 1 au rang 2, 2 à partir du rang 4. Cette valeur peut être indiquée comme une référence d'attribut dans une ligne de buff en spécifiant `[voie3_buff_def]`.
+_Exemple :_
 
-- Paramétrer la capacité de sort _Flèche de feu_ pour effectuer le jet d'attaque magique
+_Paramétrer le buff à la DEF octroyé par la capacité __Peau de pierre__ selon le rang atteint dans la __Voie du Pagne__ renseignée en voie n°3_
 
-  Propriété : `roll: magie`
+`buff: def [0,1,1,2,2]`
 
-- Paramétrer la capacité de sort _Flèche de feu_ pour indiquer son effet prolongé 
+_Cette propriété crée une valeur nommée `voie3_buff_def`. Cette valeur change selon le rang atteint dans la voie n°3 en utilisant l'énumération indiquée entre `[]` : 0 au rang 1, 1 au rang 2, 2 à partir du rang 4. Cette valeur peut être indiquée comme un attribut dans une ligne de buff en spécifiant `[voie3_buff_def]`_
+
+### Jet `roll: xxxxx`
+
+Indiquez les valeurs standard `contact` ou `distance` ou `magie` pour demander à la fiche de faire le jet d'attaque correspondant lors de l'utilisation de la capacité. 
+
+Vous pouvez indiquer un autre jet, en spécifiant le nom du bouton souhaité. Les noms des boutons d'action sont affichés au survol de la souris sur les éléments cliquables de la fiche (boutons, icones, certains textes) et sont généralement de la forme `%{xxxxx-btn}`. Spécifiez le nom du bouton en omettant `%{}`.
+
+_Exemple :_
+
+_Paramétrer la capacité de sort __Flèche de feu__ pour effectuer le jet d'attaque magique_
+
+`roll: magie`
+
+Vous pouvez spécifier le nom d'un bouton dans une liste répétable. Les noms de ces boutons commencent par `repeating_` et nécessitent d'indiquer le numéro de la ligne souhaitée.
+
+_Exemple :_
+
+_Pour que la fiche lance la deuxième ligne d'attaque :_
+
+`roll: repeating_armes_2_attack-btn`
+
+### Menu des actions `action: `
+
+Vous pouvez marquer la capacité comme _active_ afin qu'un bouton d'action lui soit assigné dans le menu des actions dans le chat.
+
+### Effets étendus `etendu: ...`
+
+Vous pouvez indiquer que la capacité a un effet qui se prolongent sur plusieurs rounds. Il peut être nécessaire de préciser cet effet avec d'autres propriétés `etendu-`.
+
+`etendu: ...` est suivie d'un texte décrivant l'effet prolongé. Ce texte peut contenir une formule de dé pour des DM (y compris des dés évolutifs `1d4°`).
+
+`etendu-duree: ...` est suivie d'un texte spécifiant la durée de l'effet. Ce texte peut être exprimé sous forme d'une valeur fixe ou d'une expression faisant référence à un attribut du personnage (_ex: `[INT] rounds` pour la durée d'un sort_).
+
+`etendu-nom: ...` est suivie du nom de l'effet, si vous souhaitez qu'il soit différent du nom de la capacité.
+
+`etendu-stop: ...` est suivie d'un texte permettant de rappeler les conditions dans lesquelles l'effet s'arrête, si aucune durée n'est indiquée.
+
+_Exemples_
+
+_Paramétrer la capacité de sort __Flèche de feu__
   
-  Propriété : `etendu: [[1d6cf<2]]` pour lancer 1d6 et afficher le résultat en rouge si le jet est de 1 ou 2 (ce qui signifie que l'effet s'interrompt)
+`etendu: [[1d6cf<2]]` pour lancer 1d6 et afficher le résultat en rouge si le jet est de 1 ou 2 (ce qui signifie que l'effet s'interrompt)
   
-  Propriété : `etendu-nom: DM flèche de feu` pour afficher le texte indiqué au lieu du nom de la capacité
+`etendu-nom: DM flèche de feu` pour afficher le texte indiqué au lieu du nom de la capacité
 
 Si une capacité est paramétrée avec des propriétés de type `etendu` et que le script MOD **AddCustomTurn** est disponible, une entrée personnalisée est ajoutée au Turn-Order Roll20 lorsque cette capacité est utilisée.
 
