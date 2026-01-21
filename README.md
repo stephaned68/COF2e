@@ -13,7 +13,10 @@ v1.13.0 [Screenshot](cof2e.png)
 ### Version _1.14.0_ (next)
 
 - Ajout d'une liste d'options tactiques activables avec bonus d'attaque, dé bonus/malus, DM supplémentaires
-- Suppression des buffs au DM et conversion en options tactiques</li>
+- Suppression des buffs au DM et conversion en options tactiques
+- Meilleure prise en charge des jets liés aux capacités (propriété `roll:`)
+- Amélioration des buffs de capacités (propriété `buff:`)
+- Ajout d'un bouton de réinitialisation des utilisation de capacités dans la fiche de PNJ
 
 ### Version _1.13.0_ (2026-01-04)
 

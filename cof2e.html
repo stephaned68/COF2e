@@ -13890,20 +13890,23 @@ function actionAbility(path, rank) {
         { atk: "atktir", alias: "distance" },
         { atk: "atkmag", alias: "magie" }
       ];
-      let roll = getProp(abilityProps, "roll");
+      let roll = getProp(abilityProps, "roll").trim();
       search.forEach(s => {
         if (cleanText(roll).includes(s.alias))
           roll = s.atk;
         if (roll === s.atk)
           roll += "-btn";
       });
-      let [ ...rptRoll ] = roll.split("_");
-      if (rptRoll[2].charAt(0) === "$")
-        rptRoll[2] = strval(intval(rptRoll[2].slice(1)) + 1);
-      if (rptRoll[0] === "repeating" && intval(rptRoll[2]) !== 0) {
-        const rowIds = await getSectionIDsOrderedAsync("armes");
-        rptRoll[2] = rowIds[intval(rptRoll[2]) - 1];
-        roll = rptRoll.join("_");
+      roll = roll.replaceAll("%{", "").replaceAll("}", "");
+      if (roll.startsWith("repeating_")) {
+        let [ ...rptRoll ] = roll.split("_");
+        if (rptRoll[2].charAt(0) === "$")
+          rptRoll[2] = strval(intval(rptRoll[2].slice(1)) + 1);
+        if (intval(rptRoll[2]) !== 0) {
+          const rowIds = await getSectionIDsOrderedAsync(rptRoll[1]);
+          rptRoll[2] = rowIds[intval(rptRoll[2]) - 1];
+          roll = rptRoll.join("_");
+        }
       }
       nextRoll = `%{${charName}|${roll}}`;
     }
