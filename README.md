@@ -16,7 +16,10 @@ v1.13.0 [Screenshot](cof2e.png)
 - Suppression des buffs au DM et conversion en options tactiques
 - Meilleure prise en charge des jets liés aux capacités (propriété `roll:`)
 - Amélioration des buffs de capacités (propriété `buff:`)
+- Ajout d'un contrôle du bonus maximum de compétence
 - Ajout d'un bouton de réinitialisation des utilisation de capacités dans la fiche de PNJ
+- Ajout d'un onglet _Version_ à la fiche de PNJ
+- Ajout d'une case à cocher _Mook_ à la fiche de PNJ
 
 ### Version _1.13.0_ (2026-01-04)
 

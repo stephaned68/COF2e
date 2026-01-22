@@ -541,7 +541,8 @@ input:not([value=""]).custom-skill + div.custom-skill.custom-skill-top {
 .npc-notes-subtab,
 .npc-gears-tab,
 .npc-config-tab,
-.npc-script-tab {
+.npc-script-tab,
+.npc-version-tab {
   display: none;
 }
 
@@ -568,7 +569,8 @@ input:not([value=""]).custom-skill + div.custom-skill.custom-skill-top {
 .tabs-toggle[value="notes"] ~ div .npc-notes-btn,
 .tabs-toggle[value="gears"] ~ div .npc-gears-btn,
 .tabs-toggle[value="config"] ~ div .npc-config-btn,
-.tabs-toggle[value="script"] ~ div .npc-script-btn {
+.tabs-toggle[value="script"] ~ div .npc-script-btn,
+.tabs-toggle[value="version"] ~ div .npc-version-btn {
   color: white; 
   background-color: var(--cof-hilite); 
 }
@@ -603,7 +605,8 @@ input:not([value=""]).custom-skill + div.custom-skill.custom-skill-top {
 .tabs-toggle[value="notes"] ~ div.npc-notes-subtab,
 .tabs-toggle[value="gears"] ~ div.npc-gears-tab, 
 .tabs-toggle[value="config"] ~ div.npc-config-tab,
-.tabs-toggle[value="script"] ~ div.npc-script-tab {
+.tabs-toggle[value="script"] ~ div.npc-script-tab,
+.tabs-toggle[value="version"] ~ div.npc-version-tab {
     display: block;
 }
 
@@ -1170,13 +1173,16 @@ input[value="0"].ability-uses + div.ability-uses {
   gap: 2px;
 }
 
-.pc-version-tab details ul {
+.pc-version-tab details ul,
+.npc-version-tab details ul {
   padding-left: 0;
   margin-left: 10px;
 }
 
 .pc-version-tab details li,
-.pc-version-tab details li em {
+.npc-version-tab details li em,
+.pc-version-tab details li,
+.npc-version-tab details li em {
   font-size: small;
 }
 

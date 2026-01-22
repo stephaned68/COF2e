@@ -301,6 +301,7 @@
             <option value="pc" selected>PJ</option>
             <option value="npc">PNJ</option>
           </select>
+          <input type="checkbox" name="attr_mook" title="@{mook} Fiche de mook" value="1">
           <input type="hidden" name="attr_sheet_type">
           <button type="action" class="flat-btn img-btn" name="act_charmancer-btn" title="Lancer le Persomancien">
             <span class="img-btn">x</span>
@@ -5997,7 +5998,7 @@
                     <li>Suppression des buffs au DM et conversion en options tactiques</li>
                     <li>Meilleure prise en charge des jets liés aux capacités (propriété 'roll:')</li>
                     <li>Amélioration des buffs de capacités (propriété 'buff:')</li>
-                    <li>Ajout d'un bouton de réinitialisation des utilisation de capacités dans la fiche de PNJ</li>
+                    <li>Ajout d'un contrôle du bonus maximum de compétence</li>
                   </ul>
                 </details>
               </li>
@@ -6010,8 +6011,6 @@
                   <ul>
                     <li>Prise en charge de l'action <em>Aider</em> (script MOD SetChatAttr nécessaire)</li>
                     <li>Ajout de 4 compétences personnalisées optionnelles avec caractéristiques associées</li>
-                    <li>Ajout d'un champ pour le score d'attaque à distance de base à la fiche de PNJ</li>
-                    <li>Ajout d'un champ Genre à la fiche de PNJ</li>
                     <li>Mise à jour automatique des PV en cas d'utilisation d'un consommable de soins</li>
                     <li>Prise en charge de l'import de texte (voies et créatures) depuis le DRS officiel</li>
                     <li>Gestion des effets prolongés des attaques et capacités</li>
@@ -6030,7 +6029,6 @@
                     <li>Plus d'insertion automatique d'inline-roll [[ ]] dans le texte d'une capacité si ce dernier en comporte déjà</li>
                     <li>Effacement de la liaison entre une ligne d'arme et de munition quand le type d'attaque n'est pas <em>trait</em></li>
                     <li>Pas d'affichage des champs fréquence d'utilisation pour les capacités dont le nombre d'utilisation maximum est 0</li>
-                    <li>Ajout de la gestion des Points de Chance à la fiche de PNJ</li>
                   </ul>
                 </details>
               </li>
@@ -6042,11 +6040,10 @@
                   </summary>
                   <ul>
                     <li>Correction DM x 2 si le seuil de critique est inférieur à 20</li>
-                    <li>Ajout de boutons <em>Récupérations</em> et <em>Soins</em> au menu d'actions du PJ</li>
+                    <li>Ajout de boutons <em>Récupérations</em> et <em>Soins</em> au menu d'actions</li>
                     <li>Ajout d'une mention pour les manoeuvres avec modificateur de tailles</li>
                     <li>Ajout du jet opposé sur l'utilisation d'une manoeuvre</li>
-                    <li>Ajout de champs pour les scores d'attaque au contact (jet de manoeuvre opposé) et magique aux fiches de PNJ</li>
-                    <li>Possibilité de combiner les options tactiques avec une option spécifique au PJ</li>
+                    <li>Possibilité de combiner les options tactiques avec une option spécifique du profil</li>
                   </ul>
                 </details>
               </li>
@@ -6059,18 +6056,15 @@
                   <ul>
                     <li>Réinitialisation des capacités utilisées par combat / par jour en cas de récupération rapide ou complète</li>
                     <li>Réinitialisation des PM maximum ec cas de récupération complète</li>
-                    <li>Ajout d'un sous-onglet pour les RD et Résistances aux DM sur la fiche de PJ</li>
-                    <li>Ajout d'une section dépliante pour les RD et Résistances aux DM sur la fiche de PNJ</li>
+                    <li>Ajout d'un sous-onglet pour les RD et Résistances aux DM</li>
                     <li>Ajout d'attributs vitesse pour les déplacements</li>
                     <li>Prise en charge des valeurs de buffs qui changent à certains rangs dans une voie</li>
                     <li>Prise en charge des manoeuvres spéciales dans les jets d'attaque</li>
-                    <li>Ajout de listes de tailles et de type de créatures sur la fiche de PNJ</li>
                     <li>Ajout d'une option pour cibler un token lors d'un jet d'attaque</li>
                     <li>Effacement de l'option tactique choisie après un jet d'attaque</li>
                     <li>Ajout d'une macro <em>pc_actions-btn</em> pour une liste d'actions dans le chat</li>
                     <li>Prise en charge des ressources consommables de type <em>soins</em></li>
                     <li>Ajout d'un bouton <em>Consommable</em> à la liste des ressources</li>
-                    <li>Ajout du nombre d'utilisations par jour/combat aux capacités de PNJ</li>
                   </ul>
                 </details>
               </li>
@@ -6109,7 +6103,6 @@
                     <li>Ajout d'une option dans la configuration <em>Token Mod</em> pour appliquer une teinte au token quand le nombre de PV tombe au-dessous de sa valeur maximum.</li>
                     <li>Ajout d'un bouton pour copier la configuration par défaut depuis une fiche nommée PJBase.</li>
                     <li>Option <em>jet:N</em> déplacée du champ <em>Spécial</em> d'une attaque au champ <em>Modificateurs d'attaque</em></li>
-                    <li>Ajout d'une option dans les coups spéciaux des PNJ pour n'affecter que la prochaine attaque</li>
                   </ul>
                 </details>
               </li>
@@ -6122,7 +6115,6 @@
                   <ul>
                     <li>Sous-onglet <em>Maîtrises</em> dans l'onglet <em>Capacités</em> pour les langues et les maîtrises spéciales d'armes / armures</li>
                     <li>Ajout d'un popup Roll20 sur le bouton DR pour choisir entre Récupération <em>Rapide</em> ou <em>Complète</em> ou <em>Se dépasser</em></li>
-                    <li>Ajout de la possibilité d'indiquer <em>jet:N</em> dans le champ Spécial d'une attaque de PNJ pour afficher la description du jet correspondant dans le chat</li>
                     <li>Ajout d'une option <em>Token Mod</em> dans l'onglet Script pour permettre aux joueurs d'interagir avec le token de leur personnage</li>
                   </ul>
                 </details>
@@ -6138,8 +6130,6 @@
                     <li>Ajout d'un champ <em>Prédicats si porté</em> aux lignes d'attaques et d'équipements</li>
                     <li>Création de 2 attaques pour les armes avec propriété <em>lancer</em> depuis l'onglet équipement</li>
                     <li>Ajout des jets des capacités aux boutons épinglables à la barre d'actions Roll20</li>
-                    <li>Ajout d'une gestion de compétences dans la fiche de PNJ</li>
-                    <li>Ajout des options tactiques et de 3 coups spéciaux dans la fiche de PNJ</li>
                     <li>Ajout d'une liste de munitions sur l'onglet équipement (script COFantasy2)</li>
                   </ul>
                 </details>
@@ -6151,7 +6141,7 @@
                     <strong>Version 1.5.0</strong> (2025-05-08)
                   </summary>
                   <ul>
-                    <li>Ajout d'un onglet Notes aux fiches de PJ</li>
+                    <li>Ajout d'un onglet Notes</li>
                     <li>Ajout d'une couleur de fond aux PV selon l'état courant (Jaune si moins de 50% de PV restants, Rouge si 1 PV restant, Rouge foncé si 0 PV restant)</li>
                     <li>Ajout d'une '*' aux capacités de sort en mode affichage</li>
                     <li>Ajout d'une option pour ajuster les PM dépensés par une capacité de sort</li>
@@ -6175,7 +6165,7 @@
                   <ul>
                     <li>Ajout d'un bouton pour afficher un check-up de l'état du personnage</li>
                     <li>Ajout d'un bouton pour activer la concentration sur les capacités de sort</li>
-                    <li>Ajout des tables de coups et d'échecs critiques sur les fiches de PJ et PNJ</li>
+                    <li>Ajout des tables de coups et d'échecs critiques</li>
                     <li>Ajout d'une question pour les DM des sorts de zone en attaque</li>
                     <li>Prise en compte des propriétés magiques des armes</li>
                     <li>Prise en compte des règles optionnelles de peur</li>
@@ -6203,9 +6193,7 @@
                     <li>Ajout de toutes les armes et armures dans la liste des équipements reconnus</li>
                     <li>Gestion simplifée du suivi des munitions</li>
                     <li>Gestion de l'usure des armes</li>
-                    <li>Ajout de 4 listes d'actions sur l'onglet Script des fiches de PJ et PNJ</li>
-                    <li>Prise en compte des attaques groupées sur la fiche de PNJ</li>
-                    <li>Ajout d'un onglet Equipement simplifié sur la fiche de PNJ</li>
+                    <li>Ajout de 4 listes d'actions sur l'onglet Script</li>
                     <li>Correction d'un bug sur l'appel du Persomancien</li>
                   </ul>
                 </details>
@@ -6224,10 +6212,8 @@
                     <li>Modification du calcul des DR max avec une base de 2 sauf pour les profils de Mystiques (3 DR)</li>
                     <li>Modification du calcul des PC max avec une base de 2 sauf pour les profils d'Aventuriers (3 PC)</li>
                     <li>Ajout d'options de configuration pour forcer la valeur max des PV, DR, PC et PM</li>
-                    <li>Modification du champ RD dans la fiche de PNJ</li>
                     <li>Amélioration de la reconnaissance d'inline-rolls dans les descriptions de capacités</li>
                     <li>Ajout du détail de la bourse par type de pièces et total du trésor en PA</li>
-                    <li>Ajout des boutons des menus d'action sur la fiche de PNJ</li>
                     <li>Ajout gestion des objets en main</li>
                     <li>Ajout de la possibilité de lier un FX Roll20 aux jets de caractéristiques, d'attaques et de capacités</li>
                     <li>Persomancien (version expérimentale)</li>
@@ -6252,7 +6238,6 @@
                     <li>Remplacement import profil en JSON par import de voie depuis PDF</li>
                     <li>Ajout d'un bouton de génération de l'équipement de base du profil</li>
                     <li>Ajout de la gestion de l'AGI/CON maximum selon l'armure</li>
-                    <li>Ajout de l'onglet Script et des options d'attaque sur les fiches de PNJ</li>
                     <li>Ajout d'un champ propriétés sur les ressources</li>
                   </ul>
                 </details>
@@ -6297,6 +6282,7 @@
         <button type="action" name="act_npc_gears-btn" class="main-tab tab-btn npc-gears-btn">EQUIPEMENT</button>
         <button type="action" name="act_npc_config-btn" class="main-tab tab-btn npc-config-btn">CONFIGURATION</button>
         <button type="action" name="act_npc_script-btn" class="main-tab tab-btn npc-script-btn">SCRIPT</button>
+        <button type="action" name="act_npc_version-btn" class="main-tab tab-btn npc-version-btn">VERSION</button>
       </div>
 
       <div class="npc-main-tab">
@@ -7441,6 +7427,214 @@
         </div>
       </div>
 
+      <!-- Fiche PNJ, Onglet Version -->
+      <div class="npc-version-tab">
+        <h3>
+          Notes de version (v<span name="attr_version"></span>)
+          <button type="action" class="flat-btn img-btn" name="act_helpdoc-btn" title="Documentation en ligne">
+            <span class="img-btn img-btn-xl">i</span>
+          </button>
+        </h3>
+
+        <div class="sheet-2colrow">
+
+          <div class="sheet-col">
+
+            <ul>
+
+              <li>
+                <details>
+                  <summary>
+                    <strong>Version 1.14.0</strong> (next)
+                  </summary>
+                  <ul>
+                    <li>Ajout d'un bouton de réinitialisation des utilisation de capacités</li>
+                    <li>Ajout d'une case à cocher pour identifier le PNJ comme un mook (TokenMod)</li>
+                    <li title="Merci, Captain Obvious...">Ajout de l'onglet <em>Version</em></li>
+                  </ul>
+                </details>
+              </li>
+
+              <li>
+                <details>
+                  <summary>
+                    <strong>Version 1.13.0</strong> (2026-01-04)
+                  </summary>
+                  <ul>
+                    <li>Ajout d'un champ pour le score d'attaque à distance de base</li>
+                    <li>Ajout d'un champ Genre</li>
+                    <li>Prise en charge de l'import de texte (voies et créatures) depuis le DRS officiel</li>
+                  </ul>
+                </details>
+              </li>
+
+              <li>
+                <details>
+                  <summary>
+                    <strong>Version 1.12.0</strong> (2025-11-30)
+                  </summary>
+                  <ul>
+                    <li>Ajout de la gestion des Points de Chance</li>
+                  </ul>
+                </details>
+              </li>
+
+              <li>
+                <details>
+                  <summary>
+                    <strong>Version 1.11.0</strong> (2025-11-11)
+                  </summary>
+                  <ul>
+                    <li>Ajout de champs pour les scores d'attaque au contact (jet de manoeuvre opposé) et magique</li>
+                  </ul>
+                </details>
+              </li>
+
+              <li>
+                <details>
+                  <summary>
+                    <strong>Version 1.10.0</strong> (2025-10-31)
+                  </summary>
+                  <ul>
+                    <li>Ajout d'une section dépliante pour les RD et Résistances aux DM</li>
+                    <li>Ajout d'attributs vitesse pour les déplacements</li>
+                    <li>Ajout de listes de tailles et de type de créatures</li>
+                    <li>Ajout d'une option pour cibler un token lors d'un jet d'attaque</li>
+                    <li>Effacement de l'option tactique choisie après un jet d'attaque</li>
+                    <li>Ajout du nombre d'utilisations par jour/combat aux capacités</li>
+                  </ul>
+                </details>
+              </li>
+
+              <li>
+                <details>
+                  <summary>
+                    <strong>Version 1.8.0</strong> (2025-08-31)
+                  </summary>
+                  <ul>
+                    <li>Ajout d'un bouton pour copier la configuration par défaut depuis une fiche nommée PNJBase.</li>
+                    <li>Ajout d'une option dans les coups spéciaux pour n'affecter que la prochaine attaque</li>
+                  </ul>
+                </details>
+              </li>
+
+              <li>
+                <details>
+                  <summary>
+                    <strong>Version 1.7.0</strong> (2025-07-26)
+                  </summary>
+                  <ul>
+                    <li>Ajout de la possibilité d'indiquer <em>jet:N</em> dans le champ Spécial d'une attaque pour afficher la description du jet de capacité correspondant dans le chat</li>
+                    <li>Ajout d'une option <em>Token Mod</em> dans l'onglet Script pour permettre la configuration rapide du token</li>
+                  </ul>
+                </details>
+              </li>
+
+              <li>
+                <details>
+                  <summary>
+                    <strong>Version 1.6.0</strong> (2025-06-22)
+                  </summary>
+                  <ul>
+                    <li>Ajout d'une gestion de bonus de compétence par caractéristiques</li>
+                    <li>Ajout des options tactiques et de 3 coups spéciaux</li>
+                    <li>Ajout d'une liste de munitions sur l'onglet équipement (script COFantasy2)</li>
+                  </ul>
+                </details>
+              </li>
+
+              <li>
+                <details>
+                  <summary>
+                    <strong>Version 1.5.0</strong> (2025-05-08)
+                  </summary>
+                  <ul>
+                    <li>Ajout de la possibilité d'épingler certains jets à la barre d'actions Roll20</li>
+                    <li>Ajout d'une case attaque active/inactive pour le script COFantasy2</li>
+                  </ul>
+                </details>
+              </li>
+
+              <li>
+                <details>
+                  <summary>
+                    <strong>Version 1.4.0</strong> (2025-04-08)
+                  </summary>
+                  <ul>
+                    <li>Ajout des tables de coups et d'échecs critiques</li>
+                    <li>Ajustements cosmétiques pour les cases à cocher et boutons radio</li>
+                  </ul>
+                </details>
+              </li>
+
+              <li>
+                <details>
+                  <summary>
+                    <strong>Version 1.3.0</strong> (2025-03-09)
+                  </summary>
+                  <ul>
+                    <li>Ajout de 4 listes d'actions sur l'onglet Script</li>
+                    <li>Prise en compte des attaques groupées</li>
+                    <li>Ajout d'un onglet Equipement simplifié</li>
+                  </ul>
+                </details>
+              </li>
+
+              <li>
+                <details>
+                  <summary>
+                    <strong>Version 1.2.0</strong> (2025-02-04)
+                  </summary>
+                  <ul>
+                    <li>Modification du champ RD</li>
+                    <li>Ajout du détail de la bourse par type de pièces et total du trésor en PA</li>
+                    <li>Ajout des boutons des menus d'action</li>
+                    <li>Améliorations visuelles diverses (dont support du darkmode dans le chat)</li>
+                  </ul>
+                </details>
+              </li>
+
+              <li>
+                <details>
+                  <summary>
+                    <strong>Version 1.1.0</strong> (2025-01-05)
+                  </summary>
+                  <ul>
+                    <li>Ajout de la gestion de compagnons</li>
+                    <li>Ajout d'options d'attaque pour le script COFantasy2</li>
+                    <li>Ajout de l'onglet Script et des options d'attaque</li>
+                  </ul>
+                </details>
+              </li>
+
+              <li>
+                <details>
+                  <summary>
+                    <strong>Version 1.0.0</strong> (2024-12-24)
+                  </summary>
+                  <ul>
+                    <li>Première version de la fiche</li>
+                  </ul>
+                </details>
+              </li>
+
+            </ul>
+
+          </div>
+
+          <div class="sheet-col">
+
+            <h4>Migrations</h4>
+            <details>
+              <summary>Détail des mises à jour</summary>
+              <textarea class="large migration" name="attr_migration"></textarea>
+            </details>
+
+          </div>
+
+        </div>
+      </div>      
+
     </div>
 
   </div>
@@ -8029,6 +8223,16 @@ const SWData = {
         bar4_link: "vitesse_cases",
       },
       NPC: {
+        bar1: "",
+        bar1_link: "", 
+        bar2: "",
+        bar2_link: "def",
+        bar3: "",
+        bar3_link: "pv",
+        bar4: "",
+        bar4_link: "vitesse_cases"
+      },
+      MOOK: {
         bar1: "",
         bar1_link: "", 
         bar2: "",
@@ -11030,7 +11234,8 @@ on("change:cfg_d20roll", function() {
 [ 
   "pc_main", "pc_abilities", "pc_gears", "pc_notes",
   "pc_config", "pc_script", "pc_version",
-  "npc_main", "npc_gears", "npc_config", "npc_script"
+  "npc_main", "npc_gears",
+  "npc_config", "npc_script", "npc_version",
 ].forEach(button => {
   on(`clicked:${button}-btn`, function() {
     const [ type, value ] = button.split("_");
@@ -13568,7 +13773,9 @@ on("change:usure_check", function() {
         }
       }
     }
-    catch (e) {} 
+    catch (e) {
+      console.error(e.message + "@change:usure_check");
+    } 
     finally {
       updates.set("usure_check", "");
       setAttrs(Object.fromEntries(updates));
@@ -14030,15 +14237,20 @@ function updateBuffsByRank(path) {
         let [ attr, ...buffs ] = propValue.trim().split(" ");
         if (attr === "")
           return;
-        buffs = buffs.join(" ");
+        buffs = buffs.join(" ")
+          .replaceAll("[", '["')
+          .replaceAll(",", '","')
+          .replaceAll("]", '"]');
         try {
           const byRank = JSON.parse(buffs.trim());
           const buffAttr = `voie${path}_buff_${ attr.trim() }`;
-          const buffByRank = rank > 0 ? byRank[rank - 1] : 0;
+          const buffByRank = rank > 0 ? byRank[rank - 1] : "";
           const buffs_voies = JSON.parse(strval(values.buffs_voies, "{}"));
           buffs_voies[buffAttr] = buffByRank;
           setAttrs({ buffs_voies: JSON.stringify(buffs_voies) });
-        } catch (e) { }
+        } catch (e) { 
+          console.error(e.message + " @ updateBuffsByRank()");
+        }
       });
     });
   });
@@ -14276,6 +14488,11 @@ seq(9).forEach(path => {
         setAttrs({ [`${ability}-btn`]: `%{${charName}|${ability}-btn}` });
       });
     });
+    
+    on(`change:${ abilityInfo(ability).rankProps }`, function () {
+      updateBuffsByRank(path);
+    });
+
   });
 
   // Update all ranks attribute
@@ -14914,7 +15131,9 @@ function parseBuffList(attribute) {
     try {
       pathBuffs = JSON.parse(strval(values.buffs_voies, "{}"));
       pathBuffList = Object.keys(pathBuffs).map(k => `[${k}]`);
-    } catch (e) { };
+    } catch (e) {
+      console.error(`${e.message} @ parseBuffList(${attribute})`);
+    };
     let buffTotal = 0;
     buffList.forEach(buff => {
       buff = buff.trim();
@@ -16567,7 +16786,10 @@ on("change:debug_mode", function() {
  * On help doc button click
  */
 on("clicked:helpdoc-btn", function() {
-  sendChatMsg("[Documentation](https://stephaned68.github.io/COF2e/)", { template: "" });
+  getAttrs([ "sheet_type" ], function (values) {
+    const main = strval(values.sheet_type).toLowerCase() + "-main";
+    sendChatMsg(`[Documentation](https://stephaned68.github.io/COF2e/${main})`, { template: "" });
+  })
 });
 
 /**
@@ -19223,7 +19445,7 @@ on("change:pvig_max", function(eventInfo) {
  * On clicking token adjust buttons (TokenMod)
  */
 on("clicked:token_min-btn clicked:token_max-btn clicked:token_siz-btn clicked:token_def-btn", function(eventInfo) {
-  getAttrs([ "sheet_type", "character_name", "pm_max", "taille" ], function(values) {
+  getAttrs([ "sheet_type", "mook", "character_name", "pm_max", "taille" ], function(values) {
     const bt = strval(eventInfo.triggerName.split("_")[1]);
     const resize = strval(({
       "min-btn": "0.9",
@@ -19231,12 +19453,14 @@ on("clicked:token_min-btn clicked:token_max-btn clicked:token_siz-btn clicked:to
       "siz-btn": "?{*Taille ?}",
     })[bt]);
     const isNPC = strval(values.sheet_type) === SWData.SHEET_TYPE.NPC;
+    const isMook = isNPC && boolval(values.mook);
     let props = {};
     if (resize !== "") {
       props = { scale: "*" + resize };
     } else {
       const tk = SWData.settings.tokens;
-      Object.entries(tk[strval(values.sheet_type)]).forEach(([k, v]) => {
+      const type = isMook ? "MOOK" : strval(values.sheet_type) 
+      Object.entries(tk[type]).forEach(([k, v]) => {
         if (v !== "pm" || intval(values.pm_max) > 0)
           props[k] = v;
       });
