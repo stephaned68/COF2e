@@ -63,7 +63,9 @@ Une quatrième icone est affichée si le personnage possède au moins un sort (e
 
 Les propriétés suivantes peuvent être configurées dans les capacités. Le nom de la propriété doit être immédiatement suivi de `:` et d'un espace.
 
-### Animation `fx: xxxxx N`
+### Animation (fx)
+
+`fx: xxxxx N`
 
 Vous pouvez indiquer le nom d'une animation `xxxxxx` et un nombre éventuel `N` de répétitions pour que la fiche joue un FX Roll20 (commande `/fx`) lorsque la capacité est utilisée.
 
@@ -73,11 +75,15 @@ _Afficher une explosion de paillettes roses quand une capacité est utilisée en
 
 `fx: nova-charm 6`
 
-### Points de Mana `pm: N` 
+### Points de Mana (pm)
+
+`pm: N` 
 
 Vous pouvez indiquer un nombre pour faire varier le nombre de PM consommés par cette capacité. Ce nombre peut être absolu (`pm: 3` pour consommer 3 PM) ou relatif (`pm: -1` pour consommer 1 PM de moins que la normale).
 
-### Effet selon le rang `selonRang: valeur1,valeur2,valeur3,valeur4,valeur5` 
+### Effet selon le rang (selonRang)
+
+`selonRang: valeur1,valeur2,valeur3,valeur4,valeur5` 
 
 Vous pouvez indiquer une suite de 5 valeurs séparées par des virgules pour indiquer qu'un paramètre de la capacité évolue selon le rang atteint dans la voie.
 - `valeur1` est la valeur du paramètre évolutif au rang 1
@@ -98,11 +104,15 @@ _Dans la description, indiquez :_
 
 _Des flammes jaillissent des doigts tendus du magicien. Jusqu’à 3 cibles au contact subissent [\{\{selonRang\}\}+INT] DM, les cibles peuvent faire un test d’AGI difficulté [10 + INT] pour ne subir que la moitié des DM_
 
-### Capacité épique `epic: ` 
+### Capacité épique (epic)
+
+`epic: ` 
 
 Vous pouvez identifier la capacité comme étant de type _épique_.
 
-### Buff selon rang `buff: xxx [valeur1,valeur2,valeur3,valeur4,valeur5]` 
+### Buff selon rang (buff)
+
+`buff: xxx [valeur1,valeur2,valeur3,valeur4,valeur5]` 
 
 Vous pouvez indiquer un identifiant xxx suivi d'un espace et d'une série de 5 valeurs entre crochets séparées par des virgules. La fiche crée un attribut nommé `voieN_buff_xxxx`, où `N` correspond au no de la voie où figure la capacité, et dont la valeur évolue selon le rang atteint dans la voie.
 
@@ -114,7 +124,9 @@ _Paramétrer le buff à la DEF octroyé par la capacité __Peau de pierre__ selo
 
 _Cette propriété crée une valeur nommée `voie3_buff_def`. Cette valeur change selon le rang atteint dans la voie n°3 en utilisant l'énumération indiquée entre `[]` : 0 au rang 1, 1 au rang 2, 2 à partir du rang 4. Cette valeur peut être indiquée comme un attribut dans une ligne de buff en spécifiant `[voie3_buff_def]`_
 
-### Jet `roll: xxxxx`
+### Jet (roll)
+
+`roll: xxxxx`
 
 Indiquez les valeurs standard `contact` ou `distance` ou `magie` pour demander à la fiche de faire le jet d'attaque correspondant lors de l'utilisation de la capacité. 
 
@@ -134,11 +146,15 @@ _Pour que la fiche lance la deuxième ligne d'attaque :_
 
 `roll: repeating_armes_2_attack-btn`
 
-### Menu des actions `action: `
+### Menu des actions (action)
+
+`action: `
 
 Vous pouvez marquer la capacité comme _active_ afin qu'un bouton d'action lui soit assigné dans le menu des actions dans le chat.
 
-### Effets étendus `etendu: ...`
+### Effets étendus (etendu)
+
+`etendu: ...`
 
 Vous pouvez indiquer que la capacité a un effet qui se prolongent sur plusieurs rounds. Il peut être nécessaire de préciser cet effet avec d'autres propriétés `etendu-`.
 
