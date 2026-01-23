@@ -5999,6 +5999,7 @@
                     <li>Meilleure prise en charge des jets liés aux capacités (propriété 'roll:')</li>
                     <li>Amélioration des buffs de capacités (propriété 'buff:')</li>
                     <li>Ajout d'un contrôle du bonus maximum de compétence</li>
+                    <li>Gestion des DM temporaires</li>
                   </ul>
                 </details>
               </li>
@@ -6958,45 +6959,76 @@
             </div>
           </div>
 
-          <input type="hidden" class="has-script" name="attr_script_show" value="0">
-          <div class="ammos">
+          <div>
+
+            <div class="resources">
+              <div class="block-title block-header">
+                Ressources
+              </div>
   
-            <div class="block-title block-header">
-              Munitions
-            </div>
-  
-            <div class="bordered">
-              
-              <fieldset class="repeating_ammos">
-  
-                <div class="d-flex">
-                  <input type="text" name="attr_ammo-nom" title="@{ammo-nom}" placeholder="Nom de la munition" value="">
-                  &nbsp;
-                  <select class="select-md" name="attr_ammo-type" title="@{ammo-type} Type de munition">
-                    <option value="fleche" selected>Flèche</option>
-                    <option value="carreau">Carreau</option>
-                    <option value="balle">Balle</option>
-                    <option value="autre">Autre</option>
-                  </select>
-                </div>
+              <div class="bordered">
                 
-                <div class="d-flex">
-                  <input type="number" class="two-digits" name="attr_ammo-qte" title="@{ammo-qte}" min="0" value="1">
-                  &nbsp;/&nbsp;
-                  <input type="number" class="two-digits" name="attr_ammo-qte_max" title="@{ammo-qte_max}" min="0" value="1">
-                  &nbsp;%&nbsp;
-                  <input type="number" name="attr_ammo-taux" title="@{ammo-taux} Taux de perte" min="0" max="100" value="100">
-                  &nbsp;
-                  <textarea class="one-row" name="attr_ammo-effet" title="@{ammo-effet} Effets" placeholder="Effets (liste de mots-clé)"></textarea>
-                </div>
+                <fieldset class="repeating_ressources">
   
-                <div class="d-flex">
-                  <textarea class="one-row" name="attr_ammo-exteff" title="@{ammo-exteff} Effets étendus" placeholder="Effets étendus (syntaxe des options d'attaque)"></textarea>
-                </div>
+                  <div class="d-flex">
+                    <input type="text" name="attr_res-desc" title="@{res-desc}" placeholder="Nom de la ressource" value="">
+                    Nombre :
+                    <input type="number" class="two-digits" name="attr_res-val" title="@{res-val}" value="1">
+                    <button type="action" class="flat-btn img-btn" name="act_resconso-btn" title="%{repeating_ressources_ID_resconso-btn} Utiliser un consommable">
+                      <span class="img-btn">-</span>
+                    </button>
+                  </div>
   
-              </fieldset>
+                  <div class="d-flex">
+                    <textarea class="one-row" name="attr_res-props" title="@{res-props} Propriétés&#10;type: munitions&#10;type: soins [formule si différent de 1d4°]" placeholder="Propriétés nom: valeur"></textarea>
+                  </div>
   
+                </fieldset>
+  
+              </div>
+            </div>            
+
+            <input type="hidden" class="has-script" name="attr_script_show" value="0">
+            <div class="ammos">
+    
+              <div class="block-title block-header">
+                Munitions
+              </div>
+    
+              <div class="bordered">
+                
+                <fieldset class="repeating_ammos">
+    
+                  <div class="d-flex">
+                    <input type="text" name="attr_ammo-nom" title="@{ammo-nom}" placeholder="Nom de la munition" value="">
+                    &nbsp;
+                    <select class="select-md" name="attr_ammo-type" title="@{ammo-type} Type de munition">
+                      <option value="fleche" selected>Flèche</option>
+                      <option value="carreau">Carreau</option>
+                      <option value="balle">Balle</option>
+                      <option value="autre">Autre</option>
+                    </select>
+                  </div>
+                  
+                  <div class="d-flex">
+                    <input type="number" class="two-digits" name="attr_ammo-qte" title="@{ammo-qte}" min="0" value="1">
+                    &nbsp;/&nbsp;
+                    <input type="number" class="two-digits" name="attr_ammo-qte_max" title="@{ammo-qte_max}" min="0" value="1">
+                    &nbsp;%&nbsp;
+                    <input type="number" name="attr_ammo-taux" title="@{ammo-taux} Taux de perte" min="0" max="100" value="100">
+                    &nbsp;
+                    <textarea class="one-row" name="attr_ammo-effet" title="@{ammo-effet} Effets" placeholder="Effets (liste de mots-clé)"></textarea>
+                  </div>
+    
+                  <div class="d-flex">
+                    <textarea class="one-row" name="attr_ammo-exteff" title="@{ammo-exteff} Effets étendus" placeholder="Effets étendus (syntaxe des options d'attaque)"></textarea>
+                  </div>
+    
+                </fieldset>
+    
+              </div>
             </div>
+
           </div>
         </div>
 
@@ -16787,8 +16819,8 @@ on("change:debug_mode", function() {
  */
 on("clicked:helpdoc-btn", function() {
   getAttrs([ "sheet_type" ], function (values) {
-    const main = strval(values.sheet_type).toLowerCase() + "-main";
-    sendChatMsg(`[Documentation](https://stephaned68.github.io/COF2e/${main})`, { template: "" });
+    const page = strval(values.sheet_type).toLowerCase() + "-main";
+    sendChatMsg(`[Documentation](https://stephaned68.github.io/COF2e/${page})`, { template: "" });
   })
 });
 
@@ -19438,6 +19470,33 @@ on("change:pvig_max", function(eventInfo) {
 
   getAttrs([ "PVIG_max" ], function(values) {
     setAttrs({ pv_max: intval(values.PVIG_max) }, { silent: true });
+  });
+});
+
+on("change:pv change:temp_dm", function(eventInfo) {
+  const typeDM = [ "temp_dm", "pv" ];
+  getAttrs([ "character_name", ...typeDM ], async function(values) {
+    const pv = intval(values.pv);
+    const tempDM = intval(values.temp_dm);
+    if (tempDM < pv)
+      return;
+    const dm = typeDM.findIndex(attr => attr === strval(eventInfo.triggerName));
+    const charName = strval(values.character_name);
+    const display = [
+      {
+        rsub: "DM temporaires",
+        text: `${charName} est assommé-e (inconscient-e) !`,
+        textclass: "secondary",
+      },
+      {
+        rsub: "DM létaux",
+        text: `${charName} tombe à 0 PV !`,
+        textclass: "fumble",
+      }
+    ][dm];
+    sendChatMsg(rollTemplate(display));
+    if (dm === 1)
+      setAttrs({ pv: 0 }, { silent: true });
   });
 });
 

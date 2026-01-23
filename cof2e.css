@@ -1120,6 +1120,7 @@ input[value="0"].ability-uses + div.ability-uses {
 .pc-gears .gears,
 .npc-gears .gears,
 .pc-gears .resources,
+.npc-gears .resources,
 .pc-gears .ammos,
 .npc-gears .ammos,
 .pc-gears .misc-gears,
