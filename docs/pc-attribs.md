@@ -84,6 +84,8 @@ Deux icones permettent de faire varier les PV en saisissant le gain ou la perte 
 
 On peut également cliquer sur <kbd>DR</kbd> pour effectuer un jet de Récupération _Rapide_ ou _Complète_, ce qui modifie le nombre de PV courants et décompte un DR du nombre disponible. Si l'option de configuration _High Fantasy_ est active, ce bouton permet aussi d'utiliser la règle optionnelle _Se dépasser_. Les nombres d'utilisations des capacités avec fréquence limitée sont également ré-initialisés : capacités _par combat_ pour une récupération rapide, _par jour_ pour une récupération complète.
 
+Les DM temporaires encaissés et les PV restants sont contrôlés par la fiche, et lorsque les premiers deviennent supérieurs aux seconds, les effets prévus sont appliqués selon le type de DM à l'origine de la bascule.
+
 # Points de Mana
 
 Dans cette section, on trouve les points de mana courants et maximum. Les PM maximum affichés tiennent compte d'éventuels buffs.

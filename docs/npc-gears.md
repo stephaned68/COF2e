@@ -20,6 +20,23 @@ Les propriétés indiquées pour l'équipement ne modifient pas les différents 
 
 Si le script ChatSetAttr est installé dans la partie et que l'option de configuration correspondante est active, un bouton est ajouté dans ce message de chat afin qu'un joueur puisse cliquer et ajouter cet objet à l'inventaire de son personnage.
 
+# Ressources
+
+Dans cette section, vous pouvez renseigner une liste de ressources et de consommables.
+
+Pour chaque élément de la liste, vous indiquez :
+- Le nom de la ressource,
+- Le nombre actuellement en possession du PNJ,
+- Une liste optionnelle de propriétés permettant de préciser la nature de la ressource.
+
+Un bouton permet de décompter une resource et éventuellement d'envoyer un message dans le chat Roll20 selon le type de consommable.
+
+Si vous spécifiez une propriété `type: soins`, et que vous cliquez sur le bouton _Consommable_, un message de chat indiquant le nombre de PV récupérés s'affiche. Par défaut, il s'agit d'une potion de soins standard permettant de récupérer 1d4° PV. Vous pouvez si besoin indiquer une formule de dés différente à la suite du mot `soins`. _Ex :_ : pour paramétrer les Elixirs de guérison du Forgesort, indiquez `type: soins [2d4°+INT]`.
+
+_NB :_
+
+_La gestion simplifiée des munitions de la fiche de PJ n'existe pas dans la fiche de PNJ. Par conséquent, si vous spécifiez une propriété `type: munitions`, cela n'aura aucun effet sur les attaques du PNJ._
+
 # Munitions
 
 Cette section n'apparait que si le script **COFantasy2** est installé dans la partie.
