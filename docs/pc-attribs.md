@@ -94,6 +94,8 @@ Dans cette section, on trouve les points de mana courants et maximum. Les PM max
 
 Un ensemble d'icones cliquables permettent d'appliquer les effets d'un ou plusieurs états préjudiciables au PJ. Ces effets sont affichés dans le chat Roll20. Une aide visuelle permet d'indiquer si le personnage subit encore au moins un état : si c'est le cas, le cadre autour des icônes est hachuré et de couleur orange.
 
+Un bouton permet d'afficher un popup Roll20 pour afficher la liste des états et choisir un état à activer ou désactiver. Ceux déjà subis par le personnage sont signalés par un rond rouge dans la liste, les autres sont marqués d'un rond vert.
+
 # Défense
 
 Cette section présente le calcul de la DEF du personnage.
@@ -214,7 +216,7 @@ Pour chaque option, on indique :
 - si le jet d'attaque se fait avec un dé bonus ou un dé malus,
 - d'éventuels DM supplémentaires (qui ne sont pas doublés en cas de coup critique).
 
-On peut activer une ou plusieurs options simultanément. Elles restent actives pour toutes les attaques tant qu'elles n'ont pas été désactivées.
+On peut activer une ou plusieurs options simultanément. Selon la configuration du paramètre _Options tactiques par round_, elles restent actives tant qu'elles n'ont pas été désactivées manuellement, ou bien elles sont désactivées automatiquement par la fiche après le prochaine attaque.
 
 Le nombre de D20 lancés par la fiche dépend des options activées : si une option procure un dé bonus et une autre inflige un dé malus, un jet normal est effectué.
 

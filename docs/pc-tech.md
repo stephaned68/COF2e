@@ -252,7 +252,7 @@ Les macros à configurer sont les suivantes :
 - `%{selected|pc_menus-btn}` : menu de tous les autres sous-menus possibles
 - `%{selected|caract_menu-btn}` : menu des jets de caractéristiques
 - `%{selected|caract_select-btn}` : popup Roll20 de sélection d'un jet de caractéristique
-- `%{selected|etats_menu-btn}` : menu des états préjudiciables
+- `%{selected|etats_select-btn}` : popup Roll20 de sélection d'un état préjudiciable
 - `%{selected|attacks_menu-btn}` : menu des jets d'attaque
 - `%{selected|abilities_menu-btn}` : menu des voies du personnage avec capacités acquises
 - `%{selected|rolls_menu-btn}` : menu des jets de capacités

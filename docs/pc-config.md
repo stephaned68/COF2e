@@ -8,6 +8,7 @@ Les préférence et réglages possibles de la fiche sont configurés dans cet on
 - Calcul automatique PV max. : Cette option permet que la fiche calcule automatiquement les PV maximums (cf. ci-dessous)
 - Contrôle points de capacités : Cette option permet que la fiche vérifie les dépassements de points de capacité (cf. ci-dessous)
 - Attaques ciblées : Cette option permet de demander au joueur de pointer sur la map la cible d'un jet d'attaque, de comparer le résultat avec la Défense du PJ ou du PNJ lié à ce token, et afficher si l'attaque est un succès ou un échec
+- Options tactiques par round : Cette option permet que la fiche désactive les options tactiques activées par le joueur après chaque attaque
 - Afficher voies 4-5-6 : Cette option est active par défaut mais elle peut être désactivée pour ne pas afficher les voies 4 à 6 pour des personnages de bas niveau
 - Afficher voies 7-8-9 : Cette option permet d'afficher les voies supplémentaires (voies de prestige)
 - Afficher compétences : Cette option permet d'activer ou de désactiver le sous-onglet _Compétences_ de l'onglet _Capacités_.
@@ -172,11 +173,11 @@ Vous pouvez activer une option de configuration pour que lorsqu'un bouton d'acti
 
 ## Premiers rangs
 
-Pour chaque voie du PJ, vous pouvez indiquer la valeur du premier rang (1 pour les voies de peuple et de profil, 3 ou 4 pour les voies de prestige). La fiche stocke le nom du profil dont cette voie est issue.
+Pour chaque voie du PJ, vous pouvez indiquer la valeur du premier rang (1 pour les voies de peuple et de profil, 4 pour les voies de prestige). La fiche stocke le nom du profil dont cette voie est issue.
 
 Ne pas oublier d'indiquer la valeur de **3** pour le rang de base la voie de prestige du _familier fantastique_.
 
-Le rang de base peut aussi être utilisé pour implémenter la magie rare du mode **low-fantasy**, en changeant le rang de base des voies de magie par 2, 3 ou 4 selon la rareté souhaitée
+Le rang de base peut aussi être utilisé pour implémenter la magie rare du mode **low-fantasy**, en changeant le rang de base des voies de magie par 2, 3 ou 4 selon la rareté souhaitée.
 
 ## Autres fonctions
 

@@ -109,11 +109,17 @@ Un clic sur le bouton d20 envoie un message dans le chat Roll20 avec le nom et l
 
 Le bouton d20 de la capacité peut être épinglé dans la barre d'actions de Roll20 par glisser-déposer.
 
+Un bouton permet de ré-initialiser le nombre d'utilisation des capacités. Vous choisissez entre les capacités par combat uniquement ou aussi les capacités par jour, et le nombre d'utilisations repasse à zéro.
+
 # Sous-onglet _Notes_
 
-Ce sous-onglet permet de noter diverses informations complémentaires sur le PNJ ou la créature :
+Ce sous-onglet vous permet de noter diverses informations complémentaires sur le PNJ ou la créature :
 - Ses tactiques de combat
 - Des notes diverses
+
+Les tactiques de combat sont murmurées dans un message de chat au début d'un combat, lorsque vous lancez l'initiative du PNJ dans le Turn-Order Roll20.
+
+Si le script TokenMod est installé et activé dans les options de configuration, vous pouvez cocher l'un et/ou l'autre de ces champs afin de les faire apparaître dans une infobulle du token visible uniquement par le MJ.
 
 ---
 
