@@ -195,6 +195,10 @@ select {
   max-height: 20px;
 }
 
+select.select-xl {
+  width: 20rem;
+}
+
 select.select-lg {
   width: 16rem;
 }
@@ -510,7 +514,8 @@ input[value="npc"] ~ button[name="roll_checkup"] {
 }
 
 input[value="0"].pc-skills-btn ~ button.pc-skills-btn,
-input[value=""].custom-skill + div.custom-skill {
+input[value=""].custom-skill + div.custom-skill,
+input[value="0"].npc-reminder + input[type="checkbox"].npc-reminder {
   display: none;
 }
 
@@ -1190,7 +1195,7 @@ input[value="0"].ability-uses + div.ability-uses {
 .npc-config-tab .npc-configs,
 .npc-script-tab .npc-configs {
   display: grid;
-  grid-template-columns: 25% 75%;
+  grid-template-columns: 35% 65%;
   gap: 2px;
 }
 

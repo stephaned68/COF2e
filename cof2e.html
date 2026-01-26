@@ -936,7 +936,7 @@
             <input type="hidden" name="attr_conditions_markers" value="">
             <div class="centered block-header block-title">
               Etats préjudiciables&nbsp;
-              <button type="action" class="flat-btn img-btn" name="act_etats_menu-btn" title="%{etats_menu-btn} Menu des états préjudiciables">
+              <button type="action" class="flat-btn img-btn" name="act_etats_select-btn" title="%{etats_select-btn} Choix d'un état préjudiciable">
                 <span class="img-btn">l</span>
               </button>
             </div>
@@ -1157,7 +1157,7 @@
 
           </div>
   
-        </div>%{drecup-btn} Lancer DR&#10;%{recovery_fast-btn} Récupération rapide&#10;%{recovery_full-btn} Récupération complète
+        </div>
 
         <!-- PC & RD -->
         <div class="pc-luck-rd">
@@ -1478,14 +1478,14 @@
                 <div class="d-flex">
                   <select class="select-lg" name="attr_tactique" title="@{attr_tactique}">
                     <option value="0">Aucune</option>
-                    <option value="1">Attaque assurée</option>
-                    <option value="2">Attaque précise</option>
-                    <option value="3">Attaque violente</option>
+                    <option value="1">Attaque assurée (+5, DM/2)</option>
+                    <option value="2">Attaque précise (-3, +1d4° DM)</option>
+                    <option value="3">Attaque violente (-7, +2d4°)</option>
                   </select>
                 </div>
-                <div class="d-flex">
+                <div class="d-flex align-self-center">
                   <input type="hidden" name="attr_tactdesc">
-                  <span name="attr_tactdesc"></span>
+                  &nbsp;<span name="attr_tactdesc"></span>
                 </div>
               </div>
 
@@ -1497,7 +1497,7 @@
                     <input type="text" class="align-self-center" name="attr_tact-name" placeholder="Autre tactique" value="">
                   </div>
                   <div class="d-flex">
-                    <input type="number" class="align-self-center" name="attr_tact-div" title="@{tact-div} Bonus pour toucher" value="0">
+                    <input type="number" class="two-digits align-self-center" name="attr_tact-div" title="@{tact-div} Bonus pour toucher" value="0">
                     &nbsp;<input type="checkbox" name="attr_tact-roll" title="@{tact-roll} Avec dé bonus" value="1">
                     &nbsp;<input type="checkbox" name="attr_tact-roll" title="@{tact-roll} Avec dé malus" value="2">
                     <input type="text" class="w-auto align-self-center" name="attr_tact-dmdiv" title="@{tact-dmdiv} DM supplémentaires" placeholder="DM supplémentaires" value="">
@@ -5107,6 +5107,9 @@
             <div class="resources">
               <div class="block-title block-header">
                 Ressources
+                <button type="action" name="act_helpres-btn" class="img-btn flat-btn" title="Aide ressources">
+                  <span class="img-btn img-btn-lg">i</span>
+                </button>
               </div>
   
               <div class="bordered">
@@ -5280,6 +5283,10 @@
               <li class="config-check">
                 <input type="checkbox" name="attr_cfg_cible" value="1">
                 <span>Attaques ciblées</span>
+              </li>
+              <li class="config-check">
+                <input type="checkbox" name="attr_cfg_optact" value="1">
+                <span title="Réinitialiser les options tactiques après une attaque">Options tactiques par round</span>
               </li>
             </ul>
 
@@ -5995,11 +6002,14 @@
                   </summary>
                   <ul>
                     <li>Ajout d'une liste d'options tactiques activables avec bonus d'attaque, dé bonus/malus, DM supplémentaires</li>
+                    <li>Ajout d'une option de configuration pour désactiver les options tactiques après une attaque</li>
                     <li>Suppression des buffs au DM et conversion en options tactiques</li>
                     <li>Meilleure prise en charge des jets liés aux capacités (propriété 'roll:')</li>
                     <li>Amélioration des buffs de capacités (propriété 'buff:')</li>
                     <li>Ajout d'un contrôle du bonus maximum de compétence</li>
                     <li>Gestion des DM temporaires</li>
+                    <li>Ajout des emojis des compétences dans le popup Roll20</li>
+                    <li>Remplacement du menu de chat des états préjudiciables par un popup Roll20</li>
                   </ul>
                 </details>
               </li>
@@ -6869,6 +6879,8 @@
 
               <div class="block-title block-header">
                 Tactique
+                <input type="hidden" class="npc-reminder" name="attr_tokenmod" value="0">
+                <input type="checkbox" class="npc-reminder" name="attr_pnj_tactique_tip" title="Afficher en info-bulle pour le MJ" value="1">
               </div>
               <textarea class="xx-large" name="attr_pnj_tactique" title="@{pnj_tactique}"></textarea>
 
@@ -6878,6 +6890,8 @@
 
               <div class="block-title block-header">
                 Notes
+                <input type="hidden" class="npc-reminder" name="attr_tokenmod" value="0">
+                <input type="checkbox" class="npc-reminder" name="attr_pnj_notes_tip" title="Afficher en info-bulle pour le MJ" value="1">
               </div>
               <textarea class="xx-large" name="attr_notes" title="@{notes}"></textarea>
 
@@ -6964,6 +6978,9 @@
             <div class="resources">
               <div class="block-title block-header">
                 Ressources
+                <button type="action" name="act_helpres-btn" class="img-btn flat-btn" title="Aide ressources">
+                  <span class="img-btn img-btn-lg">i</span>
+                </button>
               </div>
   
               <div class="bordered">
@@ -7448,6 +7465,12 @@
                 &nbsp;<input type="text" class="w-auto" name="attr_tkmarker_dead" title="@{tkmarker_dead}" value="dead">
               </div>
             </div>
+            <div class="npc-configs m2">
+              <div>Tactique (Tooltip)</div>
+              <div class="d-flex">
+                <input type="checkbox" name="attr_token_tooltip_on" title="@{token_tooltip_on}" value="1">
+              </div>
+            </div>
             <hr>
             <input type="checkbox" name="attr_chatsetattr" title="@{chatsetattr}" value="1">
             <span>ChatSetAttr</span>
@@ -7482,7 +7505,10 @@
                   <ul>
                     <li>Ajout d'un bouton de réinitialisation des utilisation de capacités</li>
                     <li>Ajout d'une case à cocher pour identifier le PNJ comme un mook (TokenMod)</li>
-                    <li title="Merci, Captain Obvious...">Ajout de l'onglet <em>Version</em></li>
+                    <li>Ajout de l'onglet <em>Version</em></li>
+                    <li>Ajout de la liste des ressources</li>
+                    <li>Ajout d'une option pense-bête pour le script TokenMod</li>
+                    <li>Ajout de la possibilité d'afficher les informations de tactique et/ou les notes en infobulle visible du MJ uniquement</li>
                   </ul>
                 </details>
               </li>
@@ -8283,6 +8309,8 @@ const SWData = {
     "actions":  "&#128262;",        // bright
     "skills":   "&#128170;",        // flexed biceps
     "heal":     "&#129505;",        // red heart
+    "red":      "&#128308;",        // red circle
+    "green":    "&#128994;",        // green circle
   },
   SHEET_TYPE: {
     PC: "pc",
@@ -8752,6 +8780,7 @@ const SWData = {
       {
         name: "inconscient",
         label: "Inconscient",
+        emoji: "&#128564;",
         lowFantasy: false,
         effects: { },
         description: [
@@ -8759,18 +8788,20 @@ const SWData = {
           "Perd 1 Dé de Récupération"
         ]
       },
-      { 
+      {
         name: "affaibli",
         label: "Affaibli",
+        emoji: "&#9889;",
         lowFantasy: false,
         effects: { },
         description: [
           "Dé malus à tous les tests"
         ]
       },
-      { 
+      {
         name: "aveugle",
         label: "Aveuglé",
+        emoji: "&#128584;",
         lowFantasy: false,
         effects: {
           init: -5,
@@ -8782,9 +8813,10 @@ const SWData = {
           "Pas d'attaque magique nécessitant de voir la cible"
         ]
       },
-      { 
+      {
         name: "effraye",
         label: "Effrayé",
+        emoji: "&#128552;",
         lowFantasy: true,
         effects: {
           atkcac: -2,
@@ -8795,18 +8827,20 @@ const SWData = {
           "Malus -2 à tous les tests"
         ]
       },
-      { 
+      {
         name: "essoufle",
         label: "Essouflé",
+        emoji: "&#128168;",
         lowFantasy: false,
         effects: { },
         description: [
           "Déplacement limité à 5 m par action de mouvement"
         ]
-      }, 
-      { 
+      },
+      {
         name: "etourdi",
         label: "Etourdi",
+        emoji: "&#128541;",
         lowFantasy: false,
         effects: {
           def: -5
@@ -8814,29 +8848,32 @@ const SWData = {
         description: [
           "Aucune action possible"
         ]
-      }, 
-      { 
+      },
+      {
         name: "immobilise",
         label: "Immobilisé",
+        emoji: "&#9939;",
         lowFantasy: false,
         effects: { },
         description: [
           "Pas de déplacement",
           "Dé malus aux tests d'attaque"
         ]
-      }, 
-      { 
-        name: "invalide", 
+      },
+      {
+        name: "invalide",
         label: "Invalide",
+        emoji: "&#129660;",
         lowFantasy: false,
         effects: { },
         description: [
           "Déplacement limité à 5 m par action de mouvement"
         ]
       },
-      { 
+      {
         name: "panique",
         label: "Paniqué",
+        emoji: "&#128561;",
         lowFantasy: true,
         effects: {
           def: -2
@@ -8845,29 +8882,32 @@ const SWData = {
           "Malus -5 à tous les tests",
           "Impossible d'attaquer ou d'incanter"
         ]
-      }, 
-      { 
-        name: "paralyse", 
+      },
+      {
+        name: "paralyse",
         label: "Paralysé",
+        emoji: "&#128376;",
         lowFantasy: false,
         effects: { },
         description: [
           "Aucune action possible",
           "Touché et critique automatique en cas d'attaque"
         ]
-      }, 
-      { 
+      },
+      {
         name: "ralenti",
         label: "Ralenti",
+        emoji: "&#128012;",
         lowFantasy: false,
         effects: { },
         description: [
           "Une seule action par round (attaque ou mouvement)"
         ]
-      }, 
-      { 
+      },
+      {
         name: "renverse",
         label: "Renversé",
+        emoji: "&#129336;",
         lowFantasy: false,
         effects: {
           atkcac: -5,
@@ -8878,10 +8918,11 @@ const SWData = {
         description: [
           "Nécessite une action d'attaque pour se relever"
         ]
-      }, 
-      { 
+      },
+      {
         name: "surpris",
         label: "Surpris",
+        emoji: "&#128562;",
         lowFantasy: false,
         effects: {
           def: -5
@@ -8889,7 +8930,7 @@ const SWData = {
         description: [
           "Pas d'action au premier round de combat"
         ]
-      }
+      }      
     ],
     SKILLS: [
       {
@@ -12151,7 +12192,8 @@ on("clicked:init-btn", function () {
     "per", "agi",
     "casque_eqp",
     "casque",
-    "pnj_tactique" 
+    "pnj_tactique",
+    "pnj_tactique_tip"
   ], function(values) {
     let initMod = "";
     if (boolval(values.cfg_init_mod))
@@ -12160,7 +12202,9 @@ on("clicked:init-btn", function () {
     const isNPC = strval(values.sheet_type) === SWData.SHEET_TYPE.NPC;
     if (!isNPC)
       helmet = helmetMalus(values);
-    const tactique = isNPC ? strval(values.pnj_tactique) : "";
+    const tactique = isNPC && !boolval(values.pnj_tactique_tip)
+    ? strval(values.pnj_tactique)
+    : "";
     const initBonus = isNPC ? " + ?{Bonus ?|0}[Bonus]" : "";
     const roll = `[[@{init}[Initiative]${helmet}${initBonus} + @{cfg_init_variable}[Dé(s)]${initMod} &{tracker} ]]`;
     const chatMsg = rollTemplate({
@@ -13301,7 +13345,7 @@ on("clicked:repeating_armes:attack-btn", async function(eventInfo) {
   getAttrs([
     "scriptVersion",
     "character_name",
-    "cfg_1attack_roll", "cfg_cible",
+    "cfg_1attack_roll", "cfg_cible", "cfg_optact",
     "cfg_d20roll", "d20roll",
     "cfg_crit_diff", "cfg_tbl_crit", "cfg_tbl_fumble",
     "cfg_use_ammo", "cfg_usure",
@@ -13332,6 +13376,7 @@ on("clicked:repeating_armes:attack-btn", async function(eventInfo) {
     const useWear = boolval(values.cfg_usure);
     const shieldUsed = boolval(values.bouclier_eqp);
     const tactics = intval(values.tactique);
+    const tactRound = boolval(values.cfg_optact);
     const weakened = intval(values.condition_affaibli);
     const restrained = intval(values.condition_immobilise);
     const pathNames = getPathNames(strval(values.noms_voies));
@@ -13737,6 +13782,14 @@ on("clicked:repeating_armes:attack-btn", async function(eventInfo) {
     
     if (tactics > 0)
       setAttrs({ tactique: "0" });
+    if (tactRound) {
+      const reset = new Map();
+      tacticIds.map(id => rptAttr("tactic", "tact-on", id)).forEach(attr => {
+        reset.set(attr, 0);
+      });
+      if (reset.size > 0)
+        setAttrs(Object.fromEntries(reset));
+    }
 
     if (useAmmo && resourceId !== "" && resourceNbr > 0) {
       const resVal = rptAttr("ressources", "res-val", resourceId);
@@ -13749,10 +13802,10 @@ on("clicked:repeating_armes:attack-btn", async function(eventInfo) {
     const ongoingPrms = ongoingAttrs().map(attr => strval(values[rptOngoing + attr]));
     if(ongoingPrms.some(v => v !== "")) {
       const [ ogEff, ogName, ogTime ] = ongoingPrms;
-      let effectName = name;
+      let effectName = name + " " + ogEff;
       if (ogName !== "")
         effectName = ogName;
-      effectName += " " + ogEff;
+      //effectName += " " + ogEff;
       let timeSpan = "";
       if (ogTime !== "")
         timeSpan = insertRolls(" " + ogTime + " ").trim();
@@ -14105,10 +14158,10 @@ function actionAbility(path, rank) {
     // check ongoing effect
     let ongoing = strval(getProp(abilityProps, "etendu"));
     if (ongoing) {
-      let effectName = strval(getProp(abilityProps, "etendu-nom"));
-      if (effectName === "")
-        effectName = abilityName;
-      effectName += " " + ongoing;
+      let effectName = abilityName + " " + ongoing;
+      const ogName = strval(getProp(abilityProps, "etendu-nom"));
+      if (ogName !== "")
+        effectName = ogName;
       let timeSpan = strval(getProp(abilityProps, "etendu-duree"));
       if (timeSpan !== "")
         timeSpan = insertRolls(" " + timeSpan + " ").trim();
@@ -15565,6 +15618,23 @@ on("clicked:helpgear-btn", async function() {
 });
 
 /**
+ * On click on the resource props help button
+ */
+on("clicked:helpres-btn", function() {
+  sendChatMsg([
+    "title=Propriétés des ressources",
+    "subtitle=Liste des codes et valeurs",
+    "type: munition=Pour décompter une munition par le nom de la ressource",
+    "type: soins=Potion de soins *standard* (1d4° PV)",
+    "type: soins NdX=Potion de soins (NdX PV)",
+    "desc=Une propriété par ligne"
+  ].filter(t => t !== ""), {
+    template: "custom",
+    whisper: "gm"
+  });
+});
+
+/**
  * Get gear properties list from name
  * @param {string} name - gear name
  * @returns {string[]}
@@ -16444,6 +16514,7 @@ on("clicked:def_config-btn", function() {
     "cfg_pvmax_auto",
     "cfg_pts_capas",
     "cfg_cible",
+    "cfg_optact",
     "voies_456",
     "voies_789",
     "use_skills",
@@ -16490,6 +16561,8 @@ on("clicked:def_config-btn", function() {
     "tkmarker_cond",
     "chatsetattr",
     "$tresor_monnaie",
+    "pnj_tactique_tip",
+    "pnj_notes_tip",
   ];
   getAttrs([ "character_name", "sheet_type", ...allConfigs ], function(values) {
     const sheetBase = strval(values.sheet_type) === SWData.SHEET_TYPE.PC ? "PJBase" : "PNJBase";
@@ -16645,11 +16718,19 @@ nameSeq(4, "custom#").forEach(custom => {
  * @returns {string[]}
  */
 function toolTipAttrs() {
-  return [ "tokenmod", "token_tooltip_on", "pense_bete" ];
+  return [ 
+    "tokenmod",
+    "token_tooltip_on",
+    "pense_bete",
+    "pnj_tactique_tip",
+    "pnj_tactique",
+    "pnj_notes_tip",
+    "notes"
+];
 }
 
 on("sheet:opened " + eventList("change", toolTipAttrs(), " "), function() {
-  getAttrs([ "character_name", ...toolTipAttrs() ], function(values) {
+  getAttrs([ "character_name", "sheet_type", ...toolTipAttrs() ], function(values) {
     const tokenmod = boolval(values.tokenmod);
     if (!tokenmod)
       return;
@@ -16657,14 +16738,32 @@ on("sheet:opened " + eventList("change", toolTipAttrs(), " "), function() {
     const charName = strval(values.character_name).trim();
     if (!tokenTip || charName === "")
       return;
-    const reminder = strval(values.pense_bete).split("\n")
+    const sheetType = strval(values.sheet_type);
+    const npcTacticTip = boolval(values.pnj_tactique_tip);
+    const npcNotesTip = boolval(values.pnj_notes_tip);
+    if (sheetType === SWData.SHEET_TYPE.NPC)
+      if (!npcTacticTip && !npcNotesTip)
+        return;
+    let reminder = sheetType === SWData.SHEET_TYPE.PC
+    ? strval(values.pense_bete)
+    : "";
+    if (sheetType === SWData.SHEET_TYPE.NPC) {
+      reminder = [
+        npcTacticTip ? strval(values.pnj_tactique) : "",
+        npcNotesTip ? strval(values.notes) : "",
+      ].join("\n");
+    }
+    reminder = reminder.split("\n")
     .filter(r => strval(r).trim() !== "")
     .map((r, ix) => `${ix + 1}) ${r}`)
     .join(" ; ");
     let tooltip = reminder;
      if (tooltip !== "")
       tooltip = "\"" + tooltip + "\"";
-    sendChatCmd(tokenMod(charName, { show_tooltip: 1, tooltip }));
+    let modProps = { show_tooltip: 1, tooltip, defaulttoken: "" };
+    if (sheetType === SWData.SHEET_TYPE.NPC)
+      modProps = { ...modProps, gm_only_tooltip: 1 };
+    sendChatCmd(tokenMod(charName, modProps));
   });
 });
 
@@ -16976,18 +17075,19 @@ on("clicked:caract_menu-btn", function () {
 /**
  * Display conditions menu
  */
-on("clicked:etats_menu-btn", function() {
+on("clicked:etats_select-btn", function() {
   getAttrs([ 
     "character_name",
     "couleur_pj",
     "notif_conditions",
     "cfg_lowfan",
     ...allConditions()
-  ], function (values) {
+  ], async function (values) {
     const charName = strval(values.character_name);
-    const whisper = intval(values.notif_conditions) === 2 ? "gm" : "";
+    //const whisper = intval(values.notif_conditions) === 2 ? "gm" : "";
     const lowFantasy = boolval(values.cfg_lowfan);
-    const chatMsg = SWData.PC.CONDITIONS
+    const actions = [];
+    const conditions = SWData.PC.CONDITIONS
     .filter(condition => {
       if (condition.name === "inconscient")
         return;
@@ -16996,23 +17096,12 @@ on("clicked:etats_menu-btn", function() {
       return condition;
     })
     .map(condition => {
-      const color = boolval(values[`condition_${condition.name}`]) ? [ "#dc3545" ] : [ "#198754" ];
-      const button = menuButton(color, {}, { 
-        padding: "0px 5px;",
-        "border-radius": "50%;",
-        "min-width": "10px;"
-      });
-      return `${condition.label}=[&nbsp;](~${charName}|${condition.name}-icon${button})`;
+      actions.push(`%{${charName}|${condition.name}-icon}`);
+      const onoff = boolval(values[`condition_${condition.name}`]) ? SWData.onoffs.red : SWData.emojis.green;
+      return onoff + " " + condition.label + " " + condition.emoji ;
     });
-    sendChatMsg([
-      `title=${charName}`,
-      "subtitle=Etats préjudiciables",
-      "color=" + strval(values.couleur_pj),
-      ...chatMsg
-    ], {
-      whisper,
-      template: "custom"
-    });
+    const { selected } = await askAsync([ "Etat ?", ...conditions ]);
+    sendChatCmd(actions[selected - 1]);
   });
 });
 
@@ -17195,11 +17284,12 @@ on("clicked:skills_menu-btn", function () {
   getAttrs([ "character_name", ...skillMods ], function (values) {
     const charName = strval(values.character_name);
     const skillSelect = SWData.PC.SKILLS.map((skill, ix) => {
+      const emoji = skill.emoji || SWData.emojis.skills;
       const skillLabel = getSkillName(skill);
       const skillStat = Array.isArray(skill.ability) ? "" : " " + skill.ability.toUpperCase();
       const skillBonus = intval(values[`${ skill.name }_bonus`]);
       const skillMod = skillBonus > 0 ? ` (+${skillBonus})` : "";
-      return `${skillLabel}${skillStat}${skillMod},${ix + 1}`;
+      return `${emoji} ${skillLabel}${skillStat}${skillMod},${ix + 1}`;
     });
     ask([ "Compétence ?", ...skillSelect ], (skill) => {
       const skillName = SWData.PC.SKILLS[skill -1].name;
@@ -17409,7 +17499,7 @@ on("clicked:pc_actions-btn clicked:npc_actions-btn", async function(eventInfo) {
     .filter(id => {
       const type = getProp(strval(values[rptAttr(resRpt, "res-props", id)]), "type");
       const onHand = numval(values[rptAttr(resRpt, "res-val", id)]);
-      return type.toLowerCase() === "soins" && onHand > 0;
+      return type.split(" ")[0].toLowerCase() === "soins" && onHand > 0;
     })
     .map(id => {
       const onHand = numval(values[rptAttr(resRpt, "res-val", id)]);
@@ -19474,28 +19564,29 @@ on("change:pvig_max", function(eventInfo) {
 });
 
 on("change:pv change:temp_dm", function(eventInfo) {
-  const typeDM = [ "temp_dm", "pv" ];
-  getAttrs([ "character_name", ...typeDM ], async function(values) {
+  if (strval(eventInfo.sourceType) !== "player")
+    return;
+  getAttrs([ "character_name", "temp_dm", "pv" ], function(values) {
     const pv = intval(values.pv);
     const tempDM = intval(values.temp_dm);
     if (tempDM < pv)
       return;
-    const dm = typeDM.findIndex(attr => attr === strval(eventInfo.triggerName));
+    const typeDM = strval(eventInfo.triggerName);
     const charName = strval(values.character_name);
-    const display = [
-      {
+    const display = ({
+      temp_dm: {
         rsub: "DM temporaires",
         text: `${charName} est assommé-e (inconscient-e) !`,
         textclass: "secondary",
       },
-      {
+      pv: {
         rsub: "DM létaux",
         text: `${charName} tombe à 0 PV !`,
         textclass: "fumble",
       }
-    ][dm];
+    })[typeDM];
     sendChatMsg(rollTemplate(display));
-    if (dm === 1)
+    if (typeDM === "pv")
       setAttrs({ pv: 0 }, { silent: true });
   });
 });

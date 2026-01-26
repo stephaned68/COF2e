@@ -12,16 +12,24 @@ v1.13.0 [Screenshot](cof2e.png)
 
 ### Version _1.14.0_ (next)
 
-- Ajout d'une liste d'options tactiques activables avec bonus d'attaque, dé bonus/malus, DM supplémentaires
-- Suppression des buffs au DM et conversion en options tactiques
-- Meilleure prise en charge des jets liés aux capacités (propriété `roll:`)
-- Amélioration des buffs de capacités (propriété `buff:`)
-- Ajout d'un contrôle du bonus maximum de compétence
-- Gestion des DM temporaires
-- Ajout d'un bouton de réinitialisation des utilisation de capacités dans la fiche de PNJ
-- Ajout d'un onglet _Version_ à la fiche de PNJ
-- Ajout d'une case à cocher _Mook_ à la fiche de PNJ
-- Ajout de la liste des ressources à l'onglet _Equipement_ de la fiche de PNJ
+- Fiche de PJ:
+  - Ajout d'une liste d'options tactiques activables avec bonus d'attaque, dé bonus/malus, DM supplémentaires
+  - Suppression des buffs au DM et conversion en options tactiques
+  - Meilleure prise en charge des jets liés aux capacités (propriété `roll:`)
+  - Amélioration des buffs de capacités (propriété `buff:`)
+  - Ajout d'un contrôle du bonus maximum de compétence
+  - Gestion des DM temporaires
+  - Ajout des emojis des compétences dans le popup Roll20
+  - Remplacement du menu de chat des états préjudiciables par un popup Roll20
+
+- Fiche de PNJ:
+  - Ajout d'un bouton de réinitialisation des utilisation de capacités
+  - Ajout d'un onglet _Version_
+  - Ajout d'une case à cocher _Mook_ (pour liaison des PV par attribut ou par valeur en cas d'utilisation du script _TokenMod_)
+  - Ajout de la liste des ressources à l'onglet _Equipement_
+  - Ajout d'une option pense-bête pour le script _TokenMod_
+  - Ajout de la possibilité d'afficher les informations de tactique et/ou les notes dans une infobulle visible du MJ uniquement
+
 
 ### Version _1.13.0_ (2026-01-04)
 
