@@ -5319,7 +5319,7 @@
                   <input type="checkbox" name="attr_cfg_init_agi" value="1">
                   <span>Initiative + AGI</span>
                 </li>
-                <li class="config-check" title="Ajoute (PER+AGI)/10 au score final">
+                <li class="config-check" title="Ajoute (PER+AGI)/10 au score final d'INIT">
                   <input type="checkbox" name="attr_cfg_init_mod" value="1">
                   <span>Départager les init. identiques</span>
                 </li>
@@ -5340,11 +5340,11 @@
                   <span>Points de chance variables</span>
                 </li>
                 <li class="config-check">
-                  <input type="checkbox" name="attr_cfg_bouclier_malus" value="1">
+                  <input type="checkbox" name="attr_cfg_bouclier_malus" title="Le bouclier inflige un malus (idem armure)" value="1">
                   <span>Utiliser le malus de bouclier</span>
                 </li>
                 <li class="config-check">
-                  <input type="checkbox" name="attr_cfg_use_ammo" value="1">
+                  <input type="checkbox" name="attr_cfg_use_ammo" title="Chaque attaque décompte une munition (ressource)" value="1">
                   <span>Suivre les munitions</span>
                   &nbsp;<input type="number" name="attr_cfg_ammo_alert" title="Seuil d'alerte munitions restantes" value="">
                 </li>
@@ -5373,7 +5373,7 @@
 
             <details>
               <summary>
-                <h4><input type="checkbox" name="attr_cfg_highfan" value="1">&nbsp;High fantasy</h4>
+                <h4 title="Ajoute 'Se dépasser' aux options de Récupération"><input type="checkbox" name="attr_cfg_highfan" value="1">&nbsp;High fantasy</h4>
               </summary>
               <ul>
                 <li class="config-check" title="Atlas & règles optionnelles, p. 184">
@@ -5393,7 +5393,7 @@
   
             <details>
               <summary>
-                <h4><input type="checkbox" name="attr_cfg_lowfan" value="1">&nbsp;Low Fantasy</h4>
+                <h4 title="+5 PV au niveau 1, plus de gain après le niveau 6&#10;DM explosifs&#10;Règles de Peur (états 'Paniqué' et 'Effrayé')"><input type="checkbox" name="attr_cfg_lowfan" value="1">&nbsp;Low Fantasy</h4>
               </summary>
               <ul>
                 <li class="config-check" title="Atlas & règles optionnelles, p. 193">
@@ -5437,7 +5437,7 @@
 
             <details>
               <summary>
-                <h4>Forcer les valeurs maxi.</h4>
+                <h4 title="Désactiver les calculs automatiques de la fiche">Forcer les valeurs maxi.</h4>
               </summary>
               <ul>
                 <li class="force-max">
@@ -17084,7 +17084,6 @@ on("clicked:etats_select-btn", function() {
     ...allConditions()
   ], async function (values) {
     const charName = strval(values.character_name);
-    //const whisper = intval(values.notif_conditions) === 2 ? "gm" : "";
     const lowFantasy = boolval(values.cfg_lowfan);
     const actions = [];
     const conditions = SWData.PC.CONDITIONS
@@ -17097,8 +17096,8 @@ on("clicked:etats_select-btn", function() {
     })
     .map(condition => {
       actions.push(`%{${charName}|${condition.name}-icon}`);
-      const onoff = boolval(values[`condition_${condition.name}`]) ? SWData.onoffs.red : SWData.emojis.green;
-      return onoff + " " + condition.label + " " + condition.emoji ;
+      const state = boolval(values[`condition_${condition.name}`]) ? SWData.emojis.red : SWData.emojis.green;
+      return state + " " + condition.label + " " + condition.emoji;
     });
     const { selected } = await askAsync([ "Etat ?", ...conditions ]);
     sendChatCmd(actions[selected - 1]);
