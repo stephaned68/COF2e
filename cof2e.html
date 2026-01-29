@@ -2899,8 +2899,11 @@
         </datalist>
         <div class="abilities-edit">
           <div class="d-flex d-flex-between">
-            <div>
+            <div class="d-flex">
               <h3>CAPACITES</h3>
+              <button type="action" name="act_helprops-btn" class="img-btn flat-btn" title="Aide propriétés des capacités" >
+                <span class="img-btn img-btn-lg">i</span>
+              </button>
             </div>
             <div class="change-view">
               <button type="action" class="flat-btn img-btn" name="act_edit_view-btn" title="Afficher les voies et capacités">
@@ -8309,6 +8312,10 @@ const SWData = {
     "actions":  "&#128262;",        // bright
     "skills":   "&#128170;",        // flexed biceps
     "heal":     "&#129505;",        // red heart
+    "recovery": {
+      "fast":   "&#127861;",        // tea
+      "full":   "&#128719;",        // bed
+    },
     "red":      "&#128308;",        // red circle
     "green":    "&#128994;",        // green circle
   },
@@ -8791,7 +8798,7 @@ const SWData = {
       {
         name: "affaibli",
         label: "Affaibli",
-        emoji: "&#9889;",
+        emoji: "&#10084;&#65039;&#8205;&#129657;",
         lowFantasy: false,
         effects: { },
         description: [
@@ -8801,7 +8808,7 @@ const SWData = {
       {
         name: "aveugle",
         label: "Aveuglé",
-        emoji: "&#128584;",
+        emoji: "&#128065;",
         lowFantasy: false,
         effects: {
           init: -5,
@@ -12643,7 +12650,10 @@ on("clicked:drecup-btn clicked:recovery_fast-btn clicked:recovery_full-btn", fun
       return;
     }
 
-    const recups = [ "Rapide", "Complète" ];
+    const recups = [ 
+      SWData.emojis.recovery.fast + " Rapide",
+      SWData.emojis.recovery.full + " Complète ",
+    ];
     if (effort !== "")
       recups.push(effort);
 
@@ -15328,6 +15338,30 @@ on("clicked:multibuff-btn", function () {
 });
 
 /**
+ * On click on the abilities props help button
+ */
+on("clicked:helprops-btn", function() {
+  const props = [
+    { name: "fx",         text: "Animation",        url: "animation-fx" },
+    { name: "pm",         text: "Pts Mana",         url: "points-de-mana-pm" },
+    { name: "selonRang",  text: "Effet selon rang", url: "effet-selon-le-rang-selonrang" },
+    { name: "epic",       text: "Capacité épique",  url: "capacit-pique-epic" },
+    { name: "buff",       text: "Buff selon rang",  url: "buff-selon-rang-buff" },
+    { name: "roll",       text: "Jet/Bouton lié",   url: "jet-roll" },
+    { name: "action",     text: "Menu des actions", url: "menu-des-actions-action" },
+    { name: "etendu",     text: "Effets prolongés", url: "effets-tendus-etendu" },
+  ].map(p => `${ p.name }:=[${ p.text }](https://stephaned68.github.io/COF2e/pc-abilities#${ p.url })`);
+  sendChatMsg([
+    "title=Propriétés des capacités",
+    ...props,
+    "desc=Une propriété par ligne"
+  ], {
+    template: "custom",
+    whisper: "gm"
+  });
+});
+
+/**
  * On click on the buffs syntax help button
  */
 on("clicked:helpbuff-btn", function() {
@@ -16726,7 +16760,7 @@ function toolTipAttrs() {
     "pnj_tactique",
     "pnj_notes_tip",
     "notes"
-];
+  ];
 }
 
 on("sheet:opened " + eventList("change", toolTipAttrs(), " "), function() {
@@ -17073,6 +17107,22 @@ on("clicked:caract_menu-btn", function () {
 });
 
 /**
+ * Return actual list of conditions for setting
+ * @param {boolean} lowFantasy - low fantasy option
+ * @returns {object[]}
+ */
+function conditionList(lowFantasy) {
+  return SWData.PC.CONDITIONS
+    .filter(condition => {
+      if (condition.name === "inconscient")
+        return;
+      if (condition.lowFantasy && !lowFantasy)
+        return;
+      return condition;
+    });
+}
+
+/**
  * Display conditions menu
  */
 on("clicked:etats_select-btn", function() {
@@ -17086,15 +17136,7 @@ on("clicked:etats_select-btn", function() {
     const charName = strval(values.character_name);
     const lowFantasy = boolval(values.cfg_lowfan);
     const actions = [];
-    const conditions = SWData.PC.CONDITIONS
-    .filter(condition => {
-      if (condition.name === "inconscient")
-        return;
-      if (condition.lowFantasy && !lowFantasy)
-        return;
-      return condition;
-    })
-    .map(condition => {
+    const conditions = conditionList(lowFantasy).map(condition => {
       actions.push(`%{${charName}|${condition.name}-icon}`);
       const state = boolval(values[`condition_${condition.name}`]) ? SWData.emojis.red : SWData.emojis.green;
       return state + " " + condition.label + " " + condition.emoji;
@@ -17587,7 +17629,16 @@ function displayCheckup() {
       const color = strval(values.couleur_pj);
       const chatMsg = [];
   
-      chatMsg.push(`PV=${ intval(values.pv) } / ${ intval(values.pv_max) }`);
+      const buttons = [ "fast", "full" ].map(rtype => {
+        const title = ({
+          fast: "Récupération rapide",
+          full: "Récupération complète",
+        })[rtype];
+        const button = menuButtonOutline(color, {}, { padding: "0px 5px;" }, { title });
+        return `[${ SWData.emojis.recovery[rtype] }](~${charName}|recovery_${rtype}-btn${button})`;
+      }).join(" ");
+
+      chatMsg.push(`PV=${ intval(values.pv) } / ${ intval(values.pv_max) } ${buttons}`);
       chatMsg.push(`DR=${ intval(values.dr) } / ${ intval(values.dr_max) }`);
       chatMsg.push(`PC=${ intval(values.pc) } / ${ intval(values.pc_max) }`);
       if (intval(values.pm_max) > 0)
@@ -17598,8 +17649,17 @@ function displayCheckup() {
         chatMsg.push(`Valeur d'Ombre=${shadow.value}`);
 
       const conditions = SWData.PC.CONDITIONS.filter(condition => boolval(values[`condition_${condition.name}`]));
-      if (conditions.length > 0)
-        chatMsg.push("Etats=" + conditions.map(condition => condition.label).join(", "));
+      if (conditions.length > 0) {
+        chatMsg.push("Etats=" + conditions.map(condition => {
+          const button = menuButtonOutline(
+            color, 
+            {}, 
+            { padding: "0px 5px;" }, 
+            { title: condition.label }
+          );
+          return `[${condition.emoji}](~${charName}|${condition.name}-icon${button})`;
+        }).join(" "));
+      }
   
       const inHand = [ holding("princ", values), holding("autre", values) ];
       chatMsg.push(`En main=${ inHand.join(", ") }`);
