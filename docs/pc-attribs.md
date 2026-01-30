@@ -126,17 +126,19 @@ Cet onglet permet d'indiquer les armes et attaques à la disposition du PJ.
 Pour chacune, vous indiquez :
 - Le nom de l'attaque,
 - Le type d'attaque (contact, distance ou magique),
-- Un éventuel bonus pour toucher propre à cette attaque,
+- Un bonus optionnel pour toucher propre à cette attaque,
 - Le score de critique du jet (_20_ par défaut),
 - Si l'arme est maniée à deux mains uniquement,
 - Les dés de DM (ex : `1d8`, `2d6`, `1d6/1d10` pour les armes à une ou deux mains),
 - Le type de DM (_ex : contondants, perforants_)
-- La caractéristique ajoutée aux DM,
+- Le bonus de caractéristique ajouté aux DM s'il y a lieu,
 - Un bonus optionnel de DM
 - La portée pour une arme à distance
 
+Si la fiche reconnaît le nom de l'arme, elle assigne automatiquement ces paramètres.
+
 Des paramètres optionnels peuvent être ajoutés :
-- Un effet spécial ou une description affichée dans le chat Roll20. Ce texte peut comporter des commandes de chat Roll20. Les références à certains attributs du personnage peuvent être reconnues et remplacées par leurs valeurs effectives.
+- Un effet spécial ou une description affichée dans le chat Roll20. Ce texte peut comporter des commandes de chat Roll20. Les références aux attributs du personnage peuvent être reconnues et remplacées par leurs valeurs effectives si vous les insérez entre `[...]`.
 - Un effet prolongé propre à cette attaque (par exemple, des DM ou un état préjudiciable sur plusieurs rounds). Vous pouvez indiquer jusqu'à 4 paramètres textuels dont les 3 derniers sont optionnels :
   - l'effet prolongé. Il peut contenir une formule de dé pour des DM
   - le nom de l'effet, si vous souhaitez qu'il soit différent du nom de l'attaque
