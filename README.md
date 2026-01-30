@@ -21,6 +21,7 @@ v1.13.0 [Screenshot](cof2e.png)
   - Gestion des DM temporaires
   - Ajout des emojis des compétences dans le popup Roll20
   - Remplacement du menu de chat des états préjudiciables par un popup Roll20
+  - Assignation automatique des paramètres de base d'une nouvelle attaque
 
 - Fiche de PNJ:
   - Ajout d'un bouton de réinitialisation des utilisation de capacités

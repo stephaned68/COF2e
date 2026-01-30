@@ -6013,6 +6013,7 @@
                     <li>Gestion des DM temporaires</li>
                     <li>Ajout des emojis des compétences dans le popup Roll20</li>
                     <li>Remplacement du menu de chat des états préjudiciables par un popup Roll20</li>
+                    <li>Assignation automatique des paramètres de base d'une nouvelle attaque</li>
                   </ul>
                 </details>
               </li>
@@ -13096,6 +13097,7 @@ function insertRolls(text, options = {}) {
 
 /**
  * Numbering PC attacks 
+ * Detect weapon name and get properties
  */
 on("change:repeating_armes:arme-nom clicked:renum_atk-btn", function(eventInfo) {
   const renumber = (eventInfo.triggerName === "clicked:renum_atk-btn");
@@ -13104,7 +13106,11 @@ on("change:repeating_armes:arme-nom clicked:renum_atk-btn", function(eventInfo) 
     atkId = strval(eventInfo.triggerName.split("_")[2]);
   getSectionIDsOrdered("repeating_armes", function (rowIds) {
     const labels = rowIds.map(id => rptAttr("armes", "arme-label", id));
-    getAttrs([ "character_name", "max_attack_label", "scriptVersion", ...labels ], function (values) {
+    getAttrs([
+      "character_name", "max_attack_label", "scriptVersion",
+      ...rptAttrs("armes", [ "arme-nom", "arme-gearid" ]),
+      ...labels
+    ], function (values) {
       const updates = new Map();
 
       if (!renumber) {
@@ -13124,6 +13130,51 @@ on("change:repeating_armes:arme-nom clicked:renum_atk-btn", function(eventInfo) 
       });
       if (renumber || numLabel > maxLabel)
         updates.set("max_attack_label", numLabel);
+
+      const gearId = strval(values[rptAttr("armes", "arme-gearid")]);
+      if (gearId === "") {
+        const atkName = cleanText(strval(values[rptAttr("armes", "arme-nom")]));
+        const weapon = SWData.GEARS.find(gear => {
+          if (atkName.includes(cleanText(gear.name)))
+            return true;
+          if (gear.altname !== "") {
+            for (const altn of gear.altname.split(",")) {
+              if (atkName.includes(altn))
+                return true;
+            }
+          }
+          return false;
+        });
+        if (weapon) {
+          updates.set(rptAttr("armes", "arme-atk"), "atkcac");
+          let dm1m = "",
+              dm2m = "",
+              dm = "";
+          weapon.props.forEach(prop => {
+            const { name, value } = parseNameValue(prop);
+            if (name === "dm-1m")
+              dm1m = value;
+            if (name === "dm-2m")
+              dm2m = value;
+            if (name === "portee") {
+              updates.set(rptAttr("armes", "arme-portee"), value);
+              updates.set(rptAttr("armes", "arme-atk"), "atktir");
+              updates.set(rptAttr("armes", "arme-bonus"), "0");
+            }
+            if (name === "critique")
+              updates.set(rptAttr("armes", "arme-crit"), value);
+            if (name === "type-dm")
+              updates.set(rptAttr("armes", "arme-dmtype"), value);
+          });
+          if (dm1m !== "" && dm2m !== "")
+            dm = dm1m + "/" + dm2m;
+          else
+            dm = dm1m + dm2m;
+          updates.set(rptAttr("armes", "arme-dm"), dm);
+          if (dm1m === "" && dm2m !== "")
+            updates.set(rptAttr("armes", "arme-2m"), 1);
+        }
+      }  
 
       if (updates.size > 0)
         setAttrs(Object.fromEntries(updates));
@@ -16134,7 +16185,7 @@ on("remove:repeating_equipement", function (eventInfo) {
 });
 
 /**
- * Handle attacks 
+ * Handle linked attacks 
  */
 on(changeEvent([
   "props",
