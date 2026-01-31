@@ -31,7 +31,6 @@ v1.14.0 [Screenshot](cof2e.png)
   - Ajout d'une option pense-bête pour le script _TokenMod_
   - Ajout de la possibilité d'afficher les informations de tactique et/ou les notes dans une infobulle visible du MJ uniquement
 
-
 ### Version _1.13.0_ (2026-01-04)
 
 - Prise en charge de l'action _Aider_ (script MOD SetChatAttr nécessaire)
