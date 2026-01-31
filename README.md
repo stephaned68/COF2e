@@ -10,7 +10,7 @@ v1.13.0 [Screenshot](cof2e.png)
 
 ## Notes de version
 
-### Version _1.14.0_ (next)
+### Version _1.14.0_ (2026-01-31)
 
 - Fiche de PJ:
   - Ajout d'une liste d'options tactiques activables avec bonus d'attaque, dé bonus/malus, DM supplémentaires
