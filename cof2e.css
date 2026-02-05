@@ -1,4 +1,4 @@
-/* COF2e v1.14.0 */
+/* COF2e v1.14.1 */
 
 @import url('https://fonts.googleapis.com/css?family=Merriweather+Sans&display=swap');
 
@@ -120,16 +120,50 @@ summary h4 {
 }
 
 /* Redefine Roll20 repeating sections buttons */
-.charsheet .repcontrol button.repcontrol_add,
-.charsheet .repcontrol button.repcontrol_edit {
+
+.charsheet .repcontrol {
+    height: 2em;
+}
+
+.charsheet .repcontrol .btn.repcontrol_add,
+.charsheet .repcontrol .btn.repcontrol_edit {
+    color: #f5f5f5;
+    font-size: 0.1em;
+    height: 20px;
+}
+
+.charsheet .repcontrol button.btn.repcontrol_add::after {
+    font-family: "Pictos";
+    content: "&";
+    margin-left: -8px;
+    margin-right: -5px;
+    font-size: 11em;
+    color: var(--cof-dark);
+}
+
+.charsheet .repcontrol button.btn.repcontrol_edit::after {
+    font-family: "Pictos";
+    content: "(";
+    margin-left: -8px;
+    margin-right: -5px;
+    font-size: 11em;
+    color: var(--cof-dark);
+}
+
+.charsheet .repcontainer.editmode + .repcontrol button.btn.repcontrol_edit::after {
+    content: ")";
+}
+
+.charsheet .repcontrol button.btn.repcontrol_add,
+.charsheet .repcontrol button.btn.repcontrol_edit {
   border-radius: 5px;
   margin: 5px;
   padding-top: 0px;
   padding-bottom: 0px;
 }
 
-.charsheet .repcontrol button.repcontrol_add:hover,
-.charsheet .repcontrol button.repcontrol_edit:hover {
+.charsheet .repcontrol button.btn.repcontrol_add:hover,
+.charsheet .repcontrol button.btn.repcontrol_edit:hover {
   color: var(--cof-click);
 }
 

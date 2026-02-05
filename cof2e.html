@@ -1,8 +1,8 @@
 <div class="cofmain">
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.14.0">
+  <input type="hidden" name="attr_verfdp" value="1.14.1">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.14.0">
+  <input type="hidden" name="attr_version" value="1.14.1">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
 
@@ -127,7 +127,7 @@
     <div>
       <img
         class="logo"
-        title="Version 1.14.0 - 31/01/2026"
+        title="Version 1.15.0 - 02/2026"
         src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cof2e_logo.jpg"
       />
       <input type="hidden" class="d20roll-btns" name="attr_cfg_d20roll" value="0">
@@ -1236,6 +1236,7 @@
 
               <div class="weapon">
                 
+                <input type="hidden" name="attr_arme-new" value="1">
                 <div>
                   <input type="hidden" name="attr_attack-btn" value="">
                   <button type="action" class="hidden" name="act_attack-btn">
@@ -1493,8 +1494,8 @@
 
                 <div class="pc-tactic">
                   <div class="d-flex">
-                    <input type="checkbox" name="attr_tact-on" value="1">
-                    <input type="text" class="align-self-center" name="attr_tact-name" placeholder="Autre tactique" value="">
+                    <input type="checkbox" name="attr_tact-on" title="@{tact-on} Activer / Désactiver" value="1">
+                    <input type="text" class="align-self-center" name="attr_tact-name" title="@{tact-name} Nom" placeholder="Nom / Capacité" value="">
                   </div>
                   <div class="d-flex">
                     <input type="number" class="two-digits align-self-center" name="attr_tact-div" title="@{tact-div} Bonus pour toucher" value="0">
@@ -6548,6 +6549,7 @@
   
               <div class="weapon">
                 
+                <input type="hidden" name="attr_arme-new" value="1">
                 <div>
                   <input type="hidden" name="attr_npcatk-btn" value="">
                   <button type="action" class="hidden" name="act_npcatk-btn">
@@ -8243,7 +8245,7 @@
 
 /**
  * COF2e Sheet Worker
- * v1.14.0
+ * v1.14.1
  */
 
 const SWData = {
@@ -8274,7 +8276,7 @@ const SWData = {
         opposed: "[[1d20[Dé] + @{target|atkcac}[Att. Contact Cible] ]]",
         name: "@{target|token_name}",
       },
-      PC: {
+      pc: {
         bar1: "",
         bar1_link: "pm",
         bar2: "",
@@ -8284,7 +8286,7 @@ const SWData = {
         bar4: "",
         bar4_link: "vitesse_cases",
       },
-      NPC: {
+      npc: {
         bar1: "",
         bar1_link: "", 
         bar2: "",
@@ -8294,7 +8296,7 @@ const SWData = {
         bar4: "",
         bar4_link: "vitesse_cases"
       },
-      MOOK: {
+      mook: {
         bar1: "",
         bar1_link: "", 
         bar2: "",
@@ -10301,6 +10303,18 @@ function changeEvent(attributeList, section = "") {
 }
 
 /**
+ * Return a list of clicked: events as string
+ * @param {string[]} buttonList - List of buttons
+ * @param {string} [section=""] - Repeating section name
+ * @returns {string}
+ */
+function clickedEvent(buttonList, section = "") {
+  if (section !== "")
+    buttonList = buttonList.map(attr => `repeating_${section}:${attr}`);
+  return eventList("clicked", buttonList, " ");
+}
+
+/**
  * Return repeating attribute name
  * @param {string} section - section name
  * @param {string} name - attribute name
@@ -10469,7 +10483,7 @@ function buildChatMsg(msg, options) {
   if (template !== "")
     return `${whisper}&{template:${template}} ${title ? (template === "default" ? `{{name=${title} }}` : `{{${title} }}`) : "" } ${chatMsg}`;
   else
-    return msg;
+    return `${whisper}${msg}`;
 }
 
 /**
@@ -10801,12 +10815,12 @@ function hasMODScript(values) {
 
 /**
  * Returns Token Mod command to complete
- * @param {string} charName - character name
+ * @param {string} charId - character id
  * @param {Object} [props={}] - properties name/value pairs
  * @returns {string}
  */
-function tokenMod(charName, props = {}) {
-  const tokenmod = `!token-mod {{ --current-page --ignore-selected --ids @{${charName}|character_id}`;
+function tokenMod(charId, props = {}) {  
+  const tokenmod = `!token-mod {{ --current-page --ignore-selected --ids ${charId}`;
   const tokenProps = Object.keys(props).map(prop => `${prop}|${props[prop]}`).join(" ");
   return tokenmod + (tokenProps !== "" ? " --set " : "") + tokenProps + " }}";
 }
@@ -12487,7 +12501,7 @@ on("clicked:vigloss-btn clicked:vigheal-btn", function (eventInfo) {
 on("change:pv change:pvig", function (eventInfo) {
   const PV = strval(eventInfo.triggerName) === "pvig" ? "PVIG" : "pv";
   getAttrs([ 
-    "sheet_type", "character_name",
+    "sheet_type", "character_id",
     "tokenmod", "token_tint_on", "token_tint", "tkmarker_dead_on", "tkmarker_dead", 
     "pv", "pv_max", "PVIG"
   ], function (values) {
@@ -12511,7 +12525,7 @@ on("change:pv change:pvig", function (eventInfo) {
       tokenProps.statusmarkers = `${deadOrAlive}${markerDead}`;
     }
     if (Object.keys(tokenProps).length > 0)
-      sendChatCmd(tokenMod(strval(values.character_name), tokenProps));
+      sendChatCmd(tokenMod(strval(values.character_id), tokenProps));
     if (isNPC)
       return;
   
@@ -12522,7 +12536,7 @@ on("change:pv change:pvig", function (eventInfo) {
 /**
  * On Recup button click
  */
-on("clicked:drecup-btn clicked:recovery_fast-btn clicked:recovery_full-btn", function(eventInfo) {
+on(clickedEvent([ "drecup-btn", "recovery_fast-btn", "recovery_full-btn"]), function(eventInfo) {
   const recoveryBtn = strval(eventInfo.triggerName).split(":")[1];
   const typeRecup = [ "fast", "full" ].findIndex(b => recoveryBtn === `recovery_${b}-btn`);
   const recupAttrs = [
@@ -12977,7 +12991,7 @@ SWData.PC.CONDITIONS.forEach(condition => {
  */
 on("change:conditions_markers", function() {
   getAttrs([ 
-    "character_name", "conditions_markers",
+    "character_id", "conditions_markers",
     "tokenmod", "tkmarker_cond"
   ], function (values) {
     const statusmarkers = strval(values.conditions_markers);
@@ -12987,7 +13001,7 @@ on("change:conditions_markers", function() {
     const markConditions = boolval(values.tkmarker_cond);
     if (!tokenmod || !markConditions)
       return;
-    sendChatCmd(tokenMod(strval(values.character_name), { statusmarkers }));
+    sendChatCmd(tokenMod(strval(values.character_id), { statusmarkers }));
   });
 });
 
@@ -13100,40 +13114,65 @@ function insertRolls(text, options = {}) {
  * Detect weapon name and get properties
  */
 on("change:repeating_armes:arme-nom clicked:renum_atk-btn", function(eventInfo) {
-  const renumber = (eventInfo.triggerName === "clicked:renum_atk-btn");
+  const rptAtk = "armes";
+  const renumber = (strval(eventInfo.triggerName.split(":")[1]) === "renum_atk-btn");
   let atkId = "";
   if (!renumber)
     atkId = strval(eventInfo.triggerName.split("_")[2]);
   getSectionIDsOrdered("repeating_armes", function (rowIds) {
-    const labels = rowIds.map(id => rptAttr("armes", "arme-label", id));
+    const labels = rowIds.map(id => rptAttr(rptAtk, "arme-label", id));
+    const names = rowIds.map(id => rptAttr(rptAtk, "arme-nom", id));
     getAttrs([
       "character_name", "max_attack_label", "scriptVersion",
-      ...rptAttrs("armes", [ "arme-nom", "arme-gearid" ]),
-      ...labels
+      rptAttr(rptAtk, "arme-new"),
+      ...rptAttrs(rptAtk, [ "arme-nom", "arme-gearid" ]),
+      ...labels,
+      ...names
     ], function (values) {
+      const charName = strval(values.character_name);
+      const useScript = hasMODScript(values);
       const updates = new Map();
 
       if (!renumber) {
-        // display attack options row if script detected
-        updates.set(rptAttr("armes", "armeopt"), hasMODScript(values) ? 1 : 0);
+        
+        // display attack options row for new row if script detected
+        const newRow = rptAttr(rptAtk, "arme-new"),
+              isNewRow = boolval(values[newRow]);
+        if (useScript && isNewRow)
+          updates.set(rptAttr(rptAtk, "armeopt"), 1);
+        updates.set(newRow, 0);
+        
         // update roll button linked attribute
-        const atkBtn = rptAttr("armes", "attack-btn", atkId);
-        updates.set(atkBtn, `%{${ strval(values.character_name) }|${atkBtn}}`);
+        const atkBtn = rptAttr(rptAtk, "attack-btn", atkId);
+        updates.set(atkBtn, `%{${charName}|${atkBtn}}`);
       }
       
+      // process renumbering
+      const renumbered = [];
       const maxLabel = intval(values.max_attack_label);
       let numLabel = renumber ? 0 : maxLabel;
       labels.forEach(label => {
         if (renumber || intval(values[label]) === 0)
           updates.set(label, ++numLabel);
-        updates.set(label.replace("label", "showlbl"), hasMODScript(values) ? 1 : 0);
+        if (renumber) {
+          const id = rptInfo(label).rowId;
+          const name = strval(values[rptAttr(rptAtk, "arme-nom", id)])
+          renumbered.push(`**${numLabel}** : ${name}`);
+        }
+        updates.set(label.replace("label", "showlbl"), useScript ? 1 : 0);        
       });
       if (renumber || numLabel > maxLabel)
         updates.set("max_attack_label", numLabel);
+      if (renumber && renumbered.length > 0) {
+        sendChatMsg("Renumérotation des attaques de " + charName, { template: "", whisper: "gm" });
+        renumbered.forEach(r => sendChatMsg(r, { template: "", whisper: "gm" }));
+      }
 
-      const gearId = strval(values[rptAttr("armes", "arme-gearid")]);
+      const gearId = strval(values[rptAttr(rptAtk, "arme-gearid")]);
       if (gearId === "") {
-        const atkName = cleanText(strval(values[rptAttr("armes", "arme-nom")]));
+
+        // if not linked to inventory, detect weapon name
+        const atkName = cleanText(strval(values[rptAttr(rptAtk, "arme-nom")]));
         const weapon = SWData.GEARS.find(gear => {
           if (atkName.includes(cleanText(gear.name)))
             return true;
@@ -13145,8 +13184,10 @@ on("change:repeating_armes:arme-nom clicked:renum_atk-btn", function(eventInfo) 
           }
           return false;
         });
+
+        // weapon known, set base attack parameters
         if (weapon) {
-          updates.set(rptAttr("armes", "arme-atk"), "atkcac");
+          updates.set(rptAttr(rptAtk, "arme-atk"), "atkcac");
           let dm1m = "",
               dm2m = "",
               dm = "";
@@ -13157,22 +13198,22 @@ on("change:repeating_armes:arme-nom clicked:renum_atk-btn", function(eventInfo) 
             if (name === "dm-2m")
               dm2m = value;
             if (name === "portee") {
-              updates.set(rptAttr("armes", "arme-portee"), value);
-              updates.set(rptAttr("armes", "arme-atk"), "atktir");
-              updates.set(rptAttr("armes", "arme-bonus"), "0");
+              updates.set(rptAttr(rptAtk, "arme-portee"), value);
+              updates.set(rptAttr(rptAtk, "arme-atk"), "atktir");
+              updates.set(rptAttr(rptAtk, "arme-bonus"), "0");
             }
             if (name === "critique")
-              updates.set(rptAttr("armes", "arme-crit"), value);
+              updates.set(rptAttr(rptAtk, "arme-crit"), value);
             if (name === "type-dm")
-              updates.set(rptAttr("armes", "arme-dmtype"), value);
+              updates.set(rptAttr(rptAtk, "arme-dmtype"), value);
           });
           if (dm1m !== "" && dm2m !== "")
             dm = dm1m + "/" + dm2m;
           else
             dm = dm1m + dm2m;
-          updates.set(rptAttr("armes", "arme-dm"), dm);
+          updates.set(rptAttr(rptAtk, "arme-dm"), dm);
           if (dm1m === "" && dm2m !== "")
-            updates.set(rptAttr("armes", "arme-2m"), 1);
+            updates.set(rptAttr(rptAtk, "arme-2m"), 1);
         }
       }  
 
@@ -16815,13 +16856,12 @@ function toolTipAttrs() {
 }
 
 on("sheet:opened " + eventList("change", toolTipAttrs(), " "), function() {
-  getAttrs([ "character_name", "sheet_type", ...toolTipAttrs() ], function(values) {
+  getAttrs([ "character_id", "sheet_type", ...toolTipAttrs() ], function(values) {
     const tokenmod = boolval(values.tokenmod);
     if (!tokenmod)
       return;
     const tokenTip = boolval(values.token_tooltip_on);
-    const charName = strval(values.character_name).trim();
-    if (!tokenTip || charName === "")
+    if (!tokenTip)
       return;
     const sheetType = strval(values.sheet_type);
     const npcTacticTip = boolval(values.pnj_tactique_tip);
@@ -16848,7 +16888,7 @@ on("sheet:opened " + eventList("change", toolTipAttrs(), " "), function() {
     let modProps = { show_tooltip: 1, tooltip, defaulttoken: "" };
     if (sheetType === SWData.SHEET_TYPE.NPC)
       modProps = { ...modProps, gm_only_tooltip: 1 };
-    sendChatCmd(tokenMod(charName, modProps));
+    sendChatCmd(tokenMod(strval(values.character_id), modProps));
   });
 });
 
@@ -17003,8 +17043,8 @@ on("change:debug_mode", function() {
  */
 on("clicked:helpdoc-btn", function() {
   getAttrs([ "sheet_type" ], function (values) {
-    const page = strval(values.sheet_type).toLowerCase() + "-main";
-    sendChatMsg(`[Documentation](https://stephaned68.github.io/COF2e/${page})`, { template: "" });
+    const page = `https://stephaned68.github.io/COF2e/${ strval(values.sheet_type).toLowerCase() }-main`;
+    sendChatMsg(`[Documentation](${page})`, { template: "", whisper: "gm" });
   })
 });
 
@@ -17927,32 +17967,59 @@ on("change:pnjatk", function() {
  * Numbering NPC attacks
  */
 on("change:repeating_npcarmes:arme-nom clicked:renum_npcatk-btn", function(eventInfo) {
-  const renumber = (eventInfo.triggerName === "clicked:renum_npcatk-btn");
+  const rptAtk = "npcarmes";
+  const renumber = (strval(eventInfo.triggerName.split(":")[1]) === "renum_npcatk-btn");
   let atkId = "";
   if (!renumber)
     atkId = strval(eventInfo.triggerName.split("_")[2]);
-  getSectionIDsOrdered("repeating_npcarmes", function (rowIds) {
-    const labels = rowIds.map(id => rptAttr("npcarmes", "arme-label", id));
-    getAttrs([ "character_name", "max_attack_label", "scriptVersion", ...labels ], function (values) {
+  getSectionIDsOrdered("repeating_" + rptAtk, function (rowIds) {
+    const labels = rowIds.map(id => rptAttr(rptAtk, "arme-label", id));
+    const names = rowIds.map(id => rptAttr(rptAtk, "arme-nom", id));
+    getAttrs([ 
+      "character_name", "max_attack_label", "scriptVersion",
+      rptAttr(rptAtk, "arme-new"),
+      ...labels,
+      ...names
+    ], function (values) {
+      const charName = strval(values.character_name);
+      const useScript = hasMODScript(values);
       const updates = new Map();
 
       if (!renumber) {
-        // display attack options row if script detected
-        updates.set(rptAttr("npcarmes", "armeopt"), hasMODScript(values) ? 1 : 0);
+
+        // display attack options row if new row and MOD script
+        const newRow = rptAttr(rptAtk, "arme-new"),
+              isNewRow = boolval(values[newRow]);
+        if (useScript && isNewRow)
+          updates.set(rptAttr(rptAtk, "armeopt"), 1);
+        updates.set(newRow, 0);
+        
         // update roll button linked attribute
-        const atkBtn = rptAttr("npcarmes", "npcatk-btn", atkId);
-        updates.set(atkBtn, `%{${ strval(values.character_name) }|${atkBtn}}`);
+        const atkBtn = rptAttr(rptAtk, "npcatk-btn", atkId);
+        updates.set(atkBtn, `%{${charName}|${atkBtn}}`);
       }
-            
+
+      // process renumbering
+      const renumbered = [];
       const maxLabel = intval(values.max_attack_label);
       let numLabel = renumber ? 0 : maxLabel;
       labels.forEach(label => {
+        console.log(label)
         if (renumber || intval(values[label]) === 0)
           updates.set(label, ++numLabel);
-        updates.set(label.replace("label", "showlbl"), hasMODScript(values) ? 1 : 0);
+        if (renumber) {
+          const id = rptInfo(label).rowId;
+          const name = strval(values[rptAttr(rptAtk, "arme-nom", id)])
+          renumbered.push(`**${numLabel}** : ${name}`);
+        }
+        updates.set(label.replace("label", "showlbl"), useScript ? 1 : 0);
       });
       if (renumber || numLabel > maxLabel)
         updates.set("max_attack_label", numLabel);
+      if (renumber && renumbered.length > 0) {
+        sendChatMsg(`Renumérotation des attaques de **${charName}**`, { template: "", whisper: "gm" });
+        renumbered.forEach(r => sendChatMsg(r, { template: "", whisper: "gm" }));
+      }
 
       if (updates.size > 0)
         setAttrs(Object.fromEntries(updates));
@@ -19552,7 +19619,9 @@ on("sheet:opened change:character_name", function() {
  * - Update status marker for luck, if any set
  */
 on("change:pc change:tkmarker_pc_on change:tkmarker_pc", function() {
-  getAttrs([ "sheet_type", "character_name", "tokenmod", "tkmarker_pc_on", "tkmarker_pc", "pc" ], function (values) {
+  getAttrs([ 
+    "sheet_type", "character_id",
+    "tokenmod", "tkmarker_pc_on", "tkmarker_pc", "pc" ], function (values) {
     if (strval(values.sheet_type) === SWData.SHEET_TYPE.NPC)
       return;
     if (!boolval(values.tokenmod))
@@ -19562,7 +19631,7 @@ on("change:pc change:tkmarker_pc_on change:tkmarker_pc", function() {
       return;
     markerPC = (boolval(values.tkmarker_pc_on) ? "" : "-") + markerPC;
     sendChatCmd(tokenMod(
-      strval(values.character_name), 
+      strval(values.character_id), 
       { statusmarkers: `${markerPC}:${ intval(values.pc) }` }
     ));
   });
@@ -19673,13 +19742,16 @@ on("change:pvig_max", function(eventInfo) {
   });
 });
 
+/**
+ * Compare PV & temp DM
+ */
 on("change:pv change:temp_dm", function(eventInfo) {
   if (strval(eventInfo.sourceType) !== "player")
     return;
   getAttrs([ "character_name", "temp_dm", "pv" ], function(values) {
     const pv = intval(values.pv);
     const tempDM = intval(values.temp_dm);
-    if (tempDM < pv)
+    if (tempDM === 0 || tempDM < pv)
       return;
     const typeDM = strval(eventInfo.triggerName);
     const charName = strval(values.character_name);
@@ -19704,8 +19776,12 @@ on("change:pv change:temp_dm", function(eventInfo) {
 /**
  * On clicking token adjust buttons (TokenMod)
  */
-on("clicked:token_min-btn clicked:token_max-btn clicked:token_siz-btn clicked:token_def-btn", function(eventInfo) {
-  getAttrs([ "sheet_type", "mook", "character_name", "pm_max", "taille" ], function(values) {
+on(clickedEvent([ "min", "max", "siz", "def" ].map(b => `token_${b}-btn`)), function(eventInfo) {
+  getAttrs([
+    "sheet_type", "mook", "character_id",
+    "pm_max", "taille",
+    "scriptVersion"
+  ], function(values) {
     const bt = strval(eventInfo.triggerName.split("_")[1]);
     const resize = strval(({
       "min-btn": "0.9",
@@ -19719,10 +19795,19 @@ on("clicked:token_min-btn clicked:token_max-btn clicked:token_siz-btn clicked:to
       props = { scale: "*" + resize };
     } else {
       const tk = SWData.settings.tokens;
-      const type = isMook ? "MOOK" : strval(values.sheet_type) 
+      const type = isMook ? "mook" : strval(values.sheet_type);
+      if (type === SWData.SHEET_TYPE.PC && hasMODScript(values)) {
+        tk.pc = { 
+          bar1_link: "pv",
+          bar2_link: "pm",
+          bar3_link: "",
+          bar4_link: "temp_dm"
+        };
+      }
       Object.entries(tk[type]).forEach(([k, v]) => {
-        if (v !== "pm" || intval(values.pm_max) > 0)
-          props[k] = v;
+        if (v === "pm" && intval(values.pm_max) === 0)
+          v = "";
+        props[k] = v;
       });
       if (isNPC) {
         let tokenSize;
@@ -19736,8 +19821,9 @@ on("clicked:token_min-btn clicked:token_max-btn clicked:token_siz-btn clicked:to
         }
         props = { ...props, width: tokenSize, height: tokenSize };
       }
+      props = { ...props, defaulttoken: "" };
     }
-    sendChatCmd(tokenMod(strval(values.character_name), props));
+    sendChatCmd(tokenMod(strval(values.character_id), props));
   });
 
 });
