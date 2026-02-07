@@ -19788,22 +19788,19 @@ on(clickedEvent([ "min", "max", "siz", "def" ].map(b => `token_${b}-btn`)), func
       "max-btn": "1.1",
       "siz-btn": "?{*Taille ?}",
     })[bt]);
+    const charId = strval(values.character_id);
     const isNPC = strval(values.sheet_type) === SWData.SHEET_TYPE.NPC;
     const isMook = isNPC && boolval(values.mook);
+    if (hasMODScript(values)) {
+      sendChatCmd(`!cof2-link-token --selectChar ${charId}`);
+      return;
+    }
     let props = {};
     if (resize !== "") {
       props = { scale: "*" + resize };
     } else {
       const tk = SWData.settings.tokens;
       const type = isMook ? "mook" : strval(values.sheet_type);
-      if (type === SWData.SHEET_TYPE.PC && hasMODScript(values)) {
-        tk.pc = { 
-          bar1_link: "pv",
-          bar2_link: "pm",
-          bar3_link: "",
-          bar4_link: "temp_dm"
-        };
-      }
       Object.entries(tk[type]).forEach(([k, v]) => {
         if (v === "pm" && intval(values.pm_max) === 0)
           v = "";
@@ -19823,7 +19820,7 @@ on(clickedEvent([ "min", "max", "siz", "def" ].map(b => `token_${b}-btn`)), func
       }
       props = { ...props, defaulttoken: "" };
     }
-    sendChatCmd(tokenMod(strval(values.character_id), props));
+    sendChatCmd(tokenMod(charId, props));
   });
 
 });
