@@ -468,7 +468,9 @@ div.path div.block-title {
 .cofmain .heading .token {
   width: 100%;
 }
-.cofmain .heading input[value="0"].token-mod ~ div.token-mod {
+.cofmain .heading input[value="0"].token-mod ~ div.token-mod,
+.cofmain .heading input[value="1"].token-script ~ button.token-script,
+.cofmain .heading input[value="0"].token-script ~ div.token-script {
   display: none;
 }
 

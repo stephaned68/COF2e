@@ -156,7 +156,8 @@
         <button type="action" class="flat-btn img-btn" name="act_token_min-btn" title="%{token_min-btn} Diminuer la taille de 10%">
           <span class="img-btn">-</span>
         </button>
-        <button type="action" class="flat-btn img-btn" name="act_token_def-btn" title="%{token_def-btn} Lier les barres du token">
+        <input type="hidden" class="token-script" name="attr_script_show" value="0">
+        <button type="action" class="flat-btn img-btn token-script" name="act_token_def-btn" title="%{token_def-btn} Lier les barres du token">
           <span class="img-btn">2</span>
         </button>
         <button type="action" class="flat-btn img-btn" name="act_token_siz-btn" title="%{token_siz-btn} Forcer la taille">
@@ -164,6 +165,12 @@
         </button>
         <button type="action" class="flat-btn img-btn" name="act_token_max-btn" title="%{token_max-btn} Augmenter la taille de 10%">
             <span class="img-btn">+</span>
+        </button>
+      </div>
+      <input type="hidden" class="token-script" name="attr_script_show" value="0">
+      <div class="d-flex d-flex-between token-script">
+        <button type="action" class="flat-btn img-btn" name="act_token_def-btn" title="%{token_def-btn} Lier les barres du token">
+          <span class="img-btn">2</span>
         </button>
       </div>
     </div>
@@ -19808,12 +19815,16 @@ on(clickedEvent([ "min", "max", "siz", "def" ].map(b => `token_${b}-btn`)), func
       });
       if (isNPC) {
         let tokenSize;
-        const size = strval(values.taille);
+        const size = cleanText(strval(values.taille));
         if (size !== "") {
           tokenSize = ({
-            "Minuscule": tk.size * 0.5, "Très petite": tk.size * 0.5,
-            "Petite": tk.size, "Moyenne": tk.size,
-            "Grande": tk.size * 2, "Énorme": tk.size * 3, "Colossale": tk.size * 4
+            "minuscule": tk.size * 0.5,
+            "tres petite": tk.size * 0.5,
+            "petite": tk.size,
+            "moyenne": tk.size,
+            "grande": tk.size * 2,
+            "enorme": tk.size * 3,
+            "colossale": tk.size * 4,
           })[size] || 70;
         }
         props = { ...props, width: tokenSize, height: tokenSize };
