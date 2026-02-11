@@ -162,11 +162,6 @@ summary h4 {
   padding-bottom: 0px;
 }
 
-.charsheet .repcontrol button.btn.repcontrol_add:hover,
-.charsheet .repcontrol button.btn.repcontrol_edit:hover {
-  color: var(--cof-click);
-}
-
 button[type="roll"] {
   box-shadow: none;
 }
