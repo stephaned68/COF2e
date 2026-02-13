@@ -436,6 +436,7 @@ div.path div.block-title {
   text-overflow: ellipsis;
 }
 
+.cofmain input[value="0"].has-script + div.has-script,
 .cofmain input[value="0"].has-script textarea.has-script,
 .cofmain input[value="0"].has-script .weapon span.has-script,
 .cofmain input[value="0"].has-script + div.ammos {
@@ -652,14 +653,12 @@ input.block-switch {
 }
 
 .abilities-view,
-.block-switch:checked ~ .abilities-edit,
-input[value="1"].show-script ~ div.show-script {
+.block-switch:checked ~ .abilities-edit {
   display: block;
 }
 
 .abilities-edit,
-.block-switch:checked ~ .abilities-view,
-input[value="0"].show-script ~ div.show-script {
+.block-switch:checked ~ .abilities-view {
   display: none;
 }
 

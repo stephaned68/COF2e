@@ -92,7 +92,8 @@
     
   <!-- COFantasy MOD interaction -->
   <input type="hidden" name="attr_script_title" value="">
-  <input type="hidden" name="attr_cofantasy" value="">
+  <input type="hidden" name="attr_cofantasy" value="">  
+  <input type="hidden" name="attr_scriptVersion" value="-">
 
   <!-- Repeating labels -->
   <input type="hidden" name="attr_max_attack_label" value="">
@@ -116,6 +117,11 @@
 
   <!-- Ongoing effects -->
   <input type="hidden" name="attr_ongoing_actmod" value="">
+
+  <!-- Gears ids -->
+  <input type="hidden" name="attr_armor_gearid" value="">
+  <input type="hidden" name="attr_shield_gearid" value="">
+  <input type="hidden" name="attr_helmet_gearid" value="">
 
   <!-- Charmancer
   <input type="hidden" name="attr_charmancer" value=""> -->
@@ -5782,8 +5788,8 @@
       <div class="pc-script-tab">
         <h3><span name="attr_script_title"></span></h3>
 
-        <input class="show-script" type="hidden" name="attr_script_show" value="0">
-        <div class="show-script">
+        <input class="has-script" type="hidden" name="attr_script_show" value="0">
+        <div class="has-script">
           <div class="sheet-2colrow">
   
             <div class="sheet-col">
@@ -7298,8 +7304,8 @@
       <div class="npc-script-tab">
         <h3><span name="attr_script_title"></span></h3>
 
-        <input class="show-script" type="hidden" name="attr_script_show" value="0">
-        <div class="show-script">
+        <input class="has-script" type="hidden" name="attr_script_show" value="0">
+        <div class="has-script">
 
           <div class="sheet-2colrow">
   
@@ -10815,8 +10821,10 @@ function d20Roll(base, d20Roll, cfcs = {}) {
  * @returns {boolean}
  */
 function hasMODScript(values) {
-  if (!values.scriptVersion)
+  if (!values.scriptVersion || strval(values.scriptVersion) === "0")
     return false;
+  if (strval(values.scriptVersion) === "1")
+    return true;
   return values.scriptVersion;
 }
 
@@ -15337,7 +15345,7 @@ function parseBuffList(attribute) {
       let expression = strval(buff.split(":")[1]).trim();
       if (pathBuffs && pathBuffList.includes(expression)) {
         expression = expression.replace("[", "").replace("]", "");
-        value = pathBuffs[expression] || 0;
+        value = numval(pathBuffs[expression]);// || 0;
       } else {
         const attrBuff = SWData.PC.BUFFS.From.find(a => `[${a}]` === expression.toLowerCase());
         if (attrBuff) {
@@ -16111,7 +16119,10 @@ on("change:repeating_equipement:equip-on", function(eventInfo) {
       `${section}_equip-props`, 
       `${section}_equip-atkid`, 
       ...allGears,
-      ...hands
+      ...hands,
+      "armor_gearid",
+      "shield_gearid",
+      "helmet_gearid",
     ], function (values) {
       const equiped = intval(values[`${section}_equip-on`]);
       const name = strval(values[`${section}_equip-nom`]);
@@ -16182,18 +16193,29 @@ on("change:repeating_equipement:equip-on", function(eventInfo) {
       if (equiped === 1) {
         updates.set(defense, defBonus);
         updates.set(defense + "_malus", defMalus);
-        if (armor) 
+        if (armor) {
           updates.set("def_car_max", defCarMax);
+          updates.set("armor_gearid", equipId);
+        }
         if (shield) {
           if (strval(values[hands[1]]) === "2m") {
             updates.set(hands[0], "");
             unEquip2Hands = true;
           }
           updates.set(hands[1], "bouclier");
+          updates.set("shield_gearid", equipId);
         }
+        if (helmet)
+          updates.set("helmet_gearid", equipId);
       } else {
         if (shield && strval(values[hands[1]]) === "bouclier")
           updates.set(hands[1], "");
+        if (armor && equipId === strval(values.armor_gearid))
+          updates.set("armor_gearid", "");
+        if (shield && equipId === strval(values.shield_gearid))
+          updates.set("shield_gearid", "");
+        if (helmet && equipId === strval(values.helmet_gearid))
+          updates.set("helmet_gearid", "");
       }
 
       if (updates.size > 0)
@@ -19489,6 +19511,12 @@ function parseSemVer(version) {
   };
 }
 
+on("change:scriptversion change:scriptversion_max", function() {
+  getAttrs([ "scriptVersion", "scriptVersion_max" ], function (values) {
+    console.log(values);
+  });
+});
+
 /**
  * On opening the sheet - general updates
  */
@@ -19507,6 +19535,9 @@ on("sheet:opened", function() {
   ], function (values) {
 
     setDebugMode(values.debug_mode);
+    
+    if (strval(values.scriptVersion) !== "1")
+      setAttrs({ scriptVersion: 0 });
 
     const sheetType = strval(values.sheet_type);
     
