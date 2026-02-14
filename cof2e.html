@@ -92,8 +92,7 @@
     
   <!-- COFantasy MOD interaction -->
   <input type="hidden" name="attr_script_title" value="">
-  <input type="hidden" name="attr_cofantasy" value="">  
-  <input type="hidden" name="attr_scriptVersion" value="-">
+  <input type="hidden" name="attr_cofantasy" value="">
 
   <!-- Repeating labels -->
   <input type="hidden" name="attr_max_attack_label" value="">
@@ -10821,11 +10820,7 @@ function d20Roll(base, d20Roll, cfcs = {}) {
  * @returns {boolean}
  */
 function hasMODScript(values) {
-  if (!values.scriptVersion || strval(values.scriptVersion) === "0")
-    return false;
-  if (strval(values.scriptVersion) === "1")
-    return true;
-  return values.scriptVersion;
+  return boolval(values.scriptVersion);
 }
 
 /**
@@ -15345,7 +15340,7 @@ function parseBuffList(attribute) {
       let expression = strval(buff.split(":")[1]).trim();
       if (pathBuffs && pathBuffList.includes(expression)) {
         expression = expression.replace("[", "").replace("]", "");
-        value = numval(pathBuffs[expression]);// || 0;
+        value = intval(pathBuffs[expression]);
       } else {
         const attrBuff = SWData.PC.BUFFS.From.find(a => `[${a}]` === expression.toLowerCase());
         if (attrBuff) {
@@ -19536,9 +19531,6 @@ on("sheet:opened", function() {
 
     setDebugMode(values.debug_mode);
     
-    if (strval(values.scriptVersion) !== "1")
-      setAttrs({ scriptVersion: 0 });
-
     const sheetType = strval(values.sheet_type);
     
     const verCOF1 = Number(values.version);
