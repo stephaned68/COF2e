@@ -90,7 +90,7 @@
 
   <input type="hidden" name="attr_rang_cavalier" value="0">
     
-  <!-- COFantasy MOD interaction -->
+  <!-- COFantasy2 MOD interaction -->
   <input type="hidden" name="attr_script_title" value="">
   <input type="hidden" name="attr_cofantasy" value="">
 
@@ -6496,6 +6496,8 @@
               <div class="npc-trait-rd">
                 <div class="block-title">
                   <span>RD</span>
+                  <input type="hidden" class="immu-dm" name="attr_immudm" value="">
+                  <span class="immu-dm"> & Immunités</span>
                 </div>
                 <div class="bordered">
                   <details>
@@ -6504,10 +6506,13 @@
                       <span name="attr_rrdm"></span>
                     </summary>
                     <div class="d-flex m2">
-                      <textarea class="one-row" name="attr_rd" title="@{rd}" placeholder="Réductions DM..."></textarea>
+                      <textarea class="one-row" name="attr_rd" title="@{rd} Réductions DM" placeholder="Réductions DM..."></textarea>
                     </div>
                     <div class="d-flex m2">
-                      <textarea class="one-row" name="attr_resdm" title="@{resdm}" placeholder="Résistances aux DM..."></textarea>
+                      <textarea class="one-row" name="attr_resdm" title="@{resdm} Résistances aux DM" placeholder="Résistances aux DM..."></textarea>
+                    </div>
+                    <div class="d-flex m2">
+                      <textarea class="one-row" name="attr_immudm" title="@{immudm} Immunités aux DM" placeholder="Immunités DM..."></textarea>
                     </div>
                   </details>
                 </div>
@@ -6658,7 +6663,7 @@
                   </div>
                   <div class="bordered">
                     <input type="checkbox" name="attr_arme-active" title="@{arme-active} Attaque active" value="1" checked>
-                    <input type="text" name="attr_arme-atkmods" placeholder="Modificateurs d'attaque" title="@{arme-atkmods} Modificateurs séparés par des virgules&#10; deBonus: avec dé bonus&#10; deMalus: avec dé malus&#10; auto: réussite automatique&#10; choc: peut faire des attaques non léthales sans malus&#10; explodeMax: dés de dégâts explosifs&#10; pasDeDmg: l'attaque ne fait pas de DM&#10; poudre: arme à poudre&#10; reroll1: relance les 1 sur les dés de DM (:1 = une seule fois)&#10; tempDmg: fait toujours des attaques non léthales&#10; jet:N: lance le jet de capacité N&#10;" value="">
+                    <input type="text" name="attr_arme-atkmods" placeholder="Modificateurs d'attaque" title="@{arme-atkmods} Modificateurs séparés par des virgules&#10; deBonus: avec dé bonus&#10; deMalus: avec dé malus&#10; auto: réussite automatique&#10; choc: peut faire des attaques non léthales sans malus&#10; explodeMax: dés de dégâts explosifs&#10; pasDeDmg: l'attaque ne fait pas de DM&#10; poudre: arme à poudre&#10; reroll1: relance les 1 sur les dés de DM (:1 = une seule fois)&#10; tempDmg: fait toujours des attaques non léthales&#10; jet:N: lance le jet de capacité N&#10; btn:N: affiche un bouton pour le jet de capacité N&#10;" value="">
                   </div>
                   <div class="bordered">
                     <textarea class="one-row" name="attr_arme-options" placeholder="Options d'attaque avec argument" title="@{arme-options} Options d'attaque"></textarea>
@@ -11280,7 +11285,7 @@ function displayMod(mod) {
  * @returns {string}
  */
 function replaceDevol(expr) {
-  return expr.replaceAll(/d(4°|E)/g, "@{devol}");
+  return expr.replaceAll(/d(4°|E|4[Ee])/g, "@{devol}");
 }
 
 // ===============
@@ -11965,12 +11970,17 @@ seq(9).forEach(p => {
  * Compute max PC
  */
 function updatePCMax(eventInfo) {
-  getAttrs([ "sheet_type", "pcmax_force", "pc_base", "cha", "pc_buff", "cfg_pc_var" ], function(values) {
-    if (strval(values.sheet_type) === SWData.SHEET_TYPE.NPC)
-      return;
+  getAttrs([ "sheet_type", "pcmax_force", "pc_max", "pc_base", "cha", "pc_buff", "cfg_pc_var" ], function(values) {
     if (boolval(values.pcmax_force))
       return;
-    
+
+    // Trick auto-calc for NPC
+    if (strval(values.sheet_type) === SWData.SHEET_TYPE.NPC) {
+      values.pc_base = intval(values.pc_max);
+      values.cha = 0;
+    }
+    delete values.pc_max;
+
     const doublePC = boolval(values.cfg_pc_var) ? 2 : 1;
     delete values.cfg_pc_var;
     const pc_max = addValues(values) * doublePC;
@@ -11981,7 +11991,7 @@ function updatePCMax(eventInfo) {
 /**
  * On PC components change
  */
-on(changeEvent([ "pc_base","cha","pc_buff","cfg_pc_var" ]), updatePCMax);
+on(changeEvent([ "pc_base", "cha", "pc_buff", "cfg_pc_var" ]), updatePCMax);
 
 /**
  * Return list of attributes for luck roll button
@@ -16661,6 +16671,7 @@ on("clicked:appearance-btn clicked:description-btn", function() {
  */
 on("clicked:def_config-btn", function() {
   const allConfigs = [
+    "$togm",
     "cfg_pvmax_auto",
     "cfg_pts_capas",
     "cfg_cible",
@@ -16709,6 +16720,7 @@ on("clicked:def_config-btn", function() {
     "tkmarker_pc_on",
     "$tkmarker_pc",
     "tkmarker_cond",
+    "token_tooltip_on",
     "chatsetattr",
     "$tresor_monnaie",
     "pnj_tactique_tip",
@@ -16884,34 +16896,40 @@ on("sheet:opened " + eventList("change", toolTipAttrs(), " "), function() {
     const tokenmod = boolval(values.tokenmod);
     if (!tokenmod)
       return;
+    let modProps = {
+      show_tooltip: 0,
+      gm_only_tooltip: 0,
+      tooltip: "",
+      defaulttoken: ""
+    };
     const tokenTip = boolval(values.token_tooltip_on);
-    if (!tokenTip)
-      return;
-    const sheetType = strval(values.sheet_type);
-    const npcTacticTip = boolval(values.pnj_tactique_tip);
-    const npcNotesTip = boolval(values.pnj_notes_tip);
-    if (sheetType === SWData.SHEET_TYPE.NPC)
-      if (!npcTacticTip && !npcNotesTip)
-        return;
-    let reminder = sheetType === SWData.SHEET_TYPE.PC
-    ? strval(values.pense_bete)
-    : "";
-    if (sheetType === SWData.SHEET_TYPE.NPC) {
-      reminder = [
-        npcTacticTip ? strval(values.pnj_tactique) : "",
-        npcNotesTip ? strval(values.notes) : "",
-      ].join("\n");
+    if (tokenTip) {
+      const sheetType = strval(values.sheet_type);
+      const npcTacticTip = boolval(values.pnj_tactique_tip);
+      const npcNotesTip = boolval(values.pnj_notes_tip);
+      let reminder = sheetType === SWData.SHEET_TYPE.PC
+      ? strval(values.pense_bete)
+      : "";
+      if (sheetType === SWData.SHEET_TYPE.NPC) {
+        reminder = [
+          npcTacticTip ? strval(values.pnj_tactique) : "",
+          npcNotesTip ? strval(values.notes) : "",
+        ].join("\n");
+      }
+      reminder = reminder.split("\n")
+      .filter(r => strval(r).trim() !== "")
+      .map((r, ix) => `${ix + 1}) ${r}`)
+      .join(" ; ");
+      let tooltip = reminder;
+      let show_tooltip = 0;
+      if (tooltip !== "") {
+        tooltip = "\"" + tooltip + "\"";
+        show_tooltip = 1;
+      }
+      modProps = { ...modProps, show_tooltip, tooltip };
+      if (sheetType === SWData.SHEET_TYPE.NPC)
+        modProps = { ...modProps, gm_only_tooltip: show_tooltip };
     }
-    reminder = reminder.split("\n")
-    .filter(r => strval(r).trim() !== "")
-    .map((r, ix) => `${ix + 1}) ${r}`)
-    .join(" ; ");
-    let tooltip = reminder;
-     if (tooltip !== "")
-      tooltip = "\"" + tooltip + "\"";
-    let modProps = { show_tooltip: 1, tooltip, defaulttoken: "" };
-    if (sheetType === SWData.SHEET_TYPE.NPC)
-      modProps = { ...modProps, gm_only_tooltip: 1 };
     sendChatCmd(tokenMod(strval(values.character_id), modProps));
   });
 });
@@ -18084,7 +18102,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
   getAttrs([
     "cfg_1attack_roll", "cfg_cible", "cfg_lowfan",
     "cfg_crit_diff", "cfg_tbl_crit", "cfg_tbl_critdie", "cfg_tbl_fumble",
-    "character_name", "niveau", "compagnon", "pc", "pc_max",
+    "character_name", "niveau", "mook", "compagnon", "pc", "pc_max",
     "atkgroup", "nbgroup", "pnj_tact",
     "atkbase_pnj", "atkcac", "atktir", "atkmag",
     ...specials,
@@ -18093,6 +18111,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     const useOneRoll = boolval(values.cfg_1attack_roll);
     const useCritDiff = intval(values.cfg_crit_diff);
     const charName = strval(values.character_name);
+    const isMook = boolval(values.mook);
     let companionOf = strval(values.compagnon);
     companionOf = companionOf !== "" ? companionOf + "|" : "";
     const group = intval(values.atkgroup);
@@ -18218,7 +18237,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
       if (specRoll === 2)
         roll = "2d20kl1";
 
-      if (specNext)
+      if (specNext || isMook)
         resetValues.set("pnj_spec", 0);
     }
 
@@ -18293,14 +18312,27 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     const specRolls = [];
 
     atkMods.forEach(atkMod => {
-      const matched = atkMod.match(/jet:([0-9]+)/i);
-      if (!matched)
+      let displayButton = false;
+      let matched = atkMod.match(/jet:([0-9]+)/i);
+      if (!matched) {
+        matched = atkMod.match(/btn:([0-9]+)/i);
+        if (!matched)
+          return;
+        displayButton = true;
+      }
+      const index = intval(matched.slice(1)[0]) - 1;
+      if (index < 0)
         return;
-      const index = matched.slice(1)[0];
-      if (!index)
-        return;
-      specRolls.push("%{" + charName + "|" + rptAttr("npcrolls", "npcroll", "$" + (intval(index) - 1) ) + "}");
-      special = "Spécial : @{" + rptAttr("npcrolls", "npcroll-name", "$" + (intval(index) - 1) ) + "}\n" + special;
+      let specRollName = "@{" + rptAttr("npcrolls", "npcroll-name", "$" + index) + "}";
+      let specRollAction = charName + "|" + rptAttr("npcrolls", "npcroll", "$" + index);
+      let specRoll;
+      if (displayButton) {
+        specRoll = `[${specRollName}](~${specRollAction}${menuButton()})`;
+      } else {
+        specRolls.push("%{" + specRollAction + "}");
+        specRoll = specRollName;
+      }
+      special = "Spécial : " + specRoll + "\n" + special;
     });
 
     let dmMax = 0;
@@ -19505,12 +19537,6 @@ function parseSemVer(version) {
     patch: intval(patch),
   };
 }
-
-on("change:scriptversion change:scriptversion_max", function() {
-  getAttrs([ "scriptVersion", "scriptVersion_max" ], function (values) {
-    console.log(values);
-  });
-});
 
 /**
  * On opening the sheet - general updates

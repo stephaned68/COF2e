@@ -439,7 +439,8 @@ div.path div.block-title {
 .cofmain input[value="0"].has-script + div.has-script,
 .cofmain input[value="0"].has-script textarea.has-script,
 .cofmain input[value="0"].has-script .weapon span.has-script,
-.cofmain input[value="0"].has-script + div.ammos {
+.cofmain input[value="0"].has-script + div.ammos,
+.cofmain input[value=""].immu-dm + span.immu-dm {
   display: none;
 }
 
