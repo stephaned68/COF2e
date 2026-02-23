@@ -48,7 +48,7 @@ Cette liste contient les attaques dont le PNJ dispose en combat. Pour chaque att
 
 Des paramètres optionnels peuvent être ajoutés :
 - Type d'attaque : vous pouvez indiquer le type de cette attaque en choisissant parmi
-  - Arme naturelle 
+  - Arme naturelle
   - Arme en main
   - Sortilège
   - Arme de jet
@@ -63,6 +63,7 @@ Des paramètres optionnels peuvent être ajoutés :
   - `reroll1:1` : si le résultat initial est égal à 1, le dé de DM est relancé une seule fois
   - `poudre` : l'arme explose et inflige 1d4° DM à l'utilisateur s'il ne maîtrise pas les armes à poudre
   - `jet:N` : le Nième jet de la liste du sous-onglet _Capacités_ est envoyé dans le chat Roll20 en même temps que le jet d'attaque. Vous pouvez ainsi gérer les attaques qui demandent un jet pour toucher contre la Défense de la cible mais ne font pas de DM classiques.
+  - `btn:N` : Un bouton est affiché dans le chat pour lancer le Nième jet de la liste du sous-onglet _Capacités_. Vous pouvez ainsi gérer certaines capacités qui ne se déclenchent pas forcément suite à l'attaque.
 
 - Options d'attaques avec arguments : ce paramètre est principalement utilisé par le script **COFantasy2**.
   
