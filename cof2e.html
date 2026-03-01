@@ -12402,7 +12402,7 @@ function wounded(values) {
   let condition_affaibli = 0;
   let condition_inconscient = 0;
   let effects = [];
-  if (pv <= 1) {
+  if (pv <= 1 && !hasMODScript(values)) {
     condition_affaibli = 1;
     effects.push("subit la condition Affaibli-e (PV = 1)");
   } 
@@ -12437,7 +12437,11 @@ function wounded(values) {
  * @param {boolean} [buttonClicked=true] - Updated via button
  */
 function updatePVDR(vp, lossOrGain, buttonClicked = true) {
-  getAttrs([ "sheet_type", "pv", "pv_max", "dr", "rd", "notif_pv" ], function (values) {
+  getAttrs([ 
+    "sheet_type", "scriptVersion",
+    "pv", "pv_max", "notif_pv",
+    "dr", "rd" 
+  ], function (values) {
     let pv = intval(values.pv);
     const pvMax = intval(values.pv_max);
     let dr = intval(values.dr);
@@ -12527,7 +12531,7 @@ on("clicked:vigloss-btn clicked:vigheal-btn", function (eventInfo) {
 on("change:pv change:pvig", function (eventInfo) {
   const PV = strval(eventInfo.triggerName) === "pvig" ? "PVIG" : "pv";
   getAttrs([ 
-    "sheet_type", "character_id",
+    "sheet_type", "character_id", "scriptVersion",
     "tokenmod", "token_tint_on", "token_tint", "tkmarker_dead_on", "tkmarker_dead", 
     "pv", "pv_max", "PVIG"
   ], function (values) {
@@ -19778,7 +19782,7 @@ on("change:pv", function(eventInfo) {
   if (strval(eventInfo.sourceType) !== "player")
     return;
   
-  getAttrs([ "pv", "dr" ], function(values) {
+  getAttrs([ "scriptVersion", "pv", "dr" ], function(values) {
     const wounds = wounded(values);
     setAttrs({ 
       PVIG: intval(values.pv),
@@ -19797,7 +19801,7 @@ on("change:pvig", function(eventInfo) {
   if (strval(eventInfo.sourceType) !== "player")
     return;
 
-  getAttrs([ "PVIG", "dr" ], function(values) {
+  getAttrs([ "scriptVersion", "PVIG", "dr" ], function(values) {
     const wounds = wounded({
       pv: intval(values.PVIG),
       dr: values.dr
