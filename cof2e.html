@@ -12406,7 +12406,7 @@ function wounded(values) {
     condition_affaibli = 1;
     effects.push("subit la condition Affaibli-e (PV = 1)");
   } 
-  if (pv === 0) {
+  if (pv === 0 && !hasMODScript(values)) {
     dr = Math.max(dr - 1, 0);
     condition_inconscient = 1;
     effects.push("perd un DR et tombe au sol inconscient-e (PV = 0)");
