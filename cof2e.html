@@ -5102,7 +5102,9 @@
                     <textarea class="one-row" name="attr_equip-props" title="@{equip-props} Propriétés"></textarea>
                     &nbsp;<input type="checkbox" name="attr_equip-atk" title="@{equip-atk} A une attaque" value="1">
                     &nbsp;<span>A une attaque</span>
-                    <input type="hidden" name="attr_atkid" value="">
+                    <input type="hidden" name="attr_equip-atklbl" value="">
+                    <span class="has-script" name="attr_equip-atklbl"></span>
+                    <input type="hidden" name="attr_equip-atkid" value="">
                   </div>
 
                   <div class="d-flex">
@@ -10825,6 +10827,10 @@ function d20Roll(base, d20Roll, cfcs = {}) {
  * @returns {boolean}
  */
 function hasMODScript(values) {
+  if (typeof values.scriptVersion === "boolean")
+    return values.scriptVersion;
+  if (strval(values.scriptVersion) === "true")
+    return true;
   return boolval(values.scriptVersion);
 }
 
@@ -13186,6 +13192,7 @@ on("change:repeating_armes:arme-nom clicked:renum_atk-btn", function(eventInfo) 
       if (renumber && renumbered.length > 0) {
         sendChatMsg("Renumérotation des attaques de " + charName, { template: "", whisper: "gm" });
         renumbered.forEach(r => sendChatMsg(r, { template: "", whisper: "gm" }));
+        updateLabelsInGears();
       }
 
       const gearId = strval(values[rptAttr(rptAtk, "arme-gearid")]);
@@ -19732,6 +19739,37 @@ on("sheet:opened "
   + changeEvent(allPathRanks("rankName"))
   + changeEvent(allPathRanks("rankProps"))
   + changeEvent(nameSeq(9, abilityInfo().pathName)), updateAbilityList);
+
+/**
+ * Update labels in gears
+ */
+async function updateLabelsInGears() {
+
+  const gearIds = await getSectionIDsAsync("equipement");
+  const atkIds = await getSectionIDsAsync("armes");
+
+  getAttrs([
+    ...gearIds.map(id => rptAttr("equipement", "equip-atkid", id)),
+    ...atkIds.map(id => rptAttr("armes", "arme-label", id))
+  ], function(values) {
+
+    const updates = new Map();
+    gearIds
+    .filter(id => strval(values[rptAttr("equipement", "equip-atkid", id)]) !== "")
+    .forEach(id => {
+      const atkId = strval(values[rptAttr("equipement", "equip-atkid", id)]).toLowerCase();
+      const label = strval(values[rptAttr("armes", "arme-label", atkId)]);
+      if (label !== "")
+        updates.set(rptAttr("equipement", "equip-atklbl", id), ":" + label);
+    });
+    if (updates.size > 0)
+      setAttrs(Object.fromEntries(updates));
+
+  });
+
+}
+
+on("sheet:opened", updateLabelsInGears);
 
 /**
  * Sync pv <=> PVIG for token bars
