@@ -1227,6 +1227,42 @@
         <!-- Attaques & Armes -->
         <div class="pc-attacks-subtab">
           
+          <input type="hidden" class="opt-tact" name="attr_optact" value="0">
+          <div class="opt-tact d-inline p2">
+            <div class="d-flex d-flex-between align-self-center">
+              <select class="select-lg" name="attr_tactique" title="@{attr_tactique} Options tactiques">
+                <option value="0">Aucune</option>
+                <option value="1">Attaque assurée (+5, DM/2)</option>
+                <option value="2">Attaque précise (-3, +1d4° DM)</option>
+                <option value="3">Attaque violente (-7, +2d4°)</option>
+              </select>
+              <input type="hidden" class="fav-tact" name="attr_favtact1" value="0">
+              <div class="fav-tact align-self-center">
+                &nbsp;
+                <input type="checkbox" name="attr_favtact1_on" value="1">
+                <input type="hidden" name="attr_favtact1_name">
+                &nbsp;<span name="attr_favtact1_name"></span>
+                <input type="hidden" name="attr_favtact1_id">
+              </div>
+              <input type="hidden" class="fav-tact" name="attr_favtact2" value="0">
+              <div class="fav-tact align-self-center">
+                &nbsp;|&nbsp;
+                <input type="checkbox" name="attr_favtact2_on" value="1">
+                <input type="hidden" name="attr_favtact2_name">
+                &nbsp;<span name="attr_favtact2_name"></span>
+                <input type="hidden" name="attr_favtact2_id">
+              </div>
+              <input type="hidden" class="fav-tact" name="attr_favtact3" value="0">
+              <div class="fav-tact align-self-center">
+                &nbsp;|&nbsp;
+                <input type="checkbox" name="attr_favtact3_on" value="1">
+                <input type="hidden" name="attr_favtact3_name">
+                &nbsp;<span name="attr_favtact3_name"></span>
+                <input type="hidden" name="attr_favtact3_id">
+              </div>
+            </div>
+          </div>
+
           <div class="pc-attacks">
             
             <div class="weapon">
@@ -1434,59 +1470,7 @@
             
             <div class="sheet-col">
               <h4 title="DM non doublés en cas de coup critique">Options Tactiques</h4>
-<!--
-              <div class="pc-tactic">
-                <div>
-                  <input type="radio" name="attr_tactique" value="0" checked>
-                  Aucune
-                </div>
-                <div>
-                </div>
-              </div>
 
-              <div class="pc-tactic">
-                <div>
-                  <input type="radio" name="attr_tactique" value="1">
-                  Attaque assurée
-                </div>
-                <div>
-                  +5 en attaque et DM divisés par 2
-                </div>
-              </div>
-
-              <div class="pc-tactic">
-                <div>
-                  <input type="radio" name="attr_tactique" value="2">
-                  Attaque précise
-                </div>
-                <div>
-                  -3 en attaque et +1d4° DM
-                </div>
-              </div>
-
-              <div class="pc-tactic">
-                <div>
-                  <input type="radio" name="attr_tactique" value="3">
-                  Attaque violente
-                </div>
-                <div>
-                  -7 en attaque et +2d4° DM
-                </div>
-              </div>
-
-              <div class="pc-tactic">
-                <div class="d-flex">
-                  <input type="checkbox" name="attr_tactautre" value="1">
-                  <input type="text" class="align-self-center" name="attr_tactname" placeholder="Autre tactique" value="">
-                </div>
-                <div class="d-flex">
-                  <input type="number" class="align-self-center" name="attr_tactdiv" value="0">
-                  &nbsp;<input type="checkbox" name="attr_tactroll" title="@{tactroll} Avec dé bonus" value="1">
-                  &nbsp;<input type="checkbox" name="attr_tactroll" title="@{tactroll} Avec dé malus" value="2">
-                  <input type="text" class="w-auto align-self-center" name="attr_tactdmdiv" placeholder="DM supplémentaires" value="">
-                </div>
-              </div>
--->
               <div class="pc-tactic">
                 <div class="d-flex">
                   <select class="select-lg" name="attr_tactique" title="@{attr_tactique}">
@@ -5321,6 +5305,10 @@
               <li class="config-check">
                 <input type="checkbox" name="attr_use_skills" value="1">
                 <span>Compétences</span>
+              </li>
+              <li class="config-check">
+                <input type="checkbox" name="attr_optact" value="1">
+                <span>Options tactiques favorites</span>
               </li>
             </ul>
 
@@ -10334,6 +10322,17 @@ function clickedEvent(buttonList, section = "") {
 }
 
 /**
+ * Return list of change/reorder/remove events for repeating section
+ * @param {string} section - Section name
+ * @param {boolean} reorder - Add change event for the reorder attribute
+ * @returns {string}
+ */
+function repeatEvents(section, reorder = false) {
+  const repOrder = reorder ? ` change:_reporder:${section}` : "";
+  return `change:repeating_${section} remove:repeating_${section}${repOrder}`;
+}
+
+/**
  * Return repeating attribute name
  * @param {string} section - section name
  * @param {string} name - attribute name
@@ -12402,6 +12401,7 @@ function wounded(values) {
   let condition_affaibli = 0;
   let condition_inconscient = 0;
   let effects = [];
+
   if (pv <= 1 && !hasMODScript(values)) {
     condition_affaibli = 1;
     effects.push("subit la condition Affaibli-e (PV = 1)");
@@ -13607,7 +13607,7 @@ on("clicked:repeating_armes:attack-btn", async function(eventInfo) {
     tacticIds.forEach(id => {
       if (!boolval(values[rptAttr("tactic", "tact-on", id)]))
         return;
-      const tactName = strval(values[rptAttr("tactic", "tact-name", id)]);
+      const tactName = strval(values[rptAttr("tactic", "tact-name", id)]).replace("*", "").trim();
       const tactBM = intval(values[rptAttr("tactic", "tact-div", id)]);
       if (tactBM !== 0)
         tacticBonus += ` + (${tactBM})[${tactName}]`;
@@ -13962,6 +13962,57 @@ on("change:tactique", function() {
       "-7 en attaque, +2d4° DM",
     ][tactique];
     setAttrs({ tactdesc });
+  });
+});
+
+/**
+ * Display favorite tactics above attacks
+ */
+on("change:optact " + repeatEvents("tactic", true), async function() {
+  const allIds = await getSectionIDsOrderedAsync("tactic");
+  getAttrs([
+    "optact",
+    ...allIds.map(id => rptAttr("tactic", "tact-on", id)),
+    ...allIds.map(id => rptAttr("tactic", "tact-name", id))
+  ], function(values) {
+    if (!boolval(values.optact))
+      return;
+
+    const favs = [];
+    allIds.forEach(id => {
+      if (strval(values[rptAttr("tactic", "tact-name", id)]).endsWith("*"))
+        favs.push(id);
+    });
+    
+    const updates = new Map();
+    [ 1, 2, 3 ].forEach(ix => {
+      updates.set(`favtact${ix}`, 0);
+      updates.set(`favtact${ix}_name`, "");
+      updates.set(`favtact${ix}_id`, "");
+    });
+    
+    let tactIds = [ ...favs, ...allIds ];
+    if (tactIds.length > 0) {
+      tactIds = tactIds.slice(0, 3);
+      tactIds.forEach((id, ix) => {
+        updates.set(`favtact${ ix + 1 }`, 1);
+        updates.set(`favtact${ ix + 1 }_on`, intval(values[rptAttr("tactic", "tact-on", id)]));
+        updates.set(`favtact${ ix + 1 }_name`, strval(values[rptAttr("tactic", "tact-name", id)]).replace("*", ""));
+        updates.set(`favtact${ ix + 1 }_id`, id);
+      });
+    }
+    setAttrs(Object.fromEntries(updates));
+  })
+});
+
+/**
+ * Enable / Disable tactics above attacks
+ */
+on(changeEvent(nameSeq(3, "favtact#_on")), function(eventInfo) {
+  const checked = intval(eventInfo.newValue);
+  const optId = strval(eventInfo.sourceAttribute).split("_")[0] + "_id";
+  getAttrs([ optId ], function(values) {
+    setAttrs({ [rptAttr("tactic", "tact-on", values[optId] )]: checked });
   });
 });
 
@@ -15326,7 +15377,7 @@ function rebuildBuffLists() {
 /**
  * On change of repeating buffs
  */
-on("change:repeating_buffs remove:repeating_buffs", function () {
+on(repeatEvents("buffs", false), function () {
   rebuildBuffLists();
 });
 
@@ -16024,7 +16075,7 @@ SWData.COINS.forEach(coin => {
 /**
  * On changes in equipement list
  */
-on("change:repeating_equipement remove:repeating_equipement", function() {
+on(repeatEvents("equipement", false), function() {
   encumbrance();
 });
 

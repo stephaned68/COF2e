@@ -441,6 +441,8 @@ div.path div.block-title {
 .cofmain input[value="0"].has-script span.has-script,
 .cofmain input[value="0"].has-script .weapon span.has-script,
 .cofmain input[value="0"].has-script + div.ammos,
+.cofmain input[value="0"].opt-tact + div.opt-tact,
+.cofmain input[value="0"].fav-tact + div.fav-tact,
 .cofmain input[value=""].immu-dm + span.immu-dm {
   display: none;
 }
