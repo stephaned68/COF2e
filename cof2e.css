@@ -1060,6 +1060,7 @@ button.spell-concentration span {
   text-decoration: overline;
 }
 
+.post-it textarea.post-it,
 .weapon textarea.one-row,
 .weapon-opt textarea.one-row,
 .abilities .path textarea.one-row,
@@ -1111,6 +1112,15 @@ button.spell-concentration span {
 .npc-actions textarea.one-row:focus,
 .resources textarea.one-row:focus {
   height: 6rem;
+}
+
+.post-it textarea.post-it:focus {
+  height: 4rem;
+}
+
+.post-it input:not([value=""]).post-it + textarea.post-it {
+  border: 2px dotted var(--cof-dark);
+  background-color: papayawhip;
 }
 
 input[value="0"].show-paths-4to9 ~ div.abilities,
