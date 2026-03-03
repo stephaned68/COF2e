@@ -12,6 +12,7 @@ Les préférence et réglages possibles de la fiche sont configurés dans cet on
 - Afficher voies 4-5-6 : Cette option est active par défaut mais elle peut être désactivée pour ne pas afficher les voies 4 à 6 pour des personnages de bas niveau
 - Afficher voies 7-8-9 : Cette option permet d'afficher les voies supplémentaires (voies de prestige)
 - Afficher compétences : Cette option permet d'activer ou de désactiver le sous-onglet _Compétences_ de l'onglet _Capacités_.
+- Options tactiques avec attaques : Cette option permet d'afficher les options tactiques standard et les trois tactiques favorite au-dessus de la liste des attaques.
 
 ### Calcul automatique des PV maximums
 

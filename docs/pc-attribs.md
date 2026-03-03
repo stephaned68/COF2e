@@ -204,6 +204,12 @@ Si l'option _Attaques ciblées_ est active, cliquer sur le bouton d'attaque dema
 
 Le bouton d20 de l'attaque peut être épinglé dans la barre d'actions de Roll20 par glisser-déposer.
 
+## Affichage des options tactiques
+
+Si l'option _Options tactiques favorites_ est active, la liste déroulante des options standard est affichée au-dessus de la liste des attaques, ainsi que jusqu'à 3 des options tactiques spécifiques. Si le personnage en possède plus de 3, la fiche affiche de préférence celle(s) dont le nom se termine par `*` (options favorites), sinon ce sont les trois premières par ordre d'affichage dans le sous-onglet _Options_.
+
+Il est ainsi possible d'activer ou de désactiver des options personnalisées directement depuis le sous-onglet _Attaques_.
+
 # Sous-onglet _Options_
 
 ## Options tactiques
@@ -217,6 +223,8 @@ Pour chaque option, on indique :
 - un bonus ou malus fixe à l'attaque,
 - si le jet d'attaque se fait avec un dé bonus ou un dé malus,
 - d'éventuels DM supplémentaires (qui ne sont pas doublés en cas de coup critique).
+
+Si le nom de l'option se termine par une étoile `*`, elle sera affichée de préférence au-dessus de la liste des attaques si l'option correspondante est active dans la configuration.
 
 On peut activer une ou plusieurs options simultanément. Selon la configuration du paramètre _Options tactiques par round_, elles restent actives tant qu'elles n'ont pas été désactivées manuellement, ou bien elles sont désactivées automatiquement par la fiche après le prochaine attaque.
 
