@@ -1,6 +1,7 @@
 # Options de configuration
 
-Les préférence et réglages possibles de la fiche sont configurés dans cet onglet :
+## Préférences
+
 - Jets
   - Public : Tous les joueurs voient les jets du PJ dans le chat.
   - Chuchotés au MJ : Seul le joueur et le MJ voient les jets (uniquement le MJ pour une fiche de PNJ non partagées aux joueurs).
@@ -9,10 +10,6 @@ Les préférence et réglages possibles de la fiche sont configurés dans cet on
 - Contrôle points de capacités : Cette option permet que la fiche vérifie les dépassements de points de capacité (cf. ci-dessous)
 - Attaques ciblées : Cette option permet de demander au joueur de pointer sur la map la cible d'un jet d'attaque, de comparer le résultat avec la Défense du PJ ou du PNJ lié à ce token, et afficher si l'attaque est un succès ou un échec
 - Options tactiques par round : Cette option permet que la fiche désactive les options tactiques activées par le joueur après chaque attaque
-- Afficher voies 4-5-6 : Cette option est active par défaut mais elle peut être désactivée pour ne pas afficher les voies 4 à 6 pour des personnages de bas niveau
-- Afficher voies 7-8-9 : Cette option permet d'afficher les voies supplémentaires (voies de prestige)
-- Afficher compétences : Cette option permet d'activer ou de désactiver le sous-onglet _Compétences_ de l'onglet _Capacités_.
-- Options tactiques avec attaques : Cette option permet d'afficher les options tactiques standard et les trois tactiques favorite au-dessus de la liste des attaques.
 
 ### Calcul automatique des PV maximums
 
@@ -46,6 +43,13 @@ La fiche décompte pour les capacités possédées (cochées) :
 - Sinon (rang >2) : 2 points
 
 Si le nombre de points de capacités utilisé dépasse le nombre maximum disponble soit 2 x [niveau], un message d'alerte s'affiche dans le chat Roll20.
+
+## Affichage
+
+- Afficher voies 4-5-6 : Cette option est active par défaut mais elle peut être désactivée pour ne pas afficher les voies 4 à 6 pour des personnages de bas niveau
+- Afficher voies 7-8-9 : Cette option permet d'afficher les voies supplémentaires (voies de prestige)
+- Compétences : Cette option permet d'activer ou de désactiver le sous-onglet _Compétences_ de l'onglet _Capacités_.
+- Options tactiques favorites : Cette option permet d'afficher les options tactiques standard et les trois tactiques favorite au-dessus de la liste des attaques.
 
 ## Initiative
 
