@@ -18929,6 +18929,8 @@ function importNPCAttack(sbLine, npcAttrs) {
   npcAttrs.set(rowId + "atktype", "main");
 
   if (cleanText(name).includes("attaque magique")) {
+    npcAttrs.set("atkmag_pnj", bonus);
+    npcAttrs.set("atkmag", bonus);
     npcAttrs.set(rowId + "atktype", "sort");
   }
 
