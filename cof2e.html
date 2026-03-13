@@ -6732,6 +6732,8 @@
                     <option value="2d20kh1">Dé bonus</option>
                     <option value="2d20kl1">Dé malus</option>
                   </select>&nbsp;
+                  <input type="hidden" name="attr_arme-atkbase" value="">
+                  <span class="align-self-center" name="attr_arme-atkbase" title="@{arme-atkbase} Score de base"></span>
                   <input type="number" class="two-digits" name="attr_arme-atk" title="@{arme-atk} Bonus d'attaque" value="">
                 </div>
                 <div class="d-flex d-flex-middle bordered">
@@ -13492,15 +13494,31 @@ on("clicked:repeating_armes:ongoing-btn", function() {
 on("change:repeating_armes:arme-atktype change:repeating_npcarmes:arme-atktype", function(eventInfo) {
   const { section } = rptInfo(eventInfo.triggerName);
   const attr = rptAttr(section, "arme-atktype");
-  getAttrs([ attr, "scriptVersion" ], function(values) {
+  getAttrs([ 
+    attr,
+    "sheet_type", "scriptVersion",
+    "atkbase_pnj", "atkcac_pnj", "atktir_pnj", "atkmag_pnj"
+  ], function(values) {
     const type = strval(values[attr]);
     let reset = {};
     if (type !== "trait")
       reset = { [rptAttr(section, "jet-resid")]: "" };
+    let atkBase = "";
+    if (strval(values.sheet_type) === SWData.SHEET_TYPE.NPC && boolval(values.atkbase_pnj)) {
+      atkBase =({
+        "": "",
+        "main": `${ intval(values.atkcac_pnj) } + `,
+        "jet": `${ intval(values.atktir_pnj) } + `,
+        "trait": `${ intval(values.atktir_pnj) } + `,
+        "sort": `${ intval(values.atkmag_pnj) } + `,
+        "naturel": `${ intval(values.atkcac_pnj) } + `,
+      })[type];
+    }
     setAttrs({
       [rptAttr(section, "arme-main")]: (type === "main" && hasMODScript(values)) ? 1 : 0,
       [rptAttr(section, "arme-jet")]: type === "jet" ? 1 : 0,
       [rptAttr(section, "arme-trait")]: type === "trait" ? 1 : 0,
+      [rptAttr(section, "arme-atkbase")]: atkBase,
       ...reset
     });
   });
@@ -18898,7 +18916,7 @@ function importNPCAttack(sbLine, npcAttrs) {
   special = strval(special);
   if (special !== "")
     special = " + " + special;
-  
+
   const rowId = rptAttr("npcarmes", "arme-", generateRowID());
   npcAttrs.set(rowId + "nom", name);
   npcAttrs.set(rowId + "roll", "1d20");
@@ -18908,6 +18926,30 @@ function importNPCAttack(sbLine, npcAttrs) {
   npcAttrs.set(rowId + "dmtype", "tranchants");
   npcAttrs.set(rowId + "dmdiv", intval(dmdiv));
   npcAttrs.set(rowId + "special", special);
+  npcAttrs.set(rowId + "atktype", "main");
+
+  if (cleanText(name).includes("attaque magique")) {
+    npcAttrs.set(rowId + "atktype", "sort");
+  }
+
+  if (
+    cleanText(name).includes("coup") ||
+    cleanText(name).includes("morsure") ||
+    cleanText(name).includes("griffe")
+  ) {
+    npcAttrs.set(rowId + "atktype", "naturel");
+    switch (true) {
+      case cleanText(name).includes("coup"):
+        npcAttrs.set(rowId + "dmtype", "coup");
+        break;
+      case cleanText(name).includes("morsure"):
+        npcAttrs.set(rowId + "dmtype", "morsure");
+        break;
+      case cleanText(name).includes("griffe"):
+        npcAttrs.set(rowId + "dmtype", "griffes");
+        break;
+    }
+  }
   
   return npcAttrs;
 }

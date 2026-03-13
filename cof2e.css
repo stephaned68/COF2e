@@ -1306,7 +1306,7 @@ input[value="0"].ability-uses + div.ability-uses {
 
 .npc-attacks .weapon {
   display: grid;
-  grid-template-columns: 25px 4.5fr 3fr 1fr 3fr 1fr;
+  grid-template-columns: 25px 4fr 3.5fr 1fr 3fr 1fr;
   gap: 2px;
   margin-bottom: 2px;
 }
