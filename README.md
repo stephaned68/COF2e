@@ -10,6 +10,20 @@ v1.14.0 [Screenshot](cof2e.png)
 
 ## Notes de version
 
+### Version _1.15.0_ (2026-03)
+
+- Fiche de PJ:
+  - Affichage optionnel des options tactiques favorites sur le sous-onglet Attaques
+  - Ajout d'une option de configuration pour les options tactiques favorites
+  - Ajout d'un champ post-it pour saisie de notes "techniques"
+
+- Fiche de PNJ:
+  - Ajout d'un modificateur d'attaque btn:N pour afficher un bouton de chat d'appel de la capacité no N
+  - Possibilité d'envoyer une description anonyme du PNJ dans le chat
+  - Affichage optionnel des capacités favorites sur le sous-onglet Attaques
+  - Ajout d'une option de configuration pour les capacités favorites
+
+
 ### Version _1.14.0_ (2026-01-31)
 
 - Fiche de PJ:

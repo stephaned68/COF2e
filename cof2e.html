@@ -1241,6 +1241,7 @@
                 <option value="2">Atq précise -3,+1d4° DM</option>
                 <option value="3">Atq violente -7,+2d4° DM</option>
               </select>
+
               <input type="hidden" class="fav-tact" name="attr_favtact1" value="0">
               <div class="fav-tact align-self-center">
                 &nbsp;
@@ -1249,21 +1250,41 @@
                 &nbsp;<span name="attr_favtact1_name"></span>
                 <input type="hidden" name="attr_favtact1_id">
               </div>
+
               <input type="hidden" class="fav-tact" name="attr_favtact2" value="0">
               <div class="fav-tact align-self-center">
-                &nbsp;|&nbsp;
+                <span class="p2">|</span>
                 <input type="checkbox" name="attr_favtact2_on" value="1">
                 <input type="hidden" name="attr_favtact2_name">
                 &nbsp;<span name="attr_favtact2_name"></span>
                 <input type="hidden" name="attr_favtact2_id">
               </div>
+
               <input type="hidden" class="fav-tact" name="attr_favtact3" value="0">
               <div class="fav-tact align-self-center">
-                &nbsp;|&nbsp;
+                <span class="p2">|</span>
                 <input type="checkbox" name="attr_favtact3_on" value="1">
                 <input type="hidden" name="attr_favtact3_name">
                 &nbsp;<span name="attr_favtact3_name"></span>
                 <input type="hidden" name="attr_favtact3_id">
+              </div>
+
+              <input type="hidden" class="fav-tact" name="attr_favtact4" value="0">
+              <div class="fav-tact align-self-center">
+                <span class="p2">|</span>
+                <input type="checkbox" name="attr_favtact4_on" value="1">
+                <input type="hidden" name="attr_favtact4_name">
+                &nbsp;<span name="attr_favtact4_name"></span>
+                <input type="hidden" name="attr_favtact4_id">
+              </div>
+
+              <input type="hidden" class="fav-tact" name="attr_favtact5" value="0">
+              <div class="fav-tact align-self-center">
+                <span class="p2">|</span>
+                <input type="checkbox" name="attr_favtact5_on" value="1">
+                <input type="hidden" name="attr_favtact5_name">
+                &nbsp;<span name="attr_favtact5_name"></span>
+                <input type="hidden" name="attr_favtact5_id">
               </div>
             </div>
             <br>
@@ -5447,9 +5468,10 @@
                 <input type="checkbox" name="attr_use_skills" value="1">
                 <span>Compétences</span>
               </li>
-              <li class="config-check" title="Affiche les options tactiques standard et jusqu'à 3 options personnelles sur l'onglet Attaques">
+              <li class="config-check" title="Affiche les options tactiques standard et de 3 à 5 options personnelles sur l'onglet Attaques">
                 <input type="checkbox" name="attr_optact" value="1">
                 <span>Options tactiques favorites</span>
+                <input type="number" name="attr_optact_nb" min="3" max="5" value="3">
               </li>
             </ul>
 
@@ -6670,6 +6692,7 @@
             <button type="action" class="flat-btn img-btn" name="act_description-btn" title="%{description-btn}">
               <h4 class="img-btn">Description</h4>
             </button>
+            <input type="checkbox" name="attr_desc_anonyme" title="Description anonymisée" value="1">
             <textarea name="attr_pnj_desc" class="x-large" title="@{pnj_desc}"></textarea>  
           </div>
   
@@ -6686,6 +6709,74 @@
         <hr>
 
         <div class="npc-attacks-subtab">
+
+          <input type="hidden" class="fav-abilities" name="attr_fav_abilities" value="0">
+          <div class="fav-abilities d-inline p2">
+            <div class="d-flex d-flex-between align-self-center">
+              <h4 class="d-inline">Capacités favorites :&nbsp;</h4>
+
+              <input type="hidden" class="fav-ability" name="attr_favability1" value="0">
+              <div class="d-inline">
+                <button type="action" class="flat-btn img-btn" name="act_fav_ability1-btn" title="%{fav_ability1-btn}">
+                  <input type="hidden" name="attr_favability1_id">
+                  <input type="hidden" name="attr_favability1_name">
+                  <span name="attr_favability1_name"></span>
+                </button>
+                <input type="hidden" name="attr_favability1_freq">
+                <span name="attr_favability1_freq"></span>
+              </div>
+
+              <input type="hidden" class="fav-ability" name="attr_favability2" value="0">
+              <div class="d-inline">
+                <span class="p2">|</span>
+                <button type="action" class="flat-btn img-btn" name="act_fav_ability2-btn" title="%{fav_ability2-btn}">
+                  <input type="hidden" name="attr_favability2_id">
+                  <input type="hidden" name="attr_favability2_name">
+                  <span name="attr_favability2_name"></span>
+                </button>
+                <input type="hidden" name="attr_favability2_freq">
+                <span name="attr_favability2_freq"></span>
+              </div>
+
+              <input type="hidden" class="fav-ability" name="attr_favability3" value="0">
+              <div class="d-inline">
+                <span class="p2">|</span>
+                <button type="action" class="flat-btn img-btn" name="act_fav_ability3-btn" title="%{fav_ability3-btn}">
+                  <input type="hidden" name="attr_favability3_id">
+                  <input type="hidden" name="attr_favability3_name">
+                  <span name="attr_favability3_name"></span>
+                </button>
+                <input type="hidden" name="attr_favability3_freq">
+                <span name="attr_favability3_freq"></span>
+              </div>
+
+              <input type="hidden" class="fav-ability" name="attr_favability4" value="0">
+              <div class="d-inline">
+                <span class="p2">|</span>
+                <button type="action" class="flat-btn img-btn" name="act_fav_ability4-btn" title="%{fav_ability3-btn}">
+                  <input type="hidden" name="attr_favability4_id">
+                  <input type="hidden" name="attr_favability4_name">
+                  <span name="attr_favability4_name"></span>
+                </button>
+                <input type="hidden" name="attr_favability4_freq">
+                <span name="attr_favability4_freq"></span>
+              </div>
+
+              <input type="hidden" class="fav-ability" name="attr_favability5" value="0">
+              <div class="d-inline">
+                <span class="p2">|</span>
+                <button type="action" class="flat-btn img-btn" name="act_fav_ability5-btn" title="%{fav_ability3-btn}">
+                  <input type="hidden" name="attr_favability5_id">
+                  <input type="hidden" name="attr_favability5_name">
+                  <span name="attr_favability5_name"></span>
+                </button>
+                <input type="hidden" name="attr_favability5_freq">
+                <span name="attr_favability5_freq"></span>
+              </div>
+
+            </div>
+            <br>
+          </div>
 
           <div class="npc-attacks">
           
@@ -7251,6 +7342,11 @@
                 <span>Attaques ciblées</span>
               </li>
 
+              <li class="config-check">
+                <input type="checkbox" name="attr_fav_abilities" value="1">
+                <span>Capacités favorites</span>
+              </li>
+
             </ul>
 
             <h4>Règles optionnelles</h4>
@@ -7674,6 +7770,9 @@
                   </summary>
                   <ul>
                     <li>Ajout d'un modificateur d'attaque btn:N pour afficher un bouton de chat d'appel de la capacité no N</li>
+                    <li>Possibilité d'envoyer la description du PNJ de manière anonyme (pas de barre de titre avec son nom)</li>
+                    <li>Affichage optionnel des capacités favorites sur le sous-onglet Attaques</li>
+                    <li>Ajout d'une option de configuration pour les capacités favorites</li>
                   </ul>
                 </details>
               </li>
@@ -8207,14 +8306,18 @@
 <rolltemplate class="sheet-rolltemplate-cof2">
 
   {{^token}}
+  {{#perso}}
   <div class="sheet-rt sheet-rt-header sheet-color-{{color}} sheet-rt-title">
     {{perso}}
   </div>
+  {{/perso}}
   {{/token}}
   {{#token}}
   <div class="sheet-rt sheet-rt-2cols sheet-rt-header sheet-color-{{color}} sheet-rt-title">
     <div class="sheet-rt-token">{{token}}</div>
+    {{#perso}}
     <div>{{perso}}</div>
+    {{/perso}}
   </div>
   {{/token}}
   <div class="sheet-rt sheet-rt-2cols sheet-rt-header sheet-color-{{color}}">
@@ -10820,8 +10923,10 @@ function rollTemplate(props, options = {}) {
         props.tags = options.tags.join(" | ");
     }
   }
+  const anonymous = (options.title) ? boolval(options.title) : true;
+  const title = anonymous ? [] : [ "perso=@{character_name}" ];
   return [
-    "perso=@{character_name}",
+    ...title,
     "color=@{couleur_pj}",
     ...Object.entries(props).map(e => {
       const [ prop, value ] = e;
@@ -14152,15 +14257,17 @@ on("change:tactique", function() {
 /**
  * Display favorite tactics above attacks
  */
-on("change:optact " + repeatEvents("tactic", true), async function() {
+on("change:optact change:optact_nb " + repeatEvents("tactic", true), async function() {
   const allIds = await getSectionIDsOrderedAsync("tactic");
   getAttrs([
     "optact",
+    "optact_nb",
     ...allIds.map(id => rptAttr("tactic", "tact-on", id)),
     ...allIds.map(id => rptAttr("tactic", "tact-name", id))
   ], function(values) {
     if (!boolval(values.optact))
       return;
+    const nbOfOpts = Math.max(3, intval(values.optact_nb));
 
     const favs = [];
     allIds.forEach(id => {
@@ -14169,15 +14276,15 @@ on("change:optact " + repeatEvents("tactic", true), async function() {
     });
     
     const updates = new Map();
-    [ 1, 2, 3 ].forEach(ix => {
+    seq(nbOfOpts).forEach(ix => {
       updates.set(`favtact${ix}`, 0);
       updates.set(`favtact${ix}_name`, "");
       updates.set(`favtact${ix}_id`, "");
     });
     
-    let tactIds = [ ...favs, ...allIds ];
+    let tactIds = [ ...new Set([ ...favs, ...allIds ]) ];
     if (tactIds.length > 0) {
-      tactIds = tactIds.slice(0, 3);
+      tactIds = tactIds.slice(0, nbOfOpts);
       tactIds.forEach((id, ix) => {
         updates.set(`favtact${ ix + 1 }`, 1);
         updates.set(`favtact${ ix + 1 }_on`, intval(values[rptAttr("tactic", "tact-on", id)]));
@@ -14192,7 +14299,7 @@ on("change:optact " + repeatEvents("tactic", true), async function() {
 /**
  * Enable / Disable tactics above attacks
  */
-on(changeEvent(nameSeq(3, "favtact#_on")), function(eventInfo) {
+on(changeEvent(nameSeq(5, "favtact#_on")), function(eventInfo) {
   const checked = intval(eventInfo.newValue);
   const optId = strval(eventInfo.sourceAttribute).split("_")[0] + "_id";
   getAttrs([ optId ], function(values) {
@@ -16896,13 +17003,14 @@ on("clicked:appearance-btn clicked:description-btn", function() {
   getAttrs([
     "sheet_type",
     "character_avatar", "character_token",
-    "apparence", "pnj_desc"
+    "apparence", "pnj_desc", "desc_anonyme"
   ], function(values) {
     
-    const text = strval(values.sheet_type) === SWData.SHEET_TYPE.PC 
-    ? strval(values.apparence) 
+    const text = strval(values.sheet_type) === SWData.SHEET_TYPE.PC
+    ? strval(values.apparence)
     : strval(values.pnj_desc);
-    sendChatMsg(rollTemplate({ text }), { whisper: "" } );
+    const anonymous = boolval(values.desc_anonyme);
+    sendChatMsg(rollTemplate({ text }, { title: !anonymous }), { whisper: "" } );
     
     let avatar = strval(values.character_avatar);
     if (!avatar)
@@ -18768,6 +18876,68 @@ on("clicked:repeating_npcrolls:npcroll-btn", function() {
       alertclass: alertCSS
     });
     sendChatMsg(chatMsg);
+  });
+});
+
+/**
+ * Display favorite abilities
+ */
+
+on("change:fav_abilities " + repeatEvents("npcrolls", true), async function() {
+  const allIds = await getSectionIDsOrderedAsync("npcrolls");
+  getAttrs([
+    "fav_abilities",
+    ...allIds.map(id => rptAttr("npcrolls", "npcroll-name", id)),
+    ...allIds.map(id => rptAttr("npcrolls", "npcroll-uses", id)),
+    ...allIds.map(id => rptAttr("npcrolls", "npcroll-max", id)),
+    ...allIds.map(id => rptAttr("npcrolls", "npcroll-freq", id))
+  ], function(values) {
+    if (!boolval(values.fav_abilities))
+      return;
+
+    const favs = [];
+    allIds.forEach(id => {
+      if (strval(values[rptAttr("npcrolls", "npcroll-name", id)]).endsWith("*"))
+        favs.push(id);
+    });
+    
+    const updates = new Map();
+    seq(5).forEach(ix => {
+      updates.set(`favability${ix}`, 0);
+      updates.set(`favability${ix}_name`, "");
+      updates.set(`favability${ix}_id`, "");
+      updates.set(`favability${ix}_freq`, "");
+    });
+    
+    let abilityIds = [ ...new Set([ ...favs, ...allIds ]) ];
+    if (abilityIds.length > 0) {
+      abilityIds = abilityIds.slice(0, 5);
+      abilityIds.forEach((id, ix) => {
+        updates.set(`favability${ ix + 1 }`, 1);
+        updates.set(`favability${ ix + 1 }_name`, strval(values[rptAttr("npcrolls", "npcroll-name", id)]).replace("*", ""));
+        updates.set(`favability${ ix + 1 }_id`, id);
+        const uses = intval(values[rptAttr("npcrolls", "npcroll-uses", id)]);
+        const umax = intval(values[rptAttr("npcrolls", "npcroll-max", id)]);
+        const freq = strval(values[rptAttr("npcrolls", "npcroll-freq", id)]);
+        if (umax !== 0 && freq !== "")
+          updates.set(`favability${ ix + 1 }_freq`, ` (${uses} / ${umax} par ${freq})`);
+      });
+    }
+    setAttrs(Object.fromEntries(updates));
+  })
+});
+
+/**
+ * Click favorite ability button
+ */
+seq(5).forEach(favbtn => {
+  on(`clicked:fav_ability${favbtn}-btn`, function() {
+    const favId = `favability${favbtn}_id`;
+    getAttrs([ "character_name", favId ], function(values) {
+      const charName = strval(values.character_name);
+      const rollId = strval(values[favId]);
+      sendChatCmd(`%{${charName}|${ rptAttr("npcrolls", "npcroll-btn", rollId) }}`);
+    });
   });
 });
 
