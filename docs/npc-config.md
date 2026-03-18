@@ -7,6 +7,7 @@ Les préférence et réglages possibles de la fiche sont configurés dans cet on
   - Avec token : Le token par défaut du PNJ apparaît dans tous les messages envoyés dans le chat par la fiche.
 - Un seul jet d'attaque, au lieu des deux jets effectués par défaut par la fiche.
 - Attaques ciblées : Cette option permet de pointer sur la map le token cible d'un jet d'attaque, de comparer le résultat avec la Défense du PJ ou du PNJ lié à ce token, et afficher si l'attaque est un succès ou un échec. **Elle n'est pas compatible** avec les attaques multiples dont bénéficient certaines créatures.
+- Capacités favorites : Cette option permet d'afficher jusqu'à 5 capacités favorites au-dessus de la liste des attaques.
 
 ## Règles optionnelles
 

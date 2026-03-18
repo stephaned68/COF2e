@@ -102,6 +102,12 @@ La sélection d'un coup spécial applique les bonus spécifiés à toutes les at
 
 Vous pouvez également activer l'une des options tactiques (attaque assurée, précise ou violente) en cochant la case correspondante. Elles sont mutuellement exclusives.
 
+## Affichage des capacités favorites
+
+Si l'option _Capacités favorites_ est active, jusqu'à 5 capacités sont affichées au-dessus de la liste des attaques sous forme de textes cliquables. Si le PNJ en possède plus de 5, la fiche affiche de préférence celle(s) dont le nom se termine par `*` (capaciéts favorites), sinon ce sont les 5 premières par ordre d'affichage dans le sous-onglet _Capacités_.
+
+Il est ainsi possible de lancer des jets de capacités directement depuis le sous-onglet _Attaques_.
+
 # Sous-onglet _Capacités_
 
 Cette liste contient les capacités spéciales du PNJ. Pour chacune, vous indiquez son nom et sa description, et éventuellement le nombre maximum et la fréquence d'utilisations.

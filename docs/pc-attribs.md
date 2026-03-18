@@ -206,7 +206,7 @@ Le bouton d20 de l'attaque peut être épinglé dans la barre d'actions de Roll2
 
 ## Affichage des options tactiques
 
-Si l'option _Options tactiques favorites_ est active, la liste déroulante des options standard est affichée au-dessus de la liste des attaques, ainsi que jusqu'à 3 des options tactiques spécifiques. Si le personnage en possède plus de 3, la fiche affiche de préférence celle(s) dont le nom se termine par `*` (options favorites), sinon ce sont les trois premières par ordre d'affichage dans le sous-onglet _Options_.
+Si l'option _Options tactiques favorites_ est active, la liste déroulante des options standard est affichée au-dessus de la liste des attaques, ainsi qu'un nombre paramétrable (de 3 à 5) d'options tactiques spécifiques. Si le personnage en possède plus du nombre paramétré, la fiche affiche de préférence celle(s) dont le nom se termine par `*` (options favorites), sinon ce sont les 3 à 5 premières par ordre d'affichage dans le sous-onglet _Options_.
 
 Il est ainsi possible d'activer ou de désactiver des options personnalisées directement depuis le sous-onglet _Attaques_.
 

@@ -49,7 +49,7 @@ Si le nombre de points de capacités utilisé dépasse le nombre maximum disponb
 - Afficher voies 4-5-6 : Cette option est active par défaut mais elle peut être désactivée pour ne pas afficher les voies 4 à 6 pour des personnages de bas niveau
 - Afficher voies 7-8-9 : Cette option permet d'afficher les voies supplémentaires (voies de prestige)
 - Compétences : Cette option permet d'activer ou de désactiver le sous-onglet _Compétences_ de l'onglet _Capacités_.
-- Options tactiques favorites : Cette option permet d'afficher les options tactiques standard et les trois tactiques favorite au-dessus de la liste des attaques.
+- Options tactiques favorites : Cette option permet d'afficher les options tactiques standard et jusqu'à 5 tactiques favorite au-dessus de la liste des attaques.
 
 ## Initiative
 
