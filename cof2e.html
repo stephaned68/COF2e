@@ -818,6 +818,7 @@
               <div class="bordered">
                 <input type="hidden" name="attr_vitesse_cases" value="7" />
                 <input type="hidden" name="attr_vitesse_pas" value="35" />
+                <input type="hidden" name="attr_vitesse_def" value="7" />
                 <input type="number" class="two-digits" name="attr_vitesse" title="@{vitesse} Vitesse de déplacement&#10;1 case = 1,5m = 5 pas" value="10">&nbsp;m&nbsp;
                 (cases : <span name="attr_vitesse_cases" title="Vitesse en cases"></span>,
                 pas : <span name="attr_vitesse_pas" title="Vitesse en pas"></span>)
@@ -1648,9 +1649,16 @@
 
             <div class="sheet-col">
 
+              <h4>Autres conditions particulières</h4>
+
               <div class="d-flex">
-                <input type="checkbox" name="attr_en_selle" title="@{en_selle}" value="1">
+                <input type="checkbox" name="attr_en_selle" title="@{en_selle} Combat monté (p.215)" value="1">
                 <span>&nbsp;En selle</span>
+              </div>
+
+              <div class="d-flex">
+                <input type="checkbox" name="attr_condition_aquatique" title="@{condition_aquatique} Combat en milieu aquatique (p.215)" value="1">
+                <span>&nbsp;En milieu aquatique</span>
               </div>
 
             </div>
@@ -6193,6 +6201,8 @@
                     <li>Affichage optionnel des options tactiques favorites sur le sous-onglet Attaques</li>
                     <li>Ajout d'une option de configuration pour les options tactiques favorites</li>
                     <li>Ajout d'un champ post-it pour saisie de notes "techniques"</li>
+                    <li>Ajout d'un bouton pour le combat à deux armes dans le sous-onglet <em>En main</em></li>
+                    <li>Ajout d'une case pour le combat en milieu aquatique dans le sous-onglet <em>En main</em></li>
                   </ul>
                 </details>
               </li>
@@ -9097,6 +9107,19 @@ const SWData = {
         ]
       },
       {
+        name: "aquatique",
+        label: "Milieu aquatique",
+        emoji: "",
+        lowFantasy: false,
+        effects: {
+          def: -5
+        },
+        description: [
+          "Vitesse divisée par deux",
+          "Dé malus aux attaques"
+        ]
+      },
+      {
         name: "affaibli",
         label: "Affaibli",
         emoji: "&#10084;&#65039;&#8205;&#129657;",
@@ -9238,7 +9261,7 @@ const SWData = {
         description: [
           "Pas d'action au premier round de combat"
         ]
-      }      
+      }   
     ],
     SKILLS: [
       {
@@ -12650,12 +12673,16 @@ on("clicked:maneuver-btn", function() {
 /**
  * On speed/m change, compute feet & square speed
  */
-on("change:vitesse", function () {
-  getAttrs([ "vitesse" ], function(values) {
+on("change:vitesse", function (eventInfo) {
+  const worker = (strval(eventInfo.sourceType) === "sheetworker");
+  getAttrs([ "vitesse", "vitesse_def", "condition_aquatique" ], function(values) {
     const vitesse = numval(values.vitesse);
+    const aquatic = numval(values.condition_aquatique);
+    let vitesse_def = numval(values.vitesse_def);
+    vitesse_def = worker || aquatic ? vitesse_def : vitesse;
     const vitesse_cases = Math.ceil(vitesse / 1.5);
     const vitesse_pas = vitesse_cases * 5;
-    setAttrs({ vitesse_pas, vitesse_cases });
+    setAttrs({ vitesse_def, vitesse_pas, vitesse_cases });
   });
 });
 
@@ -13808,7 +13835,7 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
     "tactique",
     ...rptTacticAll,
     "noms_voies", "rangs_voies",
-    "deux_armes", "en_selle",
+    "deux_armes", "en_selle", "condition_aquatique",
     ...luckButtonAttrs(),
     ...sitModAttrs.map(attr => `modsit_${attr}`),
     ...attackAttrs.map(attr => rptAttr("armes", `arme-${attr}`)),
@@ -13831,6 +13858,7 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
     const restrained = intval(values.condition_immobilise);
     const pathNames = getPathNames(strval(values.noms_voies));
     const mounted = boolval(values.en_selle);
+    const aquatic = boolval(values.condition_aquatique);
     
     // situational modifiers
     let modCover = intval(values.modsit_couvert) * -1;
@@ -13874,6 +13902,10 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
     // combat à deux armes
     let dualWield = strval(values.deux_armes);
     if (atkButton.includes("atkdual") && !modifiers.includes("demalus"))
+      modifiers.push("demalus");
+
+    // combat en milieu aquatique
+    if (aquatic && !modifiers.includes("demalus"))
       modifiers.push("demalus");
 
     const extraDM = [];
@@ -14521,6 +14553,24 @@ on("clicked:deux_armes-btn", function () {
       next_roll: `%{${charName}|${ rptAttr("armes", "atkdual2-btn", rowId) }}` + "~" + new Date().toISOString(),
       deux_armes: "atkdual1-btn" + "atkdual2-btn"
     });
+  });
+});
+
+/**
+ * Toggle aquatic conditions
+ */
+on("change:condition_aquatique", function () {
+  getAttrs([ "condition_aquatique", "vitesse_def", "def_cond" ], function(values) {
+    const aquatic = intval(values.condition_aquatique);
+    const vitesse = Math.floor(intval(values.vitesse_def) / ( aquatic === 1 ? 2 : 1 ));
+    const condition = SWData.PC.CONDITIONS.find(cond => cond.name === "aquatique");
+    let updates = setCondition(
+      aquatic,
+      condition.effects,
+      Object.keys(condition.effects).map(a => `${a}_cond`),
+      values
+    );
+    setAttrs({ vitesse, ...Object.fromEntries(updates) });
   });
 });
 
@@ -17671,7 +17721,7 @@ on("clicked:caract_menu-btn", function () {
 function conditionList(lowFantasy) {
   return SWData.PC.CONDITIONS
     .filter(condition => {
-      if (condition.name === "inconscient")
+      if ([ "inconscient", "aquatique" ].includes(condition.name))
         return;
       if (condition.lowFantasy && !lowFantasy)
         return;
@@ -19905,8 +19955,26 @@ async function migrateSheetToV1_14(sheetType, curVer = { major: 1, minor: 13, pa
     if (migration !== strval(values.migration))
       updates.set("migration", migration);
     
-    if (updates.size > 0) 
+    if (updates.size > 0)
       setAttrs(Object.fromEntries(updates));
+  });
+}
+
+/**
+ * Migrate to Version 1.15.0
+ * @param {string} sheetType - type of sheet
+ * @param {{ major: number, minor: number, patch: number }} curVer - semantic version parts
+ */
+function migrateSheetToV1_15(sheetType, curVer = { major: 1, minor: 14, patch: 0 }) {
+  if (sheetType !== SWData.SHEET_TYPE.PC)
+    return;
+
+  getAttrs([ "vitesse" ], function (values) {
+    const updates = new Map();
+
+    updates.set("vitesse_def", intval(values.vitesse));
+
+    setAttrs(Object.fromEntries(updates));
   });
 }
 
@@ -19929,6 +19997,9 @@ function migrateSheet(sheetType, curVer) {
 
   if (curVer.major === 1 && curVer.minor < 14)
     migrateSheetToV1_14(sheetType, curVer);
+
+  if (curVer.major === 1 && curVer.minor < 15)
+    migrateSheetToV1_15(sheetType, curVer);
 
   return;
 }
