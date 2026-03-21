@@ -1314,6 +1314,8 @@
                 <input type="hidden" name="attr_arme-new" value="1">
                 <div>
                   <input type="hidden" name="attr_attack-btn" value="">
+                  <button type="action" class="hidden" name="act_atkdual1-btn"></button>
+                  <button type="action" class="hidden" name="act_atkdual2-btn"></button>
                   <button type="action" class="hidden" name="act_attack-btn">
                     <span class="d20-btn">t</span>
                   </button>
@@ -1622,6 +1624,24 @@
                   <select name="attr_main_autre" class="select-lg hand-other">
                   </select>
                 </div>
+
+              </div>
+
+              <input type="hidden" class="pc-dual" name="attr_dual_wield" value="0">
+              <div class="pc-hands pc-dual">
+
+                <div>
+                  <input type="hidden" name="attr_deux_armes-btn" value="">
+                  <button type="action" class="hidden" name="act_deux_armes-btn"/>
+                  <input type="hidden" name="attr_deux_armes_btn" value="0">
+                  <button type="roll" class="flat-btn" name="roll_deux_armes" title="%{deux_armes-btn} Attaque main secondaire" value="@{deux_armes-btn}"/>
+                </div>
+
+                <div class="block-title">
+                  <span class="align-self-center">Combat à Deux Armes (L)</span>
+                  <input type="hidden" name="attr_deux_armes" value="">
+                </div>
+
               </div>
               
             </div>
@@ -10801,9 +10821,16 @@ function diceRoll(roll) {
 function sendChatCmd(chatCmd) {
   startRoll(chatCmd, roll => {
     if (chatCmd.startsWith("!"))
-      console.log(chatCmd);
+      console.log(chatCmd, roll);
     finishRoll(roll.rollId);
   });
+}
+
+async function sendChatCmdAsync(chatCmd) {
+  const roll = await startRoll(chatCmd);
+  if (chatCmd.startsWith("!"))
+    console.log(chatCmd, roll);
+  finishRoll(roll.rollId);
 }
 
 /**
@@ -13738,8 +13765,9 @@ function maneuversRollQuery(cha) {
 /**
  * Roll an attack in chat
  */
-on("clicked:repeating_armes:attack-btn", async function(eventInfo) {
+on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), async function(eventInfo) {
   const { rowId: attackId } = rptInfo(eventInfo.triggerName);
+  const { attribute: atkButton } = rptInfo(eventInfo.triggerName);
   const section = "repeating_armes_arme-";
   const rptThrown = "repeating_armes_jet-";
   const rptOngoing = "repeating_armes_etendu-";
@@ -13780,7 +13808,7 @@ on("clicked:repeating_armes:attack-btn", async function(eventInfo) {
     "tactique",
     ...rptTacticAll,
     "noms_voies", "rangs_voies",
-    "en_selle",
+    "deux_armes", "en_selle",
     ...luckButtonAttrs(),
     ...sitModAttrs.map(attr => `modsit_${attr}`),
     ...attackAttrs.map(attr => rptAttr("armes", `arme-${attr}`)),
@@ -13842,6 +13870,11 @@ on("clicked:repeating_armes:attack-btn", async function(eventInfo) {
 
     let atkTitle = "Attaque";
     const allTags = getAllTags(values);
+
+    // combat à deux armes
+    let dualWield = strval(values.deux_armes);
+    if (atkButton.includes("atkdual") && !modifiers.includes("demalus"))
+      modifiers.push("demalus");
 
     const extraDM = [];
 
@@ -14193,7 +14226,7 @@ on("clicked:repeating_armes:attack-btn", async function(eventInfo) {
       atkProps.fumble = fumbleEffect;
     }
 
-    if (boolval(values.cfg_cible)) {
+    if (boolval(values.cfg_cible) && !atkButton.includes("atkdual")) {
       atkProps.tohit = SWData.settings.tokens.target.def;
       atkProps.target = SWData.settings.tokens.target.name;
       atkProps.targetname = `[[0[${atkProps.target}] ]]`;
@@ -14202,8 +14235,11 @@ on("clicked:repeating_armes:attack-btn", async function(eventInfo) {
     const chatMsg = rollTemplate(atkProps, { tags: allTags });
     sendChatMsg(chatMsg, rollOptions);
     
-    if (tactics > 0)
-      setAttrs({ tactique: "0" });
+    dualWield = dualWield.replace(atkButton, "");
+    let updates = { deux_armes: dualWield };
+    if (dualWield === "" && tactics > 0)
+      updates = { ...updates, tactique: "0" };
+    setAttrs(updates);    
     if (tactRound) {
       const reset = new Map();
       tacticIds.map(id => rptAttr("tactic", "tact-on", id)).forEach(attr => {
@@ -14439,6 +14475,23 @@ on("change:main_princ change:main_autre", function(eventInfo) {
 });
 
 /**
+ * Dual wielding combat
+ */
+on("change:main_princ change:main_autre", function() {
+  getAttrs([ "main_princ", "main_autre" ], async function(values) {
+    const mainHand = strval(strval(values.main_princ).split("~")[1]);
+    const offHand = strval(strval(values.main_autre).split("~")[1]);
+    let dual_wield = 0;
+    if (mainHand !== "" && offHand !== "") {
+      const offDM = await getAttrsAsync([ rptAttr("armes", "arme-dm", offHand) ]);
+      const dm = strval(strval(offDM[Object.keys(offDM)[0]]).split("/")[0]);
+      dual_wield = dm.toLowerCase().match(/1[dD][2346]/) ? 1 : 0;
+    }
+    setAttrs({ dual_wield });
+  });
+});
+
+/**
  * Process in-hand attack button
  */
 on("clicked:main_princ-btn clicked:main_autre-btn", function (eventInfo) {
@@ -14449,8 +14502,25 @@ on("clicked:main_princ-btn clicked:main_autre-btn", function (eventInfo) {
     const [ rowId ] = strval(values[hand]).split("~").slice(1);
     if (!rowId)
       return;
-    const attack = `%{${charName}|${ rptAttr("armes", "attack-btn", rowId) }`;
+    const attack = `%{${charName}|${ rptAttr("armes", "attack-btn", rowId) }}`;
     sendChatCmd(attack);
+  });
+});
+
+/**
+ * Process dual wield attack button
+ */
+on("clicked:deux_armes-btn", function () {
+  getAttrs([ "character_name", "main_princ", "main_autre" ], function(values) {
+    const charName = strval(values.character_name);
+    let rowId;
+    [ rowId ] = strval(values.main_princ).split("~").slice(1);
+    sendChatCmd(`%{${charName}|${ rptAttr("armes", "atkdual1-btn", rowId) }}`);
+    [ rowId ] = strval(values.main_autre).split("~").slice(1);
+    setAttrs({ 
+      next_roll: `%{${charName}|${ rptAttr("armes", "atkdual2-btn", rowId) }}` + "~" + new Date().toISOString(),
+      deux_armes: "atkdual1-btn" + "atkdual2-btn"
+    });
   });
 });
 
@@ -20105,6 +20175,7 @@ on("sheet:opened change:character_name", function() {
       "caract_select",
       "main_princ",
       "main_autre",
+      "deux_armes",
       ...allRanks.filter(owned => boolval(values[owned]))
     ].map(b => [ `${b}-btn`, `%{${charName}|${b}-btn}` ]));
 
