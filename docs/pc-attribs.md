@@ -289,9 +289,9 @@ Selon qu'une arme est équipée ou non, un bouton _d20_ apparaît en regard de c
 
 De plus, selon le type d'armes actuellement en main, une troisième ligne avec un bouton _d20_ peut apparaître pour effectuer deux attaques avec les règles de combat à deux armes (règles p215).
 
-**NB** : _Pour des raisons techniques propres à Roll20, l'utilisation de ce bouton est incompatible avec l'option **Attaques ciblées**. Celles-ci sont donc temporairement désactivées et la cible des deux attaques n'est pas demandée par la fiche._
+**NB** : _Pour des raisons techniques propres à Roll20, l'utilisation de ce bouton est incompatible avec l'option **Attaques ciblées**. Celle-ci est donc temporairement désactivée et la cible des deux attaques n'est pas demandée par la fiche._
 
-On peut également indiquer dans ce sous-onglet si le personnage est en selle.
+On peut également indiquer dans ce sous-onglet si le personnage est en selle, et s'il combat en milieu aquatique.
 
 # Sous-onglet _Résistances_
 
