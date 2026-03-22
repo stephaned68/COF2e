@@ -48,3 +48,7 @@ Vous pouvez aussi créer deux options distinctes `Dans le mille (A)` et `Dans le
 ## Modificateurs situationnels
 
 Cette section permet de modifier les jets d'attaque à distance en fonction des circonstances sélectionnées. Est considérée comme _à distance_ une attaque utilisant le score d'attaque à distance et ayant une portée indiquée. _Cela évite d'appliquer ces modificateurs à une attaque au contact utilisant l'AGI (ex : barde, voleur)_.
+
+---
+
+[Retour]({{ site.baseurl }}/pc-attribs)
