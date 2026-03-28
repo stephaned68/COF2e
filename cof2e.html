@@ -11457,7 +11457,6 @@ function getPathsWithRank(search, values) {
   return withRank.length;
 }
 
-
 /**
  * Return list of attributes for fear conditions
  * @returns {string[]}
@@ -13230,6 +13229,28 @@ on("clicked:devol-btn", function() {
 });
 
 /**
+ * Return condition object info
+ * @param {string} name - Name of condition
+ * @returns { { 
+ *  name: string,
+ *  label: string,
+ *  emoji: string,
+ *  lowFantasy: boolean,
+ *  effects: {
+ *    def?: number,
+ *    init?: number,
+ *    atkcac?: number,
+ *    atktir?: number,
+ *    atkmag?: number
+ *  }
+ *  description: string[]
+ *  } }
+ */
+function getConditionInfo(name) {
+  return SWData.PC.CONDITIONS.find(cond => cond.name === name) || {};
+}
+
+/**
  * Return a Map of attribute buffs values
  * @param {number} hasCondition - set/unset condition flag
  * @param {object} effects - key/value pairs of attributes and debuffs
@@ -13314,10 +13335,10 @@ function displayCondition(label, effects, description, notify) {
  */
 SWData.PC.CONDITIONS.forEach(condition => {
   const { name, label, effects, description } = condition;
+  const buffs = Object.keys(effects).map(attribute => `${attribute}_cond`);
 
   // Set/Unset conditions
   on(`clicked:${name}-icon`, function () {
-    const buffs = Object.entries(effects).map(([ attribute ]) => `${attribute}_cond`);
     getAttrs([ "conditions_markers", `condition_${name}`, ...buffs ], function(values) {
       const [ markers, attribute, ...buffs ] = Object.keys(values);
       const hasCondition = 1 - intval(values[attribute]);
@@ -14560,16 +14581,12 @@ on("clicked:deux_armes-btn", function () {
  * Toggle aquatic conditions
  */
 on("change:condition_aquatique", function () {
-  getAttrs([ "condition_aquatique", "vitesse_def", "def_cond" ], function(values) {
+  const { effects } = getConditionInfo("aquatique");
+  const buffs = Object.keys(effects).map(attr => `${attr}_cond`);
+  getAttrs([ "condition_aquatique", "vitesse_def", ...buffs ], function(values) {
     const aquatic = intval(values.condition_aquatique);
     const vitesse = Math.floor(intval(values.vitesse_def) / ( aquatic === 1 ? 2 : 1 ));
-    const condition = SWData.PC.CONDITIONS.find(cond => cond.name === "aquatique");
-    let updates = setCondition(
-      aquatic,
-      condition.effects,
-      Object.keys(condition.effects).map(a => `${a}_cond`),
-      values
-    );
+    const updates = setCondition(aquatic, effects, buffs, values);
     setAttrs({ vitesse, ...Object.fromEntries(updates) });
   });
 });
