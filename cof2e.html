@@ -132,7 +132,7 @@
     <div>
       <img
         class="logo"
-        title="Version 1.15.0 - 02/2026"
+        title="Version 1.15.0 - 04/2026"
         src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cof2e_logo.jpg"
       />
       <input type="hidden" class="d20roll-btns" name="attr_cfg_d20roll" value="0">
@@ -1241,6 +1241,7 @@
                 <option value="1">Atq assurée +5,DM/2</option>
                 <option value="2">Atq précise -3,+1d4° DM</option>
                 <option value="3">Atq violente -7,+2d4° DM</option>
+                <option value="4">Tir visé (L),+PER DM</option>
               </select>
 
               <input type="hidden" class="fav-tact" name="attr_favtact1" value="0">
@@ -1436,7 +1437,7 @@
                     <input class="two-digits" type="number" name="attr_arme-usure" title="@{arme-usure} Usure">
                   </div>
                   <div class="bordered">
-                    <input type="text" name="attr_arme-atkmods" placeholder="Modificateurs d'attaque" title="@{arme-atkmods} Modificateurs séparés par des virgules&#10; deBonus: avec dé bonus&#10; deMalus: avec dé malus&#10; auto: réussite automatique&#10; choc: peut faire des attaques non léthales sans malus&#10; explodeMax: dés de dégâts explosifs&#10; pasDeDmg: l'attaque ne fait pas de DM&#10; poudre: arme à poudre&#10; reroll1: relance les 1 sur les dés de DM (:1 = une seule fois)&#10; tempDmg: fait toujours des attaques non léthales&#10; zone: sort de zone&#10; magie: bonus att.+DM&#10; magieAtt: bonus att.&#10; magieDmg: bonus DM&#10; affutee: critiques améliorés&#10; fleau: bonus DM contre créature&#10; element: bonus DM élémentaires/substance&#10; manoeuvres: attaques spéciales" value="">
+                    <input type="text" name="attr_arme-atkmods" placeholder="Modificateurs d'attaque" title="@{arme-atkmods} Modificateurs séparés par des virgules&#10; deBonus: avec dé bonus&#10; deMalus: avec dé malus&#10; auto: réussite automatique&#10; choc: peut faire des attaques non léthales sans malus&#10; explodeMax: dés de dégâts explosifs&#10; pasDeDmg: l'attaque ne fait pas de DM&#10; poudre: arme à poudre&#10; reroll1: relance les 1 sur les dés de DM (:1 = une seule fois)&#10; tempDmg: fait toujours des attaques non léthales&#10; zone: sort de zone&#10; magie: bonus att.+DM&#10; magieAtt: bonus att.&#10; magieDmg: bonus DM&#10; affutee: critiques améliorés&#10; fleau: bonus DM contre créature&#10; element: bonus DM élémentaires/substance&#10; fumble: Seuil d'échec critique&#10; manoeuvres: attaques spéciales" value="">
                   </div>
                   <div class="bordered">
                     <input type="checkbox" name="attr_arme-active" title="@{arme-active} Attaque active" value="1" checked>
@@ -1508,6 +1509,7 @@
                     <option value="1">Attaque assurée (+5, DM/2)</option>
                     <option value="2">Attaque précise (-3, +1d4° DM)</option>
                     <option value="3">Attaque violente (-7, +2d4°)</option>
+                    <option value="4">Tir visé (L, +PER DM)</option>
                   </select>
                 </div>
                 <div class="d-flex align-self-center">
@@ -5628,6 +5630,22 @@
               </ul>
             </details>
 
+            <details>
+              <summary>
+                <h4><input type="checkbox" name="attr_cfg_companion" value="1">&nbsp;Compagnon du joueur</h4>
+              </summary>
+              <ul>
+                <li class="config-check">
+                  <input type="checkbox" name="attr_cfg_comp_ppl" value="1">
+                  <span>Autoriser les peuples</span>
+                </li>
+                <li class="config-check">
+                  <input type="checkbox" name="attr_cfg_comp_prof" value="1">
+                  <span>Autoriser les profils</span>
+                </li>
+              </ul>
+            </details>
+
           </div>
 
           <div class="sheet-col">
@@ -6195,14 +6213,21 @@
               <li>
                 <details>
                   <summary>
-                    <strong>Version 1.15.0</strong> (2026-03)
+                    <strong>Version 1.15.0</strong> (2026-04)
                   </summary>
                   <ul>
                     <li>Affichage optionnel des options tactiques favorites sur le sous-onglet Attaques</li>
                     <li>Ajout d'une option de configuration pour les options tactiques favorites</li>
-                    <li>Ajout d'un champ post-it pour saisie de notes "techniques"</li>
+                    <li>Ajout d'un champ post-it pour saisie de notes</li>
                     <li>Ajout d'un bouton pour le combat à deux armes dans le sous-onglet <em>En main</em></li>
                     <li>Ajout d'une case pour le combat en milieu aquatique dans le sous-onglet <em>En main</em></li>
+                    <li>Prise en compte des armes maîtrisées par profil</li>
+                    <li><strong>Compagnon du Joueur</strong>
+                      <ul>
+                        <li>Ajout des peuples optionnels et des profils</li>
+                        <li>Prise en compte des bonus de manoeuvres des armes</li>
+                      </ul>
+                    </li>
                   </ul>
                 </details>
               </li>
@@ -8402,6 +8427,7 @@
     {{/broll}}
   {{/powder}}
   {{#dm}}
+  {{#rollTotal() computed::hasdm 1}}
   <div class="sheet-rt sheet-rt-2cols">
     <div>Dommages</div>
     <div>
@@ -8422,8 +8448,10 @@
     <div>{{dmextra}}</div>
     {{/dmextra}}
   </div>
+  {{/rollTotal() computed::hasdm 1}}
   {{/dm}}
   {{#dmcrit}}
+  {{#rollTotal() computed::hasdm 1}}
     {{#rollWasCrit() roll}}
     <div class="sheet-rt sheet-rt-2cols">
       <div><span class="sheet-rt-critical">CRITIQUE !</span></div>
@@ -8440,6 +8468,7 @@
       </div>
     </div>
     {{/rollWasCrit() broll}}
+  {{/rollTotal() computed::hasdm 1}}
   {{/dmcrit}}
   {{#roll}}
     {{#rollTotal() computed::critsuccess 1}}
@@ -8577,6 +8606,10 @@ const SWData = {
       "cfg_usure",
       "cfg_use_fear"
     ],
+    companion: [
+      "cfg_comp_ppl",
+      "cfg_comp_prof"
+    ],
     tokens: {
       size: 70,
       target: {
@@ -8657,9 +8690,11 @@ const SWData = {
       Aventuriers: [
         { 
           value: "Arquebusier",
+          companion: false,
           pv: 4,
           atks: { cac: 2, tir: 3, mag: 0 },
           skills: "artisanat,athletisme,equitation,intimidation,natation,sciences,vigilance",
+          weapons: [ "cac-1m", "tir", "poudre" ],
           gear: [
             {
               name: "Pétoire",
@@ -8681,9 +8716,11 @@ const SWData = {
         },
         { 
           value: "Barde",
+          companion: false,
           pv: 4,
           atks: { cac: 2, tir: 1, mag: 2 },
           skills: "acrobaties,artisanat,athletisme,commerce,connaissances,divertissement,empathie,equitation,intimidation,natation, persuasion, religion, renseignement,tromperie",
+          weapons: [ "cac-1m" ],
           gear : [
             {
               name: "Rapière",
@@ -8704,10 +8741,42 @@ const SWData = {
           ]
         },
         { 
+          value: "Caravanier",
+          companion: true,
+          pv: 4,
+          atks: { cac: 0, tir: 0, mag: 0 },
+          skills: "",
+          weapons: [ "cac-1m", "tir" ],
+          gear : [
+            {
+              name: "Epée courte",
+              number: "1",
+            },
+            {
+              name: "Arc court",
+              number: "1",
+            },
+            {
+              name: "Dague",
+              number: "1",
+            },
+            {
+              name: "Cuir renforcé",
+              number: "1",
+            },
+            {
+              name: "Petit bouclier",
+              number: "1",
+            }
+          ]
+        },
+        { 
           value: "Rôdeur",
+          companion: false,
           pv: 4,
           atks: { cac: 2, tir: 3, mag: 0 },
           skills: "acrobaties,artisanat,athletisme,discretion,equitation,escalade,medecine,natation,survie,vigilance",
+          weapons: [ "cac-1m", "tir" ],
           gear: [
             {
               name: "Epée longue",
@@ -8729,9 +8798,11 @@ const SWData = {
         },
         { 
           value: "Voleur",
+          companion: false,
           pv: 4,
           atks: { cac: 2, tir: 2, mag: 1 }, 
           skills: "acrobaties,artisanat,athletisme,commerce,discrétion,escalade,effraction,intimidation,natation,persuasion,renseignement,tromperie,vigilance",
+          weapons: [ "cac-1m", "tir" ],
           gear: [
             {
               name: "Rapière",
@@ -8759,9 +8830,11 @@ const SWData = {
       Combattants: [
         { 
           value: "Barbare",
+          companion: false,
           pv: 5,
           atks: { cac: 3, tir: 2, mag: 0 },
           skills: "artisanat,athletisme,equitation,escalade,intimidation,natation,survie,vigilance",
+          weapons: [ "cac-1m", "cac-2m", "arc", "sarbacane", "bola" ],
           gear: [
             {
               name: "Hache à deux mains",
@@ -8783,9 +8856,11 @@ const SWData = {
         },
         { 
           value: "Chevalier",
+          companion: false,
           pv: 5,
           atks: { cac: 3, tir: 0, mag: 2 },
           skills: "athlétisme,connaissance,equitation,intimidation,natation,persuasion,religion",
+          weapons: [ "cac-1m", "cac-2m" ],
           gear: [
             {
               name: "Epée longue",
@@ -8807,9 +8882,11 @@ const SWData = {
         },
         { 
           value: "Guerrier",
+          companion: false,
           pv: 5,
           atks: { cac: 3, tir: 2, mag: 0 },
           skills: "artisanat,athletisme,equitation,intimidation,natation",
+          weapons: [ "cac-1m", "cac-2m", "tir" ],
           gear: [
             {
               name: "Epée longue",
@@ -8833,13 +8910,45 @@ const SWData = {
             }
           ]
         },
+        { 
+          value: "Parangon",
+          companion: true,
+          pv: 5,
+          atks: { cac: 0, tir: 0, mag: 0 },
+          skills: "",
+          weapons: [ "cac-1m", "cac-2m", "tir" ],
+          gear: [
+            {
+              name: "Sabre droit",
+              number: "1",
+            },
+            {
+              name: "Sabre d'entraînement",
+              number: "1",
+            },
+            {
+              name: "Dague",
+              number: "1",
+            },
+            {
+              name: "Arc court",
+              number: "1",
+            },
+            {
+              name: "Chemise de mailles",
+              number: "1",
+            }
+          ]
+        },
       ],
       Mages: [
         { 
           value: "Ensorceleur",
+          companion: false,
           pv: 3,
           atks: { cac: 1, tir: 1, mag: 3 },
           skills: "artisanat,connaissance,occultisme,sciences",
+          weapons: [ "baton", "dague" ],
           gear: [
             {
               name: "Bâton ferré",
@@ -8853,9 +8962,11 @@ const SWData = {
         },
         { 
           value: "Forgesort",
+          companion: false,
           pv: 3,
           atks: { cac: 2, tir: 0, mag: 3 },
           skills: "artisanat,connaissance,occultisme,sciences",
+          weapons: [ "baton", "dague", "marteau", "arbalete legere" ],
           gear: [
             {
               name: "Bâton ferré",
@@ -8873,9 +8984,11 @@ const SWData = {
         },
         { 
           value: "Magicien",
+          companion: false,
           pv: 3,
           atks: { cac: 1, tir: 1, mag: 3 },
           skills: "artisanat,connaissance,occultisme,sciences",
+          weapons: [ "baton", "dague" ],
           gear: [
             {
               name: "Bâton ferré",
@@ -8892,10 +9005,34 @@ const SWData = {
           ]
         },
         { 
+          value: "Primaliste",
+          companion: true,
+          pv: 4,
+          atks: { cac: 0, tir: 0, mag: 0 },
+          skills: "",
+          weapons: [ "baton", "dague", "fronde", "gourdin", "hachette", "marteau" ],
+          gear: [
+            {
+              name: "Marteau",
+              number: "1"
+            },
+            {
+              name: "Fronde",
+              number: "1"
+            },
+            {
+              name: "Cuir simple",
+              number: "1"
+            }
+          ]
+        },
+        { 
           value: "Sorcier",
+          companion: false,
           pv: 3,
           atks: { cac: 1, tir: 1, mag: 3 },
           skills: "artisanat,connaissance,occultisme,sciences",
+          weapons: [ "baton", "dague" ],
           gear: [
             {
               name: "Bâton ferré",
@@ -8914,10 +9051,34 @@ const SWData = {
       ],
       Mystiques: [
         { 
+          value: "Chamane",
+          companion: true,
+          pv: 4,
+          atks: { cac: 0, tir: 0, mag: 0 },
+          skills: "",
+          weapons: [ "arc court", "baton", "dague", "epieu", "fronde", "lance", "marteau", "masse" ],
+          gear: [
+            {
+              name: "Masse",
+              number: "1",
+            },
+            {
+              name: "Dague",
+              number: "1",
+            },
+            {
+              name: "Cuir simple",
+              number: "1",
+            }
+          ]
+        },
+        { 
           value: "Druide",
+          companion: false,
           pv: 4,
           atks: { cac: 2, tir: 1, mag: 2 },
           skills: "artisanat,athletisme,connaissance,discretion,equitation,empathie,medecine,natation,religion,survie,vigilance",
+          weapons: [ "baton", "dague", "epieu", "javelot", "arc court" ],
           gear: [
             {
               name: "Epieu",
@@ -8939,9 +9100,11 @@ const SWData = {
         },
         { 
           value: "Moine",
+          companion: false,
           pv: 4,
           atks: { cac: 3, tir: 0, mag: 2 },
           skills: "acrobaties,artisanat,athletisme,connaissance,discretion,empathie,escalade,medecine,natation,religion,survie,vigilance",
+          weapons: [ "cac-1m", "cac-2m" ],
           gear: [
             {
               name: "Bâton ferré",
@@ -8951,9 +9114,11 @@ const SWData = {
         },
         { 
           value: "Prêtre",
+          companion: false,
           pv: 4,
           atks: { cac: 2, tir: 0, mag: 3 },
           skills: "artisanat,athletisme,connaissance,empathie,equitation,intimidation,medecine,persuasion,religion,survie",
+          weapons: [ "baton", "cac-1m", "contondant" ],
           gear: [
             {
               name: "Marteau de guerre",
@@ -8970,6 +9135,30 @@ const SWData = {
           ]
         },
       ],
+      Psionique: [
+        {
+          value: "Psionique",
+          companion: true,
+          pv: 4,
+          atks: { cac: 0, tir: 0, mag: 3 },
+          skills: [],
+          weapons: [ "cac-1m-lg", "cac-2m-lg", "tir-lg" ],
+          gear: [
+            {
+              name: "Epée courte",
+              number: "1"
+            },
+            {
+              name: "Dague",
+              number: "1"
+            },
+            {
+              name: "Cuir renforcé",
+              number: "1"
+            }
+          ]
+        }
+      ]
     },
     STATS: [ 
       "agilité",
@@ -9029,19 +9218,19 @@ const SWData = {
           Si la cible est acculée (mur, précipice, adversaire), elle perd autant en DEF pour 1 round.
           Cette action peut être précédée d’un déplacement de 10 m en direction de la cible.`
         },
-        { 
+        {
           name: "Bloquer°",
           mod: "-5",
           effect: `La cible est immobilisée pendant 1 round (dé malus en attaque et pas de déplacement).
           Contre une créature de NC inférieur au niveau de l’attaquant, ce dernier peut maintenir sa prise à chaque round qui suit en emportant un test opposé de FOR (action limitée, modifiée en cas de différence de taille).`
         },
-        { 
+        {
           name: "Désarmer°",
           mod: "-5",
           effect: `La cible laisse tomber son arme au sol. 
           Elle peut la ramasser avant tout le monde en sacrifiant son prochain tour (elle n’agira pas).`
         },
-        { 
+        {
           name: "Aveugler",
           mod: "-5",
           effect: `La cible est aveuglée pendant 1 round (‑5 en attaque au contact et en DEF, ‑10 contre une cible à distance).`
@@ -9052,17 +9241,17 @@ const SWData = {
           effect: `La cible est renversée (‑5 en DEF et action d’attaque pour se relever). 
           Cette action peut être précédée d’un déplacement de 10 m en direction de la cible.`
         },
-        { 
+        {
           name: "Renverser° (quad.:-10)",
           mod: "-10",
           effect: `La cible est renversée (‑5 en DEF et action d’attaque pour se relever). 
           Cette action peut être précédée d’un déplacement de 10 m en direction de la cible.`
         },
-        { 
+        {
           name: "Etourdir°",
           mod: "-10",
           effect: `La cible est étourdie pendant 1 round (pas d’action et ‑5 en DEF). 
-          Si cette manoeuvre est réussie contre une cible surprise de NC inférieur au niveau de l’attaquant, elle doit réussir un test de CON difficulté 10 (15 si l’attaquant utilise une arme contondante) ou être assommée (inconsciente) pour 1d6 min.`
+          Si cette manoeuvre est réussie contre une cible surprise de NC inférieur au niveau de l’attaquant, elle doit réussir un test de CON difficulté 10 (15 si l’attaquant utilise une arme contondante) ou être assommée (inconsciente) pour [[1d6]] min.`
         },
       ]
     },
@@ -9453,7 +9642,8 @@ const SWData = {
       props: [
         "dm-2m: 1d4",
         "type-dm: contondants",
-      ]
+      ],
+      tags: [ "baton", "cac-2m", "cac-2m-lg", "contondant" ]
     },
     {
       name: "Bâton ferré",
@@ -9461,7 +9651,16 @@ const SWData = {
       props: [
         "dm-2m: 1d6",
         "type-dm: contondants",
-      ]
+      ],
+      tags: [ "baton", "cac-2m", "cac-2m-lg", "contondant" ]
+    },
+    {
+      name: "Bola",
+      altname: "",
+      props: [
+        "portee: 10"
+      ],
+      tags: [ "bola", "tir", "tir-lg" ]
     },
     {
       name: "Dague",
@@ -9470,7 +9669,8 @@ const SWData = {
         "dm-1m: 1d4",
         "type-dm: perforants",
         "lancer: 5"
-      ]
+      ],
+      tags: [ "dague", "cac-1m", "cac-1m-lg" ]
     },
     {
       name: "Epée à deux mains",
@@ -9478,7 +9678,8 @@ const SWData = {
       props: [ 
         "dm-2m: 2d6",
         "type-dm: tranchants",
-      ]
+      ],
+      tags: [ "epee a deux mains", "cac-2m" ]
     },
     {
       name: "Epée bâtarde",
@@ -9487,7 +9688,8 @@ const SWData = {
         "dm-1m: 1d8",
         "dm-2m: 1d12",
         "type-dm: tranchants",
-      ]
+      ],
+      tags: [ "epee batarde", "cac-1m" ]
     },
     {
       name: "Epée courte",
@@ -9495,7 +9697,8 @@ const SWData = {
       props: [ 
         "dm-1m: 1d6",
         "type-dm: perforants",
-      ]
+      ],
+      tags: [ "epee courte", "cac-1m", "cac-1m-lg" ]
     },
     {
       name: "Epée longue",
@@ -9503,7 +9706,8 @@ const SWData = {
       props: [ 
         "dm-1m: 1d8",
         "type-dm: tranchants",
-      ]
+      ],
+      tags: [ "epee longue", "cac-1m" ]
     },
     {
       name: "Epieu",
@@ -9512,6 +9716,11 @@ const SWData = {
         "dm-1m: 1d6",
         "dm-2m: 1d10",
         "type-dm: perforants",
+      ],
+      tags: [ "epieu", "cac-1m", "cac-1m-lg" ],
+      maneuvers: [ 
+        { maneuver: "repousser", mod: 3 },
+        { maneuver: "renverser", mod: 3 },
       ]
     },
     {
@@ -9520,7 +9729,8 @@ const SWData = {
       props: [
         "dm-1m: 1d6",
         "type-dm: contondants",
-      ]
+      ],
+      tags: [ "fleau", "cac-1m", "cac-1m-lg", "contondant" ]
     },
     {
       name: "Fléau à deux mains",
@@ -9528,7 +9738,32 @@ const SWData = {
       props: [
         "dm-2m: 1d10",
         "type-dm: contondants",
-      ]
+      ],
+      tags: [ "fleau a deux mains", "cac-2m", "contondant" ]
+    },
+    {
+      name: "Fouet",
+      altname: "",
+      props: [
+        "dm-1m: 1",
+        "type-dm: contondants",
+        "special: Allonge 3m",
+        "atk: atktir",
+        "bonus-dm: 0"
+      ],
+      tags: [ "fouet", "cac-1m", "cac-1m-lg", "contondant" ]
+    },
+    {
+      name: "Fouet de guerre",
+      altname: "",
+      props: [
+        "dm-1m: 1d4",
+        "type-dm: tranchants",
+        "special: Allonge 3m, [[1d4+@{agi}]] DM sur action (L)",
+        "atk: atktir",
+        "bonus-dm: 0"
+      ],
+      tags: [ "fouet de guerre", "cac-1m", "cac-1m-lg" ]
     },
     {
       name: "Gourdin",
@@ -9536,6 +9771,10 @@ const SWData = {
       props: [
         "dm-1m: 1d4",
         "type-dm: contondants",
+      ],
+      tags: [ "gourdin", "cac-1m", "cac-1m-lg", "contondant" ],
+      maneuvers: [ 
+        { maneuver: "etourdir", mod: 4 },
       ]
     },
     {
@@ -9544,7 +9783,8 @@ const SWData = {
       props: [
         "dm-1m: 1d8",
         "type-dm: tranchants",
-      ]
+      ],
+      tags: [ "hache", "cac-1m" ]
     },
     {
       name: "Hache à deux mains",
@@ -9552,7 +9792,8 @@ const SWData = {
       props: [
         "dm-2m: 2d6",
         "type-dm: tranchants",
-      ]
+      ],
+      tags: [ "hache a deux mains", "cac-2m" ]
     },
     {
       name: "Lance",
@@ -9562,6 +9803,11 @@ const SWData = {
         "dm-2m: 1d10",
         "type-dm: perforants",
         "lancer: 10"
+      ],
+      tags: [ "lance", "cac-1m", "cac-1m-lg" ],
+      maneuvers: [ 
+        { maneuver: "repousser", mod: 3 },
+        { maneuver: "renverser", mod: 3 },
       ]
     },
     {
@@ -9570,6 +9816,21 @@ const SWData = {
       props: [
         "dm-1m: 2d6",
         "type-dm: perforants",
+      ],
+      tags: [ "lance de cavalerie", "cac-1m" ]
+    },
+    {
+      name: "Mains nues",
+      altname: "",
+      props: [
+        "dm-1m: 1d4",
+        "type-dm: contondants",
+      ],
+      tags: [ "marteau", "cac-1m", "cac-1m-lg", "contondant" ],
+      maneuvers: [ 
+        { maneuver: "bloquer",    mod: 3 },
+        { maneuver: "gener",      mod: 3 },
+        { maneuver: "renverser",  mod: 3 },
       ]
     },
     {
@@ -9578,6 +9839,10 @@ const SWData = {
       props: [
         "dm-1m: 1d6",
         "type-dm: contondants",
+      ],
+      tags: [ "marteau", "cac-1m", "cac-1m-lg", "contondant" ],
+      maneuvers: [ 
+        { maneuver: "etourdir", mod: 2 },
       ]
     },
     {
@@ -9586,7 +9851,21 @@ const SWData = {
       props: [
         "dm-1m: 1d6",
         "type-dm: contondants",
+      ],
+      tags: [ "masse", "cac-1m", "cac-1m-lg", "contondant" ],
+      maneuvers: [ 
+        { maneuver: "etourdir", mod: 2 },
       ]
+    },
+    {
+      name: "Pioche de guerre",
+      altname: "",
+      props: [
+        "dm-2m: 1d10",
+        "type-dm: perforants",
+        "critique: 18"
+      ],
+      tags: [ "pioche de guerre", "cac-2m" ]
     },
     {
       name: "Pique",
@@ -9594,7 +9873,8 @@ const SWData = {
       props: [
         "dm-2m: 1d10",
         "type-dm: perforants",
-      ]
+      ],
+      tags: [ "pique", "cac-2m" ]
     },
     {
       name: "Rapière",
@@ -9603,7 +9883,42 @@ const SWData = {
         "critique: 19",
         "dm-1m: 1d6",
         "type-dm: perforants",
-      ]
+      ],
+      tags: [ "rapiere", "cac-1m" ]
+    },
+    {
+      name: "Sabre court",
+      altname: "",
+      props: [
+        "critique: 19",
+        "dm-1m: 1d4",
+        "type-dm: tranchants",
+        "atkmods: explodeMax"
+      ],
+      tags: [ "sabre court", "cac-1m" ]
+    },
+    {
+      name: "Sabre droit",
+      altname: "",
+      props: [
+        "critique: 19",
+        "dm-1m: 1d6",
+        "dm-2m: 1d8",
+        "type-dm: tranchants",
+        "atkmods: explodeMax"
+      ],
+      tags: [ "sabre droit", "cac-1m" ]
+    },
+    {
+      name: "Sarbacane",
+      altname: "",
+      props: [
+        "dm-1m: 1",
+        "type-dm: perforants",
+        "special: [[1d4+@{per}]] en action (L)",
+        "portee: 10"
+      ],
+      tags: [ "sarbacane", "tir", "tir-lg" ]
     },
     {
       name: "Stylet",
@@ -9611,7 +9926,37 @@ const SWData = {
       props: [ 
         "dm-1m: 1d3",
         "type-dm: perforants",
+      ],
+      tags: [ "stylet", "cac-1m", "cac-1m-lg" ]
+    },
+    {
+      name: "Trident",
+      altname: "",
+      props: [
+        "dm-1m: 1d6",
+        "dm-2m: 1d10",
+        "type-dm: perforants",
+        "lancer: 10"
+      ],
+      tags: [ "trident", "cac-1m", "cac-1m-lg" ],
+      maneuvers: [ 
+        { maneuver: "bloquer",    mod: 2 },
+        { maneuver: "desarmer",   mod: 2 },
+        { maneuver: "repousser",  mod: 2 },
+        { maneuver: "renverser",  mod: 2 },
       ]
+    },
+    {
+      name: "Tribâton",
+      altname: "",
+      props: [
+        "dm-2m: 1d6",
+        "type-dm: contondants",
+        "bonus-dm: agi",
+        "special: Echec critique = 1 DM (utilisateur)",
+        "atkmods: fumble 2"
+      ],
+      tags: [ "tribaton", "cac-2m", "cac-2m-lg", "contondant" ]
     },
     {
       name: "Vivelame",
@@ -9620,7 +9965,8 @@ const SWData = {
         "critique: 19",
         "dm-2m: 1d10",
         "type-dm: tranchants",
-      ]
+      ],
+      tags: [ "vivelame", "cac-2m" ]
     },
     {
       name: "Arbalète de poing",
@@ -9629,7 +9975,8 @@ const SWData = {
         "dm-1m: 1d6",
         "portee: 10",
         "type-dm: perforants",
-      ]
+      ],
+      tags: [ "arbalete de poing", "arbalete", "tir", "tir-lg" ]
     },
     {
       name: "Arbalète lègère",
@@ -9638,7 +9985,8 @@ const SWData = {
         "dm-2m: 2d4",
         "portee: 30",
         "type-dm: perforants",
-      ]
+      ],
+      tags: [ "arbalete legere", "arbalete", "tir", "tir-lg" ]
     },
     {
       name: "Arbalète lourde",
@@ -9647,7 +9995,8 @@ const SWData = {
         "dm-2m: 2d6",
         "portee: 60",
         "type-dm: perforants",
-      ]
+      ],
+      tags: [ "arbalete lourde", "arbalete", "tir" ]
     },
     {
       name: "Arc court",
@@ -9656,7 +10005,8 @@ const SWData = {
         "dm-2m: 1d6",
         "portee: 30",
         "type-dm: perforants",
-      ]
+      ],
+      tags: [ "arc court", "arc", "tir", "tir-lg" ]
     },
     {
       name: "Arc long",
@@ -9665,7 +10015,8 @@ const SWData = {
         "dm-2m: 1d8",
         "portee: 50",
         "type-dm: perforants",
-      ]
+      ],
+      tags: [ "arc", "arc long", "tir" ]
     },
     {
       name: "Couteaux de lancer",
@@ -9674,7 +10025,8 @@ const SWData = {
         "dm-1m: 1d4",
         "portee: 10",
         "type-dm: perforants",
-      ]
+      ],
+      tags: [ "couteaux de lancer", "cac-1m", "cac-1m-lg" ]
     },
     {
       name: "Fronde",
@@ -9683,7 +10035,8 @@ const SWData = {
         "dm-1m: 1d4",
         "portee: 20",
         "type-dm: contondants",
-      ]
+      ],
+      tags: [ "fronde", "tir", "tir-lg" ]
     },
     {
       name: "Hachette",
@@ -9692,7 +10045,8 @@ const SWData = {
         "dm-1m: 1d6",
         "portee: 5",
         "type-dm: perforants",
-      ]
+      ],
+      tags: [ "hachette", "cac-1m", "cac-1m-lg" ]
     },
     {
       name: "Javelot",
@@ -9700,7 +10054,8 @@ const SWData = {
       props: [
         "dm-1m: 1d6",
         "type-dm: perforants",
-      ]
+      ],
+      tags: [ "javelot", "tir", "tir-lg" ]
     },
     {
       name: "Lance-pierre",
@@ -9708,7 +10063,8 @@ const SWData = {
       props: [
         "dm-1m: 1d3",
         "type-dm: contondants",
-      ]
+      ],
+      tags: [ "lance pierre", "tir", "tir-lg" ]
     },
     {
       name: "Pétoire",
@@ -9717,7 +10073,8 @@ const SWData = {
         "dm-1m: 1d10",
         "portee: 20",
         "type-dm: perforants",
-      ]
+      ],
+      tags: [ "petoire", "poudre" ]
     },
     {
       name: "Mousquet",
@@ -9726,7 +10083,8 @@ const SWData = {
         "dm-2m: 2d6",
         "portee: 50",
         "type-dm: perforants",
-      ]
+      ],
+      tags: [ "mousquet", "poudre" ]
     },
     {
       name: "Tissus matelassés",
@@ -9838,6 +10196,26 @@ const SWData = {
     { pv: 4, name: "vagabond", profile: "barde",
       abilities: [ "rumeurs et legendes", "eclectique", "attirail", "comprehension des langues", "deguisement" ]
      },
+    {
+      pv: 4, name: "baroudeur", profile: "caravanier",
+      abilities: [ "infatigable", "reflexes du heros", "techniques exotiques", "art de la survie", "talent personnel" ]
+     },
+    {
+      pv: 4, name: "diplomate", profile: "caravanier",
+      abilities: [ "us et coutumes", "polyglotte", "felure", "charisme heroique", "rien d'impossible" ]
+     },
+    {
+      pv: 4, name: "explorateur", profile: "caravanier",
+      abilities: [ "sur terre", "en mer", "par monts et par vaux", "maitre de la survie", "dans le ciel" ]
+     },
+    {
+      pv: 4, name: "garde personnel", profile: "caravanier",
+      abilities: [ "garde", "garde rapprochee", "capacite de garde", "dernier recours", "lien magique" ]
+     },
+    {
+      pv: 4, name: "marchand", profile: "caravanier",
+      abilities: [ "deux pour le prix d'un", "en reserve", "outils de qualite", "signe exterieur de richesse", "caravane sur pattes" ]
+     },
     { pv: 4, name: "archer", profile: "rodeur",
       abilities: [ "archer emerite", "tir chirurgical", "dans le mille", "tir rapide", "fleche de mort" ]
      },
@@ -9913,6 +10291,26 @@ const SWData = {
     { pv: 5, name: "soldat", profile: "guerrier",
       abilities: [ "teigneux", "prouesse", "piqure de rappel", "force heroique", "rempart" ]
      },
+    {
+      pv: 5, name: "arc et cheval", profile: "parangon",
+      abilities: [ "equitation martiale", "tir en mouvement", "tir expert", "perception heroique", "tirs successifs" ]
+     },
+    {
+      pv: 5, name: "honneur", profile: "parangon",
+      abilities: [ "chef ne", "duel", "honorable", "volonte heroique", "surmonter la douleur" ]
+     },
+    {
+      pv: 5, name: "maitrise interieure", profile: "parangon",
+      abilities: [ "esprit vide", "main vide", "cri", "technique mortelle", "puissance du cri" ]
+     },
+    {
+      pv: 5, name: "sabre", profile: "parangon",
+      abilities: [ "technique du sabre", "frappe du vide", "lames jumelles", "agilite heroique", "deluge de lames" ]
+     },
+    {
+      pv: 5, name: "traditions", profile: "parangon",
+      abilities: [ "esprit eclaire", "force de la repetition", "lame de lignee", "instant present", "tradition familiale" ]
+     },
     { pv: 3, name: "mage", profile: "ensorceleur,forgesort,magicien,sorcier",
       abilities: [ "occultisme", "maitrise de la magie", "tour de magie", "esprit superieur", "tempete de mana" ]
      },
@@ -9970,6 +10368,26 @@ const SWData = {
     { pv: 3, name: "magie universelle", profile: "magicien",
       abilities: [ "lumiere", "familier", "invisibilite", "vol", "teleportation" ]
      },
+    {
+      pv: 4, name: "bois", profile: "primaliste",
+      abilities: [ "pluie d'echardes", "bois durci", "cheval de bois", "explosion du bois", "figurine en bois" ]
+     },
+    {
+      pv: 4, name: "brumes", profile: "primaliste",
+      abilities: [ "temperation", "manteau de brume", "armure de brume", "volonte heroique", "nuage personnel" ]
+     },
+    {
+      pv: 4, name: "rivieres", profile: "primaliste",
+      abilities: [ "traversee", "source claire", "lance liquide", "fluide", "crue devastatrice" ]
+     },
+    {
+      pv: 4, name: "sol", profile: "primaliste",
+      abilities: [ "sens de la terre", "pilier magique", "sables mouvants", "passage par le sol", "champ mortel" ]
+     },
+    {
+      pv: 4, name: "torche", profile: "primaliste",
+      abilities: [ "torche", "feu de camp", "torche puissante", "boutefeu", "passage par le feu" ]
+     },
     { pv: 3, name: "demon", profile: "sorcier",
       abilities: [ "malediction", "beaute de la succube", "pacte demoniaque", "aspect du demon", "invocation d'un demon" ]
      },
@@ -9987,6 +10405,26 @@ const SWData = {
      },
     { pv: 3, name: "arcanes obscurs", profile: "sorcier",
       abilities: [ "contact vampirique", "tentation du demon", "epidemie", "aura maudite", "extinction de masse" ]
+     },
+    {
+      pv: 4, name: "esprit animal", profile: "chamane",
+      abilities: [ "esprit du loup", "esprit du serpe", "esprit de l'ours", "esprit de l'aigle", "esprit du poisson" ]
+     },
+    {
+      pv: 4, name: "esprits des choses", profile: "chamane",
+      abilities: [ "dialogue avec les objets", "pierre vivante", "arme vivante", "siphon de magie", "esprit du lieu" ]
+     },
+    {
+      pv: 4, name: "esprits malefiques", profile: "chamane",
+      abilities: [ "esprits predateurs", "esprits de cauchemars", "metal corrompu", "esprits hurlants", "esprit insecte" ]
+     },
+    {
+      pv: 4, name: "esprit vital", profile: "chamane",
+      abilities: [ "esprits des ancetres", "esprit du foyer", "esprit protecteur", "perception heroique", "esprit lie" ]
+     },
+    {
+      pv: 4, name: "forme d'esprit", profile: "chamane",
+      abilities: [ "esprit de veille", "esprit de repos", "arpenteur de reves", "perception des esprits", "esprit vagabond" ]
      },
     { pv: 4, name: "animaux", profile: "druide",
       abilities: [ "langage des animaux", "petit compagnon", "nuee d'insectes", "masque du predateur", "forme animale" ]
@@ -10036,37 +10474,190 @@ const SWData = {
     { pv: 4, name: "corruption", profile: "pretre",
       abilities: [ "blessure mineure", "poison", "blessure majeure", "vengeance", "epidemie" ]
      },
+    { pv: 4, name: "attaque mentale", profile: "psionique",
+      abilities: [ "attaque mentale", "bouclier psi", "attaque etourdissante", "volonte heroique", "vague psionique" ]
+     },
+    { pv: 4, name: "controle corporel", profile: "psionique",
+      abilities: [ "proprioception", "transe de regeneration", "controle du metabolisme", "constitution heroique", "acceleration" ]
+     },
+    { pv: 4, name: "empathie", profile: "psionique",
+      abilities: [ "perception extra-sensorielle", "defense intuitive", "perception du passe", "perception heroique", "vision lointaine" ]
+     },
+    { pv: 4, name: "telekinesie", profile: "psionique",
+      abilities: [ "manipulation a distance", "champ de protection", "onde de choc", "psychoportation", "puissance de l'esprit" ]
+     },
+    { pv: 4, name: "telepathie", profile: "psionique",
+      abilities: [ "telepathie", "cameleon mental", "suggestion", "imposture mentale", "domination psy" ]
+     }
   ],
   HERITAGE: [
     {
+      name: [ "ame forgee", "ame-forgee" ],
+      abilities: [ "metallique", "choc electrique", "infiltration", "rayon ardent", "machine de guerre" ],
+      companion: true
+    },
+    {
+      name: [ "cambion" ],
+      abilities: [ "ami des ombres", "enfant des tenebres", "resistances", "la belle et la bete", "forge par les tenebres" ],
+      companion: true
+    },
+    {
+      name: [ "demi elfe", "demi-elfe", "demie elfe", "demie-elfe" ],
+      abilities: [ "heritages", "nomade", "capacite d'apprentissage", "sang feerique", "empathie fantastique" ],
+      companion: true
+    },
+    {
+      name: [ "demi ogre", "demi-ogre", "demie ogre", "demie-ogre", "demie ogresse", "demie-ogresse" ],
+      abilities: [ "reaction violente", "violence ciblee", "vorace", "toujours plus lourd", "monumental" ],
+      companion: true
+    },
+    {
       name: [ "demi orc", "demi-orc", "demie orque", "demie-orque" ],
-      abilities: [ "impressionnant", "talent pour la violence", "critique brutal", "attaque sanglante", "colosse" ]
+      abilities: [ "impressionnant", "talent pour la violence", "critique brutal", "attaque sanglante", "colosse" ],
+      companion: false
+    },
+    {
+      name: [ "drakonide", "drakeide", "sangdragon", "sang-dragon" ],
+      abilities: [ "sang dragon", "souffle", "ecailles robustes", "fureur drakonide / ailes puissantes", "heritage draconique" ],
+      companion: true
     },
     {
       name: [ "elfe haut", "haut elfe", "haut-elfe" ],
-      abilities: [ "lumiere interieure", "force d'ame", "talent pour la magie", "immortel", "superiorite elfique" ]
+      abilities: [ "lumiere interieure", "force d'ame", "talent pour la magie", "immortel", "superiorite elfique" ],
+      companion: false
+    },
+    {
+      name: [ "elfe pale" ],
+      abilities: [ "natif de la foret sombre", "resistance au poison", "fleau des morts", "provoquer la chance", "superiorite elfique" ],
+      companion: true
+    },
+    {
+      name: [ "elfe des profondeurs", "elfe noir", "drow" ],
+      abilities: [ "enfant des tenebres", "lames et sorcellerie", "combat a deux armes", "maitrise des arbaletes", "superiorite elfique" ],
+      companion: true
     },
     {
       name: [ "elfe sylvain", "elfe sylvaine", "elfe sylvestre", "elfe des bois" ],
-      abilities: [ "lumiere des etoiles", "enfant de la foret", "archer emerite", "fleche sanglante", "superiorite elfique" ]
+      abilities: [ "lumiere des etoiles", "enfant de la foret", "archer emerite", "fleche sanglante", "superiorite elfique" ],
+      companion: false
+    },
+    {
+      name: [ "farfadet" ],
+      abilities: [ "ne d'un chou", "langage des animaux", "invisibilite", "monture feerique", "seigneur feerique" ],
+      companion: true
+    },
+    {
+      name: [ "fee" ],
+      abilities: [ "nee d'une fleur", "pirouette", "poudre de fee", "fee reveree", "lady fee" ],
+      companion: true
+    },
+    {
+      name: [ "felis", "felys" ],
+      abilities: [ "ame feline", "armes naturelles", "vif et discret", "metamorphose feline", "nature feline" ],
+      companion: true
+    },
+    {
+      name: [ "frouin" ],
+      abilities: [ "avarie", "minus", "parano", "attaque simultanee", "champion de la survie" ],
+      companion: true
     },
     {
       name: [ "gnome" ],
-      abilities: [ "don etrange", "petit pote", "insignifiant", "merveille technologique", "bonne nature" ]
+      abilities: [ "don etrange", "petit pote", "insignifiant", "merveille technologique", "bonne nature" ],
+      companion: false
+    },
+    {
+      name: [ "gobelin", "gobeline" ],
+      abilities: [ "vivacite gobeline", "attaque groupee", "kafouiller", "worg", "vif et alerte" ],
+      companion: true
     },
     {
       name: [ "halfelin", "halfeline" ],
-      abilities: [ "petite taille", "resistance legendaire", "bon pour le moral", "petit veinard", "vif et bien nourri" ]
+      abilities: [ "petite taille", "resistance legendaire", "bon pour le moral", "petit veinard", "vif et bien nourri" ],
+      companion: false
     },
     {
       name: [ "humain", "humaine" ],
-      abilities: [ "diversite", "instinct de survie", "touche-a-tout", "loup parmi les loups", "polyvalence" ]
+      abilities: [ "diversite", "instinct de survie", "touche-a-tout", "loup parmi les loups", "polyvalence" ],
+      companion: false
+    },
+    {
+      name: [ "kobold" ],
+      abilities: [ "ruse kobold", "chetif", "piege improvise", "attaque vicieuse", "ruse instinctive" ],
+      companion: true
+    },
+    {
+      name: [ "minotaure" ],
+      abilities: [ "coup de corne", "charge puissante", "frenesie", "encorner", "colosse" ],
+      companion: true
     },
     {
       name: [ "nain", "naine" ],
-      abilities: [ "habitant des tunnels", "haches et marteaux", "resistance a la magie", "fils du roc", "tenacite" ]
-    }
+      abilities: [ "habitant des tunnels", "haches et marteaux", "resistance a la magie", "fils du roc", "tenacite" ],
+      companion: false
+    },
+    {
+      name: [ "nephilim" ],
+      abilities: [ "photosensible", "enfant de la lumiere", "resistances", "la plume et l'acier", "forge par la lumiere" ],
+      companion: true
+    },
+    {
+      name: [ "ophidien", "ophidienne" ],
+      abilities: [ "sang des anciens", "regard hypnotique", "crachat", "mutation serpentine", "forme de serpent" ],
+      companion: true
+    },
+    {
+      name: [ "satyre", "faune" ],
+      abilities: [ "bonne nature", "encorner et ruer", "compagnon de voyage", "magie sauvage", "ascendance naturelle" ],
+      companion: true
+    },
+    {
+      name: [ "wolfer" ],
+      abilities: [ "chasseur ne", "griffes et crocs", "loi de la meute", "forme de loup", "esprit du loup" ],
+      companion: true
+    },
   ],
+  SENS: {
+    "âmeforgée": "Vision dans le noir",
+    "cambion": "Vision dans le noir",
+    "demielfe": "Lumière des étoiles",
+    "demieelfe": "Lumière des étoiles",
+    "demiogre": "Vision dans le noir",
+    "demieogre": "Vision dans le noir",
+    "demieogresse": "Vision dans le noir",
+    "demiorc": "Vision dans le noir",
+    "demieorc": "Vision dans le noir",
+    "demieorque": "Vision dans le noir",
+    "drakonide": "Vision dans le noir",
+    "drakeide": "Vision dans le noir",
+    "sangdragon": "Vision dans le noir",
+    "elfehaut": "Lumière des étoiles",
+    "elfehaute": "Lumière des étoiles",
+    "elfepale": "Vision dans le noir",
+    "elfedesprofondeurs": "Vision dans le noir",
+    "drow": "Vision dans le noir",
+    "elfesylvain": "Lumière des étoiles",
+    "elfesylvaine": "Lumière des étoiles",
+    "elfesylvestre": "Lumière des étoiles",
+    "elfedesbois": "Lumière des étoiles",
+    "felis": "Lumière des étoiles",
+    "felys": "Lumière des étoiles",
+    "frouin": "Vision dans le noir",
+    "gnome": "Vision dans le noir",
+    "gobelin": "Vision dans le noir",
+    "gobeline": "Vision dans le noir",
+    "kobold": "Vision dans le noir",
+    "farfadet": "Vision dans le noir",
+    "fee": "Vision dans le noir",
+    "nain": "Vision dans le noir",
+    "naine": "Vision dans le noir",
+    "nephilim": "Lumière des étoiles",
+    "ophidien": "Vision dans le noir",
+    "ophidienne": "Vision dans le noir",
+    "satyre": "Lumière des étoiles",
+    "faune": "Lumière des étoiles",
+    "wolfer": "Vision dans le noir",
+  },
   ATTACKS: {
     CF: [
       "se blesse lui-même (DM / 2)",
@@ -10883,10 +11474,12 @@ function sendChatMsg(msg, options) {
       updates.set("last_rolls", last_rolls);
 
     if (roll.results.roll) {
-      const rx = "\\[(" + SWData.PC.COMBAT.maneuvers.map(mn => mn.name.split(" ")[0]).join("|") + ")\\]\\)";
+      const rx = "\\[(" + SWData.PC.COMBAT.maneuvers.map(mn => mn.name.split(" ")[0]).join("|") + ")\\].*\\)";
       const matched = roll.results.roll.expression.match(rx);
-      if (matched)
+      if (matched) {
         updates.set("last_maneuver", `${ cleanText(matched[1]) }~${roll.rollId}`); // make it unique
+        computed.hasdm=0;
+      }
     }
 
     // check TN
@@ -11615,6 +12208,33 @@ function replaceDevol(expr) {
   return expr.replaceAll(/d(4°|E|4[Ee])/g, "@{devol}");
 }
 
+/**
+ * Return die roll macro for evolutive dice
+ * @param {number} number - number of dice to roll
+ * @param {string} devol - evolutive dice value
+ * @returns {string}
+ */
+function rollDEvol(number, devol) {
+  return devol === "2d6" 
+  ? `${ 2 * number }d6`
+  : `${number}${devol}`;
+}
+
+/**
+ * Expand evolutive dice expression
+ * @param {string} dm - DM dice expression
+ * @param {string} devol - evolutive dice value
+ * @returns {string}
+ */
+function expandDEvol(dm, devol) {
+  if (dm.includes("@{devol}")) {
+    const [ matched, dice ] = dm.match(/([0-9]+)@{devol}/);
+    if (matched)
+      dm = dm.replace(matched, rollDEvol(intval(dice), devol));
+  }
+  return dm;
+}
+
 // ===============
 // PC SHEET EVENTS
 // ===============
@@ -11705,15 +12325,20 @@ on("change:cfg_d20roll", function() {
  * Populate the profiles datalist
  * @param {string} family - name of profiles family
  * @param {string} profile - name of current profile
+ * @param {boolean} useCompanion - allow companion profiles
  * @returns 
  */
-function setProfilesList(family, profile) {
+function setProfilesList(family, profile, useCompanion) {
   const profiles = SWData.PC.PROFILES[family] || [];
   if (profiles.length === 0)
     return;
+  let optionsArray = [ ...profiles, ...SWData.PC.PROFILES.Psionique ];
+  if (!useCompanion)
+    optionsArray = optionsArray.filter(prof => !prof.companion);
+  optionsArray = optionsArray.map(prof => ({ value: prof.value, selected: (prof.value === profile)}))
   populateListOptions({
     elemSelector: "#pc-profiles",
-    optionsArray: profiles.map(prof => ({ value: prof.value, selected: (prof.value === profile)}))
+    optionsArray
   });
 }
 
@@ -11745,28 +12370,29 @@ function getProfileData(profile, selectFamily = "") {
  * - set PC & DR base
  */
 on("change:famille", function(eventInfo) {
-  getAttrs([ "profil", "famille" ], function(values) {
+  getAttrs([ "profil", "famille", "cfg_comp_prof" ], function(values) {
     const family = strval(values.famille);
     const profile = strval(values.profil);
-    setProfilesList(family, profile);
+    const useCompanion = boolval(values.cfg_comp_prof);
+    setProfilesList(family, profile, useCompanion);
 
     const updates = new Map();
 
     let dRecup = 8;
     let pcBase = 2;
     let drBase = 2;
-    let voie123pv = 4;
+    let voies123pv = 4;
     switch (family) {
       case "Aventuriers":
         pcBase = 3;
         break;
       case "Combattants":
         dRecup = 10;
-        voie123pv = 5;
+        voies123pv = 5;
         break;
       case "Mages":
         dRecup = 6;
-        voie123pv = 3;
+        voies123pv = 3;
         break;
       case "Mystiques":
         drBase = 3;
@@ -11775,9 +12401,9 @@ on("change:famille", function(eventInfo) {
     updates.set("drecup", dRecup);
     updates.set("pc_base", pcBase);
     updates.set("dr_base", drBase);
-    updates.set("voie1pv", voie123pv);
-    updates.set("voie2pv", voie123pv);
-    updates.set("voie3pv", voie123pv);
+    updates.set("voie1pv", voies123pv);
+    updates.set("voie2pv", voies123pv);
+    updates.set("voie3pv", voies123pv);
 
     logAndSet(Object.fromEntries(updates), logTitle(eventInfo));
   });
@@ -11828,9 +12454,10 @@ on("change:profil", function(eventInfo) {
 on("change:peuple", function(eventInfo) {
   const path = SWData.settings.peoplePath;
   const rankNames = seq(5).map(rank => abilityInfo({ path, rank }).rankName);
-  getAttrs([ "peuple", ...rankNames ], function(values) {
+  getAttrs([ "peuple", "cfg_comp_ppl", ...rankNames ], function(values) {
     const updates = new Map();
     const people = strval(values.peuple);
+    const useCompanion = strval(values.cfg_comp_ppl);
     
     if (people.trim() === "") {
       updates.set(abilityInfo({ path }).pathName, "");
@@ -11853,6 +12480,8 @@ on("change:peuple", function(eventInfo) {
     const peopleInfo = SWData.HERITAGE.find(p => p.name.includes(cleanText(people)));
     if (!peopleInfo)
       return;
+    if (!useCompanion && peopleInfo.companion)
+      return;
     
     updates.set(abilityInfo({ path }).pathName, people);
     rankNames.forEach((rank, ix) => {
@@ -11860,20 +12489,7 @@ on("change:peuple", function(eventInfo) {
         updates.set(abilityInfo({ path, rank: ix + 1 }).rankName, capitalize(peopleInfo.abilities[ix]));
     });
 
-    const sens = ({
-      "demiorc": "Vision dans le noir",
-      "demieorc": "Vision dans le noir",
-      "demieorque": "Vision dans le noir",
-      "elfehaut": "Lumière des étoiles",
-      "elfehaute": "Lumière des étoiles",
-      "elfesylvain": "Lumière des étoiles",
-      "elfesylvaine": "Lumière des étoiles",
-      "elfesylvestre": "Lumière des étoiles",
-      "elfedesbois": "Lumière des étoiles",
-      "gnome": "Vision dans le noir",
-      "nain": "Vision dans le noir",
-      "naine": "Vision dans le noir"
-    })[people.replaceAll("-", "").replaceAll(" ", "").trim().toLowerCase()];
+    const sens = SWData.SENS[people.replaceAll("-", "").replaceAll(" ", "").trim().toLowerCase()];
     if (sens)
       updates.set("sens", sens);
 
@@ -11903,22 +12519,26 @@ function updateAttacksBase(level, levelCap, attributes) {
 /**
  * Return the evolutive die for level
  * @param {number} level - PC's level
+ * @param {boolean} [upgrade=false] - Upgrade evolutive die category (half-elf)
  * @returns {string} 
  */
-function getDEvol(level) {
+function getDEvol(level, upgrade = false) {
   let dEvol;
   switch (true) {
     case level >= 15:
-      dEvol = "d12";
+      dEvol = upgrade ? "2d6" : "d12";
       break;
     case level >= 12:
-      dEvol = "d10";
+      dEvol = upgrade ? "d12" : "d10";
       break;
     case level >= 9:
-      dEvol = "d8";
+      dEvol = upgrade ? "d10" : "d8";
       break;
     case level >= 6:
-      dEvol = "d6";
+      dEvol = upgrade ? "d8" : "d6";
+      break;
+    case level >= 3:
+      dEvol = upgrade ? "d6" : "d4";
       break;
     default:
       dEvol = "d4";
@@ -11934,13 +12554,17 @@ on(changeEvent([
   "cfg_use_epic", "cfg_use_capped6", "cfg_atk_diff"
 ]), function(eventInfo) {
   getAttrs([ 
-    "sheet_type", "niveau", "profil", "pc", "pc_max",
-    "cfg_use_epic", "cfg_use_capped6", "cfg_atk_diff",
+    "sheet_type", "peuple", "niveau", "profil", "pc", "pc_max",
+    "cfg_use_epic", "cfg_use_capped6", "cfg_atk_diff", "cfg_comp_ppl",
     "noms_rangs",
   ], function(values) {
     if (strval(values.sheet_type) === SWData.SHEET_TYPE.NPC)
       return;
 
+    const peuple = cleanText(strval(values.peuple)).replaceAll("-", " ").replaceAll(" ", "");
+    const upgrade = boolval(values.cfg_comp_ppl) 
+                    && [ "demielfe", "demieelfe" ].includes(peuple)
+                    && hasAbilityName("capacite d'apprentissage", values);
     const cappedAt6 = boolval(values.cfg_use_capped6);
     const atkDiff = boolval(values.cfg_atk_diff);
     // base progression
@@ -11965,7 +12589,7 @@ on(changeEvent([
       atks = profile.atks;
     Object.keys(atks).forEach(atk => updateAttrs.set(`atk${atk}_base`, atks[atk]));
     updateAttrs = updateAttacksBase(level, levelCap, updateAttrs);
-    updateAttrs.set("devol", getDEvol(level));
+    updateAttrs.set("devol", getDEvol(level, upgrade));
     updateAttrs.set("def_base", 10);
     
     // epic progression
@@ -12693,15 +13317,39 @@ on("change:sens", function () {
     if (numval(values.sens_portee) !== 0)
       return;
     let sens_portee = 0;
-    switch (strval(values.peuple.toLowerCase()) + "," + strval(values.sens).toLowerCase()) {
-      case "demi-orc,vision dans le noir":
-      case "demie-orc,vision dans le noir":
-      case "demie-orque,vision dans le noir":
+    const peuple = cleanText(strval(values.peuple.toLowerCase())).replaceAll("-", "").replaceAll(" ", "");
+    switch (peuple + "," + strval(values.sens).toLowerCase()) {
+      case "cambion,vision dans le noir":
+      case "demiogre,vision dans le noir":
+      case "demieogresse,vision dans le noir":
+      case "demiorc,vision dans le noir":
+      case "demieorc,vision dans le noir":
+      case "demieorque,vision dans le noir":
+      case "drakonide,vision dans le noir":
+      case "drakeide,vision dans le noir":
+      case "sangdragon,vision dans le noir":
+      case "elfepale,vision dans le noir":
+      case "elfedesprofondeurs,vision dans le noir":
+      case "elfenoir,vision dans le noir":
+      case "elfenoire,vision dans le noir":
+      case "drow,vision dans le noir":
+      case "frouin,vision dans le noir":
+      case "gobelin,vision dans le noir":
+      case "gobeline,vision dans le noir":
+      case "kobold,vision dans le noir":
       case "nain,vision dans le noir":
       case "naine,vision dans le noir":
+      case "ophidien,vision dans le noir":
+      case "ophidienne,vision dans le noir":
+      case "wolfer,vision dans le noir":
         sens_portee = 30;
         break;
+      case "farfadet,vision dans le noir":
+      case "fee,vision dans le noir":
+        sens_portee = 20;
+        break;
       case "gnome,vision dans le noir":
+      case "ameforgee,vision dans le noir":
         sens_portee = 10;
         break;
     }
@@ -13218,13 +13866,16 @@ on("change:help_roll", function() {
  * Roll evolutive die
  */
 on("clicked:devol-btn", function() {
+  getAttrs([ "devol" ], function(values) {
     askValue("Nombre de dés ?", function(dice) {
-    const chatMsg = rollTemplate({
-      lsub: "Jet",
-      rsub: "Dé évolutif",
-      roll: `[[${dice}@{devol}]]`
-    });
-    sendChatMsg(chatMsg);
+      let devol = strval(values.devol);
+      const chatMsg = rollTemplate({
+        lsub: "Jet",
+        rsub: "Dé évolutif",
+        roll: `[[${ rollDEvol(intval(dice), devol) }]]`
+      });
+      sendChatMsg(chatMsg);
+    })
   });
 });
 
@@ -13501,7 +14152,8 @@ on("change:repeating_armes:arme-nom clicked:renum_atk-btn", function(eventInfo) 
     const labels = rowIds.map(id => rptAttr(rptAtk, "arme-label", id));
     const names = rowIds.map(id => rptAttr(rptAtk, "arme-nom", id));
     getAttrs([
-      "character_name", "max_attack_label", "scriptVersion",
+      "scriptVersion", "character_name",
+      "profil", "max_attack_label",
       rptAttr(rptAtk, "arme-new"),
       ...rptAttrs(rptAtk, [ "arme-nom", "arme-gearid" ]),
       ...labels,
@@ -13593,6 +14245,11 @@ on("change:repeating_armes:arme-nom clicked:renum_atk-btn", function(eventInfo) 
           updates.set(rptAttr(rptAtk, "arme-dm"), dm);
           if (dm1m === "" && dm2m !== "")
             updates.set(rptAttr(rptAtk, "arme-2m"), 1);
+          const wp = weaponTrained(strval(values.profil), weapon.name);
+          if (!wp.trained) {
+            updates.set(rptAttr(rptAtk, "arme-atkmods"), "deMalus");
+            sendChatMsg(wp.message, { whisper: "gm", template: "" });
+          }
         }
       }  
 
@@ -13797,15 +14454,21 @@ function rangeWithUnits(portee, extra = 0) {
 /**
  * Return the roll query for maneuvers
  * @param {number} cha - CHA stat value
+ * @param { { maneuver: string, mod: number }[] } [hasBonus=[]] - maneuvers with bonus
  * @returns {string}
  */
-function maneuversRollQuery(cha) {
+function maneuversRollQuery(cha, hasBonus = []) {
   const maneuvers = SWData.PC.COMBAT.maneuvers.map(mn => {
     const [ title ] = mn.name.split(" ");
     mn.name = mn.name.replace("{{cha}}", cha);
     mn.name += mn.name.includes("(") ? "" : " (" + mn.mod + ")";
     mn.mod = mn.mod.replace("{{cha}}", cha);
-    return `${mn.name},[[${ mn.mod === "-" ? "0" : mn.mod }]][${title}]`;
+    const maneuverBonus = hasBonus.find(b => b.maneuver === cleanText(title).replace("°", ""));
+    const bonus = {
+      label: (maneuverBonus) ? ` (+${maneuverBonus.mod})` : "",
+      roll: (maneuverBonus) ? ` + [[${maneuverBonus.mod}]][Bonus arme]` : ""
+    };
+    return `${mn.name}${bonus.label},[[${ mn.mod === "-" ? "0" : mn.mod }]][${title}]${bonus.roll}`;
   }).join("|");
   return " +(?{Manoeuvre ?|Aucune,0|" + maneuvers + "})";
 }
@@ -13841,14 +14504,13 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
     "visibilite"
   ];
   getAttrs([
-    "scriptVersion",
-    "character_name",
+    "scriptVersion", "character_name", "famille", "devol",
     "cfg_1attack_roll", "cfg_cible", "cfg_optact",
     "cfg_d20roll", "d20roll",
     "cfg_crit_diff", "cfg_tbl_crit", "cfg_tbl_fumble",
     "cfg_use_ammo", "cfg_usure",
     "cfg_lowfan", "cfg_shadow", "pc",
-    "atkcac", "atktir", "atkmag",
+    "manoeuvre", "atkcac", "atktir", "atkmag",
     "agi_dsup", "per_dsup", "cha",
     "bouclier_eqp",
     "condition_affaibli", "condition_immobilise",
@@ -13880,6 +14542,7 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
     const pathNames = getPathNames(strval(values.noms_voies));
     const mounted = boolval(values.en_selle);
     const aquatic = boolval(values.condition_aquatique);
+    const maneuver = boolval(values.manoeuvre);
     
     // situational modifiers
     let modCover = intval(values.modsit_couvert) * -1;
@@ -13901,7 +14564,8 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
     const usure = strval(values[section + "usure"]);
     const resourceId = strval(values[`${rptThrown}resid`]);
     const resourceNbr = Math.max(1, intval(values[`${rptThrown}nbre`]));
-
+    const devol = strval(values.devol);
+    
     // all attacks buffs 
     const allAtkBuffs = allRollsBuff(values, "attacks");
 
@@ -13961,7 +14625,8 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
     }
 
     // Special tactics
-    let tacticBonus = "";
+    let tacticBonus = "",
+        aimedShot = "";
     switch (tactics) {
       case 1:
         atkTitle = "Attaque assurée";
@@ -13970,12 +14635,18 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
       case 2:
         atkTitle = "Attaque précise";
         tacticBonus = ` -3[${atkTitle}]`;
-        extraDM.push(` + [[1@{devol}]] ${atkTitle}`);
+        extraDM.push(` + [[${ rollDEvol(1, devol) }]] ${atkTitle}`);
         break;
       case 3:
         atkTitle = "Attaque violente";
         tacticBonus = ` -7[${atkTitle}]`;
-        extraDM.push(` + [[2@{devol}]] ${atkTitle}`);
+        extraDM.push(` + [[${ rollDEvol(2, devol) }]] ${atkTitle}`);
+        break;
+      case 4:
+        if (atk === "atktir" && portee !== "") {
+          atkTitle = "Tir visé (L)";
+          aimedShot = ` + @{per}[${atkTitle}]`;
+        }
         break;
     }
     
@@ -13986,9 +14657,11 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
       const tactBM = intval(values[rptAttr("tactic", "tact-div", id)]);
       if (tactBM !== 0)
         tacticBonus += ` + (${tactBM})[${tactName}]`;
-      const tactDM = strval(values[rptAttr("tactic", "tact-dmdiv", id)]);
-      if (tactDM !== "")
-        extraDM.push(` + [[${ replaceDevol(tactDM) }]] ${tactName}`);
+      let tactDM = strval(values[rptAttr("tactic", "tact-dmdiv", id)]);
+      if (tactDM !== "") {
+        tactDM = expandDEvol(replaceDevol(tactDM), devol);
+        extraDM.push(` + [[${tactDM}]] ${tactName}`);
+      }
       const tactRoll = intval(values[rptAttr("tactic", "tact-roll", id)]);
       if (tactRoll === 1) {
         if (modifiers.includes("demalus"))
@@ -14060,7 +14733,7 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
     if (bRoll && useOneRoll)
       bRoll = false;
     
-    let fumble = "1";
+    let fumble = strval(getAtkMod(modifiers, "fumble"), "1");
 
     let powder = "";
     if (modifiers.includes("poudre")) {
@@ -14075,14 +14748,24 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
     const shadow = shadowValue(values);
 
     // Manoeuvres
-    const maneuvers = modifiers.includes("manoeuvres") ? maneuversRollQuery(intval(values.cha)) : "";
+    let hasBonus = [];
+    if (maneuver) {
+      if (strval(values.famille).toLowerCase() === "combattants") {
+      const weapon = SWData.GEARS.find(gear => cleanText(gear.name) === cleanText(name));
+        if (weapon?.maneuvers) 
+          hasBonus = weapon.maneuvers;
+      }
+      if (!modifiers.includes("manoeuvres"))
+        modifiers.push("manoeuvres");
+    }
+    const maneuvers = modifiers.includes("manoeuvres") ? maneuversRollQuery(intval(values.cha), hasBonus) : "";
 
     // Attack roll
     let attack = "";
     if (!hasMalusDie && !hasBonusDie)
-      roll = d20Roll(roll, strval(values.d20roll), { cf: fumble, cs: `>${crit}` });
+      roll = d20Roll(roll, strval(values.d20roll), { cf: `<${fumble}`, cs: `>${crit}` });
     else
-      roll = rollCfCs(roll, { cf: fumble, cs: `>${crit}` });
+      roll = rollCfCs(roll, { cf: `<${fumble}`, cs: `>${crit}` });
     if (atk !== "0")
       attack = `[[${roll}[Dés] + @{${atk}}[Bonus]${magicHit}${fear}${shadow.malus} + ${atkdiv}[Divers]${allAtkBuffs}${tacticBonus}${modSit}${maneuvers} ]]`;
     
@@ -14090,7 +14773,9 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
     let [ dm, ...dmextra ] = strval(values[section + "dm"]).split(" ");
     dm = replaceDevol(dm);
     if (dm.includes("/")) {
-      const [ dm1m, dm2m ] = dm.split("/");
+      let [ dm1m, dm2m ] = dm.split("/");
+      dm1m = expandDEvol(dm1m, devol);
+      dm2m = expandDEvol(dm2m, devol);
       dm = shieldUsed ? dm1m : `?{Maniée à|Une main,${dm1m}|Deux mains,${dm2m}}`;
     }
 
@@ -14106,7 +14791,10 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
     const dmdesc = [ dmtype, ...dmextra ].join(" ").trim();
     const dmbonus = strval(values[section + "bonus"]);
     const dmdiv = strval(values[section + "dmdiv"]);
+    
     let dmAbilities = "";
+    if (dmbonus.includes("per"))
+      aimedShot = "";
 
     if (boolval(values.cfg_lowfan))
       modifiers.push("explodemax");
@@ -14143,7 +14831,7 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
 
     let dmroll = "";
     if (dm !== "" )
-      dmroll = `${dm}${dmOpt} + ${dmbonus}[Bonus]${magicDM}${ shadow.dm } + ${dmdiv}[Divers]${dmAbilities}`;
+      dmroll = `${dm}${dmOpt} + ${dmbonus}[Bonus]${aimedShot}${magicDM}${ shadow.dm } + ${dmdiv}[Divers]${dmAbilities}`;
     if (dmroll !== "" && tactics === 1)
       dmroll = `floor((${dmroll})/2)`;
     if (dmroll !== "")
@@ -14231,6 +14919,7 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
       rollf: "[[0]]",
       brollf: "[[0]]",
       rolleffect: rollEffect,
+      hasdm: "[[1]]",
       dm: dmroll,
       dmdesc,
       critdiff: `[[${useCritDiff}]]`,
@@ -14280,9 +14969,17 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
     }
 
     if (boolval(values.cfg_cible) && !atkButton.includes("atkdual")) {
-      atkProps.tohit = SWData.settings.tokens.target.def;
+      if (modifiers.includes("manoeuvres")) {
+        atkProps.tohit = SWData.settings.tokens.target.opposed;
+        atkProps.opposed = "[[1]]";
+      } else {
+        atkProps.tohit = SWData.settings.tokens.target.def;
+      }
       atkProps.target = SWData.settings.tokens.target.name;
       atkProps.targetname = `[[0[${atkProps.target}] ]]`;
+      /*atkProps.tohit = SWData.settings.tokens.target.def;
+      atkProps.target = SWData.settings.tokens.target.name;
+      atkProps.targetname = `[[0[${atkProps.target}] ]]`;*/
     }
     
     const chatMsg = rollTemplate(atkProps, { tags: allTags });
@@ -14313,13 +15010,8 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
     const ongoingPrms = ongoingAttrs().map(attr => strval(values[rptOngoing + attr]));
     if(ongoingPrms.some(v => v !== "")) {
       const [ ogEff, ogName, ogTime ] = ongoingPrms;
-      let effectName = name + " " + ogEff;
-      if (ogName !== "")
-        effectName = ogName;
-      //effectName += " " + ogEff;
-      let timeSpan = "";
-      if (ogTime !== "")
-        timeSpan = insertRolls(" " + ogTime + " ").trim();
+      const effectName = (ogName !== "") ? ogName : name + " " + ogEff;
+      const timeSpan = (ogTime !== "") ? insertRolls(" " + ogTime + " ").trim() : "";
       const ongoing_actmod = effectName + "~" + timeSpan + "~" + new Date().toISOString();
       setAttrs({ ongoing_actmod });
     }
@@ -14462,6 +15154,26 @@ on("change:last_maneuver", function () {
 function getWeaponGearAttr(data) {
   const [ label, weaponId ] = strval(data).split("~");
   return intval(label) > 0 ? rptAttr("armes", "arme-gearid", weaponId) : "";
+}
+
+/**
+ * Return weapon's training for a profile
+ * @param {string} profile - profile name
+ * @param {string} weapon - weapon name
+ * @returns { { trained: boolean, message: string } }
+ */
+function weaponTrained(profile, weapon) {
+  const trainedWith = getProfileData(profile).weapons;
+  const message = `Le profil **${profile}** ne maitrise pas **${weapon}** et subit un dé malus en attaque`;
+  weapon = cleanText(weapon);
+  const tags = SWData.GEARS
+    .find(gear => weapon === cleanText(gear.name) || gear.altname.split(",").includes(weapon))
+    .tags;
+  const trained = tags.some(tag => trainedWith.includes(tag));
+  return {
+    trained,
+    message: trained ? "" : message
+  };
 }
 
 /**
@@ -16766,9 +17478,9 @@ on(changeEvent([
     "atkid",
     "predicats"
   ].map(a => rptAttr("equipement", `equip-${a}`));
-  getAttrs([ "cfg_usure", ...gearAttrs ], function(values) {
+  getAttrs([ ...gearAttrs, "profil", "cfg_usure" ], function(values) {
+    const [ name, detail, props, atk, atkid, pred ] = Object.keys(values);
     const usure = boolval(values.cfg_usure);
-    const [ name, detail, props, atk, atkid, pred ] = Object.keys(values).slice(1);
     const equipment = strval(values[name]);
     const description = strval(values[detail]);
     const properties = strval(values[props]);
@@ -16794,7 +17506,11 @@ on(changeEvent([
       "type-dm",
       "portee",
       "lancer",
-      "usure"
+      "usure",
+      "special",
+      "atk",
+      "bonus-dm",
+      "atkmods"
     ];
 
     const magicMods = [
@@ -16814,6 +17530,7 @@ on(changeEvent([
       "bouclier-malus",
       "agi-max",
     ];
+
     properties.split("\n").forEach(prop => {
       const { name, value } = parseNameValue(prop);
       if (name === "" || defProps.includes(name))
@@ -16833,7 +17550,8 @@ on(changeEvent([
       attributes.set(rptAttr("equipement", "equip-atkid"), attackId);
       const rowId = rptAttr("armes", "arme-", attackId);
       attributes.set(rowId + "nom", equipment);
-      const atk = attackRow.has("portee") ? "atktir" : "atkcac";
+      let atk = strval(attackRow.get("atk"), "atkcac");
+      atk = attackRow.has("portee") ? "atktir" : atk;
       attributes.set(rowId + "atk", atk);
       attributes.set(rowId + "crit", strval(attackRow.get("critique")));
       const dm1m = attackRow.has("dm-1m") ? strval(attackRow.get("dm-1m")) : "";
@@ -16846,10 +17564,16 @@ on(changeEvent([
       if (dm === dm2m)
         attributes.set(rowId + "2m", 1);
       attributes.set(rowId + "dm", dm);
-      attributes.set(rowId + "arme-bonus", atk === "atkcac" ? "@{for}" : "");
+      let bonusDM = strval(attackRow.get("bonus-dm")).toLowerCase();
+      if (bonusDM !== "0")
+        bonusDM = bonusDM !== "" ? "@{" + bonusDM + "}" : "";
+      if (bonusDM === "")
+        bonusDM = atk === "atkcac" ? "@{for}" : "";
+      attributes.set(rowId + "bonus", bonusDM);
       attributes.set(rowId + "dmtype", strval(attackRow.get("type-dm")).toLowerCase());
       attributes.set(rowId + "portee", strval(attackRow.get("portee")));
-      attributes.set(rowId + "special", description);
+      let special = [ strval(attackRow.get("special")), description ].filter(s => strval(s) !== "");
+      attributes.set(rowId + "special", special.join("\n"));
       attributes.set(rowId + "atktype", (atk === "atkcac") ? "main" : "trait");
       attributes.set(rowId + "gearid", gearId);
       if (usure && attackRow.has("usure"))
@@ -16857,13 +17581,20 @@ on(changeEvent([
       const atkmods = [];
       const options = [];
       attackRow.forEach((value, prop) => {
-        if (magicMods.includes(prop)) {
+        if (prop === "atkmods") {
+          atkmods.push(value);
+        } else if (magicMods.includes(prop)) {
           atkmods.push(prop + " " + value);
         } else {
           if (!weaponProps.includes(prop))
             options.push(`${prop}: ${value}`);
         }
       });
+      const wp = weaponTrained(strval(values.profil), equipment);
+      if (!wp.trained && !atkmods.includes("deMalus")) {
+        atkmods.push("deMalus");
+        sendChatMsg(wp.message, { whisper: "gm", template: "" });
+      }
       if (atkmods.length > 0)
         attributes.set(rowId + "atkmods", atkmods.join(","));
       if (options.length > 0)
@@ -17277,11 +18008,11 @@ on("clicked:reset_all-btn", async function() {
 });
 
 /**
- * On changing all high/low fantasy options
+ * On changing all high/low fantasy & companion options
  */
-on("change:cfg_highfan change:cfg_lowfan", function (eventInfo) {
+on("change:cfg_highfan change:cfg_lowfan change:cfg_companion", function (eventInfo) {
   const { sourceAttribute } = eventInfo;
-  getAttrs([ "cfg_highfan", "cfg_lowfan" ], function (values) {
+  getAttrs([ "cfg_highfan", "cfg_lowfan", "cfg_companion" ], function (values) {
     const checked = intval(values[sourceAttribute]);
     let options;
     switch (sourceAttribute) {
@@ -17291,6 +18022,9 @@ on("change:cfg_highfan change:cfg_lowfan", function (eventInfo) {
       case "cfg_lowfan":
         options = SWData.settings.lowFan;
         break;
+      case "cfg_companion":
+        options = SWData.settings.companion;
+        break;
     }
     const subOptions = new Map(options.map(o => [ o, checked]));
     setAttrs(Object.fromEntries(subOptions));
@@ -17298,30 +18032,43 @@ on("change:cfg_highfan change:cfg_lowfan", function (eventInfo) {
 });
 
 /**
+ * Set main option for all sub-options
+ * @param {string} mainOption - attribute to set if all sub-options are on
+ * @param {string[]} options - list of sub-options attribute names
+ */
+function setAllOptions(mainOption, subOptions) {
+  getAttrs(subOptions, function (values) {
+    if (Object.values(values).every(v => boolval(v)))
+      setAttrs({ [mainOption]: 1 }, { silent: true });
+  });
+}
+
+/**
  * On changing high fantasy options
  */
-on(changeEvent(SWData.settings.highFan), function () {
-  getAttrs(SWData.settings.highFan, function (values) {
-    if (Object.values(values).every(v => boolval(v)))
-      setAttrs({ cfg_highfan: 1 }, { silent: true });
-  });
+on(changeEvent(SWData.settings.highFan), function() {
+  setAllOptions("cfg_highfan", SWData.settings.highFan)
 });
 
 /**
  * On changing low fantasy options
  */
-on(changeEvent(SWData.settings.lowFan), function () {
-  getAttrs(SWData.settings.lowFan, function (values) {
-    if (Object.values(values).every(v => boolval(v)))
-      setAttrs({ cfg_lowfan: 1 }, { silent: true });
-  });
+on(changeEvent(SWData.settings.lowFan), function() {
+  setAllOptions("cfg_lowfan", SWData.settings.lowFan)
+});
+
+/**
+ * On changing companion options
+ */
+on(changeEvent(SWData.settings.companion), function() {
+  setAllOptions("cfg_companion", SWData.settings.companion);
 });
 
 /**
  * Rebuild custom attributes 
  */
 function rebuildCustom() {
-  getAttrs([ "custom" ], function (values) {
+  getAttrs([ "custom", "devol" ], function (values) {
     const rows = strval(values.custom)
       .split("\n")
       .map(r => strval(r).trim())
@@ -17329,12 +18076,13 @@ function rebuildCustom() {
     if (rows.length === 0)
       return;
     
+    const devol = strval(values.devol);
     const updates = new Map();
     rows.forEach(row => {
       const { name, value } = parseNameValue(row);
       if (!name)
         return;
-      updates.set(name.replace(" ", "-"), replaceDevol(value));
+      updates.set(name.replace(" ", "-"), expandDEvol(replaceDevol(value), devol));
     });
 
     if (updates.size > 0)
@@ -17375,6 +18123,7 @@ function toolTipAttrs() {
     "tokenmod",
     "token_tooltip_on",
     "pense_bete",
+    "rd",
     "pnj_tactique_tip",
     "pnj_tactique",
     "pnj_notes_tip",
@@ -17403,6 +18152,7 @@ on("sheet:opened " + eventList("change", toolTipAttrs(), " "), function() {
       : "";
       if (sheetType === SWData.SHEET_TYPE.NPC) {
         reminder = [
+          strval(values.rd),
           npcTacticTip ? strval(values.pnj_tactique) : "",
           npcNotesTip ? strval(values.notes) : "",
         ].join("\n");
@@ -18710,7 +19460,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
       const bonus = intval(values[`cspec${specMove}_bonus`]);
       if (bonus > 0)
         specBonus = ` + [[${bonus}]][${specName}]`;
-      specDM = replaceDevol(strval(values[`cspec${specMove}_dm`]));
+      specDM = expandDEvol(replaceDevol(strval(values[`cspec${specMove}_dm`])));
       if (specDM !== "") {
         if (isNaN(specDM)) {
           extraDM.push(` + [[${specDM}]] ${specName}`);
