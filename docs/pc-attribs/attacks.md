@@ -14,7 +14,7 @@ Pour chacune, vous indiquez :
 - Un bonus optionnel de DM
 - La portée pour une arme à distance
 
-Si la fiche reconnaît le nom de l'arme, elle assigne automatiquement ces paramètres.
+Si la fiche reconnaît le nom de l'arme, elle assigne automatiquement ces paramètres. De plus, elle vérifie les armes maîtrisées par le profil du personnage, et ajoute le modificateur d'attaque `deMalus` si le profil ne sait pas manier ce type d'arme, et murmure un message d'avertissement dans le chat Roll20.
 
 Des paramètres optionnels peuvent être ajoutés :
 - Un effet spécial ou une description affichée dans le chat Roll20. Ce texte peut comporter des commandes de chat Roll20. Les références aux attributs du personnage peuvent être reconnues et remplacées par leurs valeurs effectives si vous les insérez entre `[...]`.
@@ -52,7 +52,7 @@ Des paramètres optionnels peuvent être ajoutés :
   - `affutee` pour réduire de 1 le seuil de critique et ajouter 1d4° DM en cas de coup critique
   - `element xxx [intense]` suivi d'un nom d'élément/substance xxx : ajoute une ligne de 1d4° DM élémentaires (2d4° si le nom de l'élément est suivi d'un espace et du mot `intense`)
   - `fleau xxx` suivi du nom d'un type de créature xxx : Roll20 demande confirmation lors de l'attaque et une ligne de 1d4° DM est ajoutée si la créature ciblée est du même type
-  - `manoeuvres` : l'attaque propose de choisir une des 8 manoeuvres possibles (cf règles page 217) et d'appliquer le modificateur correspondant au jet pour toucher. La description des effets de la manoeuvre sont chuchotés dans le chat Roll20.
+  - `manoeuvres` : l'attaque propose de choisir une des manoeuvres possibles (cf règles page 217) et d'appliquer le modificateur correspondant au jet pour toucher. La description des effets de la manoeuvre sont chuchotés dans le chat Roll20.
 
 - Options d'attaques avec arguments :
   
@@ -67,7 +67,7 @@ Des paramètres optionnels peuvent être ajoutés :
 - Pour les armes de type _Trait_, vous pouvez spécifier le nom de la munition (utile si le suivi simplifié des munitions est activé dans la configuration) ainsi que le nombre dépensé par chaque attaque
 - Pour les armes de type _Jet_, vous pouvez spécifier le nombre disponible, nombre possédé et taux de perte. Ces paramètres sont utilisés par le script **COFantasy2**.
 
-Un clic sur le bouton d20 permet de lancer le jet d'attaque et de DM dans le chat en tenant compte des divers paramètres. 
+Un clic sur le bouton d20 permet de lancer le jet d'attaque et de DM dans le chat en tenant compte des divers paramètres.
 
 A moins que l'option de configuration _Un seul jet d'attaque_ ne soit active, deux jets distincts d'attaque sont effectués, sauf si le PJ est _Affaibli_ ou _Immobilisé_. En cas de jet normal, prenez en compte le premier jet affiché. Prenez le plus élevé des deux jets si le PJ bénéficie d'un _dé bonus_ ou le moins élevé s'il subit un _dé malus_.
 
@@ -80,6 +80,8 @@ Le texte d'effet spécial est traité par la fiche pour substituer les jets en l
 L'icone située à côté de **ARME/SORT** permet d'afficher un menu d'action dans le chat avec un bouton pour chaque jet d'attaque.
 
 Si l'option _Attaques ciblées_ est active, cliquer sur le bouton d'attaque demande au joueur de sélectionner le token de la cible et le résultat du jet d'attaque est comparé à sa Défense pour en déterminer le succès ou l'échec.
+
+Si l'icone _Manoeuvres_ est active, cliquer sur le bouton d20 de l'attaque affiche un popup Roll20 proposant de choisir une manoeuvre. Selon les propriétés de l'arme utilisée, les bonus accordés aux profils de combattants pour certaines manoeuvres sont pris en compte (règle du _Compagnon du joueur_). Si une manoeuvre a été effectuée, le jet de dommages n'apparaît pas dans le chat.
 
 Le bouton d20 de l'attaque peut être épinglé dans la barre d'actions de Roll20 par glisser-déposer.
 
