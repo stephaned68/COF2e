@@ -436,6 +436,7 @@ div.path div.block-title {
   text-overflow: ellipsis;
 }
 
+/*.cofmain select[selected="pc"].is-mook + input.is-mook,*/
 .cofmain input[value="0"].has-script + div.has-script,
 .cofmain input[value="0"].has-script textarea.has-script,
 .cofmain input[value="0"].has-script span.has-script,
@@ -501,6 +502,7 @@ div.path div.block-title {
   margin: 2px;
 }
 
+input[value="pc"] ~ input.is-mook,
 input[value="npc"] ~ button[name="act_charmancer-btn"],
 input[value="npc"] ~ button[name="roll_checkup"] {
   display: none;

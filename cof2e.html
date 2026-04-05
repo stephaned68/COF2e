@@ -309,12 +309,12 @@
         </div>
         <div class="d-flex d-flex-middle">
           <strong>Type</strong>
-          <select class="select-sm" name="attr_sheet_type">
+          <select class="select-sm is-mook" name="attr_sheet_type">
             <option value="pc" selected>PJ</option>
             <option value="npc">PNJ</option>
           </select>
-          <input type="checkbox" name="attr_mook" title="@{mook} Fiche de mook" value="1">
           <input type="hidden" name="attr_sheet_type">
+          <input type="checkbox" class="is-mook" name="attr_mook" title="@{mook} Fiche de mook" value="1" checked>
           <button type="action" class="flat-btn img-btn" name="act_charmancer-btn" title="Lancer le Persomancien">
             <span class="img-btn">x</span>
           </button>
@@ -4139,7 +4139,11 @@
               </div>
             </div>
             <div class="sheet-col">
-              <h4>Armes</h4>
+              <h4>Armes
+                <button type="action" class="img-btn flat-btn float-right", name="act_martial_training" title="Armes & armures maîtrisées">
+                  <span class="img-btn img-btn-lg">i</span>
+                </button>
+              </h4>
               <div>
                 <textarea class="one-row" name="attr_maitrises_armes" title="@{maitrises_armes}" placeholder="Autres maitrises d'armes"></textarea>
               </div>
@@ -5480,7 +5484,7 @@
               </li>
               <li class="config-check">
                 <input type="checkbox" name="attr_cfg_optact" value="1">
-                <span title="Réinitialiser les options tactiques après une attaque">Options tactiques par round</span>
+                <span title="Réinitialiser les options tactiques après une attaque">Options tactiques par attaque</span>
               </li>
             </ul>
 
@@ -6213,7 +6217,7 @@
               <li>
                 <details>
                   <summary>
-                    <strong>Version 1.15.0</strong> (2026-04)
+                    <strong>Version 1.15.0</strong> (2026-04-06)
                   </summary>
                   <ul>
                     <li>Affichage optionnel des options tactiques favorites sur le sous-onglet Attaques</li>
@@ -6222,10 +6226,11 @@
                     <li>Ajout d'un bouton pour le combat à deux armes dans le sous-onglet <em>En main</em></li>
                     <li>Ajout d'une case pour le combat en milieu aquatique dans le sous-onglet <em>En main</em></li>
                     <li>Prise en compte des armes maîtrisées par profil</li>
+                    <li>Ajout d'une icone pour afficher les maîtrises martiales</li>
                     <li><strong>Compagnon du Joueur</strong>
                       <ul>
                         <li>Ajout des peuples optionnels et des profils</li>
-                        <li>Prise en compte des bonus de manoeuvres des armes</li>
+                        <li>Prise en compte des bonus de manoeuvres et aux DM des armes</li>
                       </ul>
                     </li>
                   </ul>
@@ -8475,6 +8480,11 @@
     <div class="sheet-rt sheet-rt-text">
       <span class="sheet-rt sheet-rt-critical">{{crithit}}</span>
     </div>
+    {{#critspec}}
+    <div class="sheet-rt sheet-rt-text">
+      <span class="sheet-rt sheet-rt-critical">{{critspec}}</span>
+    </div>
+    {{/critspec}}
     {{/rollTotal() computed::critsuccess 1}}
     {{#broll}}
       {{#rollTotal() computed::bcritsuccess 1}}
@@ -8483,6 +8493,11 @@
         <br>
         <span class="sheet-rt sheet-rt-critical">{{crithit}}</span>
       </div>
+      {{#critspec}}
+      <div class="sheet-rt sheet-rt-text">
+        <span class="sheet-rt sheet-rt-critical">{{critspec}}</span>
+      </div>
+      {{/critspec}}
       {{/rollTotal() computed::bcritsuccess 1}}
     {{/broll}}
   {{/roll}}
@@ -8695,6 +8710,7 @@ const SWData = {
           atks: { cac: 2, tir: 3, mag: 0 },
           skills: "artisanat,athletisme,equitation,intimidation,natation,sciences,vigilance",
           weapons: [ "cac-1m", "tir", "poudre" ],
+          def: { max: 4, shield: 0 },
           gear: [
             {
               name: "Pétoire",
@@ -8721,6 +8737,7 @@ const SWData = {
           atks: { cac: 2, tir: 1, mag: 2 },
           skills: "acrobaties,artisanat,athletisme,commerce,connaissances,divertissement,empathie,equitation,intimidation,natation, persuasion, religion, renseignement,tromperie",
           weapons: [ "cac-1m" ],
+          def: { max: 3, shield: 0 },
           gear : [
             {
               name: "Rapière",
@@ -8747,6 +8764,7 @@ const SWData = {
           atks: { cac: 0, tir: 0, mag: 0 },
           skills: "",
           weapons: [ "cac-1m", "tir" ],
+          def: { max: 4, shield: 1 },
           gear : [
             {
               name: "Epée courte",
@@ -8777,6 +8795,7 @@ const SWData = {
           atks: { cac: 2, tir: 3, mag: 0 },
           skills: "acrobaties,artisanat,athletisme,discretion,equitation,escalade,medecine,natation,survie,vigilance",
           weapons: [ "cac-1m", "tir" ],
+          def: { max: 3, shield: 0 },
           gear: [
             {
               name: "Epée longue",
@@ -8803,6 +8822,7 @@ const SWData = {
           atks: { cac: 2, tir: 2, mag: 1 }, 
           skills: "acrobaties,artisanat,athletisme,commerce,discrétion,escalade,effraction,intimidation,natation,persuasion,renseignement,tromperie,vigilance",
           weapons: [ "cac-1m", "tir" ],
+          def: { max: 2, shield: 0 },
           gear: [
             {
               name: "Rapière",
@@ -8834,7 +8854,8 @@ const SWData = {
           pv: 5,
           atks: { cac: 3, tir: 2, mag: 0 },
           skills: "artisanat,athletisme,equitation,escalade,intimidation,natation,survie,vigilance",
-          weapons: [ "cac-1m", "cac-2m", "arc", "sarbacane", "bola" ],
+          weapons: [ "cac-1m", "cac-2m", "arc", "bola", "fronde", "sarbacane" ],
+          def: { max: 3, shield: 2 },
           gear: [
             {
               name: "Hache à deux mains",
@@ -8861,6 +8882,7 @@ const SWData = {
           atks: { cac: 3, tir: 0, mag: 2 },
           skills: "athlétisme,connaissance,equitation,intimidation,natation,persuasion,religion",
           weapons: [ "cac-1m", "cac-2m" ],
+          def: { max: 6, shield: 2 },
           gear: [
             {
               name: "Epée longue",
@@ -8887,6 +8909,7 @@ const SWData = {
           atks: { cac: 3, tir: 2, mag: 0 },
           skills: "artisanat,athletisme,equitation,intimidation,natation",
           weapons: [ "cac-1m", "cac-2m", "tir" ],
+          def: { max: 5, shield: 2 },
           gear: [
             {
               name: "Epée longue",
@@ -8917,6 +8940,7 @@ const SWData = {
           atks: { cac: 0, tir: 0, mag: 0 },
           skills: "",
           weapons: [ "cac-1m", "cac-2m", "tir" ],
+          def: { max: 4, shield: 0 },
           gear: [
             {
               name: "Sabre droit",
@@ -8949,6 +8973,7 @@ const SWData = {
           atks: { cac: 1, tir: 1, mag: 3 },
           skills: "artisanat,connaissance,occultisme,sciences",
           weapons: [ "baton", "dague" ],
+          def: { max: 0, shield: 0 },
           gear: [
             {
               name: "Bâton ferré",
@@ -8967,6 +8992,7 @@ const SWData = {
           atks: { cac: 2, tir: 0, mag: 3 },
           skills: "artisanat,connaissance,occultisme,sciences",
           weapons: [ "baton", "dague", "marteau", "arbalete legere" ],
+          def: { max: 2, shield: 0 },
           gear: [
             {
               name: "Bâton ferré",
@@ -8989,6 +9015,7 @@ const SWData = {
           atks: { cac: 1, tir: 1, mag: 3 },
           skills: "artisanat,connaissance,occultisme,sciences",
           weapons: [ "baton", "dague" ],
+          def: { max: 0, shield: 0 },
           gear: [
             {
               name: "Bâton ferré",
@@ -9011,6 +9038,7 @@ const SWData = {
           atks: { cac: 0, tir: 0, mag: 0 },
           skills: "",
           weapons: [ "baton", "dague", "fronde", "gourdin", "hachette", "marteau" ],
+          def: { max: 2, shield: 0 },
           gear: [
             {
               name: "Marteau",
@@ -9033,6 +9061,7 @@ const SWData = {
           atks: { cac: 1, tir: 1, mag: 3 },
           skills: "artisanat,connaissance,occultisme,sciences",
           weapons: [ "baton", "dague" ],
+          def: { max: 0, shield: 0 },
           gear: [
             {
               name: "Bâton ferré",
@@ -9057,6 +9086,7 @@ const SWData = {
           atks: { cac: 0, tir: 0, mag: 0 },
           skills: "",
           weapons: [ "arc court", "baton", "dague", "epieu", "fronde", "lance", "marteau", "masse" ],
+          def: { max: 2, shield: 0 },
           gear: [
             {
               name: "Masse",
@@ -9079,6 +9109,7 @@ const SWData = {
           atks: { cac: 2, tir: 1, mag: 2 },
           skills: "artisanat,athletisme,connaissance,discretion,equitation,empathie,medecine,natation,religion,survie,vigilance",
           weapons: [ "baton", "dague", "epieu", "javelot", "arc court" ],
+          def: { max: 2, shield: 1 },
           gear: [
             {
               name: "Epieu",
@@ -9105,6 +9136,7 @@ const SWData = {
           atks: { cac: 3, tir: 0, mag: 2 },
           skills: "acrobaties,artisanat,athletisme,connaissance,discretion,empathie,escalade,medecine,natation,religion,survie,vigilance",
           weapons: [ "cac-1m", "cac-2m" ],
+          def: { max: 0, shield: 0 },
           gear: [
             {
               name: "Bâton ferré",
@@ -9119,6 +9151,7 @@ const SWData = {
           atks: { cac: 2, tir: 0, mag: 3 },
           skills: "artisanat,athletisme,connaissance,empathie,equitation,intimidation,medecine,persuasion,religion,survie",
           weapons: [ "baton", "cac-1m", "contondant" ],
+          def: { max: 4, shield: 1 },
           gear: [
             {
               name: "Marteau de guerre",
@@ -9143,6 +9176,7 @@ const SWData = {
           atks: { cac: 0, tir: 0, mag: 3 },
           skills: [],
           weapons: [ "cac-1m-lg", "cac-2m-lg", "tir-lg" ],
+          def: { max: 4, shield: 0 },
           gear: [
             {
               name: "Epée courte",
@@ -9698,7 +9732,8 @@ const SWData = {
         "dm-1m: 1d6",
         "type-dm: perforants",
       ],
-      tags: [ "epee courte", "cac-1m", "cac-1m-lg" ]
+      tags: [ "epee courte", "cac-1m", "cac-1m-lg" ],
+      critical: "+[[@{agi}]] DM"
     },
     {
       name: "Epée longue",
@@ -9843,7 +9878,8 @@ const SWData = {
       tags: [ "marteau", "cac-1m", "cac-1m-lg", "contondant" ],
       maneuvers: [ 
         { maneuver: "etourdir", mod: 2 },
-      ]
+      ],
+      critical: "-2 en att. et en DEF si la cible porte une armure de plaques",
     },
     {
       name: "Masse",
@@ -11496,7 +11532,7 @@ function sendChatMsg(msg, options) {
     }
 
     // check crit success
-    if (options.critical) {
+    if (options.critical || options.critspec) {
       const rollD20 = diceRoll(roll.results.roll);
       if (rollD20 >= options.crit)
         computed.critsuccess = 1;
@@ -12343,24 +12379,46 @@ function setProfilesList(family, profile, useCompanion) {
 }
 
 /**
+ * Return primary profile
+ * @param {string} profile - profile value (possibly prime/2nd)
+ * @returns {string}
+ */
+function mainProfile(profile) {
+  return strval(strval(profile).split("/")[0]);
+}
+
+/**
  * Get profile data object
  * @param {string} profile - profile name
  * @param {string} [selectFamily=""] - family name
- * @returns {object}
+ * @returns { {
+ *    value: string,
+ *    companion: boolean,
+ *    pv: number,
+ *    atks: { cac: number, tir: number, mag: number },
+ *    skills: string,
+ *    weapons: string[],
+ *    def: { max: number, shield: number }
+ *    gear: { name: string, number: string }[]
+ *    family: string
+ * } }
  */
 function getProfileData(profile, selectFamily = "") {
-  let data;
-  const [ primary ] = strval(profile).split("/");
-  if (primary) {
-    for (const family in SWData.PC.PROFILES) {
-      if (selectFamily !== "" && family.toLowerCase() !== selectFamily.toLowerCase())
+  let data = {};
+  let family = "";
+  const primary = mainProfile(profile);
+  if (primary !== "") {
+    for (const f in SWData.PC.PROFILES) {
+      if (selectFamily !== "" && f.toLowerCase() !== selectFamily.toLowerCase())
         continue;
-      data = SWData.PC.PROFILES[family].find(p => primary.toLowerCase() === p.value.toLowerCase());
-      if (data)
+      data = SWData.PC.PROFILES[f].find(p => cleanText(primary) === cleanText(p.value));
+      if (data) {
+        family = f;
         break;
+      }
     }
   }
-  return data;
+  return { ...data, family };
 }
 
 /**
@@ -14747,16 +14805,21 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
     // Valeur d'Ombre
     const shadow = shadowValue(values);
 
-    // Manoeuvres
+    // Manoeuvres & coups critiques
+    const isFighter = cleanText(values.famille).startsWith("combattant");
     let hasBonus = [];
-    if (maneuver) {
-      if (strval(values.famille).toLowerCase() === "combattants") {
+    let critSpecial = "";
+    if (isFighter) {
       const weapon = SWData.GEARS.find(gear => cleanText(gear.name) === cleanText(name));
+      if (maneuver) {
         if (weapon?.maneuvers) 
           hasBonus = weapon.maneuvers;
+        if (!modifiers.includes("manoeuvres"))
+          modifiers.push("manoeuvres");
+      } else {
+        if (weapon?.critical)
+          critSpecial = weapon.critical;
       }
-      if (!modifiers.includes("manoeuvres"))
-        modifiers.push("manoeuvres");
     }
     const maneuvers = modifiers.includes("manoeuvres") ? maneuversRollQuery(intval(values.cha), hasBonus) : "";
 
@@ -14932,6 +14995,7 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
       bcritsuccess: "",
       crithit: "",
       critfail: "",
+      critspec: "",
       fumbletest: "",
       fumble: "",
       tohit: "",
@@ -14952,11 +15016,16 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
       }
     }
 
-    if (rollOptions.critical) {
+    if (rollOptions.critical || critSpecial !== "") {
       atkProps.critsuccess = "[[0]]";
       atkProps.crithit = critHit;
       if (atkProps.broll !== "")
         atkProps.bcritsuccess = "[[0]]";
+    }
+    if (critSpecial !== "") {
+      atkProps.critspec = critSpecial;
+      rollOptions.critspec = true;
+      rollOptions.crit = crit;
     }
 
     if (rollOptions.fumble) {
@@ -14977,9 +15046,6 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
       }
       atkProps.target = SWData.settings.tokens.target.name;
       atkProps.targetname = `[[0[${atkProps.target}] ]]`;
-      /*atkProps.tohit = SWData.settings.tokens.target.def;
-      atkProps.target = SWData.settings.tokens.target.name;
-      atkProps.targetname = `[[0[${atkProps.target}] ]]`;*/
     }
     
     const chatMsg = rollTemplate(atkProps, { tags: allTags });
@@ -16921,6 +16987,83 @@ function encumbrance() {
     });
   });
 }
+
+/**
+ * On click on martial training icon button
+ */
+on("clicked:martial_training", function() {
+  getAttrs([ "character_name", "profil" ], function(values) {
+    const { weapons, def } = getProfileData(values.profil);
+    if (!weapons && !def)
+      return;
+
+    let weaponTraining = [ ...weapons ];
+    // all melee weapons
+    if (weapons.includes("cac-2m"))
+      weaponTraining = weaponTraining.filter(wtag => wtag !== "cac-1m");
+    // all light melee weapons
+    if (weapons.includes("cac-2m-lg"))
+      weaponTraining = weaponTraining.filter(wtag => wtag !== "cac-1m-lg");
+    // bludgeoning melee weapons
+    if (weapons.includes("contondant") && weapons.includes("cac-1m"))
+      weaponTraining = weaponTraining.filter(wtag => wtag !== "cac-1m");
+    // lowtech ranged weapons
+    const simpleRangedWeapons = [ "arc", "bola", "fronde", "sarbacane" ];
+    const lightWeapons = [ "cac-1m-lg", "cac-2m-lg", "tir-lg" ];
+    const simpleRanged = weapons.filter(wtag => simpleRangedWeapons.includes(wtag));
+    if (simpleRanged.length > 0 && simpleRangedWeapons.every(wtag => simpleRanged.includes(wtag)))
+        weaponTraining.push("tir-simple");
+    // Weapons training
+    const trained = weaponTraining.map(wtag => {
+      if (simpleRangedWeapons.includes(wtag))
+        return "";
+      return ({
+        "cac-1m": "Armes de contact à une main",
+        "cac-1m-lg": "Armes légère à une main",
+        "contondant": "Armes contondantes à une main",
+        "cac-2m": "Toutes les armes de contact",
+        "cac-2m-lg": "Toutes les armes légères",
+        "tir": "Toutes les armes à distance",
+        "tir-lg": "Toutes les armes à distance légères",
+        "tir-simple": "Armes à distance simples",
+        "poudre": "Armes à poudre",
+      })[wtag] || capitalize(wtag);
+    }).filter(t => t !== "");
+    const light = [];
+    if (weaponTraining.some(wt => lightWeapons.includes(wt)))
+      light.push("*Armes légères*=1d6 DM max, critique : 20");
+
+    // Armor & shield
+    const armor = SWData.GEARS.findLast(gear => {
+      const prop = gear.props.find(prop => {
+        const { name } = parseNameValue(prop);
+        if (name === "armure")
+          return true;
+      });
+      if (!prop)
+        return false;
+      const { value } = parseNameValue(prop);
+      if (intval(value) <= def.max)
+        return true;
+    });
+    const shield = [ "Aucun", "Petit bouclier", "Tous" ][def.shield];
+
+    const defense = [
+      `Armure max.=${ strval(armor?.name, "Aucune") }`,
+      `Bouclier=${shield}`
+    ]
+    sendChatMsg([
+      "title=Maîtrises martiales",
+      ...trained.map((wt, ix) => `${ ix+1 }.=${wt}`),
+      ...light,
+      ...defense,
+      `desc=${ strval(values.character_name) } (${ strval(values.profil) })`
+      ], {
+      template: "custom",
+      whisper: "gm"
+    });
+  });
+});
 
 /**
  * On click on the gear props help button
