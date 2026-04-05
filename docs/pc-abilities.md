@@ -203,6 +203,8 @@ Ce sous-onglet permet d'indiquer les langues maîtrisées par le personnage.
 
 On peut également y noter des maîtrises spécifiques d'armes et d'armures sous forme de champ de texte libre.
 
+Une icône _Information_ permet de chuchoter dans le chat Roll20 un message rappelant les maîtrises d'armes, d'armures et de boucliers du personnage liées à son profil principal.
+
 # Jets de compétences
 
 Ce sous-onglet n'apparaît que si la règle optionnelle est activée dans l'onglet _Configuration_ de la fiche.
