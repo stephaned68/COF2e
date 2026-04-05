@@ -6,23 +6,29 @@ Consultez la [documentation](https://stephaned68.github.io/COF2e/)
 
 ## Version courante
 
-v1.14.0 [Screenshot](cof2e.png)
+v1.15.0 [Screenshot](cof2e.png)
 
 ## Notes de version
 
-### Version _1.15.0_ (2026-03)
+### Version _1.15.0_ (2026-04-06)
 
 - Fiche de PJ:
   - Affichage optionnel des options tactiques favorites sur le sous-onglet Attaques
   - Ajout d'une option de configuration pour les options tactiques favorites
   - Ajout d'un champ post-it pour saisie de notes "techniques"
+  - Ajout d'un bouton pour le combat à deux armes dans le sous-onglet _En main_
+  - Ajout d'une case pour le combat en milieu aquatique dans le sous-onglet _En main_
+  - Prise en compte des armes maîtrisées par profil
+  - Ajout d'une icone pour afficher les maîtrises martiales
+  - **Compagnon du Joueur**
+    - Ajout des peuples optionnels et des profils
+    - Prise en compte des bonus de manoeuvres et aux DM des armes
 
 - Fiche de PNJ:
   - Ajout d'un modificateur d'attaque btn:N pour afficher un bouton de chat d'appel de la capacité no N
   - Possibilité d'envoyer une description anonyme du PNJ dans le chat
   - Affichage optionnel des capacités favorites sur le sous-onglet Attaques
   - Ajout d'une option de configuration pour les capacités favorites
-
 
 ### Version _1.14.0_ (2026-01-31)
 
