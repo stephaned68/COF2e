@@ -8763,7 +8763,7 @@ const SWData = {
           pv: 4,
           atks: { cac: 0, tir: 0, mag: 0 },
           skills: "",
-          weapons: [ "cac-1m", "tir" ],
+          weapons: [ "cac-1m", "tir", "baton", "lance" ],
           def: { max: 4, shield: 1 },
           gear : [
             {
@@ -16996,7 +16996,9 @@ on("clicked:martial_training", function() {
     const { weapons, def } = getProfileData(values.profil);
     if (!weapons && !def)
       return;
-
+    
+    const simpleRangedWeapons = [ "arc", "bola", "fronde", "sarbacane" ];
+    
     let weaponTraining = [ ...weapons ];
     // all melee weapons
     if (weapons.includes("cac-2m"))
@@ -17008,7 +17010,6 @@ on("clicked:martial_training", function() {
     if (weapons.includes("contondant") && weapons.includes("cac-1m"))
       weaponTraining = weaponTraining.filter(wtag => wtag !== "cac-1m");
     // lowtech ranged weapons
-    const simpleRangedWeapons = [ "arc", "bola", "fronde", "sarbacane" ];
     const lightWeapons = [ "cac-1m-lg", "cac-2m-lg", "tir-lg" ];
     const simpleRanged = weapons.filter(wtag => simpleRangedWeapons.includes(wtag));
     if (simpleRanged.length > 0 && simpleRangedWeapons.every(wtag => simpleRanged.includes(wtag)))
