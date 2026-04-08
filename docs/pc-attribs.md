@@ -90,6 +90,8 @@ Les DM temporaires encaissés et les PV restants sont contrôlés par la fiche, 
 
 Dans cette section, on trouve les points de mana courants et maximum. Les PM maximum affichés tiennent compte d'éventuels buffs.
 
+Si les options de configuration _Compagnon du Joueur_ autorisent l'utilisation des nouveaux profils et que le personnage est un Psionique, une seconde section permet d'afficher les Points d'Ego courants et maximum. Le texte **PE** est cliquable et permet de choisir une récupération rapide ou complète des Points d'Ego.
+
 # Etats préjudiciables
 
 Un ensemble d'icones cliquables permettent d'appliquer les effets d'un ou plusieurs états préjudiciables au PJ. Ces effets sont affichés dans le chat Roll20. Une aide visuelle permet d'indiquer si le personnage subit encore au moins un état : si c'est le cas, le cadre autour des icônes est hachuré et de couleur orange.

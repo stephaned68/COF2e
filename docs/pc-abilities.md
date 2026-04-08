@@ -81,6 +81,12 @@ _Afficher une explosion de paillettes roses quand une capacité est utilisée en
 
 Vous pouvez indiquer un nombre pour faire varier le nombre de PM consommés par cette capacité. Ce nombre peut être absolu (`pm: 3` pour consommer 3 PM) ou relatif (`pm: -1` pour consommer 1 PM de moins que la normale).
 
+### Points de Mana (pe)
+
+`pe: N` 
+
+Idem ci-dessus pour les Points d'Ego du Psionique (profil optionnel du _Compagnon_).
+
 ### Effet selon le rang (selonRang)
 
 `selonRang: valeur1,valeur2,valeur3,valeur4,valeur5` 

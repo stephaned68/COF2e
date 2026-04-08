@@ -86,6 +86,11 @@ Si le nombre de points de capacités utilisé dépasse le nombre maximum disponb
 ## Dark Fantasy
 - Lutte contre l'Ombre : le nombre de PC mini est de -5, et devient la Valeur d'Ombre lorsqu'elle est négative.
 
+## Compagnon du joueur
+
+- Autoriser les peuples : les peuples optionnels sont reconnus et la fiche insère automatiquement les noms des capacités de la voie de peuple.
+- Autoriser les profils : les profils optionnels sont reconnus, la fiche reconnaît les noms des voies et insère automatiquement les noms des capacités et les PV par niveau.
+
 ## Forcer les valeurs maxi
 
 Cette section permet de fixer la valeur maximum des PV, DR, PC et PM et empêche la fiche de les calculer automatiquement.
