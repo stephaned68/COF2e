@@ -1,8 +1,8 @@
 <div class="cofmain">
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.15.0">
+  <input type="hidden" name="attr_verfdp" value="1.16.0">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.15.0">
+  <input type="hidden" name="attr_version" value="1.16.0">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
 
@@ -132,7 +132,7 @@
     <div>
       <img
         class="logo"
-        title="Version 1.15.0 - 06/04/2026"
+        title="Version 1.16.0 - 04/2026"
         src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cof2e_logo.jpg"
       />
       <input type="hidden" class="d20roll-btns" name="attr_cfg_d20roll" value="0">
@@ -914,6 +914,25 @@
                 <input class="two-digits" type="number" name="attr_pm" title="@{pm} PM courants" value="0">
                 /
                 <span class="attr-max" name="attr_pm_max" title="@{pm_max} PM maximum"></span>
+              </div>
+
+            </div>
+
+            <!-- PE -->
+            <input type="hidden" class="has-psionic" name="attr_psionic" value="0">
+            <div class="hits hit has-psionic" title="Points d'Ego (psionique)">
+
+              <div class="block-title centered">
+                <button class="flat-btn img-btn" type="action" name="act_egoreco-btn">
+                  <span title="%{egoreco-btn} Lancer Récup. PE&#10;%{egoreco_fast-btn} Récupération rapide&#10;%{egoreco_full-btn} Récupération complète">PE</span>
+                </button>
+              </div>
+
+              <div class="bordered centered">
+                <input type="hidden" name="attr_pe_max" value="0">
+                <input class="two-digits" type="number" name="attr_pe" title="@{pe} PE courants" value="0">
+                /
+                <span class="attr-max" name="attr_pe_max" title="@{pe_max} PE maximum"></span>
               </div>
 
             </div>
@@ -5679,6 +5698,12 @@
                   <span>PM</span>:
                   <input type="number" class="two-digits" name="attr_pm_max" title="@{pm_max}">
                 </li>
+                <input type="hidden" class="has-psionic" name="attr_psionic" value="0">
+                <li class="force-max has-psionic">
+                  <input type="checkbox" class="force-max" name="attr_pemax_force" title="@{pemax_force}" value="1">
+                  <span>PE</span>:
+                  <input type="number" class="two-digits" name="attr_pe_max" title="@{pe_max}">
+                </li>
               </ul>
             </details>
 
@@ -6217,7 +6242,7 @@
               <li>
                 <details>
                   <summary>
-                    <strong>Version 1.15.0</strong> (2026-04-06)
+                    <strong>Version 1.15.1</strong> (2026-04-08)
                   </summary>
                   <ul>
                     <li>Affichage optionnel des options tactiques favorites sur le sous-onglet Attaques</li>
@@ -7826,7 +7851,7 @@
               <li>
                 <details>
                   <summary>
-                    <strong>Version 1.15.0</strong> (2026-04-06)
+                    <strong>Version 1.15.1</strong> (2026-04-08)
                   </summary>
                   <ul>
                     <li>Ajout d'un modificateur d'attaque btn:N pour afficher un bouton de chat d'appel de la capacité no N</li>
@@ -8597,7 +8622,7 @@
 
 /**
  * COF2e Sheet Worker
- * v1.15.0
+ * v1.16.0
  */
 
 const SWData = {
@@ -12921,18 +12946,21 @@ on("change:for", updateLoadLimit);
 
 /**
  * Compute max PM
+ * @description Must not be an ability from a psionic path
  */
 function updatePMMax(eventInfo) {
   const owned = allPathRanks("rankOwned");
   const spells = allPathRanks("rankSpell");
   const bRanks = nameSeq(9, abilityInfo().rankBase);
+  const pProfiles = nameSeq(9, abilityInfo().pathProfile);
   getAttrs([ 
     "cfg_use_mana", "pmmax_force",
     "vol", "pm_buff",
     "cha", "rangs_voies", "noms_voies", "noms_rangs",
     ...spells,
     ...owned,
-    ...bRanks
+    ...bRanks,
+    ...pProfiles
   ], function(values) {
     if (boolval(values.pmmax_force))
       return;
@@ -12940,6 +12968,9 @@ function updatePMMax(eventInfo) {
     const useMorePM = boolval(values.cfg_use_mana);
     const spellPM = spells.reduce((pm, spell) => {
       const [ ability ] = spell.split("_");
+      const profile = strval(values[abilityInfo(ability).pathProfile]);
+      if (profile === "psionique")
+        return pm;
       const baseRank = intval(values[abilityInfo(ability).rankBase]);
       const rank = abilityInfo(ability).rank;
       let pmGain = 1;
@@ -12964,7 +12995,54 @@ function updatePMMax(eventInfo) {
  * On VOL & PM buff change
  * On CHA & ranks change
  */
-on(changeEvent([ "vol","pm_buff","cha","rangs_voies","noms_voies","noms_rangs" ]), updatePMMax);
+on(changeEvent([ "vol", "pm_buff", "cha", "rangs_voies", "noms_voies", "noms_rangs" ]), updatePMMax);
+
+/**
+ * Compute max PE
+ * @description Must be an ability from a psionic path
+ */
+function updatePEMax(eventInfo) {
+  const owned = allPathRanks("rankOwned");
+  const spells = allPathRanks("rankSpell");
+  const bRanks = nameSeq(9, abilityInfo().rankBase);
+  const pProfiles = nameSeq(9, abilityInfo().pathProfile);
+  getAttrs([ 
+    "cfg_use_mana", "pemax_force",
+    "vol", "pe_buff",
+    "rangs_voies",
+    //"noms_voies", "noms_rangs",
+    ...spells,
+    ...owned,
+    ...bRanks,
+    ...pProfiles
+  ], function(values) {
+    if (boolval(values.pemax_force))
+      return;
+
+    const useMorePE = boolval(values.cfg_use_mana);
+    const spellPE = spells.reduce((pe, spell) => {
+      const [ ability ] = spell.split("_");
+      const profile = strval(values[abilityInfo(ability).pathProfile]);
+      if (profile !== "psionique")
+        return pe;
+      const baseRank = intval(values[abilityInfo(ability).rankBase]);
+      const rank = abilityInfo(ability).rank;
+      let peGain = 1;
+      if (useMorePE && (baseRank + rank -1) >= 3)
+        peGain = 2;
+      return pe + (intval(values[ability]) * intval(values[spell]) * peGain);
+    }, 0);
+    let base = intval(values.vol);
+
+    const pe_max = spellPE > 0 ? base + spellPE + intval(values.pe_buff) : 0;
+    logAndSet({ pe_max }, logTitle(eventInfo));
+  });
+}
+
+/**
+ * On VOL & PE buff change
+ */
+on(changeEvent([ "vol", "pe_buff", "rangs_voies", "noms_voies", "noms_rangs" ]), updatePEMax);
 
 /**
  * On change of an ability spell
@@ -12972,6 +13050,7 @@ on(changeEvent([ "vol","pm_buff","cha","rangs_voies","noms_voies","noms_rangs" ]
 seq(9).forEach(p => {
   seq(5).forEach(r => {
     on(`change:v${p}r${r} change:v${p}r${r}_spell`, updatePMMax);
+    on(`change:v${p}r${r} change:v${p}r${r}_spell`, updatePEMax);
   });
 });
 
@@ -13641,7 +13720,7 @@ on(clickedEvent([ "drecup-btn", "recovery_fast-btn", "recovery_full-btn"]), func
       const chatMsg = rollTemplate({
         lsub,
         rsub,
-        text: "@{character_name} est déjà à son maximum de PV !",
+        text: `@{character_name} est déjà à son maximum de PV !`,
       });
       sendChatMsg(chatMsg);
       return;
@@ -13666,7 +13745,7 @@ on(clickedEvent([ "drecup-btn", "recovery_fast-btn", "recovery_full-btn"]), func
 
     /**
      * Perform recovery or push self
-     * @param {number} typeRecup - recovery type 1=fast, 2=full, 3=push 
+     * @param {number} typeRecup - recovery type 1=fast, 2=full, 3=push
      */
     const recovery = (typeRecup) => {
       if (typeRecup !== 2 && dr > 0)
@@ -13727,7 +13806,7 @@ on(clickedEvent([ "drecup-btn", "recovery_fast-btn", "recovery_full-btn"]), func
       return;
     }
 
-    const recups = [ 
+    const recups = [
       SWData.emojis.recovery.fast + " Rapide",
       SWData.emojis.recovery.full + " Complète ",
     ];
@@ -13737,6 +13816,86 @@ on(clickedEvent([ "drecup-btn", "recovery_fast-btn", "recovery_full-btn"]), func
     ask([ "Récupération ?", ...recups ], recovery);
   });
 });
+
+on(clickedEvent([ "egoreco-btn", "egoreco_fast-btn", "egoreco_full-btn"]), function(eventInfo) {
+  const egorecoBtn = strval(eventInfo.triggerName).split(":")[1];
+  const typeRecup = [ "fast", "full" ].findIndex(b => egorecoBtn === `egoreco_${b}-btn`);
+  getAttrs([ "dr", "dr_max", "devol", "pe", "pe_max" ], function(values) {
+    const lsub = "Jet";
+    let rsub = "Récupération PE";
+    
+    let dr = intval(values.dr);
+    let drMax = intval(values.dr_max);
+    if (dr === 0 && drMax !== 0) {
+      const chatMsg = rollTemplate({
+        lsub,
+        rsub,
+        text: "Plus de Dé de Récupération !",
+        textclass: "fumble"
+      });
+      sendChatMsg(chatMsg);
+      return;
+    }
+    
+    const peMax = intval(values.pe_max);
+    let pe = intval(values.pe);
+    if (pe === peMax) {
+      const chatMsg = rollTemplate({
+        lsub,
+        rsub,
+        text: `@{character_name} est déjà à son maximum de PE !`,
+      });
+      sendChatMsg(chatMsg);
+      return;
+    }
+    
+    /**
+     * Perform Ego recovery 
+     * @param {number} typeRecup - recovery type 1=fast, 2=full
+     */
+    const egoRecovery = (typeRecup) => {
+      if (typeRecup === 1 && dr > 0)
+        dr -= 1;
+      
+      const devol = strval(values.devol);
+      const peRecup = typeRecup === 1 
+      ? devol
+      : (devol === "2d6" ? "12" : devol.split("d")[1]);
+      let text = `${dr} DR restants`;    
+      rsub += " *" + (typeRecup === 1 ? "Rapide" : "Complète") + "*";
+      const recup = `[[${peRecup}]] PE récupérés`;
+      
+      let chatMsg = {
+        lsub,
+        rsub,
+        roll: recup,
+        text
+      };
+      const chatCmd = buildChatMsg(rollTemplate(chatMsg));
+
+      startRoll(chatCmd, roll => {
+        finishRoll(roll.rollId);
+        let updates = new Map([ [ "dr", dr ] ]);
+        pe += roll.results.roll.result;
+        updates.set("pe", Math.min(pe, peMax));
+        setAttrs(Object.fromEntries(updates));
+      });
+    }
+    
+    if (typeRecup >= 0) {
+      egoRecovery(typeRecup + 1);
+      return;
+    }
+
+    const recups = [
+      SWData.emojis.recovery.fast + " Rapide",
+      SWData.emojis.recovery.full + " Complète ",
+    ];
+
+    ask([ "Récupération Ego ?", ...recups ], egoRecovery);
+  });
+});
+
 
 /**
  * Update the def attribute
@@ -15432,6 +15591,7 @@ on("change:next_roll", function () {
 function actionAbility(path, rank) {
   const abilityAttrs = [
     abilityInfo({ path, rank }).pathName,
+    abilityInfo({ path, rank }).pathProfile,
     abilityInfo({ path, rank }).rankName,
     abilityInfo({ path, rank }).rankDesc,
     abilityInfo({ path, rank }).rankOwned,
@@ -15446,10 +15606,18 @@ function actionAbility(path, rank) {
   getAttrs([
     ...abilityAttrs, 
     "character_name",
-    "pm", "concentration", "rangs_voies",
+    "pm", "pe", "concentration", "rangs_voies",
   ], async function(values) {
-    const [ name, ability, desc, owned, spell, used, uses, freq, props, br ] = Object.keys(values);
+    const [ 
+      name, profile,
+      ability, desc,
+      owned, spell,
+      used, uses, freq,
+      props,
+      br 
+    ] = Object.keys(values);
     const pathName = strval(values[name]);
+    const psionic = (strval(values[profile]) === "psionique");
     let abilityName = strval(values[ability]);
     const abilityOwned = boolval(values[owned]);
     const abilitySpell = boolval(values[spell]);
@@ -15498,48 +15666,51 @@ function actionAbility(path, rank) {
       }
     }
 
-    // alert on spells & PM
+    // alert on spells & PM/PE
+    const power = psionic ? "pe" : "pm";
+    const powerName = psionic ? "Points d'Ego" : "Points de Mana";
     if (!expended && abilityOwned && abilitySpell) {
-      let pm = intval(values.pm);
-      let mana = rank + rankBase - 1;
-      const pmProp = strval(getProp(abilityProps, "pm"));
-      if (pmProp !== "") {
-        let [ pmMod, ...pmModInfo ] = pmProp.split(" ");
-        if ([ "+", "-" ].includes(pmMod.charAt(0))) {
-          mana = Math.max(0, mana - intval(pmMod));
+      let currentPower = intval(values[power]);
+      let powerUsed = rank + rankBase - 1;
+      const powerProp = strval(getProp(abilityProps, power));
+      if (powerProp !== "") {
+        let [ powerMod, ...powerModInfo ] = powerProp.split(" ");
+        if ([ "+", "-" ].includes(powerMod.charAt(0))) {
+          powerUsed = Math.max(0, powerUsed - intval(powerMod));
         } else {
-          mana = intval(pmMod);
+          powerUsed = intval(powerMod);
         }
-        if (mana === 0) {
-          alert = `Pas de PM dépensés ${ pmModInfo.join(" ") }`;
+        if (powerUsed === 0) {
+          alert = `Pas de ${ power.toUpperCase() } dépensés ${ powerModInfo.join(" ") }`;
           alertCSS = "secondary";
         }
       }
       if (attackSpell && concentration) {
-        mana = Math.max(0, mana - 2);
+        powerUsed = Math.max(0, powerUsed - 2);
         abilityName = abilityName.replace("(A)", "(L:Concentration)");
       }
       alert += (alert !== "") ? "\n" : "";
-      if (mana > pm) {
-        alert += "Plus assez de Points de Mana\n";
-        alert += `${pm} restants pour ${mana} nécessaires\n`;
-        alert += `Brûlure de Mana : [[${mana - pm}d@{drecup}]] PV perdus\n`
+      if (powerUsed > currentPower) {
+        alert += `Plus assez de ${ powerName }\n`;
+        alert += `${currentPower} restants pour ${powerUsed} nécessaires\n`;
+        alert += `Brûlure ${ psionic ? "d'Ego" : "de Mana" } : [[${powerUsed - currentPower}d@{drecup}]] PV perdus\n`
         alertCSS = "fumble";
       } else {
-        pm -= mana;
-        if (mana > 0) {
-          alert += `${pm} Points de Mana restants`;
+        currentPower -= powerUsed;
+        if (powerUsed > 0) {
+          alert += `${currentPower} ${powerName} restants`;
           alertCSS = "secondary";
         }
-        updates.set("pm", pm);
+        updates.set(power, currentPower);
       }
     }
 
     if (abilitySpell) {
       allTags.push("Sort");
-      if (hasProp(abilityProps, "zone")) {
+      if (hasProp(abilityProps, "zone"))
         allTags.push("Zone");
-      }
+      if (psionic)
+        allTags.push("Psionique");
     }
 
     // change rolls based on rank
@@ -15873,11 +16044,13 @@ function updatePathInfos(path) {
 
     updates.set(abilityInfo({ path, rank: 0}).pathPV, pathPV.pv);
     updates.set(abilityInfo({ path, rank: 0}).pathProfile, pathPV.profile);
+    if (pathPV.profile === "psionique")
+      updates.set("psionic", 1);
     rankNames.forEach((rank, ix) => {
       if (strval(values[rank]) === "")
         updates.set(abilityInfo({ path, rank: ix + 1 }).rankName, capitalize(pathPV.abilities[ix]));
     });
-
+    
     setAttrs(Object.fromEntries(updates));
   });
 }
@@ -19790,6 +19963,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
         broll: "",
         brollf: "[[0]]",
         brolleffect: "",
+        hasdm: "[[1]]",
         dm: dmroll,
         dmdesc,
         critdiff: `[[${useCritDiff}]]`,

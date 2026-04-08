@@ -1,4 +1,4 @@
-/* COF2e v1.15.0 */
+/* COF2e v1.16.0 */
 
 @import url('https://fonts.googleapis.com/css?family=Merriweather+Sans&display=swap');
 
@@ -436,12 +436,12 @@ div.path div.block-title {
   text-overflow: ellipsis;
 }
 
-/*.cofmain select[selected="pc"].is-mook + input.is-mook,*/
 .cofmain input[value="0"].has-script + div.has-script,
 .cofmain input[value="0"].has-script textarea.has-script,
 .cofmain input[value="0"].has-script span.has-script,
 .cofmain input[value="0"].has-script .weapon span.has-script,
 .cofmain input[value="0"].has-script + div.ammos,
+.cofmain input[value="0"].has-psionic + .has-psionic,
 .cofmain input[value="0"].opt-tact + div.opt-tact,
 .cofmain input[value="0"].fav-tact + div.fav-tact,
 .cofmain input[value="0"].fav-abilities + div.fav-abilities,
@@ -1251,7 +1251,8 @@ input[value="0"].ability-uses + div.ability-uses {
 .pc-config-tab input[name="attr_pvmax_force"] ~ span,
 .pc-config-tab input[name="attr_drmax_force"] ~ span,
 .pc-config-tab input[name="attr_pcmax_force"] ~ span,
-.pc-config-tab input[name="attr_pmmax_force"] ~ span {
+.pc-config-tab input[name="attr_pmmax_force"] ~ span,
+.pc-config-tab input[name="attr_pemax_force"] ~ span {
   display: inline-block;
   width: 5rem;
 }
