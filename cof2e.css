@@ -306,6 +306,7 @@ span.img-btn-xl {
 }
 
 .img-btn:hover {
+  font-weight: bold;
   color: var(--cof-click);
   transition: all 0.2s ease;
 }

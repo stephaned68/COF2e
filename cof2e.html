@@ -897,7 +897,7 @@
 
             <div class="bordered centered hit">
               DM temporaires
-              <input type="number" name="attr_temp_dm" title="@{temp_dm}" value="">
+              <input type="number" class="two-digits" name="attr_temp_dm" title="@{temp_dm}" value="">
             </div>
 
             <!-- PM -->
@@ -1254,6 +1254,7 @@
           
           <input type="hidden" class="opt-tact" name="attr_optact" value="0">
           <div class="opt-tact d-inline p2">
+
             <div class="d-flex d-flex-between align-self-center">
               <select class="select-lg" name="attr_tactique" title="@{attr_tactique} Options tactiques">
                 <option value="0">Aucune</option>
@@ -1314,7 +1315,9 @@
           <div class="pc-attacks">
             
             <div class="weapon">
-              <div></div>
+              <div>
+                <button type="action" class="hidden" name="act_round-btn" />
+              </div>
               <h4>
                 ARME / SORT
                 <button type="action" class="flat-btn img-btn" name="act_attacks_menu-btn" title="%{attacks_menu-btn} Menu des jets d'attaques">
@@ -1338,7 +1341,7 @@
                   <button type="action" class="hidden" name="act_atkdual1-btn"></button>
                   <button type="action" class="hidden" name="act_atkdual2-btn"></button>
                   <button type="action" class="hidden" name="act_attack-btn">
-                    <span class="d20-btn">t</span>
+                    <!--<span class="d20-btn">t</span>-->
                   </button>
                   <button type="roll" class="flat-btn" name="roll_attack" title="%{repeating_armes_ID_attack-btn} Jet d'attaque" value="@{attack-btn}"/>
                 </div>
@@ -4034,7 +4037,7 @@
               <div>
                 <input type="hidden" name="attr_roll-btn" value="">
                 <button class="hidden" type="action" name="act_roll-btn">
-                  <span class="d20-btn">t</span>
+                  <!--<span class="d20-btn">t</span>-->
                 </button>
                 <button type="roll" class="flat-btn" name="roll_roll" title="%{repeating_rolls_ID_roll-btn}" value="@{roll-btn}"/>
               </div>
@@ -5868,6 +5871,10 @@
                     <input type="checkbox" name="attr_cfg_luck_btn" value="1">
                     <span>Bouton Chance</span>
                   </li>
+                  <li class="config-check">
+                    <input type="checkbox" name="attr_cfg_round_btn" value="1">
+                    <span>Bouton Fin de round</span>
+                  </li>
                 </ul>
               </li>
               <li>Dé bonus/Dé malus
@@ -6238,6 +6245,19 @@
           <div class="sheet-col">
 
             <ul>
+
+              <li>
+                <details>
+                  <summary>
+                    <strong>Version 1.16.0</strong> (2026-04)
+                  </summary>
+                  <ul>
+                    <li>Ajout des Points d'Ego (Compagnon, Psionique)</li>
+                    <li>Amélioration des DM temporaires (message d'information, récupération)</li>
+                    <li>Affichage optionnel d'un bouton <em>Fin de round</em> sur les attaques</li>
+                  </ul>
+                </details>
+              </li>
 
               <li>
                 <details>
@@ -8574,14 +8594,20 @@
     {{#aide}}
     <span>{{aide}}</span>
     {{/aide}}
+    {{#round}}
+    <span>{{round}}</span>
+    {{/round}}
   </div>
   {{/chance}}
   {{^chance}}
-  {{#aide}}
   <div class="sheet-rt sheet-rt-text">
+    {{#aide}}
     <span>{{aide}}</span>
+    {{/aide}}
+    {{#round}}
+    <span>{{round}}</span>
+    {{/round}}
   </div>
-  {{/aide}}
   {{/chance}}
   {{#alert}}
   <div class="sheet-rt sheet-rt-text">
@@ -11539,9 +11565,13 @@ function sendChatMsg(msg, options) {
       const matched = roll.results.roll.expression.match(rx);
       if (matched) {
         updates.set("last_maneuver", `${ cleanText(matched[1]) }~${roll.rollId}`); // make it unique
-        computed.hasdm=0;
+        computed.hasdm = 0;
       }
     }
+
+    const toHit = intval(roll.results.tohit?.result);
+    if (toHit > 0 && intval(roll.results.roll.result) < toHit)
+      computed.hasdm = 0;
 
     // check TN
     const rollTN = intval(options.rollTN);
@@ -11632,8 +11662,7 @@ function rollTemplate(props, options = {}) {
   return [
     ...title,
     "color=@{couleur_pj}",
-    ...Object.entries(props).map(e => {
-      const [ prop, value ] = e;
+    ...Object.entries(props).map(([ prop, value ]) => {
       const space = (value !== "") ? " " : ""
       return `${prop}=${value}${space}`;
     })
@@ -11682,9 +11711,8 @@ function ask(askParams, callback) {
   const { ask, choices } = askCommand(askParams);
   startRoll(ask, question => {
       const query = question.results.ask.result;
-      if(query && callback) {
+      if(query && callback)
           callback(query, choices);
-      }
       finishRoll(question.rollId);
   });
 };
@@ -13683,7 +13711,7 @@ on(clickedEvent([ "drecup-btn", "recovery_fast-btn", "recovery_full-btn"]), func
   const recupAttrs = [
     "dr", "dr_max", "drecup",
     "niveau", "vol",
-    "pv", "pv_max",
+    "pv", "pv_max", "temp_dm",
     "pm", "pm_max",
     "cfg_highfan",
     "cfg_use_drniv",
@@ -13754,6 +13782,7 @@ on(clickedEvent([ "drecup-btn", "recovery_fast-btn", "recovery_full-btn"]), func
       const level = intval(values.niveau);
       const addLevel = boolval(values.cfg_use_drniv);
       const drOnly = boolval(values.cfg_use_dronly);
+      let tempDM = intval(values.temp_dm);
       let bRecup = "", bLevel = 0;
       if (!drOnly) {
         bLevel = addLevel ? level : Math.ceil(level / 2);
@@ -13768,8 +13797,16 @@ on(clickedEvent([ "drecup-btn", "recovery_fast-btn", "recovery_full-btn"]), func
         rsub = effort;
         recup = `[[${rolls[0]} + 1d10 + @{vol}[VOL] ]]`;
       } else {
-        rsub += " *" + (typeRecup === 1 ? "Rapide" : "Complète") + "*"
+        rsub += " *" + (typeRecup === 1 ? "Rapide" : "Complète") + "*";
         recup = `[[${dRecup}[DR] ${bRecup}]] PV récupérés`;
+        if (tempDM > 0) {
+          const tempRecovery = typeRecup === 1 ? 30 : 8 * 60;
+          if (tempDM - tempRecovery > 0)
+            text += `\n${tempRecovery} DM temporaires éliminés`;
+          else
+            text += `\nTous les DM temporaires sont éliminés`;
+          tempDM = Math.max(0, tempDM - tempRecovery);
+        }
         if (typeRecup === 1)
           resetAbilities = combat;
         else
@@ -13788,7 +13825,10 @@ on(clickedEvent([ "drecup-btn", "recovery_fast-btn", "recovery_full-btn"]), func
       const chatCmd = buildChatMsg(rollTemplate(chatMsg));
       startRoll(chatCmd, roll => {
         finishRoll(roll.rollId);
-        let updates = new Map([ [ "dr", dr ] ]);
+        let updates = new Map([ 
+          [ "dr", dr ],
+          [ "temp_dm", tempDM ]
+        ]);
         if (typeRecup !== 3) {
           pv += roll.results.roll.result;
           updates.set("pv", Math.min(pv, pvMax));
@@ -13817,6 +13857,9 @@ on(clickedEvent([ "drecup-btn", "recovery_fast-btn", "recovery_full-btn"]), func
   });
 });
 
+/**
+ * On PE Recup button click
+ */
 on(clickedEvent([ "egoreco-btn", "egoreco_fast-btn", "egoreco_full-btn"]), function(eventInfo) {
   const egorecoBtn = strval(eventInfo.triggerName).split(":")[1];
   const typeRecup = [ "fast", "full" ].findIndex(b => egorecoBtn === `egoreco_${b}-btn`);
@@ -14721,11 +14764,11 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
     "visibilite"
   ];
   getAttrs([
-    "scriptVersion", "character_name", "famille", "devol",
+    "scriptVersion", "famille", "devol",
     "cfg_1attack_roll", "cfg_cible", "cfg_optact",
     "cfg_d20roll", "d20roll",
     "cfg_crit_diff", "cfg_tbl_crit", "cfg_tbl_fumble",
-    "cfg_use_ammo", "cfg_usure",
+    "cfg_use_ammo", "cfg_usure", "cfg_round_btn",
     "cfg_lowfan", "cfg_shadow", "pc",
     "manoeuvre", "atkcac", "atktir", "atkmag",
     "agi_dsup", "per_dsup", "cha",
@@ -14751,6 +14794,7 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
     const useCritDiff = intval(values.cfg_crit_diff);
     const useAmmo = boolval(values.cfg_use_ammo);
     const useWear = boolval(values.cfg_usure);
+    const roundButton = boolval(values.cfg_round_btn);
     const shieldUsed = boolval(values.bouclier_eqp);
     const tactics = intval(values.tactique);
     const tactRound = boolval(values.cfg_optact);
@@ -15149,6 +15193,7 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
       powder,
       text: special,
       chance: addLuckButton(values),
+      round: "",
       usure: "",
       critsuccess: "",
       bcritsuccess: "",
@@ -15206,15 +15251,18 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
       atkProps.target = SWData.settings.tokens.target.name;
       atkProps.targetname = `[[0[${atkProps.target}] ]]`;
     }
+
+    if (roundButton)
+      atkProps.round = `[&nbsp;Fin du round&nbsp;](~${strval(values.character_name)}|round-btn${ menuButton(strval(values.couleur_pj), {}, { class: "chat-button" }) })`;
     
     const chatMsg = rollTemplate(atkProps, { tags: allTags });
     sendChatMsg(chatMsg, rollOptions);
     
     dualWield = dualWield.replace(atkButton, "");
     let updates = { deux_armes: dualWield };
-    if (dualWield === "" && tactics > 0)
+    if (dualWield === "" && !roundButton && tactics > 0)
       updates = { ...updates, tactique: "0" };
-    setAttrs(updates);    
+    setAttrs(updates);
     if (tactRound) {
       const reset = new Map();
       tacticIds.map(id => rptAttr("tactic", "tact-on", id)).forEach(attr => {
@@ -15245,17 +15293,28 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
 });
 
 /**
+ * Reset at end of round
+ */
+on("clicked:round-btn", function () {
+  setAttrs({ 
+    tactique: 0,
+    def_action: ""
+  });
+});
+
+/**
  * Display tactical option description
  */
 on("change:tactique", function() {
   getAttrs([ "tactique" ], function(values) {
-    const tactique = numval(values.tactique);
-    const tactdesc = [
+    const tactics = intval(values.tactique);
+    const tactdesc = ([
       "",
       "+5 en attaque, DM divisés par 2",
       "-3 en attaque, +1d4° DM",
       "-7 en attaque, +2d4° DM",
-    ][tactique];
+      "Action (L), +[PER] DM",
+    ])[tactics];
     setAttrs({ tactdesc });
   });
 });
@@ -21511,15 +21570,16 @@ on("change:pv change:temp_dm", function(eventInfo) {
       return;
     const typeDM = strval(eventInfo.triggerName);
     const charName = strval(values.character_name);
+    const text = `${tempDM} DM temporaires - ${pv} PV restants\n`;
     const display = ({
       temp_dm: {
         rsub: "DM temporaires",
-        text: `${charName} est assommé-e (inconscient-e) !`,
+        text: `${text}${charName} est assommé-e (inconscient-e) !`,
         textclass: "secondary",
       },
       pv: {
         rsub: "DM létaux",
-        text: `${charName} tombe à 0 PV !`,
+        text: `${text}${charName} tombe à 0 PV !`,
         textclass: "fumble",
       }
     })[typeDM];
