@@ -6,10 +6,10 @@
   - Public : Tous les joueurs voient les jets du PJ dans le chat.
   - Chuchotés au MJ : Seul le joueur et le MJ voient les jets (uniquement le MJ pour une fiche de PNJ non partagées aux joueurs).
   - Avec token : Le token par défaut du personnage apparaît dans tous les messages envoyés dans le chat par la fiche.
-- Calcul automatique PV max. : Cette option permet que la fiche calcule automatiquement les PV maximums (cf. ci-dessous)
-- Contrôle points de capacités : Cette option permet que la fiche vérifie les dépassements de points de capacité (cf. ci-dessous)
-- Attaques ciblées : Cette option permet de demander au joueur de pointer sur la map la cible d'un jet d'attaque, de comparer le résultat avec la Défense du PJ ou du PNJ lié à ce token, et afficher si l'attaque est un succès ou un échec
-- Options tactiques par round : Cette option permet que la fiche désactive les options tactiques activées par le joueur après chaque attaque
+- Calcul automatique PV max. : Cette option permet que la fiche calcule automatiquement les PV maximums (cf. ci-dessous).
+- Contrôle points de capacités : Cette option permet que la fiche vérifie les dépassements de points de capacité (cf. ci-dessous).
+- Attaques ciblées : Cette option permet de demander au joueur de pointer sur la map la cible d'un jet d'attaque, de comparer le résultat avec la Défense du PJ ou du PNJ lié à ce token, et afficher si l'attaque est un succès ou un échec.
+- Options tactiques par round : Cette option permet que la fiche désactive les options tactiques activées par le joueur après chaque attaque. Elle est inutile si l'option _Bouton Fin de round_ est active (cf. ci-dessous).
 
 ### Calcul automatique des PV maximums
 
@@ -133,7 +133,8 @@ Vous pouvez sélectionner une couleur spécifique pour les messages de chat du p
 Vous pouvez également modifier certains aspects des messages de chat :
 - Un seul jet d'attaque (cf _Jets de d20_ ci-dessous).
 - Un seul jet de compétence (cf _Jets de d20_ ci-dessous).
-- Bouton Chance : Un bouton chance est affiché au bas des messages sur tous les jets de D20 et permet de dépenser instantanément un PC en affichant les résultats précédents bonifiés (+10 ou +1d10 si l'option PC variables est active).
+- Bouton Chance : Un bouton _Chance_ est affiché au bas des messages sur tous les jets de D20 et permet de dépenser instantanément un PC en affichant les résultats précédents bonifiés (+10 ou +1d10 si l'option PC variables est active).
+- Bouton Fin de round : Un bouton _Fin de round_ est affiché au bas des messages d'attaques et permet de supprimer l'option tactique choisie.
 
 ## Dé bonus / Dé malus
 
