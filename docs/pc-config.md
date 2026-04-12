@@ -9,7 +9,7 @@
 - Calcul automatique PV max. : Cette option permet que la fiche calcule automatiquement les PV maximums (cf. ci-dessous).
 - Contrôle points de capacités : Cette option permet que la fiche vérifie les dépassements de points de capacité (cf. ci-dessous).
 - Attaques ciblées : Cette option permet de demander au joueur de pointer sur la map la cible d'un jet d'attaque, de comparer le résultat avec la Défense du PJ ou du PNJ lié à ce token, et afficher si l'attaque est un succès ou un échec.
-- Options tactiques par round : Cette option permet que la fiche désactive les options tactiques activées par le joueur après chaque attaque. Elle est inutile si l'option _Bouton Fin de round_ est active (cf. ci-dessous).
+- Options tactiques par round : Cette option permet que la fiche désactive les options tactiques activées par le joueur après chaque attaque. Elle est inutile si l'option _Bouton Fin de tour_ est active (cf. ci-dessous).
 
 ### Calcul automatique des PV maximums
 
@@ -101,6 +101,14 @@ Cette section affiche le nombre de voies dans lesquelles le personnage a acquis 
 
 _Exemple :_ Nombre de dés de DM de l'_attaque sournoise_, nombre d'utilisation par jour du sort de _récupération mineure_.
 
+## Premiers rangs
+
+Pour chaque voie du PJ, vous pouvez indiquer la valeur du premier rang (1 pour les voies de peuple et de profil, 4 pour les voies de prestige). La fiche stocke le nom du profil dont cette voie est issue.
+
+Ne pas oublier d'indiquer la valeur de **3** pour le rang de base la voie de prestige du _familier fantastique_.
+
+Le rang de base peut aussi être utilisé pour implémenter la magie rare du mode **low-fantasy**, en changeant le rang de base des voies de magie par 2, 3 ou 4 selon la rareté souhaitée.
+
 ## Attributs personnalisés
 
 Cette section permet de définir une liste d'attributs dans une zone de texte libre. La syntaxe de cette liste est la même que pour les [prédicats]({{ site.baseurl }}/pc-script).
@@ -134,7 +142,7 @@ Vous pouvez également modifier certains aspects des messages de chat :
 - Un seul jet d'attaque (cf _Jets de d20_ ci-dessous).
 - Un seul jet de compétence (cf _Jets de d20_ ci-dessous).
 - Bouton Chance : Un bouton _Chance_ est affiché au bas des messages sur tous les jets de D20 et permet de dépenser instantanément un PC en affichant les résultats précédents bonifiés (+10 ou +1d10 si l'option PC variables est active).
-- Bouton Fin de round : Un bouton _Fin de round_ est affiché au bas des messages d'attaques et permet de supprimer l'option tactique choisie.
+- Bouton Fin de tour : Un bouton _Fin de tour_ est affiché au bas des messages d'attaques et permet de terminer le tour en supprimant l'option tactique choisie.
 
 ## Dé bonus / Dé malus
 
@@ -181,14 +189,6 @@ Pour les jets d'armes, les états préjudiciables et la présence des modificate
 #### Choisir le type de dés pendant le jet
 
 Vous pouvez activer une option de configuration pour que lorsqu'un bouton d'action est cliqué, un popup Roll20 s'ouvre et la fiche demande au joueur le type de jet à effectuer. Cette demande ne s'affiche que si le jet devrait être normal.
-
-## Premiers rangs
-
-Pour chaque voie du PJ, vous pouvez indiquer la valeur du premier rang (1 pour les voies de peuple et de profil, 4 pour les voies de prestige). La fiche stocke le nom du profil dont cette voie est issue.
-
-Ne pas oublier d'indiquer la valeur de **3** pour le rang de base la voie de prestige du _familier fantastique_.
-
-Le rang de base peut aussi être utilisé pour implémenter la magie rare du mode **low-fantasy**, en changeant le rang de base des voies de magie par 2, 3 ou 4 selon la rareté souhaitée.
 
 ## Autres fonctions
 
