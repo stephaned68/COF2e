@@ -1031,7 +1031,7 @@ button.spell-concentration span {
   gap: 5px;
 }
 
-.abilities .rank .rank-summary span.rank-title {
+.abilities .rank .rank-summary .rank-title {
   width: 21rem;
   overflow-x: hidden;
   text-overflow: ellipsis;
@@ -1081,6 +1081,7 @@ button.spell-concentration span {
 .npc-gears .gears textarea.one-row,
 .npc-gears .ammos textarea.one-row,
 .npc-actions textarea.one-row,
+.npc-configs textarea.one-row,
 .resources textarea.one-row {
   padding: 0;
   margin: 0;
@@ -1116,6 +1117,7 @@ button.spell-concentration span {
 .npc-trait-rd textarea.one-row:focus,
 .npc-gears .gears textarea.one-row:focus,
 .npc-actions textarea.one-row:focus,
+.npc-configs textarea.one-row:focus,
 .resources textarea.one-row:focus {
   height: 6rem;
 }
@@ -1210,6 +1212,10 @@ input[value="0"].ability-uses + div.ability-uses {
   display: grid;
   grid-template-columns: 50% 50%;
   gap: 2px;
+}
+
+.pc-config-tab ul.pc-configs:has(.first-rank) {
+  margin-left: 0;
 }
 
 .pc-config-tab div.pc-configs.first-rank span {
