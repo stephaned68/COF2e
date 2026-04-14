@@ -8890,7 +8890,7 @@ const SWData = {
           companion: true,
           pv: 4,
           atks: { cac: 0, tir: 0, mag: 0 },
-          skills: "",
+          skills: "artisanat,athletisme,commerce,connaissance,equitation,escalade,natation,persuasion,renseignement,tromperie,vigilance,survie",
           weapons: [ "cac-1m", "tir", "baton", "lance" ],
           def: { max: 4, shield: 1 },
           gear : [
@@ -9066,7 +9066,7 @@ const SWData = {
           companion: true,
           pv: 5,
           atks: { cac: 0, tir: 0, mag: 0 },
-          skills: "",
+          skills: "acrobaties,artisanat,athletisme,connaissance,equitation,intimidation,persuasion,vigilance",
           weapons: [ "cac-1m", "cac-2m", "tir" ],
           def: { max: 4, shield: 0 },
           gear: [
@@ -9164,7 +9164,7 @@ const SWData = {
           companion: true,
           pv: 4,
           atks: { cac: 0, tir: 0, mag: 0 },
-          skills: "",
+          skills: "artisanat,athletisme,medecine,natation",
           weapons: [ "baton", "dague", "fronde", "gourdin", "hachette", "marteau" ],
           def: { max: 2, shield: 0 },
           gear: [
@@ -9212,7 +9212,7 @@ const SWData = {
           companion: true,
           pv: 4,
           atks: { cac: 0, tir: 0, mag: 0 },
-          skills: "",
+          skills: "artisanat,discretion,divertissement,empathie,medecine,natation,occultisme,religion,survie,vigilance",
           weapons: [ "arc court", "baton", "dague", "epieu", "fronde", "lance", "marteau", "masse" ],
           def: { max: 2, shield: 0 },
           gear: [
@@ -9301,8 +9301,14 @@ const SWData = {
           value: "Psionique",
           companion: true,
           pv: 4,
-          atks: { cac: 0, tir: 0, mag: 3 },
-          skills: [],
+          atks: { cac: 0, tir: 0, mag: 0 },
+          skills: "empathie,intimidation,persuasion,tromperie,vigilance",
+          moreSkills: {
+            Aventuriers: "commerce,divertissement,survie",
+            Combattants: "athletisme,equitation,natation",
+            Mages: "artisanat,occultisme,sciences",
+            Mystiques: "medecine,occultisme,religion"
+          },
           weapons: [ "cac-1m-lg", "cac-2m-lg", "tir-lg" ],
           def: { max: 4, shield: 0 },
           gear: [
@@ -12614,7 +12620,7 @@ on("change:profil", function(eventInfo) {
       return;
 
     const profile = getProfileData(strval(values.profil));
-    if (!profile)
+    if (!profile.family)
       return;
 
     const updates = new Map();
@@ -12630,6 +12636,14 @@ on("change:profil", function(eventInfo) {
       const proficient = skillList.includes(skill.name) ? 1 : 0;
       updates.set(skill.name + "_prof", proficient);
     });
+
+    if (profile.value === "Psionique") {
+      let moreSkills = profile.moreSkills[family];
+      if (moreSkills) {
+        moreSkills = moreSkills.split(",").map(ms => "**" + capitalize(ms) + "**").join(", ");
+        sendChatMsg(`Choisir deux autres compétences maîtrisées parmi ${moreSkills}`, { template: "", whisper: "gm" });
+      }
+    }
         
     if (updates.size > 0)
       logAndSet(Object.fromEntries(updates), logTitle(eventInfo));
@@ -17183,7 +17197,7 @@ function importFromPDF(text, path, base = 1) {
       let [ rank, title ] = matched.slice(1);
       rank = intval(rank) - base + 1;
       updates.set(`v${path}r${rank}_spell`, title.includes("*") ? 1 : 0);
-      title = title.replace("*", "");
+      title = title.replaceAll("*", "");
       updates.set(`voie${path}-t${rank}`, title.trim());
       ability = `voie${path}-${rank}`;
       return;
