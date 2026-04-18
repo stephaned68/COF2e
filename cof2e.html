@@ -409,9 +409,13 @@
             <div class="trait">
               <div class="block-title">
                 <button type="action" class="hidden" name="act_agi-btn"></button>
+                <button type="action" class="hidden" name="act_agimod-btn"></button>
                 <button type="action" class="block-title" name="act_agi_select-btn" title="%{agi_select-btn}">
                   <span class="d20-btn">t</span>
                   AGI
+                </button>
+                <button type="action" class="block-title float-right" name="act_agi_mod-btn" title="%{agi_mod-btn}">
+                  <span class="img-btn">+</span>
                 </button>
               </div>
               <div>
@@ -453,9 +457,13 @@
             <div class="trait">
               <div class="block-title">
                 <button type="action" class="hidden" name="act_con-btn"></button>
+                <button type="action" class="hidden" name="act_conmod-btn"></button>
                 <button type="action" class="block-title" name="act_con_select-btn" title="%{con_select-btn}">
                   <span class="d20-btn">t</span>
                   CON
+                </button>
+                <button type="action" class="block-title float-right" name="act_con_mod-btn" title="%{con_mod-btn}">
+                  <span class="img-btn">+</span>
                 </button>
               </div>
               <div>
@@ -497,10 +505,14 @@
             <div class="trait">
               <div class="block-title">
                 <button type="action" class="hidden" name="act_for-btn"></button>
+                <button type="action" class="hidden" name="act_formod-btn"></button>
                 <button type="action" class="block-title" name="act_for_select-btn" title="%{for_select-btn}">
                   <span class="d20-btn">t</span>
                   FOR
                 </button>
+                <button type="action" class="block-title float-right" name="act_for_mod-btn" title="%{for_mod-btn}">
+                  <span class="img-btn">+</span>
+                </button>                
               </div>
               <div>
                 <select class="select-xxs first-char" name="attr_for_sup" title="@{for_dsup} Normale, Supérieure, Héroïque">
@@ -541,10 +553,14 @@
             <div class="trait">
               <div class="block-title">
                 <button type="action" class="hidden" name="act_per-btn"></button>
+                <button type="action" class="hidden" name="act_permod-btn"></button>
                 <button type="action" class="block-title" name="act_per_select-btn" title="%{per_select-btn}">
                   <span class="d20-btn">t</span>
                   PER
                 </button>
+                <button type="action" class="block-title float-right" name="act_per_mod-btn" title="%{per_mod-btn}">
+                  <span class="img-btn">+</span>
+                </button>                
               </div>
               <div>
                 <select class="select-xxs first-char" name="attr_per_sup" title="@{per_dsup} Normale, Supérieure, Héroïque">
@@ -585,9 +601,13 @@
             <div class="trait">
               <div class="block-title">
                 <button type="action" class="hidden" name="act_cha-btn"></button>
+                <button type="action" class="hidden" name="act_chamod-btn"></button>
                 <button type="action" class="block-title" name="act_cha_select-btn" title="%{cha_select-btn}">
                   <span class="d20-btn">t</span>
                   CHA
+                </button>
+                <button type="action" class="block-title float-right" name="act_cha_mod-btn" title="%{cha_mod-btn}">
+                  <span class="img-btn">+</span>
                 </button>
               </div>
               <div>
@@ -629,10 +649,14 @@
             <div class="trait">
               <div class="block-title">
                 <button type="action" class="hidden" name="act_int-btn"></button>
+                <button type="action" class="hidden" name="act_intmod-btn"></button>
                 <button type="action" class="block-title" name="act_int_select-btn" title="%{int_select-btn}">
                   <span class="d20-btn">t</span>
                   INT
                 </button>
+                <button type="action" class="block-title float-right" name="act_int_mod-btn" title="%{int_mod-btn}">
+                  <span class="img-btn">+</span>
+                </button>                
               </div>
               <div>
                 <select class="select-xxs first-char" name="attr_int_sup" title="@{int_dsup} Normale, Supérieure, Héroïque">
@@ -673,10 +697,14 @@
             <div class="trait">
               <div class="block-title">
                 <button type="action" class="hidden" name="act_vol-btn"></button>
+                <button type="action" class="hidden" name="act_volmod-btn"></button>
                 <button type="action" class="block-title" name="act_vol_select-btn" title="%{vol_select-btn}">
                   <span class="d20-btn">t</span>
                   VOL
                 </button>
+                <button type="action" class="block-title float-right" name="act_vol_mod-btn" title="%{vol_mod-btn}">
+                  <span class="img-btn">+</span>
+                </button>                
               </div>
               <div>
                 <select class="select-xxs first-char" name="attr_vol_sup" title="@{vol_dsup} Normale, Supérieure, Héroïque">
@@ -13331,7 +13359,10 @@ SWData.PC.STATS.forEach(stat => {
   });
   
   // Roll stat
-  on(`clicked:${short}-btn`, function () {
+  on(`clicked:${short}-btn clicked:${short}mod-btn`, function (eventInfo) {
+    const modifier = strval(eventInfo.triggerName).includes("mod-btn")
+    ? " + (?{Modificateur ?|0}[Modificateur])"
+    : "";
     const defGearAttrs = [
       "armure_malus", "armure_eqp",
       "cfg_bouclier_malus", "bouclier_malus", "bouclier_eqp",
@@ -13387,7 +13418,7 @@ SWData.PC.STATS.forEach(stat => {
       : "" )
       + helpAllRolls !== "" ? "\n" + helpAllRolls : "";
       const allRolls = allRollsBuff(values, "caracs");
-      const carac = `[[${roll}[Dé] + @{${short}${ isNPC ? "" : "_test" }}[Bonus ${short.toUpperCase()}]${allRolls}${helpAllRolls}${shadow.malus}${fear}${armor_malus}${shield_malus}${helmet_malus} ]] `;
+      const carac = `[[${roll}[Dé] + @{${short}${ isNPC ? "" : "_test" }}[Bonus ${short.toUpperCase()}]${modifier}${allRolls}${helpAllRolls}${shadow.malus}${fear}${armor_malus}${shield_malus}${helmet_malus} ]] `;
 
       const chatMsg = rollTemplate({
         lsub: "Test",
@@ -13405,7 +13436,10 @@ SWData.PC.STATS.forEach(stat => {
   });
 
   // Stat & ability roll select
-  on(`clicked:${short}_select-btn`, async function() {
+  on(`clicked:${short}_select-btn clicked:${short}_mod-btn`, async function(eventInfo) {
+    const modifier = strval(eventInfo.triggerName).includes("_mod-btn")
+    ? "mod"
+    : "";
     const rollIds = await getSectionIDsAsync("rolls");
     const abilityRolls = [];
     rollIds.forEach(id => {
@@ -13421,7 +13455,7 @@ SWData.PC.STATS.forEach(stat => {
       ...nameSeq(4, `custom#_${short}`),
     ], function(values) {
       const charName = strval(values.character_name);
-      const actions = [ `%{${charName}|${short}-btn}` ];
+      const actions = [ `%{${charName}|${short}${modifier}-btn}` ];
       let rolls = rollIds
       .filter(id => strval(values[rptAttr("rolls", "roll-carac", id)]) === `@{${short}_test}`)
       .map(id => {

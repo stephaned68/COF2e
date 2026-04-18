@@ -763,7 +763,7 @@ div.change-view {
 
 .pc-attributes .trait {
   display: grid;
-  grid-template-columns: 1.5fr 0.25fr 1fr 1.35fr 1.35fr;
+  grid-template-columns: 1.75fr 0.25fr 1fr 1.35fr 1.35fr;
   gap: 2px;
   padding: 2px;
 }
