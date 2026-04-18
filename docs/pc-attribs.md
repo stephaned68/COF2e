@@ -31,6 +31,8 @@ Un clic sur le bouton permet de lancer un jet "sec" de caractéristique. Le type
 
 Si des jets de capacités sont liés à la caractéristique, ou bien que l'option _Compétences_ est active, le clic sur le bouton affiche un popup Roll20 de sélection permettant de choisir le type de jet à faire (jet "sec", de capacité ou de compétence). Les compétences affichées sont celles dans lequel le personnage a un bonus (qu'il les maîtrise ou pas).
 
+Un deuxième bouton `+` permet de faire le même jet de caractéristique mais en affichant un popup Roll20 afin que le joueur puisse saisir un éventuel modificateur (bonus/malus) accordé selon les circonstances par le MJ.
+
 Le texte **Carac** est un bouton qui permet d'afficher un popup Roll20 pour choisir la caractéristique et faire un jet dans le chat.
 
 L'icone située à côté de **Carac** permet d'afficher un menu d'action dans le chat avec un bouton pour chaque jet de caractéristique.
