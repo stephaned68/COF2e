@@ -251,6 +251,10 @@ select.select-xxs {
   appearance: none;
 }
 
+select.select-xxs.first-char {
+  width: 1.1rem;
+}
+
 select.select-xxs option {
   font-size: small;
 }
@@ -421,6 +425,10 @@ div.path div.block-title {
   margin: 2px;
 }
 
+.m5 {
+  margin: 5px;
+}
+
 .p2 {
   padding: 2px;
 }
@@ -439,7 +447,8 @@ div.path div.block-title {
 
 .cofmain input[value="0"].has-script + div.has-script,
 .cofmain input[value="0"].has-script textarea.has-script,
-.cofmain input[value="0"].has-script span.has-script,
+.cofmain input[value=""].has-script + span.has-script,
+.cofmain input[value="0"].has-script + span.has-script,
 .cofmain input[value="0"].has-script .weapon span.has-script,
 .cofmain input[value="0"].has-script + div.ammos,
 .cofmain input[value="0"].has-psionic + .has-psionic,
@@ -447,7 +456,8 @@ div.path div.block-title {
 .cofmain input[value="0"].fav-tact + div.fav-tact,
 .cofmain input[value="0"].fav-abilities + div.fav-abilities,
 .cofmain input[value="0"].fav-ability + div.fav-ability,
-.cofmain input[value=""].immu-dm + span.immu-dm {
+.cofmain input[value=""].immu-dm + span.immu-dm,
+.cofmain input[value="0"].mounted + .mounted {
   display: none;
 }
 
@@ -458,6 +468,26 @@ div.path div.block-title {
 
 .cofmain input[value="1"].d20roll-btns + div.d20roll-btns {
   display: block;
+}
+
+.cofmain input[value="1"].locked ~ button.unlocked,
+.cofmain input[value="1"].locked + input.locked,
+.cofmain input[value="0"].locked ~ button.locked,
+.cofmain input[value="0"].locked ~ span.locked {
+  display: none;
+}
+
+.cofmain input[value="0"].locked ~ button.unlocked,
+.cofmain input[value="0"].locked + input.locked,
+.cofmain input[value="1"].locked ~ button.locked,
+.cofmain input[value="1"].locked ~ span.locked {
+  display: inline-block;
+}
+
+.cofmain input[value="npc"].locked ~ button.unlocked,
+.cofmain input[value="npc"].locked ~ button.locked,
+.cofmain input[value="npc"].locked ~ span.locked {
+  display: none;
 }
 
 /* Identity layout */
@@ -505,7 +535,8 @@ div.path div.block-title {
 
 input[value="pc"] ~ input.is-mook,
 input[value="npc"] ~ button[name="act_charmancer-btn"],
-input[value="npc"] ~ button[name="roll_checkup"] {
+input[value="npc"] ~ button[name="roll_checkup"],
+input[value="1"].is-mook + .npc-configs.is-mook {
   display: none;
 }
 
@@ -540,7 +571,9 @@ input[value="npc"] ~ button[name="roll_checkup"] {
 .tab-btn,
 .d20roll_1d,
 .d20roll_db,
-.d20roll_dm {
+.d20roll_dm,
+.locked,
+.unlocked {
   border: none;
   margin-top: 5px;
 }

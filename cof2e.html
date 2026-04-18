@@ -5,6 +5,8 @@
   <input type="hidden" name="attr_version" value="1.16.0">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
+  <!-- Edit locked -->
+  <input type="hidden" name="attr_locked" value="0">
 
   <!-- Token -->
   <input type="hidden" name="attr_token_url" value="">
@@ -135,22 +137,36 @@
         title="Version 1.16.0 - 04/2026"
         src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cof2e_logo.jpg"
       />
-      <input type="hidden" class="d20roll-btns" name="attr_cfg_d20roll" value="0">
-      <div class="d20roll-btns d-flex m2">
-        <input type="hidden" class="d20-toggle" name="attr_d20roll" value="1d20"/>
-        <div>
-          <span>Jet :</span>&nbsp;
-          <button type="action" class="img-btn d20roll_db" name="act_d20roll_db-btn">
-            <span class="img-btn">&</span>&nbsp;Dé bonus
-          </button>
-          <button type="action" class="img-btn d20roll_1d" name="act_d20roll_1d-btn">
-            Normal
-          </button>
-          <button type="action" class="img-btn d20roll_dm" name="act_d20roll_dm-btn">
-            <span class="img-btn">_</span>&nbsp;Dé malus
-          </button>
+      <div class="d-flex m2">
+        
+        <input type="hidden" class="locked" name="attr_sheet_type">
+        <input type="hidden" class="locked" name="attr_locked" value="0">
+        <button type="action" class="img-btn locked" name="act_lock-btn" title="Déverrouiller les valeurs&#10;- PV max">
+          <span class="img-btn">(</span>
+        </button>
+        <button type="action" class="img-btn unlocked" name="act_lock-btn" title="Verrouiller les valeurs&#10;- PV max">
+          <span class="img-btn">)</span>
+        </button>
+
+        <input type="hidden" class="d20roll-btns" name="attr_cfg_d20roll" value="0">
+        <div class="d20roll-btns">
+          <input type="hidden" class="d20-toggle" name="attr_d20roll" value="1d20"/>
+          <div>
+            <span>Jet :</span>&nbsp;
+            <button type="action" class="img-btn d20roll_db" name="act_d20roll_db-btn">
+              <span class="img-btn">&</span>&nbsp;Dé bonus
+            </button>
+            <button type="action" class="img-btn d20roll_1d" name="act_d20roll_1d-btn">
+              Normal
+            </button>
+            <button type="action" class="img-btn d20roll_dm" name="act_d20roll_dm-btn">
+              <span class="img-btn">_</span>&nbsp;Dé malus
+            </button>
+          </div>
         </div>
+
       </div>
+
     </div>
 
     <!-- Token -->
@@ -314,7 +330,7 @@
             <option value="npc">PNJ</option>
           </select>
           <input type="hidden" name="attr_sheet_type">
-          <input type="checkbox" class="is-mook" name="attr_mook" title="@{mook} Fiche de mook" value="1" checked>
+          <input type="checkbox" class="is-mook" name="attr_mook" title="@{mook} Fiche de mook (PNJ anonyme)&#10;L'intégration avec TokenMod assigne la valeur des PV à la barre du token, et non l'attribut-même&#10;- Evite que la perte de PV d'un mook n'affecte tous les autres&#10;- Pas de teinte automatique du jeton selon les PV" value="1" checked>
           <button type="action" class="flat-btn img-btn" name="act_charmancer-btn" title="Lancer le Persomancien">
             <span class="img-btn">x</span>
           </button>
@@ -399,10 +415,10 @@
                 </button>
               </div>
               <div>
-                <select class="select-xxs" name="attr_agi_sup" title="@{agi_dsup}">
-                  <option value="N" selected>N Normale</option>
-                  <option value="S">S Supérieure OU Héroïque</option>
-                  <option value="H">H Supérieure ET Héroïque</option>
+                <select class="select-xxs first-char" name="attr_agi_sup" title="@{agi_dsup} Normale, Supérieure, Héroïque">
+                  <option value="N" selected>N - Normale</option>
+                  <option value="S">S - Supérieure OU Héroïque</option>
+                  <option value="H">H - Supérieure ET Héroïque</option>
                 </select>
                 <input type="hidden" name="attr_agi_dsup" value="1d20">
               </div>
@@ -443,10 +459,10 @@
                 </button>
               </div>
               <div>
-                <select class="select-xxs" name="attr_con_sup" title="@{con_dsup}">
-                  <option value="N" selected>N Normale</option>
-                  <option value="S">S Supérieure OU Héroïque</option>
-                  <option value="H">H Supérieure ET Héroïque</option>
+                <select class="select-xxs first-char" name="attr_con_sup" title="@{con_dsup} Normale, Supérieure, Héroïque">
+                  <option value="N" selected>N - Normale</option>
+                  <option value="S">S - Supérieure OU Héroïque</option>
+                  <option value="H">H - Supérieure ET Héroïque</option>
                 </select>
                 <input type="hidden" name="attr_con_dsup" value="1d20">
               </div>
@@ -487,10 +503,10 @@
                 </button>
               </div>
               <div>
-                <select class="select-xxs" name="attr_for_sup" title="@{for_dsup}">
-                  <option value="N" selected>N Normale</option>
-                  <option value="S">S Supérieure OU Héroïque</option>
-                  <option value="H">H Supérieure ET Héroïque</option>
+                <select class="select-xxs first-char" name="attr_for_sup" title="@{for_dsup} Normale, Supérieure, Héroïque">
+                  <option value="N" selected>N - Normale</option>
+                  <option value="S">S - Supérieure OU Héroïque</option>
+                  <option value="H">H - Supérieure ET Héroïque</option>
                 </select>
                 <input type="hidden" name="attr_for_dsup" value="1d20">
               </div>
@@ -531,10 +547,10 @@
                 </button>
               </div>
               <div>
-                <select class="select-xxs" name="attr_per_sup" title="@{per_dsup}">
-                  <option value="N" selected>N Normale</option>
-                  <option value="S">S Supérieure OU Héroïque</option>
-                  <option value="H">H Supérieure ET Héroïque</option>
+                <select class="select-xxs first-char" name="attr_per_sup" title="@{per_dsup} Normale, Supérieure, Héroïque">
+                  <option value="N" selected>N - Normale</option>
+                  <option value="S">S - Supérieure OU Héroïque</option>
+                  <option value="H">H - Supérieure ET Héroïque</option>
                 </select>
                 <input type="hidden" name="attr_per_dsup" value="1d20">
               </div>
@@ -575,10 +591,10 @@
                 </button>
               </div>
               <div>
-                <select class="select-xxs" name="attr_cha_sup" title="@{cha_dsup}">
-                  <option value="N" selected>N Normale</option>
-                  <option value="S">S Supérieure OU Héroïque</option>
-                  <option value="H">H Supérieure ET Héroïque</option>
+                <select class="select-xxs first-char" name="attr_cha_sup" title="@{cha_dsup} Normale, Supérieure, Héroïque">
+                  <option value="N" selected>N - Normale</option>
+                  <option value="S">S - Supérieure OU Héroïque</option>
+                  <option value="H">H - Supérieure ET Héroïque</option>
                 </select>
                 <input type="hidden" name="attr_cha_dsup" value="1d20">
               </div>
@@ -619,10 +635,10 @@
                 </button>
               </div>
               <div>
-                <select class="select-xxs" name="attr_int_sup" title="@{int_dsup}">
-                  <option value="N" selected>N Normale</option>
-                  <option value="S">S Supérieure OU Héroïque</option>
-                  <option value="H">H Supérieure ET Héroïque</option>
+                <select class="select-xxs first-char" name="attr_int_sup" title="@{int_dsup} Normale, Supérieure, Héroïque">
+                  <option value="N" selected>N - Normale</option>
+                  <option value="S">S - Supérieure OU Héroïque</option>
+                  <option value="H">H - Supérieure ET Héroïque</option>
                 </select>
                 <input type="hidden" name="attr_int_dsup" value="1d20">
               </div>
@@ -663,10 +679,10 @@
                 </button>
               </div>
               <div>
-                <select class="select-xxs" name="attr_vol_sup" title="@{vol_dsup}">
-                  <option value="N" selected>N Normale</option>
-                  <option value="S">S Supérieure OU Héroïque</option>
-                  <option value="H">H Supérieure ET Héroïque</option>
+                <select class="select-xxs first-char" name="attr_vol_sup" title="@{vol_dsup} Normale, Supérieure, Héroïque">
+                  <option value="N" selected>N - Normale</option>
+                  <option value="S">S - Supérieure OU Héroïque</option>
+                  <option value="H">H - Supérieure ET Héroïque</option>
                 </select>
                 <input type="hidden" name="attr_vol_dsup" value="1d20">
               </div>
@@ -864,8 +880,10 @@
               <input type="hidden" class="pv-status" name="attr_pvstatus" value="">
               <div class="bordered centered pv-color">
                 <input type="number" class="two-digits" name="attr_pv" title="@{pv} PV courants">
-                /
-                <input type="number" class="two-digits" name="attr_pv_max" title="@{pv_max} PV maximum">
+                <span>/&nbsp;</span>
+                <input type="hidden" class="locked" name="attr_locked" value="0">
+                <input type="number" class="two-digits locked" name="attr_pv_max" title="@{pv_max} PV maximum">
+                <span class="attr-max locked" name="attr_pv_max" title="@{pv_max} PV maximum"></span>
               </div>
 
             </div>
@@ -1560,6 +1578,7 @@
             </div>
 
             <div class="sheet-col">
+
               <h4>Modificateurs de situation</h4>
 
               <div class="pc-tactic">
@@ -1599,6 +1618,26 @@
                   <span>&nbsp;Brouillard / Pénombre</span>
                 </div>
               </div>
+
+              <br>
+
+              <h4>Autres conditions</h4>
+              
+              <div class="d-flex">
+                <input type="checkbox" name="attr_en_selle" title="@{en_selle} Combat monté (règles p.215)" value="1">
+                <span>&nbsp;En selle&nbsp;</span>
+                <input type="hidden" class="mounted" name="attr_en_selle" value="0">
+                <div class="mounted">
+                  <input type="checkbox" name="attr_monture" title="@{monture} Monture de guerre (règles p.215)" value="1">
+                  <span>&nbsp;Monture de guerre&nbsp;</span>
+                </div>
+              </div>
+
+              <div class="d-flex">
+                <input type="checkbox" name="attr_condition_aquatique" title="@{condition_aquatique} Combat en milieu aquatique (règles p.215)" value="1">
+                <span>&nbsp;En milieu aquatique</span>
+              </div>
+
             </div>
 
           </div>
@@ -1672,18 +1711,6 @@
             </div>
 
             <div class="sheet-col">
-
-              <h4>Autres conditions particulières</h4>
-
-              <div class="d-flex">
-                <input type="checkbox" name="attr_en_selle" title="@{en_selle} Combat monté (p.215)" value="1">
-                <span>&nbsp;En selle</span>
-              </div>
-
-              <div class="d-flex">
-                <input type="checkbox" name="attr_condition_aquatique" title="@{condition_aquatique} Combat en milieu aquatique (p.215)" value="1">
-                <span>&nbsp;En milieu aquatique</span>
-              </div>
 
             </div>
 
@@ -5304,7 +5331,7 @@
                     <textarea class="one-row" name="attr_equip-props" title="@{equip-props} Propriétés"></textarea>
                     &nbsp;<input type="checkbox" name="attr_equip-atk" title="@{equip-atk} A une attaque" value="1">
                     &nbsp;<span>A une attaque</span>
-                    <input type="hidden" name="attr_equip-atklbl" value="">
+                    <input type="hidden" class="has-script" name="attr_equip-atklbl" value="">
                     <span class="has-script" name="attr_equip-atklbl"></span>
                     <input type="hidden" name="attr_equip-atkid" value="">
                   </div>
@@ -7887,14 +7914,16 @@
           <div class="sheet-col">
             <input type="checkbox" name="attr_tokenmod" title="@{tokenmod}" value="1">
             <span>Token Mod</span>
-            <div class="npc-configs m2">
+            <input type="hidden" class="is-mook" name="attr_mook" value="1">
+            <div class="npc-configs m2 is-mook">
               <div>Teinte 1/2 PV</div>
               <div class="d-flex">
                 <input type="checkbox" name="attr_token_tint_on" title="@{token_tint_on}" value="1">
                 &nbsp;<input type="text" name="attr_token_tint" title="@{token_tint}" value="ED2939">
               </div>
             </div>
-            <div class="npc-configs m2">
+            <input type="hidden" class="is-mook" name="attr_mook" value="1">
+            <div class="npc-configs m2 is-mook">
               <div>Marker 0 PV</div>
               <div class="d-flex">
                 <input type="checkbox" name="attr_tkmarker_dead_on" title="@{tkmarker_dead_on}" value="1">
@@ -12137,7 +12166,6 @@ function ownedAbilities(values) {
     const path = SWData.PVPATH.find(path => path.name === pathName);
     if (!path)
       return;
-    //const owned = path.abilities.slice(0, ranks[ix]);
     const owned = getRankNames(pathName, values).slice(0, ranks[ix]);
     abilities = [ ...abilities, ...owned ];
   });
@@ -12155,11 +12183,10 @@ function ownedAbilityTree(values) {
   getPathNames(strval(values.noms_voies)).forEach((pathName, ix) => {
     if (ranks[ix] === 0)
       return;
-    pathName = cleanText(pathName)
+    pathName = cleanText(pathName);
     const path = SWData.PVPATH.find(path => path.name === pathName);
     if (!path)
       return;
-    //const owned = path.abilities.slice(0, ranks[ix]);
     const owned = getRankNames(pathName, values).slice(0, ranks[ix]);
     abilities.push({ name: pathName, profile: path.profile, abilities: owned });
   });
@@ -12186,7 +12213,9 @@ function hasAbility(search, values) {
   } else {
     owned = ownedAbilities(values);
   }
-  return owned.includes(cleanText(name));
+  // In case ability names have been entered with fancy emoticons
+  const found = owned.some(ability => ability.includes(cleanText(name)));
+  return found;
 }
 
 /**
@@ -12436,6 +12465,15 @@ on("change:sheet_type", function(eventInfo) {
     }
 
   });
+});
+
+/**
+ * Lock/Unlock sheet
+ */
+on("clicked:lock-btn", function() {
+  getAttrs([ "locked" ], function(values) {
+    setAttrs({ locked: 1 - intval(values.locked) });
+  })
 });
 
 /**
@@ -13626,29 +13664,29 @@ on("change:sens", function () {
  * } }
  */
 function wounded(values) {
+  const pvMax = intval(values.pv_max);
   let pv = intval(values.pv);
   let dr = intval(values.dr);
   let condition_affaibli = 0;
   let condition_inconscient = 0;
   let effects = [];
 
-  if (pv <= 1 && !hasMODScript(values)) {
+  if (pvMax > 0 && pv <= 1 && !hasMODScript(values)) {
     condition_affaibli = 1;
     effects.push("subit la condition Affaibli-e (PV = 1)");
   } 
-  if (pv === 0 && !hasMODScript(values)) {
+  if (pvMax > 0 && pv === 0 && !hasMODScript(values)) {
     dr = Math.max(dr - 1, 0);
     condition_inconscient = 1;
     effects.push("perd un DR et tombe au sol inconscient-e (PV = 0)");
   }
 
-  const pvMax = intval(values.pv_max);
   let pvstatus = "";
-  if (pv <= Math.floor(pvMax / 2))
+  if (pvMax > 0 && pv <= Math.floor(pvMax / 2))
     pvstatus = "yellow";
-  if (pv < 2)
+  if (pvMax > 0 && pv < 2)
     pvstatus = "red";
-  if (pv === 0)
+  if (pvMax > 0 && pv === 0)
     pvstatus = "black";
 
   return {
@@ -14505,6 +14543,7 @@ on("change:repeating_armes:arme-nom clicked:renum_atk-btn", function(eventInfo) 
     getAttrs([
       "scriptVersion", "character_name",
       "profil", "max_attack_label",
+      "maitrises_armes",
       rptAttr(rptAtk, "arme-new"),
       ...rptAttrs(rptAtk, [ "arme-nom", "arme-gearid" ]),
       ...labels,
@@ -14596,7 +14635,7 @@ on("change:repeating_armes:arme-nom clicked:renum_atk-btn", function(eventInfo) 
           updates.set(rptAttr(rptAtk, "arme-dm"), dm);
           if (dm1m === "" && dm2m !== "")
             updates.set(rptAttr(rptAtk, "arme-2m"), 1);
-          const wp = weaponTrained(strval(values.profil), weapon.name);
+          const wp = weaponTrained(strval(values.profil), weapon.name, strval(values.maitrises_armes));
           if (!wp.trained) {
             updates.set(rptAttr(rptAtk, "arme-atkmods"), "deMalus");
             sendChatMsg(wp.message, { whisper: "gm", template: "" });
@@ -14868,8 +14907,8 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
     ...fearConditionsAttrs(),
     "tactique",
     ...rptTacticAll,
-    "noms_voies", "rangs_voies",
-    "deux_armes", "en_selle", "condition_aquatique",
+    "noms_voies", "rangs_voies", "noms_rangs",
+    "deux_armes", "en_selle", "monture", "condition_aquatique",
     ...luckButtonAttrs(),
     ...sitModAttrs.map(attr => `modsit_${attr}`),
     ...attackAttrs.map(attr => rptAttr("armes", `arme-${attr}`)),
@@ -14893,6 +14932,7 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
     const restrained = intval(values.condition_immobilise);
     const pathNames = getPathNames(strval(values.noms_voies));
     const mounted = boolval(values.en_selle);
+    const warMount = boolval(values.monture);
     const aquatic = boolval(values.condition_aquatique);
     const maneuver = boolval(values.manoeuvre);
     
@@ -14940,6 +14980,11 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
     let dualWield = strval(values.deux_armes);
     if (atkButton.includes("atkdual") && !modifiers.includes("demalus"))
       modifiers.push("demalus");
+
+    // combat en selle selon monture
+    if (mounted && !warMount)
+      if (!modifiers.includes("demalus"))
+        modifiers.push("demalus");
 
     // combat en milieu aquatique
     if (aquatic && !modifiers.includes("demalus"))
@@ -15535,19 +15580,33 @@ function getWeaponGearAttr(data) {
  * Return weapon's training for a profile
  * @param {string} profile - profile name
  * @param {string} weapon - weapon name
- * @returns { { trained: boolean, message: string } }
+ * @param {string} extraTraining - list of additional weapons proficiencies
+ * @returns { { trained: boolean|null, message: string } }
  */
-function weaponTrained(profile, weapon) {
-  const trainedWith = getProfileData(profile).weapons;
-  const message = `Le profil **${profile}** ne maitrise pas **${weapon}** et subit un dé malus en attaque`;
+function weaponTrained(profile, weapon, extraTraining) {
+  const knownProfile = profile !== "";
+  const message = knownProfile
+  ? `Le profil **${profile}** ne maitrise pas **${weapon}** et subit un dé malus en attaque`
+  : "Choisir d'abord un profil pour déterminer correctement les armes maîtrisées";
+  let trainedWith = getProfileData(profile).weapons || [];
   weapon = cleanText(weapon);
+  let moreTrained = [];
+  if (extraTraining !== "") {
+    moreTrained = extraTraining.split("\n")
+    .filter(xt => xt.trim() !== "" && !xt.trim().startsWith("//"))
+    .map(xt => cleanText(xt));
+  }
+  if (moreTrained.length > 0)
+    trainedWith = [ ...trainedWith, ...moreTrained ];
   const tags = SWData.GEARS
     .find(gear => weapon === cleanText(gear.name) || gear.altname.split(",").includes(weapon))
     .tags;
-  const trained = tags.some(tag => trainedWith.includes(tag));
+  let trained = knownProfile ? false : null;
+  if (trainedWith.length > 0)
+    trained = tags.some(tag => trainedWith.includes(tag));
   return {
     trained,
-    message: trained ? "" : message
+    message: (trained && knownProfile ? "" : message)
   };
 }
 
@@ -17945,7 +18004,7 @@ on(changeEvent([
     "atkid",
     "predicats"
   ].map(a => rptAttr("equipement", `equip-${a}`));
-  getAttrs([ ...gearAttrs, "profil", "cfg_usure" ], function(values) {
+  getAttrs([ ...gearAttrs, "profil", "maitrises_armes", "cfg_usure" ], function(values) {
     const [ name, detail, props, atk, atkid, pred ] = Object.keys(values);
     const usure = boolval(values.cfg_usure);
     const equipment = strval(values[name]);
@@ -18057,7 +18116,7 @@ on(changeEvent([
             options.push(`${prop}: ${value}`);
         }
       });
-      const wp = weaponTrained(strval(values.profil), equipment);
+      const wp = weaponTrained(strval(values.profil), equipment, strval(values.maitrises_armes));
       if (!wp.trained && !atkmods.includes("deMalus")) {
         atkmods.push("deMalus");
         sendChatMsg(wp.message, { whisper: "gm", template: "" });
@@ -21315,7 +21374,7 @@ function loadAttackLists(section) {
       const shield = boolval(values.bouclier_eqp);
       rowIds.forEach(id => {
         const type = strval(values[rptAttr(section, "arme-atktype", id)]);
-        if (type === "sort")
+        if (type === "sort" || type === "naturel")
           return;
         const label = strval(values[rptAttr(section, "arme-label", id)], "999");
         const name = strval(values[rptAttr(section, "arme-nom", id)]);
