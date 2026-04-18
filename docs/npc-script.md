@@ -44,19 +44,24 @@ Lorsque le script est activé, trois boutons sont affichés sous le token du PNJ
 - `⤧` permet d'appliquer un coefficient multiplicateur à la taille actuelle du token
 - `-` permet d'augmenter la taille du token de 10%
 
-D'autres options peuvent être activées :
+#### Liaison par défaut des barres de tokens
+
+2. 🔵 : Défense
+3. 🔴 : Valeur des points de Vigueur courants/max (mook)
+4. 🟡 : Vitesse en cases (si la partie utilise **Jumpgate** et que la barre n°4 est active)
+
+#### Options de suivi des PV
+
+Ces options ne sont disponibles que pour les PNJs importants qui ont une fiche individuelle.
+
 - Marker 0 PV : permet d'indiquer un nom de marker à appliquer au token lorsque le nombre de PV tombe à 0.
 - Teinte 1/2 PV : permet d'indiquer une teinte à appliquer au token lorsque le nombre de PV tombe à la moitié du nombre de PV maximum.
 
   La teinte doit être indiquée sous la forme d'un code hexadécimal à 6 caractères (0-9, A-F).
 
-  Ces options ne fonctionnent que pour les PNJs importants qui ont leur propre fiche. Les PNJs de type _mook_ n'ont pas de barre de token liée à l'attribut `pv`, uniquement à sa valeur et par conséquent la fiche ne peut détecter que les pertes de PV.
+Les PNJs de type **mook** n'ont pas de barre de token liée à l'attribut `pv` mais uniquement à sa valeur. Par conséquent, la fiche de personnage ne peut pas détecter les pertes de PV des **mooks** et changer leur teinte ou leur appliquer un marker.
 
-#### Liaison par défaut des barres de tokens
-
-2. 🔵 : Défense
-3. 🔴 : Valeur des points de Vigueur courants/max (mook)
-4. 🟡 : Vitesse en cases (si la partie utilise **Jumpgate**)
+Un script MOD permet de compenser ce problème : [Corpse](https://github.com/stephaned68/Roll20APIMods/tree/main/Corpse)
 
 ### ChatSetAttr
 

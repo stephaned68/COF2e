@@ -70,7 +70,7 @@ D'autres options peuvent être activées :
 1. 🟢 : Points de Mana courant/max (si le personnage en dispose)
 2. 🔵 : Défense
 3. 🔴 : Points de Vigueur courants/max
-4. 🟡 : Vitesse en cases (si la partie utilise **Jumpgate** et que la 4ème barre est active)
+4. 🟡 : Vitesse en cases (si la partie utilise **Jumpgate** et que la barre n°4 est active)
 
 ### ChatSetAttr
 

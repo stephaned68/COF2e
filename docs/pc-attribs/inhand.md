@@ -28,8 +28,6 @@ De plus, selon le type d'armes actuellement en main, une troisième ligne avec u
 
 **NB** : _Pour des raisons techniques propres à Roll20, l'utilisation de ce bouton est incompatible avec l'option **Attaques ciblées**. Celle-ci est donc temporairement désactivée et la cible des deux attaques n'est pas demandée par la fiche._
 
-On peut également indiquer dans ce sous-onglet si le personnage est en selle, et s'il combat en milieu aquatique.
-
 ---
 
 [Retour]({{ site.baseurl }}/pc-attribs)
