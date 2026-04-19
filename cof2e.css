@@ -277,7 +277,8 @@ button.flat-btn {
   background-image: none;
 }
 
-.cofmain button[type="roll"].img-btn:before {
+.cofmain button[type="roll"].img-btn:before,
+.cofmain button[type="action"].img-btn:before {
   content: "";
 }
 
