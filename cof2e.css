@@ -1384,6 +1384,20 @@ textarea.migration {
   resize: none;
 }
 
+/*.sheet-darkmode {
+  .cofmain {
+    background-color: #333;
+    color: #ddd;
+
+    h4 {
+      color: #ddd;
+    }
+    .tab-btn {
+      color: #333;
+    }
+  }
+}*/
+
 /* ROLL TEMPLATES */
 
 .sheet-rolltemplate-cof2 {

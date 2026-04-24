@@ -110,6 +110,7 @@
   <!-- PVIG = pv first in dropdown -->
   <input type="hidden" name="attr_PVIG" value="0">
   <input type="hidden" name="attr_PVIG_max" value="0">
+  <input type="hidden" name="attr_current_pv" value="0">
   <input type="hidden" name="attr_healing" value="">
 
   <!-- Help action -->
@@ -896,11 +897,11 @@
             <div class="hits hit">
 
               <div class="block-title centered">
-                <button class="flat-btn img-btn img-btn-lg" type="action" name="act_vigloss-btn" title="%{vigloss-btn}">
+                <button class="flat-btn img-btn img-btn-lg" type="action" name="act_vigloss-btn" title="%{vigloss-btn} Infliger des DM">
                   <span class="img-btn">e</span>
                 </button>
                 PV
-                <button class="flat-btn img-btn img-btn-lg" type="action" name="act_vigheal-btn" title="%{vigheal-btn}">
+                <button class="flat-btn img-btn img-btn-lg" type="action" name="act_vigheal-btn" title="%{vigheal-btn} Soigner des DM">
                   <span class="img-btn">k</span>
                 </button>
               </div>
@@ -5299,6 +5300,8 @@
               <button type="action" name="act_helpgear-btn" class="img-btn flat-btn" title="Aide équipement" >
                 <span class="img-btn img-btn-lg">i</span>
               </button>
+              <button type="action" name="act_helpgear_wpn-btn" class="hidden">
+              <button type="action" name="act_helpgear_def-btn" class="hidden">
             </div>
 
             <div class="bordered">
@@ -7243,7 +7246,7 @@
               <div class="d-flex m2">
 
                 <input type="radio" name="attr_pnj_spec" title="@{pnj_spec} (5)" value="5">
-                &nbsp;<input type="text" name="attr_cspec5_nom" title="@{cspec5_nom}" placeholder="Coup spécial 3" value="">
+                &nbsp;<input type="text" name="attr_cspec5_nom" title="@{cspec5_nom}" placeholder="Coup spécial 5" value="">
                 &nbsp;<input type="checkbox" name="attr_cspec5_roll" title="@{cspec5_roll} Dé bonus" value="1">
                 &nbsp;<input type="checkbox" name="attr_cspec5_roll" title="@{cspec5_roll} Dé malus" value="2">
                 &nbsp;/&nbsp;<input type="number" name="attr_cspec5_bonus" title="@{cspec5_bonus} Bonus attaque" value="">
@@ -7512,7 +7515,7 @@
 
               <li>
                 Jets&nbsp;:&nbsp;
-                <select class="select-md" name="attr_togm" title="@{togm}">
+                <select class="select-lg" name="attr_togm" title="@{togm}">
                   <option value="" selected>Publics</option>
                   <option value="/w gm ">Chuchotés au MJ</option>
                 </select>
@@ -7651,29 +7654,6 @@
                     <div>Supérieure</div>
                     <div class="d-flex">
                       : <input type="number" class="two-digits" name="attr_def_supval" title="@{def_supval}">
-                    </div>
-                  </div>
-                </li>
-  
-              </ul>
-            </details>
-
-            <details>
-              <summary>
-                <h4>Déclencheurs</h4>
-              </summary>
-              <ul>
-  
-                <li>
-                  <div class="npc-configs m2">
-                    <div>
-                      <span>Seuil PV</span>
-                      &nbsp;<input type="checkbox" name="attr_seuil_demipv" title="@{seuil_demipv} A déclencher quand PV / 2" value="1">
-                      &nbsp;<input type="number" class="two-digits" name="attr_seuil_pv" title="@{seuil_pv}">
-                    </div>
-                    <div class="d-flex">
-                      <span>:&nbsp;</span>
-                      <textarea class="one-row" name="attr_seuil_mods" title="@{seuil_mods}" placeholder="attribut=valeur (un par ligne)" value=""></textarea>
                     </div>
                   </div>
                 </li>
@@ -7997,7 +7977,6 @@
                   </summary>
                   <ul>
                     <li>Ajout de 2 coups spéciaux paramétrables (5 en tout)</li>
-                    <li>Ajout d'une option de configuration de déclencheurs</li>
                   </ul>
                 </details>
               </li>
@@ -11229,6 +11208,12 @@ function getRandom(max) {
   return Math.floor(Math.random() * max) + 1;
 }
 
+async function roll(dice) {
+  const roll = await startRoll(`! {{dice=[[${dice}]] }}`);
+  finishRoll(roll.rollId);
+  return intval(roll.results.dice.result);
+}
+
 /**
 * Parse a chunk of data into name & value
 * @param {string} data - chunk of data to parse
@@ -13814,14 +13799,14 @@ function updatePVDR(vp, lossOrGain, buttonClicked = true) {
 
 /**
  * Handle PV change buttons
- * @param {string} button Name of action button
+ * @param {string} button - name of action button
  */
 function changeVP(button) {
   let prompt = (button === "vigloss-btn") ? "PV perdus ?" : "PV soignés ?";
   let lossOrGain = (button === "vigloss-btn") ? -1 : +1;
-  //const ask = `!{{ask=[[?{${prompt}}]]}}`;
   askValue(prompt, function(vp) {
-    if (vp <= 0) return;
+    if (vp <= 0)
+      return;
     updatePVDR(vp, lossOrGain);
   });
 }
@@ -13832,6 +13817,16 @@ function changeVP(button) {
 on("clicked:vigloss-btn clicked:vigheal-btn", function (eventInfo) {
   const [ button ] = strval(eventInfo.triggerName).split(":").slice(1);
   changeVP(button);
+});
+
+/**
+ * ON PV value change, update separate attribute
+ */
+on("change:pv", function() {
+  getAttrs([ "pv", "current_pv" ], function(values) {
+    if (intval(values.pv) !== intval(values.current_pv))
+      setAttrs({ current_pv: intval(values.pv) });
+  });
 });
 
 /**
@@ -17494,6 +17489,8 @@ on("clicked:martial_training", function() {
  * On click on the gear props help button
  */
 on("clicked:helpgear-btn", async function() {
+  const values = await getAttrsAsync([ "character_name" ]);
+  const charName = strval(values.character_name);
   const { selected, choices } = await askAsync([
     "Type ?",
     "Armes",
@@ -17502,6 +17499,10 @@ on("clicked:helpgear-btn", async function() {
   ]);
   if (selected === 0)
     return;
+
+  let button = ([ "wpn", "def", "" ])[selected - 1];
+  if (button !== "")
+    button = ` [Liste](~${charName}|helpgear_${button}-btn${menuButtonOutline()})`;
 
   sendChatMsg([
     "title=Propriétés d'équipement",
@@ -17526,11 +17527,28 @@ on("clicked:helpgear-btn", async function() {
     selected === 3 ? "affutee:=Arme affûtée" : "",
     selected === 3 ? "element:=Nom de l'élément (+' intense')" : "",
     selected === 3 ? "fleau:=Nom du type de créature" : "",
-    "desc=Une propriété par ligne"
+    "desc=Une propriété par ligne" + button
   ].filter(t => t !== ""), {
     template: "custom",
     whisper: "gm"
   });
+});
+
+/**
+ * Display list of known weapons or armors
+ */
+on("clicked:helpgear_wpn-btn clicked:helpgear_def-btn", function(eventInfo) {
+  const button = strval(eventInfo.triggerName).split(":")[1]?.split("_")[1];
+  let gears = [];
+  if (button === "wpn-btn")
+    gears = SWData.GEARS.filter(gear => gear.props.some(p => p.startsWith("dm-")));
+  if (button === "def-btn")
+    gears = SWData.GEARS.filter(gear => gear.props.some(p => p.startsWith("armure") || p.startsWith("bouclier") || p.startsWith("casque")));
+  gears = gears.map((gear, ix) => `${ ix + 1 }:=${ gear.name }`);
+  sendChatMsg([
+    `title=Liste des ${ button === "wpn-btn" ? "Armes" : "Armures" }`,
+    ...gears
+  ], { template: "custom", whisper: "gm" });
 });
 
 /**
@@ -20414,33 +20432,50 @@ on("change:atkbase_pnj change:atkcac_pnj change:atktir_pnj change:atkmag_pnj", f
 
 /**
  * Set NPC attribute changes on PV threshold
- */
-on("change:pv", function () {
+ *
+on("change:current_pv", function (eventInfo) {
   getAttrs([ 
     "sheet_type",
     "pv", "pv_max",
-    "seuil_demipv", "seuil_pv", "seuil_mods",
+    "demipv_mods", "zeropv_mods",
+    "seuil_pv", "seuil_mods",
     "def_sup"
   ], function (values) {
     if (strval(values.sheet_type) !== SWData.SHEET_TYPE.NPC)
       return;
+    const pv = intval(values.pv);
     const pvMax = intval(values.pv_max);
-    const halfPV = boolval(values.seuil_demipv);
-    const threshold = halfPV ? Math.floor(pvMax / 2) : intval(values.seuil_pv);
-    if (threshold <= 0 || intval(values.pv) > threshold)
+    const halfPV = Math.floor(pvMax / 2);
+    const threshold = intval(values.seuil_pv);
+    if (pv > halfPV)
       return;
-    const updates = strval(values.seuil_mods).split("\n")
+    let mods = strval(values.demipv_mods);
+    if (threshold > 0 && pv <= threshold)
+      mods = strval(values.seuil_mods);
+    if (pv <= 0)
+      mods = strval(values.zeropv_mods);
+    if (mods === "")
+      return;
+    const notifs = [];
+    const updates = mods.split("\n")
     .filter(rowData => strval(rowData) !== "" && !strval(rowData).startsWith("//"))
     .reduce((result, rowData) => {
+      if (rowData.startsWith("+")) {
+        notifs.push(rowData.slice(1));
+        return result;
+      }
       const { name, value } = parseNameValue(rowData,"=");
       if (name !== "")
         result.set(name, strval(value));
       return result;
     }, new Map());
+    if (notifs.length > 0) {
+      sendChatMsg(notifs.join("\n"), { template: "", whisper: "gm" });
+    }
     if (updates.size > 0)
       setAttrs(Object.fromEntries(updates));
   });
-});
+});*/
 
 /**
  * Set companion attributes
@@ -21784,9 +21819,7 @@ on("change:pvig_max", function(eventInfo) {
 /**
  * Compare PV & temp DM
  */
-on("change:pv change:temp_dm", function(eventInfo) {
-  if (strval(eventInfo.sourceType) !== "player")
-    return;
+on("change:current_pv change:temp_dm", function(eventInfo) {
   getAttrs([ "character_name", "temp_dm", "pv" ], function(values) {
     const pv = intval(values.pv);
     const tempDM = intval(values.temp_dm);
@@ -21801,14 +21834,14 @@ on("change:pv change:temp_dm", function(eventInfo) {
         text: `${text}${charName} est assommé-e (inconscient-e) !`,
         textclass: "secondary",
       },
-      pv: {
+      current_pv: {
         rsub: "DM létaux",
         text: `${text}${charName} tombe à 0 PV !`,
         textclass: "fumble",
       }
     })[typeDM];
     sendChatMsg(rollTemplate(display));
-    if (typeDM === "pv")
+    if (typeDM === "current_pv")
       setAttrs({ pv: 0 }, { silent: true });
   });
 });
