@@ -17,7 +17,6 @@ v1.15.1 [Screenshot](cof2e.png)
 
 - Fiche de PNJ:
   - Ajout de 2 coups spéciaux paramétrables (pour un total de 5)
-  - Ajout d'une gestion de déclencheurs (modification d'attributs)
 
 ### Version _1.15.1_ (2026-04-08)
 

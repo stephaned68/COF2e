@@ -1,4 +1,4 @@
-# Identité 
+# Identité
 
 - Vous pouvez indiquer pour votre PJ un nom "connu" mais aussi son vrai nom dans le champ Alias. En cliquant sur le label Alias, ce dernier vient remplacer son nom connu. Un message de notification s'affiche dans le chat Roll20.
 - Lorsque vous sélectionnez une famille, une liste des profils correspondants est disponible. Si un profil est indiqué, vous devez l'effacer pour voir de nouveau la liste. Vous pouvez indiquer votre profile primaire suivi de / et d'un second profil si votre PJ dispose d'un profil hybride.
@@ -13,6 +13,10 @@ Un bouton situé à côté du type de fiche de personnage permet de lancer le Pe
 Un autre bouton situé à côté du type de fiche de personnage permet d'afficher un bilan de santé du personnage : nombre de PV, DR, PC (Ombre), PM courants et maximum, états préjudiciables subis, objets tenus en main, nombre d'utilisations restantes des capacités à usage limité, liste des buffs actifs.
 
 Ce bouton peut être épinglé dans la barre d'action de Roll20 par glisser-déposer.
+
+## Verrouillage
+
+Une icone cadenas ouvert / fermé permet de verrouiller la fiche de personnage. En mode _verrouillé_, le champ _Points de Vigueur Maximum_ n'est pas modifiable, afin d'éviter une mauvaise manipulation.
 
 # Caractéristiques
 

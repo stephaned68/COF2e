@@ -31,27 +31,6 @@ Cette section permet de gérer certaines créatures dont le score Défense peut 
 - Base : Il s'agit de la valeur de base de la Défense.
 - Supérieure : Il s'agit de la valeur supérieure de la Défense dont la créature peut éventuellement bénéficier via une de ses capacités
 
-## Déclencheurs
-
-Cette section permet de configurer des modifications de valeurs d'attributs du PNJ en fonction de la valeur d'un autre attribut. Il est ainsi possible de gérer des créatures dont certaines capacités évoluent lorsque leurs PV restants deviennent inférieurs à un certain seuil.
-
-- Seuil PV : 
-  - Cochez la case pour que les modifications de valeurs se déclenchent à la moitié des PV restants.
-  - Ou indiquez le nombre de PV restants sous lequel les modifications de valeurs se déclenchent.
-  - Indiquez une liste de nom d'attributs et de valeurs à changer, séparés par un signe égal `=`. Une paire nom=valeur par ligne.
-
-_NB : L'utilisation de cette fonctionnalité nécessite de connaître le nom des attributs utilisés par la fiche de personnage. Ce nom est en principe affiché dans une bulle d'aide lorsque le curseur de souris est déplacé au dessus d'un champ de saisie, d'une liste déroulante de sélection, d'un champ de texte, d'une case à cocher ou d'un bouton d'option. Si l'information n'est pas disponible, contactez l'auteur en créant un [ticket](https://github.com/stephaned68/COF2e/issues/new)._
-
-_NB : Pour activer la DEF supérieure d'un PNJ, assignez 1 à l'attribut `def_sup`_
-
-### Exemple : _Hausser le ton_
-
-- Dans la section _Coups spéciaux_, configurez-en un, en indiquant `+3` dans le bonus d'attaque et `1d4°` dans les DM supplémentaires, sans cocher la case _Prochaine attaque_.
-- Dans la section _Déclencheurs_, cochez la case pour déclencher les changements quand les PV restants tombent sous la moitié des PV maximum.
-- Dans la liste des changements, indiquez :
-  - `pnj_spec=?` où `?` correspond au no du coup spécial configuré pour modifier les attaques
-  - `rd=3` pour assigner une valeur de 3 à l'attribut de Réduction de Dommages
-
 ## Compétences
 
 Cette section permet de configurer des bonus de compétences pour le PNJ.
