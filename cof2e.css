@@ -1100,6 +1100,10 @@ button.spell-concentration span {
   text-decoration: overline;
 }
 
+/*.abilities-view input[value="0"].use-params div.rank details div.d-flex.use-params {
+  display: none;
+}*/
+
 .post-it textarea.post-it,
 .weapon textarea.one-row,
 .weapon-opt textarea.one-row,

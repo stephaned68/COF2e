@@ -106,6 +106,7 @@
 
   <!-- Rolls -->
   <input type="hidden" name="attr_d20roll" value="">
+  <input type="hidden" name="attr_roll_modifier" value="0">
 
   <!-- PVIG = pv first in dropdown -->
   <input type="hidden" name="attr_PVIG" value="0">
@@ -1773,6 +1774,7 @@
         
         <!-- Fiche PJ, Onglet Capacités, Mode Affichage -->
         <div class="abilities-view">
+          <input type="hidden" class="use-params" name="attr_use_params" value="1">
           <div class="d-flex d-flex-between">
             <div>
               <h3>
@@ -1834,7 +1836,7 @@
                   </summary>
                   <span name="attr_voie1-1" title="@{voie1-1}"></span>
                   <div class="d-flex">
-                    <input type="text"  name="attr_v1r1_param" title="@{v1r1_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                    <input type="text" class="use-params" name="attr_v1r1_param" title="@{v1r1_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v1r1_use_max" value="0">
                   <div class="ability-uses">
@@ -1860,8 +1862,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie1-2" title="@{voie1-2}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v1r2_param" title="@{v1r2_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v1r2_param" title="@{v1r2_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v1r2_use_max" value="0">
                   <div class="ability-uses">                  
@@ -1887,8 +1889,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie1-3" title="@{voie1-3}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v1r3_param" title="@{v1r3_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v1r3_param" title="@{v1r3_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>                  
                   <input type="hidden" class="ability-uses" name="attr_v1r3_use_max" value="0">
                   <div class="ability-uses">                  
@@ -1914,8 +1916,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie1-4" title="@{voie1-4}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v1r4_param" title="@{v1r4_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v1r4_param" title="@{v1r4_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v1r4_use_max" value="0">
                   <div class="ability-uses">                  
@@ -1941,8 +1943,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie1-5" title="@{voie1-5}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v1r5_param" title="@{v1r5_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v1r5_param" title="@{v1r5_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v1r5_use_max" value="0">
                   <div class="ability-uses">                  
@@ -1982,8 +1984,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie2-1" title="@{voie2-1}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v2r1_param" title="@{v2r1_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v2r1_param" title="@{v2r1_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v2r1_use_max" value="0">
                   <div class="ability-uses">                  
@@ -2009,8 +2011,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie2-2" title="@{voie2-2}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v2r2_param" title="@{v2r2_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v2r2_param" title="@{v2r2_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v2r2_use_max" value="0">
                   <div class="ability-uses">                  
@@ -2036,8 +2038,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie2-3" title="@{voie2-3}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v2r3_param" title="@{v2r3_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v2r3_param" title="@{v2r3_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v2r3_use_max" value="0">
                   <div class="ability-uses">                  
@@ -2063,8 +2065,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie2-4" title="@{voie2-4}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v2r4_param" title="@{v2r4_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v2r4_param" title="@{v2r4_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v2r4_use_max" value="0">
                   <div class="ability-uses">                  
@@ -2090,8 +2092,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie2-5" title="@{voie2-5}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v2r5_param" title="@{v2r5_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v2r5_param" title="@{v2r5_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v2r5_use_max" value="0">
                   <div class="ability-uses">                  
@@ -2131,8 +2133,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie3-1" title="@{voie3-1}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v3r1_param" title="@{v3r1_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v3r1_param" title="@{v3r1_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v3r1_use_max" value="0">
                   <div class="ability-uses">                  
@@ -2158,8 +2160,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie3-2" title="@{voie3-2}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v3r2_param" title="@{v3r2_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v3r2_param" title="@{v3r2_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v3r2_use_max" value="0">
                   <div class="ability-uses">                  
@@ -2185,8 +2187,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie3-3" title="@{voie3-3}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v3r3_param" title="@{v3r3_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v3r3_param" title="@{v3r3_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v3r3_use_max" value="0">
                   <div class="ability-uses">                  
@@ -2212,8 +2214,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie3-4" title="@{voie3-4}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v3r4_param" title="@{v3r4_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v3r4_param" title="@{v3r4_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v3r4_use_max" value="0">
                   <div class="ability-uses">                  
@@ -2239,8 +2241,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie3-5" title="@{voie3-5}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v3r5_param" title="@{v3r5_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v3r5_param" title="@{v3r5_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v3r5_use_max" value="0">
                   <div class="ability-uses">                  
@@ -2285,8 +2287,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie4-1" title="@{voie4-1}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v4r1_param" title="@{v4r1_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v4r1_param" title="@{v4r1_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v4r1_use_max" value="0">
                   <div class="ability-uses">                  
@@ -2312,8 +2314,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie4-2" title="@{voie4-2}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v4r2_param" title="@{v4r2_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v4r2_param" title="@{v4r2_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v4r2_use_max" value="0">
                   <div class="ability-uses">                  
@@ -2339,8 +2341,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie4-3" title="@{voie4-3}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v4r3_param" title="@{v4r3_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v4r3_param" title="@{v4r3_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v4r3_use_max" value="0">
                   <div class="ability-uses">                  
@@ -2366,8 +2368,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie4-4" title="@{voie4-4}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v4r4_param" title="@{v4r4_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v4r4_param" title="@{v4r4_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v4r4_use_max" value="0">
                   <div class="ability-uses">                  
@@ -2393,8 +2395,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie4-5" title="@{voie4-5}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v4r5_param" title="@{v4r5_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v4r5_param" title="@{v4r5_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v4r5_use_max" value="0">
                   <div class="ability-uses">                  
@@ -2434,8 +2436,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie5-1" title="@{voie5-1}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v5r1_param" title="@{v5r1_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v5r1_param" title="@{v5r1_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v5r1_use_max" value="0">
                   <div class="ability-uses">                  
@@ -2461,8 +2463,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie5-2" title="@{voie5-2}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v5r2_param" title="@{v5r2_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v5r2_param" title="@{v5r2_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v5r2_use_max" value="0">
                   <div class="ability-uses">                  
@@ -2488,8 +2490,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie5-3" title="@{voie5-3}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v5r3_param" title="@{v5r3_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v5r3_param" title="@{v5r3_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v5r3_use_max" value="0">
                   <div class="ability-uses">                  
@@ -2515,8 +2517,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie5-4" title="@{voie5-4}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v5r4_param" title="@{v5r4_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v5r4_param" title="@{v5r4_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v5r4_use_max" value="0">
                   <div class="ability-uses">                  
@@ -2542,8 +2544,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie5-5" title="@{voie5-5}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v5r5_param" title="@{v5r5_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v5r5_param" title="@{v5r5_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v5r5_use_max" value="0">
                   <div class="ability-uses">                  
@@ -2583,8 +2585,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie6-1" title="@{voie6-1}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v6r1_param" title="@{v6r1_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v6r1_param" title="@{v6r1_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v6r1_use_max" value="0">
                   <div class="ability-uses">                  
@@ -2610,8 +2612,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie6-2" title="@{voie6-2}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v6r2_param" title="@{v6r2_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v6r2_param" title="@{v6r2_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v6r2_use_max" value="0">
                   <div class="ability-uses">                  
@@ -2637,8 +2639,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie6-3" title="@{voie6-3}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v6r3_param" title="@{v6r3_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v6r3_param" title="@{v6r3_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v6r3_use_max" value="0">
                   <div class="ability-uses">                  
@@ -2664,8 +2666,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie6-4" title="@{voie6-4}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v6r4_param" title="@{v6r4_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v6r4_param" title="@{v6r4_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v6r4_use_max" value="0">
                   <div class="ability-uses">                  
@@ -2691,8 +2693,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie6-5" title="@{voie6-5}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v6r5_param" title="@{v6r5_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v6r5_param" title="@{v6r5_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v6r5_use_max" value="0">
                   <div class="ability-uses">                  
@@ -2737,8 +2739,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie7-1" title="@{voie7-1}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v7r1_param" title="@{v7r1_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v7r1_param" title="@{v7r1_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v7r1_use_max" value="0">
                   <div class="ability-uses">                  
@@ -2764,8 +2766,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie7-2" title="@{voie7-2}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v7r2_param" title="@{v7r2_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v7r2_param" title="@{v7r2_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v7r2_use_max" value="0">
                   <div class="ability-uses">                  
@@ -2791,8 +2793,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie7-3" title="@{voie7-3}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v7r3_param" title="@{v7r3_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v7r3_param" title="@{v7r3_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v7r3_use_max" value="0">
                   <div class="ability-uses">
@@ -2818,8 +2820,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie7-4" title="@{voie7-4}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v7r4_param" title="@{v7r4_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v7r4_param" title="@{v7r4_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v7r4_use_max" value="0">
                   <div class="ability-uses">                  
@@ -2845,8 +2847,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie7-5" title="@{voie7-5}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v7r5_param" title="@{v7r5_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v7r5_param" title="@{v7r5_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v7r5_use_max" value="0">
                   <div class="ability-uses">                  
@@ -2886,8 +2888,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie8-1" title="@{voie8-1}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v8r1_param" title="@{v8r1_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v8r1_param" title="@{v8r1_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v8r1_use_max" value="0">
                   <div class="ability-uses">                  
@@ -2913,8 +2915,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie8-2" title="@{voie8-2}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v8r2_param" title="@{v8r2_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v8r2_param" title="@{v8r2_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v8r2_use_max" value="0">
                   <div class="ability-uses">                  
@@ -2940,8 +2942,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie8-3" title="@{voie8-3}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v8r3_param" title="@{v8r3_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v8r3_param" title="@{v8r3_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v8r3_use_max" value="0">
                   <div class="ability-uses">                  
@@ -2967,8 +2969,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie8-4" title="@{voie8-4}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v8r4_param" title="@{v8r4_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v8r4_param" title="@{v8r4_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v8r4_use_max" value="0">
                   <div class="ability-uses">                  
@@ -2994,8 +2996,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie8-5" title="@{voie8-5}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v8r5_param" title="@{v8r5_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v8r5_param" title="@{v8r5_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v8r5_use_max" value="0">
                   <div class="ability-uses">                  
@@ -3035,8 +3037,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie9-1" title="@{voie9-1}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v9r1_param" title="@{v9r1_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v9r1_param" title="@{v9r1_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v9r1_use_max" value="0">
                   <div class="ability-uses">                  
@@ -3062,8 +3064,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie9-2" title="@{voie9-2}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v9r2_param" title="@{v9r2_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v9r2_param" title="@{v9r2_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v9r2_use_max" value="0">
                   <div class="ability-uses">                  
@@ -3089,8 +3091,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie9-3" title="@{voie9-3}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v9r3_param" title="@{v9r3_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v9r3_param" title="@{v9r3_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v9r3_use_max" value="0">
                   <div class="ability-uses">                  
@@ -3116,8 +3118,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie9-4" title="@{voie9-4}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v9r4_param" title="@{v9r4_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v9r4_param" title="@{v9r4_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v9r4_use_max" value="0">
                   <div class="ability-uses">                  
@@ -3143,8 +3145,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie9-5" title="@{voie9-5}"></span>
-                  <div class="d-flex">
-                    <input type="text"  name="attr_v9r5_param" title="@{v9r5_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v9r5_param" title="@{v9r5_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v9r5_use_max" value="0">
                   <div class="ability-uses">                  
@@ -4085,6 +4087,8 @@
             <h4>Capacité / Compétence</h4>
             <h4>Description / Jet spécial</h4>
           </div>
+
+          <input type="hidden" name="attr_roll_carac" value="">
 
           <fieldset class="repeating_rolls">
 
@@ -5265,6 +5269,7 @@
             <div class="sheet-col">
 
               <ul>
+                <li>Cliquez sur le bouton Import à droite du nom de la voie</li>
                 <li>N'oubliez pas d'indiquer le premier rang de la voie dans la configuration</li>
                 <li>
                   La première ligne est le nom de la voie<br>
@@ -5577,7 +5582,11 @@
               <li class="config-check">
                 <input type="checkbox" name="attr_voies_789" value="1">
                 <span>Voies 7-8-9</span>
-              </li>
+              </li><!--
+              <li class="config-check" title="Voir les paramètres des capacités en mode affichage">
+                <input type="checkbox" name="attr_use_params" value="1" checked>
+                <span>Voir les paramètres de capacités</span>
+              </li>-->
               <li class="config-check" title="Système de compétences (Atlas & règles optionnelles, p. 223)">
                 <input type="checkbox" name="attr_use_skills" value="1">
                 <span>Compétences</span>
@@ -6307,12 +6316,14 @@
               <li>
                 <details>
                   <summary>
-                    <strong>Version 1.16.0</strong> (2026-04)
+                    <strong>Version 1.16.0</strong> (2026-05)
                   </summary>
                   <ul>
                     <li>Ajout des Points d'Ego (Compagnon, Psionique)</li>
                     <li>Amélioration des DM temporaires (message d'information, récupération)</li>
                     <li>Affichage optionnel d'un bouton <em>Fin de tour</em> sur les attaques</li>
+                    <li>Amélioration des jets de caractéristiques pour les capacités réglées sur <em>Demander</em></li>
+                    <li>Ajout d'une saisie de modificateur aux jets de capacités et de compétences depuis le bouton caractéristique +</li>
                   </ul>
                 </details>
               </li>
@@ -7973,7 +7984,7 @@
               <li>
                 <details>
                   <summary>
-                    <strong>Version 1.16.0</strong> (2026-04)
+                    <strong>Version 1.16.0</strong> (2026-05)
                   </summary>
                   <ul>
                     <li>Ajout de 2 coups spéciaux paramétrables (5 en tout)</li>
@@ -8773,6 +8784,7 @@ const SWData = {
     profilePaths: [ 2, 3 ],
     level1Paths: [ 1, 2, 3 ],
     minLevels: [ 1, 2, 3, 5, 7, 9, 11, 13 ],
+    npcFavorites: 5,
     highFan: [ 
       "cfg_use_epic",
       "cfg_use_drniv",
@@ -11103,6 +11115,20 @@ function objval(value, onError = {}) {
 function capitalize(s, forceLower = true) {
   if (s && s !== "")
     return s.charAt(0).toUpperCase() + (forceLower ? s.substring(1).toLowerCase() : s.substring(1));
+  return s;
+}
+
+/**
+ * Capitalize all words in string
+ * @param {string} s - string to capitalize
+ * @param {boolean} [forceLower=true] - force lower to end of string
+ * @returns {string}
+*/
+function capitalizeAll(s, forceLower = true) {
+  if (s && s !== "")
+    if (s.includes(" ")) 
+      return s.split(" ").map(w => capitalize(w)).join(" ");
+  return s
 }
 
 /**
@@ -11292,6 +11318,16 @@ function cleanText(t, clearTags = true) {
     t = t.replace(/\*/,     "");
   }
   return t.trim();
+}
+
+/**
+ * Text matching
+ * @param {string} inStr - string to search in
+ * @param {string} subStr - string to search for
+ * @returns {boolean}
+ */
+function inStr(inStr, subStr) {
+  return cleanText(inStr).includes(cleanText(subStr));
 }
 
 /**
@@ -12235,7 +12271,7 @@ function hasAbility(search, values) {
     owned = ownedAbilities(values);
   }
   // In case ability names have been entered with fancy emoticons
-  const found = owned.some(ability => ability.includes(cleanText(name)));
+  const found = owned.some(ability => inStr(ability, name));
   return found;
 }
 
@@ -12361,7 +12397,7 @@ function getAllTags(values) {
 function getFamilyByProfile(name) {
   let familyName = "";
   for (const family of Object.keys(SWData.PC.PROFILES)) {
-    const found = SWData.PC.PROFILES[family].find(profile => cleanText(profile.value) === cleanText(name));
+    const found = SWData.PC.PROFILES[family].find(profile => inStr(name, profile.value));
     if (found) {
       familyName = cleanText(family);
       break;
@@ -12606,7 +12642,7 @@ function getProfileData(profile, selectFamily = "") {
     for (const f in SWData.PC.PROFILES) {
       if (selectFamily !== "" && f.toLowerCase() !== selectFamily.toLowerCase())
         continue;
-      data = SWData.PC.PROFILES[f].find(p => cleanText(primary) === cleanText(p.value));
+      data = SWData.PC.PROFILES[f].find(p => inStr(primary, p.value));
       if (data) {
         family = f;
         break;
@@ -13448,11 +13484,20 @@ SWData.PC.STATS.forEach(stat => {
       ...nameSeq(4, `custom#_${short}`),
     ], function(values) {
       const charName = strval(values.character_name);
-      const actions = [ `%{${charName}|${short}${modifier}-btn}` ];
+      const actions = [ {
+        action: `%{${charName}|${short}${modifier}-btn}`,
+        carac: ""
+      } ];
       let rolls = rollIds
-      .filter(id => strval(values[rptAttr("rolls", "roll-carac", id)]) === `@{${short}_test}`)
+      .filter(id => {
+        const carac = strval(values[rptAttr("rolls", "roll-carac", id)]);
+        return carac === `@{${short}_test}` || carac === "?";
+      })
       .map(id => {
-        actions.push(`%{${charName}|${ rptAttr("rolls", "roll-btn", id) }}`);
+        actions.push({
+          action: `%{${charName}|${ rptAttr("rolls", "roll-btn", id) }}`,
+          carac: short
+        });
         return `${SWData.emojis.actions} ${ strval(values[rptAttr("rolls", "roll-nom", id)]) }`;
       });
       const skills = [];
@@ -13477,9 +13522,15 @@ SWData.PC.STATS.forEach(stat => {
           const emoji = skill.emoji || SWData.emojis.skills;
           skills.push(emoji + getSkillName(skill) + skillBonus);
           if (Array.isArray(skill.ability))
-            actions.push(`%{${charName}|skill-${ skill.name }-${short}}`);
+            actions.push({
+              action: `%{${charName}|skill-${ skill.name }-${short}}`,
+              carac: ""
+            });
           else
-            actions.push(`%{${charName}|skill-${ skill.name }}`);
+            actions.push({ 
+              action: `%{${charName}|skill-${ skill.name }}`,
+              carac: ""
+            });
         });
       }
       if (rolls.length === 0 && skills.length === 0) {
@@ -13488,7 +13539,13 @@ SWData.PC.STATS.forEach(stat => {
       }
 
       ask([ "Jet ?", short.toUpperCase(), ...rolls, ...skills ], (selected) => {
-        sendChatCmd(actions[selected - 1]);
+        const { action, carac } = actions[selected - 1];
+        const attrs = new Map();
+        if (carac !== "")
+          attrs.set("roll_carac", "@{" + carac + "}");
+        if (modifier === "mod")
+          attrs.set("roll_modifier", 1);
+        setAttrs(Object.fromEntries(attrs), {}, () => sendChatCmd(action));
       });
     });
   });
@@ -14109,7 +14166,7 @@ on(clickedEvent([ "egoreco-btn", "egoreco_fast-btn", "egoreco_full-btn"]), funct
 /**
  * Update the def attribute
  */
-function updateDef(eventInfo) {
+function updateDef(eventInfo) { 
   getAttrs([ "sheet_type", ...SWData.PC.COMBAT.def ], function(values) {
     if (strval(values.sheet_type) === SWData.SHEET_TYPE.NPC)
       return;
@@ -14517,36 +14574,37 @@ function insertRolls(text, options = {}) {
     companionOf += "|";
   const devol = `@{${ isNPC ? companionOf : "" }devol}`;
   
-  // Search for " [#d4° + XXX] " or " [#dE + XXX] "
-  matchRegExp(text, /([ ]*)\[([1-9])d(4°|E)[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL|rang voie [1-9])\]([ ]*)/gm).forEach(result => {
-    let [ matched, sb, dice, , stat, sa ] = result;
+  // Search for " [#d4° + XXX] " (or dE or d4e or d4E)
+  matchRegExp(text, /([ ]*)\[([1-9])d(4°|E|4e|4E)[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL|rang voie [1-9])(.*)\]([ ]*)/gm).forEach(result => {
+    let [ matched, sb, dice, , stat, , sa ] = result;
     if (stat.startsWith("rang "))
       stat = `rang_voie${ findPathByName(stat, pathNames) }`;
     const replace = `${sb}[[${dice}${devol} + @{${stat.toLowerCase()}}[${stat}] ]]${sa}`;
+    console.log(stat, matched, replace)
     text = text.replace(matched, replace);
   });
 
-  // Search for "... #d4° ..." or "... #dE ..."
-  matchRegExp(text, /([ ]*)([1-9])d(4°|E)([ ]*)/gm).forEach(result => {
+  // Search for "... #d4° ..." (or dE or d4e or d4E)
+  matchRegExp(text, /([ ]*)([1-9])d(4°|E|4e|4E)([ ]*)/gm).forEach(result => {
     const [ matched, sb, dice, , sa ] = result;
     const replace = `${sb}[[${dice}${devol}]]${sa}`;
     text = text.replace(matched, replace);
   });
 
   // Search for " [# + XXX] "
-  matchRegExp(text, /([ ]*)\[([0-9]+)[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL|rang voie [1-9])\]([ ]*)/gm).forEach(result => {
-    let [ matched, sb, value, ability, sa ] = result;
-    if (ability.startsWith("rang ")) {
-      ability = `rang_voie${ findPathByName(ability, pathNames) }`;
+  matchRegExp(text, /([ ]*)\[([0-9]+)[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL|rang voie [1-9])(.*)\]([ ]*)/gm).forEach(result => {
+    let [ matched, sb, value, stat, , sa ] = result;
+    if (stat.startsWith("rang ")) {
+      stat = `rang_voie${ findPathByName(stat, pathNames) }`;
     }
-    const replace = `${sb}[[${value} + @{${ability.toLowerCase()}}]]${sa}`;
+    const replace = `${sb}[[${value} + @{${stat.toLowerCase()}}]]${sa}`;
     text = text.replace(matched, replace);
   });
 
   // Search for " [XXX] "
-  matchRegExp(text, /([ ]+)\[(AGI|CON|FOR|PER|CHA|INT|VOL|NIV|NIVEAU|NC|NOM)\]([ ]+)/gm).forEach(result => {
-    let [ matched, sb, ability, sa ] = result;
-    if (ability === "NIV")
+  matchRegExp(text, /([ ]+)\[(AGI|CON|FOR|PER|CHA|INT|VOL|NIV|NIVEAU|NC|NOM)(.*)\]([ ]+)/gm).forEach(result => {
+    let [ matched, sb, ability, , sa ] = result;
+    if (ability === "NIV" || ability === "NC")
       ability = "niveau";
     if (ability === "NOM")
       ability = "character_name";
@@ -15186,9 +15244,9 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
     let hasBonus = [];
     let critSpecial = "";
     if (isFighter) {
-      const weapon = SWData.GEARS.find(gear => cleanText(gear.name) === cleanText(name));
+      const weapon = SWData.GEARS.find(gear => inStr(name, gear.name));
       if (maneuver) {
-        if (weapon?.maneuvers) 
+        if (weapon?.maneuvers)
           hasBonus = weapon.maneuvers;
         if (!modifiers.includes("manoeuvres"))
           modifiers.push("manoeuvres");
@@ -16284,7 +16342,7 @@ function updatePathInfos(path) {
       return;
     }
 
-    const pathPV = SWData.PVPATH.find(p => p.name === name);
+    const pathPV = SWData.PVPATH.find(p => inStr(name, p.name));
     if (!pathPV)
       return;
 
@@ -16681,7 +16739,7 @@ on("clicked:repeating_rolls:roll-btn", function() {
       "cfg_d20roll", "d20roll",
       "cfg_shadow", "pc",
       "allcaracs_desc", "allcaracs_buff", 
-      "help_roll_all",
+      "help_roll_all", "roll_carac", "roll_modifier",
       ...fearConditionsAttrs(),
       ...luckButtonAttrs(),
       ...statsAttrs,
@@ -16714,6 +16772,8 @@ on("clicked:repeating_rolls:roll-btn", function() {
       }
     }
     
+    const updates = new Map();
+
     const allTags = getAllTags(values);
 
     // Weakened condition
@@ -16734,12 +16794,23 @@ on("clicked:repeating_rolls:roll-btn", function() {
     // Valeur d'Ombre
     const shadow = shadowValue(values);
     
+    // Actual stat is known
+    if (carac === "?") {
+      const rollStat = strval(values.roll_carac);
+      if (rollStat !== "") {
+        carac = rollStat;
+        updates.set("roll_carac", "");
+      }
+    }
+
     let mark;
     if (abilityMatch && carac === "0")
       mark = "rang ";
     else
       mark = "+";
     const rollBonus = carac !== "?" ? ` *(${mark}${ intval(values[carac.slice(2, 2 + 3 + 5)]) + (ranks[rankInPath - 1] || 0) + bonus })*` : "";
+
+    const rollModifier = boolval(values.roll_modifier);
 
     let lsub = "Capacité";
     let text = "";
@@ -16770,6 +16841,11 @@ on("clicked:repeating_rolls:roll-btn", function() {
       // + Bonus
       if (bonus !== 0)
         rollCmd += ` + (${bonus})[Bonus]`;
+      // + Modificateur
+      if (rollModifier) {
+        rollCmd += " + (?{Modificateur ?|0}[Modificateur])";
+        updates.set("roll_modifier", 0);
+      }
       // + All rolls buff
       rollCmd += allRollsBuff(values, "caracs");
       // + Help
@@ -16801,6 +16877,9 @@ on("clicked:repeating_rolls:roll-btn", function() {
       chance: addLuckButton(values)
     }, { tags: allTags });
     sendChatMsg(chatMsg);
+
+    if (updates.size > 0)
+      setAttrs(Object.fromEntries(updates));
   });
 })
 
@@ -16854,7 +16933,7 @@ SWData.PC.SKILLS.forEach(skill => {
       "pc", "cfg_shadow", 
       "cfg_1skill_roll", "cfg_d20roll", "d20roll",
       "allcaracs_desc", "allcaracs_buff",
-      "help_roll_all",
+      "help_roll_all", "roll_modifier",
       ...fearConditionsAttrs(),
       ...luckButtonAttrs()
     ], function (values) {
@@ -16918,6 +16997,10 @@ SWData.PC.SKILLS.forEach(skill => {
       if (skillBonus !== 0)
         rollCmd += ` + (${skillBonus})[Bonus ${skillName}]`;
 
+      const rollModifier = boolval(values.roll_modifier);
+      if (rollModifier)
+        rollCmd += " + (?{Modificateur ?|0}[Modificateur])";
+
       rollCmd += allRollsBuff(values, "caracs");
 
       const helpAllRolls = strval(values.help_roll_all);
@@ -16951,6 +17034,8 @@ SWData.PC.SKILLS.forEach(skill => {
         updates.set(`${skill.name}_carac`, skillDef);
       if (helpAllRolls !== "")
         updates.set("help_roll_all", "");
+      if (rollModifier)
+        updates.set("roll_modifier", 0);
       if (updates.size > 0)
         setAttrs(Object.fromEntries(updates));
     });
@@ -18531,6 +18616,7 @@ on("clicked:def_config-btn", function() {
     "token_tooltip_on",
     "chatsetattr",
     "$tresor_monnaie",
+    "fav_abilities",
     "pnj_tactique_tip",
     "pnj_notes_tip",
   ];
@@ -19863,6 +19949,25 @@ on("change:repeating_npcarmes:arme-nom clicked:renum_npcatk-btn", function(event
           updates.set(rptAttr(rptAtk, "armeopt"), 1);
         updates.set(newRow, 0);
         
+        const name = cleanText(values[rptAttr(rptAtk, "arme-nom", atkId)]);
+        let natural = false;
+        switch (true) {
+          case (name.includes("coup")):
+            updates.set(rptAttr(rptAtk, "arme-dmtype"), "coup");
+            natural = true;
+            break;
+          case (name.includes("morsure")):
+            updates.set(rptAttr(rptAtk, "arme-dmtype"), "morsure");
+            natural = true;
+            break;
+          case (name.includes("griffe")):
+            updates.set(rptAttr(rptAtk, "arme-dmtype"), "griffes");
+            natural = true;
+            break;
+        }
+        if (natural)
+          updates.set(rptAttr(rptAtk, "arme-atktype"), "naturel");
+
         // update roll button linked attribute
         const atkBtn = rptAttr(rptAtk, "npcatk-btn", atkId);
         updates.set(atkBtn, `%{${charName}|${atkBtn}}`);
@@ -20310,11 +20415,15 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
  * Roll an NPC ability in chat
  */
 on("clicked:repeating_npcrolls:npcroll-btn", function() {
-  const section = "repeating_npcrolls_npcroll-";
-  const rollAttrs = [ "name", "uses", "max", "freq", "desc" ].map(a => `${section}${a}`);
+  const section = "npcrolls";
+  const rollAttrs = rptAttrs(section, [ 
+    "name",
+    "uses", "max", "freq",
+    "desc"
+  ].map(a => `npcroll-${a}`));
   getAttrs([ "compagnon", ...rollAttrs ], function (values) {
     const companionOf = strval(values.compagnon);
-    let name = strval(values[section + "name"], "Capacité");
+    let name = strval(values[rptAttr(section, "npcroll-name")], "Capacité");
     const action = name.match(/ \((G|M|A|L)\)[ ]*$/);
     let actionType = "";
     if (action) {
@@ -20325,10 +20434,10 @@ on("clicked:repeating_npcrolls:npcroll-btn", function() {
     let text = "";
     let alert = "";
     let alertCSS = "";
-    const maxUses = numval(values[section + "max"]);
-    const freq = strval(values[section + "freq"]);
+    const maxUses = numval(values[rptAttr(section, "npcroll-max")]);
+    const freq = strval(values[rptAttr(section, "npcroll-freq")]);
     if (freq !== "" && maxUses !== 0) {
-      let nbUsed = numval(values[section + "uses"]) + 1;
+      let nbUsed = numval(values[rptAttr(section, "npcroll-uses")]) + 1;
       if (nbUsed > maxUses) {
         text = "";
         alert = `Nombre d'utilisations par ${freq} atteint`;
@@ -20337,11 +20446,11 @@ on("clicked:repeating_npcrolls:npcroll-btn", function() {
         alert = `Utilisée ${nbUsed} fois`;
         alertCSS = "secondary";
       }
-      setAttrs({ [`${section}uses`]: Math.min(nbUsed, maxUses) });
+      setAttrs({ [rptAttr(section, "npcroll-uses")]: Math.min(nbUsed, maxUses) });
     }
 
     if (text === "")
-      text = insertRolls(strval(values[section + "desc"]), { isNPC: true, companionOf });
+      text = insertRolls(strval(values[rptAttr(section, "npcroll-desc")]), { isNPC: true, companionOf });
 
     const chatMsg = rollTemplate({
       lsub: "Capacité" + actionType,
@@ -20357,7 +20466,6 @@ on("clicked:repeating_npcrolls:npcroll-btn", function() {
 /**
  * Display favorite abilities
  */
-
 on("change:fav_abilities " + repeatEvents("npcrolls", true), async function() {
   const allIds = await getSectionIDsOrderedAsync("npcrolls");
   getAttrs([
@@ -20377,7 +20485,7 @@ on("change:fav_abilities " + repeatEvents("npcrolls", true), async function() {
     });
     
     const updates = new Map();
-    seq(5).forEach(ix => {
+    seq(SWData.settings.npcFavorites).forEach(ix => {
       updates.set(`favability${ix}`, 0);
       updates.set(`favability${ix}_name`, "");
       updates.set(`favability${ix}_id`, "");
@@ -20386,7 +20494,7 @@ on("change:fav_abilities " + repeatEvents("npcrolls", true), async function() {
     
     let abilityIds = [ ...new Set([ ...favs, ...allIds ]) ];
     if (abilityIds.length > 0) {
-      abilityIds = abilityIds.slice(0, 5);
+      abilityIds = abilityIds.slice(0, SWData.settings.npcFavorites);
       abilityIds.forEach((id, ix) => {
         updates.set(`favability${ ix + 1 }`, 1);
         updates.set(`favability${ ix + 1 }_name`, strval(values[rptAttr("npcrolls", "npcroll-name", id)]).replace("*", ""));
@@ -20406,7 +20514,7 @@ on("change:fav_abilities " + repeatEvents("npcrolls", true), async function() {
 /**
  * Click favorite ability button
  */
-seq(5).forEach(favbtn => {
+seq(SWData.settings.npcFavorites).forEach(favbtn => {
   on(`clicked:fav_ability${favbtn}-btn`, function() {
     const favId = `favability${favbtn}_id`;
     getAttrs([ "character_name", favId ], function(values) {
@@ -20429,53 +20537,6 @@ on("change:atkbase_pnj change:atkcac_pnj change:atktir_pnj change:atkmag_pnj", f
     setAttrs({ atkcac, atktir, atkmag });
   });
 });
-
-/**
- * Set NPC attribute changes on PV threshold
- *
-on("change:current_pv", function (eventInfo) {
-  getAttrs([ 
-    "sheet_type",
-    "pv", "pv_max",
-    "demipv_mods", "zeropv_mods",
-    "seuil_pv", "seuil_mods",
-    "def_sup"
-  ], function (values) {
-    if (strval(values.sheet_type) !== SWData.SHEET_TYPE.NPC)
-      return;
-    const pv = intval(values.pv);
-    const pvMax = intval(values.pv_max);
-    const halfPV = Math.floor(pvMax / 2);
-    const threshold = intval(values.seuil_pv);
-    if (pv > halfPV)
-      return;
-    let mods = strval(values.demipv_mods);
-    if (threshold > 0 && pv <= threshold)
-      mods = strval(values.seuil_mods);
-    if (pv <= 0)
-      mods = strval(values.zeropv_mods);
-    if (mods === "")
-      return;
-    const notifs = [];
-    const updates = mods.split("\n")
-    .filter(rowData => strval(rowData) !== "" && !strval(rowData).startsWith("//"))
-    .reduce((result, rowData) => {
-      if (rowData.startsWith("+")) {
-        notifs.push(rowData.slice(1));
-        return result;
-      }
-      const { name, value } = parseNameValue(rowData,"=");
-      if (name !== "")
-        result.set(name, strval(value));
-      return result;
-    }, new Map());
-    if (notifs.length > 0) {
-      sendChatMsg(notifs.join("\n"), { template: "", whisper: "gm" });
-    }
-    if (updates.size > 0)
-      setAttrs(Object.fromEntries(updates));
-  });
-});*/
 
 /**
  * Set companion attributes
@@ -21847,9 +21908,14 @@ on("change:current_pv change:temp_dm", function(eventInfo) {
 });
 
 /**
- * On clicking token adjust buttons (TokenMod)
+ * On clicking token adjust buttons (TokenMod / COFantasy2)
  */
-on(clickedEvent([ "min", "max", "siz", "def" ].map(b => `token_${b}-btn`)), function(eventInfo) {
+on(clickedEvent([ 
+  "token_min",
+  "token_max",
+  "token_siz",
+  "token_def"
+].map(b => `${b}-btn`)), function(eventInfo) {
   getAttrs([
     "sheet_type", "mook", "character_id",
     "pm_max", "taille",

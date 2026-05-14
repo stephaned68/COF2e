@@ -10,10 +10,14 @@ v1.15.1 [Screenshot](cof2e.png)
 
 ## Notes de version
 
-### Version _1.16.0_ (2026-04)
+### Version _1.16.0_ (2026-05)
 
 - Fiche de PJ:
   - Gestion des Points d'Ego du profil de Psionique
+  - Amélioration des DM temporaires (message d'information, récupération)
+  - Affichage optionnel d'un bouton _Fin de tour_ sur les attaques
+  - Amélioration des jets de caractéristiques pour les capacités réglées sur _Demander_
+  - Ajout d'une saisie de modificateur aux jets de capacités et de compétences depuis le bouton caractéristique +
 
 - Fiche de PNJ:
   - Ajout de 2 coups spéciaux paramétrables (pour un total de 5)
