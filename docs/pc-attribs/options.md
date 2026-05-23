@@ -18,6 +18,8 @@ On peut activer une ou plusieurs options simultanément. Selon la configuration 
 
 Le nombre de D20 lancés par la fiche dépend des options activées : si une option procure un dé bonus et une autre inflige un dé malus, un jet normal est effectué.
 
+Si l'option _Attaques ciblées_ est active, que les DM supplémentaires indiqués comportent l'expression `DM/2`, et que l'option est active lorsqu'une attaque échoue, les DM sont quand même calculés mais divisés par deux, sauf si le D20 de l'attaque a donné 1. Cela permet de mettre en oeuvre la capacité de Chevalier _Frappe du justicier_ (cf ci-après).
+
 ### Exemples d'options tactiques
 
 #### Attaque sournoise
@@ -44,6 +46,14 @@ Pour créer l'option _Dans le mille_, indiquez :
 Cochez la case d'activation. A chaque fois que le rôdeur effectue une attaque, la fiche demandera le type d'action utilisée, effectuera le jet d'attaque avec un dé malus, et lancera les dés de DM supplémentaires selon le choix effectué.
 
 Vous pouvez aussi créer deux options distinctes `Dans le mille (A)` et `Dans le mille (L)` avec les dés de DM supplémentaires correspondants et activer l'une ou l'autre.
+
+#### Frappe du justicier
+
+Pour créer l'option _Frappe du justicier_ du profil de _Chevalier_, indiquez :
+- `Frappe du justicier` dans le nom de l'option,
+- `DM/2` dans les DM supplémentaires.
+
+Vous devez utiliser l'option de configuration _Attaques ciblées_ pour que cette option tactique fonctionne.
 
 ## Modificateurs situationnels
 

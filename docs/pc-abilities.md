@@ -39,6 +39,25 @@ Pour chaque voie, vous indiquez :
 
 - Une icône située à côté des PV de voie permet d'importer la liste des capacités à partir du texte collé dans le sous-onglet Import.
 
+### Plusieurs capacités par rang
+
+Certaines voies de prestige permettent l'acquisition de plusieurs capacités pour chaque rang obtenu dans la voie (exemple : _Voie du maître des sorts_).
+
+Pour les paramétrer, vous devez indiquer le nom de chaque capacité précédé de `--`, puis la description de la capacité sur les lignes suivantes.
+
+Lorsque le bouton d'utilisation est cliqué, la fiche demande de choisir la capacité dont le nom et la description sont à afficher dans le chat Roll20.
+
+_Exemple :_
+
+Quand le personnage acquiert la capacité de rang 4 _Arcanes inférieures_ de la _voie du maître des sorts_ et qu'il décide d'apprendre les sorts _Murmures dans le vent_ et _Chant des héros_, il doit les indiquer de la manière suivante dans le texte de la capacité :
+
+```
+-- Murmures dans le vent
+L'ensorceleur chuchote ...
+-- Chant des héros
+Le barde peut chanter ...
+```
+
 ## Mode Affichage
 
 Les informations saisies en mode _Edition_ sont reprises mais non modifiables dans cet vue.
