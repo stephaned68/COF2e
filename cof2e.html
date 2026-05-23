@@ -1599,7 +1599,7 @@
                     <input type="number" class="two-digits align-self-center" name="attr_tact-div" title="@{tact-div} Bonus pour toucher" value="0">
                     &nbsp;<input type="checkbox" name="attr_tact-roll" title="@{tact-roll} Avec dé bonus" value="1">
                     &nbsp;<input type="checkbox" name="attr_tact-roll" title="@{tact-roll} Avec dé malus" value="2">
-                    <input type="text" class="w-auto align-self-center" name="attr_tact-dmdiv" title="@{tact-dmdiv} DM supplémentaires" placeholder="DM supplémentaires" value="">
+                    <input type="text" class="w-auto align-self-center" name="attr_tact-dmdiv" title="@{tact-dmdiv} DM supplémentaires&#10;'DM/2' pour demi DM en cas d'échec" placeholder="DM supplémentaires" value="">
                   </div>
                 </div>
 
@@ -1774,7 +1774,7 @@
         
         <!-- Fiche PJ, Onglet Capacités, Mode Affichage -->
         <div class="abilities-view">
-          <input type="hidden" class="use-params" name="attr_use_params" value="1">
+          <!--<input type="hidden" class="use-params" name="attr_use_params" value="1">-->
           <div class="d-flex d-flex-between">
             <div>
               <h3>
@@ -1835,8 +1835,8 @@
                     </div>
                   </summary>
                   <span name="attr_voie1-1" title="@{voie1-1}"></span>
-                  <div class="d-flex">
-                    <input type="text" class="use-params" name="attr_v1r1_param" title="@{v1r1_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
+                  <div class="d-flex use-params">
+                    <input type="text" name="attr_v1r1_param" title="@{v1r1_param} Paramètre de capacité" placeholder="Paramètre de capacité" value="">
                   </div>
                   <input type="hidden" class="ability-uses" name="attr_v1r1_use_max" value="0">
                   <div class="ability-uses">
@@ -6324,6 +6324,9 @@
                     <li>Affichage optionnel d'un bouton <em>Fin de tour</em> sur les attaques</li>
                     <li>Amélioration des jets de caractéristiques pour les capacités réglées sur <em>Demander</em></li>
                     <li>Ajout d'une saisie de modificateur aux jets de capacités et de compétences depuis le bouton caractéristique +</li>
+                    <li>Prise en compte <em>DM/2</em> dans les DM supplémentaires des options tactiques</li>
+                    <li>Prise en charge des voies permettant l'acquisition de plusieurs capacités par rang</li>
+                    <li>Corrections sur la prise en charge des voies de prestige</li>
                   </ul>
                 </details>
               </li>
@@ -7988,6 +7991,7 @@
                   </summary>
                   <ul>
                     <li>Ajout de 2 coups spéciaux paramétrables (5 en tout)</li>
+                    <li>Corrections sur les jets de caractéristiques</li>
                   </ul>
                 </details>
               </li>
@@ -8702,6 +8706,14 @@
       {{/rollTotal() computed::brollf 1}}
     {{/broll}}
   {{/roll}}
+  {{#faildm}}
+  {{#rollTotal() computed::dmfail 1}}
+  <div class="sheet-rt sheet-rt-text">
+    <div>
+      {{faildm}} {{dmdesc}}
+    </div>
+  {{/rollTotal() computed::dmfail 1}}
+  {{/faildm}}
   {{#heal}}
   <div class="sheet-rt sheet-rt-roll">
     <span class="sheet-rt sheet-rt-roll">{{heal}} PV récupérés</span>
@@ -11729,7 +11741,11 @@ function sendChatMsg(msg, options) {
     if (last_rolls !== "" && save)
       updates.set("last_rolls", last_rolls);
 
+    let rolled = 0;
+    let rollD20 = 0;
     if (roll.results.roll) {
+      rolled = intval(roll.results.roll.result);
+      rollD20 = diceRoll(roll.results.roll);
       const rx = "\\[(" + SWData.PC.COMBAT.maneuvers.map(mn => mn.name.split(" ")[0]).join("|") + ")\\].*\\)";
       const matched = roll.results.roll.expression.match(rx);
       if (matched) {
@@ -11738,14 +11754,18 @@ function sendChatMsg(msg, options) {
       }
     }
 
+    // check to hit & DM on fail 
     const toHit = intval(roll.results.tohit?.result);
-    if (toHit > 0 && intval(roll.results.roll.result) < toHit)
+    if (toHit > 0 && rolled < toHit)
       computed.hasdm = 0;
+    if (computed.hasdm === 0) 
+      if (options.dmgOnFail && rollD20 > 1)
+        computed.dmfail = 1;
 
     // check TN
     const rollTN = intval(options.rollTN);
     if (rollTN > 0) {
-      const rollD20 = diceRoll(roll.results.roll);
+      //const rollD20 = diceRoll(roll.results.roll);
       if (rollD20 >= rollTN)
         computed.rollf = 1;
       if (!computed.rollf && roll.results.broll) {
@@ -11757,7 +11777,7 @@ function sendChatMsg(msg, options) {
 
     // check crit success
     if (options.critical || options.critspec) {
-      const rollD20 = diceRoll(roll.results.roll);
+      //const rollD20 = diceRoll(roll.results.roll);
       if (rollD20 >= options.crit)
         computed.critsuccess = 1;
       if (!computed.critsuccess && roll.results.broll) {
@@ -11771,7 +11791,7 @@ function sendChatMsg(msg, options) {
     if (options.fumble) {
       const rollCar = diceRoll(roll.results.fumbletest);
       if (rollCar < 10) {
-        const rollD20 = diceRoll(roll.results.roll);
+        //const rollD20 = diceRoll(roll.results.roll);
         if (rollD20 === 1)
           computed.critfail = 1;
         if (!computed.critfail && roll.results.broll) {
@@ -11788,7 +11808,7 @@ function sendChatMsg(msg, options) {
       const name = strval(options.usure.name);
       const usure = intval(options.usure.value);
       if (usure > 0 && attackId !== "") {
-        const rollD20 = diceRoll(roll.results.roll);
+        //const rollD20 = diceRoll(roll.results.roll);
         if (rollD20 === 1 && roll.results.usure)
           updates.set("usure_check", JSON.stringify({ attack: attackId, name, usure, roll: roll.results.usure.result }));
       }
@@ -12485,10 +12505,10 @@ function rollDEvol(number, devol) {
  * @returns {string}
  */
 function expandDEvol(dm, devol) {
-  if (dm.includes("@{devol}")) {
-    const [ matched, dice ] = dm.match(/([0-9]+)@{devol}/);
-    if (matched)
-      dm = dm.replace(matched, rollDEvol(intval(dice), devol));
+  let matching = dm.match(/([0-9]+)@{devol}/);
+  if (matching) {
+    const [ matched, dice ] = matching;
+    dm = dm.replace(matched, rollDEvol(intval(dice), devol));
   }
   return dm;
 }
@@ -13023,6 +13043,7 @@ function updatePVMax(eventInfo, changed = "") {
   const owned = allPathRanks("rankOwned");
   const other = [ 
     ...nameSeq(9, abilityInfo().pathPV),
+    ...nameSeq(9, abilityInfo().rankBase),
     ...allPathRanks("rankProps")
   ];
   getAttrs([
@@ -13066,23 +13087,24 @@ function updatePVMax(eventInfo, changed = "") {
       if (!boolval(values[ability]))
         return;
       
-      const props = strval(values[`${ability}_props`]).toLowerCase();
+      const props = strval(values[abilityInfo(ability).rankProps]).toLowerCase();
       if (hasProp(props, "doublon") || hasProp(props, "epic"))
         return;
 
       const { path, rank } = abilityInfo(ability);
       let pathPV = intval(values[abilityInfo(ability).pathPV]);
-
-      if (path === SWData.settings.peoplePath && rank === 1)
+      const rankPath = rank + intval(values[abilityInfo(ability).rankBase]) - 1;
+      
+      if (path === SWData.settings.peoplePath && rankPath === 1)
         return;
 
-      if (SWData.settings.profilePaths.includes(path) && rank === 1) {
+      if (SWData.settings.profilePaths.includes(path) && rankPath === 1) {
         pvMax += pathPV;
         return;
       }
 
       if (SWData.settings.level1Paths.includes(path) 
-          && rank === 2 
+          && rankPath === 2
           && hasProp(props, "initial"))
         return;
       
@@ -13099,7 +13121,7 @@ function updatePVMax(eventInfo, changed = "") {
       if (pathPV === 0)
         return;
 
-      if (rank > 2) {
+      if (rankPath > 2) {
         pvMax += pathPV;
       } else {
         pvMax += pathPV / 2;
@@ -13533,20 +13555,30 @@ SWData.PC.STATS.forEach(stat => {
             });
         });
       }
-      if (rolls.length === 0 && skills.length === 0) {
-        sendChatCmd(actions[0]);
-        return;
-      }
 
-      ask([ "Jet ?", short.toUpperCase(), ...rolls, ...skills ], (selected) => {
-        const { action, carac } = actions[selected - 1];
+      /**
+       * Roll stat with optional modifier
+       * @param { { action: string, carac: string } } roll - stat roll object
+       * @param {boolean} withMod - roll with modifier
+       */
+      const statRoll = (roll, withMod = false) => {
+        const { action, carac } = roll;
         const attrs = new Map();
         if (carac !== "")
           attrs.set("roll_carac", "@{" + carac + "}");
-        if (modifier === "mod")
+        if (withMod)
           attrs.set("roll_modifier", 1);
         setAttrs(Object.fromEntries(attrs), {}, () => sendChatCmd(action));
-      });
+      }
+
+      const withMod = (modifier === "mod");
+      if (rolls.length === 0 && skills.length === 0) {
+        statRoll(actions[0], withMod);
+      } else {
+        ask([ "Jet ?", short.toUpperCase(), ...rolls, ...skills ], (selected) => {
+          statRoll(actions[selected - 1], withMod);
+        });
+      }
     });
   });
 
@@ -14575,12 +14607,11 @@ function insertRolls(text, options = {}) {
   const devol = `@{${ isNPC ? companionOf : "" }devol}`;
   
   // Search for " [#d4° + XXX] " (or dE or d4e or d4E)
-  matchRegExp(text, /([ ]*)\[([1-9])d(4°|E|4e|4E)[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL|rang voie [1-9])(.*)\]([ ]*)/gm).forEach(result => {
+  matchRegExp(text, /([ ]*)\[([1-9])d(4°|E|4e|4E)[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL|rang voie [1-9])(.*?)\]([ ]*)/gm).forEach(result => {
     let [ matched, sb, dice, , stat, , sa ] = result;
     if (stat.startsWith("rang "))
       stat = `rang_voie${ findPathByName(stat, pathNames) }`;
     const replace = `${sb}[[${dice}${devol} + @{${stat.toLowerCase()}}[${stat}] ]]${sa}`;
-    console.log(stat, matched, replace)
     text = text.replace(matched, replace);
   });
 
@@ -15142,6 +15173,7 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
         break;
     }
     
+    let dmgOnFail = "";
     tacticIds.forEach(id => {
       if (!boolval(values[rptAttr("tactic", "tact-on", id)]))
         return;
@@ -15150,6 +15182,10 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
       if (tactBM !== 0)
         tacticBonus += ` + (${tactBM})[${tactName}]`;
       let tactDM = strval(values[rptAttr("tactic", "tact-dmdiv", id)]);
+      if (tactDM.toUpperCase().replaceAll(" ", "").includes("DM/2")) {
+        dmgOnFail = tactName;
+        tactDM = "";
+      }
       if (tactDM !== "") {
         tactDM = expandDEvol(replaceDevol(tactDM), devol);
         extraDM.push(` + [[${tactDM}]] ${tactName}`);
@@ -15329,13 +15365,16 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
     let dmroll = "";
     if (dm !== "" )
       dmroll = `${dm}${dmOpt} + ${dmbonus}[Bonus]${aimedShot}${magicDM}${ shadow.dm } + ${dmdiv}[Divers]${dmAbilities}`;
-    if (dmroll !== "" && tactics === 1)
+    if (dmroll !== "" && tactics === 1) {
       dmroll = `floor((${dmroll})/2)`;
+    }
+    if (dmgOnFail !== "")
+      dmgOnFail += ` : [[floor((${dmroll})/2) ]]`;
     if (dmroll !== "")
       dmroll = `[[${dmroll} ]]`;
 
     let special = insertRolls(strval(values[section + "special"]), { pathNames });
-
+    
     if (hasAtkMod(modifiers, "fleau")) {
       const [ ...curse ] = strval(getAtkMod(modifiers, "fleau")).split(" ");
       extraDM.push(`?{Contre ${ curse.join(" ").toUpperCase() } ?|Oui,+[[1@{devol}]] DM Fléau des ${ curse.join(" ") }|Non,&nbsp;}`);
@@ -15435,7 +15474,9 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
       fumble: "",
       tohit: "",
       target: "",
-      targetname: ""
+      targetname: "",
+      dmfail: "[[0]]",
+      faildm: dmgOnFail
     };
 
     if (roll.startsWith("1d20") && bRoll)
@@ -15485,6 +15526,9 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
 
     if (roundButton)
       atkProps.round = `[&nbsp;Fin du tour&nbsp;](~${strval(values.character_name)}|round-btn${ menuButton(strval(values.couleur_pj), {}, { class: "chat-button" }) })`;
+    
+    if (dmgOnFail !== "")
+      rollOptions.dmgOnFail = true;
     
     const chatMsg = rollTemplate(atkProps, { tags: allTags });
     sendChatMsg(chatMsg, rollOptions);
@@ -15931,6 +15975,22 @@ function actionAbility(path, rank) {
     if (abilityName === "" && description === "")
       return;
 
+    if (description.includes("-- ")) {
+      const [ ...many ] = description.split("-- ").slice(1);
+      const askMany = many.reduce((all, ma) => {
+        const [ name, desc ] = ma.split("\n");
+        all.push({ name: name.trim(), desc: desc.trim() });
+        return all;
+      }, []);
+      const prompt = abilitySpell ? "Sort ?" : "Capacité ?";
+      const { selected } = await askAsync([ prompt, ...askMany.map(ma => ma.name)]);
+      if (selected > 0) {
+        const { name, desc } = askMany[selected - 1];
+        abilityName = name;
+        description = desc;
+      }
+    }
+
     const allTags = getAllTags(values);
 
     const nbUsed = intval(values[used]) + 1;
@@ -16278,7 +16338,7 @@ function checkAbilityPoints(changed = "") {
         alerts.push(`La capacité ${rankName} (rang ${rankPath}) n'est pas accessible avant le niveau ${minLevel}`);
       }
 
-      usedPoints += (rank > 2) ? 2 : 1;
+      usedPoints += (rankPath > 2) ? 2 : 1;
     });
 
     if (usedPoints > maxPoints || alerts.length > 0) {
@@ -18765,7 +18825,7 @@ function rebuildCustom() {
 /**
  * On changing the custom attributes code
  */
-on("change:custom", rebuildCustom);
+on("change:custom sheet:opened", rebuildCustom);
 
 /**
  * On changing the stats associated with custom skills
@@ -19117,8 +19177,8 @@ on("clicked:caract_select-btn", function () {
     });
     ask([ "Carac. ?", ...statSelect ], (selected) => {
       const stat = shorten(SWData.PC.STATS[selected -1]);
-      const select = isNPC ? "" : "_select";
-      sendChatCmd(`%{${charName}|${stat}${select}-btn}`);
+      const button = isNPC ? `pnj_${stat}` : `${stat}_select`;
+      sendChatCmd(`%{${charName}|${button}-btn}`);
     });
   });
 });
