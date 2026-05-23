@@ -14,6 +14,8 @@
 
 [Informations Techniques]({{ site.baseurl }}/pc-tech)
 
+![Fiche de PJ]({{ site.baseurl }}/img/pj.png)
+
 ---
 
 [Retour]({{ site.baseurl }}/index)
