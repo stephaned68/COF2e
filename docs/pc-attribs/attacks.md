@@ -43,7 +43,7 @@ Des paramètres optionnels peuvent être ajoutés :
   - `deMalus` : l'attaque est faite avec un dé malus
   - `explodeMax` : le dé de DM est _explosif_ (relance d'un nouveau dé de DM en cas de résultat maximum)
   - `reroll1` : le dé de DM est relancé jusqu'à ce que son résultat soit supérieur à 1
-  - `reroll1:1` : si le résultat initial est égal à 1, le dé de DM est relancé une seule fois
+  - `reroll1 1` : si le résultat initial est égal à 1, le dé de DM est relancé une seule fois
   - `poudre` : l'arme explose et inflige 1d4° DM à l'utilisateur s'il ne maîtrise pas les armes à poudre
   - `zone` : l'attaque est un sort de zone
   - `magie X` suivi de la valeur X du bonus au jet pour toucher et aux DM
@@ -53,6 +53,9 @@ Des paramètres optionnels peuvent être ajoutés :
   - `element xxx [intense]` suivi d'un nom d'élément/substance xxx : ajoute une ligne de 1d4° DM élémentaires (2d4° si le nom de l'élément est suivi d'un espace et du mot `intense`)
   - `fleau xxx` suivi du nom d'un type de créature xxx : Roll20 demande confirmation lors de l'attaque et une ligne de 1d4° DM est ajoutée si la créature ciblée est du même type
   - `manoeuvres` : l'attaque propose de choisir une des manoeuvres possibles (cf règles page 217) et d'appliquer le modificateur correspondant au jet pour toucher. La description des effets de la manoeuvre sont chuchotés dans le chat Roll20.
+  - `aoe X` suivi de la valeur X de l'aire / rayon d'effet
+  - `save XXX DD` suivi du nom d'une caractéristique XXX (ex: `AGI`) et de la difficulté DD du jet, séparés des espaces. La fiche ajoute une ligne dans le chat indiquant le test à faire et sa difficulté pour réduire les DM de moitié. La difficulté peut être calculée à partir d'une formule (_ex: `10+INT`_). De plus, un second message avec un bouton cliquable permettant de sélectionner le token d'un PNJ et de faire le test de caractéristique est murmuré au MJ.
+  - `save XXX DD 0` suivi du nom d'une caractéristique XXX, de la difficulté DD d'un jet et de 0, séparés par des espaces. L'effet est le même que ci-dessus, mais les DM sont affichés à 0.
 
 - Options d'attaques avec arguments :
   
@@ -61,10 +64,10 @@ Des paramètres optionnels peuvent être ajoutés :
   Vous pouvez toutefois y indiquer les options suivantes reconnues par la fiche :
   
   - `fx: ` suivi du nom d'un FX Roll20 et d'un nombre facultatif de répétition
-  - `effet: X xxx` suivi d'un texte xxx à afficher si le jet de D20 atteint ou dépasse la valeur cible X
+  - `effet: X` suivi d'un espace et d'un texte à afficher si le jet de D20 atteint ou dépasse la valeur cible X
 
 - Pour les armes de type _En main_, vous pouvez spécifier une liste de prédicats si l'arme est portée. Ce paramètre est utilisé par le script **COFantasy2**.
-- Pour les armes de type _Trait_, vous pouvez spécifier le nom de la munition (utile si le suivi simplifié des munitions est activé dans la configuration) ainsi que le nombre dépensé par chaque attaque
+- Pour les armes de type _Trait_, vous pouvez spécifier le nom de la munition (utile si le suivi simplifié des munitions est activé dans la configuration) ainsi que le nombre dépensé par chaque attaque. La fiche crée automatiquement dans l'onglet _Equipement_ une ressource avec une propriété `type: munitions` si nécessaire, et la lie à l'attaque. Il faut ensuite modifier la quantité de munitions possédées, la ressource étant créée avec une valeur de 1.
 - Pour les armes de type _Jet_, vous pouvez spécifier le nombre disponible, nombre possédé et taux de perte. Ces paramètres sont utilisés par le script **COFantasy2**.
 
 Un clic sur le bouton d20 permet de lancer le jet d'attaque et de DM dans le chat en tenant compte des divers paramètres.

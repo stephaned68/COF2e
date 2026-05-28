@@ -25,7 +25,7 @@ Pour chaque voie, vous indiquez :
   - La description de la capacité,
   - Le nombre d'utilisations maximum s'il y a lieu,
   - La fréquence à laquelle ce nombre d'utilisations se renouvelle (une liste avec combat / jour / aventure est proposée, mais il est possible de saisir librement une autre valeur),
-  - Un paramètre optionnel, 
+  - Un paramètre optionnel, principalement utilisé par le script MOD COFantasy2.
   
     _Exemples d'utilisation :_
     - _Nom de la fiche de PNJ du compagnon (rôdeur, chevalier, etc...)_
@@ -35,7 +35,7 @@ Pour chaque voie, vous indiquez :
   
     La syntaxe de cette liste est la même que pour les [prédicats]({{ site.baseurl }}/pc-script).
 
-    Voir le paragraphe _Propriétés des capacités_ ci-dessous pour les propriétés de capacités prises en charge directement par la fiche
+    Voir le paragraphe _Propriétés des capacités_ ci-dessous pour des propriétés de capacités prises en charge directement par la fiche
 
 - Une icône située à côté des PV de voie permet d'importer la liste des capacités à partir du texte collé dans le sous-onglet Import.
 
@@ -71,6 +71,8 @@ Pour chaque rang :
 
 Le texte de la capacité est transformé par insertion de jets en ligne s'il y a lieu (voir paragraphe _Jets en ligne_ ci-dessous).
 
+Le paramètre de la capacité peut aussi être modifié en mode _Affichage_.
+
 Trois icones sont situées à côté de **Editer** :
 - L'icône _Horloge_ permet de ré-initialiser le nombre d'utilisation des capacités pour un type de fréquence donné (_ex : pour ré-initialiser toutes les capacités "par jour" à la fin d'une récupération longue_).
 - L'icône _Recycler_ permet de choisir une capacité dont les effets se prolongent sur la durée et d'effectuer un jet pour cet effet.
@@ -100,7 +102,7 @@ _Afficher une explosion de paillettes roses quand une capacité est utilisée en
 
 Vous pouvez indiquer un nombre pour faire varier le nombre de PM consommés par cette capacité. Ce nombre peut être absolu (`pm: 3` pour consommer 3 PM) ou relatif (`pm: -1` pour consommer 1 PM de moins que la normale).
 
-### Points de Mana (pe)
+### Points d'Ego (pe)
 
 `pe: N` 
 
@@ -117,7 +119,7 @@ Vous pouvez indiquer une suite de 5 valeurs séparées par des virgules pour ind
 - `valeur4` est la valeur du paramètre évolutif au rang 4
 - `valeur5` est la valeur du paramètre évolutif au rang 5
   
-Le texte de la capacité doit comporter l'expression `{ {selonRang} }` pour que la fiche y insère la valeur dépendant du rang atteint.
+Le texte de la capacité doit comporter l'expression `%selonRang%` pour que la fiche y insère la valeur correspondant au rang atteint.
 
 _Exemple :_
 
@@ -127,7 +129,19 @@ _Paramétrer la capacité de sort __Arc de feu__ avec son évolution au rang 4 :
 
 _Dans la description, indiquez :_
 
-_Des flammes jaillissent des doigts tendus du magicien. Jusqu’à 3 cibles au contact subissent [\{\{selonRang\}\}+INT] DM, les cibles peuvent faire un test d’AGI difficulté [10 + INT] pour ne subir que la moitié des DM_
+_Des flammes jaillissent des doigts tendus du magicien. Jusqu’à 3 cibles au contact subissent [%selonRang%+INT] DM, les cibles peuvent faire un test d’AGI difficulté [10 + INT] pour ne subir que la moitié des DM_
+
+#### Avec création d'un attribut personnalisé
+
+Vous pouvez optionnellement précéder la liste des valeurs d'un nom d'attribut et d'un signe `|`.
+
+`selonRang: attribut|valeur1,valeur2,valeur3,valeur4,valeur5`
+
+_Exemple :_
+
+`selonRang: dm-arcfeu|valeur1,valeur2,valeur3,valeur4,valeur5`
+
+Cette syntaxe permet de créer un attribut _dm-arcfeu_ que vous pouvez ensuite utiliser dans une macro Roll20 à l'aide de la syntaxe habituelle `@{dm-arcfeu}`.
 
 ### Capacité épique (epic)
 
@@ -137,17 +151,17 @@ Vous pouvez identifier la capacité comme étant de type _épique_.
 
 ### Buff selon rang (buff)
 
-`buff: xxx [valeur1,valeur2,valeur3,valeur4,valeur5]` 
+`buff: xxx|valeur1,valeur2,valeur3,valeur4,valeur5` 
 
-Vous pouvez indiquer un identifiant xxx suivi d'un espace et d'une série de 5 valeurs entre crochets séparées par des virgules. La fiche crée un attribut nommé `voieN_buff_xxxx`, où `N` correspond au no de la voie où figure la capacité, et dont la valeur évolue selon le rang atteint dans la voie.
+Vous pouvez indiquer un identifiant xxx suivi d'un `|` et d'une série de 5 valeurs séparées par des virgules. La fiche crée un attribut nommé `voieN_buff_xxxx`, où `N` correspond au no de la voie où figure la capacité, et dont la valeur évolue selon le rang atteint dans la voie.
 
 _Exemple :_
 
 _Paramétrer le buff à la DEF octroyé par la capacité __Peau de pierre__ selon le rang atteint dans la __Voie du Pagne__ renseignée en voie n°3_
 
-`buff: def [0,1,1,2,2]`
+`buff: def|0,1,1,2,2`
 
-_Cette propriété crée une valeur nommée `voie3_buff_def`. Cette valeur change selon le rang atteint dans la voie n°3 en utilisant l'énumération indiquée entre `[]` : 0 au rang 1, 1 au rang 2, 2 à partir du rang 4. Cette valeur peut être indiquée comme un attribut dans une ligne de buff en spécifiant `[voie3_buff_def]`_
+_Cette propriété crée une valeur nommée `voie3_buff_def`. Cette valeur change selon le rang atteint dans la voie n°3 en utilisant l'énumération indiquée après `|` : 0 au rang 1, 1 au rang 2, 2 à partir du rang 4. Cette valeur peut être indiquée comme attribut dans une ligne de buff en spécifiant le nom `[voie3_buff_def]`_
 
 ### Jet (roll)
 
