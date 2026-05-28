@@ -327,11 +327,11 @@
         </div>
         <div class="d-flex d-flex-middle">
           <strong>Type</strong>
-          <select class="select-sm is-mook" name="attr_sheet_type">
+          <select class="select-sm" name="attr_sheet_type">
             <option value="pc" selected>PJ</option>
             <option value="npc">PNJ</option>
           </select>
-          <input type="hidden" name="attr_sheet_type">
+          <input type="hidden" class=" is-mook" name="attr_sheet_type">
           <input type="checkbox" class="is-mook" name="attr_mook" title="@{mook} Fiche de mook (PNJ anonyme)&#10;L'intégration avec TokenMod assigne la valeur des PV à la barre du token, et non l'attribut-même&#10;- Evite que la perte de PV d'un mook n'affecte tous les autres&#10;- Pas de teinte automatique du jeton selon les PV" value="1" checked>
           <button type="action" class="flat-btn img-btn" name="act_charmancer-btn" title="Lancer le Persomancien">
             <span class="img-btn">x</span>
@@ -1507,7 +1507,7 @@
                     <input class="two-digits" type="number" name="attr_arme-usure" title="@{arme-usure} Usure">
                   </div>
                   <div class="bordered">
-                    <input type="text" name="attr_arme-atkmods" placeholder="Modificateurs d'attaque" title="@{arme-atkmods} Modificateurs séparés par des virgules&#10; deBonus: avec dé bonus&#10; deMalus: avec dé malus&#10; auto: réussite automatique&#10; choc: peut faire des attaques non léthales sans malus&#10; explodeMax: dés de dégâts explosifs&#10; pasDeDmg: l'attaque ne fait pas de DM&#10; poudre: arme à poudre&#10; reroll1: relance les 1 sur les dés de DM (:1 = une seule fois)&#10; tempDmg: fait toujours des attaques non léthales&#10; zone: sort de zone&#10; magie: bonus att.+DM&#10; magieAtt: bonus att.&#10; magieDmg: bonus DM&#10; affutee: critiques améliorés&#10; fleau: bonus DM contre créature&#10; element: bonus DM élémentaires/substance&#10; fumble: Seuil d'échec critique&#10; manoeuvres: attaques spéciales" value="">
+                    <input type="text" name="attr_arme-atkmods" placeholder="Modificateurs d'attaque" title="@{arme-atkmods} Modificateurs séparés par des virgules&#10; deBonus: avec dé bonus&#10; deMalus: avec dé malus&#10; auto: réussite automatique&#10; choc: peut faire des attaques non léthales sans malus&#10; explodeMax: dés de dégâts explosifs&#10; pasDeDmg: l'attaque ne fait pas de DM&#10; poudre: arme à poudre&#10; reroll1: relance les 1 sur les dés de DM (:1 = une seule fois)&#10; tempDmg: fait toujours des attaques non léthales&#10; zone: sort de zone&#10; magie: bonus att.+DM&#10; magieAtt: bonus att.&#10; magieDmg: bonus DM&#10; affutee: critiques améliorés&#10; fleau: bonus DM contre créature&#10; element: bonus DM élémentaires/substance&#10; fumble: Seuil d'échec critique&#10; manoeuvres: attaques spéciales&#10; ae: aire d'effet (rayon)&#10; save: jet de résistance" value="">
                   </div>
                   <div class="bordered">
                     <input type="checkbox" name="attr_arme-active" title="@{arme-active} Attaque active" value="1" checked>
@@ -6327,6 +6327,8 @@
                     <li>Prise en compte <em>DM/2</em> dans les DM supplémentaires des options tactiques</li>
                     <li>Prise en charge des voies permettant l'acquisition de plusieurs capacités par rang</li>
                     <li>Corrections sur la prise en charge des voies de prestige</li>
+                    <li>Changement de syntaxe des propriétés de capacités <em>selonRang</em> et <em>buff</em></li>
+                    <li>Ajout des modificateurs d'attaque <em>aoe</em> et <em>save</em></li>
                   </ul>
                 </details>
               </li>
@@ -8714,6 +8716,12 @@
     </div>
   {{/rollTotal() computed::dmfail 1}}
   {{/faildm}}
+  {{#rollGreater() computed::halfdm -1}}
+  <div class="sheet-rt sheet-rt-text">
+    <div>
+      {{savedm}} : {{computed::halfdm}} {{dmdesc}}
+  </div>
+  {{/rollGreater() computed::halfdm -1}}
   {{#heal}}
   <div class="sheet-rt sheet-rt-roll">
     <span class="sheet-rt sheet-rt-roll">{{heal}} PV récupérés</span>
@@ -8851,6 +8859,12 @@ const SWData = {
         bar4_link: "vitesse_cases"
       }
     }
+  },
+  D20: {
+    malus: "2d20kl1",
+    normal: "1d20",
+    bonus: "2d20kh1",
+    suphero: "{2d20kh1, 0d0+10}kh1"
   },
   emojis: {
     "atkcac":   "&#9876;&#65039;",  // crossed-swords
@@ -11752,6 +11766,12 @@ function sendChatMsg(msg, options) {
         updates.set("last_maneuver", `${ cleanText(matched[1]) }~${roll.rollId}`); // make it unique
         computed.hasdm = 0;
       }
+    } else {
+      if (options.halfDmgOnSave) {
+        computed.halfdm = 0;
+        if (roll.results.halfdm?.result > 0)
+          computed.halfdm = Math.floor(roll.results.dm?.result/2);
+      }
     }
 
     // check to hit & DM on fail 
@@ -11988,29 +12008,29 @@ function dieRoll(type, weakened = 0, cfcs = {}) {
 function d20Roll(base, d20Roll, cfcs = {}) {
   let roll = base;
   switch (roll) {
-    case "1d20":
-    case rollCfCs("1d20"):
-      if (d20Roll !== "1d20")
+    case SWData.D20.normal:
+    case rollCfCs(SWData.D20.normal):
+      if (d20Roll !== SWData.D20.normal)
         return rollCfCs(d20Roll, cfcs);
       break;
-    case "2d20kh1":
-    case rollCfCs("2d20kh1"):
-      if (d20Roll === "2d20kl1")
-        return rollCfCs("1d20", cfcs);
+    case SWData.D20.bonus:
+    case rollCfCs(SWData.D20.bonus):
+      if (d20Roll === SWData.D20.malus)
+        return rollCfCs(SWData.D20.normal, cfcs);
       break;
-    case "2d20kl1":
-    case rollCfCs("2d20kl1"):
-      if (d20Roll === "2d20kh1")
-        return rollCfCs("1d20", cfcs);
+    case SWData.D20.malus:
+    case rollCfCs(SWData.D20.malus):
+      if (d20Roll === SWData.D20.bonus)
+        return rollCfCs(SWData.D20.normal, cfcs);
       break;
-    case "{2d20kh1, 0d0 + 10}kh1":
-    case "{" + rollCfCs("2d20kh1") +", 0d0 + 10}kh1":
-      if (d20Roll === "2d20kl1")
-        return rollCfCs("2d20kh1", cfcs);
+    case SWData.D20.suphero:
+    case "{" + rollCfCs(SWData.D20.bonus) +", 0d0 + 10}kh1":
+      if (d20Roll === SWData.D20.malus)
+        return rollCfCs(SWData.D20.bonus, cfcs);
       break;
   }
-  if (roll === "1d20")
-    roll = rollCfCs("1d20", cfcs);
+  if (roll === SWData.D20.normal)
+    roll = rollCfCs(SWData.D20.normal, cfcs);
   return roll;
 }
 
@@ -14878,6 +14898,35 @@ on("change:repeating_armes:arme-atktype change:repeating_npcarmes:arme-atktype",
 });
 
 /**
+ * Create ammo type resource if none found
+ */
+on("change:repeating_armes:jet-nom", async function(eventInfo) {
+  const { cfg_use_ammo: useAmmo } = await getAttrsAsync([ "cfg_use_ammo" ]);
+  if (!boolval(useAmmo))
+    return;
+  const rptResources = "ressources";
+  const ammoAttr = strval(eventInfo.sourceAttribute);
+  const resIds = await getSectionIDsAsync(rptResources);
+  const resAttrs = resIds.map(id => rptAttr(rptResources, "res-desc", id));
+  getAttrs([
+    ammoAttr,
+    ...resAttrs
+  ], function(values) {
+    const ammoName = strval(values[ammoAttr]);
+    if (!resAttrs.find(r => values[r].trim() === ammoName)) {
+      const updates = new Map();
+      const newResId = generateRowID();
+      const newResRow = rptAttr(rptResources, "res", newResId);
+      updates.set(`${newResRow}-desc`, ammoName);
+      updates.set(`${newResRow}-val`, 1);
+      updates.set(`${newResRow}-props`, "type: munitions");
+      updates.set(rptAttr("armes", "jet-resid", rptInfo(ammoAttr).rowId), newResId);
+      setAttrs(Object.fromEntries(updates));
+    }
+  });
+});
+
+/**
  * Return if attack is combat
  * @param {string} atkAttr - attack attribute
  * @returns {boolean}
@@ -15319,6 +15368,29 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
         allTags.push("Zone");
       }
     }
+
+    let halfDmgOnSave = ""
+        zeroDmgOnSave = "";
+    if (atk === "0") {
+      if (hasAtkMod(modifiers, "aoe")) {
+        const radius = getAtkMod(modifiers, "aoe").trim();
+        allTags.push(`Rayon ${ (radius + "m").toLowerCase().replace("mm", "m") }`);
+      }
+      if (hasAtkMod(modifiers, "save")) {
+        let [ stat, diff, zero ] = getAtkMod(modifiers, "save").replace(/\s\s+/g, " ").split(" ");
+        stat = shorten(stat);
+        const statRoll = `[${ stat.toUpperCase() }](~target|pnj_${stat}-btn${menuButton()})`;
+        stat = (stat.startsWith("a") ? "d'" : "de ") + stat.toUpperCase();
+        diff = insertRolls("[" + diff.replace("[", "").replace("]", "").toUpperCase() + "]");
+        const dmgOnSave = `Jet ${stat} difficulté ${diff} réussi`;
+        if (strval(zero) === "0")
+          zeroDmgOnSave = dmgOnSave;
+        else
+          halfDmgOnSave = dmgOnSave;
+        // whisper to GM
+        sendChatMsg("**Jet de Réaction PNJ :** " + statRoll, { template: "", whisper: "gm" });
+      }
+    }
     
     const dmtype = strval(values[section + "dmtype"]);
     const dmdesc = [ dmtype, ...dmextra ].join(" ").trim();
@@ -15368,8 +15440,10 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
     if (dmroll !== "" && tactics === 1) {
       dmroll = `floor((${dmroll})/2)`;
     }
+
     if (dmgOnFail !== "")
       dmgOnFail += ` : [[floor((${dmroll})/2) ]]`;
+    
     if (dmroll !== "")
       dmroll = `[[${dmroll} ]]`;
 
@@ -15462,7 +15536,7 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
       dmcrit,
       powder,
       text: special,
-      chance: addLuckButton(values),
+      chance: (attack !== "" ? addLuckButton(values) : ""),
       round: "",
       usure: "",
       critsuccess: "",
@@ -15476,7 +15550,9 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
       target: "",
       targetname: "",
       dmfail: "[[0]]",
-      faildm: dmgOnFail
+      faildm: dmgOnFail,
+      savedm: halfDmgOnSave + zeroDmgOnSave,
+      halfdm: "[[-1]]"
     };
 
     if (roll.startsWith("1d20") && bRoll)
@@ -15513,7 +15589,7 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
       atkProps.fumble = fumbleEffect;
     }
 
-    if (boolval(values.cfg_cible) && !atkButton.includes("atkdual")) {
+    if (attack !== "" && boolval(values.cfg_cible) && !atkButton.includes("atkdual")) {
       if (modifiers.includes("manoeuvres")) {
         atkProps.tohit = SWData.settings.tokens.target.opposed;
         atkProps.opposed = "[[1]]";
@@ -15529,6 +15605,10 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
     
     if (dmgOnFail !== "")
       rollOptions.dmgOnFail = true;
+    if (halfDmgOnSave !== "" || zeroDmgOnSave !== "") {
+      atkProps.halfdm = zeroDmgOnSave !== "" ? "[[0]]" : "[[1]]";
+      rollOptions.halfDmgOnSave = true;
+    }
     
     const chatMsg = rollTemplate(atkProps, { tags: allTags });
     sendChatMsg(chatMsg, rollOptions);
@@ -15908,12 +15988,15 @@ function enhancedAbility(hasRank, rank, change) {
  * @returns {string}
  */
 function paramByRank(description, path, values, abilityProps) {
-  if (description.includes("{{selonRang}}") && hasProp(abilityProps, "selonRang")) {
-    const selonRang = getProp(abilityProps, "selonRang").split(",").map(v => strval(v));
+  if (description.includes("%selonRang%") && hasProp(abilityProps, "selonRang")) {
+    let propValue = getProp(abilityProps, "selonRang");
+    if (propValue.includes("|"))
+      propValue = propValue.split("|")[1];
+    const selonRang = propValue.split(",").map(v => strval(v));
     const hasRank = getPathRanks(strval(values.rangs_voies))[path - 1];
-    const param = strval(selonRang[hasRank - 1]);
+    const param = strval(selonRang[hasRank - 1]).trim();
     if (param !== "")
-      description = description.replace("{{selonRang}}", param);
+      description = description.replaceAll("%selonRang%", param);
   }
   return description;
 }
@@ -16234,25 +16317,26 @@ function updateAllRanks(path) {
 }
 
 /**
- * Update the buffs_voies attribute with the list of buff attribute names
+ * Update the buffs_voies & v#r#_selonrang attributes
  * @param {number} path - path number changed
  */
 function updateBuffsByRank(path) {
   const rankProps = seq(5).map(rank => abilityInfo({ path, rank }).rankProps);
-  getAttrs([ `rang_voie${path}`, "buffs_voies", ...rankProps ], function(values) {
+  getAttrs([ "devol", `rang_voie${path}`, "buffs_voies", ...rankProps ], function(values) {
     const rank = intval(values[`rang_voie${path}`]);
     rankProps.filter(a => strval(values[a]) !== "").forEach(props => {
-      values[props].split("\n").filter(prop => prop.startsWith("buff:")).forEach(prop => {
-        const propValue = prop.split(":")[1].replace(/\s+/g, " ");
-        let [ attr, ...buffs ] = propValue.trim().split(" ");
+      const propList = values[props].split("\n");
+      
+      // Update the buffs_voies attribute with the list of buff attribute names
+      propList.filter(prop => prop.startsWith("buff:")).forEach(prop => {
+        let propValue = strval(prop.split(":")[1]);
+        if (propValue === "")
+          return
+        let [ attr, buffs ] = propValue.trim().split("|");
         if (attr === "")
           return;
-        buffs = buffs.join(" ")
-          .replaceAll("[", '["')
-          .replaceAll(",", '","')
-          .replaceAll("]", '"]');
         try {
-          const byRank = JSON.parse(buffs.trim());
+          const byRank = buffs.split(",").map(s => strval(s).trim());
           const buffAttr = `voie${path}_buff_${ attr.trim() }`;
           const buffByRank = rank > 0 ? byRank[rank - 1] : "";
           const buffs_voies = JSON.parse(strval(values.buffs_voies, "{}"));
@@ -16261,6 +16345,22 @@ function updateBuffsByRank(path) {
         } catch (e) { 
           console.error(e.message + " @ updateBuffsByRank()");
         }
+      });
+      
+      // Update an optional attribute (v#r#_selonrang) with the evolutive value
+      propList.filter(prop => prop.startsWith("selonRang:")).forEach(prop => {
+        let propValue = strval(prop.split(":")[1]);
+        if (propValue === "")
+          return;
+        let attrName = "";
+        if (propValue.includes("|")) {
+          [ attrName, propValue ] = propValue.split("|").map(s => strval(s).trim());
+        }
+        if (strval(attrName) === "")
+          attrName = `v${path}r${ intval(props.charAt(3)) }_selonrang`;
+        const [ ...byRank ] = propValue.split(",").map(s => s.trim());
+        const valueByRank = expandDEvol(replaceDevol(byRank[rank - 1].trim()), values.devol);
+        setAttrs({ [attrName]: valueByRank });
       });
     });
   });
@@ -16777,16 +16877,17 @@ function statRollQuery(ability) {
  * On ability roll button click
  */
 on("clicked:repeating_rolls:roll-btn", function() {
-  const section = "repeating_rolls_roll-";
+  const section = "rolls";
   const statsAttrs = SWData.PC.STATS.map(stat => `${ shorten(stat) }_test`);
-  const rollAttrs = rptAttrs(rptInfo(section).section, [
+  const statsRolls = SWData.PC.STATS.map(stat => `${ shorten(stat) }_sup`);
+  const rollAttrs = rptAttrs(section, [
     "nom",
     "cmd",
     "type",
     "carac",
     "voie",
     "bonus"
-  ].map(a => `${ section.split("_")[2] }${a}`));
+  ].map(a => `roll-${a}`));
   const abilityAttrs = [ 
     ...allPathRanks("rankName"),
     ...allPathRanks("rankDesc"),
@@ -16803,15 +16904,16 @@ on("clicked:repeating_rolls:roll-btn", function() {
       ...fearConditionsAttrs(),
       ...luckButtonAttrs(),
       ...statsAttrs,
+      ...statsRolls,
       ...rollAttrs,
       ...abilityAttrs
     ], function (values) {
-    const rollName = strval(values[section + "nom"]);
-    let type = strval(values[section + "type"]);
-    let carac = strval(values[section + "carac"]);
-    const rankInPath = intval(values[section + "voie"]);
-    const bonus = intval(values[section + "bonus"]);
-    let rollCmd = strval(values[section + "cmd"]);
+    const rollName = strval(values[rptAttr(section, "roll-nom")]);
+    let type = strval(values[rptAttr(section, "roll-type")]);
+    let carac = strval(values[rptAttr(section, "roll-carac")]);
+    const rankInPath = intval(values[rptAttr(section, "roll-voie")]);
+    const bonus = intval(values[rptAttr(section, "roll-bonus")]);
+    let rollCmd = strval(values[rptAttr(section, "roll-cmd")]);
 
     const ranks = getPathRanks(strval(values.rangs_voies));
     const names = getPathNames(strval(values.noms_voies));
@@ -16836,14 +16938,29 @@ on("clicked:repeating_rolls:roll-btn", function() {
 
     const allTags = getAllTags(values);
 
+    if (type === SWData.D20.normal) {
+      const caracSup = carac !== "?" ? values[`${ carac.substring(2).split("_")[0] }_sup`] : "";
+      switch (caracSup) {
+        case "S":
+          type = SWData.D20.bonus;
+          break;
+        case "H":
+          type = SWData.D20.suphero;
+          break;
+      }
+    }
+
     // Weakened condition
     if (boolval(values.condition_affaibli)) {
       switch (type) {
-        case "1d20":
-          type = "2d20kl1";
+        case SWData.D20.normal:
+          type = SWData.D20.malus;
           break;
-        case "2d20kh1":
-          type = "1d20";
+        case SWData.D20.bonus:
+          type = SWData.D20.normal;
+          break;
+        case SWData.D20.suphero:
+          type = SWData.D20.bonus;
           break;
       }
     }
@@ -16862,7 +16979,7 @@ on("clicked:repeating_rolls:roll-btn", function() {
         updates.set("roll_carac", "");
       }
     }
-
+    
     let mark;
     if (abilityMatch && carac === "0")
       mark = "rang ";
@@ -16879,10 +16996,11 @@ on("clicked:repeating_rolls:roll-btn", function() {
       text = insertRolls(rollCmd, { pathNames: names });
       let carTip = "";
       // d20
-      if (type === "1d20")
+      if (type === "1d20") {
         type = d20Roll(type, strval(values.d20roll));
-      else
+      } else {
         type = rollCfCs(type);
+      }
       rollCmd = `${type}[Dés]`;
       const helpAllRolls = strval(values.help_roll_all);
       // + Carac
@@ -16978,6 +17096,7 @@ SWData.PC.SKILLS.forEach(skill => {
     const useCarac = strval(eventInfo.triggerName.split("-")[2]);
     let skillName = getSkillName(skill);
     const statsAttrs = SWData.PC.STATS.map(stat => shorten(stat));
+    const statsRolls = SWData.PC.STATS.map(stat => `${ shorten(stat) }_sup`);
     const skillAttrs = [ "carac", "bonus", "def" ].map(a => `${skill.name}_${a}`);
     const customNames = nameSeq(4, "custom#_skillname");
     const customCaracs = nameSeq(4, "custom#").reduce((all, custom) => {
@@ -16987,6 +17106,7 @@ SWData.PC.SKILLS.forEach(skill => {
     getAttrs([
       ...skillAttrs,
       ...statsAttrs,
+      ...statsRolls,
       ...customNames,
       ...customCaracs,
       "condition_affaibli",
@@ -17012,8 +17132,11 @@ SWData.PC.SKILLS.forEach(skill => {
           caracBonus = "@{" + skill.ability[0] + "}";
       }
 
-      if (useCarac !== "")
+      let caracSup = "";
+      if (useCarac !== "") {
         caracBonus = "@{" + useCarac + "}";
+        caracSup = strval(values[`${useCarac}_sup`]);
+      }
       let short = "";
       if (caracBonus !== "0" && caracBonus !== "?")
         short = caracBonus.slice(2,5).toUpperCase() + " + ";
@@ -17021,7 +17144,18 @@ SWData.PC.SKILLS.forEach(skill => {
       const skillDef = strval(values[def]);
       const skillTotal = ` *(+${ intval(values[caracBonus.slice(2, 5)]) + skillBonus })*`;
 
-      let rollCmd = "1d20";
+      let rollCmd = "";
+      switch (caracSup) {
+        case "S":
+          rollCmd = SWData.D20.bonus;
+          break;
+        case "H":
+          rollCmd = SWData.D20.suphero;
+          break;
+        default:
+          rollCmd = SWData.D20.normal;
+          break;
+      }
       
       const allTags = getAllTags(values);
 
@@ -17033,7 +17167,17 @@ SWData.PC.SKILLS.forEach(skill => {
 
       // Weakened condition
       if (boolval(values.condition_affaibli)) {
-        rollCmd = "2d20kl1";
+        switch (rollCmd) {
+          case SWData.D20.normal:
+            rollCmd = SWData.D20.malus;
+            break;
+          case SWData.D20.bonus:
+            rollCmd = SWData.D20.normal;
+            break;
+          case SWData.D20.suphero:
+            rollCmd = SWData.D20.bonus;
+            break;
+        }
       }
 
       // Single roll
@@ -17041,7 +17185,7 @@ SWData.PC.SKILLS.forEach(skill => {
       ? boolval(values.cfg_1skill_roll)
       : true;
 
-      if (rollCmd === "1d20")
+      if (rollCmd === SWData.D20.normal)
         rollCmd = d20Roll(rollCfCs(rollCmd), strval(values.d20roll));
 
       rollCmd += "[Dés]"
@@ -18421,7 +18565,7 @@ on("change:repeating_ressources:res-props", function(eventInfo) {
 
       const desc = strval(values[`${rptResources}_res-desc`]);
       const props = strval(values[`${rptResources}_res-props`]);
-      if (getProp(props, "type").toLowerCase() !== "munitions")
+      if (getProp(props, "type")?.toLowerCase() !== "munitions")
         return;
 
       const thrownIds = allAttacks
@@ -18445,19 +18589,20 @@ on("change:repeating_ressources:res-props", function(eventInfo) {
  */
 on("change:repeating_ressources:res-val", function(eventInfo) {
   const section = "ressources";
-  const attrs = rptAttrs(section, [ "res-desc", "res-val", "res-props" ]);
+  const resId = rptInfo(eventInfo.sourceAttribute).rowId;
+  const attrs = rptAttrs(section, [ "res-desc", "res-val", "res-props" ], resId);
   getAttrs([ "cfg_use_ammo", "cfg_ammo_alert", ...attrs ], function (values) {
     const useAmmo = boolval(values.cfg_use_ammo);
     if (!useAmmo)
       return;
     
     const ammoAlert = intval(values.cfg_ammo_alert);
-    const desc = strval(values[rptAttr(section, "res-desc")]);
-    const props = strval(values[rptAttr(section, "res-props")]);
-    if (getProp(props, "type").toLowerCase() !== "munitions")
+    const desc = strval(values[rptAttr(section, "res-desc", resId)]);
+    const props = strval(values[rptAttr(section, "res-props", resId)]);
+    if (getProp(props, "type")?.toLowerCase() !== "munitions")
       return;
 
-    const value = intval(values[rptAttr(section, "res-val")]);
+    const value = intval(values[rptAttr(section, "res-val", resId)]);
     if (value <= 0 || value <= ammoAlert) {
       const text = value <= 0 ? `Plus de ${desc}` : `Plus que ${value} ${desc}`;
       const textclass = value <= 0 ? "fumble" : "secondary";
@@ -18883,8 +19028,9 @@ on("sheet:opened " + eventList("change", toolTipAttrs(), " "), function() {
       ? strval(values.pense_bete)
       : "";
       if (sheetType === SWData.SHEET_TYPE.NPC) {
+        const rd = strval(values.rrdm);
         reminder = [
-          "RD" + strval(values.rrdm),
+          (rd !== "" ? "RD " : "") + rd,
           npcTacticTip ? strval(values.pnj_tactique) : "",
           npcNotesTip ? strval(values.notes) : "",
         ].join("\n");
@@ -20038,7 +20184,6 @@ on("change:repeating_npcarmes:arme-nom clicked:renum_npcatk-btn", function(event
       const maxLabel = intval(values.max_attack_label);
       let numLabel = renumber ? 0 : maxLabel;
       labels.forEach(label => {
-        console.log(label)
         if (renumber || intval(values[label]) === 0)
           updates.set(label, ++numLabel);
         if (renumber) {
@@ -21371,7 +21516,7 @@ function migrateLog(log, newVer, text) {
  * @param {{ major: number, minor: number, patch: number }} curVer - semantic version parts
  * @returns {void}
  * 
- * Update xxx_base caracteristics attributes with xxx values
+ * Update xxx_base stats attributes with xxx values
  */
 function migrateSheetToV1_3(sheetType, curVer = { major: 1, minor: 2, patch: 0 }) {
   if (sheetType !== SWData.SHEET_TYPE.PC)
@@ -21393,8 +21538,7 @@ function migrateSheetToV1_3(sheetType, curVer = { major: 1, minor: 2, patch: 0 }
 
 /**
  * Migrate to Version 1.11.0
- * @param {string} sheetType - type of sheet
- * @param {{ major: number, minor: number, patch: number }} curVer - semantic version parts
+ * Update base NPC melee & spell attack
  */
 function migrateSheetToV1_11(sheetType, curVer = { major: 1, minor: 10, patch: 0 }) {
   const updates = new Map();
@@ -21409,8 +21553,7 @@ function migrateSheetToV1_11(sheetType, curVer = { major: 1, minor: 10, patch: 0
 
 /**
  * Migrate to Version 1.13.0
- * @param {string} sheetType - type of sheet
- * @param {{ major: number, minor: number, patch: number }} curVer - semantic version parts
+ * Update base NPC ranged attack
  */
 function migrateSheetToV1_13(sheetType, curVer = { major: 1, minor: 12, patch: 0 }) {
   const updates = new Map();
@@ -21424,8 +21567,7 @@ function migrateSheetToV1_13(sheetType, curVer = { major: 1, minor: 12, patch: 0
 
 /**
  * Migrate to Version 1.14.0
- * @param {string} sheetType - type of sheet
- * @param {{ major: number, minor: number, patch: number }} curVer - semantic version parts
+ * Convert attack buffs to tactical options
  */
 async function migrateSheetToV1_14(sheetType, curVer = { major: 1, minor: 13, patch: 0 }) {
   if (sheetType !== SWData.SHEET_TYPE.PC)
@@ -21486,8 +21628,7 @@ async function migrateSheetToV1_14(sheetType, curVer = { major: 1, minor: 13, pa
 
 /**
  * Migrate to Version 1.15.0
- * @param {string} sheetType - type of sheet
- * @param {{ major: number, minor: number, patch: number }} curVer - semantic version parts
+ * Update speed attributes
  */
 function migrateSheetToV1_15(sheetType, curVer = { major: 1, minor: 14, patch: 0 }) {
   if (sheetType !== SWData.SHEET_TYPE.PC)
@@ -21499,6 +21640,57 @@ function migrateSheetToV1_15(sheetType, curVer = { major: 1, minor: 14, patch: 0
     updates.set("vitesse_def", intval(values.vitesse));
 
     setAttrs(Object.fromEntries(updates));
+  });
+}
+
+/**
+ * Migrate to Version 1.16.0
+ * Change selonRang & buff ability props syntax
+ */
+function migrateSheetToV1_16(sheetType, curVer = { major: 1, minor: 2, patch: 0 }) {
+  if (sheetType !== SWData.SHEET_TYPE.PC)
+    return;
+
+  const allProps = [];
+  const allDesc = [];
+  seq(9).forEach(path => {
+    seq(5).forEach(rank => {
+      allProps.push(abilityInfo({ path, rank }).rankProps);
+      allDesc.push(abilityInfo({ path, rank }).rankDesc);
+    });
+  });
+
+  const updates = new Map();
+  getAttrs([ ...allProps, ...allDesc ], function(values) {
+    // update buff:
+    allProps.forEach(attr => {
+      const props = strval(values[attr]);
+      if (props !== "") {
+        if (hasProp(props, "buff")) {
+          const updatedProps = props.split("\n").reduce((result, prop) => {
+            if (prop.startsWith("buff")) {
+              let value = getProp(prop, "buff");
+              value = value.replace(" [", "|").replace("]", "");
+              result.push("buff: " + value.trim());  
+            } else {
+              result.push(prop);
+            }
+            return result;
+          }, []).join("\"n");
+          updates.set(attr, updatedProps);
+        }
+      }
+    });
+    // update %selonRang%
+    allDesc.forEach(attr => {
+      const desc = strval(values[attr]);
+      if (desc.includes("{{selonRang}}")) {
+        updates.set(attr, desc.replace("{{selonRang}}", "%selonRang%"))
+      }
+    });
+
+    if (updates.size > 0)
+      setAttrs(Object.fromEntries(updates));
   });
 }
 
@@ -21524,6 +21716,10 @@ function migrateSheet(sheetType, curVer) {
 
   if (curVer.major === 1 && curVer.minor < 15)
     migrateSheetToV1_15(sheetType, curVer);
+
+  console.log(curVer)
+  if (curVer.major === 1 && curVer.minor < 16)
+    migrateSheetToV1_16(sheetType, curVer);
 
   return;
 }
