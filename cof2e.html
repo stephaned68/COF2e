@@ -18653,20 +18653,22 @@ on("change:repeating_ressources:res-props", function(eventInfo) {
  * On change of ammo-type resource
  */
 on("change:repeating_ressources:res-val", function(eventInfo) {
+  if (strval(eventInfo.sourceType) === "player")
+    return;
+  
   const section = "ressources";
   const resId = rptInfo(eventInfo.sourceAttribute).rowId;
   const attrs = rptAttrs(section, [ "res-desc", "res-val", "res-props" ], resId);
   getAttrs([ "cfg_use_ammo", "cfg_ammo_alert", ...attrs ], function (values) {
     const useAmmo = boolval(values.cfg_use_ammo);
     if (!useAmmo)
-      return;
-    
-    const ammoAlert = intval(values.cfg_ammo_alert);
-    const desc = strval(values[rptAttr(section, "res-desc", resId)]);
+      return;    
     const props = strval(values[rptAttr(section, "res-props", resId)]);
     if (getProp(props, "type")?.toLowerCase() !== "munitions")
       return;
 
+    const desc = strval(values[rptAttr(section, "res-desc", resId)]);
+    const ammoAlert = intval(values.cfg_ammo_alert);
     const value = intval(values[rptAttr(section, "res-val", resId)]);
     if (value <= 0 || value <= ammoAlert) {
       const text = value <= 0 ? `Plus de ${desc}` : `Plus que ${value} ${desc}`;
@@ -18704,6 +18706,9 @@ on("clicked:repeating_ressources:resconso-btn", function () {
       if (roll.length === 0)
         roll.push("1d4°");
       heal = insertRolls(roll.join(" "));
+      if (heal.includes("@{cha}")) {
+        heal = heal.replace("@{cha}", "{0d0+@{cha},0d0+@{con}}kh1");
+      }
       text = `Reste ${remaining} ${ rsub.toLowerCase() }`;
     }
 
