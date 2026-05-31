@@ -306,13 +306,14 @@ Il suffit ensuite de cliquer sur le bouton d'import de la voie pour insérer le 
 
 Avant d'être envoyé dans le chat, les descriptions des capacités sont analysées et certaines expressions sont remplacées par des jets en ligne (_in-line rolls_) :
 - `[AGI]`, `[CON]`, `[FOR]`, etc... sont remplacés par le score de la caractéristique correspondante.
+- `[XXX*]` ne fonctionne que pour un PNJ paramétré en tant que compagnon et est remplacé par le score de la caractéristique XXX du PJ.
 - `[NIV]` ou `[NIVEAU]` ou `[NC]` sont remplacés par le niveau du personnage.
 - `[NOM]` est remplacé par le nom du personnage.
-- `[nombre +/- XXX]`, où `XXX` est un nom de caractéristique, sont remplacés par le résultat du calcul.
+- `[nombre +/- XXX]`, où `XXX` est une caractéristique, est remplacé par le résultat du calcul.
 - `[rang voie N]` est remplacé par la valeur du rang dans la voie indiquée par N.
-- `Nd4°` ou `NdE` est remplacé par un jet du nombre `N` de dés évolutifs.
-- `[Nd4° + XXX]` est remplacé par un jet du nombre `N` de dés évolutifs auquel le score de la caractéristique `XXX` (_AGI_, _CHA_ etc...) est ajouté. `[NdE + XXX]`, `[Nd4e + XXX]`, `[Nd4E + XXX]` sont aussi reconnus comme spécifications de dés évolutifs
-- Les formules de dés sont remplacés par le jet correspondant. Exemple : `1d10`, `2d6+6`, `1d8 + 2`...
+- `Nd4°` est remplacé par un jet du nombre `N` de dés évolutifs. `NdE`, `Nd4E` et `Nd4e` sont aussi reconnus comme spécifications de dés évolutifs.
+- `[Nd4° + XXX]` est remplacé par un jet du nombre `N` de dés évolutifs auquel le score de la caractéristique `XXX` (_AGI_, _CHA_ etc...) est ajouté. `[NdE + XXX]`, `[Nd4e + XXX]` et `[Nd4E + XXX]` sont aussi reconnus comme spécifications de dés évolutifs.
+- Les formules de dés sont remplacés par le jet correspondant. _Exemple : `1d10`, `2d6+6`, `1d8 + 2`..._
 
 Si vous connaissez le langage de macro de Roll20, vous pouvez indiquer ces inline-rolls vous-même dans le texte de la capacité.
 
@@ -323,6 +324,11 @@ Si vous connaissez le langage de macro de Roll20, vous pouvez indiquer ces inlin
 `[[1d@{drecup} + floor(@{niveau}/2)]]` pour lancer un dé de récupération et ajouter la moitié du niveau du PJ arrondi à l'entier inférieur.
 
 `[[?{Nombre de dés ?}@{devol}]]` pour demander un nombre de dés évolutifs à lancer.
+
+## Remarques
+
+- Si vous indiquez des formules de dés avec un **D**, la fiche n'effectue **pas** la substitution par des _in-line rolls_. `1d6` est remplacé par `[[1d6]]`, mais pas `1D6`.
+- Si la fiche détecte que vous avez utilisé vous-même des _in-line rolls_ dans le texte (il y a au moins une occurence de `[[...]]`), elle ne fait **aucune** des substitutions décrites ci-dessus. Soit vous laissez le texte tel qu'il apparaît dans les règles avec les syntaxes spéciales implémentées dans la fiche, soit vous les remplacez par le langage de macro de Roll20, mais il n'est pas possible de mixer les deux.
 
 ---
 
