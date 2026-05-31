@@ -143,12 +143,6 @@ _Exemple :_
 
 Cette syntaxe permet de créer un attribut _dm-arcfeu_ que vous pouvez ensuite utiliser dans une macro Roll20 à l'aide de la syntaxe habituelle `@{dm-arcfeu}`.
 
-### Capacité épique (epic)
-
-`epic: ` 
-
-Vous pouvez identifier la capacité comme étant de type _épique_.
-
 ### Buff selon rang (buff)
 
 `buff: xxx|valeur1,valeur2,valeur3,valeur4,valeur5` 
@@ -163,27 +157,33 @@ _Paramétrer le buff à la DEF octroyé par la capacité __Peau de pierre__ selo
 
 _Cette propriété crée une valeur nommée `voie3_buff_def`. Cette valeur change selon le rang atteint dans la voie n°3 en utilisant l'énumération indiquée après `|` : 0 au rang 1, 1 au rang 2, 2 à partir du rang 4. Cette valeur peut être indiquée comme attribut dans une ligne de buff en spécifiant le nom `[voie3_buff_def]`_
 
+### Capacité épique (epic)
+
+`epic: `
+
+Vous pouvez identifier la capacité comme étant de type _épique_.
+
 ### Jet (roll)
 
 `roll: xxxxx`
 
-Indiquez les valeurs standard `contact` ou `distance` ou `magie` pour demander à la fiche de faire le jet d'attaque correspondant lors de l'utilisation de la capacité. 
+Indiquez les valeurs standard `contact` ou `distance` ou `magie` pour demander à la fiche de faire le jet d'attaque correspondant lors de l'utilisation de la capacité.
 
-Vous pouvez indiquer un autre jet, en spécifiant le nom du bouton souhaité. Les noms des boutons d'action sont affichés au survol de la souris sur les éléments cliquables de la fiche (boutons, icones, certains textes) et sont généralement de la forme `%{xxxxx-btn}`. Spécifiez le nom du bouton en omettant `%{}`.
+Indiquez la valeur `attaque N` pour demander à la fiche de faire le Nième jet de la liste des armes / attaques.
 
-_Exemple :_
+Indiquez la valeur `jet N` pour demander à la fiche de faire le Nième jet de la liste des jets de capacités.
 
-_Paramétrer la capacité de sort __Flèche de feu__ pour effectuer le jet d'attaque magique_
+Vous pouvez indiquer un autre jet, en spécifiant le nom du bouton souhaité. Les noms des boutons d'action sont affichés au survol de la souris sur les éléments cliquables de la fiche (boutons, icones, certains textes) et sont généralement de la forme `%{xxxxx-btn}`. Spécifiez le nom du bouton en omettant `%{` et `}`.
+
+_Exemples :_
+
+_Paramétrer une capacité pour effectuer un jet d'attaque magique_
 
 `roll: magie`
 
-Vous pouvez spécifier le nom d'un bouton dans une liste répétable. Les noms de ces boutons commencent par `repeating_` et nécessitent d'indiquer le numéro de la ligne souhaitée.
+_Paramétrer une capacité pour que la fiche lance la deuxième ligne d'attaque :_
 
-_Exemple :_
-
-_Pour que la fiche lance la deuxième ligne d'attaque :_
-
-`roll: repeating_armes_2_attack-btn`
+`roll: attaque 2`
 
 ### Menu des actions (action)
 
@@ -195,11 +195,11 @@ Vous pouvez marquer la capacité comme _active_ afin qu'un bouton d'action lui s
 
 `etendu: ...`
 
-Vous pouvez indiquer que la capacité a un effet qui se prolongent sur plusieurs rounds. Il peut être nécessaire de préciser cet effet avec d'autres propriétés `etendu-`.
+Vous pouvez indiquer que la capacité a un effet qui se prolonge sur plusieurs rounds. Il peut être nécessaire de préciser cet effet avec d'autres propriétés `etendu-xxx`.
 
 `etendu: ...` est suivie d'un texte décrivant l'effet prolongé. Ce texte peut contenir une formule de dé pour des DM (y compris des dés évolutifs `1d4°`).
 
-`etendu-duree: ...` est suivie d'un texte spécifiant la durée de l'effet. Ce texte peut être exprimé sous forme d'une valeur fixe ou d'une expression faisant référence à un attribut du personnage (_ex: `[INT] rounds` pour la durée d'un sort_).
+`etendu-duree: ...` est suivie d'un texte spécifiant la durée de l'effet. Ce texte peut être exprimé sous forme d'une valeur fixe ou d'une expression faisant référence à un attribut du personnage (_ex: `[INT] rounds` pour la durée d'un sort de magicien_).
 
 `etendu-nom: ...` est suivie du nom de l'effet, si vous souhaitez qu'il soit différent du nom de la capacité.
 
@@ -275,11 +275,9 @@ Pour chaque élément de la liste, vous pouvez indiquer :
   - Comme le rang dans une voie, éventuellement ajusté d'un bonus `X`, en référençant celle-ci sous l'une des formes suivantes :
     - `[rang voie N]` ou `[rang voie N] + X` pour la voie no `N`
     - `[rang nom]` ou `[rang nom] + X` pour la voie `nom`
-  - Comme une formule de jet de dés (principalement pour les buffs aux DM)
+  - Comme une formule de jet de dés
 
 Plusieurs buffs peuvent s'appliquer au même attribut du PJ. Si c'est le cas, le total des buffs actuellement actifs (cochés) est calculé.
-
-Dans le cas d'un buff aux DM, celui-ci s'applique à tous les jets d'attaque effectuées à partir du moment où il est actif. Il est possible de le rendre optionnel en indiquant un `?` au début de son nom. La fiche demandera alors si ce buff s'applique quand un jet d'attaque est effectué. Il est possible d'indiquer une liste de DM différents pour un même buff. Voir exemple ci-dessous.
 
 ## Activation / désactivation par nom
 
@@ -313,7 +311,7 @@ Avant d'être envoyé dans le chat, les descriptions des capacités sont analys�
 - `[nombre +/- XXX]`, où `XXX` est un nom de caractéristique, sont remplacés par le résultat du calcul.
 - `[rang voie N]` est remplacé par la valeur du rang dans la voie indiquée par N.
 - `Nd4°` ou `NdE` est remplacé par un jet du nombre `N` de dés évolutifs.
-- `[Nd4° + XXX]` ou `[NdE + XXX]` est remplacé par un jet du nombre `N` de dés évolutifs auquel le score de la caractéristique `XXX` (_AGI_, _CHA_ etc...) est ajouté.
+- `[Nd4° + XXX]` est remplacé par un jet du nombre `N` de dés évolutifs auquel le score de la caractéristique `XXX` (_AGI_, _CHA_ etc...) est ajouté. `[NdE + XXX]`, `[Nd4e + XXX]`, `[Nd4E + XXX]` sont aussi reconnus comme spécifications de dés évolutifs
 - Les formules de dés sont remplacés par le jet correspondant. Exemple : `1d10`, `2d6+6`, `1d8 + 2`...
 
 Si vous connaissez le langage de macro de Roll20, vous pouvez indiquer ces inline-rolls vous-même dans le texte de la capacité.
