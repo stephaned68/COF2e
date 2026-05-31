@@ -331,7 +331,7 @@
             <option value="pc" selected>PJ</option>
             <option value="npc">PNJ</option>
           </select>
-          <input type="hidden" class=" is-mook" name="attr_sheet_type">
+          <input type="hidden" class="is-mook" name="attr_sheet_type">
           <input type="checkbox" class="is-mook" name="attr_mook" title="@{mook} Fiche de mook (PNJ anonyme)&#10;L'intégration avec TokenMod assigne la valeur des PV à la barre du token, et non l'attribut-même&#10;- Evite que la perte de PV d'un mook n'affecte tous les autres&#10;- Pas de teinte automatique du jeton selon les PV" value="1" checked>
           <button type="action" class="flat-btn img-btn" name="act_charmancer-btn" title="Lancer le Persomancien">
             <span class="img-btn">x</span>
@@ -6324,10 +6324,11 @@
                     <li>Affichage optionnel d'un bouton <em>Fin de tour</em> sur les attaques</li>
                     <li>Amélioration des jets de caractéristiques pour les capacités réglées sur <em>Demander</em></li>
                     <li>Ajout d'une saisie de modificateur aux jets de capacités et de compétences depuis le bouton caractéristique +</li>
-                    <li>Prise en compte <em>DM/2</em> dans les DM supplémentaires des options tactiques</li>
-                    <li>Prise en charge des voies permettant l'acquisition de plusieurs capacités par rang</li>
-                    <li>Corrections sur la prise en charge des voies de prestige</li>
+                    <li>Ajout de <em>DM/2</em> dans les DM supplémentaires des options tactiques</li>
+                    <li>Corrections sur la gestion des voies de prestige</li>
+                    <li>Possibilité d'indiquer plusieurs capacités (nom + description) par rang dans les voies 7 à 9</li>
                     <li>Changement de syntaxe des propriétés de capacités <em>selonRang</em> et <em>buff</em></li>
+                    <li>Ajout de <em>attaque N</em> et <em>jet N</em> dans la propriété de capacité <em>roll:</em></li>
                     <li>Ajout des modificateurs d'attaque <em>aoe</em> et <em>save</em></li>
                   </ul>
                 </details>
@@ -7994,6 +7995,7 @@
                   <ul>
                     <li>Ajout de 2 coups spéciaux paramétrables (5 en tout)</li>
                     <li>Corrections sur les jets de caractéristiques</li>
+                    <li>Corrections sur les score d'attaques de base</li>
                   </ul>
                 </details>
               </li>
@@ -11167,24 +11169,6 @@ function toKebabCase(s) {
 }
 
 /**
- * Return stat short name
- * @param {string} stat - stat name
- * @returns {string}
- */
-function shorten(stat) {
-  return stat.substring(0, 3);
-}
-
-/**
- * Return stat upper short name
- * @param {string} stat - stat name
- * @returns {string}
- */
-function upperShort(stat) {
-  return shorten(stat).toUpperCase();
-}
-
-/**
  * Log to JS console with color & style
  * @param {any}     data - data to log
  * @param {object}  options - console display options
@@ -11260,6 +11244,11 @@ function getRandom(max) {
   return Math.floor(Math.random() * max) + 1;
 }
 
+/**
+ * Get a dice expression result
+ * @param {string} dice - dice expression
+ * @returns {number}
+ */
 async function roll(dice) {
   const roll = await startRoll(`! {{dice=[[${dice}]] }}`);
   finishRoll(roll.rollId);
@@ -11317,6 +11306,70 @@ function stripNonPrintable(text, stripSurrogatesAndFormats) {
 }
 
 /**
+ * Replace multiple space & tab occurences with one
+ * @param {string} s - string to process
+ * @returns {string}
+ */
+function singleSpace(s) {
+  return s.replace(/\s\s+/g, " ");
+}
+
+/**
+ * Split string on space
+ * @param {string} s - string to process
+ * @returns {string[]}
+ */
+function splitOnSpace(s) {
+  return singleSpace(s).split(" ");
+}
+
+/**
+ * Return stat short name
+ * @param {string} stat - stat name
+ * @returns {string}
+ */
+function shorten(stat) {
+  return stat.substring(0, 3);
+}
+
+/**
+ * Return stat upper short name
+ * @param {string} stat - stat name
+ * @returns {string}
+ */
+function upperShort(stat) {
+  return shorten(stat).toUpperCase();
+}
+
+/**
+ * Return if PC character sheet
+ * @param {string} type - sheet type
+ * @returns {boolean}
+ */
+function isPC(type) {
+  return strval(type) === SWData.SHEET_TYPE.PC;
+}
+
+/**
+ * Return if NPC character sheet
+ * @param {string} type - sheet type
+ * @returns {boolean}
+ */
+function isNPC(type) {
+  return strval(type) === SWData.SHEET_TYPE.NPC;
+}
+
+/**
+ * Return if mook NPC character sheet
+ * @param {string} type - sheet type
+ * @param {string} mook - mook NPC
+ * @returns {boolean}
+ */
+function isMook(type, mook) {
+  return isNPC(type) && boolval(mook);
+}
+
+/**
  * Clean-up text
  * @param {string} t - text to cleanup (multiple spaces & accents)
  * @param {boolean} [clearTags=true] - also remove COF2 tags (action types & spells)
@@ -11324,7 +11377,7 @@ function stripNonPrintable(text, stripSurrogatesAndFormats) {
  */
 function cleanText(t, clearTags = true) {
   t = strval(t).toLowerCase();
-  t = t.replace(/\s\s+/g,   " ");
+  t = singleSpace(t);
   t = t.replace(/[àâä]/g,   "a");
   t = t.replace(/[éèêë]/g,  "e");
   t = t.replace(/[îï]/g,    "i");
@@ -12133,7 +12186,7 @@ function playFX(fxValue) {
   fxValue.split(",").forEach((fx, ix) => {
     if (ix > 0)
       fxChat += "\n";
-    const [ fxName, ...params ] = (fx.replace(/\s\s+/g, " ") + " ").split(" ");
+    const [ fxName, ...params ] = splitOnSpace(fx + " ");
     let count = 1;
     const fxCmd = `/fx ${fxName} @{selected|token_id}`;
     if (params[0] !== "")
@@ -12178,6 +12231,7 @@ function abilityInfo(pathRank = "") {
       pathName:     "voie#nom",
       pathPV:       "voie#pv",
       pathProfile:  "v#profil",
+      pathRank:     "rang_voie#",
       rankBase:     "v#br",
       rankName:     "voie#-t#",
       rankDesc:     "voie#-#",
@@ -12543,7 +12597,7 @@ function expandDEvol(dm, devol) {
 on("change:sheet_type", function(eventInfo) {
   getAttrs([ "sheet_type" ], function(values) {
     const sheetType = strval(values.sheet_type);
-    if (!sheetType) 
+    if (!sheetType)
       return;
 
     Object.values(SWData.SHEET_TYPE).forEach(type => {
@@ -12554,9 +12608,9 @@ on("change:sheet_type", function(eventInfo) {
       }
     });
 
-    if (sheetType === SWData.SHEET_TYPE.NPC) {
+    if (isNPC(sheetType)) {
       let updates = { atkcac: 0, atkmag: 0 };
-      if (strval(eventInfo.previousValue) === SWData.SHEET_TYPE.PC)
+      if (isPC(eventInfo.previousValue))
         updates = { ...updates, pc: 0, pc_max: 0 };
       logAndSet(updates, logTitle(eventInfo));
     }
@@ -12895,7 +12949,7 @@ on(changeEvent([
     "cfg_use_epic", "cfg_use_capped6", "cfg_atk_diff", "cfg_comp_ppl",
     "noms_rangs",
   ], function(values) {
-    if (strval(values.sheet_type) === SWData.SHEET_TYPE.NPC)
+    if (isNPC(values.sheet_type))
       return;
 
     const peuple = cleanText(strval(values.peuple)).replaceAll("-", " ").replaceAll(" ", "");
@@ -12975,7 +13029,7 @@ SWData.PC.STATS.forEach(stat => {
   ];
   on(changeEvent(attrs), function (eventInfo) {
     getAttrs([ "sheet_type", ...attrs], function(values) {
-      if (strval(values.sheet_type) === SWData.SHEET_TYPE.NPC)
+      if (isNPC(values.sheet_type))
         return;
       
       const base = intval(values[`${short}_base`]);
@@ -12994,7 +13048,7 @@ SWData.PC.STATS.forEach(stat => {
  */
 function updateInit(eventInfo) {
   getAttrs([ ...SWData.PC.COMBAT.init, "sheet_type" ], function(values) {
-    if (strval(values.sheet_type) === SWData.SHEET_TYPE.NPC)
+    if (isNPC(values.sheet_type))
       return;
 
     delete values.sheet_type;
@@ -13023,11 +13077,10 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
     `${attack}_buff`
   ];
   on(changeEvent(changed), function(eventInfo) {
-    getAttrs(changed, function(values) {
-      const sheetType = strval(values.sheet_type);
-      delete values.sheet_type;
-      if (sheetType === SWData.SHEET_TYPE.NPC)
+    getAttrs([ ...changed, "sheet_type" ], function(values) {
+      if (isNPC(values.sheet_type))
         return;
+      delete values.sheet_type;
       const score = addValues(values);
       logAndSet({ [attack]: score }, logTitle(eventInfo));
     });
@@ -13039,7 +13092,7 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
  */
 function updateDRMax(eventInfo) {
   getAttrs([ "sheet_type", "drmax_force", "dr_base", "con", "dr_buff" ], function(values) {
-    if (strval(values.sheet_type) === SWData.SHEET_TYPE.NPC)
+    if (isNPC(values.sheet_type))
       return;
     if (boolval(values.drmax_force))
       return;
@@ -13078,7 +13131,7 @@ function updatePVMax(eventInfo, changed = "") {
     ...owned,
     ...other 
   ], function(values) {
-    if (strval(values.sheet_type) === SWData.SHEET_TYPE.NPC)
+    if (isNPC(values.sheet_type))
       return;
     if (!boolval(values.cfg_pvmax_auto) && strval(eventInfo.triggerName) !== "RESET")
       return;
@@ -13189,7 +13242,7 @@ function loadLimit(force) {
  */
 function updateLoadLimit(eventInfo) {
   getAttrs([ "sheet_type", "for" ], function(values) {
-    if (strval(values.sheet_type) === SWData.SHEET_TYPE.NPC)
+    if (isNPC(values.sheet_type))
       return;
     logAndSet({ limite_enc: loadLimit(intval(values.for)) }, logTitle(eventInfo));
   });
@@ -13319,7 +13372,7 @@ function updatePCMax(eventInfo) {
       return;
 
     // Trick auto-calc for NPC
-    if (strval(values.sheet_type) === SWData.SHEET_TYPE.NPC) {
+    if (isNPC(values.sheet_type)) {
       values.pc_base = intval(values.pc_max);
       values.cha = 0;
     }
@@ -13376,7 +13429,7 @@ function addLuckButton(values) {
 function addHelpButton(values) {
   if (!boolval(values.chatsetattr))
     return "";
-  if (strval(values.sheet_type) !== SWData.SHEET_TYPE.PC)
+  if (!isPC(values.sheet_type))
     return "";
   const charName = strval(values.character_name);
   const color = strval(values.couleur_pj);
@@ -13469,8 +13522,8 @@ SWData.PC.STATS.forEach(stat => {
       // Roll ability
       const [ kroll, mod, test ] = Object.keys(values);
       const roll = d20Roll(strval(values[kroll]), strval(values.d20roll));
-      const isNPC = strval(values.sheet_type) === SWData.SHEET_TYPE.NPC;
-      const statMod = ` *(${ displayMod(values[isNPC ? mod : test]) })*`;
+      const npcSheet = isNPC(values.sheet_type);
+      const statMod = ` *(${ displayMod(values[npcSheet ? mod : test]) })*`;
       
       const armure_eqp = intval(values.armure_eqp);
       const armure_malus = intval(values.armure_malus) * armure_eqp;
@@ -13489,7 +13542,7 @@ SWData.PC.STATS.forEach(stat => {
       : "" )
       + helpAllRolls !== "" ? "\n" + helpAllRolls : "";
       const allRolls = allRollsBuff(values, "caracs");
-      const carac = `[[${roll}[Dé] + @{${short}${ isNPC ? "" : "_test" }}[Bonus ${short.toUpperCase()}]${modifier}${allRolls}${helpAllRolls}${shadow.malus}${fear}${armor_malus}${shield_malus}${helmet_malus} ]] `;
+      const carac = `[[${roll}[Dé] + @{${short}${ npcSheet ? "" : "_test" }}[Bonus ${short.toUpperCase()}]${modifier}${allRolls}${helpAllRolls}${shadow.malus}${fear}${armor_malus}${shield_malus}${helmet_malus} ]] `;
 
       const chatMsg = rollTemplate({
         lsub: "Test",
@@ -13622,13 +13675,13 @@ on("clicked:init-btn", function () {
     if (boolval(values.cfg_init_mod))
       initMod = ` + [[(@{per}+@{agi})/10]][Distinct]`;
     let helmet = "";
-    const isNPC = strval(values.sheet_type) === SWData.SHEET_TYPE.NPC;
-    if (!isNPC)
+    const npcSheet = isNPC(values.sheet_type);
+    if (!npcSheet)
       helmet = helmetMalus(values);
-    const tactique = isNPC && !boolval(values.pnj_tactique_tip)
+    const tactique = npcSheet && !boolval(values.pnj_tactique_tip)
     ? strval(values.pnj_tactique)
     : "";
-    const initBonus = isNPC ? " + ?{Bonus ?|0}[Bonus]" : "";
+    const initBonus = npcSheet ? " + ?{Bonus ?|0}[Bonus]" : "";
     const roll = `[[@{init}[Initiative]${helmet}${initBonus} + @{cfg_init_variable}[Dé(s)]${initMod} &{tracker} ]]`;
     const chatMsg = rollTemplate({
       lsub: "Jet",
@@ -13949,7 +14002,7 @@ on("change:pv change:pvig", function (eventInfo) {
     "tokenmod", "token_tint_on", "token_tint", "tkmarker_dead_on", "tkmarker_dead", 
     "pv", "pv_max", "PVIG"
   ], function (values) {
-    const isNPC = strval(values.sheet_type) === SWData.SHEET_TYPE.NPC;
+    const npcSheet = isNPC(values.sheet_type);
     const tokenTint = boolval(values.token_tint_on);
     const tokenmod = boolval(values.tokenmod);
     const markerDead = boolval(values.tkmarker_dead_on) ? strval(values.tkmarker_dead).trim() : "";
@@ -13970,7 +14023,7 @@ on("change:pv change:pvig", function (eventInfo) {
     }
     if (Object.keys(tokenProps).length > 0)
       sendChatCmd(tokenMod(strval(values.character_id), tokenProps));
-    if (isNPC)
+    if (npcSheet)
       return;
   
     setAttrs({ pvstatus: wounds.pvstatus });
@@ -14220,7 +14273,7 @@ on(clickedEvent([ "egoreco-btn", "egoreco_fast-btn", "egoreco_full-btn"]), funct
  */
 function updateDef(eventInfo) { 
   getAttrs([ "sheet_type", ...SWData.PC.COMBAT.def ], function(values) {
-    if (strval(values.sheet_type) === SWData.SHEET_TYPE.NPC)
+    if (isNPC(values.sheet_type))
       return;
 
     delete values.sheet_type;
@@ -14586,7 +14639,7 @@ function matchRegExp(text, pattern) {
  * @returns {number}
  */
 function findPathByName(name, names) {
-  const q = name.replace(/\s\s+/g, " ").trim().split(" ").slice(1) || [];
+  const q = singleSpace(name).trim().split(" ").slice(1) || [];
   if (q.length === 0)
     return 0;
 
@@ -14621,7 +14674,7 @@ function insertRolls(text, options = {}) {
   if (text.match(/\[\[.+\]\]/))
     return text;
 
-  const { pathNames = [], isNPC = false, companionOf = "" } = options;
+  let { pathNames = [], isNPC = false, companionOf = "" } = options;
   if (isNPC && companionOf !== "")
     companionOf += "|";
   const devol = `@{${ isNPC ? companionOf : "" }devol}`;
@@ -14652,14 +14705,16 @@ function insertRolls(text, options = {}) {
     text = text.replace(matched, replace);
   });
 
-  // Search for " [XXX] "
-  matchRegExp(text, /([ ]+)\[(AGI|CON|FOR|PER|CHA|INT|VOL|NIV|NIVEAU|NC|NOM)(.*)\]([ ]+)/gm).forEach(result => {
-    let [ matched, sb, ability, , sa ] = result;
+  // Search for " [XXX] " or " [XXX*] "
+  matchRegExp(text, /([ ]+)\[(AGI|CON|FOR|PER|CHA|INT|VOL|NIV|NIVEAU|NC|NOM)(.*?)\]([ ]+)/gm).forEach(result => {
+    let [ matched, sb, ability, special, sa ] = result;
     if (ability === "NIV" || ability === "NC")
       ability = "niveau";
     if (ability === "NOM")
       ability = "character_name";
-    const replace = `${sb}[[@{${ability.toLowerCase()}}]]${sa}`;
+    if (special === "*")
+      special = companionOf;
+    const replace = `${sb}[[@{${special.trim()}${ability.toLowerCase()}}]]${sa}`;
     text = text.replace(matched, replace);
   });
 
@@ -14877,16 +14932,8 @@ on("change:repeating_armes:arme-atktype change:repeating_npcarmes:arme-atktype",
     if (type !== "trait")
       reset = { [rptAttr(section, "jet-resid")]: "" };
     let atkBase = "";
-    if (strval(values.sheet_type) === SWData.SHEET_TYPE.NPC && boolval(values.atkbase_pnj)) {
-      atkBase =({
-        "": "",
-        "main": `${ intval(values.atkcac_pnj) } + `,
-        "jet": `${ intval(values.atktir_pnj) } + `,
-        "trait": `${ intval(values.atktir_pnj) } + `,
-        "sort": `${ intval(values.atkmag_pnj) } + `,
-        "naturel": `${ intval(values.atkcac_pnj) } + `,
-      })[type];
-    }
+    if (isNPC(values.sheet_type) && boolval(values.atkbase_pnj))
+      atkBase = npcBaseAttack(type, values);
     setAttrs({
       [rptAttr(section, "arme-main")]: (type === "main" && hasMODScript(values)) ? 1 : 0,
       [rptAttr(section, "arme-jet")]: type === "jet" ? 1 : 0,
@@ -15377,7 +15424,7 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
         allTags.push(`Rayon ${ (radius + "m").toLowerCase().replace("mm", "m") }`);
       }
       if (hasAtkMod(modifiers, "save")) {
-        let [ stat, diff, zero ] = getAtkMod(modifiers, "save").replace(/\s\s+/g, " ").split(" ");
+        let [ stat, diff, zero ] = splitOnSpace(getAtkMod(modifiers, "save"));
         stat = shorten(stat);
         const statRoll = `[${ stat.toUpperCase() }](~target|pnj_${stat}-btn${menuButton()})`;
         stat = (stat.startsWith("a") ? "d'" : "de ") + stat.toUpperCase();
@@ -15515,7 +15562,7 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
     // Check special effect on die roll
     let rollEffect = "";
     if (!hasMODScript(values) && hasProp(options, "effet")) {
-      const [ tn, ...effect ] = getProp(options, "effet").replace(/\s\s+/g, " ").split(" ");
+      const [ tn, ...effect ] = splitOnSpace(getProp(options, "effet"));
       rollOptions.rollTN = intval(tn.trim());
       rollEffect = effect.join(" ").trim();
     }
@@ -16185,6 +16232,8 @@ function actionAbility(path, rank) {
     // Do another roll
     let nextRoll = "";
     if (hasProp(abilityProps, "roll")) {
+
+      // search for std attack
       const search = [
         { atk: "atkcac", alias: "contact" },
         { atk: "atktir", alias: "distance" },
@@ -16197,6 +16246,22 @@ function actionAbility(path, rank) {
         if (roll === s.atk)
           roll += "-btn";
       });
+
+      // search for repeating attack
+      if (roll.toLowerCase().startsWith("att")) {
+        const [ id ] = splitOnSpace(roll)[1];
+        if (intval(id, -1) >= 0)
+          roll = rptAttr("armes", "attack-btn", `$${ intval(id) - 1 }`);
+      }
+
+      // search for repeating ability
+      if (roll.toLowerCase().startsWith("jet")) {
+        const [ id ] = splitOnSpace(roll)[1];
+        if (intval(id, -1) >= 0)
+          roll = rptAttr("rolls", "roll-btn", `$${ intval(id) - 1 }`);
+      }
+
+      // re-format roll
       roll = roll.replaceAll("%{", "").replaceAll("}", "");
       if (roll.startsWith("repeating_")) {
         let [ ...rptRoll ] = roll.split("_");
@@ -18745,12 +18810,11 @@ async function linkAttacks() {
 
 on("clicked:appearance-btn clicked:description-btn", function() {
   getAttrs([
-    "sheet_type",
-    "character_avatar", "character_token",
+    "sheet_type", "character_avatar", "character_token",
     "apparence", "pnj_desc", "desc_anonyme"
   ], function(values) {
     
-    const text = strval(values.sheet_type) === SWData.SHEET_TYPE.PC
+    const text = isPC(values.sheet_type)
     ? strval(values.apparence)
     : strval(values.pnj_desc);
     const anonymous = boolval(values.desc_anonyme);
@@ -18826,7 +18890,7 @@ on("clicked:def_config-btn", function() {
     "pnj_notes_tip",
   ];
   getAttrs([ "character_name", "sheet_type", ...allConfigs ], function(values) {
-    const sheetBase = strval(values.sheet_type) === SWData.SHEET_TYPE.PC ? "PJBase" : "PNJBase";
+    const sheetBase = isPC(values.sheet_type) ? "PJBase" : "PNJBase";
 
     // PJBase / PNJBase : make sure all attributes are created
     if (strval(values.character_name).trim() === sheetBase) {
@@ -19024,10 +19088,10 @@ on("sheet:opened " + eventList("change", toolTipAttrs(), " "), function() {
       const sheetType = strval(values.sheet_type);
       const npcTacticTip = boolval(values.pnj_tactique_tip);
       const npcNotesTip = boolval(values.pnj_notes_tip);
-      let reminder = sheetType === SWData.SHEET_TYPE.PC
+      let reminder = isPC(sheetType)
       ? strval(values.pense_bete)
       : "";
-      if (sheetType === SWData.SHEET_TYPE.NPC) {
+      if (isNPC(sheetType)) {
         const rd = strval(values.rrdm);
         reminder = [
           (rd !== "" ? "RD " : "") + rd,
@@ -19046,7 +19110,7 @@ on("sheet:opened " + eventList("change", toolTipAttrs(), " "), function() {
         show_tooltip = 1;
       }
       modProps = { ...modProps, show_tooltip, tooltip };
-      if (sheetType === SWData.SHEET_TYPE.NPC)
+      if (isNPC(sheetType))
         modProps = { ...modProps, gm_only_tooltip: show_tooltip };
     }
     sendChatCmd(tokenMod(strval(values.character_id), modProps));
@@ -19313,17 +19377,17 @@ on("clicked:caract_select-btn", function () {
     ...allTests,
     ...allSupH 
   ], function (values) {
-    const isNPC = strval(values.sheet_type) === SWData.SHEET_TYPE.NPC;
+    const npcSheet = isNPC(values.sheet_type);
     const charName = strval(values.character_name);
     const statSelect = SWData.PC.STATS.map((stat, ix) => {
       const short = shorten(stat);
       const supH = SWData.PC.STATSUP[strval(values[`${short}_sup`], "N")];
-      const test = isNPC ? "" : "_test";
+      const test = npcSheet ? "" : "_test";
       return `${ short.toUpperCase() } (${ displayMod(values[`${short}${test}`]) })${supH},${ix + 1}`
     });
     ask([ "Carac. ?", ...statSelect ], (selected) => {
       const stat = shorten(SWData.PC.STATS[selected -1]);
-      const button = isNPC ? `pnj_${stat}` : `${stat}_select`;
+      const button = npcSheet ? `pnj_${stat}` : `${stat}_select`;
       sendChatCmd(`%{${charName}|${button}-btn}`);
     });
   });
@@ -19336,13 +19400,13 @@ on("clicked:caract_menu-btn", function () {
   const allStats = SWData.PC.STATS.map(stat => `${shorten(stat)}`);
   const allTests = SWData.PC.STATS.map(stat => `${shorten(stat)}_test`);
   getAttrs([ "sheet_type", "character_name", "couleur_pj", ...allStats, ...allTests ], function (values) {
-    const isNPC = strval(values.sheet_type) === SWData.SHEET_TYPE.NPC;
+    const npcSheet = isNPC(values.sheet_type);
     const charName = strval(values.character_name);
     const color = strval(values.couleur_pj);
     const chatMsg = SWData.PC.STATS.map(stat => {
       const short = shorten(stat);
-      const select = isNPC ? "" : "_select";
-      const test = isNPC ? "" : "_test";
+      const select = npcSheet ? "" : "_select";
+      const test = npcSheet ? "" : "_test";
       const button = menuButton(color, {}, { width: "3.5rem", ["text-align"]: "center" });
       return `${capitalize(stat)}=[${short.toUpperCase()} (${ values[`${short}${test}`] })](~${charName}|${short}${select}-btn${button})`;
     });
@@ -19633,10 +19697,10 @@ on("clicked:pc_menus-btn", function () {
  */
 on("clicked:pc_actions-btn clicked:npc_actions-btn", async function(eventInfo) {
 
-  const isNPC = strval(eventInfo.triggerName).split(":")[1].startsWith("npc");
+  const npcSheet = strval(eventInfo.triggerName).split(":")[1].startsWith("npc");
 
   // weapons
-  const weaponRpt = isNPC ? "npcarmes" : "armes";
+  const weaponRpt = npcSheet ? "npcarmes" : "armes";
   const weaponIds = await getSectionIDsOrderedAsync(weaponRpt);
   const attackNames = weaponIds.map(id => rptAttr(weaponRpt, "arme-nom", id));
   const atkType = weaponIds.map(id => rptAttr(weaponRpt, "arme-atk", id));
@@ -19655,8 +19719,8 @@ on("clicked:pc_actions-btn clicked:npc_actions-btn", async function(eventInfo) {
   });
 
   // rolls
-  const rollRpt = isNPC ? "npcrolls" : "rolls";
-  const rollNameAttr = isNPC ? "npcroll-name" : "roll-nom";
+  const rollRpt = npcSheet ? "npcrolls" : "rolls";
+  const rollNameAttr = npcSheet ? "npcroll-name" : "roll-nom";
   let rollIds = await getSectionIDsOrderedAsync(rollRpt);
   const rollNames = rollIds.map(id => rptAttr(rollRpt, rollNameAttr, id));
 
@@ -19704,7 +19768,7 @@ on("clicked:pc_actions-btn clicked:npc_actions-btn", async function(eventInfo) {
     chatMsg.push("Caractéristiques=" + stats);
 
     // Attacks
-    if (!isNPC) {
+    if (!npcSheet) {
       const attacks = SWData.PC.COMBAT.attacks.map((attack) => {
         const emoji = SWData.emojis[attack[0]];
         return `[${emoji}](~${charName}|${ attack[0] }-btn${ button({}, { title: attack[2] }) })`;
@@ -19717,14 +19781,14 @@ on("clicked:pc_actions-btn clicked:npc_actions-btn", async function(eventInfo) {
       const type = strval(values[rptAttr(weaponRpt, "arme-atk", id)]);
       const range = strval(values[rptAttr(weaponRpt, "arme-portee", id)]);
       const emoji = type === "atkmag" ? SWData.emojis.atkmag : isRanged(type, range) ? SWData.emojis.atktir : SWData.emojis.atkcac;
-      const atkBtn = isNPC ? "npcatk-btn" : "attack-btn";
+      const atkBtn = npcSheet ? "npcatk-btn" : "attack-btn";
       return `[${emoji}](~${charName}|${ rptAttr(weaponRpt, atkBtn, id) }${ button() }) ${ values[rptAttr(weaponRpt, "arme-nom", id)] }`;
     }).join("\n");
     if (weapons.length > 0)
       chatMsg.push("Armes=" + weapons);
 
     // Abilities
-    if (!isNPC) {
+    if (!npcSheet) {
       const pathRanks = strval(values.rangs_voies).split(",");
       const pathNames = strval(values.noms_voies).split("|");
       pathNames.forEach((pathName, ix) => {
@@ -19761,27 +19825,27 @@ on("clicked:pc_actions-btn clicked:npc_actions-btn", async function(eventInfo) {
 
     // Rolls
     const rolls = rollIds.map((id) => {
-      const rollBtn = isNPC ? "npcroll-btn" : "roll-btn";
+      const rollBtn = npcSheet ? "npcroll-btn" : "roll-btn";
       return `[${SWData.emojis.actions}](~${charName}|${ rptAttr(rollRpt, rollBtn, id) }${ button() }) ${ values[rptAttr(rollRpt, rollNameAttr, id)] }`;
     }).join("\n");
     if (rolls.length > 0)
       chatMsg.push("Autres capacités=" + rolls);
 
     // Buffs
-    if (!isNPC) {
+    if (!npcSheet) {
       const buffs = buffIds.filter((id) => boolval(values[rptAttr(buffRpt, "buff-temp", id)]));
       if (buffs.length > 0)
         chatMsg.push(`Buffs=[Choix](~${charName}|multibuff-btn${menuButton(color, {}, { padding: "0px 5px;" })})`);
     }
 
     // Skills
-    if (!isNPC && boolval(values.use_skills)) {
+    if (!npcSheet && boolval(values.use_skills)) {
       chatMsg.push(`Compétences=[Choix](~${charName}|skills_menu-btn${menuButton(color, {}, { padding: "0px 5px;" })})`);
     }
 
     // Recovery + Healing
     let desc = "";
-    if (!isNPC) {
+    if (!npcSheet) {
       desc = "Récup. " + [ "fast", "full" ].map(r => {
         const recup = ({ fast: "Rapide", full: "Complète" })[r];
         return `[${recup}](~${charName}|recovery_${r}-btn${ button({ "font-weight": "bolder" }) })`;
@@ -19872,7 +19936,7 @@ function displayCheckup() {
   const allBuffs = SWData.PC.BUFFS.To.map(a => `${a}_buff_list`);
   processAllAttacks("armes", [ "nom" ], function(ids, allAttacks) {
     getAttrs([ ...recapAttrs, ...allAttacks, ...allBuffs ], function(values) {
-      if (strval(values.sheet_type) === SWData.SHEET_TYPE.NPC)
+      if (isNPC(values.sheet_type))
         return;
       if (intval(values.pv_max) === 0 && intval(values.dr_max) === 0 && intval(values.pc_max) === 0)
         return;
@@ -20041,7 +20105,7 @@ SWData.PC.STATS.forEach(stat => {
       const skills = strval(values.pnj_comp).split("\n")
       .filter(r => r.startsWith(short.toUpperCase()))
       .map(r => {
-        const [ bonus, ...name ] = strval(r.split(":")[1]).trim().replace(/\s\s+/g, " ").split(" ");
+        const [ bonus, ...name ] = splitOnSpace(strval(r.split(":")[1]).trim());
         return `${ SWData.emojis.skills }${ name.join(" ") } (${bonus}),[[${bonus}]][${ name.join(" ") }]`;
       });
       let skill = "";
@@ -20240,7 +20304,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
   getAttrs([
     "cfg_1attack_roll", "cfg_cible", "cfg_lowfan",
     "cfg_crit_diff", "cfg_tbl_crit", "cfg_tbl_critdie", "cfg_tbl_fumble",
-    "character_name", "niveau", "mook", "compagnon", "pc", "pc_max",
+    "character_name", "niveau", "sheet_type", "mook", "compagnon", "pc", "pc_max",
     "atkgroup", "nbgroup", "pnj_tact",
     "atkbase_pnj", "atkcac", "atktir", "atkmag",
     ...specials,
@@ -20249,7 +20313,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     const useOneRoll = boolval(values.cfg_1attack_roll);
     const useCritDiff = intval(values.cfg_crit_diff);
     const charName = strval(values.character_name);
-    const isMook = boolval(values.mook);
+    const mookNPC = isMook(values.sheet_type, values.mook);
     let companionOf = strval(values.compagnon);
     companionOf = companionOf !== "" ? companionOf + "|" : "";
     const group = intval(values.atkgroup);
@@ -20375,7 +20439,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
       if (specRoll === 2)
         roll = "2d20kl1";
 
-      if (specNext || isMook)
+      if (specNext || mookNPC)
         resetValues.set("pnj_spec", 0);
     }
 
@@ -20731,15 +20795,44 @@ seq(SWData.settings.npcFavorites).forEach(favbtn => {
 });
 
 /**
+ * Return NPC base attack display string
+ * @param {string} type - attack type
+ * @param {object} values - Roll20 getAttrs() object
+ * @returns {string}
+ */
+function npcBaseAttack(type, values) {
+  return ({
+    "": "",
+    "main": `${ intval(values.atkcac_pnj) } + `,
+    "jet": `${ intval(values.atktir_pnj) } + `,
+    "trait": `${ intval(values.atktir_pnj) } + `,
+    "sort": `${ intval(values.atkmag_pnj) } + `,
+    "naturel": `${ intval(values.atkcac_pnj) } + `,
+  })[type.toLowerCase()];
+}
+
+/**
  * Set NPC attack scores
  */
-on("change:atkbase_pnj change:atkcac_pnj change:atktir_pnj change:atkmag_pnj", function() {
-  getAttrs([ "atkbase_pnj", "atkcac_pnj", "atktir_pnj", "atkmag_pnj" ], function (values) {
+on("change:atkbase_pnj change:atkcac_pnj change:atktir_pnj change:atkmag_pnj", async function() {
+  const atkIds = await getSectionIDsAsync("npcarmes");
+  const atkAttrs = atkIds.map(id => rptAttr("npcarmes", "arme-atktype", id));
+  getAttrs([ 
+    "atkbase_pnj", "atkcac_pnj", "atktir_pnj", "atkmag_pnj", 
+    ...atkAttrs
+  ], function (values) {
     const base = numval(values.atkbase_pnj);
     const atkcac = numval(values.atkcac_pnj) * base;
     const atktir = numval(values.atktir_pnj) * base;
     const atkmag = numval(values.atkmag_pnj) * base;
-    setAttrs({ atkcac, atktir, atkmag });
+    const updates = {};
+    atkAttrs.forEach(attr => {
+      const { rowId } = rptInfo(attr);
+      const type = strval(values[attr]);
+      const atkBase = base === 1 ? npcBaseAttack(type, values) : "";
+      updates[rptAttr("npcarmes", "arme-atkbase", rowId)] = atkBase;
+    });
+    setAttrs({ atkcac, atktir, atkmag, ...updates });
   });
 });
 
@@ -21390,7 +21483,7 @@ function migrateCOF1Value(attr, oldVal) {
  * @returns {void}
  */
 function migrateCOF1Sheet(sheetType, verCOF1) {
-  if (sheetType !== SWData.SHEET_TYPE.PC)
+  if (!isPC(sheetType))
     return;
 
   const section = "armes";
@@ -21519,7 +21612,7 @@ function migrateLog(log, newVer, text) {
  * Update xxx_base stats attributes with xxx values
  */
 function migrateSheetToV1_3(sheetType, curVer = { major: 1, minor: 2, patch: 0 }) {
-  if (sheetType !== SWData.SHEET_TYPE.PC)
+  if (!isPC(sheetType))
     return;
   
   getAttrs([ "migration", ...SWData.PC.STATS.map(s => shorten(s)) ], function(values) {
@@ -21543,7 +21636,7 @@ function migrateSheetToV1_3(sheetType, curVer = { major: 1, minor: 2, patch: 0 }
 function migrateSheetToV1_11(sheetType, curVer = { major: 1, minor: 10, patch: 0 }) {
   const updates = new Map();
 
-  if (sheetType === SWData.SHEET_TYPE.NPC) {
+  if (isNPC(sheetType)) {
     updates.set("atkcac", 0);
     updates.set("atkmag", 0);
   }
@@ -21558,7 +21651,7 @@ function migrateSheetToV1_11(sheetType, curVer = { major: 1, minor: 10, patch: 0
 function migrateSheetToV1_13(sheetType, curVer = { major: 1, minor: 12, patch: 0 }) {
   const updates = new Map();
 
-  if (sheetType === SWData.SHEET_TYPE.NPC) {
+  if (isNPC(sheetType)) {
     updates.set("atktir", 0);
   }
 
@@ -21570,7 +21663,7 @@ function migrateSheetToV1_13(sheetType, curVer = { major: 1, minor: 12, patch: 0
  * Convert attack buffs to tactical options
  */
 async function migrateSheetToV1_14(sheetType, curVer = { major: 1, minor: 13, patch: 0 }) {
-  if (sheetType !== SWData.SHEET_TYPE.PC)
+  if (!isPC(sheetType))
     return;
 
   const buffIds = await getSectionIDsAsync("buffs");
@@ -21631,7 +21724,7 @@ async function migrateSheetToV1_14(sheetType, curVer = { major: 1, minor: 13, pa
  * Update speed attributes
  */
 function migrateSheetToV1_15(sheetType, curVer = { major: 1, minor: 14, patch: 0 }) {
-  if (sheetType !== SWData.SHEET_TYPE.PC)
+  if (!isPC(sheetType))
     return;
 
   getAttrs([ "vitesse" ], function (values) {
@@ -21648,7 +21741,7 @@ function migrateSheetToV1_15(sheetType, curVer = { major: 1, minor: 14, patch: 0
  * Change selonRang & buff ability props syntax
  */
 function migrateSheetToV1_16(sheetType, curVer = { major: 1, minor: 2, patch: 0 }) {
-  if (sheetType !== SWData.SHEET_TYPE.PC)
+  if (!isPC(sheetType))
     return;
 
   const allProps = [];
@@ -21725,24 +21818,6 @@ function migrateSheet(sheetType, curVer) {
 }
 
 /**
- * Process character token
- * @param {Map} updates - Map of attributes to update
- * @param {object} values - attributes names/values pairs
- * @returns {Map} updated Map of attributes
- */
-function getTokenURL(updates, values) {
-  const url = strval(values.character_token);
-  if (url !== "") {
-    [ token_url ] = url.split("?");
-    if (token_url)
-      updates.set("token_url", token_url);
-    else
-      updates.set("token_dsp", "");
-  }
-  return updates;
-}
-
-/**
  * Rebuild all path info
  * @param {Map} updates - Map of attributes to update
  * @param {object} values - attributes names/values pairs
@@ -21758,6 +21833,7 @@ function rebuildPathAll(updates, values) {
 
 /**
  * Load attack lists
+ * @param {string} section - section name
  */
 function loadAttackLists(section) {
   processAllAttacks(section, [ "atktype", "label", "nom", "2m" ], function(rowIds, allAttacks) {
@@ -21850,12 +21926,12 @@ on("sheet:opened", function() {
     "debug_mode", "scriptVersion", "scriptVersion_max",
     "character_token",
     "sheet_type", "profil", "famille",
+    "pc_subtab1",
     "compagnon", "comp_def", "comp_pv_max", "comp_init", "comp_pnjatk",
     "pnjatk",
-    "pc_subtab1",
     "cfg_shadow",
-    ...nameSeq(9, "rang_voie#"),
-    ...nameSeq(9, "voie#nom")
+    ...nameSeq(9, abilityInfo().pathRank), // "rang_voie#"),
+    ...nameSeq(9, abilityInfo().pathName), // "voie#nom"),
   ], function (values) {
 
     setDebugMode(values.debug_mode);
@@ -21880,27 +21956,38 @@ on("sheet:opened", function() {
 
     let updates = new Map();
     
-    if (sheetType === SWData.SHEET_TYPE.PC && values.pc_subtab1 === "")
+    if (isPC(sheetType) && strval(values.pc_subtab1) === "")
       updates.set("pc_subtab1", "attacks");
 
-    updates = getTokenURL(updates, values);
+    // update sheet token
+    const url = strval(values.character_token);
+    if (url !== "") {
+      const [ token_url ] = url.split("?");
+      if (token_url)
+        updates.set("token_url", token_url);
+      else
+        updates.set("token_dsp", "");
+    }
     
-    if (sheetType === SWData.SHEET_TYPE.PC) {
+    if (isPC(sheetType)) {
+      // update datalists
       const family = strval(values.famille);
       const profile = strval(values.profil);
       setProfilesList(family, profile);
+      // rebuild paths & buffs infos
       updates = rebuildPathAll(updates, values);
       rebuildBuffValues();
-      loadAttackLists("armes");
-    } else {
-      loadAttackLists("npcarmes");
     }
 
+    // Load in-hand attack lists
+    loadAttackLists(`${ isNPC(sheetType) ? "npc" : "" }armes`)
+
     // Set companion attributes from master
-    if (sheetType === SWData.SHEET_TYPE.NPC) {
+    if (isNPC(sheetType)) {
       setCompanion(values);
     }
 
+    // COFantasy2 
     if (hasMODScript(values)) {
       updates.set("script_title", `COFantasy2 v${ strval(values.scriptVersion_max) }`);
     } else {
@@ -21908,6 +21995,7 @@ on("sheet:opened", function() {
     }
     updates.set("script_show", hasMODScript(values) ? "1" : "0");
 
+    // Update version
     if (values.version !== values.verfdp)
       updates.set("version", values.verfdp);
 
@@ -21926,8 +22014,8 @@ function updateActionButtons(options) {
       const charName = strval(values.character_name);
       if (charName === "")
         return;
-      const isNPC = strval(values.sheet_type) === SWData.SHEET_TYPE.NPC;
-      if (npc !== isNPC)
+      const npcSheet = isNPC(values.sheet_type);
+      if (npc !== npcSheet)
         return;
       const updates = new Map();
       rowIds.forEach(rowId => {
@@ -21982,7 +22070,7 @@ on("change:pc change:tkmarker_pc_on change:tkmarker_pc", function() {
   getAttrs([ 
     "sheet_type", "character_id",
     "tokenmod", "tkmarker_pc_on", "tkmarker_pc", "pc" ], function (values) {
-    if (strval(values.sheet_type) === SWData.SHEET_TYPE.NPC)
+    if (isNPC(values.sheet_type))
       return;
     if (!boolval(values.tokenmod))
       return;
@@ -22184,8 +22272,8 @@ on(clickedEvent([
       "siz-btn": "?{*Taille ?}",
     })[bt]);
     const charId = strval(values.character_id);
-    const isNPC = strval(values.sheet_type) === SWData.SHEET_TYPE.NPC;
-    const isMook = isNPC && boolval(values.mook);
+    const npcSheet = isNPC(values.sheet_type);
+    const mookNPC = isMook(values.sheet_type, values.mook);
     if (hasMODScript(values)) {
       sendChatCmd(`!cof2-link-token --selectChar ${charId}`);
       return;
@@ -22195,13 +22283,13 @@ on(clickedEvent([
       props = { scale: "*" + resize };
     } else {
       const tk = SWData.settings.tokens;
-      const type = isMook ? "mook" : strval(values.sheet_type);
+      const type = mookNPC ? "mook" : strval(values.sheet_type);
       Object.entries(tk[type]).forEach(([k, v]) => {
         if (v === "pm" && intval(values.pm_max) === 0)
           v = "";
         props[k] = v;
       });
-      if (isNPC) {
+      if (npcSheet) {
         let tokenSize;
         const size = cleanText(strval(values.taille));
         if (size !== "") {

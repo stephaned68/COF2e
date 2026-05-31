@@ -18,9 +18,18 @@ v1.15.1 [Screenshot](cof2e.png)
   - Affichage optionnel d'un bouton _Fin de tour_ sur les attaques
   - Amélioration des jets de caractéristiques pour les capacités réglées sur _Demander_
   - Ajout d'une saisie de modificateur aux jets de capacités et de compétences depuis le bouton caractéristique +
+  - Ajout de `DM/2` dans les DM supplémentaires des options tactiques (_Frappe du justicier_)
+  - Corrections sur la gestion des voies de prestige
+  - Possibilité d'indiquer plusieurs capacités (nom + description) par rang dans les voies 7 à 9
+  - Changement de syntaxe des propriétés de capacités `selonRang` et `buff`
+  - Ajout de `attaque N` et `jet N` dans la propriété de capacité `roll`
+  - Ajout des modificateurs d'attaque `aoe` et `save`
+
 
 - Fiche de PNJ:
   - Ajout de 2 coups spéciaux paramétrables (pour un total de 5)
+  - Corrections sur les jets de caractéristiques
+  - Corrections sur les scores d'attaque de base
 
 ### Version _1.15.1_ (2026-04-08)
 
