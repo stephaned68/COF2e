@@ -39,23 +39,24 @@ Des paramètres optionnels peuvent être ajoutés :
 - Attaque active : ce paramètre est utilisé par le script **COFantasy2** pour afficher la liste des actions du tour.
 
 - Modificateurs d'attaque : vous pouvez spécifier une série de mentions spéciales permettant de régler le comportement du jet d'attaque. Séparez les différentes mentions par des virgules.
-  - `deBonus` : l'attaque est faite avec un dé bonus, sauf si le personnage est _Affaibli_
-  - `deMalus` : l'attaque est faite avec un dé malus
+  - `deBonus` : effectuer l'attaque avec un dé bonus, sauf si le personnage est _Affaibli_
+  - `deMalus` : effectuer l'attaque avec un dé malus
   - `explodeMax` : le dé de DM est _explosif_ (relance d'un nouveau dé de DM en cas de résultat maximum)
-  - `reroll1` : le dé de DM est relancé jusqu'à ce que son résultat soit supérieur à 1
-  - `reroll1 1` : si le résultat initial est égal à 1, le dé de DM est relancé une seule fois
-  - `poudre` : l'arme explose et inflige 1d4° DM à l'utilisateur s'il ne maîtrise pas les armes à poudre
+  - `reroll1` : relancer le dé de DM jusqu'à ce que son résultat soit supérieur à 1
+  - `reroll1 1` : relancer le dé de DM _une seule fois_ si le résultat initial est de 1
+  - `poudre` : appliquer la règle de non maîtrise des armes à poudre p. 187
   - `zone` : l'attaque est un sort de zone
   - `magie X` suivi de la valeur X du bonus au jet pour toucher et aux DM
   - `magieAtt X` suivi de la valeur X du bonus magique au jet pour toucher
   - `magieDmg X` suivi de la valeur du bonus magique aux DM (peut être un jet de dé)
-  - `affutee` pour réduire de 1 le seuil de critique et ajouter 1d4° DM en cas de coup critique
-  - `element xxx [intense]` suivi d'un nom d'élément/substance xxx : ajoute une ligne de 1d4° DM élémentaires (2d4° si le nom de l'élément est suivi d'un espace et du mot `intense`)
+  - `affutee` : réduire de 1 le seuil de critique et ajouter 1d4° DM en cas de coup critique
+  - `element xxx [intense]` suivi d'un nom d'élément/substance xxx : ajouter une ligne de 1d4° DM élémentaires (2d4° si le nom de l'élément est suivi d'un espace et du mot `intense`)
   - `fleau xxx` suivi du nom d'un type de créature xxx : Roll20 demande confirmation lors de l'attaque et une ligne de 1d4° DM est ajoutée si la créature ciblée est du même type
   - `manoeuvres` : l'attaque propose de choisir une des manoeuvres possibles (cf règles page 217) et d'appliquer le modificateur correspondant au jet pour toucher. La description des effets de la manoeuvre sont chuchotés dans le chat Roll20.
-  - `aoe X` suivi de la valeur X de l'aire / rayon d'effet
+  - `aoe X` suivi de la valeur X du rayon d'effet
   - `save XXX DD` suivi du nom d'une caractéristique XXX (ex: `AGI`) et de la difficulté DD du jet, séparés des espaces. La fiche ajoute une ligne dans le chat indiquant le test à faire et sa difficulté pour réduire les DM de moitié. La difficulté peut être calculée à partir d'une formule entre `[]` (_ex: `[10+INT]`_). De plus, un second message murmuré au MJ comporte un bouton qui permet de sélectionner le token d'un PNJ et de faire le test de caractéristique.
   - `save XXX DD 0` suivi du nom d'une caractéristique XXX, de la difficulté DD d'un jet et de `0`, séparés par des espaces. L'effet est le même que ci-dessus, mais les DM sont affichés à 0.
+  - `multi` : l'attaque permet d'atteindre plusieurs cibles avec un seul jet pour toucher, la fiche ne doit pas demander de cliquer sur la cible si l'option de configuration _Attaques ciblées_ est active.
 
 - Options d'attaques avec arguments :
   

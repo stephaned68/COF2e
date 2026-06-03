@@ -78,7 +78,7 @@ Trois icones sont situées à côté de **Editer** :
 - L'icône _Recycler_ permet de choisir une capacité dont les effets se prolongent sur la durée et d'effectuer un jet pour cet effet.
 - L'icône _Options_ permet d'afficher un menu d'action dans le chat avec un bouton pour chaque voie. Chacun de ces boutons affiche ensuite un sous-menu avec un bouton d'action pour chaque capacité possédée dans cette voie.
 
-Une quatrième icone est affichée si le personnage possède au moins un sort (et donc dispose d'une valeur maximum de Points de Mana). Ce bouton permet d'appliquer la règle de Concentration accrue à l'utilisation d'une capacité de sort.
+Une quatrième icone est affichée si le personnage possède au moins un sort (et donc dispose d'une valeur maximum de Points de Mana). Ce bouton permet d'appliquer la règle de Concentration accrue à l'utilisation d'une capacité de sort. Si l'option _High Fantasy_ est active, la fiche demande s'il faut appliquer la règle de _Concentration puissante_.
 
 ## Propriétés des capacités
 

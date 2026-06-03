@@ -72,7 +72,8 @@ Si le nombre de points de capacités utilisé dépasse le nombre maximum disponb
 ## High Fantasy
 
 - Progression épique : Les scores d'attaques augmentent de +1 à chaque niveau impair à partir du niveau 11, ainsi que le score de base de la Défense.
-- Récupération + niveau : Le niveau du personnage est ajouté au résultat du DR en cas de récupération rapide (1/2 niveau par défaut).
+- Récupération + niveau : Le niveau du personnage est ajouté au résultat du DR en cas de récupération rapide ou complète (1/2 niveau par défaut).
+- Récupération complète : Le personnage récupère tous les PV perdus ou la moitié selon les conditions lors d'une récupération complète.
 - Plus de Mana : Les sorts de rang 3 ou plus augmentent le maximum de 2 PM au lieu de 1.
 
 ## Low Fantasy
