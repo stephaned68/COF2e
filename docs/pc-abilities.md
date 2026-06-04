@@ -169,7 +169,7 @@ Vous pouvez identifier la capacité comme étant de type _épique_.
 
 Indiquez les valeurs standard `contact` ou `distance` ou `magie` pour demander à la fiche de faire le jet d'attaque correspondant lors de l'utilisation de la capacité.
 
-Indiquez la valeur `attaque N` pour demander à la fiche de faire le Nième jet de la liste des armes / attaques.
+Indiquez la valeur `atk N` pour demander à la fiche de faire le Nième jet de la liste des armes / attaques.
 
 Indiquez la valeur `jet N` pour demander à la fiche de faire le Nième jet de la liste des jets de capacités.
 
@@ -183,7 +183,7 @@ _Paramétrer une capacité pour effectuer un jet d'attaque magique_
 
 _Paramétrer une capacité pour que la fiche lance la deuxième ligne d'attaque :_
 
-`roll: attaque 2`
+`roll: atk 2`
 
 ### Menu des actions (action)
 
