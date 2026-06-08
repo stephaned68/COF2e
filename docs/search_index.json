@@ -1,0 +1,42 @@
+---
+layout: null
+---
+{%- assign stop_words = site.data.stop_words.words -%}
+{%- assign split_chars = site.data.split_chars.chars -%}
+
+[
+  {% for page in site.posts %}
+    {
+      "title": "{{ page.title | escape }}",
+      "keywords": {
+        {%- assign sanitized_content = page.content | append: ' ' | append: page.title | strip_html | downcase | escape %} 
+        {%- for char in split_chars %}
+            {%- assign sanitized_content = sanitized_content | replace: char, ' ' %}
+        {%- endfor %}
+
+        {%- assign words = sanitized_content | split: ' ' %}
+        {%- assign filtered_words = words | where_exp: "word", "word.size > 1" %}
+
+        {%- assign stop_words_filtered_words = '' %}
+        {%- for word in filtered_words %}
+            {%- unless stop_words contains word %}
+                {%- if stop_words_filtered_words == '' %}
+                    {%- assign stop_words_filtered_words = word %}
+                {%- else %}
+                    {%- assign stop_words_filtered_words = stop_words_filtered_words | append: ',' | append: word %}
+                {%- endif %}
+            {%- endunless %}
+        {%- endfor %}
+
+        {%- assign filtered_words = stop_words_filtered_words | split: ',' %}
+
+        {%- assign grouped_words = filtered_words | group_by_exp: "word", "word" %}
+        {%- for group in grouped_words %}
+            "{{ group.name }}": {{ group.items | size }}{% unless forloop.last %},{% endunless %}
+        {%- endfor %}
+      },
+      "url": "{{ page.url | relative_url }}",
+      "excerpt": "{{ page.excerpt | strip_html | escape | strip_newlines }}"
+    }{% unless forloop.last %},{% endunless %}
+  {%- endfor %}
+]
