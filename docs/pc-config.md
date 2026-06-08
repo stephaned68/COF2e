@@ -16,17 +16,20 @@
 Pour un fonctionnement correct de cette option, il est nécessaire de respecter les contraintes suivantes :
 - La voie n°1 est la voie de peuple ou du mage
 - Les voies n°2 et 3 sont les voies où sont choisies les deux capacités au niveau 1
-- La capacité supplémentaire prise par les profils de mages au niveau 1 doit avoir la propriété `initial`
+- La capacité supplémentaire de rang 2 prise par les profils de mages au niveau 1 doit avoir la propriété `initial`
+- En cas de point de capacité orphelin, la dernière capacité de rang 2 apprise doit avoir la propriété `pcorphelin`
 - Les PV de la voie (qui sont ceux de la famille de profil auquel appartient la voie) doivent être spécifiés. Ceux-ci sont initialisés automatiquement si le nom de la voie est reconnu par la fiche.
 
 Les PV maximums sont calculés en faisant la somme des éléments suivants :
 - [niveau] x [CON]
 - pour toutes les capacités possédées (cochées) qui n'ont pas la propriété `doublon` (cf capacité en doublon, p. 171) ni la propriété `epic` (cf capacités épiques, Atlas p. 185)
-  - Si rang 1 de la voie 1 : 0 PV
-  - Sinon si rang 1 de voie 2 ou 3 : [PV de voie]
-  - Sinon si rang 2 de voie 1,2 ou 3 et propriété `initial` : 0 PV
-  - Sinon si rang 1 ou 2 : [PV de voie]/2
-  - Sinon (rang >2) : [PV de voie]
+  - **0 PV** pour le rang 1 de la voie 1
+  - **[PV de voie]** pour le rang 1 des voies 2 ou 3
+  - **0 PV** pour le rang 2 des voies 1,2 ou 3 avec la propriété `initial`
+  - **[PV de voie]/2** pour le rang 1 des autres voies
+  - **[PV de voie]** pour un rang 2 avec la propriété `pcorphelin`
+  - **[PV de voie]/2** pour un rang 2
+  - **[PV de voie]** pour les rangs 3 et plus
 
 ### Contrôle des points de capacités
 
@@ -36,13 +39,13 @@ Pour un fonctionnement correct de cette option, il est nécessaire de respecter 
 - La capacité supplémentaire prise par les profils de mages au niveau 1 doit avoir la propriété `initial`
 
 La fiche décompte pour les capacités possédées (cochées) :
-- Si rang 1 de la voie 1 : 0 point
-- Sinon si rang 1 de voie 2 ou 3 : 1 point
-- Sinon si rang 2 de voie 1,2 ou 3 et propriété `initial` : 0 point
-- Sinon si rang 1 ou 2 : 1 point
-- Sinon (rang >2) : 2 points
+- **0 point** pour le rang 1 de la voie 1
+- **1 point** pour le rang 1 de voie 2 ou 3
+- **0 point** pour le rang 2 des voies 1,2 ou 3 avec la propriété `initial`
+- **1 point** pour un rang 1 ou 2
+- **2 points** pour un rang 3 ou plus
 
-Si le nombre de points de capacités utilisé dépasse le nombre maximum disponble soit 2 x [niveau], un message d'alerte s'affiche dans le chat Roll20.
+Si le nombre de points de capacités utilisé dépasse le nombre maximum disponible soit 2 x [niveau], un message d'alerte s'affiche dans le chat Roll20.
 
 ## Affichage
 

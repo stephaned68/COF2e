@@ -96,6 +96,8 @@ Si vous spécifiez une propriété `type: munitions`, la fiche recherche dans le
 
 Si vous spécifiez une propriété `type: soins`, et que vous cliquez sur le bouton _Consommable_, un message de chat indiquant le nombre de PV récupérés s'affiche. Par défaut, il s'agit d'une potion de soins standard permettant de récupérer 1d4° PV. Vous pouvez si besoin indiquer une formule de dés différente à la suite du mot `soins`. _Ex :_ : pour paramétrer les Elixirs de guérison du Forgesort, indiquez `type: soins [2d4°+INT]`.
 
+Si vous spécifiez une propriété `type: mana`, et que vous cliquez sur le bouton _Consommable_, un message de chat indiquant le nombre de PM récupérés s'affiche.
+
 # Munitions
 
 Cette section n'apparait que si le script **COFantasy2** est installé dans la partie.

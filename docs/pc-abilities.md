@@ -215,6 +215,12 @@ _Paramétrer la capacité de sort __Flèche de feu__ :_
 
 Si une capacité est paramétrée avec des propriétés de type `etendu` et que le script MOD **AddCustomTurn** est disponible, une entrée personnalisée est ajoutée au Turn-Order Roll20 lorsque cette capacité est utilisée.
 
+### PC orphelin (pcorphelin)
+
+`pcorphelin: `
+
+En cas de point de capacité orphelin, cette propriété doit être indiquée pour la dernière capacité de rang 2 acquise afin que le calcul automatique des PV maximum soit correct.
+
 ## Capacités épiques
 
 Pour que les calculs des rangs atteints dans les voies, des PV et des points de capacités dépensés soient corrects, une capacité épique ne doit **pas** être cochée.

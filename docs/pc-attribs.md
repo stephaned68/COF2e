@@ -1,7 +1,7 @@
 # Identité
 
 - Vous pouvez indiquer pour votre PJ un nom "connu" mais aussi son vrai nom dans le champ Alias. En cliquant sur le label Alias, ce dernier vient remplacer son nom connu. Un message de notification s'affiche dans le chat Roll20.
-- Lorsque vous sélectionnez une famille, une liste des profils correspondants est disponible. Si un profil est indiqué, vous devez l'effacer pour voir de nouveau la liste. Vous pouvez indiquer votre profile primaire suivi de / et d'un second profil si votre PJ dispose d'un profil hybride.
+- Lorsque vous sélectionnez une famille, une liste des profils correspondants est disponible. Si un profil est indiqué, vous devez l'effacer pour voir de nouveau la liste. Vous pouvez indiquer votre profil primaire suivi de / et d'un second profil si votre PJ dispose d'un profil hybride.
 - Lorsque vous spécifiez un peuple, la fiche vérifie si ce peuple dispose d'un sens spécial (_Lumière des étoiles_ ou _Vision dans le noir_) et le charge automatiquement ainsi que sa portée.
 
 ## Persomancien
@@ -88,9 +88,31 @@ Les PV et DR max affichés tiennent compte de la famille du profil (+1 DR pour u
 
 Deux icones permettent de faire varier les PV en saisissant le gain ou la perte dans un popup Roll20. Une formule de dé peut être saisie dans ce popup (_ex_ : <kbd>1d8</kbd>) et le jet correspondant sera effectué. Si nécessaire en cas de perte de PV, la fiche applique l'état préjudiciable _Affaibli_ (1 PV) et la perte de DR (0 PV).
 
-On peut également cliquer sur <kbd>DR</kbd> pour effectuer un jet de Récupération _Rapide_ ou _Complète_, ce qui modifie le nombre de PV courants et décompte un DR du nombre disponible. Si l'option de configuration _High Fantasy_ est active, ce bouton permet aussi d'utiliser la règle optionnelle _Se dépasser_. Les nombres d'utilisations des capacités avec fréquence limitée sont également ré-initialisés : capacités _par combat_ pour une récupération rapide, _par jour_ pour une récupération complète.
+Deux icones cliquables permettent d'effectuer des récupérations (cf. ci-après). Si l'option de configuration _High Fantasy_ est active, une troisième icone apparaît et permet d'utiliser la règle optionnelle _Se dépasser_.
 
 Les DM temporaires encaissés et les PV restants sont contrôlés par la fiche, et lorsque les premiers deviennent supérieurs aux seconds, les effets prévus sont appliqués selon le type de DM à l'origine de la bascule.
+
+## Récupérations
+
+Par défaut, les icones décomptent un DR du nombre disponible, calculent le nombre de PV récupérés et mettent à jour la fiche.
+
+Selon les circonstances et les options de configuration actives, des choix peuvent être proposés par la fiche pour chaque type de récupération.
+
+### Rapide
+
+Les nombres d'utilisations des capacités _par combat_ sont réinitialisés.
+
+Si l'option de configuration _High fantasy_ est active, une liste de choix est proposée (cf. Atlas p. 191) :
+- Si le personnage a perdu des PV et des PM, le joueur peut choisir lesquels récupérer, en appliquant la règle optionnelle de récupération de mana selon la famille du profil.
+- Si le personnage est un druide ou prêtre, le joueur peut choisir d'appliquer la règle de dépense d'un PC pour récupérer l'ensemble des PM au lieu de seulement la moitié.
+
+### Complète
+
+Les nombres d'utilisations des capacités _par combat_ et _par jour_ sont réinitialisés.
+
+Si l'option de configuration _High fantasy_ est active, deux choix sont proposés (cf. Atlas p. 191) :
+- _Récupération complète_ pour regagner la moitié des PV perdus si c'est plus avantageux.
+- _Récupération auberge_ pour regagner l'ensemble des PV perdus.
 
 # Points de Mana
 
