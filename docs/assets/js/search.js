@@ -1,3 +1,7 @@
+/**
+ * https://www.ostberg.dev/projects/2025/02/16/adding-search-to-github-pages.html
+ */
+
 document.addEventListener("DOMContentLoaded", function() {
     const searchInput = document.getElementById('search-input');
     const baseUrl = document.getElementById('search').dataset.baseurl;
