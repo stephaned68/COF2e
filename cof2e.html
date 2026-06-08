@@ -6345,7 +6345,7 @@
                     <li>Possibilité d'indiquer plusieurs capacités (nom + description) par rang dans les voies 7 à 9</li>
                     <li>Changement de syntaxe des propriétés de capacités <em>selonRang</em> et <em>buff</em></li>
                     <li>Ajout de la propriété de capacité<em>pcorphelin</em> pour calcul correct des PV maximums</li>
-                    <li>Ajout de <em>attaque N</em> et <em>jet N</em> dans la propriété de capacité <em>roll:</em></li>
+                    <li>Ajout de <em>atk N</em> et <em>jet N</em> dans la propriété de capacité <em>roll:</em></li>
                     <li>Ajout des modificateurs d'attaque <em>aoe</em>, <em>save</em> et <em>multi</em></li>
                     <li>Ajout des options de récupération complète (Atlas d'Osgild p.191)</li>
                     <li>Ajout de la <em>Concentration puissante</em> (Atlas d'Osgild p.191)</li>
@@ -22038,7 +22038,6 @@ function migrateSheet(sheetType, curVer) {
   if (curVer.major === 1 && curVer.minor < 15)
     migrateSheetToV1_15(sheetType, curVer);
 
-  console.log(curVer)
   if (curVer.major === 1 && curVer.minor < 16)
     migrateSheetToV1_16(sheetType, curVer);
 
