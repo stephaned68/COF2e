@@ -5,6 +5,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     const searchInput = document.getElementById('search-input');
     const baseUrl = document.getElementById('search').dataset.baseurl;
+    console.log(baseUrl);
     let resultsContainer;
     const maxResults = 10;
 
