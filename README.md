@@ -10,7 +10,7 @@ v1.15.1 [Screenshot](cof2e.png)
 
 ## Notes de version
 
-### Version _1.16.0_ (2026-05)
+### Version _1.16.0_ (2026-06-08)
 
 - Fiche de PJ:
   - Gestion des Points d'Ego du profil de Psionique
@@ -22,9 +22,10 @@ v1.15.1 [Screenshot](cof2e.png)
   - Corrections sur la gestion des voies de prestige
   - Possibilité d'indiquer plusieurs capacités (nom + description) par rang dans les voies 7 à 9
   - Changement de syntaxe des propriétés de capacités `selonRang` et `buff`
-  - Ajout de `attaque N` et `jet N` dans la propriété de capacité `roll`
+  - Ajout de la propriété de capacité `pcorphelin` pour calcul correct des PV maximum
+  - Ajout de `att N` et `jet N` dans la propriété de capacité `roll`
   - Ajout des modificateurs d'attaque `aoe` et `save`
-
+  - Ajout des options high fantasy de _Récupération complète_ et _Concentration puissante_
 
 - Fiche de PNJ:
   - Ajout de 2 coups spéciaux paramétrables (pour un total de 5)

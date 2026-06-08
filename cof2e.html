@@ -136,7 +136,7 @@
     <div>
       <img
         class="logo"
-        title="Version 1.16.0 - 04/2026"
+        title="Version 1.16.0 - 08/06/2026"
         src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cof2e_logo.jpg"
       />
       <div class="d-flex m2">
@@ -331,7 +331,7 @@
             <option value="pc" selected>PJ</option>
             <option value="npc">PNJ</option>
           </select>
-          <input type="hidden" class="is-mook" name="attr_sheet_type">
+          <input type="hidden" class="is-mook" name="attr_sheet_type" value="pc">
           <input type="checkbox" class="is-mook" name="attr_mook" title="@{mook} Fiche de mook (PNJ anonyme)&#10;L'intégration avec TokenMod assigne la valeur des PV à la barre du token, et non l'attribut-même&#10;- Evite que la perte de PV d'un mook n'affecte tous les autres&#10;- Pas de teinte automatique du jeton selon les PV" value="1" checked>
           <button type="action" class="flat-btn img-btn" name="act_charmancer-btn" title="Lancer le Persomancien">
             <span class="img-btn">x</span>
@@ -919,14 +919,25 @@
             </div>
 
             <!-- DR -->
+            <div class="d-flex d-flex-even">
+              <button class="flat-btn" type="action" name="act_recovery_fast-btn" title="%{recovery_fast-btn} Récupération rapide">
+                <span class="material-icons bubble-icon">coffee</span>
+              </button>
+              <button class="flat-btn" type="action" name="act_recovery_full-btn" title="%{recovery_fast-btn} Récupération rapide">
+                <span class="material-icons bubble-icon">bed</span>
+              </button>
+              <input type="hidden" class="high-fan" name="attr_cfg_highfan" value="0">
+              <button class="flat-btn high-fan" type="action" name="act_effort-btn" title="%{effort-btn} Se dépasser">
+                <span class="material-icons bubble-icon">flash_on</span>
+              </button>
+            </div>
+
             <div class="hits hit">
 
               <div class="block-title centered">
                 <button class="hidden" type="action" name="act_recovery_fast-btn"></button>
                 <button class="hidden" type="action" name="act_recovery_full-btn"></button>
-                <button class="flat-btn img-btn" type="action" name="act_drecup-btn">
-                  <span title="%{drecup-btn} Lancer DR&#10;%{recovery_fast-btn} Récupération rapide&#10;%{recovery_full-btn} Récupération complète">DR</span>
-                </button>
+                <span>DR</span>
                 <select name="attr_drecup" class="select-xs" title="@{drecup} Type de DR">
                   <option value="6">d6</option>
                   <option value="8">d8</option>
@@ -1507,7 +1518,7 @@
                     <input class="two-digits" type="number" name="attr_arme-usure" title="@{arme-usure} Usure">
                   </div>
                   <div class="bordered">
-                    <input type="text" name="attr_arme-atkmods" placeholder="Modificateurs d'attaque" title="@{arme-atkmods} Modificateurs séparés par des virgules&#10; deBonus: avec dé bonus&#10; deMalus: avec dé malus&#10; auto: réussite automatique&#10; choc: peut faire des attaques non léthales sans malus&#10; explodeMax: dés de dégâts explosifs&#10; pasDeDmg: l'attaque ne fait pas de DM&#10; poudre: arme à poudre&#10; reroll1: relance les 1 sur les dés de DM (:1 = une seule fois)&#10; tempDmg: fait toujours des attaques non léthales&#10; zone: sort de zone&#10; magie: bonus att.+DM&#10; magieAtt: bonus att.&#10; magieDmg: bonus DM&#10; affutee: critiques améliorés&#10; fleau: bonus DM contre créature&#10; element: bonus DM élémentaires/substance&#10; fumble: Seuil d'échec critique&#10; manoeuvres: attaques spéciales&#10; ae: aire d'effet (rayon)&#10; save: jet de résistance" value="">
+                    <input type="text" name="attr_arme-atkmods" placeholder="Modificateurs d'attaque" title="@{arme-atkmods} Modificateurs séparés par des virgules&#10; deBonus: avec dé bonus&#10; deMalus: avec dé malus&#10; auto: réussite automatique&#10; choc: peut faire des attaques non léthales sans malus&#10; explodeMax: dés de dégâts explosifs&#10; pasDeDmg: l'attaque ne fait pas de DM&#10; poudre: arme à poudre&#10; reroll1: relance les 1 sur les dés de DM (:1 = une seule fois)&#10; tempDmg: fait toujours des attaques non léthales&#10; zone: sort de zone&#10; magie: bonus att.+DM&#10; magieAtt: bonus att.&#10; magieDmg: bonus DM&#10; affutee: critiques améliorés&#10; fleau: bonus DM contre créature&#10; element: bonus DM élémentaires/substance&#10; fumble: Seuil d'échec critique&#10; manoeuvres: attaques spéciales&#10; aoe: aire d'effet (rayon)&#10; save: jet de résistance&#10; multi: cibles multiples" value="">
                   </div>
                   <div class="bordered">
                     <input type="checkbox" name="attr_arme-active" title="@{arme-active} Attaque active" value="1" checked>
@@ -1786,16 +1797,17 @@
                 <span class="img-btn">l</span>
               </button>
               <button type="action" class="flat-btn img-btn" name="act_ongoing-btn" title="%{ongoing-btn} Effets prolongés">
-                <span class="img-btn">0</span>
+                <span class="img-btn img-btn-lg">0</span>
               </button>
               <button type="action" class="flat-btn img-btn" name="act_reset_uses-btn" title="%{reset_uses-btn} Ré-initialiser l'usage des capacités">
-                <span class="img-btn">t</span>
+                <span class="img-btn img-btn-lg">t</span>
               </button>
               <input type="hidden" class="spell-concentration" name="attr_concentration" value="0">
               <input type="hidden" class="spell-concentration-show" name="attr_pm_max" value="0">
               <button type="action" class="flat-btn img-btn spell-concentration" name="act_concentration-btn" title="%{concentration-btn} Concentration (L)">
-                <span class="img-btn">E</span>
+                <span class="img-btn img-btn-lg">E</span>
               </button>
+              <input type="hidden" name="attr_concentration_pow" value="0">
               <button type="action" class="flat-btn img-btn" name="act_edit_view-btn" title="Editer les voies et capacités">
                 <span class="img-btn"></span>Editer
               </button>
@@ -5677,6 +5689,10 @@
                   <span>Récupération + niveau</span>
                 </li>
                 <li class="config-check" title="Atlas & règles optionnelles, p. 191">
+                  <input type="checkbox" name="attr_cfg_use_fullrec" value="1">
+                  <span>Récupération complète</span>
+                </li>
+                <li class="config-check" title="Atlas & règles optionnelles, p. 191">
                   <input type="checkbox" name="attr_cfg_use_mana" value="1">
                   <span>Plus de Mana</span>
                 </li>
@@ -6316,7 +6332,7 @@
               <li>
                 <details>
                   <summary>
-                    <strong>Version 1.16.0</strong> (2026-05)
+                    <strong>Version 1.16.0</strong> (2026-06-08)
                   </summary>
                   <ul>
                     <li>Ajout des Points d'Ego (Compagnon, Psionique)</li>
@@ -6328,8 +6344,11 @@
                     <li>Corrections sur la gestion des voies de prestige</li>
                     <li>Possibilité d'indiquer plusieurs capacités (nom + description) par rang dans les voies 7 à 9</li>
                     <li>Changement de syntaxe des propriétés de capacités <em>selonRang</em> et <em>buff</em></li>
+                    <li>Ajout de la propriété de capacité<em>pcorphelin</em> pour calcul correct des PV maximums</li>
                     <li>Ajout de <em>attaque N</em> et <em>jet N</em> dans la propriété de capacité <em>roll:</em></li>
-                    <li>Ajout des modificateurs d'attaque <em>aoe</em> et <em>save</em></li>
+                    <li>Ajout des modificateurs d'attaque <em>aoe</em>, <em>save</em> et <em>multi</em></li>
+                    <li>Ajout des options de récupération complète (Atlas d'Osgild p.191)</li>
+                    <li>Ajout de la <em>Concentration puissante</em> (Atlas d'Osgild p.191)</li>
                   </ul>
                 </details>
               </li>
@@ -7990,7 +8009,7 @@
               <li>
                 <details>
                   <summary>
-                    <strong>Version 1.16.0</strong> (2026-05)
+                    <strong>Version 1.16.0</strong> (2026-06-08)
                   </summary>
                   <ul>
                     <li>Ajout de 2 coups spéciaux paramétrables (5 en tout)</li>
@@ -8726,7 +8745,7 @@
   {{/rollGreater() computed::halfdm -1}}
   {{#heal}}
   <div class="sheet-rt sheet-rt-roll">
-    <span class="sheet-rt sheet-rt-roll">{{heal}} PV récupérés</span>
+    <span class="sheet-rt sheet-rt-roll">{{heal}} {{healdesc}} récupérés</span>
   </div>
   {{/heal}}
   {{#text}}
@@ -8878,6 +8897,7 @@ const SWData = {
     "recovery": {
       "fast":   "&#127861;",        // tea
       "full":   "&#128719;",        // bed
+      "camp":   "&#9978;",          // tent
     },
     "red":      "&#128308;",        // red circle
     "green":    "&#128994;",        // green circle
@@ -11889,7 +11909,8 @@ function sendChatMsg(msg, options) {
 
     // store healing result
     if (roll.results.heal) {
-      updates.set("healing", `${ roll.results.heal.result }~${ roll.rollId }`); // make it unique
+      const type = roll.results.mana?.result === 1 ? "PM" : "PV";
+      updates.set("healing", `${ roll.results.heal.result }~${type}~${ roll.rollId }`); // make it unique
     }
 
     // additional chat roll
@@ -13096,7 +13117,6 @@ function updateDRMax(eventInfo) {
       return;
     if (boolval(values.drmax_force))
       return;
-
     const dr_max = intval(values.dr_base) + intval(values.con) + intval(values.dr_buff);
     logAndSet({ dr_max }, logTitle(eventInfo));
   });
@@ -13197,7 +13217,8 @@ function updatePVMax(eventInfo, changed = "") {
       if (rankPath > 2) {
         pvMax += pathPV;
       } else {
-        pvMax += pathPV / 2;
+        const orphan = (rankPath === 2 && hasProp(props, "pcorphelin")) ? 1 : 2;
+        pvMax += pathPV / orphan;
       }
 
     });
@@ -13293,7 +13314,6 @@ function updatePMMax(eventInfo) {
       if (cha > base)
         base = cha;
     }
-
     const epicMana = hasAbilityName("mana epique", values) ? 5 : 0;
     const pm_max = spellPM > 0 ? base + spellPM + intval(values.pm_buff) + epicMana : 0;
     logAndSet({ pm_max }, logTitle(eventInfo));
@@ -14031,18 +14051,24 @@ on("change:pv change:pvig", function (eventInfo) {
 });
 
 /**
- * On Recup button click
+ * On Recup buttons click
  */
-on(clickedEvent([ "drecup-btn", "recovery_fast-btn", "recovery_full-btn"]), function(eventInfo) {
-  const recoveryBtn = strval(eventInfo.triggerName).split(":")[1];
-  const typeRecup = [ "fast", "full" ].findIndex(b => recoveryBtn === `recovery_${b}-btn`);
+on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), function(eventInfo) {
+  const button = strval(eventInfo.triggerName).split(":")[1];
+  const typeRecup = [
+    "recovery_fast",
+    "recovery_full",
+    "effort"
+  ].findIndex(b => button === `${b}-btn`);
   const recupAttrs = [
     "dr", "dr_max", "drecup",
-    "niveau", "vol",
+    "famille", "profil", "niveau", "vol",
     "pv", "pv_max", "temp_dm",
     "pm", "pm_max",
+    "pc",
     "cfg_highfan",
     "cfg_use_drniv",
+    "cfg_use_fullrec",
     "cfg_use_dronly",
     "last_rolls",
   ];
@@ -14050,11 +14076,13 @@ on(clickedEvent([ "drecup-btn", "recovery_fast-btn", "recovery_full-btn"]), func
   const abilities = allPathRanks("rankName");
   const uses = allPathRanks("rankUseMax");
   const freqs = allPathRanks("rankUseFreq");
-  getAttrs([ ...recupAttrs, ...owned, ...abilities, ...uses, ...freqs ], function(values) {
+  getAttrs([ ...recupAttrs, ...owned, ...abilities, ...uses, ...freqs ], async function(values) {
     const lsub = "Jet";
     let rsub = "Récupération";
+    const family = strval(values.famille).toLowerCase();
+    const profile = cleanText(strval(values.profil));
     const highFan = boolval(values.cfg_highfan);
-    const effort = highFan ? "Se dépasser" : "";
+    const fullRec = highFan && boolval(values.cfg_use_fullrec);
     const rolls = strval(values.last_rolls).split("|").map(r => intval(r));
 
     let dr = intval(values.dr);
@@ -14071,8 +14099,10 @@ on(clickedEvent([ "drecup-btn", "recovery_fast-btn", "recovery_full-btn"]), func
     }
 
     const pvMax = intval(values.pv_max);
+    const pmMax = intval(values.pm_max);
     let pv = intval(values.pv);
-    if (pv === pvMax && !highFan) {
+    const pm = intval(values.pm);
+    if (pv === pvMax && !(highFan && pmMax > 0 && pm < pmMax) && typeRecup !== 2) {
       const chatMsg = rollTemplate({
         lsub,
         rsub,
@@ -14082,9 +14112,8 @@ on(clickedEvent([ "drecup-btn", "recovery_fast-btn", "recovery_full-btn"]), func
       return;
     }
 
-    const pm = intval(values.pm);
-    const pmMax = intval(values.pm_max);
-
+    let pc = intval(values.pc);
+    
     const combat = [];
     const daily = [];
     freqs.filter(attr => strval(values[attr]) !== "").forEach(attr => {
@@ -14100,13 +14129,31 @@ on(clickedEvent([ "drecup-btn", "recovery_fast-btn", "recovery_full-btn"]), func
     });
 
     /**
-     * Perform recovery or push self
-     * @param {number} typeRecup - recovery type 1=fast, 2=full, 3=push
+     * @typedef {number} recoveryTypes
      */
-    const recovery = (typeRecup) => {
-      if (typeRecup !== 2 && dr > 0)
+    /**
+     * @enum {recoveryTypes}
+     */
+    const recoveryTypes = {
+      FAST:   1,
+      FULL:   2,
+      PUSH:   3,
+      ALL:    4,
+      MANA:   5,
+      PCMANA: 6
+    }
+    /**
+     * Perform recovery or push/effort
+     * @param {recoveryTypes} type - recovery type
+     */
+    const recovery = (type) => {
+      if (
+        type !== recoveryTypes.FULL &&
+        type !== recoveryTypes.ALL &&
+        dr > 0
+      )
         dr -= 1;
-      const dRecup = `${ (typeRecup === 1 || drMax === 0) ? "d" : "" }${values.drecup}`;
+      const dRecup = `${ (type === recoveryTypes.FAST || drMax === 0) ? "d" : "" }${values.drecup}`;
       const level = intval(values.niveau);
       const addLevel = boolval(values.cfg_use_drniv);
       const drOnly = boolval(values.cfg_use_dronly);
@@ -14117,39 +14164,70 @@ on(clickedEvent([ "drecup-btn", "recovery_fast-btn", "recovery_full-btn"]), func
         bRecup = `+ ${bLevel}[Niveau${ addLevel ? "" : "/2" }] `;
       }  
       let text = `${dr} DR restants`;
-      if (typeRecup === 2 && pmMax > 0)
-        text = `${ pmMax - pm } PM récupérés, ` + text;
+      let restorePM;
+      if (pmMax > 0) {
+        if (type === recoveryTypes.FULL || type === recoveryTypes.ALL) {
+          restorePM = pmMax - pm;
+          text = `${restorePM} PM récupérés, ` + text;
+        }
+      }
       let recup;
       let resetAbilities;
-      if (typeRecup === 3) {
-        rsub = effort;
-        recup = `[[${rolls[0]} + 1d10 + @{vol}[VOL] ]]`;
+      if (type === recoveryTypes.PUSH) {
+        rsub = "Se dépasser";
+        recup = `[[${ rolls[0] } + 1d10 + @{vol}[VOL] ]]`;
+      } else if (type === recoveryTypes.MANA || type === recoveryTypes.PCMANA) {
+        rsub += " *Rapide*";
+        restorePM = pmMax - pm;
+        if (!family.includes("mages") && type !== recoveryTypes.PCMANA) {
+          restorePM = Math.ceil(restorePM / 2);
+          text = "@{character_name} récupère la moitié des PM perdus\n" + text;
+        } else {
+          text = "@{character_name} récupère tous les PM perdus\n" + text;
+          if (type === recoveryTypes.PCMANA)
+            text += `, ${ --pc } PC restants`;
+        }
+        recup = `[[${restorePM} ]]`;
       } else {
-        rsub += " *" + (typeRecup === 1 ? "Rapide" : "Complète") + "*";
-        recup = `[[${dRecup}[DR] ${bRecup}]] PV récupérés`;
+        rsub += " *" + ([ "Rapide", "Complète", "", "Auberge" ][type - 1]) + "*";
+        const lostPV = pvMax - pv;
+        if (type === recoveryTypes.ALL) {
+          recup = `[[${ lostPV }]]`;
+        } else {
+          if (type === recoveryTypes.FULL && fullRec)
+            recup = `[[${ Math.max(Math.floor(lostPV/2), intval(dRecup) + bLevel ) }]]`;
+          else
+            recup = `[[${dRecup}[DR] ${bRecup}]]`;
+        }
         if (tempDM > 0) {
-          const tempRecovery = typeRecup === 1 ? 30 : 8 * 60;
+          const tempRecovery = type === recoveryTypes.FAST ? 30 : 8 * 60;
           if (tempDM - tempRecovery > 0)
             text += `\n${tempRecovery} DM temporaires éliminés`;
           else
             text += `\nTous les DM temporaires sont éliminés`;
           tempDM = Math.max(0, tempDM - tempRecovery);
         }
-        if (typeRecup === 1)
+        if (type === recoveryTypes.FAST)
           resetAbilities = combat;
         else
           resetAbilities = combat.concat(daily);
         if (resetAbilities.length > 0)
           text += "\n" + resetAbilities.map(a => `${a.name} : ${a.uses} ${ a.uses <= 1 ? "utilisation" : "utilisations" }`).join("\n");
       }
+      // build chat msg
       let chatMsg = {
         lsub,
         rsub,
-        roll: recup,
         text
       };
-      if (typeRecup === 3 && rolls.length > 1)
-        chatMsg = { ...chatMsg, broll: `[[${rolls[1]} + 1d10 + @{vol}[VOL] ]]` };
+      if (type === recoveryTypes.PUSH) {
+        chatMsg = { ...chatMsg, roll: recup };
+        if (rolls.length > 1)
+          chatMsg = { ...chatMsg, broll: `[[${ rolls[1] } + 1d10 + @{vol}[VOL] ]]` };
+      } else {
+        const healdesc = type === recoveryTypes.MANA || recoveryTypes.PCMANA ? "PM" : "PV";
+        chatMsg = { ...chatMsg, heal: recup, healdesc };
+      }
       const chatCmd = buildChatMsg(rollTemplate(chatMsg));
       startRoll(chatCmd, roll => {
         finishRoll(roll.rollId);
@@ -14157,31 +14235,64 @@ on(clickedEvent([ "drecup-btn", "recovery_fast-btn", "recovery_full-btn"]), func
           [ "dr", dr ],
           [ "temp_dm", tempDM ]
         ]);
-        if (typeRecup !== 3) {
-          pv += roll.results.roll.result;
+        if (type !== recoveryTypes.PUSH) {
+          pv += roll.results.heal.result;
           updates.set("pv", Math.min(pv, pvMax));
           updates.set("PVIG", Math.min(pv, pvMax));
         }
-        if (typeRecup === 2 && pmMax > 0)
-          updates.set("pm", pmMax);
-        resetAbilities.forEach(ability => updates.set(ability.reset, 0));
+        if (pmMax > 0) {
+          if (
+            type === recoveryTypes.FULL ||
+            type === recoveryTypes.ALL ||
+            type === recoveryTypes.MANA ||
+            type === recoveryTypes.PCMANA
+          )
+            updates.set("pm", pm + restorePM);
+          if (type === recoveryTypes.PCMANA)
+            updates.set("pc", pc);
+        }
+        if (resetAbilities)
+          resetAbilities.forEach(ability => updates.set(ability.reset, 0));
         setAttrs(Object.fromEntries(updates));
       });
     }
 
-    if (typeRecup >= 0) {
-      recovery(typeRecup + 1);
-      return;
+    let recup = typeRecup + 1;
+
+    if (typeRecup === 0) {
+      let selected = 1;
+      const choices = [ SWData.emojis.heal + " Vigueur" ];
+      if (highFan) {
+        if (pmMax !== 0 && pm < pmMax) {
+          choices.push(SWData.emojis.atkmag + " Mana",);
+          if (pc > 0 && [ "druide", "pretre" ].includes(profile))
+            choices.push(SWData.emojis.atkmag + " Mana (PC)",);
+          selected = 2;
+        }
+        if (choices.length > 1) {
+          const resp = await askAsync([ "Récupération ?", ...choices ]);
+          selected = resp.selected;
+        }
+      }
+      recup = [
+        recoveryTypes.FAST,
+        recoveryTypes.MANA,
+        recoveryTypes.PCMANA
+      ][selected - 1];
     }
 
-    const recups = [
-      SWData.emojis.recovery.fast + " Rapide",
-      SWData.emojis.recovery.full + " Complète ",
-    ];
-    if (effort !== "")
-      recups.push(effort);
-
-    ask([ "Récupération ?", ...recups ], recovery);
+    if (typeRecup === 1) {
+      if (highFan) {
+        const { selected } = await askAsync([
+          "Récupération ?",
+          SWData.emojis.recovery.camp + " Complète",
+          SWData.emojis.recovery.full + " Auberge",
+        ]);
+        recup = selected === 2 ? recoveryTypes.ALL : recoveryTypes.FULL;
+      }
+    }
+    
+    recovery(recup);
   });
 });
 
@@ -14665,6 +14776,7 @@ function findPathByName(name, names) {
  * @param {string[]}  options.pathNames - list of path names
  * @param {boolean}   options.isNPC - processing NPC abilities 
  * @param {string}    options.companionOf - name of PC the NPC is a companion of (ends with |)
+ * @param {number}    options.maxD4e - max value of evolutive die
  * @returns {string}
  */
 function insertRolls(text, options = {}) {
@@ -14674,7 +14786,7 @@ function insertRolls(text, options = {}) {
   if (text.match(/\[\[.+\]\]/))
     return text;
 
-  let { pathNames = [], isNPC = false, companionOf = "" } = options;
+  let { pathNames = [], isNPC = false, companionOf = "", maxD4e = 0 } = options;
   if (isNPC && companionOf !== "")
     companionOf += "|";
   const devol = `@{${ isNPC ? companionOf : "" }devol}`;
@@ -14684,14 +14796,24 @@ function insertRolls(text, options = {}) {
     let [ matched, sb, dice, , stat, , sa ] = result;
     if (stat.startsWith("rang "))
       stat = `rang_voie${ findPathByName(stat, pathNames) }`;
-    const replace = `${sb}[[${dice}${devol} + @{${stat.toLowerCase()}}[${stat}] ]]${sa}`;
+    let d4e = "";
+    if (maxD4e !== 0)
+      d4e = intval(dice) * maxD4e;
+    else
+      d4e = dice + devol;
+    const replace = `${sb}[[${d4e} + @{${stat.toLowerCase()}}[${stat}] ]]${sa}`;
     text = text.replace(matched, replace);
   });
 
   // Search for "... #d4° ..." (or dE or d4e or d4E)
   matchRegExp(text, /([ ]*)([1-9])d(4°|E|4e|4E)([ ]*)/gm).forEach(result => {
     const [ matched, sb, dice, , sa ] = result;
-    const replace = `${sb}[[${dice}${devol}]]${sa}`;
+    let d4e = "";
+    if (maxD4e !== 0)
+      d4e = intval(dice) * maxD4e;
+    else
+      d4e = dice + devol;
+    const replace = `${sb}[[${d4e}]]${sa}`;
     text = text.replace(matched, replace);
   });
 
@@ -14836,11 +14958,17 @@ on("change:repeating_armes:arme-nom clicked:renum_atk-btn", function(eventInfo) 
           updates.set(rptAttr(rptAtk, "arme-dm"), dm);
           if (dm1m === "" && dm2m !== "")
             updates.set(rptAttr(rptAtk, "arme-2m"), 1);
+          // modifiers
+          const mods = [];
+          if (weapon.tags?.includes("poudre"))
+            mods.push("poudre");
           const wp = weaponTrained(strval(values.profil), weapon.name, strval(values.maitrises_armes));
           if (!wp.trained) {
-            updates.set(rptAttr(rptAtk, "arme-atkmods"), "deMalus");
+            mods.push("deMalus");
             sendChatMsg(wp.message, { whisper: "gm", template: "" });
           }
+          if (mods.length > 0)
+            updates.set(rptAttr(rptAtk, "arme-atkmods"), mods.join(","));
         }
       }  
 
@@ -15094,6 +15222,7 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
   const section = "repeating_armes_arme-";
   const rptThrown = "repeating_armes_jet-";
   const rptOngoing = "repeating_armes_etendu-";
+  const maxD4e = await maxEvolDie();
   const tacticIds = await getSectionIDsAsync("repeating_tactic");
   const rptTacticAll = [];
   tacticIds.forEach(id => {
@@ -15116,7 +15245,7 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
     "visibilite"
   ];
   getAttrs([
-    "scriptVersion", "famille", "devol",
+    "scriptVersion", "famille", "profil", "devol",
     "cfg_1attack_roll", "cfg_cible", "cfg_optact",
     "cfg_d20roll", "d20roll",
     "cfg_crit_diff", "cfg_tbl_crit", "cfg_tbl_fumble",
@@ -15137,6 +15266,7 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
     ...[ "resid", "nbre" ].map(attr => rptAttr("armes", `jet-${attr}`)),
     "allattacks_buff", "allattacks_desc",
     ...ongoingAttrs().map(attr => rptAttr("armes", `etendu-${attr}`)),
+    "concentration", "concentration_pow",
   ], function (values) {
     
     // general options
@@ -15194,6 +15324,10 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
       }));
       return;
     }
+
+    // concentration puissante
+    const powConcentration = 
+      boolval(values.concentration) && boolval(values.concentration_pow);
 
     let atkTitle = "Attaque";
     const allTags = getAllTags(values);
@@ -15361,8 +15495,11 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
 
     let powder = "";
     if (modifiers.includes("poudre")) {
-      powder = "La poudre explose et inflige [[1@{devol}]] DM";
-      fumble = "<2";
+      const { weapons } = getProfileData(values.profil);
+      if (!weapons.some(wt => wt.toLowerCase().includes("poudre"))) {
+        powder = "La poudre explose et inflige [[1@{devol}]] DM";
+        fumble = "2";
+      }
     }
 
     // Peur
@@ -15410,6 +15547,10 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
 
     if (atkType === "sort") {
       allTags.push("Sort");
+      if (powConcentration && dm.includes("@{devol}")) {
+        dm = dm.replaceAll("@{devol}", `*${maxD4e}`)
+        allTags.push("Concentr.+");
+      }
       if (hasAtkMod(modifiers, "zone")) {
         dm = `?{Sort de zone, privilégier|Cible,${dm}|Allié,floor(${dm}/2)}`;
         allTags.push("Zone");
@@ -15424,11 +15565,14 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
         allTags.push(`Rayon ${ (radius + "m").toLowerCase().replace("mm", "m") }`);
       }
       if (hasAtkMod(modifiers, "save")) {
-        let [ stat, diff, zero ] = splitOnSpace(getAtkMod(modifiers, "save"));
+        let [ stat, ...dd ] = splitOnSpace(getAtkMod(modifiers, "save"));
         stat = shorten(stat);
         const statRoll = `[${ stat.toUpperCase() }](~target|pnj_${stat}-btn${menuButton()})`;
         stat = (stat.startsWith("a") ? "d'" : "de ") + stat.toUpperCase();
-        diff = insertRolls("[" + diff.replace("[", "").replace("]", "").toUpperCase() + "]");
+        let zero;
+        if (dd[dd.length - 1] === "0")
+          zero = dd.pop();
+        const diff = insertRolls("[" + dd.join(" ").replace("[", "").replace("]", "").toUpperCase() + "]");
         const dmgOnSave = `Jet ${stat} difficulté ${diff} réussi`;
         if (strval(zero) === "0")
           zeroDmgOnSave = dmgOnSave;
@@ -15636,7 +15780,11 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
       atkProps.fumble = fumbleEffect;
     }
 
-    if (attack !== "" && boolval(values.cfg_cible) && !atkButton.includes("atkdual")) {
+    const targeting = 
+      boolval(values.cfg_cible) &&        // targeted attacks
+      !atkButton.includes("atkdual") &&   // no dual wielding
+      !hasAtkMod(modifiers, "multi");     // no multi target
+    if (attack !== "" && targeting) {
       if (modifiers.includes("manoeuvres")) {
         atkProps.tohit = SWData.settings.tokens.target.opposed;
         atkProps.opposed = "[[1]]";
@@ -16060,6 +16208,18 @@ on("change:next_roll", function () {
 });
 
 /**
+ * Return max value of evolutive die
+ * @returns {number}
+ */
+async function maxEvolDie() {
+  const roll = await startRoll(`! {{devol=[[0[@{devol}]]] }}`);
+  finishRoll(roll.rollId);
+  let maxD4e = getRollData(roll, "devol");
+  maxD4e = (maxD4e === "2d6") ? "12" : maxD4e.replace("d", "");
+  return intval(maxD4e);
+}
+
+/**
  * Display ability text with inline rolls
  * @param {number} path - Path #
  * @param {number} rank - Rank #
@@ -16084,7 +16244,9 @@ function actionAbility(path, rank) {
   getAttrs([
     ...abilityAttrs, 
     "character_name",
-    "pm", "pe", "concentration", "rangs_voies",
+    "pm", "pe",
+    "concentration", "concentration_pow",
+    "rangs_voies"
   ], async function(values) {
     const [ 
       name, profile,
@@ -16101,6 +16263,7 @@ function actionAbility(path, rank) {
     const abilitySpell = boolval(values[spell]);
     const attackSpell = abilitySpell ? abilityName.toLowerCase().includes("(a)") : false;
     const concentration = boolval(values.concentration);
+    const powConcentration = concentration && boolval(values.concentration_pow);
     let description = strval(values[desc]);
     if (abilityName === "" && description === "")
       return;
@@ -16161,6 +16324,7 @@ function actionAbility(path, rank) {
     }
 
     // alert on spells & PM/PE
+    let maxD4e = 0;
     const power = psionic ? "pe" : "pm";
     const powerName = psionic ? "Points d'Ego" : "Points de Mana";
     if (!expended && abilityOwned && abilitySpell) {
@@ -16180,7 +16344,11 @@ function actionAbility(path, rank) {
         }
       }
       if (attackSpell && concentration) {
-        powerUsed = Math.max(0, powerUsed - 2);
+        if (powConcentration)
+          maxD4e = await maxEvolDie();
+        else
+          powerUsed -= 2;
+        powerUsed = Math.max(0, powerUsed);
         abilityName = abilityName.replace("(A)", "(L:Concentration)");
       }
       alert += (alert !== "") ? "\n" : "";
@@ -16201,6 +16369,8 @@ function actionAbility(path, rank) {
 
     if (abilitySpell) {
       allTags.push("Sort");
+      if (powConcentration)
+        allTags.push("Concentr.+");
       if (hasProp(abilityProps, "zone"))
         allTags.push("Zone");
       if (psionic)
@@ -16225,7 +16395,7 @@ function actionAbility(path, rank) {
     }
 
     // build text
-    let text = insertRolls(description);
+    let text = insertRolls(description, { maxD4e });
     if (alert !== "" && alertCSS === "")
       text += "\n" + alert
     
@@ -16248,14 +16418,14 @@ function actionAbility(path, rank) {
       });
 
       // search for repeating attack
-      if (roll.toLowerCase().startsWith("att")) {
+      if (roll.toLowerCase().startsWith("atk ")) {
         const [ id ] = splitOnSpace(roll)[1];
         if (intval(id, -1) >= 0)
           roll = rptAttr("armes", "attack-btn", `$${ intval(id) - 1 }`);
       }
 
       // search for repeating ability
-      if (roll.toLowerCase().startsWith("jet")) {
+      if (roll.toLowerCase().startsWith("jet ")) {
         const [ id ] = splitOnSpace(roll)[1];
         if (intval(id, -1) >= 0)
           roll = rptAttr("rolls", "roll-btn", `$${ intval(id) - 1 }`);
@@ -16713,8 +16883,16 @@ on("change:buffs_voies", function() {
  * On click on concentration button
  */
 on("clicked:concentration-btn", function () {
-  getAttrs([ "concentration" ], function (values) {
-    setAttrs({ concentration: 1 - intval(values.concentration) });
+  getAttrs([ "cfg_highfan", "concentration" ], async function (values) {
+    let power = 0;
+    if (intval(values.concentration) === 0 && boolval(values.cfg_highfan)) {
+      const { selected } = await askAsync("Concentration puissante ?");
+      power = selected - 1;
+    }
+    setAttrs({ 
+      concentration: 1 - intval(values.concentration),
+      concentration_pow: power
+    });
   })
 });
 
@@ -17762,6 +17940,60 @@ function encumbrance() {
 }
 
 /**
+ * Return weapons and light weapons training
+ * @param {string[]} weapons - list of weapon tags for profile
+ * @returns { { trained:string[], light:string[] } }
+ */
+function weaponsTraining(weapons) {
+  const simpleRangedWeapons = [ 
+    "arc",
+    "bola",
+    "fronde",
+    "sarbacane"
+  ];
+  let weaponTraining = [ ...weapons ];
+  // all melee weapons
+  if (weapons.includes("cac-2m"))
+    weaponTraining = weaponTraining.filter(wtag => wtag !== "cac-1m");
+  // all light melee weapons
+  if (weapons.includes("cac-2m-lg"))
+    weaponTraining = weaponTraining.filter(wtag => wtag !== "cac-1m-lg");
+  // bludgeoning melee weapons
+  if (weapons.includes("contondant") && weapons.includes("cac-1m"))
+    weaponTraining = weaponTraining.filter(wtag => wtag !== "cac-1m");
+  // lowtech ranged weapons
+  const lightWeapons = [
+    "cac-1m-lg",
+    "cac-2m-lg",
+    "tir-lg"
+  ];
+  const simpleRanged = weapons.filter(wtag => simpleRangedWeapons.includes(wtag));
+  if (simpleRanged.length > 0 && simpleRangedWeapons.every(wtag => simpleRanged.includes(wtag)))
+      weaponTraining.push("tir-simple");
+  // Weapons training
+  const trained = weaponTraining.map(wtag => {
+    if (simpleRangedWeapons.includes(wtag))
+      return "";
+    return ({
+      "cac-1m": "Armes de contact à une main",
+      "cac-1m-lg": "Armes légère à une main",
+      "contondant": "Armes contondantes à une main",
+      "cac-2m": "Toutes les armes de contact",
+      "cac-2m-lg": "Toutes les armes légères",
+      "tir": "Toutes les armes à distance",
+      "tir-lg": "Toutes les armes à distance légères",
+      "tir-simple": "Armes à distance simples",
+      "poudre": "Armes à poudre",
+    })[wtag] || capitalize(wtag);
+  }).filter(t => t !== "");
+  const light = [];
+  if (weaponTraining.some(wt => lightWeapons.includes(wt)))
+    light.push("*Armes légères*=1d6 DM max, critique : 20");
+
+  return { trained, light };
+}
+
+/**
  * On click on martial training icon button
  */
 on("clicked:martial_training", function() {
@@ -17769,43 +18001,9 @@ on("clicked:martial_training", function() {
     const { weapons, def } = getProfileData(values.profil);
     if (!weapons && !def)
       return;
-    
-    const simpleRangedWeapons = [ "arc", "bola", "fronde", "sarbacane" ];
-    
-    let weaponTraining = [ ...weapons ];
-    // all melee weapons
-    if (weapons.includes("cac-2m"))
-      weaponTraining = weaponTraining.filter(wtag => wtag !== "cac-1m");
-    // all light melee weapons
-    if (weapons.includes("cac-2m-lg"))
-      weaponTraining = weaponTraining.filter(wtag => wtag !== "cac-1m-lg");
-    // bludgeoning melee weapons
-    if (weapons.includes("contondant") && weapons.includes("cac-1m"))
-      weaponTraining = weaponTraining.filter(wtag => wtag !== "cac-1m");
-    // lowtech ranged weapons
-    const lightWeapons = [ "cac-1m-lg", "cac-2m-lg", "tir-lg" ];
-    const simpleRanged = weapons.filter(wtag => simpleRangedWeapons.includes(wtag));
-    if (simpleRanged.length > 0 && simpleRangedWeapons.every(wtag => simpleRanged.includes(wtag)))
-        weaponTraining.push("tir-simple");
-    // Weapons training
-    const trained = weaponTraining.map(wtag => {
-      if (simpleRangedWeapons.includes(wtag))
-        return "";
-      return ({
-        "cac-1m": "Armes de contact à une main",
-        "cac-1m-lg": "Armes légère à une main",
-        "contondant": "Armes contondantes à une main",
-        "cac-2m": "Toutes les armes de contact",
-        "cac-2m-lg": "Toutes les armes légères",
-        "tir": "Toutes les armes à distance",
-        "tir-lg": "Toutes les armes à distance légères",
-        "tir-simple": "Armes à distance simples",
-        "poudre": "Armes à poudre",
-      })[wtag] || capitalize(wtag);
-    }).filter(t => t !== "");
-    const light = [];
-    if (weaponTraining.some(wt => lightWeapons.includes(wt)))
-      light.push("*Armes légères*=1d6 DM max, critique : 20");
+
+    // Weapons
+    const { trained, light } = weaponsTraining(weapons);
 
     // Armor & shield
     const armor = SWData.GEARS.findLast(gear => {
@@ -18655,7 +18853,7 @@ on("change:repeating_ressources:res-props", function(eventInfo) {
 on("change:repeating_ressources:res-val", function(eventInfo) {
   if (strval(eventInfo.sourceType) === "player")
     return;
-  
+
   const section = "ressources";
   const resId = rptInfo(eventInfo.sourceAttribute).rowId;
   const attrs = rptAttrs(section, [ "res-desc", "res-val", "res-props" ], resId);
@@ -18696,11 +18894,13 @@ on("clicked:repeating_ressources:resconso-btn", function () {
       return;
     const remaining = value - 1;
     updates.set(rptAttr(section, "res-val"), remaining);
-    let text = "";
     let heal = "";
+    let healdesc = "";
+    let mana = "[[0]]";
     const rsub = capitalize(strval(values[rptAttr(section, "res-desc")]));
     const props = strval(values[rptAttr(section, "res-props")]);
     const type = strval(getProp(props, "type"));
+    // heal PV
     if (type.toLowerCase().startsWith("soins")) {
       let [ ...roll ] = type.trim().split(" ").slice(1);
       if (roll.length === 0)
@@ -18709,15 +18909,24 @@ on("clicked:repeating_ressources:resconso-btn", function () {
       if (heal.includes("@{cha}")) {
         heal = heal.replace("@{cha}", "{0d0+@{cha},0d0+@{con}}kh1");
       }
+      healdesc = "PV";
       text = `Reste ${remaining} ${ rsub.toLowerCase() }`;
     }
-
-    if (heal !== "" || text !== "") {
+    // heal PM
+    if (type.toLowerCase().startsWith("mana")) {
+      heal = "[[1d8]]";
+      healdesc = "PM";
+      mana = "[[1]]";
+    }
+    
+    if (heal !== "") {
       const chatMsg = rollTemplate({
         lsub: "Consommable",
         rsub,
         heal,
-        text
+        healdesc,
+        mana,
+        text: `Reste ${remaining} ${ rsub.toLowerCase() }`
       });
       sendChatMsg(chatMsg);
     }
@@ -19768,7 +19977,7 @@ on("clicked:pc_actions-btn clicked:npc_actions-btn", async function(eventInfo) {
     const stats = SWData.PC.STATS.map(stat => {
       const short = shorten(stat);
       const button = menuButton(color, {}, { width: "2rem", ["text-align"]: "center" });
-      return `[${short.toUpperCase()}](~${charName}|${short}-btn${button})`;
+      return `[${short.toUpperCase()}](~${charName}|${short}_select-btn${button})`;
     }).join(" ");
     chatMsg.push("Caractéristiques=" + stats);
 
@@ -20056,13 +20265,27 @@ on("clicked:checkup-btn", function() {
  * On healing in message
  */
 on("change:healing", function() {
-  getAttrs([ "healing", "pv", "pv_max" ], function(values) {
-    const healing = intval(strval(values.healing).split("~")[0]);
-    if (healing === 0)
+  getAttrs([ 
+    "healing",
+    "pv", "pv_max",
+    "pm", "pm_max"
+  ], function(values) {
+    const [ healing, type ] = strval(values.healing).split("~");
+    if (intval(healing) === 0)
       return;
-    const pvMax = intval(values.pv_max);
-    const pv = Math.min(intval(values.pv) + healing, pvMax);
-    setAttrs({ pv, PVIG: pv });
+
+    let updates = new Map();
+    if (type === "PM") {
+      const pmMax = intval(values.pm_max);
+      const pm = Math.min(intval(values.pm) + intval(healing), pmMax);
+      updates.set("pm", pm);
+    } else {
+      const pvMax = intval(values.pv_max);
+      const pv = Math.min(intval(values.pv) + intval(healing), pvMax);
+      updates.set("pv", pv);
+      updates.set("PVIG", pv);
+    }
+    setAttrs(Object.fromEntries(updates));
   });
 });
 

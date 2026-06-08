@@ -1,6 +1,7 @@
 /* COF2e v1.16.0 */
 
 @import url('https://fonts.googleapis.com/css?family=Merriweather+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Material+Icons&display=swap');
 
 /* Declarations */
 * {
@@ -21,6 +22,10 @@ button,
 input:hover:read-write,
 select:hover {
   background-color: white;
+}
+
+.cofmain .material-icons {
+  font-size: 1.3rem;
 }
 
 .cofmain input[type="text"] {
@@ -320,7 +325,8 @@ img.bubble-img {
   width: 18px;
 }
 
-img.bubble-img:hover {
+img.bubble-img:hover,
+.bubble-icon:hover {
   transform: scale(1.5);
   background-color: var(--cof-click);
   border-radius: 100%;
@@ -398,6 +404,10 @@ div.path div.block-title {
   justify-content: space-between;
 }
 
+.d-flex-even {
+  justify-content: space-evenly;
+}
+
 .d-flex-middle {
   vertical-align: middle;
 }
@@ -458,7 +468,8 @@ div.path div.block-title {
 .cofmain input[value="0"].fav-abilities + div.fav-abilities,
 .cofmain input[value="0"].fav-ability + div.fav-ability,
 .cofmain input[value=""].immu-dm + span.immu-dm,
-.cofmain input[value="0"].mounted + .mounted {
+.cofmain input[value="0"].mounted + .mounted,
+.cofmain input[value="0"].high-fan + .high-fan {
   display: none;
 }
 
