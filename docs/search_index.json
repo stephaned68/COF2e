@@ -5,7 +5,7 @@ layout: null
 {%- assign split_chars = site.data.split_chars.chars -%}
 
 [
-  {% for page in site.posts %}
+  {% for page in site.pages %}
     {
       "title": "{{ page.title | escape }}",
       "keywords": {
