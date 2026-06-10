@@ -94,9 +94,9 @@ Un bouton permet de décompter un consommable et éventuellement d'envoyer un me
 
 Si vous spécifiez une propriété `type: munitions`, la fiche recherche dans les armes une ligne dont le type d'attaque est _Trait_ et dont le nom de munition correspond au nom de la ressource. Elle établit la relation entre les deux éléments pour décrémenter la ressource à chaque attaque et afficher un message d'avertissement lorsque le personnage est à court de munitions.
 
-Si vous spécifiez une propriété `type: soins`, et que vous cliquez sur le bouton _Consommable_, un message de chat indiquant le nombre de PV récupérés s'affiche. Par défaut, il s'agit d'une potion de soins standard permettant de récupérer 1d4° PV. Vous pouvez si besoin indiquer une formule de dés différente à la suite du mot `soins`. _Ex :_ : pour paramétrer les Elixirs de guérison du Forgesort, indiquez `type: soins [2d4°+INT]`.
+Spécifiez la propriété `type: soins` pour une potion de soins. Quand vous cliquez sur le bouton _Consommable_, un message de chat indiquant le nombre de PV récupérés s'affiche. Par défaut, il s'agit d'une potion de soins standard permettant de récupérer 1d4° PV. Vous pouvez si besoin indiquer une formule de dés différente à la suite du mot `soins`. _Ex :_ : pour paramétrer les Elixirs de guérison du Forgesort, indiquez `type: soins [2d4°+INT]`.
 
-Si vous spécifiez une propriété `type: mana`, et que vous cliquez sur le bouton _Consommable_, un message de chat indiquant le nombre de PM récupérés s'affiche.
+Spécifiez la propriété `type: mana` pour une potion de mana. Quand vous cliquez sur le bouton _Consommable_, un message de chat indiquant le nombre de PM récupérés s'affiche.
 
 # Munitions
 
