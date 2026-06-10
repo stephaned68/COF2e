@@ -8,7 +8,11 @@ permalink: /search/
   <input type="text" id="search-input" placeholder="Rechercher...">
 </div>
 
-<div>{{ site.pages }}</div>
+<ul>
+{% for page in site.pages %}
+<li>{{ page.name }}</li>
+{%- endfor %}
+</ul>
 
 
 <script src="{{ site.baseurl }}/assets/js/search.js"></script>
