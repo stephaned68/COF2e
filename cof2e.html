@@ -1,6 +1,6 @@
 <div class="cofmain">
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.16.0">
+  <input type="hidden" name="attr_verfdp" value="1.16.02">
   <!-- Version courante fiche -->
   <input type="hidden" name="attr_version" value="1.16.0">
   <!-- Mode debug -->
@@ -923,7 +923,7 @@
               <button class="flat-btn" type="action" name="act_recovery_fast-btn" title="%{recovery_fast-btn} Récupération rapide">
                 <span class="material-icons bubble-icon">coffee</span>
               </button>
-              <button class="flat-btn" type="action" name="act_recovery_full-btn" title="%{recovery_fast-btn} Récupération rapide">
+              <button class="flat-btn" type="action" name="act_recovery_full-btn" title="%{recovery_full-btn} Récupération complète">
                 <span class="material-icons bubble-icon">bed</span>
               </button>
               <input type="hidden" class="high-fan" name="attr_cfg_highfan" value="0">
@@ -982,6 +982,8 @@
             <div class="hits hit has-psionic" title="Points d'Ego (psionique)">
 
               <div class="block-title centered">
+                <button class="hidden" type="action" name="act_egoreco_fast-btn">
+                <button class="hidden" type="action" name="act_egoreco_full-btn">
                 <button class="flat-btn img-btn" type="action" name="act_egoreco-btn">
                   <span title="%{egoreco-btn} Lancer Récup. PE&#10;%{egoreco_fast-btn} Récupération rapide&#10;%{egoreco_full-btn} Récupération complète">PE</span>
                 </button>
@@ -6332,6 +6334,17 @@
               <li>
                 <details>
                   <summary>
+                    <strong>Version 1.17.0</strong> (2026-07)
+                  </summary>
+                  <ul>
+                    <li>Amélioration des boutons Récupérations (PE, capacités)</li>
+                  </ul>
+                </details>
+              </li>
+
+              <li>
+                <details>
+                  <summary>
                     <strong>Version 1.16.0</strong> (2026-06-08)
                   </summary>
                   <ul>
@@ -6412,251 +6425,249 @@
                 </details>
               </li>
 
-              <li>
-                <details>
-                  <summary>
-                    <strong>Version 1.12.0</strong> (2025-11-30)
-                  </summary>
-                  <ul>
-                    <li>Sélection d'un jet sec, de capacité ou de compétence au clic sur une caractéristique</li>
-                    <li>Plus d'insertion automatique d'inline-roll [[ ]] dans le texte d'une capacité si ce dernier en comporte déjà</li>
-                    <li>Effacement de la liaison entre une ligne d'arme et de munition quand le type d'attaque n'est pas <em>trait</em></li>
-                    <li>Pas d'affichage des champs fréquence d'utilisation pour les capacités dont le nombre d'utilisation maximum est 0</li>
-                  </ul>
-                </details>
-              </li>
-
-              <li>
-                <details>
-                  <summary>
-                    <strong>Version 1.11.0</strong> (2025-11-11)
-                  </summary>
-                  <ul>
-                    <li>Correction DM x 2 si le seuil de critique est inférieur à 20</li>
-                    <li>Ajout de boutons <em>Récupérations</em> et <em>Soins</em> au menu d'actions</li>
-                    <li>Ajout d'une mention pour les manoeuvres avec modificateur de tailles</li>
-                    <li>Ajout du jet opposé sur l'utilisation d'une manoeuvre</li>
-                    <li>Possibilité de combiner les options tactiques avec une option spécifique du profil</li>
-                  </ul>
-                </details>
-              </li>
-
-              <li>
-                <details>
-                  <summary>
-                    <strong>Version 1.10.0</strong> (2025-10-31)
-                  </summary>
-                  <ul>
-                    <li>Réinitialisation des capacités utilisées par combat / par jour en cas de récupération rapide ou complète</li>
-                    <li>Réinitialisation des PM maximum ec cas de récupération complète</li>
-                    <li>Ajout d'un sous-onglet pour les RD et Résistances aux DM</li>
-                    <li>Ajout d'attributs vitesse pour les déplacements</li>
-                    <li>Prise en charge des valeurs de buffs qui changent à certains rangs dans une voie</li>
-                    <li>Prise en charge des manoeuvres spéciales dans les jets d'attaque</li>
-                    <li>Ajout d'une option pour cibler un token lors d'un jet d'attaque</li>
-                    <li>Effacement de l'option tactique choisie après un jet d'attaque</li>
-                    <li>Ajout d'une macro <em>pc_actions-btn</em> pour une liste d'actions dans le chat</li>
-                    <li>Prise en charge des ressources consommables de type <em>soins</em></li>
-                    <li>Ajout d'un bouton <em>Consommable</em> à la liste des ressources</li>
-                  </ul>
-                </details>
-              </li>
-
-              <li>
-                <details>
-                  <summary>
-                    <strong>Version 1.9.0</strong> (2025-09-28)
-                  </summary>
-                  <ul>
-                    <li>Possibilité de cacher aussi les voies 4, 5 et 6</li>
-                    <li>Ajout d'un type de buff <em>Tous les test de caracs</em> et <em>Tous les jets d'attaque</em></li>
-                    <li>Ajout d'un paramètre <em>temporaire</em> dans la définition d'un buff</li>
-                    <li>Ajout d'un bouton pour regrouper les buffs temporaires par leur nom et les activer/désactiver</li>
-                    <li>
-                      Ajout des attributs <em>voies_rang3</em>, <em>voies_rang4</em>, <em>voies_rang5</em>
-                      avec le nombre de voies dans lesquelles les rangs 3 à 5 sont atteints
-                    </li>
-                    <li>Remplacement de la propriété de capacité <em>evol</em> par la propriété <em>selonRang</em></li>
-                    <li>Ajout d'une option de configuration pour lancer un seul d20 dans les jets de compétence</li>
-                    <li>Harmonisation des icones d'états préjudiciables avec le token marker set du script COFantasy2</li>
-                    <li>Mise au point de l'option <em>Etats préjudiciables</em> de l'interface <em>Token Mod</em></li>
-                  </ul>
-                </details>
-              </li>
-
-              <li>
-                <details>
-                  <summary>
-                    <strong>Version 1.8.0</strong> (2025-08-31)
-                  </summary>
-                  <ul>
-                    <li>Prise en compte des capacités épiques dans le calcul des rangs dans la voie et des PV (propriété <em>epic:</em>).</li>
-                    <li>Prise en compte des capacités épiques <em>Défense héroïque</em> et <em>Mana épique</em> dans le calcul de la DEF et des PM.</li>
-                    <li>Possibilité de compter le trésor en PA ou en PO.</li>
-                    <li>Ajout d'une option dans la configuration <em>Token Mod</em> pour appliquer une teinte au token quand le nombre de PV tombe au-dessous de sa valeur maximum.</li>
-                    <li>Ajout d'un bouton pour copier la configuration par défaut depuis une fiche nommée PJBase.</li>
-                    <li>Option <em>jet:N</em> déplacée du champ <em>Spécial</em> d'une attaque au champ <em>Modificateurs d'attaque</em></li>
-                  </ul>
-                </details>
-              </li>
-
-              <li>
-                <details>
-                  <summary>
-                    <strong>Version 1.7.0</strong> (2025-07-26)
-                  </summary>
-                  <ul>
-                    <li>Sous-onglet <em>Maîtrises</em> dans l'onglet <em>Capacités</em> pour les langues et les maîtrises spéciales d'armes / armures</li>
-                    <li>Ajout d'un popup Roll20 sur le bouton DR pour choisir entre Récupération <em>Rapide</em> ou <em>Complète</em> ou <em>Se dépasser</em></li>
-                    <li>Ajout d'une option <em>Token Mod</em> dans l'onglet Script pour permettre aux joueurs d'interagir avec le token de leur personnage</li>
-                  </ul>
-                </details>
-              </li>
-
-              <li>
-                <details>
-                  <summary>
-                    <strong>Version 1.6.0</strong> (2025-06-22)
-                  </summary>
-                  <ul>
-                    <li>Déplacement des propriétés magiques des armes vers les modificateurs d'attaque</li>
-                    <li>Ajout d'un champ <em>Prédicats si porté</em> aux lignes d'attaques et d'équipements</li>
-                    <li>Création de 2 attaques pour les armes avec propriété <em>lancer</em> depuis l'onglet équipement</li>
-                    <li>Ajout des jets des capacités aux boutons épinglables à la barre d'actions Roll20</li>
-                    <li>Ajout d'une liste de munitions sur l'onglet équipement (script COFantasy2)</li>
-                  </ul>
-                </details>
-              </li>
-
-              <li>
-                <details>
-                  <summary>
-                    <strong>Version 1.5.0</strong> (2025-05-08)
-                  </summary>
-                  <ul>
-                    <li>Ajout d'un onglet Notes</li>
-                    <li>Ajout d'une couleur de fond aux PV selon l'état courant (Jaune si moins de 50% de PV restants, Rouge si 1 PV restant, Rouge foncé si 0 PV restant)</li>
-                    <li>Ajout d'une '*' aux capacités de sort en mode affichage</li>
-                    <li>Ajout d'une option pour ajuster les PM dépensés par une capacité de sort</li>
-                    <li>Prise en compte des capacités avec paramètre évolutif</li>
-                    <li>Amélioration des objets en main (main gauche selon bouclier équipé ou pas)</li>
-                    <li>Mise au point de la vérif. des points de capacités et du calcul auto. des PV</li>
-                    <li>Correction de l'import PDF pour les voies de magie destructrice et magie élémentaire</li>
-                    <li>Ajout de la possibilité d'épingler certains jets à la barre d'actions Roll20</li>
-                    <li>Ajout de buffs aux DMs avec possibilité de jet optionnel</li>
-                    <li>Ajout d'une gestion d'attributs personnalisés</li>
-                    <li>Ajout d'une case attaque active/inactive pour le script COFantasy2</li>
-                  </ul>
-                </details>
-              </li>
-
-              <li>
-                <details>
-                  <summary>
-                    <strong>Version 1.4.0</strong> (2025-04-08)
-                  </summary>
-                  <ul>
-                    <li>Ajout d'un bouton pour afficher un check-up de l'état du personnage</li>
-                    <li>Ajout d'un bouton pour activer la concentration sur les capacités de sort</li>
-                    <li>Ajout des tables de coups et d'échecs critiques</li>
-                    <li>Ajout d'une question pour les DM des sorts de zone en attaque</li>
-                    <li>Prise en compte des propriétés magiques des armes</li>
-                    <li>Prise en compte des règles optionnelles de peur</li>
-                    <li>Prise en compte de la valeur d'Ombre</li>
-                    <li>Ajout des bonus de base aux titres des jets d'attaques, de capacités et de compétences</li>
-                    <li>Ajout de tags aux jets dans le chat</li>
-                    <li>Amélioration des textes descriptifs dans les jets de capacités</li>
-                    <li>Ajustements cosmétiques pour les cases à cocher et boutons radio</li>
-                  </ul>
-                </details>
-              </li>
-
-              <li>
-                <details>
-                  <summary>
-                    <strong>Version 1.3.0</strong> (2025-03-09)
-                  </summary>
-                  <ul>
-                    <li>Ajout de buffs aux caractéristiques pris en compte dans les attributes dérivés</li>
-                    <li>Ajout d'un contrôle sur le niveau minimum requis pour les rangs de capacités</li>
-                    <li>Ajout d'une case "en selle" (pour gestion de la voie du cavalier)</li>
-                    <li>Affichage optionnel d'un bouton Chance dans tous les jets de D20</li>
-                    <li>Ajout d'un menu de chat pour les états préjudiciables</li>
-                    <li>Prise en compte de l'état Immobilisé pour les jets d'attaque avec dé malus</li>
-                    <li>Ajout de toutes les armes et armures dans la liste des équipements reconnus</li>
-                    <li>Gestion simplifée du suivi des munitions</li>
-                    <li>Gestion de l'usure des armes</li>
-                    <li>Ajout de 4 listes d'actions sur l'onglet Script</li>
-                    <li>Correction d'un bug sur l'appel du Persomancien</li>
-                  </ul>
-                </details>
-              </li>
-
-              <li>
-                <details>
-                  <summary>
-                    <strong>Version 1.2.0</strong> (2025-02-04)
-                  </summary>
-                  <ul>
-                    <li>Ajout d'une gestion des armures, boucliers et casques équipés</li>
-                    <li>Ajout d'une option pour vérifier les points de capacités utilisés</li>
-                    <li>Import des voies déplacé de l'onglet Configuration dans un sous-onglet Import de l'onglet Capacités</li>
-                    <li>Ajout d'une icône pour chaque nom de voie en mode Edition pour l'import du texte des capacités</li>
-                    <li>Modification du calcul des DR max avec une base de 2 sauf pour les profils de Mystiques (3 DR)</li>
-                    <li>Modification du calcul des PC max avec une base de 2 sauf pour les profils d'Aventuriers (3 PC)</li>
-                    <li>Ajout d'options de configuration pour forcer la valeur max des PV, DR, PC et PM</li>
-                    <li>Amélioration de la reconnaissance d'inline-rolls dans les descriptions de capacités</li>
-                    <li>Ajout du détail de la bourse par type de pièces et total du trésor en PA</li>
-                    <li>Ajout gestion des objets en main</li>
-                    <li>Ajout de la possibilité de lier un FX Roll20 aux jets de caractéristiques, d'attaques et de capacités</li>
-                    <li>Persomancien (version expérimentale)</li>
-                    <li>Améliorations visuelles diverses (dont support du darkmode dans le chat)</li>
-                  </ul>
-                </details>
-              </li>
-
-              <li>
-                <details>
-                  <summary>
-                    <strong>Version 1.1.0</strong> (2025-01-05)
-                  </summary>
-                  <ul>
-                    <li>Ajout d'un bouton pour le test de chance</li>
-                    <li>Ajout d'un champ paramètre et d'un champ propriétés pour chaque capacité</li>
-                    <li>Ajout d'un champ PV de voie pour chaque voie</li>
-                    <li>Rangs 1 des voies 1,2 & 3 cochés par défaut</li>
-                    <li>Ajout d'une option de calcul automatique des PV max</li>
-                    <li>Ajout de la gestion de compagnons</li>
-                    <li>Ajout d'options d'attaque pour le script COFantasy2</li>
-                    <li>Remplacement import profil en JSON par import de voie depuis PDF</li>
-                    <li>Ajout d'un bouton de génération de l'équipement de base du profil</li>
-                    <li>Ajout de la gestion de l'AGI/CON maximum selon l'armure</li>
-                    <li>Ajout d'un champ propriétés sur les ressources</li>
-                  </ul>
-                </details>
-              </li>
-
-              <li>
-                <details>
-                  <summary>
-                    <strong>Version 1.0.0</strong> (2024-12-24)
-                  </summary>
-                  <ul>
-                    <li>Première version de la fiche</li>
-                  </ul>
-                </details>
-              </li>
-
             </ul>
 
           </div>
 
           <div class="sheet-col">
 
-            <h4>Migrations</h4>
+            <button type="action" class="flat-btn img-btn float-right" name="act_migrations" title="Détail des migrations">
+              <span class="img-btn">x</span>
+            </button>
+
             <details>
-              <summary>Détail des mises à jour</summary>
-              <textarea class="large migration" name="attr_migration"></textarea>
+              <summary>
+                <h4>Versions 2025</h4>
+              </summary>
+
+              <ul>
+                  
+                <li>
+                  <details>
+                    <summary>
+                      <strong>Version 1.12.0</strong> (2025-11-30)
+                    </summary>
+                    <ul>
+                      <li>Sélection d'un jet sec, de capacité ou de compétence au clic sur une caractéristique</li>
+                      <li>Plus d'insertion automatique d'inline-roll [[ ]] dans le texte d'une capacité si ce dernier en comporte déjà</li>
+                      <li>Effacement de la liaison entre une ligne d'arme et de munition quand le type d'attaque n'est pas <em>trait</em></li>
+                      <li>Pas d'affichage des champs fréquence d'utilisation pour les capacités dont le nombre d'utilisation maximum est 0</li>
+                    </ul>
+                  </details>
+                </li>
+
+                <li>
+                  <details>
+                    <summary>
+                      <strong>Version 1.11.0</strong> (2025-11-11)
+                    </summary>
+                    <ul>
+                      <li>Correction DM x 2 si le seuil de critique est inférieur à 20</li>
+                      <li>Ajout de boutons <em>Récupérations</em> et <em>Soins</em> au menu d'actions</li>
+                      <li>Ajout d'une mention pour les manoeuvres avec modificateur de tailles</li>
+                      <li>Ajout du jet opposé sur l'utilisation d'une manoeuvre</li>
+                      <li>Possibilité de combiner les options tactiques avec une option spécifique du profil</li>
+                    </ul>
+                  </details>
+                </li>
+
+                <li>
+                  <details>
+                    <summary>
+                      <strong>Version 1.10.0</strong> (2025-10-31)
+                    </summary>
+                    <ul>
+                      <li>Réinitialisation des capacités utilisées par combat / par jour en cas de récupération rapide ou complète</li>
+                      <li>Réinitialisation des PM maximum ec cas de récupération complète</li>
+                      <li>Ajout d'un sous-onglet pour les RD et Résistances aux DM</li>
+                      <li>Ajout d'attributs vitesse pour les déplacements</li>
+                      <li>Prise en charge des valeurs de buffs qui changent à certains rangs dans une voie</li>
+                      <li>Prise en charge des manoeuvres spéciales dans les jets d'attaque</li>
+                      <li>Ajout d'une option pour cibler un token lors d'un jet d'attaque</li>
+                      <li>Effacement de l'option tactique choisie après un jet d'attaque</li>
+                      <li>Ajout d'une macro <em>pc_actions-btn</em> pour une liste d'actions dans le chat</li>
+                      <li>Prise en charge des ressources consommables de type <em>soins</em></li>
+                      <li>Ajout d'un bouton <em>Consommable</em> à la liste des ressources</li>
+                    </ul>
+                  </details>
+                </li>
+
+                <li>
+                  <details>
+                    <summary>
+                      <strong>Version 1.9.0</strong> (2025-09-28)
+                    </summary>
+                    <ul>
+                      <li>Possibilité de cacher aussi les voies 4, 5 et 6</li>
+                      <li>Ajout d'un type de buff <em>Tous les test de caracs</em> et <em>Tous les jets d'attaque</em></li>
+                      <li>Ajout d'un paramètre <em>temporaire</em> dans la définition d'un buff</li>
+                      <li>Ajout d'un bouton pour regrouper les buffs temporaires par leur nom et les activer/désactiver</li>
+                      <li>
+                        Ajout des attributs <em>voies_rang3</em>, <em>voies_rang4</em>, <em>voies_rang5</em>
+                        avec le nombre de voies dans lesquelles les rangs 3 à 5 sont atteints
+                      </li>
+                      <li>Remplacement de la propriété de capacité <em>evol</em> par la propriété <em>selonRang</em></li>
+                      <li>Ajout d'une option de configuration pour lancer un seul d20 dans les jets de compétence</li>
+                      <li>Harmonisation des icones d'états préjudiciables avec le token marker set du script COFantasy2</li>
+                      <li>Mise au point de l'option <em>Etats préjudiciables</em> de l'interface <em>Token Mod</em></li>
+                    </ul>
+                  </details>
+                </li>
+
+                <li>
+                  <details>
+                    <summary>
+                      <strong>Version 1.8.0</strong> (2025-08-31)
+                    </summary>
+                    <ul>
+                      <li>Prise en compte des capacités épiques dans le calcul des rangs dans la voie et des PV (propriété <em>epic:</em>).</li>
+                      <li>Prise en compte des capacités épiques <em>Défense héroïque</em> et <em>Mana épique</em> dans le calcul de la DEF et des PM.</li>
+                      <li>Possibilité de compter le trésor en PA ou en PO.</li>
+                      <li>Ajout d'une option dans la configuration <em>Token Mod</em> pour appliquer une teinte au token quand le nombre de PV tombe au-dessous de sa valeur maximum.</li>
+                      <li>Ajout d'un bouton pour copier la configuration par défaut depuis une fiche nommée PJBase.</li>
+                      <li>Option <em>jet:N</em> déplacée du champ <em>Spécial</em> d'une attaque au champ <em>Modificateurs d'attaque</em></li>
+                    </ul>
+                  </details>
+                </li>
+
+                <li>
+                  <details>
+                    <summary>
+                      <strong>Version 1.7.0</strong> (2025-07-26)
+                    </summary>
+                    <ul>
+                      <li>Sous-onglet <em>Maîtrises</em> dans l'onglet <em>Capacités</em> pour les langues et les maîtrises spéciales d'armes / armures</li>
+                      <li>Ajout d'un popup Roll20 sur le bouton DR pour choisir entre Récupération <em>Rapide</em> ou <em>Complète</em> ou <em>Se dépasser</em></li>
+                      <li>Ajout d'une option <em>Token Mod</em> dans l'onglet Script pour permettre aux joueurs d'interagir avec le token de leur personnage</li>
+                    </ul>
+                  </details>
+                </li>
+
+                <li>
+                  <details>
+                    <summary>
+                      <strong>Version 1.6.0</strong> (2025-06-22)
+                    </summary>
+                    <ul>
+                      <li>Déplacement des propriétés magiques des armes vers les modificateurs d'attaque</li>
+                      <li>Ajout d'un champ <em>Prédicats si porté</em> aux lignes d'attaques et d'équipements</li>
+                      <li>Création de 2 attaques pour les armes avec propriété <em>lancer</em> depuis l'onglet équipement</li>
+                      <li>Ajout des jets des capacités aux boutons épinglables à la barre d'actions Roll20</li>
+                      <li>Ajout d'une liste de munitions sur l'onglet équipement (script COFantasy2)</li>
+                    </ul>
+                  </details>
+                </li>
+
+                <li>
+                  <details>
+                    <summary>
+                      <strong>Version 1.5.0</strong> (2025-05-08)
+                    </summary>
+                    <ul>
+                      <li>Ajout d'un onglet Notes</li>
+                      <li>Ajout d'une couleur de fond aux PV selon l'état courant (Jaune si moins de 50% de PV restants, Rouge si 1 PV restant, Rouge foncé si 0 PV restant)</li>
+                      <li>Ajout d'une '*' aux capacités de sort en mode affichage</li>
+                      <li>Ajout d'une option pour ajuster les PM dépensés par une capacité de sort</li>
+                      <li>Prise en compte des capacités avec paramètre évolutif</li>
+                      <li>Amélioration des objets en main (main gauche selon bouclier équipé ou pas)</li>
+                      <li>Mise au point de la vérif. des points de capacités et du calcul auto. des PV</li>
+                      <li>Correction de l'import PDF pour les voies de magie destructrice et magie élémentaire</li>
+                      <li>Ajout de la possibilité d'épingler certains jets à la barre d'actions Roll20</li>
+                      <li>Ajout de buffs aux DMs avec possibilité de jet optionnel</li>
+                      <li>Ajout d'une gestion d'attributs personnalisés</li>
+                      <li>Ajout d'une case attaque active/inactive pour le script COFantasy2</li>
+                    </ul>
+                  </details>
+                </li>
+
+                <li>
+                  <details>
+                    <summary>
+                      <strong>Version 1.4.0</strong> (2025-04-08)
+                    </summary>
+                    <ul>
+                      <li>Ajout d'un bouton pour afficher un check-up de l'état du personnage</li>
+                      <li>Ajout d'un bouton pour activer la concentration sur les capacités de sort</li>
+                      <li>Ajout des tables de coups et d'échecs critiques</li>
+                      <li>Ajout d'une question pour les DM des sorts de zone en attaque</li>
+                      <li>Prise en compte des propriétés magiques des armes</li>
+                      <li>Prise en compte des règles optionnelles de peur</li>
+                      <li>Prise en compte de la valeur d'Ombre</li>
+                      <li>Ajout des bonus de base aux titres des jets d'attaques, de capacités et de compétences</li>
+                      <li>Ajout de tags aux jets dans le chat</li>
+                      <li>Amélioration des textes descriptifs dans les jets de capacités</li>
+                      <li>Ajustements cosmétiques pour les cases à cocher et boutons radio</li>
+                    </ul>
+                  </details>
+                </li>
+
+                <li>
+                  <details>
+                    <summary>
+                      <strong>Version 1.3.0</strong> (2025-03-09)
+                    </summary>
+                    <ul>
+                      <li>Ajout de buffs aux caractéristiques pris en compte dans les attributes dérivés</li>
+                      <li>Ajout d'un contrôle sur le niveau minimum requis pour les rangs de capacités</li>
+                      <li>Ajout d'une case "en selle" (pour gestion de la voie du cavalier)</li>
+                      <li>Affichage optionnel d'un bouton Chance dans tous les jets de D20</li>
+                      <li>Ajout d'un menu de chat pour les états préjudiciables</li>
+                      <li>Prise en compte de l'état Immobilisé pour les jets d'attaque avec dé malus</li>
+                      <li>Ajout de toutes les armes et armures dans la liste des équipements reconnus</li>
+                      <li>Gestion simplifée du suivi des munitions</li>
+                      <li>Gestion de l'usure des armes</li>
+                      <li>Ajout de 4 listes d'actions sur l'onglet Script</li>
+                      <li>Correction d'un bug sur l'appel du Persomancien</li>
+                    </ul>
+                  </details>
+                </li>
+
+                <li>
+                  <details>
+                    <summary>
+                      <strong>Version 1.2.0</strong> (2025-02-04)
+                    </summary>
+                    <ul>
+                      <li>Ajout d'une gestion des armures, boucliers et casques équipés</li>
+                      <li>Ajout d'une option pour vérifier les points de capacités utilisés</li>
+                      <li>Import des voies déplacé de l'onglet Configuration dans un sous-onglet Import de l'onglet Capacités</li>
+                      <li>Ajout d'une icône pour chaque nom de voie en mode Edition pour l'import du texte des capacités</li>
+                      <li>Modification du calcul des DR max avec une base de 2 sauf pour les profils de Mystiques (3 DR)</li>
+                      <li>Modification du calcul des PC max avec une base de 2 sauf pour les profils d'Aventuriers (3 PC)</li>
+                      <li>Ajout d'options de configuration pour forcer la valeur max des PV, DR, PC et PM</li>
+                      <li>Amélioration de la reconnaissance d'inline-rolls dans les descriptions de capacités</li>
+                      <li>Ajout du détail de la bourse par type de pièces et total du trésor en PA</li>
+                      <li>Ajout gestion des objets en main</li>
+                      <li>Ajout de la possibilité de lier un FX Roll20 aux jets de caractéristiques, d'attaques et de capacités</li>
+                      <li>Persomancien (version expérimentale)</li>
+                      <li>Améliorations visuelles diverses (dont support du darkmode dans le chat)</li>
+                    </ul>
+                  </details>
+                </li>
+
+                <li>
+                  <details>
+                    <summary>
+                      <strong>Version 1.1.0</strong> (2025-01-05)
+                    </summary>
+                    <ul>
+                      <li>Ajout d'un bouton pour le test de chance</li>
+                      <li>Ajout d'un champ paramètre et d'un champ propriétés pour chaque capacité</li>
+                      <li>Ajout d'un champ PV de voie pour chaque voie</li>
+                      <li>Rangs 1 des voies 1,2 & 3 cochés par défaut</li>
+                      <li>Ajout d'une option de calcul automatique des PV max</li>
+                      <li>Ajout de la gestion de compagnons</li>
+                      <li>Ajout d'options d'attaque pour le script COFantasy2</li>
+                      <li>Remplacement import profil en JSON par import de voie depuis PDF</li>
+                      <li>Ajout d'un bouton de génération de l'équipement de base du profil</li>
+                      <li>Ajout de la gestion de l'AGI/CON maximum selon l'armure</li>
+                      <li>Ajout d'un champ propriétés sur les ressources</li>
+                    </ul>
+                  </details>
+                </li>
+
+              </ul>
+
             </details>
 
           </div>
@@ -8062,166 +8073,174 @@
                 </details>
               </li>
 
-              <li>
-                <details>
-                  <summary>
-                    <strong>Version 1.12.0</strong> (2025-11-30)
-                  </summary>
-                  <ul>
-                    <li>Ajout de la gestion des Points de Chance</li>
-                  </ul>
-                </details>
-              </li>
-
-              <li>
-                <details>
-                  <summary>
-                    <strong>Version 1.11.0</strong> (2025-11-11)
-                  </summary>
-                  <ul>
-                    <li>Ajout de champs pour les scores d'attaque au contact (jet de manoeuvre opposé) et magique</li>
-                  </ul>
-                </details>
-              </li>
-
-              <li>
-                <details>
-                  <summary>
-                    <strong>Version 1.10.0</strong> (2025-10-31)
-                  </summary>
-                  <ul>
-                    <li>Ajout d'une section dépliante pour les RD et Résistances aux DM</li>
-                    <li>Ajout d'attributs vitesse pour les déplacements</li>
-                    <li>Ajout de listes de tailles et de type de créatures</li>
-                    <li>Ajout d'une option pour cibler un token lors d'un jet d'attaque</li>
-                    <li>Effacement de l'option tactique choisie après un jet d'attaque</li>
-                    <li>Ajout du nombre d'utilisations par jour/combat aux capacités</li>
-                  </ul>
-                </details>
-              </li>
-
-              <li>
-                <details>
-                  <summary>
-                    <strong>Version 1.8.0</strong> (2025-08-31)
-                  </summary>
-                  <ul>
-                    <li>Ajout d'un bouton pour copier la configuration par défaut depuis une fiche nommée PNJBase.</li>
-                    <li>Ajout d'une option dans les coups spéciaux pour n'affecter que la prochaine attaque</li>
-                  </ul>
-                </details>
-              </li>
-
-              <li>
-                <details>
-                  <summary>
-                    <strong>Version 1.7.0</strong> (2025-07-26)
-                  </summary>
-                  <ul>
-                    <li>Ajout de la possibilité d'indiquer <em>jet:N</em> dans le champ Spécial d'une attaque pour afficher la description du jet de capacité correspondant dans le chat</li>
-                    <li>Ajout d'une option <em>Token Mod</em> dans l'onglet Script pour permettre la configuration rapide du token</li>
-                  </ul>
-                </details>
-              </li>
-
-              <li>
-                <details>
-                  <summary>
-                    <strong>Version 1.6.0</strong> (2025-06-22)
-                  </summary>
-                  <ul>
-                    <li>Ajout d'une gestion de bonus de compétence par caractéristiques</li>
-                    <li>Ajout des options tactiques et de 3 coups spéciaux</li>
-                    <li>Ajout d'une liste de munitions sur l'onglet équipement (script COFantasy2)</li>
-                  </ul>
-                </details>
-              </li>
-
-              <li>
-                <details>
-                  <summary>
-                    <strong>Version 1.5.0</strong> (2025-05-08)
-                  </summary>
-                  <ul>
-                    <li>Ajout de la possibilité d'épingler certains jets à la barre d'actions Roll20</li>
-                    <li>Ajout d'une case attaque active/inactive pour le script COFantasy2</li>
-                  </ul>
-                </details>
-              </li>
-
-              <li>
-                <details>
-                  <summary>
-                    <strong>Version 1.4.0</strong> (2025-04-08)
-                  </summary>
-                  <ul>
-                    <li>Ajout des tables de coups et d'échecs critiques</li>
-                    <li>Ajustements cosmétiques pour les cases à cocher et boutons radio</li>
-                  </ul>
-                </details>
-              </li>
-
-              <li>
-                <details>
-                  <summary>
-                    <strong>Version 1.3.0</strong> (2025-03-09)
-                  </summary>
-                  <ul>
-                    <li>Ajout de 4 listes d'actions sur l'onglet Script</li>
-                    <li>Prise en compte des attaques groupées</li>
-                    <li>Ajout d'un onglet Equipement simplifié</li>
-                  </ul>
-                </details>
-              </li>
-
-              <li>
-                <details>
-                  <summary>
-                    <strong>Version 1.2.0</strong> (2025-02-04)
-                  </summary>
-                  <ul>
-                    <li>Modification du champ RD</li>
-                    <li>Ajout du détail de la bourse par type de pièces et total du trésor en PA</li>
-                    <li>Ajout des boutons des menus d'action</li>
-                    <li>Améliorations visuelles diverses (dont support du darkmode dans le chat)</li>
-                  </ul>
-                </details>
-              </li>
-
-              <li>
-                <details>
-                  <summary>
-                    <strong>Version 1.1.0</strong> (2025-01-05)
-                  </summary>
-                  <ul>
-                    <li>Ajout de la gestion de compagnons</li>
-                    <li>Ajout d'options d'attaque pour le script COFantasy2</li>
-                    <li>Ajout de l'onglet Script et des options d'attaque</li>
-                  </ul>
-                </details>
-              </li>
-
-              <li>
-                <details>
-                  <summary>
-                    <strong>Version 1.0.0</strong> (2024-12-24)
-                  </summary>
-                  <ul>
-                    <li>Première version de la fiche</li>
-                  </ul>
-                </details>
-              </li>
-
             </ul>
 
           </div>
 
           <div class="sheet-col">
 
-            <h4>Migrations</h4>
+            <button type="action" class="flat-btn img-btn float-right" name="act_migrations" title="Détail des migrations">
+              <span class="img-btn">x</span>
+            </button>
+
             <details>
-              <summary>Détail des mises à jour</summary>
-              <textarea class="large migration" name="attr_migration"></textarea>
+              <summary>
+                <h4>Versions 2025</h4>
+              </summary>
+
+              <ul>
+
+                <li>
+                  <details>
+                    <summary>
+                      <strong>Version 1.12.0</strong> (2025-11-30)
+                    </summary>
+                    <ul>
+                      <li>Ajout de la gestion des Points de Chance</li>
+                    </ul>
+                  </details>
+                </li>
+
+                <li>
+                  <details>
+                    <summary>
+                      <strong>Version 1.11.0</strong> (2025-11-11)
+                    </summary>
+                    <ul>
+                      <li>Ajout de champs pour les scores d'attaque au contact (jet de manoeuvre opposé) et magique</li>
+                    </ul>
+                  </details>
+                </li>
+
+                <li>
+                  <details>
+                    <summary>
+                      <strong>Version 1.10.0</strong> (2025-10-31)
+                    </summary>
+                    <ul>
+                      <li>Ajout d'une section dépliante pour les RD et Résistances aux DM</li>
+                      <li>Ajout d'attributs vitesse pour les déplacements</li>
+                      <li>Ajout de listes de tailles et de type de créatures</li>
+                      <li>Ajout d'une option pour cibler un token lors d'un jet d'attaque</li>
+                      <li>Effacement de l'option tactique choisie après un jet d'attaque</li>
+                      <li>Ajout du nombre d'utilisations par jour/combat aux capacités</li>
+                    </ul>
+                  </details>
+                </li>
+
+                <li>
+                  <details>
+                    <summary>
+                      <strong>Version 1.8.0</strong> (2025-08-31)
+                    </summary>
+                    <ul>
+                      <li>Ajout d'un bouton pour copier la configuration par défaut depuis une fiche nommée PNJBase.</li>
+                      <li>Ajout d'une option dans les coups spéciaux pour n'affecter que la prochaine attaque</li>
+                    </ul>
+                  </details>
+                </li>
+
+                <li>
+                  <details>
+                    <summary>
+                      <strong>Version 1.7.0</strong> (2025-07-26)
+                    </summary>
+                    <ul>
+                      <li>Ajout de la possibilité d'indiquer <em>jet:N</em> dans le champ Spécial d'une attaque pour afficher la description du jet de capacité correspondant dans le chat</li>
+                      <li>Ajout d'une option <em>Token Mod</em> dans l'onglet Script pour permettre la configuration rapide du token</li>
+                    </ul>
+                  </details>
+                </li>
+
+                <li>
+                  <details>
+                    <summary>
+                      <strong>Version 1.6.0</strong> (2025-06-22)
+                    </summary>
+                    <ul>
+                      <li>Ajout d'une gestion de bonus de compétence par caractéristiques</li>
+                      <li>Ajout des options tactiques et de 3 coups spéciaux</li>
+                      <li>Ajout d'une liste de munitions sur l'onglet équipement (script COFantasy2)</li>
+                    </ul>
+                  </details>
+                </li>
+
+                <li>
+                  <details>
+                    <summary>
+                      <strong>Version 1.5.0</strong> (2025-05-08)
+                    </summary>
+                    <ul>
+                      <li>Ajout de la possibilité d'épingler certains jets à la barre d'actions Roll20</li>
+                      <li>Ajout d'une case attaque active/inactive pour le script COFantasy2</li>
+                    </ul>
+                  </details>
+                </li>
+
+                <li>
+                  <details>
+                    <summary>
+                      <strong>Version 1.4.0</strong> (2025-04-08)
+                    </summary>
+                    <ul>
+                      <li>Ajout des tables de coups et d'échecs critiques</li>
+                      <li>Ajustements cosmétiques pour les cases à cocher et boutons radio</li>
+                    </ul>
+                  </details>
+                </li>
+
+                <li>
+                  <details>
+                    <summary>
+                      <strong>Version 1.3.0</strong> (2025-03-09)
+                    </summary>
+                    <ul>
+                      <li>Ajout de 4 listes d'actions sur l'onglet Script</li>
+                      <li>Prise en compte des attaques groupées</li>
+                      <li>Ajout d'un onglet Equipement simplifié</li>
+                    </ul>
+                  </details>
+                </li>
+
+                <li>
+                  <details>
+                    <summary>
+                      <strong>Version 1.2.0</strong> (2025-02-04)
+                    </summary>
+                    <ul>
+                      <li>Modification du champ RD</li>
+                      <li>Ajout du détail de la bourse par type de pièces et total du trésor en PA</li>
+                      <li>Ajout des boutons des menus d'action</li>
+                      <li>Améliorations visuelles diverses (dont support du darkmode dans le chat)</li>
+                    </ul>
+                  </details>
+                </li>
+
+                <li>
+                  <details>
+                    <summary>
+                      <strong>Version 1.1.0</strong> (2025-01-05)
+                    </summary>
+                    <ul>
+                      <li>Ajout de la gestion de compagnons</li>
+                      <li>Ajout d'options d'attaque pour le script COFantasy2</li>
+                      <li>Ajout de l'onglet Script et des options d'attaque</li>
+                    </ul>
+                  </details>
+                </li>
+
+                <li>
+                  <details>
+                    <summary>
+                      <strong>Version 1.0.0</strong> (2024-12-24)
+                    </summary>
+                    <ul>
+                      <li>Première version de la fiche</li>
+                    </ul>
+                  </details>
+                </li>
+
+              </ul>
             </details>
 
           </div>
@@ -14061,12 +14080,15 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
     "effort"
   ].findIndex(b => button === `${b}-btn`);
   const recupAttrs = [
+    "character_name",
+    "famille", "profil", "niveau", "devol",
     "dr", "dr_max", "drecup",
-    "famille", "profil", "niveau", "vol",
     "pv", "pv_max", "temp_dm",
     "pm", "pm_max",
+    "pe", "pe_max",
     "pc",
-    "cfg_highfan",
+    "rangs_voies", "noms_voies", "noms_rangs",
+    "cfg_highfan", "cfg_lowfan",
     "cfg_use_drniv",
     "cfg_use_fullrec",
     "cfg_use_dronly",
@@ -14079,10 +14101,13 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
   getAttrs([ ...recupAttrs, ...owned, ...abilities, ...uses, ...freqs ], async function(values) {
     const lsub = "Jet";
     let rsub = "Récupération";
+    const charName = strval(values.character_name);
     const family = strval(values.famille).toLowerCase();
     const profile = cleanText(strval(values.profil));
+    const dEvol = strval(values.devol);
     const highFan = boolval(values.cfg_highfan);
-    const fullRec = highFan && boolval(values.cfg_use_fullrec);
+    const lowFan = boolval(values.cfg_lowfan);
+    const fullRec = !lowFan && boolval(values.cfg_use_fullrec);
     const rolls = strval(values.last_rolls).split("|").map(r => intval(r));
 
     let dr = intval(values.dr);
@@ -14099,18 +14124,15 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
     }
 
     const pvMax = intval(values.pv_max);
-    const pmMax = intval(values.pm_max);
     let pv = intval(values.pv);
+
+    const pmMax = intval(values.pm_max);
     const pm = intval(values.pm);
-    if (pv === pvMax && !(highFan && pmMax > 0 && pm < pmMax) && typeRecup !== 2) {
-      const chatMsg = rollTemplate({
-        lsub,
-        rsub,
-        text: `@{character_name} est déjà à son maximum de PV !`,
-      });
-      sendChatMsg(chatMsg);
-      return;
-    }
+    const missingPM = () => pmMax > 0 && pm < pmMax;
+
+    const peMax = intval(values.pe_max);
+    const pe = intval(values.pe);
+    const missingPE = () => peMax > 0 && pe < peMax;
 
     let pc = intval(values.pc);
     
@@ -14122,11 +14144,66 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
         return;
       const name = strval(values[abilityInfo(vr).rankName]);
       const uses = numval(values[abilityInfo(vr).rankUseMax]);
-      if ([ "combat", "rencontre" ].includes(cleanText(values[attr])))
-        combat.push({ reset: abilityInfo(vr).rankUse, name, uses });
-      if ([ "jour", "journee", "repos long" ].includes(cleanText(values[attr])))
-        daily.push({ reset: abilityInfo(vr).rankUse, name, uses });
+      const freq = cleanText(values[attr]);
+      if ([ "combat", "rencontre" ].includes(freq))
+        combat.push({ reset: abilityInfo(vr).rankUse, name, uses, freq: "combat" });
+      if ([ "jour", "journee", "repos long" ].includes(freq))
+        daily.push({ reset: abilityInfo(vr).rankUse, name, uses, freq: "jour" });
     });
+
+    /**
+     * @typedef {object} resetAbility
+     * @property {string} reset - name of ability use attribute
+     * @property {string} name - name of ability
+     * @property {number} uses - max number of uses
+     * @property {string} freq - frequency of uses
+     */
+
+    /**
+     * Build display text for reset abilities
+     * @param {resetAbility[]} resetAbilities - list of abilities to reset
+     * @returns {string}
+     */
+    const resetUsesText = (resetAbilities) => {
+      if (!resetAbilities || resetAbilities.length === 0)
+        return "";
+
+      return resetAbilities
+        .map(ability => `${ability.name} : ${ability.uses} fois par ${ability.freq}`)
+        .join("\n");
+    }
+
+    /**
+     * Build setAttrs() object for reset abilities
+     * @param {resetAbility[]} resetAbilities - list of abilities to reset
+     * @returns {object}
+     */
+    const resetUsesUpdate = (resetAbilities) => {
+      if (!resetAbilities || resetAbilities.length === 0)
+        return {};
+
+      return resetAbilities.reduce((result, ability) => {
+        return { ...result, [ability.reset]: 0 };
+      }, {});
+    }
+
+    /**
+     * Perform reset abilities only
+     * @param {resetAbility[]} resetAbilities - list of abilities to reset
+     * @param {string} freq - name of frequency
+     */
+    const resetUses = (resetAbilities, freq = "combat") => {
+      if (!resetAbilities || resetAbilities.length === 0)
+        return;
+
+      let chatMsg = {
+        lsub: "Récupération",
+        rsub: `Capacités par ${freq}`,
+        text: resetUsesText(resetAbilities)
+      };
+      sendChatMsg(buildChatMsg(rollTemplate(chatMsg)));
+      setAttrs(resetUsesUpdate(resetAbilities));
+    }
 
     /**
      * @typedef {number} recoveryTypes
@@ -14135,24 +14212,36 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
      * @enum {recoveryTypes}
      */
     const recoveryTypes = {
-      FAST:   1,
-      FULL:   2,
-      PUSH:   3,
-      ALL:    4,
-      MANA:   5,
-      PCMANA: 6
+      FAST:     1,  // rapide
+      FULL:     2,  // complète
+      PUSH:     3,  // se dépasser
+      ALL:      4,  // auberge (complète high fantasy)
+      MANA:     5,  // mana uniquement, tout ou 1/2
+      PCMANA:   6,  // 1 PC = tous PM (prêtre & druide)
+      EGOFAST:  7,  // ego, rapide
+      EGOFULL:  8   // ego, complète
     }
     /**
      * Perform recovery or push/effort
      * @param {recoveryTypes} type - recovery type
      */
     const recovery = (type) => {
-      if (
-        type !== recoveryTypes.FULL &&
-        type !== recoveryTypes.ALL &&
-        dr > 0
-      )
-        dr -= 1;
+      switch (type) {
+        case recoveryTypes.FAST:
+        case recoveryTypes.PUSH:
+          dr -= 1;
+          break;
+        case recoveryTypes.FULL:
+        case recoveryTypes.ALL:
+          if (pv === pvMax && !missingPM() && !missingPE())
+            dr = Math.min(dr + 1, drMax);
+          break;
+        case recoveryTypes.MANA:
+        case recoveryTypes.PCMANA:
+          if (!lowFan)
+            dr -= 1;
+          break;
+      }
       const dRecup = `${ (type === recoveryTypes.FAST || drMax === 0) ? "d" : "" }${values.drecup}`;
       const level = intval(values.niveau);
       const addLevel = boolval(values.cfg_use_drniv);
@@ -14162,7 +14251,7 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
       if (!drOnly) {
         bLevel = addLevel ? level : Math.ceil(level / 2);
         bRecup = `+ ${bLevel}[Niveau${ addLevel ? "" : "/2" }] `;
-      }  
+      }
       let text = `${dr} DR restants`;
       let restorePM;
       if (pmMax > 0) {
@@ -14177,9 +14266,10 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
         rsub = "Se dépasser";
         recup = `[[${ rolls[0] } + 1d10 + @{vol}[VOL] ]]`;
       } else if (type === recoveryTypes.MANA || type === recoveryTypes.PCMANA) {
-        rsub += " *Rapide*";
+        rsub += lowFan ? " *Complète*" : " *Rapide*";
         restorePM = pmMax - pm;
-        if (!family.includes("mages") && type !== recoveryTypes.PCMANA) {
+        const halfPM = !lowFan && !family.includes("mages") && type !== recoveryTypes.PCMANA;
+        if (halfPM) {
           restorePM = Math.ceil(restorePM / 2);
           text = "@{character_name} récupère la moitié des PM perdus\n" + text;
         } else {
@@ -14188,6 +14278,8 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
             text += `, ${ --pc } PC restants`;
         }
         recup = `[[${restorePM} ]]`;
+        if (lowFan)
+          resetAbilities = combat.concat(daily);
       } else {
         rsub += " *" + ([ "Rapide", "Complète", "", "Auberge" ][type - 1]) + "*";
         const lostPV = pvMax - pv;
@@ -14200,20 +14292,21 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
             recup = `[[${dRecup}[DR] ${bRecup}]]`;
         }
         if (tempDM > 0) {
-          const tempRecovery = type === recoveryTypes.FAST ? 30 : 8 * 60;
+          const tempRecovery = (type === recoveryTypes.FAST) ? 30 : 8 * 60;
           if (tempDM - tempRecovery > 0)
             text += `\n${tempRecovery} DM temporaires éliminés`;
           else
             text += `\nTous les DM temporaires sont éliminés`;
           tempDM = Math.max(0, tempDM - tempRecovery);
         }
-        if (type === recoveryTypes.FAST)
+        if (type === recoveryTypes.FAST || type === recoveryTypes.EGOFAST)
           resetAbilities = combat;
         else
           resetAbilities = combat.concat(daily);
-        if (resetAbilities.length > 0)
-          text += "\n" + resetAbilities.map(a => `${a.name} : ${a.uses} ${ a.uses <= 1 ? "utilisation" : "utilisations" }`).join("\n");
       }
+      if (resetAbilities.length > 0)
+        text += "\n" + resetUsesText(resetAbilities);
+      
       // build chat msg
       let chatMsg = {
         lsub,
@@ -14225,20 +14318,22 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
         if (rolls.length > 1)
           chatMsg = { ...chatMsg, broll: `[[${ rolls[1] } + 1d10 + @{vol}[VOL] ]]` };
       } else {
-        const healdesc = type === recoveryTypes.MANA || recoveryTypes.PCMANA ? "PM" : "PV";
+        const healdesc = (type === recoveryTypes.MANA || type === recoveryTypes.PCMANA)
+        ? "PM"
+        : "PV";
         chatMsg = { ...chatMsg, heal: recup, healdesc };
       }
       const chatCmd = buildChatMsg(rollTemplate(chatMsg));
       startRoll(chatCmd, roll => {
         finishRoll(roll.rollId);
         let updates = new Map([ 
-          [ "dr", dr ],
-          [ "temp_dm", tempDM ]
+          [ "dr", dr ]
         ]);
-        if (type !== recoveryTypes.PUSH) {
+        if (type !== recoveryTypes.PUSH && type !== recoveryTypes.MANA) {
           pv += roll.results.heal.result;
           updates.set("pv", Math.min(pv, pvMax));
           updates.set("PVIG", Math.min(pv, pvMax));
+          updates.set("temp_dm", tempDM);
         }
         if (pmMax > 0) {
           if (
@@ -14251,48 +14346,134 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
           if (type === recoveryTypes.PCMANA)
             updates.set("pc", pc);
         }
-        if (resetAbilities)
-          resetAbilities.forEach(ability => updates.set(ability.reset, 0));
-        setAttrs(Object.fromEntries(updates));
+        
+        setAttrs({
+          ...Object.fromEntries(updates),
+          ...resetUsesUpdate(resetAbilities)
+        });
       });
     }
 
-    let recup = typeRecup + 1;
+    let recup = [
+      recoveryTypes.FAST,
+      recoveryTypes.FULL
+    ][typeRecup];
 
+    // FAST button
     if (typeRecup === 0) {
-      let selected = 1;
       const choices = [ SWData.emojis.heal + " Vigueur" ];
+      const recups = [ recoveryTypes.FAST ];
+      let selected = 1;
       if (highFan) {
-        if (pmMax !== 0 && pm < pmMax) {
-          choices.push(SWData.emojis.atkmag + " Mana",);
-          if (pc > 0 && [ "druide", "pretre" ].includes(profile))
+        if (missingPM()) {
+          choices.push(SWData.emojis.atkmag + " Mana");
+          recups.push(recoveryTypes.MANA)
+          if (pc > 0 && [ "druide", "pretre" ].includes(profile)) {
             choices.push(SWData.emojis.atkmag + " Mana (PC)",);
-          selected = 2;
-        }
-        if (choices.length > 1) {
-          const resp = await askAsync([ "Récupération ?", ...choices ]);
-          selected = resp.selected;
+            recups.push(recoveryTypes.PCMANA);
+          }
         }
       }
-      recup = [
-        recoveryTypes.FAST,
-        recoveryTypes.MANA,
-        recoveryTypes.PCMANA
-      ][selected - 1];
+      if (missingPE()) {
+        choices.push(SWData.emojis.atkmag + " Ego");
+        recups.push(recoveryTypes.EGOFAST);
+      }
+      if (combat?.length > 0) {
+        choices.push(SWData.emojis.actions + " Capacités (combat)");
+        recups.push(0);
+      }
+      if (choices.length > 1) {
+        const resp = await askAsync([ "Récupération ?", ...choices ]);
+        selected = resp.selected;
+      }
+      recup = recups[selected - 1];
     }
 
+    // FULL button
     if (typeRecup === 1) {
-      if (highFan) {
-        const { selected } = await askAsync([
-          "Récupération ?",
-          SWData.emojis.recovery.camp + " Complète",
-          SWData.emojis.recovery.full + " Auberge",
-        ]);
-        recup = selected === 2 ? recoveryTypes.ALL : recoveryTypes.FULL;
+      const choices = [];
+      const recups = [];
+
+      if (lowFan) {
+        if (pv < pvMax) {
+          choices.push(SWData.emojis.heal + " Vigueur");
+          recup = recoveryTypes.FULL;
+          recups.push(recup);
+        }
+        if (missingPM()) {
+          choices.push(SWData.emojis.atkmag + " Mana");
+          recup = recoveryTypes.MANA;
+          recups.push(recup);
+        }
+        if (missingPE()) {
+          choices.push(SWData.emojis.atkmag + " Ego");
+          recup = recoveryTypes.EGOFULL;
+          recups.push(recup);
+        }
       }
+
+      if (fullRec) {
+        choices.push(SWData.emojis.recovery.camp + " Complète");
+        choices.push(SWData.emojis.recovery.full + " Auberge");
+        recups.push(recoveryTypes.FULL);
+        recups.push(recoveryTypes.ALL);
+        if (missingPE()) {
+          choices.push(SWData.emojis.atkmag + " Ego");
+          recups.push(recoveryTypes.EGOFULL);
+        }
+      }
+      
+      if (recups.length === 0) {
+        if (pv < pvMax) {
+          choices.push(SWData.emojis.heal + " Vigueur");
+          recup = recoveryTypes.FULL;
+          recups.push(recup);
+        }
+        if (missingPE()) {
+          choices.push(SWData.emojis.atkmag + " Ego");
+          recup = recoveryTypes.EGOFULL;
+          recups.push(recup);
+        }
+      }
+
+      if (daily?.length > 0 || combat?.length > 0) {
+        choices.push(SWData.emojis.actions + " Capacités (jour)");
+        recups.push(0);
+      }
+      
+      if (choices.length > 1) {
+        const { selected } = await askAsync([ "Récupération ?", ...choices ]);
+        recup = recups[selected - 1];
+      }
+    }
+
+    const withPV = hasAbility({
+      name: "controle du metabolisme",
+      inPath: "controle corporel" 
+    }, values);
+
+    switch (recup) {
+      case 0:
+        if (typeRecup === 0)
+          resetUses(combat, "combat");
+        else
+          resetUses(combat.concat(daily), "jour");
+        break;
+      case recoveryTypes.EGOFAST:
+        sendChatCmd(`%{${charName}|egoreco_fast-btn}`);
+        if (pv < pvMax && withPV)
+          recovery(recoveryTypes.FAST);
+        break;
+      case recoveryTypes.EGOFULL:
+        sendChatCmd(`%{${charName}|egoreco_full-btn}`);
+        if (pv < pvMax && withPV)
+          recovery(recoveryTypes.FULL);
+        break;
+      default:
+        recovery(recup);
+        break;
     }
     
-    recovery(recup);
   });
 });
 
@@ -14303,8 +14484,8 @@ on(clickedEvent([ "egoreco-btn", "egoreco_fast-btn", "egoreco_full-btn"]), funct
   const egorecoBtn = strval(eventInfo.triggerName).split(":")[1];
   const typeRecup = [ "fast", "full" ].findIndex(b => egorecoBtn === `egoreco_${b}-btn`);
   getAttrs([ "dr", "dr_max", "devol", "pe", "pe_max" ], function(values) {
-    const lsub = "Jet";
-    let rsub = "Récupération PE";
+    const lsub = "Récupération";
+    let rsub = "Points d'Ego";
     
     let dr = intval(values.dr);
     let drMax = intval(values.dr_max);
@@ -14344,7 +14525,7 @@ on(clickedEvent([ "egoreco-btn", "egoreco_fast-btn", "egoreco_full-btn"]), funct
       ? devol
       : (devol === "2d6" ? "12" : devol.split("d")[1]);
       let text = `${dr} DR restants`;    
-      rsub += " *" + (typeRecup === 1 ? "Rapide" : "Complète") + "*";
+      rsub = "PE *" + (typeRecup === 1 ? "Rapide" : "Complète") + "*";
       const recup = `[[${peRecup}]] PE récupérés`;
       
       let chatMsg = {
@@ -14357,10 +14538,10 @@ on(clickedEvent([ "egoreco-btn", "egoreco_fast-btn", "egoreco_full-btn"]), funct
 
       startRoll(chatCmd, roll => {
         finishRoll(roll.rollId);
-        let updates = new Map([ [ "dr", dr ] ]);
+        const updates = { dr };
         pe += roll.results.roll.result;
-        updates.set("pe", Math.min(pe, peMax));
-        setAttrs(Object.fromEntries(updates));
+        updates.pe = Math.min(pe, peMax);
+        setAttrs(updates);
       });
     }
     
@@ -19484,6 +19665,27 @@ on("clicked:helpdoc-btn", function() {
   getAttrs([ "sheet_type" ], function (values) {
     const page = `https://stephaned68.github.io/COF2e/${ strval(values.sheet_type).toLowerCase() }-main`;
     sendChatMsg(`[Documentation](${page})`, { template: "", whisper: "gm" });
+  })
+});
+
+/**
+ * Display migrations
+ */
+on("clicked:migrations", function() {
+  getAttrs([ "migration" ], function (values) {
+    let migrations = strval(values.migration).split("\n");
+    if (migrations.length > 1) {
+      migrations = migrations
+        .filter(mg => mg)
+        .map((mg, ix) => `${ ix + 1 }=${ mg.replace("=", "&#61;").replace(": ", ":\n") }`);
+      sendChatMsg([
+        "title=Migrations",
+        ...migrations
+      ], {
+        template: "custom",
+        whisper: "gm"
+      });
+    }
   })
 });
 
