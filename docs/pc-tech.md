@@ -140,7 +140,17 @@ Les attributs ci-dessous sont rechargés à chaque fois que la fiche de personna
 - `rangs_voies` : liste des rangs dans les voies, séparés par des `,`
 - `noms_rangs` : liste des rangs dans les voies, sous forme de JSON sérialisé 
 
-`[ { id: "v#r#", rank: "nom de la capacité", path: "nom de la voie" }, ... ]`
+```json
+[ 
+  { 
+    id: "v#r#",
+    rank: "nom de la capacité",
+    path: "nom de la voie" 
+  }, 
+  { ... }
+]
+```
+
 - `buffs_voies` : liste des valeurs de buffs selon le rang atteint dans les voies
 
 `{ voieN_buff_xxx: valeur, }`
