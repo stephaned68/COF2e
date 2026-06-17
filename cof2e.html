@@ -10787,126 +10787,151 @@ const SWData = {
     {
       name: [ "ame forgee", "ame-forgee" ],
       abilities: [ "metallique", "choc electrique", "infiltration", "rayon ardent", "machine de guerre" ],
+      skills: "athletisme,sciences",
       companion: true
     },
     {
       name: [ "cambion" ],
       abilities: [ "ami des ombres", "enfant des tenebres", "resistances", "la belle et la bete", "forge par les tenebres" ],
+      skills: "discretion,tromperie",
       companion: true
     },
     {
       name: [ "demi elfe", "demi-elfe", "demie elfe", "demie-elfe" ],
       abilities: [ "heritages", "nomade", "capacite d'apprentissage", "sang feerique", "empathie fantastique" ],
+      skills: "divertissement,empathie",
       companion: true
     },
     {
       name: [ "demi ogre", "demi-ogre", "demie ogre", "demie-ogre", "demie ogresse", "demie-ogresse" ],
       abilities: [ "reaction violente", "violence ciblee", "vorace", "toujours plus lourd", "monumental" ],
+      skills: "athletisme,intimidation",
       companion: true
     },
     {
       name: [ "demi orc", "demi-orc", "demie orque", "demie-orque" ],
       abilities: [ "impressionnant", "talent pour la violence", "critique brutal", "attaque sanglante", "colosse" ],
+      skills: "athletisme,intimidation",
       companion: false
     },
     {
       name: [ "drakonide", "drakeide", "sangdragon", "sang-dragon" ],
       abilities: [ "sang dragon", "souffle", "ecailles robustes", "fureur drakonide / ailes puissantes", "heritage draconique" ],
+      skills: "connaissance,vigilance",
       companion: true
     },
     {
       name: [ "elfe haut", "haut elfe", "haut-elfe" ],
       abilities: [ "lumiere interieure", "force d'ame", "talent pour la magie", "immortel", "superiorite elfique" ],
+      skills: "connaissance,divertissement",
       companion: false
     },
     {
       name: [ "elfe pale" ],
       abilities: [ "natif de la foret sombre", "resistance au poison", "fleau des morts", "provoquer la chance", "superiorite elfique" ],
+      skills: "discretion,survie",
       companion: true
     },
     {
       name: [ "elfe des profondeurs", "elfe noir", "drow" ],
       abilities: [ "enfant des tenebres", "lames et sorcellerie", "combat a deux armes", "maitrise des arbaletes", "superiorite elfique" ],
+      skills: "discretion,escalade",
       companion: true
     },
     {
       name: [ "elfe sylvain", "elfe sylvaine", "elfe sylvestre", "elfe des bois" ],
       abilities: [ "lumiere des etoiles", "enfant de la foret", "archer emerite", "fleche sanglante", "superiorite elfique" ],
+      skills: "discretion,survie",
       companion: false
     },
     {
       name: [ "farfadet" ],
       abilities: [ "ne d'un chou", "langage des animaux", "invisibilite", "monture feerique", "seigneur feerique" ],
+      skills: "acrobatie,tromperie",
       companion: true
     },
     {
       name: [ "fee" ],
       abilities: [ "nee d'une fleur", "pirouette", "poudre de fee", "fee reveree", "lady fee" ],
+      skills: "acrobatie,tromperie",
       companion: true
     },
     {
       name: [ "felis", "felys" ],
       abilities: [ "ame feline", "armes naturelles", "vif et discret", "metamorphose feline", "nature feline" ],
+      skills: "acrobatie,vigilance",
       companion: true
     },
     {
       name: [ "frouin" ],
       abilities: [ "avarie", "minus", "parano", "attaque simultanee", "champion de la survie" ],
+      skills: "discretion,empathie",
       companion: true
     },
     {
       name: [ "gnome" ],
       abilities: [ "don etrange", "petit pote", "insignifiant", "merveille technologique", "bonne nature" ],
+      skills: "occultisme,sciences",
       companion: false
     },
     {
       name: [ "gobelin", "gobeline" ],
       abilities: [ "vivacite gobeline", "attaque groupee", "kafouiller", "worg", "vif et alerte" ],
+      skills: "acrobatie,renseignement",
       companion: true
     },
     {
       name: [ "halfelin", "halfeline" ],
       abilities: [ "petite taille", "resistance legendaire", "bon pour le moral", "petit veinard", "vif et bien nourri" ],
+      skills: "discretion,effraction",
       companion: false
     },
     {
       name: [ "humain", "humaine" ],
       abilities: [ "diversite", "instinct de survie", "touche-a-tout", "loup parmi les loups", "polyvalence" ],
+      skills: "artisanat",
       companion: false
     },
     {
       name: [ "kobold" ],
       abilities: [ "ruse kobold", "chetif", "piege improvise", "attaque vicieuse", "ruse instinctive" ],
+      skills: "discretion,tromperie",
       companion: true
     },
     {
       name: [ "minotaure" ],
       abilities: [ "coup de corne", "charge puissante", "frenesie", "encorner", "colosse" ],
+      skills: "intimidation,survie",
       companion: true
     },
     {
       name: [ "nain", "naine" ],
       abilities: [ "habitant des tunnels", "haches et marteaux", "resistance a la magie", "fils du roc", "tenacite" ],
+      skills: "artisanat,vigilance",
       companion: false
     },
     {
       name: [ "nephilim" ],
       abilities: [ "photosensible", "enfant de la lumiere", "resistances", "la plume et l'acier", "forge par la lumiere" ],
+      skills: "connaissance,religion",
       companion: true
     },
     {
       name: [ "ophidien", "ophidienne" ],
       abilities: [ "sang des anciens", "regard hypnotique", "crachat", "mutation serpentine", "forme de serpent" ],
+      skills: "occultisme,tromperie",
       companion: true
     },
     {
       name: [ "satyre", "faune" ],
       abilities: [ "bonne nature", "encorner et ruer", "compagnon de voyage", "magie sauvage", "ascendance naturelle" ],
+      skills: "divertissement,survie",
       companion: true
     },
     {
       name: [ "wolfer" ],
       abilities: [ "chasseur ne", "griffes et crocs", "loi de la meute", "forme de loup", "esprit du loup" ],
+      skills: "survie,vigilance",
       companion: true
     },
   ],
@@ -12833,11 +12858,11 @@ on("change:famille", function(eventInfo) {
 });
 
 /**
- * On change of profile, check skill proficiencies
+ * On change of profile or heritage, check skill proficiencies
  */
-on("change:profil", function(eventInfo) {
+on("change:profil change:peuple", function(eventInfo) {
   getAttrs([ 
-    "profil", "famille", "niveau",
+    "profil", "famille", "niveau", "peuple",
     "cfg_atk_diff", "use_skills"
   ], function(values) {
     const useSkills = boolval(values.use_skills);
@@ -12851,7 +12876,12 @@ on("change:profil", function(eventInfo) {
     const profile = getProfileData(strval(values.profil));
     if (!profile.family)
       return;
-
+    
+    const people = cleanText(strval(values.peuple));
+    let heritage;
+    if (people !== "")
+      heritage = SWData.HERITAGE.find(p => p.name.includes(people));
+    
     const updates = new Map();
 
     if (boolval(values.cfg_atk_diff) && intval(values.niveau) < 2) {
@@ -12860,7 +12890,19 @@ on("change:profil", function(eventInfo) {
       });
     }
 
+    const duplicates = [];
     const skillList = profile.skills.split(",");
+    if (heritage) {
+      heritage.skills.split(",").forEach(skill => {
+        if (skillList.includes(skill))
+          duplicates.push(`2 points de compétence à investir en **${ getSkillName(skill) }**`);
+        else
+          skillList.push(skill);
+      });
+    }
+    if (duplicates.length > 0)
+      sendChatMsg(duplicates.join(", "), { template: "", whisper: "gm" });
+
     SWData.PC.SKILLS.forEach(skill => {
       const proficient = skillList.includes(skill.name) ? 1 : 0;
       updates.set(skill.name + "_prof", proficient);
@@ -12869,7 +12911,7 @@ on("change:profil", function(eventInfo) {
     if (profile.value === "Psionique") {
       let moreSkills = profile.moreSkills[family];
       if (moreSkills) {
-        moreSkills = moreSkills.split(",").map(ms => "**" + capitalize(ms) + "**").join(", ");
+        moreSkills = moreSkills.split(",").map(ms => "**" + getSkillName(ms) + "**").join(", ");
         sendChatMsg(`Choisir deux autres compétences maîtrisées parmi ${moreSkills}`, { template: "", whisper: "gm" });
       }
     }
@@ -17487,10 +17529,12 @@ on("clicked:repeating_rolls:roll-btn", function() {
 
 /**
  * Return skill name
- * @param {{ label: string, name: string, ability: string }} skill - Skill object
+ * @param {string | { label: string, name: string, ability: string }} skill - Skill object or name
  * @returns {string}
  */
 function getSkillName(skill) {
+  if (typeof skill === "string")
+    skill = SWData.PC.SKILLS.find(s => s.name = skill);
   return (skill.label !== "") ? skill.label : capitalize(skill.name);
 }
 
@@ -19673,17 +19717,24 @@ on("clicked:helpdoc-btn", function() {
  */
 on("clicked:migrations", function() {
   getAttrs([ "migration" ], function (values) {
-    let migrations = strval(values.migration).split("\n");
-    if (migrations.length > 1) {
-      migrations = migrations
-        .filter(mg => mg)
-        .map((mg, ix) => `${ ix + 1 }=${ mg.replace("=", "&#61;").replace(": ", ":\n") }`);
-      sendChatMsg([
-        "title=Migrations",
-        ...migrations
-      ], {
-        template: "custom",
-        whisper: "gm"
+    let data = strval(values.migration).split("\n");
+    if (data.length > 1) {
+      data = data
+        .filter(mg => strval(mg) !== "")
+        .map((mg) => {
+          const [ datetime, logmsg ] = mg.replace(": ","~").split("~");
+          return { datetime, logmsg };
+        });
+      const byDate = Object.groupBy(data, ({ datetime }) => datetime);
+      Object.keys(byDate).forEach((date) => {
+        const migrations = byDate[date].map((mg, ix) => `${ ix + 1 }=${ mg.logmsg }`);
+        sendChatMsg([
+          "title=Migrations " + date,
+          ...migrations
+        ], {
+          template: "custom",
+          whisper: "gm"
+        });
       });
     }
   })
