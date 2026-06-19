@@ -1,6 +1,6 @@
 <div class="cofmain">
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.16.02">
+  <input type="hidden" name="attr_verfdp" value="1.16.03">
   <!-- Version courante fiche -->
   <input type="hidden" name="attr_version" value="1.16.0">
   <!-- Mode debug -->
@@ -7027,7 +7027,7 @@
                 </div>
                 <div class="d-flex d-flex-middle bordered">
                   <span class="align-self-center">Att*&nbsp;:&nbsp;</span>
-                  <input type="checkbox" name="attr_arme-multi" title="@{arme-multi} Attaques multiples" value="1">&nbsp;
+                  <input type="number" name="attr_arme-multi" title="@{arme-multi} Attaques multiples" value="1">&nbsp;
                   <select class="select-md" name="attr_arme-roll" title="@{arme-roll} Type de jet">
                     <option value="1d20" selected>Normal</option>
                     <option value="2d20kh1">Dé bonus</option>
@@ -20804,7 +20804,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     const atkTir = intval(values.atktir);
     const atkMag = intval(values.atkmag);
     const name = capitalize(strval(values[section + "nom"], "Attaque"));
-    const useMulti = intval(values[section + "multi"]);
+    let multiAttacks = Math.max(1, intval(values[section + "multi"], 1));
     let roll = strval(values[section + "roll"]);
     const atk = strval(values[section + "atk"]);
     const portee = strval(values[section + "portee"]);
@@ -20922,16 +20922,6 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
 
       if (specNext || mookNPC)
         resetValues.set("pnj_spec", 0);
-    }
-
-    let multiAttacks = 1;
-    if (useMulti === 1) {
-      const result = name.match(/\(([0-9]*)[ ]*attaques\)/);
-      if (result) {
-        [ multiAttacks ] = result.slice(1);
-      }
-      if (intval(multiAttacks) <= 0)
-        multiAttacks = 1;
     }
 
     let atkBonus = strval(atk, "0");
@@ -21435,6 +21425,10 @@ function importNPCAttack(sbLine, npcAttrs) {
     [ name, bonus ] = lmatch.slice(1);
     bonus = intval(bonus);
   }
+  let multi = "";
+  const submatch = name.match(/(.+?)\(([0-9]+)[ ]+attaques\)/);
+  if (submatch)
+    [ name, multi  ] = submatch.slice(1);
 
   let dm = "";
   let dmdiv = "";
@@ -21452,6 +21446,10 @@ function importNPCAttack(sbLine, npcAttrs) {
 
   const rowId = rptAttr("npcarmes", "arme-", generateRowID());
   npcAttrs.set(rowId + "nom", name);
+  if (multi === "")
+    npcAttrs.set(rowId + "multi", 1);
+  else
+    npcAttrs.set(rowId + "multi", intval(multi));
   npcAttrs.set(rowId + "roll", "1d20");
   npcAttrs.set(rowId + "atk", bonus);
   npcAttrs.set(rowId + "crit", "20");
@@ -21643,14 +21641,16 @@ function statBlockFromDRS(statblock) {
         if (submatch)
           [ name, range ] = submatch.slice(1);
         let multi = "";
-        submatch = name.match(/(.+?)\(([0-9]+[ ]+attaques)\)/);
+        submatch = name.match(/(.+?)\(([0-9]+)[ ]+attaques\)/);
         if (submatch)
-          [ name, multi ] = submatch.slice(1);
+          [ name, multi  ] = submatch.slice(1);
 
         const rowId = rptAttr("npcarmes", "arme-", generateRowID());
         npcAttrs.set(rowId + "nom", name);
-        if (multi !== "")
+        if (multi === "")
           npcAttrs.set(rowId + "multi", 1);
+        else
+          npcAttrs.set(rowId + "multi", intval(multi));
         npcAttrs.set(rowId + "roll", "1d20");
         npcAttrs.set(rowId + "atk", intval(bonus));
         npcAttrs.set(rowId + "crit", "20");
@@ -22221,7 +22221,7 @@ function migrateSheetToV1_15(sheetType, curVer = { major: 1, minor: 14, patch: 0
  * Migrate to Version 1.16.0
  * Change selonRang & buff ability props syntax
  */
-function migrateSheetToV1_16(sheetType, curVer = { major: 1, minor: 2, patch: 0 }) {
+function migrateSheetToV1_16(sheetType, curVer = { major: 1, minor: 15, patch: 0 }) {
   if (!isPC(sheetType))
     return;
 
@@ -22268,6 +22268,22 @@ function migrateSheetToV1_16(sheetType, curVer = { major: 1, minor: 2, patch: 0 
   });
 }
 
+async function migrateSheetToV1_16_03(sheetType, curVer = { major: 1, minor: 16, patch: 2 }) {
+  if (!isNPC(sheetType))
+    return;
+
+  const ids = await getSectionIDsAsync("npcarmes");
+  getAttrs( [ ...ids.map(id => rptAttr("npcarmes", "arme-multi", id)) ], function(values) {
+    const updates = new Map();
+    ids.forEach(id => {
+      const rptMulti = rptAttr("npcarmes", "arme-multi", id);
+      const multi = intval(values[rptMulti]);
+      updates.set(rptMulti, multi + 1);
+    });
+    setAttrs(Object.fromEntries(updates));
+  });
+}
+
 /**
  * Apply sheet migrations
  * @param {string} sheetType - character sheet type
@@ -22293,6 +22309,9 @@ function migrateSheet(sheetType, curVer) {
 
   if (curVer.major === 1 && curVer.minor < 16)
     migrateSheetToV1_16(sheetType, curVer);
+  
+  if (curVer.major === 1 && curVer.minor === 16 && curVer.patch < 3)
+    migrateSheetToV1_16_03(sheetType, curVer);
 
   return;
 }

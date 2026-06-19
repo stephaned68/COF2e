@@ -10,6 +10,15 @@ v1.16.0 [Screenshot](cof2e.png)
 
 ## Notes de version
 
+### Version _1.17.0_ (2026-07)
+
+- Fiche de PJ:
+  - Ajout des Points d'Ego et des capacités combat/jour aux boutons de récupération
+  - Ajout des maîtrises de compétences liées aux peuples (compagnon compris)
+
+- Fiche de PNJ:
+  - Modification de la case à cocher _Attaques multiples_ par un nombre d'attaques (1 par défaut)
+
 ### Version _1.16.0_ (2026-06-08)
 
 - Fiche de PJ:
