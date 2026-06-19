@@ -22296,8 +22296,13 @@ async function migrateSheetToV1_17(sheetType, curVer = { major: 1, minor: 16, pa
     ...ids.map(id => rptAttr("npcarmes", "arme-nom", id)),
     ...ids.map(id => rptAttr("npcarmes", "arme-multi", id)) 
   ], function(values) {
+  getAttrs([
+    ...ids.map(id => rptAttr("npcarmes", "arme-nom", id)),
+    ...ids.map(id => rptAttr("npcarmes", "arme-multi", id)) 
+  ], function(values) {
     const updates = new Map();
     ids.forEach(id => {
+      const name = strval(values[rptAttr("npcarmes", "arme-nom", id)]);
       const name = strval(values[rptAttr("npcarmes", "arme-nom", id)]);
       const rptMulti = rptAttr("npcarmes", "arme-multi", id);
       let multi = intval(values[rptMulti]);
