@@ -22287,6 +22287,10 @@ function migrateSheetToV1_16(sheetType, curVer = { major: 1, minor: 15, patch: 0
   });
 }
 
+/**
+ * Migrate to Version 1.17.0
+ * Change NPC multi-attack attribute
+ */
 async function migrateSheetToV1_17(sheetType, curVer = { major: 1, minor: 16, patch: 2 }) {
   if (!isNPC(sheetType))
     return;
@@ -22296,13 +22300,8 @@ async function migrateSheetToV1_17(sheetType, curVer = { major: 1, minor: 16, pa
     ...ids.map(id => rptAttr("npcarmes", "arme-nom", id)),
     ...ids.map(id => rptAttr("npcarmes", "arme-multi", id)) 
   ], function(values) {
-  getAttrs([
-    ...ids.map(id => rptAttr("npcarmes", "arme-nom", id)),
-    ...ids.map(id => rptAttr("npcarmes", "arme-multi", id)) 
-  ], function(values) {
     const updates = new Map();
     ids.forEach(id => {
-      const name = strval(values[rptAttr("npcarmes", "arme-nom", id)]);
       const name = strval(values[rptAttr("npcarmes", "arme-nom", id)]);
       const rptMulti = rptAttr("npcarmes", "arme-multi", id);
       let multi = intval(values[rptMulti]);
