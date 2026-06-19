@@ -8020,6 +8020,17 @@
               <li>
                 <details>
                   <summary>
+                    <strong>Version 1.17.0</strong> (2026-07)
+                  </summary>
+                  <ul>
+                    <li>Remplacement case multi-attaques par nombre d'attaque (1 par défaut)</li>
+                  </ul>
+                </details>
+              </li>
+
+              <li>
+                <details>
+                  <summary>
                     <strong>Version 1.16.0</strong> (2026-06-08)
                   </summary>
                   <ul>
@@ -21425,8 +21436,14 @@ function importNPCAttack(sbLine, npcAttrs) {
     [ name, bonus ] = lmatch.slice(1);
     bonus = intval(bonus);
   }
+
+  let submatch;
+  let range = "";
+  submatch = name.match(/(.+?)\(([0-9]+[ ]+m)\)/);
+  if (submatch)
+    [ name, range ] = submatch.slice(1);
   let multi = "";
-  const submatch = name.match(/(.+?)\(([0-9]+)[ ]+attaques\)/);
+  submatch = name.match(/(.+?)\(([0-9]+)[ ]+attaques\)/);
   if (submatch)
     [ name, multi  ] = submatch.slice(1);
 
@@ -21449,13 +21466,15 @@ function importNPCAttack(sbLine, npcAttrs) {
   if (multi === "")
     npcAttrs.set(rowId + "multi", 1);
   else
-    npcAttrs.set(rowId + "multi", intval(multi));
+    npcAttrs.set(rowId + "multi", intval(multi, 1));
   npcAttrs.set(rowId + "roll", "1d20");
   npcAttrs.set(rowId + "atk", bonus);
   npcAttrs.set(rowId + "crit", "20");
   npcAttrs.set(rowId + "dm", dm);
   npcAttrs.set(rowId + "dmtype", "tranchants");
   npcAttrs.set(rowId + "dmdiv", intval(dmdiv));
+  if (range !== "")
+    npcAttrs.set(rowId + "portee", rangeWithUnits(range));
   npcAttrs.set(rowId + "special", special);
   npcAttrs.set(rowId + "atktype", "main");
 
@@ -21650,7 +21669,7 @@ function statBlockFromDRS(statblock) {
         if (multi === "")
           npcAttrs.set(rowId + "multi", 1);
         else
-          npcAttrs.set(rowId + "multi", intval(multi));
+          npcAttrs.set(rowId + "multi", intval(multi, 1));
         npcAttrs.set(rowId + "roll", "1d20");
         npcAttrs.set(rowId + "atk", intval(bonus));
         npcAttrs.set(rowId + "crit", "20");
@@ -22268,17 +22287,28 @@ function migrateSheetToV1_16(sheetType, curVer = { major: 1, minor: 15, patch: 0
   });
 }
 
-async function migrateSheetToV1_16_03(sheetType, curVer = { major: 1, minor: 16, patch: 2 }) {
+async function migrateSheetToV1_17(sheetType, curVer = { major: 1, minor: 16, patch: 2 }) {
   if (!isNPC(sheetType))
     return;
 
   const ids = await getSectionIDsAsync("npcarmes");
-  getAttrs( [ ...ids.map(id => rptAttr("npcarmes", "arme-multi", id)) ], function(values) {
+  getAttrs([
+    ...ids.map(id => rptAttr("npcarmes", "arme-nom", id)),
+    ...ids.map(id => rptAttr("npcarmes", "arme-multi", id)) 
+  ], function(values) {
     const updates = new Map();
     ids.forEach(id => {
+      const name = strval(values[rptAttr("npcarmes", "arme-nom", id)]);
       const rptMulti = rptAttr("npcarmes", "arme-multi", id);
-      const multi = intval(values[rptMulti]);
-      updates.set(rptMulti, multi + 1);
+      let multi = intval(values[rptMulti]);
+      if (multi === 0) {
+        multi = 1;
+      } else {
+        const matched = name.match(/\(([0-9]+)[ ]+attaques\)/);
+        if (matched)
+          multi = intval(matched[1], 1);
+      }
+      updates.set(rptMulti, multi);
     });
     setAttrs(Object.fromEntries(updates));
   });
@@ -22311,7 +22341,7 @@ function migrateSheet(sheetType, curVer) {
     migrateSheetToV1_16(sheetType, curVer);
   
   if (curVer.major === 1 && curVer.minor === 16 && curVer.patch < 3)
-    migrateSheetToV1_16_03(sheetType, curVer);
+    migrateSheetToV1_17(sheetType, curVer);
 
   return;
 }
