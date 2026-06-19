@@ -21145,7 +21145,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
 
       // process multi-attacks
       for (let atk = 1; atk <= multiAttacks; atk++) {
-        if (useMulti === 1)
+        if (multiAttacks > 1)
           chatAtk = { ...chatAtk, lsub: `${atk}${ atk > 1 ? "ème" : "ère" } attaque` };
         const chatMsg = rollTemplate(chatAtk);
         sendChatMsg(chatMsg, rollOptions);
