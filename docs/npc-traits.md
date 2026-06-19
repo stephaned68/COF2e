@@ -36,7 +36,7 @@ Cette zone de texte libre permet de préciser des informations générales sur l
 
 Cette liste contient les attaques dont le PNJ dispose en combat. Pour chaque attaque, vous indiquez :
 - Son nom,
-- S'il faut effectuer des attaques multiples,
+- Le nombre d'attaques en cas d'attaques multiples (1 par défaut),
 - Si le jet d'attaque est normal, bénéficie d'un _dé bonus_ ou subit un _dé malus_,
 - Le score d'attaque ajouté au d20,
 - Le seuil de réussite critique de l'attaque,
@@ -75,7 +75,7 @@ Des paramètres optionnels peuvent être ajoutés :
 
 Un clic sur le bouton d20 permet de lancer le jet d'attaque et de DM dans le chat en tenant compte des divers paramètres.
 
-Si la case d'attaques multiples est cochée et que le nom de l'attaque contient l'expression `(n attaques)`, le nombre n de jets d'attaque est effectué. **Attention** : cette fonction n'est pas compatible avec l'option de configuration _Attaques ciblées_, le popup de sélection du token cible des attaques ne s'affiche pas en cas d'attaques multiples.
+**Attention** : la fonctionnalité _Attaques multiples_ n'est pas compatible avec l'option de configuration _Attaques ciblées_, le popup de sélection du token cible des attaques ne s'affiche pas en cas d'attaques multiples.
 
 Le texte d'effet spécial est traité par la fiche pour substituer les jets en ligne comme décrit pour la description des [capacités des PJs]({{ site.baseurl }}/pc-abilities).
 
