@@ -22307,6 +22307,8 @@ async function migrateSheetToV1_17(sheetType, curVer = { major: 1, minor: 16, pa
         const matched = name.match(/\(([0-9]+)[ ]+attaques\)/);
         if (matched)
           multi = intval(matched[1], 1);
+        else
+          multi = 2;
       }
       updates.set(rptMulti, multi);
     });
