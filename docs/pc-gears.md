@@ -86,7 +86,7 @@ Si vous cochez la case `A une attaque`, une ligne d'attaque est automatiquement 
 
 La ligne d'attaque est créée en fonction des propriétés d'équipement que vous avez indiqué pour l'arme. De plus, la fiche vérifie les armes maîtrisées par le profil du personnage, et ajoute le modificateur d'attaque `deMalus` si le profil ne sait pas manier ce type d'arme, et murmure un message d'avertissement dans le chat Roll20.
 
-Si l'arme possède la propriété `lancer`, la fiche crée deux lignes d'attaque : une pour le maniement au contact et une pour le lancer, sauf si le script **COFantasy2** est installé, auquel cas le modificateur `armeDeContact` est ajouté.
+Si l'arme possède la propriété `lancer`, la fiche crée deux lignes d'attaque : une pour le maniement au contact et une pour le lancer, sauf si le script **COFantasy2** est installé, auquel cas le modificateur `armeDeContact` est ajouté à la ligne d'attaque.
 
 # Ressources
 
