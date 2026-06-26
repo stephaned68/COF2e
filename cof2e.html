@@ -1,6 +1,6 @@
 <div class="cofmain">
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.16.03">
+  <input type="hidden" name="attr_verfdp" value="1.16.04">
   <!-- Version courante fiche -->
   <input type="hidden" name="attr_version" value="1.16.0">
   <!-- Mode debug -->
@@ -6338,6 +6338,8 @@
                   </summary>
                   <ul>
                     <li>Amélioration des boutons Récupérations (PE, capacités)</li>
+                    <li>Ajout propriétés <em>opts</em> et <em>options</em> aux équipements de type arme</li>
+                    <li>Amélioration des armes maîtrisées (+X dans le nom et interactions avec COFantasy2)</li>
                   </ul>
                 </details>
               </li>
@@ -16238,6 +16240,11 @@ function weaponTrained(profile, weapon, extraTraining) {
   : "Choisir d'abord un profil pour déterminer correctement les armes maîtrisées";
   let trainedWith = getProfileData(profile).weapons || [];
   weapon = cleanText(weapon);
+  const matched = weapon.match(/([ ]+[0-9]+)/);
+  if (matched) {
+    const [ magic ] = matched.slice(1);
+    weapon = weapon.replace(magic, "").trim();
+  }
   let moreTrained = [];
   if (extraTraining !== "") {
     moreTrained = extraTraining.split("\n")
@@ -16248,9 +16255,9 @@ function weaponTrained(profile, weapon, extraTraining) {
     trainedWith = [ ...trainedWith, ...moreTrained ];
   const tags = SWData.GEARS
     .find(gear => weapon === cleanText(gear.name) || gear.altname.split(",").includes(weapon))
-    .tags;
+    ?.tags;
   let trained = knownProfile ? false : null;
-  if (trainedWith.length > 0)
+  if (tags && trainedWith.length > 0)
     trained = tags.some(tag => trainedWith.includes(tag));
   return {
     trained,
@@ -18362,12 +18369,19 @@ on("clicked:helpres-btn", function() {
  * @returns {string[]}
  */
 function getGearProps(name) {
+  name = cleanText(name, false);
   const found = SWData.GEARS.find(gear => {
-    if (cleanText(gear.name, false) === cleanText(name, false))
+    const gearName = cleanText(gear.name, false);
+    if (gearName === name)
       return gear;
-    if (strval(gear.altname) !== "") {
-      if (gear.altname.split(",").includes(cleanText(name)))
+    if (strval(gear.altname) !== "")
+      if (gear.altname.split(",").includes(name))
         return gear;
+    const matched = name.match(`${gearName}[ ]+\\+([0-9])`);
+    if (matched) {
+      const [ magic ] = matched.slice(1);
+      gear.props.push("magie: " + magic);
+      return gear;
     }
   });
   return found ? found.props : [];
@@ -18653,7 +18667,7 @@ on("change:repeating_equipement:equip-nom", function() {
   const section = "equipement";
   const gearAttrs = rptAttrs(section, [ "equip-nom", "equip-props" ]);
   getAttrs(gearAttrs, function(values) {
-    const name = strval(values[rptAttr(section, "equip-nom")]);
+    let name = strval(values[rptAttr(section, "equip-nom")]);
     const hasProps = strval(values[rptAttr(section, "equip-props")]);
     if (name !== "" && hasProps === "") {
       const props = getGearProps(name);
@@ -18852,7 +18866,7 @@ on(changeEvent([
     "atkid",
     "predicats"
   ].map(a => rptAttr("equipement", `equip-${a}`));
-  getAttrs([ ...gearAttrs, "profil", "maitrises_armes", "cfg_usure" ], function(values) {
+  getAttrs([ ...gearAttrs, "scriptVersion", "profil", "maitrises_armes", "cfg_usure" ], function(values) {
     const [ name, detail, props, atk, atkid, pred ] = Object.keys(values);
     const usure = boolval(values.cfg_usure);
     const equipment = strval(values[name]);
@@ -18884,7 +18898,9 @@ on(changeEvent([
       "special",
       "atk",
       "bonus-dm",
-      "atkmods"
+      "atkmods",
+      "mods",
+      "options"
     ];
 
     const magicMods = [
@@ -18917,7 +18933,7 @@ on(changeEvent([
       let thrownId = "";
       if (!attackId) {
         attackId = generateRowID();
-        if (attackRow.has("lancer"))
+        if (attackRow.has("lancer") && !hasMODScript(values))
           thrownId = generateRowID();
       }
 
@@ -18955,24 +18971,28 @@ on(changeEvent([
       const atkmods = [];
       const options = [];
       attackRow.forEach((value, prop) => {
-        if (prop === "atkmods") {
+        if (prop === "lancer" && hasMODScript(values)) {
+          atkmods.push("armeDeContact");
+        } else if (prop === "mods" || prop === "atkmods") {
           atkmods.push(value);
         } else if (magicMods.includes(prop)) {
           atkmods.push(prop + " " + value);
+        } else if (prop === "options") {
+          options.push(`${prop}: ${value}`);
         } else {
           if (!weaponProps.includes(prop))
             options.push(`${prop}: ${value}`);
         }
       });
       const wp = weaponTrained(strval(values.profil), equipment, strval(values.maitrises_armes));
-      if (!wp.trained && !atkmods.includes("deMalus")) {
+      if (!hasMODScript(values) && !wp.trained && !atkmods.includes("deMalus")) {
         atkmods.push("deMalus");
         sendChatMsg(wp.message, { whisper: "gm", template: "" });
       }
       if (atkmods.length > 0)
         attributes.set(rowId + "atkmods", atkmods.join(","));
       if (options.length > 0)
-        attributes.set(rowId + "options", options.join("\n"));      
+        attributes.set(rowId + "options", options.join("\n"));
       attributes.set(rowId + "predicats", predicats);
 
       if (thrownId) {
@@ -21175,7 +21195,7 @@ on("clicked:repeating_npcrolls:npcroll-btn", function() {
   getAttrs([ "compagnon", ...rollAttrs ], function (values) {
     const companionOf = strval(values.compagnon);
     let name = strval(values[rptAttr(section, "npcroll-name")], "Capacité");
-    const action = name.match(/ \((G|M|A|L)\)[ ]*$/);
+    const action = name.match(/ \((G|M|A|L)\)[ ]*?$/);
     let actionType = "";
     if (action) {
       name = name.replace(action[0], "");
