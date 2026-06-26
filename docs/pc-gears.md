@@ -40,6 +40,13 @@ Les codes et valeurs correspondantes que vous pouvez indiquer sont :
   - `portee` : portée de l'arme à distance
   - `lancer` : portée de l'arme lancée
   - `usure` : seuil d'usure
+  - `special` : valeur du champ _Spécial_
+  - `atk` : nom de l'attribut attaque (si différent de celui par défaut)
+    - `atkcac`, `atktir`, `atkmag`
+    - `0` s'il n'y a pas de jet d'attaque à faire
+  - `bonus-dm` : nom de la caractéristique à ajouter aux DM (si différent de celle par défaut)
+  - `atkmods`, `mods` : modificateurs de l'attaque (liste de mots-clés séparés par des `,`)
+  - `options` : options d'attaque (principalement pour le script **COFantasy2**). Toutes les valeurs des propriétés qui ne font pas partie de la liste ci-dessus sont ajoutées dans ce champ.
 - Pour les protections (armures et boucliers) :
   - `bonus-def` : bonus apporté à la DEF par l'armure ou le bouclier
   - `armure` : bonus apporté à la DEF par l'armure
@@ -79,7 +86,7 @@ Si vous cochez la case `A une attaque`, une ligne d'attaque est automatiquement 
 
 La ligne d'attaque est créée en fonction des propriétés d'équipement que vous avez indiqué pour l'arme. De plus, la fiche vérifie les armes maîtrisées par le profil du personnage, et ajoute le modificateur d'attaque `deMalus` si le profil ne sait pas manier ce type d'arme, et murmure un message d'avertissement dans le chat Roll20.
 
-Si l'arme possède la propriété `lancer`, la fiche crée deux lignes d'attaque : une pour le maniement au contact et une pour le lancer.
+Si l'arme possède la propriété `lancer`, la fiche crée deux lignes d'attaque : une pour le maniement au contact et une pour le lancer, sauf si le script **COFantasy2** est installé, auquel cas le modificateur `armeDeContact` est ajouté.
 
 # Ressources
 
