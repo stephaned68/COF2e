@@ -1124,6 +1124,7 @@ button.spell-concentration span {
 .pc-roll-r1 textarea.one-row,
 .pc-gears .gears textarea.one-row,
 .pc-gears .ammos textarea.one-row,
+.pc-gears .potions textarea.one-row,
 .pc-actions textarea.one-row,
 .npc-abilities .npc-ability textarea.one-row,
 .npc-trait-rd textarea.one-row,
@@ -1161,6 +1162,7 @@ button.spell-concentration span {
 .pc-roll-r1 textarea.one-row:focus,
 .pc-gears .gears textarea.one-row:focus,
 .pc-gears .ammos textarea.one-row:focus,
+.pc-gears .potions textarea.one-row:focus,
 .pc-actions textarea.one-row:focus,
 .npc-abilities .npc-ability textarea.one-row:focus,
 .npc-trait-rd textarea.one-row:focus,
@@ -1228,6 +1230,7 @@ input[value="0"].ability-uses + div.ability-uses {
 .pc-gears .resources,
 .npc-gears .resources,
 .pc-gears .ammos,
+.pc-gears .potions,
 .npc-gears .ammos,
 .pc-gears .misc-gears,
 .pc-gears .notes {
