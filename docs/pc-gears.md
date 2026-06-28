@@ -105,6 +105,19 @@ Spécifiez la propriété `type: soins` pour une potion de soins. Quand vous cli
 
 Spécifiez la propriété `type: mana` pour une potion de mana. Quand vous cliquez sur le bouton _Consommable_, un message de chat indiquant le nombre de PM récupérés s'affiche.
 
+# Potions
+
+Cette section n'apparait que si le script **COFantasy2** est installé dans la partie.
+
+Elle permet de gérer une liste de potions de manière plus détaillée.
+
+Pour chaque élément de la liste, vous indiquez :
+- Le nom de la potion
+- Sa localisation, à choisir entre main, ceinture et sac
+- Son type, à choisir entre soins non magiques, récupération, mana, autre
+- Les quantités possédées courantes et maximum
+- Des effets supplémentaires pour la potion
+
 # Munitions
 
 Cette section n'apparait que si le script **COFantasy2** est installé dans la partie.
