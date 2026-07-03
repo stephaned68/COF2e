@@ -15584,7 +15584,8 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
     let range = (portee !== "") ? ` *(${ rangeWithUnits(portee) })*` : "";
     let crit = intval(values[section + "crit"], 20);
     const atkType = strval(values[section + "atktype"]);
-    let modifiers = strval(values[section + "atkmods"]).split(",").map(mod => mod.trim().toLowerCase());
+    let modifiers = strval(values[section + "atkmods"]);
+    modifiers = modifiers.split("\n").join(",").split(",").map(mod => mod.trim().toLowerCase());
     const options = strval(values[section + "options"]);
     const usure = strval(values[section + "usure"]);
     const resourceId = strval(values[`${rptThrown}resid`]);
@@ -20894,7 +20895,8 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     const range = (portee !== "") ? ` *(${ rangeWithUnits(portee) })*` : "";
     const crit = intval(values[section + "crit"], 20);
     const atkType = strval(values[section + "atktype"]);
-    const atkMods = strval(values[section + "atkmods"]).split(",").map(mod => mod.trim().toLowerCase());
+    let atkMods = strval(values[section + "atkmods"]);
+    atkMods = atkMods.split("\n").join(",").split(",").map(mod => mod.trim().toLowerCase());
 
     const resetValues = new Map();
 
