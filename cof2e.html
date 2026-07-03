@@ -1,8 +1,8 @@
 <div class="cofmain">
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.16.04">
+  <input type="hidden" name="attr_verfdp" value="1.17.0">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.16.0">
+  <input type="hidden" name="attr_version" value="1.17.0">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
   <!-- Edit locked -->
@@ -136,7 +136,7 @@
     <div>
       <img
         class="logo"
-        title="Version 1.16.0 - 08/06/2026"
+        title="Version 1.17.0 - 07/2026"
         src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cof2e_logo.jpg"
       />
       <div class="d-flex m2">
@@ -1319,11 +1319,16 @@
             <div class="d-flex d-flex-between align-self-center">
               <select class="select-lg" name="attr_tactique" title="@{attr_tactique} Options tactiques">
                 <option value="0">Aucune</option>
-                <option value="1">Atq assurée +5,DM/2</option>
-                <option value="2">Atq précise -3,+1d4° DM</option>
-                <option value="3">Atq violente -7,+2d4° DM</option>
+                <option value="1">Assurée +5,DM/2</option>
+                <option value="2">Précise -3,+1d4° DM</option>
+                <option value="3">Violente -7,+2d4° DM</option>
                 <option value="4">Tir visé (L),+PER DM</option>
               </select>
+
+              <div class="fav-tact align-self-center" title="Cible aveuglée, étourdie, renversée ou surprise">
+                &nbsp;<input type="checkbox" name="attr_modsit_def" value="5">
+                &nbsp;<span>Def -5</span>
+              </div>
 
               <input type="hidden" class="fav-tact" name="attr_favtact1" value="0">
               <div class="fav-tact align-self-center">
@@ -1389,7 +1394,6 @@
               <h4>CRIT.</h4>
               <h4>DM</h4>
               <h4>PORTEE</h4>
-              <!--<h4>SPECIAL</h4>-->
             </div>
 
             <fieldset class="repeating_armes">
@@ -1520,7 +1524,7 @@
                     <input class="two-digits" type="number" name="attr_arme-usure" title="@{arme-usure} Usure">
                   </div>
                   <div class="bordered">
-                    <input type="text" name="attr_arme-atkmods" placeholder="Modificateurs d'attaque" title="@{arme-atkmods} Modificateurs séparés par des virgules&#10; deBonus: avec dé bonus&#10; deMalus: avec dé malus&#10; auto: réussite automatique&#10; choc: peut faire des attaques non léthales sans malus&#10; explodeMax: dés de dégâts explosifs&#10; pasDeDmg: l'attaque ne fait pas de DM&#10; poudre: arme à poudre&#10; reroll1: relance les 1 sur les dés de DM (:1 = une seule fois)&#10; tempDmg: fait toujours des attaques non léthales&#10; zone: sort de zone&#10; magie: bonus att.+DM&#10; magieAtt: bonus att.&#10; magieDmg: bonus DM&#10; affutee: critiques améliorés&#10; fleau: bonus DM contre créature&#10; element: bonus DM élémentaires/substance&#10; fumble: Seuil d'échec critique&#10; manoeuvres: attaques spéciales&#10; aoe: aire d'effet (rayon)&#10; save: jet de résistance&#10; multi: cibles multiples" value="">
+                    <textarea class="one-row" name="attr_arme-atkmods" placeholder="Modificateurs d'attaque" title="@{arme-atkmods} Modificateurs séparés par des virgules&#10; deBonus: avec dé bonus&#10; deMalus: avec dé malus&#10; auto: réussite automatique&#10; choc: peut faire des attaques non léthales sans malus&#10; explodeMax: dés de dégâts explosifs&#10; pasDeDmg: l'attaque ne fait pas de DM&#10; poudre: arme à poudre&#10; reroll1: relance les 1 sur les dés de DM (:1 = une seule fois)&#10; tempDmg: fait toujours des attaques non léthales&#10; zone: sort de zone&#10; magie: bonus att.+DM&#10; magieAtt: bonus att.&#10; magieDmg: bonus DM&#10; affutee: critiques améliorés&#10; fleau: bonus DM contre créature&#10; element: bonus DM élémentaires/substance&#10; fumble: Seuil d'échec critique&#10; manoeuvres: attaques spéciales&#10; aoe: aire d'effet (rayon)&#10; save: jet de résistance&#10; multi: cibles multiples"></textarea>
                   </div>
                   <div class="bordered">
                     <input type="checkbox" name="attr_arme-active" title="@{arme-active} Attaque active" value="1" checked>
@@ -1666,6 +1670,11 @@
 
               <h4>Autres conditions</h4>
               
+              <div class="d-flex" title="DEF -5">
+                <input type="checkbox" name="attr_modsit_def" value="5">
+                <span>&nbsp;Cible aveuglée, étourdie, renversée ou surprise</span>
+              </div>
+
               <div class="d-flex">
                 <input type="checkbox" name="attr_en_selle" title="@{en_selle} Combat monté (règles p.215)" value="1">
                 <span>&nbsp;En selle&nbsp;</span>
@@ -6380,7 +6389,7 @@
                   </summary>
                   <ul>
                     <li>Amélioration des boutons Récupérations (PE, capacités)</li>
-                    <li>Ajout propriétés <em>opts</em> et <em>options</em> aux équipements de type arme</li>
+                    <li>Ajout propriétés <em>mods</em> et <em>options</em> aux équipements de type arme</li>
                     <li>Amélioration des armes maîtrisées (+X dans le nom et interactions avec COFantasy2)</li>
                   </ul>
                 </details>
@@ -7155,7 +7164,7 @@
                   </div>
                   <div class="bordered">
                     <input type="checkbox" name="attr_arme-active" title="@{arme-active} Attaque active" value="1" checked>
-                    <input type="text" name="attr_arme-atkmods" placeholder="Modificateurs d'attaque" title="@{arme-atkmods} Modificateurs séparés par des virgules&#10; deBonus: avec dé bonus&#10; deMalus: avec dé malus&#10; auto: réussite automatique&#10; choc: peut faire des attaques non léthales sans malus&#10; explodeMax: dés de dégâts explosifs&#10; pasDeDmg: l'attaque ne fait pas de DM&#10; poudre: arme à poudre&#10; reroll1: relance les 1 sur les dés de DM (:1 = une seule fois)&#10; tempDmg: fait toujours des attaques non léthales&#10; jet:N: lance le jet de capacité N&#10; btn:N: affiche un bouton pour le jet de capacité N&#10;" value="">
+                    <textarea class="one-row" name="attr_arme-atkmods" placeholder="Modificateurs d'attaque" title="@{arme-atkmods} Modificateurs séparés par des virgules&#10; deBonus: avec dé bonus&#10; deMalus: avec dé malus&#10; auto: réussite automatique&#10; choc: peut faire des attaques non léthales sans malus&#10; explodeMax: dés de dégâts explosifs&#10; pasDeDmg: l'attaque ne fait pas de DM&#10; poudre: arme à poudre&#10; reroll1: relance les 1 sur les dés de DM (:1 = une seule fois)&#10; tempDmg: fait toujours des attaques non léthales&#10; jet:N: lance le jet de capacité N&#10; btn:N: affiche un bouton pour le jet de capacité N&#10;"></textarea>
                   </div>
                   <div class="bordered">
                     <textarea class="one-row" name="attr_arme-options" placeholder="Options d'attaque avec argument" title="@{arme-options} Options d'attaque"></textarea>
@@ -8887,7 +8896,7 @@
 
 /**
  * COF2e Sheet Worker
- * v1.16.0
+ * v1.17.0
  */
 
 const SWData = {
@@ -13887,7 +13896,7 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
       if (boolval(values.cfg_cible)) {
         if (maneuvers === "") {
           atkProps.tohit = SWData.settings.tokens.target.def;
-        } 
+        }
         else {
           atkProps.tohit = SWData.settings.tokens.target.opposed;
           atkProps.opposed = "[[1]]";
@@ -15519,6 +15528,7 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
   const sitModAttrs = [
     "couvert",
     "melee",
+    "def",
     "contact",
     "visibilite"
   ];
@@ -15569,6 +15579,7 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
     // situational modifiers
     let modCover = intval(values.modsit_couvert) * -1;
     const modMelee = intval(values.modsit_melee) * -1;
+    const modDef = intval(values.modsit_def);
     const modContact = intval(values.modsit_contact);
     const modVisible = intval(values.modsit_visibilite) * -1;
     
@@ -15623,6 +15634,12 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
     // combat en milieu aquatique
     if (aquatic && !modifiers.includes("demalus"))
       modifiers.push("demalus");
+
+    // attaque ciblée
+    const targeting = 
+      boolval(values.cfg_cible) &&        // targeted attacks
+      !atkButton.includes("atkdual") &&   // no dual wielding
+      !hasAtkMod(modifiers, "multi");     // no multi target
 
     const extraDM = [];
 
@@ -15714,7 +15731,9 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
     });
 
     // Build situational modifiers
-    let modSit = "";
+    let modSit = !targeting && modDef !== 0 
+    ? ` +${modDef}[Cible sans défense]`
+    : "";
     if (isRanged(atk, portee)) {
       if (hasAbility({ name: "joli coup", inPath: "precision" }, values)) {
         if (modCover === -2)
@@ -16058,16 +16077,15 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
       atkProps.fumble = fumbleEffect;
     }
 
-    const targeting = 
-      boolval(values.cfg_cible) &&        // targeted attacks
-      !atkButton.includes("atkdual") &&   // no dual wielding
-      !hasAtkMod(modifiers, "multi");     // no multi target
     if (attack !== "" && targeting) {
       if (modifiers.includes("manoeuvres")) {
         atkProps.tohit = SWData.settings.tokens.target.opposed;
         atkProps.opposed = "[[1]]";
       } else {
         atkProps.tohit = SWData.settings.tokens.target.def;
+        if (modDef !== 0)
+          atkProps.tohit = atkProps.tohit.replace("]]", "") + `-${modDef}[Cible sans défense] ]]`;
+
       }
       atkProps.target = SWData.settings.tokens.target.name;
       atkProps.targetname = `[[0[${atkProps.target}] ]]`;
@@ -22353,7 +22371,7 @@ function migrateSheetToV1_16(sheetType, curVer = { major: 1, minor: 15, patch: 0
  * Migrate to Version 1.17.0
  * Change NPC multi-attack attribute
  */
-async function migrateSheetToV1_17(sheetType, curVer = { major: 1, minor: 16, patch: 2 }) {
+async function migrateSheetToV1_17(sheetType, curVer = { major: 1, minor: 16, patch: 0 }) {
   if (!isNPC(sheetType))
     return;
 
@@ -22408,8 +22426,8 @@ function migrateSheet(sheetType, curVer) {
   if (curVer.major === 1 && curVer.minor < 16)
     migrateSheetToV1_16(sheetType, curVer);
   
-  if (curVer.major === 1 && curVer.minor === 16 && curVer.patch < 3)
-    migrateSheetToV1_17(sheetType, curVer);
+  if (curVer.major === 1 && curVer.minor < 17)
+    //migrateSheetToV1_17(sheetType, curVer);
 
   return;
 }
