@@ -62,6 +62,7 @@ Cette section permet de modifier les jets d'attaque à distance en fonction des 
 ## Autres conditions
 
 On peut indiquer dans cette section :
+- Si la cible est "sans défense" en raison des conditions _Aveuglée_, _Etourdie_, _Renversée_ ou _Surprise_. Selon que l'option _Attaques ciblées_ soit active ou pas, le DEF de la cible subit un malus de -5 ou le jet d'attaque bénéficie d'un bonus de +5.
 - Si le personnage est en selle, et si sa monture est une monture de guerre.
 
   Ce paramètre permet d'effectuer les jets d'attaque avec dé malus si la monture n'est pas entrainée au combat. Il permet aussi de profiter des bonus aux dommages prévus par la capacité _Cavalier émérite_ du profil de _Chevalier_.
