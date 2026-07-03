@@ -95,6 +95,8 @@ Si l'option _Options tactiques favorites_ est active, la liste déroulante des o
 
 Il est ainsi possible d'activer ou de désactiver des options personnalisées directement depuis le sous-onglet _Attaques_.
 
+Une option spéciale _Def -5_ est disponible pour indiquer si la cible subit un état préjudiciable qui modifie sa DEF.
+
 ---
 
 [Retour]({{ site.baseurl }}/pc-attribs)
