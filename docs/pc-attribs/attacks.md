@@ -38,7 +38,7 @@ Des paramètres optionnels peuvent être ajoutés :
 
 - Attaque active : ce paramètre est utilisé par le script **COFantasy2** pour afficher la liste des actions du tour.
 
-- Modificateurs d'attaque : vous pouvez spécifier une série de mentions spéciales permettant de régler le comportement du jet d'attaque. Séparez les différentes mentions par des virgules.
+- Modificateurs d'attaque : vous pouvez spécifier une série de mentions spéciales permettant de régler le comportement du jet d'attaque. Séparez les différentes mentions par des virgules. Vous pouvez également saisir cette liste sur plusieurs lignes.
   - `deBonus` : effectuer l'attaque avec un dé bonus, sauf si le personnage est _Affaibli_
   - `deMalus` : effectuer l'attaque avec un dé malus
   - `explodeMax` : le dé de DM est _explosif_ (relance d'un nouveau dé de DM en cas de résultat maximum)

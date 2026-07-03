@@ -114,7 +114,6 @@ Elle permet de gérer une liste de potions de manière plus détaillée.
 Pour chaque élément de la liste, vous indiquez :
 - Le nom de la potion
 - Sa localisation, à choisir entre main, ceinture et sac
-- Son type, à choisir entre soins non magiques, récupération, mana, autre
 - Les quantités possédées courantes et maximum
 - Des effets supplémentaires pour la potion
 
