@@ -14459,9 +14459,14 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
 
     // FAST button
     if (typeRecup === 0) {
-      const choices = [ SWData.emojis.heal + " Vigueur" ];
-      const recups = [ recoveryTypes.FAST ];
-      let selected = 1;
+      const choices = [];
+      const recups = [];
+      let selected = 0;
+      if (pv < pvMax) {
+        choices.push(SWData.emojis.heal + " Vigueur");
+        recups.push(recoveryTypes.FAST);
+        selected = 1;
+      }
       if (highFan) {
         if (missingPM()) {
           choices.push(SWData.emojis.atkmag + " Mana");
@@ -14484,7 +14489,7 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
         const resp = await askAsync([ "Récupération ?", ...choices ]);
         selected = resp.selected;
       }
-      recup = recups[selected - 1];
+      recup = recups[selected - 1] || -1;
     }
 
     // FULL button
@@ -14550,8 +14555,9 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
       inPath: "controle corporel" 
     }, values);
 
-    console.log(recup, typeRecup)
     switch (recup) {
+      case -1:
+        break;
       case 0:
         if (typeRecup === 0) {
           resetUses(combat, "combat");
@@ -14564,11 +14570,13 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
         sendChatCmd(`%{${charName}|egoreco_fast-btn}`);
         if (pv < pvMax && withPV)
           recovery(recoveryTypes.FAST);
+        resetUses(combat, "combat");
         break;
       case recoveryTypes.EGOFULL:
         sendChatCmd(`%{${charName}|egoreco_full-btn}`);
         if (pv < pvMax && withPV)
           recovery(recoveryTypes.FULL);
+        resetUses(combat.concat(daily), "jour");
         break;
       default:
         recovery(recup);
