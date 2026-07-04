@@ -14550,12 +14550,15 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
       inPath: "controle corporel" 
     }, values);
 
+    console.log(recup, typeRecup)
     switch (recup) {
       case 0:
-        if (typeRecup === 0)
+        if (typeRecup === 0) {
           resetUses(combat, "combat");
-        else
+        } else {
           resetUses(combat.concat(daily), "jour");
+          setAttrs({ dr: Math.min(dr + 1, drMax) });
+        }
         break;
       case recoveryTypes.EGOFAST:
         sendChatCmd(`%{${charName}|egoreco_fast-btn}`);
