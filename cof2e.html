@@ -5487,8 +5487,6 @@
                   
                   <div class="d-flex">
                     <input type="number" class="two-digits" name="attr_potion-qte" title="@{potion-qte}" min="0" value="1">
-                    &nbsp;/&nbsp;
-                    <input type="number" class="two-digits" name="attr_potion-qte_max" title="@{potion-qte_max}" min="0" value="1">
                     &nbsp;
                     <textarea class="one-row" name="attr_potion-effets" title="@{potion-effets} Effets" placeholder="Effets"></textarea>
                   </div>
@@ -17887,7 +17885,7 @@ function rebuildBuffLists() {
 }
 
 /**
- * On change of repeating buffs
+ * On change of repeating buffs or equipped armor
  */
 on("change:def_car_max " + repeatEvents("buffs", false), function () {
   rebuildBuffLists();
