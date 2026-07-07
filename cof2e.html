@@ -17845,7 +17845,7 @@ SWData.PC.SKILLS.forEach(skill => {
  * Rebuild buffable attributes xxx_buff_list
  */
 function rebuildBuffLists() {
-  const section = "buffs"; // "repeating_buffs";
+  const section = "buffs";
   getSectionIDs(section, function (rowIds) {
     const buffs = Object.fromEntries(new Map(
       SWData.PC.BUFFS.To.map(attr => [ `${attr}_buff_list`, "" ])
@@ -17859,7 +17859,7 @@ function rebuildBuffLists() {
     getAttrs([ "def_car_max", ...allBuffs ], function(values) {
       const defCarMax = intval(values.def_car_max);
       rowIds.forEach(id => {
-        const rowId = rptAttr(section, "buff-", id); // `${section}_${id}_buff-`;
+        const rowId = rptAttr(section, "buff-", id);
         
         const agiMax = intval(values[`${rowId}agimax`]);
         if (defCarMax > 0 && agiMax > defCarMax)
@@ -17889,7 +17889,7 @@ function rebuildBuffLists() {
 /**
  * On change of repeating buffs
  */
-on(repeatEvents("buffs", false), function () {
+on("change:def_car_max " + repeatEvents("buffs", false), function () {
   rebuildBuffLists();
 });
 
