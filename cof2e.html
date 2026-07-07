@@ -4202,46 +4202,62 @@
               <h4>Langues</h4>
               <div>
                 <input type="checkbox" name="attr_lang_abyssal" value="1">
-                <span title="Démons, élémentaires du feu">Abyssal</span>
+                <span title="@{nom_abyssal} Démons, élémentaires du feu" name="attr_nom_abyssal">Abyssal</span>
               </div>
               <div>
                 <input type="checkbox" name="attr_lang_aquarien" value="1">
-                <span title="Créatures sous-marines, élementaires de l'eau">Aquarien</span>
+                <span title="@{nom_aquarien} Créatures sous-marines, élementaires de l'eau" name="attr_nom_aquarien">Aquarien</span>
               </div>
               <div>
                 <input type="checkbox" name="attr_lang_argotien" value="1">
-                <span title="Argot des voleurs et langue des signes">Argotien</span>
+                <span title="@{nom_argotien} Argot des voleurs et langue des signes" name="attr_nom_argotien">Argotien</span>
               </div>
               <div>
                 <input type="checkbox" name="attr_lang_celestien" value="1">
-                <span title="Anges, créatures des plans supérieurs, élémentaires de l'air">Célestien</span>
+                <span title="@{nom_celestien} Anges, créatures des plans supérieurs, élémentaires de l'air" name="attr_nom_celestien">Célestien</span>
               </div>
               <div>
                 <input type="checkbox" name="attr_lang_commun" value="1">
-                <span title="Humains, halfelins">Commun</span>
+                <span title="@{nom_commun} Humains, halfelins" name="attr_nom_commun">Commun</span>
+              </div>
+              <div class="d-flex">
+                <input type="checkbox" name="attr_cust_lang1" value="1">
+                <input type="text" name="attr_nom_lang1" placeholder="Personnalisée">
+              </div>
+              <div class="d-flex">
+                <input type="checkbox" name="attr_cust_lang3" value="1">
+                <input type="text" name="attr_nom_lang3" placeholder="Personnalisée">
               </div>
             </div>
             <div class="sheet-col">
               <h4>&nbsp;</h4>
               <div>
                 <input type="checkbox" name="attr_lang_draconique" value="1">
-                <span title="Dragons, kobolds, hommes-lézards">Draconique</span>
+                <span title="@{nom_draconique} Dragons, kobolds, hommes-lézards" name="attr_nom_draconique">Draconique</span>
               </div>
               <div>
                 <input type="checkbox" name="attr_lang_noirparle" value="1">
-                <span title="Goblinoïdes, orcs, ogres, trolls, créatures maléfiques">Noir parlé</span>
+                <span title="@{nom_noirparle} Goblinoïdes, orcs, ogres, trolls, créatures maléfiques" name="attr_nom_noirparle">Noir parlé</span>
               </div>
               <div>
                 <input type="checkbox" name="attr_lang_profond" value="1">
-                <span title="Créatures souterraines (elfes des profondeurs)">Profond</span>
+                <span title="@{nom_profond} Créatures souterraines (elfes des profondeurs)" name="attr_nom_profond">Profond</span>
               </div>
               <div>
                 <input type="checkbox" name="attr_lang_runique" value="1">
-                <span title="Gnomes, nains, géants, élémentaires de la terre">Runique</span>
+                <span title="@{nom_runique} Gnomes, nains, géants, élémentaires de la terre" name="attr_nom_runique">Runique</span>
               </div>
               <div>
                 <input type="checkbox" name="attr_lang_sylvestre" value="1">
-                <span title="Elfes, fées, dryades, sylvaniens">Sylvestre</span>
+                <span title="@{nom_sylvestre} Elfes, fées, dryades, sylvaniens" name="attr_nom_sylvestre">Sylvestre</span>
+              </div>
+              <div class="d-flex">
+                <input type="checkbox" name="attr_cust_lang2" value="1">
+                <input type="text" name="attr_nom_lang2" placeholder="Personnalisée">
+              </div>
+              <div class="d-flex">
+                <input type="checkbox" name="attr_cust_lang4" value="1">
+                <input type="text" name="attr_nom_lang4" placeholder="Personnalisée">
               </div>
             </div>
             <div class="sheet-col">
@@ -5000,6 +5016,7 @@
                 <span class="img-btn img-btn-lg">i</span>
               </button>
             </h4>
+            <h4>Armure</h4>
           </div>
 
           <fieldset class="repeating_buffs">
@@ -5074,6 +5091,12 @@
   
                 <input type="text" name="attr_buff-value" title="@{buff-value}" placeholder="Valeur fixe ou [CAR] ou [rang voie]" value="">
   
+              </div>
+
+              <div class="bordered d-flex">
+                
+                <input type="number" name="attr_buff-agimax" title="@{buff-agimax} Restriction d'armure (agi-max)" value="">
+
               </div>
 
             </div>
@@ -6380,9 +6403,10 @@
                     <strong>Version 1.17.0</strong> (2026-07)
                   </summary>
                   <ul>
-                    <li>Amélioration des boutons Récupérations (PE, capacités)</li>
+                    <li>Amélioration des boutons Récupérations (PE, capacités, 0 DR)</li>
                     <li>Ajout propriétés <em>mods</em> et <em>options</em> aux équipements de type arme</li>
                     <li>Amélioration des armes maîtrisées (+X dans le nom et interactions avec COFantasy2)</li>
+                    <li>Ajout de 4 langues personnalisées + possibilité de renommer les langues standard</li>
                   </ul>
                 </details>
               </li>
@@ -9944,6 +9968,18 @@ const SWData = {
         label: "",
         ability: [ "agi", "con", "for", "per", "cha", "int", "vol" ]
       },
+    ],
+    LANGUAGES: [
+      "abyssal",
+      "aquarien",
+      "argotien",
+      "celestien",
+      "commun",
+      "draconique",
+      "noirparle",
+      "profond",
+      "runique",
+      "sylvestre"
     ]
   },
   COINS: [
@@ -13313,10 +13349,9 @@ function updatePVMax(eventInfo, changed = "") {
         return;
       }
 
-      if (SWData.settings.level1Paths.includes(path) 
-          && rankPath === 2
-          && hasProp(props, "initial"))
-        return;
+      if (SWData.settings.level1Paths.includes(path) && rankPath === 2)
+          if (hasProp(props, "initial") || hasProp(props, "mage"))
+            return;
       
       if (pathPV === 0) {
         const pathName = strval(getPathNames(values.noms_voies)[path - 1]);
@@ -14208,17 +14243,16 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
     const fullRec = !lowFan && boolval(values.cfg_use_fullrec);
     const rolls = strval(values.last_rolls).split("|").map(r => intval(r));
 
+    const drMax = intval(values.dr_max);
     let dr = intval(values.dr);
-    let drMax = intval(values.dr_max);
-    if (dr === 0 && drMax !== 0) {
+    if (typeRecup === 0 && drMax === 0) {
       const chatMsg = rollTemplate({
         lsub,
         rsub,
-        text: "Plus de Dé de Récupération !",
+        text: "Pas de récupération rapide des PV avec 0 DR",
         textclass: "fumble"
       });
       sendChatMsg(chatMsg);
-      return;
     }
 
     const pvMax = intval(values.pv_max);
@@ -14327,7 +14361,8 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
       switch (type) {
         case recoveryTypes.FAST:
         case recoveryTypes.PUSH:
-          dr -= 1;
+          if (drMax > 0)
+            dr -= 1;
           break;
         case recoveryTypes.FULL:
         case recoveryTypes.ALL:
@@ -14336,7 +14371,7 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
           break;
         case recoveryTypes.MANA:
         case recoveryTypes.PCMANA:
-          if (!lowFan)
+          if (!lowFan && drMax > 0)
             dr -= 1;
           break;
       }
@@ -14462,7 +14497,7 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
       const choices = [];
       const recups = [];
       let selected = 0;
-      if (pv < pvMax) {
+      if (drMax > 0 && pv < pvMax) {
         choices.push(SWData.emojis.heal + " Vigueur");
         recups.push(recoveryTypes.FAST);
         selected = 1;
@@ -14596,13 +14631,13 @@ on(clickedEvent([ "egoreco-btn", "egoreco_fast-btn", "egoreco_full-btn"]), funct
     const lsub = "Récupération";
     let rsub = "Points d'Ego";
     
+    const drMax = intval(values.dr_max);
     let dr = intval(values.dr);
-    let drMax = intval(values.dr_max);
-    if (dr === 0 && drMax !== 0) {
+    if (typeRecup === 0 && drMax === 0) {
       const chatMsg = rollTemplate({
         lsub,
         rsub,
-        text: "Plus de Dé de Récupération !",
+        text: "Pas de récupération rapide avec 0 DR !",
         textclass: "fumble"
       });
       sendChatMsg(chatMsg);
@@ -14627,13 +14662,17 @@ on(clickedEvent([ "egoreco-btn", "egoreco_fast-btn", "egoreco_full-btn"]), funct
      */
     const egoRecovery = (typeRecup) => {
       if (typeRecup === 1 && dr > 0)
-        dr -= 1;
+          dr -= 1;
       
       const devol = strval(values.devol);
-      const peRecup = typeRecup === 1 
-      ? devol
-      : (devol === "2d6" ? "12" : devol.split("d")[1]);
-      let text = `${dr} DR restants`;    
+      const devolMax = devol === "2d6" ? "12" : devol.split("d")[1];
+      const peRecup = typeRecup === 1
+      ? (drMax === 0 ? "" : devol)
+      : (drMax === 0 ? devol : devolMax);
+      if (peRecup === "")
+        return;
+
+      let text = `${dr} DR restants`;
       rsub = "PE *" + (typeRecup === 1 ? "Rapide" : "Complète") + "*";
       const recup = `[[${peRecup}]] PE récupérés`;
       
@@ -16969,8 +17008,9 @@ function checkAbilityPoints(changed = "") {
         return;
 
       const props = strval(values[ability + "_props"]);
-      if (SWData.settings.level1Paths.includes(path) && rankPath === 2 && hasProp(props, "initial"))
-        return;
+      if (SWData.settings.level1Paths.includes(path) && rankPath === 2)
+        if (hasProp(props, "initial") || hasProp(props, "mage"))
+          return;
 
       const minLevel = SWData.settings.minLevels[rankPath - 1];
       if (level < minLevel) {
@@ -17082,10 +17122,14 @@ on(changeEvent(SWData.settings.level1Paths.map(p => `v${p}r2`)), function(eventI
     const props = strval(values[rankProps])
       .split("\n")
       .filter(p => strval(p) !== "")
-      .filter(p => !p.startsWith("initial"));
+      .filter(p => !p.startsWith("initial") && !p.startsWith("mage"));
     
     if (checked) {
-      if (!rank2Props.some(a => strval(values[a]).startsWith("initial"))) {
+      const initMage = rank2Props.some(a => {
+        const prop = strval(values[a]);
+        return prop.startsWith("initial") || prop.startsWith("mage");
+      });
+      if (!initMage) {
         if (abilityInfo(rank).path === 1 && path1Mage) {
           props.push("initial: ");
         } else if (abilityInfo(rank).path > 1) {
@@ -17801,22 +17845,26 @@ SWData.PC.SKILLS.forEach(skill => {
  * Rebuild buffable attributes xxx_buff_list
  */
 function rebuildBuffLists() {
-  const section = "repeating_buffs";
-  getSectionIDs("buffs", function (rowIds) {
+  const section = "buffs"; // "repeating_buffs";
+  getSectionIDs(section, function (rowIds) {
     const buffs = Object.fromEntries(new Map(
       SWData.PC.BUFFS.To.map(attr => [ `${attr}_buff_list`, "" ])
     ));
     const allBuffs = [];
     rowIds.forEach(id => {
-      [ "on", "nom", "attrib", "value" ]
-        .map(attr => `${section}_${id}_buff-${attr}`)
-        .forEach(a => {
-        allBuffs.push(a);
-      });
+      [ "on", "nom", "attrib", "value", "agimax" ]
+        .map(attr => rptAttr(section, `buff-${attr}`, id))
+        .forEach(a => allBuffs.push(a));
     });
-    getAttrs(allBuffs, function(values) {
+    getAttrs([ "def_car_max", ...allBuffs ], function(values) {
+      const defCarMax = intval(values.def_car_max);
       rowIds.forEach(id => {
-        const rowId = `${section}_${id}_buff-`;
+        const rowId = rptAttr(section, "buff-", id); // `${section}_${id}_buff-`;
+        
+        const agiMax = intval(values[`${rowId}agimax`]);
+        if (defCarMax > 0 && agiMax > defCarMax)
+          return;
+
         const enabled = intval(values[`${rowId}on`]);
         const name = strval(values[`${rowId}nom`]).replaceAll(":", "|");
         const attrib = strval(values[`${rowId}attrib`]);
@@ -19423,7 +19471,11 @@ on("clicked:def_config-btn", function() {
     "pnj_tactique_tip",
     "pnj_notes_tip",
   ];
-  getAttrs([ "character_name", "sheet_type", ...allConfigs ], function(values) {
+  const languages = [
+    ...SWData.PC.LANGUAGES.map(lang => `$nom_${lang}`),
+    ...nameSeq(4, "$nom_lang#")
+  ];
+  getAttrs([ "character_name", "sheet_type", ...allConfigs, ...languages ], function(values) {
     const sheetBase = isPC(values.sheet_type) ? "PJBase" : "PNJBase";
 
     // PJBase / PNJBase : make sure all attributes are created
@@ -19454,6 +19506,21 @@ on("clicked:def_config-btn", function() {
       });
       setAttrs(Object.fromEntries(updates));
   
+      finishRoll(values.rollId);
+    });
+
+    // Special : languages
+    const askLangs = languages.map(attr => `{{${attr.slice(1)}=[[0[@{${sheetBase}|${attr.slice(1)}}] ]]}}`).join(" ");
+    startRoll("! " + askLangs, values => {
+      const updates = new Map();
+      languages.forEach(langAttr => {
+        const value = getRollData(values, langAttr.slice(1));
+        if (!value.startsWith(sheetBase) && strval(value) !== "")
+          updates.set(langAttr.slice(1), value);
+      });
+      if (updates.size > 0)
+        setAttrs(Object.fromEntries(updates));
+
       finishRoll(values.rollId);
     });
   });

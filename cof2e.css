@@ -1214,7 +1214,7 @@ input[value="0"].ability-uses + div.ability-uses {
 
 .pc-buffs-subtab .pc-buffs {
   display: grid;
-  grid-template-columns: 1fr 0.5fr 1fr;
+  grid-template-columns: 1fr 0.5fr 1fr 5rem;
   gap: 2px;
 }
 
