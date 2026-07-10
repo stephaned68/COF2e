@@ -6035,6 +6035,26 @@
               <textarea class="medium" name="attr_pense_bete"></textarea>
             </details>
 
+            <details>
+              <summary>
+                <h4>Sacrifice (Mages)</h4>
+              </summary>
+              <div class="d-flex d-flex-between">
+                <div>
+                  <input type="checkbox" name="attr_sacrifice_agi" value="1">&nbsp;AGI
+                </div>
+                <div>
+                  <input type="checkbox" name="attr_sacrifice_for" value="1">&nbsp;FOR
+                </div>
+                <div>
+                  <input type="checkbox" name="attr_sacrifice_con" value="1">&nbsp;CON
+                </div>
+                <div>
+                  <input type="checkbox" name="attr_sacrifice_per" value="1">&nbsp;PER
+                </div>
+              </div>
+            </details>
+
           </div>
 
           <div class="sheet-col">
@@ -7849,7 +7869,7 @@
           <summary>Importer un statblock</summary>
           <div class="npc-2colrow">
             <div>
-              <textarea name="attr_statblock" class="stat-block" placeholder="Coller ici un statblock copié depuis le PDF ou le DRS"></textarea>
+              <textarea name="attr_statblock" class="stat-block" placeholder="Coller ici un statblock copié depuis le PDF ou le DRS avec l'option &quot;Coller en texte brut&quot;"></textarea>
             </div>
             <div>
               <button type="action" name="act_importsb-btn" class="flat-btn img-btn" title="Importer le statblock">
@@ -16964,6 +16984,14 @@ function updateAllPathNames(path) {
 }
 
 /**
+ * Return list of sacrifice attributes
+ * @returns {string[]}
+ */
+function getSacrificeAttrs() {
+  return [ "agi", "con", "for", "per" ].map(attr => `sacrifice_${attr}`);
+}
+
+/**
  * Check max ability points
  * @param {string} [changed=""] - path+rank ability identifier
  */
@@ -16972,13 +17000,15 @@ function checkAbilityPoints(changed = "") {
   const owned = allPathRanks("rankOwned");
   const props = allPathRanks("rankProps");
   const baseRank = nameSeq(9, abilityInfo().rankBase);
+  const sacrifices = getSacrificeAttrs();
   getAttrs([ 
     "cfg_pts_capas",
     "niveau", "famille",
     ...owned,
     ...names,
     ...props,
-    ...baseRank
+    ...baseRank,
+    ...sacrifices
   ], function(values) {
     const checkAP = boolval(values.cfg_pts_capas);
     if (!checkAP)
@@ -16991,9 +17021,16 @@ function checkAbilityPoints(changed = "") {
       if (level === 1 && cleanText(values.famille) === "mages" && abilityInfo(changed).rank === 2)
         return;
 
-    const alerts = [];
-    const maxPoints = level * 2;
+    let sacrifice = 0;
+    if (cleanText(values.famille) === "mages") {
+      sacrifice = sacrifices.reduce((result, attr) => {
+        result += boolval(values[attr]) ? 2 : 0;
+        return result;
+      }, 0);
+    }
+    const maxPoints = sacrifice + level * 2;
     let usedPoints = 0;
+    const alerts = [];
     
     owned.forEach(ability => {
       if (!boolval(values[ability]))
@@ -17854,7 +17891,12 @@ function rebuildBuffLists() {
         .map(attr => rptAttr(section, `buff-${attr}`, id))
         .forEach(a => allBuffs.push(a));
     });
-    getAttrs([ "def_car_max", ...allBuffs ], function(values) {
+    const sacrifices = getSacrificeAttrs();
+    getAttrs([ 
+      "def_car_max",
+      ...allBuffs,
+      ...sacrifices
+    ], function(values) {
       const defCarMax = intval(values.def_car_max);
       rowIds.forEach(id => {
         const rowId = rptAttr(section, "buff-", id);
@@ -17879,6 +17921,14 @@ function rebuildBuffLists() {
           buffs[attribute] = buffList;
         }
       });
+      sacrifices.forEach(attr => {
+        if (!boolval(values[attr]))
+          return;
+        const stat = attr.split("_")[1];
+        const attribute = `${stat}_buff_list`;
+        const buffList = buffs[attribute] + `Sacrifice ${ upperShort(stat) } : -1; `;
+        buffs[attribute] = buffList;
+      });
       setAttrs(buffs);
     });
   });
@@ -17888,6 +17938,10 @@ function rebuildBuffLists() {
  * On change of repeating buffs or equipped armor
  */
 on("change:def_car_max " + repeatEvents("buffs", false), function () {
+  rebuildBuffLists();
+});
+
+on(changeEvent(getSacrificeAttrs()), function () {
   rebuildBuffLists();
 });
 
@@ -21571,6 +21625,35 @@ function importNPCStats(sbLine, npcAttrs) {
 }
 
 /**
+ * Figure out NPC attack damage type
+ * @param {string} name - attack / weapon name
+ * @returns {string}
+ */
+function getDMType(name) {
+  name = cleanText(name);
+  const weapon = SWData.GEARS.find(gear => {
+    if (name.includes(cleanText(gear.name)))
+      return true;
+    if (gear.altname.split(",").some(altn => name.includes(altn)))
+      return true;
+    return false;
+  });
+  if (weapon) {
+    const dmType = getProp(weapon.props.join("\n"), "type-dm");
+    if (dmType)
+      return dmType;
+  } else {
+    if (name.includes("morsure"))
+      return "morsure";
+    if (name.includes("griffe"))
+      return "griffes";
+    if (name.includes("coup"))
+      return "coup";
+  }
+  return "";
+}
+
+/**
  * Parse an attack from a statblock line
  * @param {string} sbLine - line of text
  * @param {Map} npcAttrs - Map of attributes to update
@@ -21621,7 +21704,7 @@ function importNPCAttack(sbLine, npcAttrs) {
   npcAttrs.set(rowId + "atk", bonus);
   npcAttrs.set(rowId + "crit", "20");
   npcAttrs.set(rowId + "dm", dm);
-  npcAttrs.set(rowId + "dmtype", "tranchants");
+  npcAttrs.set(rowId + "dmtype", getDMType(name));
   npcAttrs.set(rowId + "dmdiv", intval(dmdiv));
   if (range !== "")
     npcAttrs.set(rowId + "portee", rangeWithUnits(range));
@@ -21685,7 +21768,7 @@ function statBlockFromDRS(statblock) {
 
     // name
     if (lineNum === 0) {
-      npcAttrs.set("character_name", sbLine);
+      npcAttrs.set("character_name", capitalize(sbLine, true));
       return;
     }
     
@@ -21824,7 +21907,7 @@ function statBlockFromDRS(statblock) {
         npcAttrs.set(rowId + "atk", intval(bonus));
         npcAttrs.set(rowId + "crit", "20");
         npcAttrs.set(rowId + "dm", dm);
-        npcAttrs.set(rowId + "dmtype", "tranchants");
+        npcAttrs.set(rowId + "dmtype", getDMType(name));
         if (dmdiv)
           npcAttrs.set(rowId + "dmdiv", intval(dmdiv));
         if (range)
@@ -21913,7 +21996,7 @@ function statBlockFromPDF(statblock) {
         match = sbLine.match(/(.+)\|[ ]*NC[ ]+([0-9.,]+)/);
         if (match) {
           const [ , character_name, nc ] = match;
-          npcAttrs.set("character_name", character_name);
+          npcAttrs.set("character_name", capitalize(character_name, true));
           npcAttrs.set("niveau", nc);
         }
         return;
@@ -21928,11 +22011,15 @@ function statBlockFromPDF(statblock) {
       }
 
       // size
-      match = sbLine.match(/TAILLE[ ]+(MINUSCULE|TRÈS[ ]+PETITE|PETITE|MOYENNE|GRANDE|ÉNORME|COLOSSALE)/);
+      match = sbLine.toLowerCase().match(/taille[ ]+(minuscule|tr[èe]s[ ]+petite|petite|moyenne|grande|[ée]norme|colossale)/);
       if (match) {
         const taille = strval(match[1]);
-        if (taille !== "")
-          npcAttrs.set("taille", taille.toLowerCase());
+        if (taille !== "") {
+          if (taille === "énorme")
+            npcAttrs.set("taille", "Enorme");
+          else
+            npcAttrs.set("taille", capitalize(taille, true));
+        }
       }
 
       // défense
