@@ -13368,9 +13368,11 @@ function updatePVMax(eventInfo, changed = "") {
       }
 
       if (SWData.settings.level1Paths.includes(path) && rankPath === 2)
-          if (hasProp(props, "initial") || hasProp(props, "mage"))
+          if (hasProp(props, "initial"))
             return;
-      
+      if (hasProp(props, "mage"))
+        return;
+
       if (pathPV === 0) {
         const pathName = strval(getPathNames(values.noms_voies)[path - 1]);
         if (pathName !== "") {
@@ -17044,7 +17046,7 @@ function checkAbilityPoints(changed = "") {
 
       const props = strval(values[ability + "_props"]);
       if (SWData.settings.level1Paths.includes(path) && rankPath === 2)
-        if (hasProp(props, "initial") || hasProp(props, "mage"))
+        if (hasProp(props, "initial"))
           return;
 
       const minLevel = SWData.settings.minLevels[rankPath - 1];
@@ -17157,12 +17159,12 @@ on(changeEvent(SWData.settings.level1Paths.map(p => `v${p}r2`)), function(eventI
     const props = strval(values[rankProps])
       .split("\n")
       .filter(p => strval(p) !== "")
-      .filter(p => !p.startsWith("initial") && !p.startsWith("mage"));
+      .filter(p => !p.startsWith("initial"));
     
     if (checked) {
       const initMage = rank2Props.some(a => {
         const prop = strval(values[a]);
-        return prop.startsWith("initial") || prop.startsWith("mage");
+        return prop.startsWith("initial");
       });
       if (!initMage) {
         if (abilityInfo(rank).path === 1 && path1Mage) {
