@@ -6425,6 +6425,8 @@
                     <li>Ajout propriétés <em>mods</em> et <em>options</em> aux équipements de type arme</li>
                     <li>Amélioration des armes maîtrisées (+X dans le nom et interactions avec COFantasy2)</li>
                     <li>Ajout de 4 langues personnalisées + possibilité de renommer les langues standard</li>
+                    <li>Inversion du nombre d'utilisations des capacités à usage limité</li>
+                    <li>Ajout du <em>pacte occulte</em> des mages</li>
                   </ul>
                 </details>
               </li>
@@ -8111,6 +8113,7 @@
                   </summary>
                   <ul>
                     <li>Remplacement case multi-attaques par nombre d'attaque (1 par défaut)</li>
+                    <li>Inversion du nombre d'utilisations des capacités à usage limité</li>
                   </ul>
                 </details>
               </li>
@@ -14335,7 +14338,7 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
         return {};
 
       return resetAbilities.reduce((result, ability) => {
-        return { ...result, [ability.reset]: 0 };
+        return { ...result, [ability.reset]: ability.uses };
       }, {});
     }
 
@@ -14353,7 +14356,7 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
         rsub: `Capacités par ${freq}`,
         text: resetUsesText(resetAbilities)
       };
-      sendChatMsg(buildChatMsg(rollTemplate(chatMsg)));
+      sendChatMsg(rollTemplate(chatMsg));
       setAttrs(resetUsesUpdate(resetAbilities));
     }
 
@@ -14540,11 +14543,16 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
         choices.push(SWData.emojis.actions + " Capacités (combat)");
         recups.push(0);
       }
+      if (choices.length === 1)
+        selected = 1;
       if (choices.length > 1) {
         const resp = await askAsync([ "Récupération ?", ...choices ]);
         selected = resp.selected;
       }
-      recup = recups[selected - 1] || -1;
+      if (selected > 0)
+        recup = recups[selected - 1]
+      else
+        recup = -1;
     }
 
     // FULL button
@@ -16650,7 +16658,7 @@ function actionAbility(path, rank) {
 
     const allTags = getAllTags(values);
 
-    const nbUsed = intval(values[used]) + 1;
+    const nbUsed = intval(values[used]) - 1;
     const maxUses = intval(values[uses]);
     const usage = strval(values[freq]);
 
@@ -16676,13 +16684,13 @@ function actionAbility(path, rank) {
 
     // alert on usage
     if (maxUses !== 0) {
-      if (nbUsed > maxUses) {
+      if (nbUsed < 0) {
         description = "";
         expended = true;
         alert = `Nombre maximum d'utilisations déjà atteint`;
         alertCSS = "fumble";
       } else {
-        alert = `Utilisée ${nbUsed} fois`;
+        alert = `Utilisée ${ maxUses - nbUsed } fois`;
         alertCSS = "secondary";
       }
     }
@@ -16825,8 +16833,8 @@ function actionAbility(path, rank) {
     sendChatMsg(chatMsg, { nextRoll });
     
     // Update usages
-    if (maxUses > 0 && nbUsed <= maxUses)
-      updates.set(used, nbUsed);
+    if (maxUses > 0)
+      updates.set(used, Math.max(0, nbUsed));
 
     // Update attributes
     if (updates.size > 0)
@@ -17349,7 +17357,9 @@ on("clicked:reset_uses-btn", function() {
           owned.set(ability, intval(values[attribute]));
         continue;
       }
-      if (!owned.has(ability) || owned.get(ability) === 0)
+      /*if (!owned.has(ability) || owned.get(ability) === 0)
+        continue;*/
+      if (!owned.has(ability) || owned.get(ability) > 0)
         continue;
       const freq = capitalize(values[attribute]);
       if (!freqs.includes(freq)) {
@@ -17392,7 +17402,8 @@ on("clicked:reset_uses-btn", function() {
         sendChatMsg(chatMsg);
         const reset = {};
         abilities[freq].forEach(ability => {
-          reset[abilityInfo(ability).rankUse] = 0;
+          //reset[abilityInfo(ability).rankUse] = 0;
+          reset[abilityInfo(ability).rankUse] = intval(values[abilityInfo(ability).rankUseMax]);
         });
         setAttrs(reset);
       });
@@ -17410,16 +17421,20 @@ on("clicked:reset_npcuses-btn", async function() {
     return;
   const { selected } = await askAsync([ "Capacités ?", "Par combat", "Par jour" ]);
   const daily = (selected === 2);
-  const allFreqs = rollIds.map(id => rptAttr(rptRolls, "npcroll-freq", id));
-  getAttrs(allFreqs, function (values) {
+  const allUses = [
+    ...rollIds.map(id => rptAttr(rptRolls, "npcroll-freq", id)),
+    ...rollIds.map(id => rptAttr(rptRolls, "npcroll-max", id)),
+  ];
+  getAttrs(allUses, function (values) {
     const updates = new Map();
     rollIds.forEach(id => {
       const freq = strval(values[rptAttr(rptRolls, "npcroll-freq", id)]);
+      const maxUses = intval(values[rptAttr(rptRolls, "npcroll-max", id)]);
       const uses = rptAttr(rptRolls, "npcroll-uses", id);
       if (freq.toLowerCase() === "combat")
-        updates.set(uses, 0);
+        updates.set(uses, maxUses);
       if (daily && freq.toLowerCase() === "jour")
-        updates.set(uses, 0);
+        updates.set(uses, maxUses);
     });
     if (updates.size > 0)
       setAttrs(Object.fromEntries(updates));
@@ -21388,25 +21403,25 @@ on("clicked:repeating_npcrolls:npcroll-btn", function() {
       actionType = " - " + action[1];
     }
 
-    let text = "";
+    let text;
     let alert = "";
     let alertCSS = "";
-    const maxUses = numval(values[rptAttr(section, "npcroll-max")]);
+    const maxUses = intval(values[rptAttr(section, "npcroll-max")]);
     const freq = strval(values[rptAttr(section, "npcroll-freq")]);
     if (freq !== "" && maxUses !== 0) {
-      let nbUsed = numval(values[rptAttr(section, "npcroll-uses")]) + 1;
-      if (nbUsed > maxUses) {
+      let nbUsed = intval(values[rptAttr(section, "npcroll-uses")]) - 1;
+      if (nbUsed < 0) {
         text = "";
         alert = `Nombre d'utilisations par ${freq} atteint`;
         alertCSS = "fumble";
       } else {
-        alert = `Utilisée ${nbUsed} fois`;
+        alert = `Utilisée ${ maxUses - nbUsed } fois`;
         alertCSS = "secondary";
       }
-      setAttrs({ [rptAttr(section, "npcroll-uses")]: Math.min(nbUsed, maxUses) });
+      setAttrs({ [rptAttr(section, "npcroll-uses")]: Math.max(nbUsed, 0) });
     }
 
-    if (text === "")
+    if (text !== "")
       text = insertRolls(strval(values[rptAttr(section, "npcroll-desc")]), { isNPC: true, companionOf });
 
     const chatMsg = rollTemplate({
