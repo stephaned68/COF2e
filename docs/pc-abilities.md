@@ -65,9 +65,9 @@ Les informations saisies en mode _Edition_ sont reprises mais non modifiables da
 Pour chaque rang :
 - Une case à cocher permet d'indiquer si la capacité est possédée ou non (permet le calcul du rang du PJ dans ses voies),
 - Une icone permet d'afficher le texte de la capacité dans le chat Roll20.
-  - Si cette capacité a un nombre d'utilisations maximum configuré, cliquer sur ce bouton en compte une.
+  - Si cette capacité a un nombre d'utilisations maximum configuré, cliquer sur ce bouton en décompte une.
   - Si le nombre d'utilisations est dépassé, une alerte s'affiche dans le chat plutôt que le texte de la capacité.
-- Le nombre de fois où cette capacité a été utilisée peut être modifié manuellement. La fréquence de renouvellement est affichée.
+- Le nombre d'utilisations restantes de la capacité peut être modifié manuellement. La fréquence de renouvellement est affichée.
 
 Le texte de la capacité est transformé par insertion de jets en ligne s'il y a lieu (voir paragraphe _Jets en ligne_ ci-dessous).
 

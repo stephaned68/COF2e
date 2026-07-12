@@ -110,13 +110,13 @@ Il est ainsi possible de lancer des jets de capacités directement depuis le sou
 
 # Sous-onglet _Capacités_
 
-Cette liste contient les capacités spéciales du PNJ. Pour chacune, vous indiquez son nom et sa description, et éventuellement le nombre maximum et la fréquence d'utilisations.
+Cette liste contient les capacités spéciales du PNJ. Pour chacune, vous indiquez son nom et sa description, et éventuellement le nombre d'utilisations restantes, le nombre maximum et la fréquence d'utilisations.
 
 Un clic sur le bouton d20 envoie un message dans le chat Roll20 avec le nom et la description. Le texte de la description est traité par la fiche pour substituer les jets en ligne comme décrit pour la description des [capacités des PJs]({{ site.baseurl }}/pc-abilities). Un contrôle du nombre d'utilisations maximum est effectué et un message s'affiche si la limite est atteinte.
 
 Le bouton d20 de la capacité peut être épinglé dans la barre d'actions de Roll20 par glisser-déposer.
 
-Un bouton permet de ré-initialiser le nombre d'utilisation des capacités. Vous choisissez entre les capacités par combat uniquement ou aussi les capacités par jour, et le nombre d'utilisations repasse à zéro.
+Un bouton permet de ré-initialiser le nombre d'utilisation des capacités. Vous choisissez entre les capacités par combat uniquement ou aussi les capacités par jour, et le nombre d'utilisations restantes repasse au maximum.
 
 # Sous-onglet _Notes_
 
