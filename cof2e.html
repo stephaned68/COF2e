@@ -909,7 +909,7 @@
 
               <input type="hidden" class="pv-status" name="attr_pvstatus" value="">
               <div class="bordered centered pv-color">
-                <input type="number" class="two-digits" name="attr_pv" title="@{pv} PV courants">
+                <input type="number" class="two-digits" name="attr_pv" min="0" title="@{pv} PV courants">
                 <span>/&nbsp;</span>
                 <input type="hidden" class="locked" name="attr_locked" value="0">
                 <input type="number" class="two-digits locked" name="attr_pv_max" title="@{pv_max} PV maximum">
@@ -947,7 +947,7 @@
 
               <div class="bordered centered">
                 <input type="hidden" name="attr_dr_max" value="2">
-                <input type="number" name="attr_dr" title="@{dr} DR courants" value="2">
+                <input type="number" name="attr_dr" min="0" title="@{dr} DR courants" value="2">
                 /&nbsp;
                 <span class="attr-max" name="attr_dr_max" title="@{dr_max} DR maximum"></span>
               </div>
@@ -956,7 +956,7 @@
 
             <div class="bordered centered hit">
               DM temporaires
-              <input type="number" class="two-digits" name="attr_temp_dm" title="@{temp_dm}" value="">
+              <input type="number" class="two-digits" min="0" name="attr_temp_dm" title="@{temp_dm}" value="">
             </div>
 
             <!-- PM -->
@@ -970,7 +970,7 @@
 
               <div class="bordered centered">
                 <input type="hidden" name="attr_pm_max" value="0">
-                <input class="two-digits" type="number" name="attr_pm" title="@{pm} PM courants" value="0">
+                <input class="two-digits" min="0" type="number" name="attr_pm" title="@{pm} PM courants" value="0">
                 /
                 <span class="attr-max" name="attr_pm_max" title="@{pm_max} PM maximum"></span>
               </div>
@@ -991,7 +991,7 @@
 
               <div class="bordered centered">
                 <input type="hidden" name="attr_pe_max" value="0">
-                <input class="two-digits" type="number" name="attr_pe" title="@{pe} PE courants" value="0">
+                <input class="two-digits" type="number" min="0" name="attr_pe" title="@{pe} PE courants" value="0">
                 /
                 <span class="attr-max" name="attr_pe_max" title="@{pe_max} PE maximum"></span>
               </div>
