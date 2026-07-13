@@ -16934,6 +16934,31 @@ function updateAllRanks(path) {
 }
 
 /**
+ * Normalize abilities property attribute value
+ * @param {string} attr - v#r#_props attribute name
+ */
+function normalizeRankProps(attr) {
+  getAttrs([ attr ], function(values) {
+    let resetPV = false;
+    let props = strval(values[attr]);
+    if (props === "")
+      return;
+    props = props.split("\n").map(propVal => {
+      let [ prop, value ] = propVal.trim().split(":");
+      if (!value)
+        if (!prop.endsWith(":"))
+          propVal = prop + ": ";
+      if (prop.startsWith("initial") || prop.startsWith("mage"))
+        resetPV = true;
+      return propVal;
+    }).join("\n");
+    setAttrs({ [attr]: props }, null, () => {
+      updatePVMax({});
+    });
+  });
+}
+
+/**
  * Update the buffs_voies & v#r#_selonrang attributes
  * @param {number} path - path number changed
  */
@@ -17239,8 +17264,9 @@ seq(9).forEach(path => {
         setAttrs({ [`${ability}-btn`]: `%{${charName}|${ability}-btn}` });
       });
     });
-    
+
     on(`change:${ abilityInfo(ability).rankProps }`, function () {
+      normalizeRankProps(abilityInfo(ability).rankProps);
       updateBuffsByRank(path);
     });
 
