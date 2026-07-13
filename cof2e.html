@@ -16945,9 +16945,12 @@ function normalizeRankProps(attr) {
       return;
     props = props.split("\n").map(propVal => {
       let [ prop, value ] = propVal.trim().split(":");
-      if (!value)
+      if (!value) {
         if (!prop.endsWith(":"))
-          propVal = prop + ": ";
+          propVal = prop + ":";
+        if (!propVal.endsWith(" "))
+          propVal += " ";
+      }
       if (prop.startsWith("initial") || prop.startsWith("mage"))
         resetPV = true;
       return propVal;
