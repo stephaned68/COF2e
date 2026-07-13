@@ -14408,9 +14408,13 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
         bLevel = addLevel ? level : Math.ceil(level / 2);
         bRecup = `+ ${bLevel}[Niveau${ addLevel ? "" : "/2" }] `;
       }
-      let text = `${dr} DR restants`;
+      let text;
+      if (dr >= 0) 
+        text = `${dr} DR restants`;
+      else
+        text = "Plus de DR restants";
       let restorePM;
-      if (pmMax > 0) {
+      if (pmMax > 0 && dr >= 0) {
         if (type === recoveryTypes.FULL || type === recoveryTypes.ALL) {
           restorePM = pmMax - pm;
           text = `${restorePM} PM récupérés, ` + text;
@@ -14418,21 +14422,24 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
       }
       let recup;
       let resetAbilities;
-      if (type === recoveryTypes.PUSH) {
+      let effort = getRandom(10);
+      if (type === recoveryTypes.PUSH && dr >= 0) {
         rsub = "Se dépasser";
-        recup = `[[${ rolls[0] } + 1d10 + @{vol}[VOL] ]]`;
+        recup = `[[${ rolls[0] } + ${effort} + @{vol}[VOL] ]]`;
       } else if (type === recoveryTypes.MANA || type === recoveryTypes.PCMANA) {
         rsub += lowFan ? " *Complète*" : " *Rapide*";
         restorePM = pmMax - pm;
         const halfPM = !lowFan && !family.includes("mages") && type !== recoveryTypes.PCMANA;
         if (halfPM) {
           restorePM = Math.ceil(restorePM / 2);
-          text = "@{character_name} récupère la moitié des PM perdus\n" + text;
+          text = (dr >= 0 ? "@{character_name} récupère la moitié des PM perdus\n" : "") + text;
         } else {
-          text = "@{character_name} récupère tous les PM perdus\n" + text;
+          text = (dr >= 0 || type === recoveryTypes.PCMANA ? "@{character_name} récupère tous les PM perdus\n" : "") + text;
           if (type === recoveryTypes.PCMANA)
             text += `, ${ --pc } PC restants`;
         }
+        if (type === recoveryTypes.MANA && dr < 0)
+          restorePM = 0;
         recup = `[[${restorePM} ]]`;
         if (lowFan)
           resetAbilities = combat.concat(daily);
@@ -14472,7 +14479,7 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
       if (type === recoveryTypes.PUSH) {
         chatMsg = { ...chatMsg, roll: recup };
         if (rolls.length > 1)
-          chatMsg = { ...chatMsg, broll: `[[${ rolls[1] } + 1d10 + @{vol}[VOL] ]]` };
+          chatMsg = { ...chatMsg, broll: `[[${ rolls[1] } + ${effort} + @{vol}[VOL] ]]` };
       } else {
         const healdesc = (type === recoveryTypes.MANA || type === recoveryTypes.PCMANA)
         ? "PM"
@@ -14483,7 +14490,7 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
       startRoll(chatCmd, roll => {
         finishRoll(roll.rollId);
         let updates = new Map([ 
-          [ "dr", dr ]
+          [ "dr", Math.max(dr, 0) ]
         ]);
         if (type !== recoveryTypes.PUSH && type !== recoveryTypes.MANA) {
           pv += roll.results.heal.result;
