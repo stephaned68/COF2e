@@ -14460,7 +14460,7 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
         else
           resetAbilities = combat.concat(daily);
       }
-      if (resetAbilities.length > 0)
+      if (resetAbilities?.length > 0)
         text += "\n" + resetUsesText(resetAbilities);
       
       // build chat msg
@@ -14512,9 +14512,10 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
 
     let recup = [
       recoveryTypes.FAST,
-      recoveryTypes.FULL
+      recoveryTypes.FULL,
+      recoveryTypes.PUSH
     ][typeRecup];
-
+    
     // FAST button
     if (typeRecup === 0) {
       const choices = [];
