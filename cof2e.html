@@ -13489,8 +13489,10 @@ function updatePMMax(eventInfo) {
       if (cha > base)
         base = cha;
     }
-    const epicMana = hasAbilityName("mana epique", values) ? 5 : 0;
-    const pm_max = spellPM > 0 ? base + spellPM + intval(values.pm_buff) + epicMana : 0;
+    let pm_max = intval(values.pm_buff);
+    const epicMana = spellPM > 0 && hasAbilityName("mana epique", values) ? 5 : 0;
+    if (spellPM > 0) 
+      pm_max += base + spellPM + epicMana;
     logAndSet({ pm_max }, logTitle(eventInfo));
   });
 }
