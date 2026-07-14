@@ -221,6 +221,12 @@ Si une capacité est paramétrée avec des propriétés de type `etendu` et que 
 
 En cas de point de capacité orphelin, cette propriété doit être indiquée pour la dernière capacité de rang 2 acquise afin que le calcul automatique des PV maximum soit correct.
 
+### Capacités des mages (mage)
+
+`mage: `
+
+Cette propriété doit être indiquée pour les capacités de sort supplémentaires acquises via le sacrifice d'une caractéristique physique. Elle permet d'ajuster le calcul automatique des PV.
+
 ## Capacités épiques
 
 Pour que les calculs des rangs atteints dans les voies, des PV et des points de capacités dépensés soient corrects, une capacité épique ne doit **pas** être cochée.
@@ -312,7 +318,7 @@ Il suffit ensuite de cliquer sur le bouton d'import de la voie pour insérer le 
 - La première ligne du texte doit être le nom de la voie, l'import efface le préfixe (_"Voie du..."_, _"Voie de la ..."_, etc...)
 - Une ligne qui commence par un chiffre et se termine par `:` marque le nom d'une capacité, les lignes suivantes sont assemblées pour former la description complète.
 - Cette description est analysée pour trouver des références à un nombre d'utilisations limité (ex : _"une fois par combat, ..."_)
-- Si le nom d'une capacité comporte un astérisque `*`, celle-ci est considérée comme un sort. _Attention_ : ce caractère n'existe pas dans les textes copiés depuis le DRS, il n'est donc pas possible d'identifier les sorts.
+- Si le nom d'une capacité comporte un astérisque `*`, celle-ci est considérée comme un sort.
 
 # Jets en ligne (Inline-Rolls)
 
