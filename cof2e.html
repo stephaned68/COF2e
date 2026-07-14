@@ -18220,7 +18220,7 @@ function importFromDRS(text, path, base = 1) {
     if (matchTitle) {
       let [ rank, title ] = matchTitle.slice(1);
       rank = intval(rank) - base + 1;
-      updates.set(`v${path}r${rank}_spell`, title.endsWith("*") ? 1 : 0); 
+      updates.set(`v${path}r${rank}_spell`, title.includes("*") ? 1 : 0); 
       title = title.replace("*", "");
       abilityTitle = `voie${path}-t${rank}`;
       updates.set(abilityTitle, title.trim());
