@@ -5310,19 +5310,18 @@
 
             <div class="sheet-col">
               <h4>Import des capacités</h4>
-              <textarea class="statblock" name="attr_voie_pdf" placeholder="Copiez ici le texte de la voie..."></textarea>
+              <textarea class="statblock" name="attr_voie_pdf" placeholder="Coller ici le texte de la voie copié depuis le PDF ou le DRS avec l'option &quot;Coller en texte brut&quot;"></textarea>
             </div>
 
             <div class="sheet-col">
 
               <ul>
-                <li>Cliquez sur le bouton Import à droite du nom de la voie</li>
+                <li>Cliquez sur le bouton Import <span class="img-btn">W</span> à droite du nom de la voie</li>
                 <li>N'oubliez pas d'indiquer le premier rang de la voie dans la configuration</li>
                 <li>
-                  La première ligne est le nom de la voie<br>
-                  Les préfixes ("Voie du ...", "Voie de la ...") sont tronqués
+                  La première ligne est le nom de la voie et les préfixes ("Voie du ...", "Voie de la ...") sont tronqués
                 </li>
-                <li>Une ligne commençant par un chiffre marque le début d'une capacité</li>
+                <li>Une ligne qui commence par un chiffre marque le début d'une capacité</li>
                 <li>Les lignes suivantes constituent la description de la capacité</li>
               </ul>
 
@@ -18221,10 +18220,8 @@ function importFromDRS(text, path, base = 1) {
     if (matchTitle) {
       let [ rank, title ] = matchTitle.slice(1);
       rank = intval(rank) - base + 1;
-      /* cannot identify spells
-      updates.set(`v${path}r${rank}_spell`, title.includes("*") ? 1 : 0); 
+      updates.set(`v${path}r${rank}_spell`, title.endsWith("*") ? 1 : 0); 
       title = title.replace("*", "");
-      */
       abilityTitle = `voie${path}-t${rank}`;
       updates.set(abilityTitle, title.trim());
       ability = `voie${path}-${rank}`;
