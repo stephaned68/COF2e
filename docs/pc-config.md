@@ -87,6 +87,10 @@ Si le nombre de points de capacités utilisé dépasse le nombre maximum disponi
 - Usure des armes : Un échec critique en attaque provoque un jet d'usure.
 - Règles de Peur : les états préjudiciables Effrayé et Paniqué s'ajoutent aux autres.
 
+## Sacrifice (Mages)
+
+Cette section permet de mettre en oeuvre la règle optionnelle du _Pacte sombre_ de l'_Atlas d'Osgild_.
+
 ## Dark Fantasy
 - Lutte contre l'Ombre : le nombre de PC mini est de -5, et devient la Valeur d'Ombre lorsqu'elle est négative.
 
@@ -128,6 +132,10 @@ _Exemple :_
 Cette section permet de définir les noms de 1 à 4 compétences personnalisées qui s'ajoutent à la liste standard de 22 compétences définies dans l'_Atlas d'Osgild_.
 
 Une ou plusieurs caractéristiques associées peuvent être cochées pour chaque compétence personnalisées. Le jet de compétence effectué demandera la caractéristique à utiliser si nécessaire.
+
+## Pense-bête
+
+Cette zone de texte permet d'indiquer différentes informations qui seront chargées dans la bulle d'aide du jeton de personnage, à condition que l'intégration avec le script MOD **TokenMod** soit active.
 
 ## Notifications
 
