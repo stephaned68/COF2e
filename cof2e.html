@@ -16625,6 +16625,7 @@ function actionAbility(path, rank) {
   getAttrs([
     ...abilityAttrs, 
     "character_name",
+    "scriptVersion",
     "pm", "pe",
     "concentration", "concentration_pow",
     "rangs_voies"
@@ -16667,7 +16668,7 @@ function actionAbility(path, rank) {
 
     const allTags = getAllTags(values);
 
-    const nbUsed = intval(values[used]) - 1;
+    const nbUsed = intval(values[used]) - (hasMODScript(values) ? 1 : 0);
     const maxUses = intval(values[uses]);
     const usage = strval(values[freq]);
 
@@ -16692,7 +16693,7 @@ function actionAbility(path, rank) {
     let expended = false;
 
     // alert on usage
-    if (maxUses !== 0) {
+    if (maxUses !== 0 && !hasMODScript(values)) {
       if (nbUsed < 0) {
         description = "";
         expended = true;
@@ -16708,7 +16709,11 @@ function actionAbility(path, rank) {
     let maxD4e = 0;
     const power = psionic ? "pe" : "pm";
     const powerName = psionic ? "Points d'Ego" : "Points de Mana";
-    if (!expended && abilityOwned && abilitySpell) {
+    const countPMPE = !expended &&            // remaining usages
+                      abilityOwned &&         // owned ability
+                      abilitySpell &&         // spell ability
+                      !hasMODScript(values);  // COFantasy2 not installed
+    if (countPMPE) {
       let currentPower = intval(values[power]);
       let powerUsed = rank + rankBase - 1;
       const powerProp = strval(getProp(abilityProps, power));
@@ -16842,13 +16847,12 @@ function actionAbility(path, rank) {
     sendChatMsg(chatMsg, { nextRoll });
     
     // Update usages
-    if (maxUses > 0)
+    if (maxUses > 0 && !hasMODScript(values))
       updates.set(used, Math.max(0, nbUsed));
 
     // Update attributes
     if (updates.size > 0)
       setAttrs(Object.fromEntries(updates));
-
   });
 }
 
@@ -16954,9 +16958,7 @@ function normalizeRankProps(attr) {
         resetPV = true;
       return propVal;
     }).join("\n");
-    setAttrs({ [attr]: props }, null, () => {
-      updatePVMax({});
-    });
+    setAttrs({ [attr]: props }, null, () => updatePVMax({}));
   });
 }
 
