@@ -68,6 +68,9 @@ Pour chaque rang :
   - Si cette capacité a un nombre d'utilisations maximum configuré, cliquer sur ce bouton en décompte une.
   - Si le nombre d'utilisations est dépassé, une alerte s'affiche dans le chat plutôt que le texte de la capacité.
 - Le nombre d'utilisations restantes de la capacité peut être modifié manuellement. La fréquence de renouvellement est affichée.
+- Si la capacité est un sort, le nombre de points de mana nécessaire est décompté du maximum. Si le personnage n'a plus assez de PM, la fiche calcule et affiche le nombre de PV perdus en cas d'utilisation de la _Brûlure de Mana_.
+
+_Le nombre d'utilisation et le nombre de PM ne sont pas décomptés si le script MOD **COFantasy2** est installé._
 
 Le texte de la capacité est transformé par insertion de jets en ligne s'il y a lieu (voir paragraphe _Jets en ligne_ ci-dessous).
 
