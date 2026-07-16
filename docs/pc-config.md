@@ -89,7 +89,10 @@ Si le nombre de points de capacités utilisé dépasse le nombre maximum disponi
 
 ## Sacrifice (Mages)
 
-Cette section permet de mettre en oeuvre la règle optionnelle du _Pacte sombre_ de l'_Atlas d'Osgild_.
+Cette section permet de mettre en oeuvre la règle optionnelle du _Pacte sombre_ de l'_Atlas d'Osgild_. 4 cases à cocher permettent d'indiquer les caractéristiques physiques sacrifiées par le pacte. Pour chaque case cochée :
+- Un pseudo-buff est créé pour réduire le score de caractéristique de 1.
+- Le nombre de points de capacités disponibles augmente de 2.
+- Les capacités acquises grâce à ces points supplémentaires doivent avoir la propriété `mage: ` pour que le calcul automatique des PV soit correct.
 
 ## Dark Fantasy
 - Lutte contre l'Ombre : le nombre de PC mini est de -5, et devient la Valeur d'Ombre lorsqu'elle est négative.
