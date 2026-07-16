@@ -25,6 +25,7 @@ v1.16.0 [Screenshot](cof2e.png)
 - Fiche de PNJ:
   - Modification de la case à cocher _Attaques multiples_ par un nombre d'attaques (1 par défaut)
   - Amélioration de l'import des attaques à distance d'un statblock
+  - Interactions avec **COFantasy2** (paramètres des capacités)
 
 ### Version _1.16.0_ (2026-06-08)
 
