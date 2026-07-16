@@ -473,6 +473,18 @@ div.path div.block-title {
   display: none;
 }
 
+.cofmain input[value="1"].has-script + .reset-npcuses,
+.cofmain input[value="1"].has-script ~ .repcontainer .repitem .npc-roll-uses,
+.cofmain input[value="0"].has-script ~ .repcontainer .repitem .npc-roll-params {
+  display: none;
+}
+.cofmain input[value="0"].has-script ~ .repcontainer .repitem .npc-roll-uses {
+  display: flex;
+}
+.cofmain input[value="1"].has-script ~ .repcontainer .repitem .npc-roll-params {
+  display: block;
+}
+
 .cofmain input[value="0"].d20roll-btns + div.d20roll-btns,
 .cofmain input[value="2"].d20roll-btns + div.d20roll-btns {
   display: none;

@@ -6421,11 +6421,12 @@
                   </summary>
                   <ul>
                     <li>Amélioration des boutons Récupérations (PE, capacités, 0 DR)</li>
-                    <li>Ajout propriétés <em>mods</em> et <em>options</em> aux équipements de type arme</li>
-                    <li>Amélioration des armes maîtrisées (+X dans le nom et interactions avec COFantasy2)</li>
+                    <li>Ajout des propriétés <em>mods</em> et <em>options</em> aux équipements de type arme</li>
+                    <li>Amélioration des armes maîtrisées (arme magique avec +X dans son nom)</li>
                     <li>Ajout de 4 langues personnalisées + possibilité de renommer les langues standard</li>
                     <li>Inversion du nombre d'utilisations des capacités à usage limité</li>
                     <li>Ajout du <em>pacte occulte</em> des mages</li>
+                    <li>Interactions avec COFantasy2 (contact/lancer, potions, décompte des PM et capacités)</li>
                   </ul>
                 </details>
               </li>
@@ -7410,13 +7411,15 @@
               </h4>
               <h4>
                 UTILISATIONS
-                <button type="action" class="flat-btn img-btn" name="act_reset_npcuses-btn" title="%{reset_npcuses-btn} Ré-initialiser l'usage des capacités">
+                <input type="hidden" class="has-script" name="attr_script_show" value="0">
+                <button type="action" class="flat-btn img-btn reset-npcuses" name="act_reset_npcuses-btn" title="%{reset_npcuses-btn} Ré-initialiser l'usage des capacités">
                   <span class="img-btn">t</span>
                 </button>
               </h4>
               <h4>DESCRIPTION</h4>
             </div>
-  
+
+            <input type="hidden" class="has-script" name="attr_script_show" value="0">
             <fieldset class="repeating_npcrolls">
               
               <div class="npc-ability">
@@ -7434,15 +7437,20 @@
                 </div>
 
                 <div class="bordered d-flex">
-                  <input type="number" name="attr_npcroll-uses" title="@{npcroll-uses} Nombre d'utilisations" value="">
-                  /
-                  <input type="number" name="attr_npcroll-max" title="@{npcroll-max} Nombre d'utilisations max"value="">
-                  &nbsp;
-                  <input type="text" list="npcroll-freqs" name="attr_npcroll-freq" title="@{npcroll-freq} Fréquence d'utilisation" placeholder="Par ..." value="">
-                  <datalist id="npcroll-freqs">
-                    <option value="combat"></option>
-                    <option value="jour"></option>
-                  </datalist>
+
+                  <textarea class="npc-roll-params one-row" name="attr_npcroll-param" title="@{npcroll-param} Paramètres de capacité"></textarea>
+                  
+                  <div class="npc-roll-uses">
+                    <input type="number" name="attr_npcroll-uses" title="@{npcroll-uses} Nombre d'utilisations" value="">
+                    /
+                    <input type="number" name="attr_npcroll-max" title="@{npcroll-max} Nombre d'utilisations max"value="">
+                    &nbsp;
+                    <input type="text" list="npcroll-freqs" name="attr_npcroll-freq" title="@{npcroll-freq} Fréquence d'utilisation" placeholder="Par ..." value="">
+                    <datalist id="npcroll-freqs">
+                      <option value="combat"></option>
+                      <option value="jour"></option>
+                    </datalist>
+                  </div>
 
                 </div>
   
