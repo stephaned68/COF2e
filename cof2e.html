@@ -7410,7 +7410,8 @@
                 </button>
               </h4>
               <h4>
-                UTILISATIONS
+                <input type="hidden" name="attr_npcrolluse_label">
+                <span name="attr_npcrolluse_label"></span>
                 <input type="hidden" class="has-script" name="attr_script_show" value="0">
                 <button type="action" class="flat-btn img-btn reset-npcuses" name="act_reset_npcuses-btn" title="%{reset_npcuses-btn} Ré-initialiser l'usage des capacités">
                   <span class="img-btn">t</span>
@@ -22829,6 +22830,8 @@ on("sheet:opened", function() {
       updates.set("script_title", "Le script MOD COFantasy2 n'est pas installé...");
     }
     updates.set("script_show", hasMODScript(values) ? "1" : "0");
+    if (isNPC(sheetType))
+      updates.set("npcrolluse_label", (hasMODScript(values) ? "PARAMÈTRES" : "UTILISATIONS"));
 
     // Update version
     if (values.version !== values.verfdp)
