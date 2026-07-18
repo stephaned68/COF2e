@@ -8957,6 +8957,7 @@ const SWData = {
     highFan: [ 
       "cfg_use_epic",
       "cfg_use_drniv",
+      "cfg_use_fullrec",
       "cfg_use_mana"
     ],
     lowFan: [
@@ -18007,8 +18008,21 @@ on("change:def_car_max " + repeatEvents("buffs", false), function () {
   rebuildBuffLists();
 });
 
-on(changeEvent(getSacrificeAttrs()), function () {
-  rebuildBuffLists();
+/**
+ * On change of stat sacrifice
+ */
+on(changeEvent(getSacrificeAttrs()), function (eventInfo) {
+  const stat = strval(eventInfo.sourceAttribute.split("_")[1]);
+  getAttrs([ "character_name", stat ], function(values) {
+    const value = intval(values[stat]);
+    if (value === -2) {
+      sendChatCmd(`/w "${ strval(values.character_name) }" Sacrifice **impossible**, ${ stat.toUpperCase() } = **-2**`);
+      setAttrs({ ["sacrifice_" + stat]: 0 }, { silent: true });
+      return;
+    }
+    
+    rebuildBuffLists();
+  });
 });
 
 /**
@@ -22765,6 +22779,7 @@ on("sheet:opened", function() {
     "pc_subtab1",
     "compagnon", "comp_def", "comp_pv_max", "comp_init", "comp_pnjatk",
     "pnjatk",
+    "npcrolluse_label",
     "cfg_shadow",
     ...nameSeq(9, abilityInfo().pathRank), // "rang_voie#"),
     ...nameSeq(9, abilityInfo().pathName), // "voie#nom"),
@@ -22825,13 +22840,17 @@ on("sheet:opened", function() {
 
     // COFantasy2 
     if (hasMODScript(values)) {
+      updates.set("script_show", "1");
       updates.set("script_title", `COFantasy2 v${ strval(values.scriptVersion_max) }`);
     } else {
+      updates.set("script_show", "0");
       updates.set("script_title", "Le script MOD COFantasy2 n'est pas installé...");
     }
-    updates.set("script_show", hasMODScript(values) ? "1" : "0");
-    if (isNPC(sheetType))
-      updates.set("npcrolluse_label", (hasMODScript(values) ? "PARAMÈTRES" : "UTILISATIONS"));
+    if (isNPC(sheetType)) {
+      const npcRollUseLabel = hasMODScript(values) ? "PARAMÈTRES" : "UTILISATIONS";
+      if (strval(values.npcrolluse_label) !== npcRollUseLabel)
+        updates.set("npcrolluse_label", npcRollUseLabel);
+    }
 
     // Update version
     if (values.version !== values.verfdp)
