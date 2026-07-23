@@ -234,94 +234,15 @@ Cette propriété doit être indiquée pour les capacités de sort supplémentai
 
 Pour que les calculs des rangs atteints dans les voies, des PV et des points de capacités dépensés soient corrects, une capacité épique ne doit **pas** être cochée.
 
-# Jets de capacités
+# Sous-onglet [_Jets de capacités_]({{ site.baseurl }}/pc-abilities/rolls)
 
-Ce sous-onglet permet de lister des jets liés aux capacités du PJ. Pour chaque jet, vous pouvez indiquer :
-- Un nom
-- Le jet de dé correspondant :
-  - Soit un jet de d20 normal, soit un jet avec _dé bonus_ ou _dé malus_, soit un autre type de jet.
-  - Le score de caractéristique éventuel à ajouter au jet. L'option _Demander_ permet d'afficher un popup Roll20 pour choisir la caractéristique selon les circonstances.
-  - La voie de profil dont le rang doit être ajouté au jet s'il y a lieu.
-  - Un bonus fixe (_+2_ pour une voie de profil, _+3_ pour la voie de peuple, _+5_ pour la voie de prestige).
-- Une description ou un jet spécial. Avant envoi du jet dans le chat, cette description est transformée par insertion de jets en ligne s'il y a lieu (voir paragraphe _Jets en ligne_ ci-dessous).
+# Sous-onglet [_Maîtrises_]({{ site.baseurl }}/pc-abilities/masteries)
 
-L'icone située à côté de **Nom** permet d'afficher un menu d'action dans le chat avec un bouton pour chaque jet de capacité.
+# Sous-onglet [_Jets de compétences_]({{ site.baseurl }}/pc-abilities/skills)
 
-Si la description du jet est vide, mais que son nom correspond au nom d'une capacité possédée par le personnage, le texte de cette capacité est récupéré. **Attention** : si la capacité mise en correspondance par ce mécanisme est un sort, le nombre de PM n'est pas décompté lorsque le jet est effectué.
+# Sous-onglet [_Buffs / Debuffs_]({{ site.baseurl }}/pc-abilities/buffs)
 
-Le bouton d20 du jet peut être épinglé dans la barre d'actions de Roll20 par glisser-déposer.
-
-# Maîtrises
-
-Ce sous-onglet permet d'indiquer les langues maîtrisées par le personnage. Les langues des règles de base ainsi qu'un espace pour 4 langues personnalisées sont disponibles.
-
-Vous pouvez renommer les langues standard. Pour ce faire, créez un attribut personnalisé dans l'onglet **Configuration** dont le nom est `nom_abyssal | nom_aquarien | nom_argotien | nom_celestien | nom_commun | nom_draconique | nom_noirparle | nom_profond | nom_runique | nom_sylvestre`.
-
-Par exemple, pour remplacer _Argotien_ par _Bas parlé_, créez un attribut personnalisé 
-`nom_argotien: Bas parlé`.
-
-On peut également noter des maîtrises spécifiques d'armes et d'armures sous forme de champ de texte libre.
-
-Une icône _Information_ permet de chuchoter dans le chat Roll20 un message rappelant les maîtrises d'armes, d'armures et de boucliers du personnage liées à son profil principal.
-
-# Jets de compétences
-
-Ce sous-onglet n'apparaît que si la règle optionnelle est activée dans l'onglet _Configuration_ de la fiche.
-
-- Cliquez sur le nom de la compétence pour faire un jet dans le chat Roll20.
-- La caractéristique la plus souvent utilisée est indiquée par défaut mais vous pouvez la changer selon les circonstances.
-- Le choix _Demander_ permet d'afficher un popup Roll20 pour sélectionner la caractéristique au moment du jet. La liste des caractéristiques affichée dans le popup est restreinte (par les règles pour les compétences _Athlétisme_ et _Equitation_, par la configuration pour les compétences personnalisées).
-- Indiquez le bonus de compétence qui s'ajoute au jet.
-
-A moins que l'option de configuration _Un seul jet de compétence_ ne soit active ou que le PJ ne soit _Affaibli_, deux jets distincts sont effectués. En cas de jet normal, prenez en compte le premier jet affiché. Prenez le plus élevé des deux jets si le PJ bénéficie d'un _dé bonus_ ou le moins élevé s'il subit un _dé malus_.
-
-# Buffs / Debuffs
-
-Ce sous-onglet permet de créer une liste de buffs / debuffs, c'est à dire des bonus ou malus obtenus par certaines capacités ou circonstances, qui peuvent s'ajouter de manière temporaire ou permanente à certains attributs du PJ.
-
-Pour chaque élément de la liste, vous pouvez indiquer :
-- Si le buff est actif ou pas (case à cocher)
-- Le nom ou origine du buff
-- Si ce buff est temporaire (case à cocher)
-- L'attribut auquel ce buff s'applique :
-  - Une caractéristique (_AGI_, _CON_, etc), éventuellement tous les jets de caractéristiques
-  - Un score de combat (Initiative, Défense, DM)
-  - Un score d'attaque (Contact, Distance, Magique), éventuellement tous les jets d'attaque
-  - Une ressource (PV, DR, PM, PC)
-- La valeur du buff, qui peut s'exprimer :
-  - Comme une valeur fixe, par exemple `+1`, `-2`
-  - Comme la valeur d'un autre attribut, en référençant celui-ci entre crochets, par exemple `[CHA]`
-  - Comme le niveau du personnage, en le référençant sous la forme `[niveau]`
-  - Comme le rang dans une voie, éventuellement ajusté d'un bonus `X`, en référençant celle-ci sous l'une des formes suivantes :
-    - `[rang voie N]` ou `[rang voie N] + X` pour la voie no `N`
-    - `[rang nom]` ou `[rang nom] + X` pour la voie `nom`
-  - Comme une formule de jet de dés
-- Une éventuelle limitation d'armure, au cas où le buff provient d'une capacité de profil et ne doit s'appliquer que si le personnage porte une armure autorisée pour son profil. Cette limitation est comparée à la propriété `agi-max` de l'armure : si elle est supérieure, le buff n'est pas pris en compte. Par exemple, un buff provenant d'une capacité d'un profil limité au cuir simple (`agi-max` = 6) ne s'applique pas si le personnage porte une armure de cuir renforcée (`agi-max` = 5).
-
-Plusieurs buffs peuvent s'appliquer au même attribut du PJ. Si c'est le cas, le total des buffs actuellement actifs (cochés) est calculé.
-
-## Activation / désactivation par nom
-
-Une icone _Interrupteur_ à côté du titre _Nom du buff_ permet l'activation et désactivation rapide de plusieurs buffs. Un popup Roll20 affiche les noms des buffs de type temporaire. Tous les buffs correspondants au nom sélectionné voient leur état basculer entre actif et inactif.
-
-_Exemple :_ 
-
-Pour gérer un buff pour le sort de _Bénédiction_ du prêtre, créer deux lignes avec le même nom, une avec _Tests de caracs_ et l'autre avec _Tests d'attaque_ en cible et la valeur du bonus octroyée par le sort. Cochez la case _Temporaire_ pour ces deux lignes. Lorsque vous cliquez sur l'icône _Interrupteur_, un popup Roll20 s'affiche avec une liste de choix dont _Bénédiction_. Sélectionnez-le, les deux lignes de buffs correspondantes sont activées ou désactivées.
-
-## Détail par attribut
-
-Cette section dépliable permet de consulter la liste des buffs actuellement appliqués à chaque attribut et leur somme.
-
-# Import
-
-Ce sous-onglet permet de coller le texte d'une voie copié depuis le PDF des règles ou depuis le DRS officiel de Black Book Editions. Cliquez la case correspondante si vous utilisez le DRS.
-
-Il suffit ensuite de cliquer sur le bouton d'import de la voie pour insérer le texte des capacités dans la fiche de personnage.
-- La voie en question est remplie avec le texte copié, toutes les données précédemment saisies sont **écrasées** !
-- La première ligne du texte doit être le nom de la voie, l'import efface le préfixe (_"Voie du..."_, _"Voie de la ..."_, etc...)
-- Une ligne qui commence par un chiffre et se termine par `:` marque le nom d'une capacité, les lignes suivantes sont assemblées pour former la description complète.
-- Cette description est analysée pour trouver des références à un nombre d'utilisations limité (ex : _"une fois par combat, ..."_)
-- Si le nom d'une capacité comporte un astérisque `*`, celle-ci est considérée comme un sort.
+# Sous-onglet [_Import_]({{ site.baseurl }}/pc-abilities/import)
 
 # Jets en ligne (Inline-Rolls)
 
