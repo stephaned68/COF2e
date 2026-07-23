@@ -234,15 +234,15 @@ Cette propriété doit être indiquée pour les capacités de sort supplémentai
 
 Pour que les calculs des rangs atteints dans les voies, des PV et des points de capacités dépensés soient corrects, une capacité épique ne doit **pas** être cochée.
 
-# Sous-onglet [_Jets de capacités_]({{ site.baseurl }}/pc-abilities/rolls)
+# [_Jets de capacités_]({{ site.baseurl }}/pc-abilities/rolls)
 
-# Sous-onglet [_Maîtrises_]({{ site.baseurl }}/pc-abilities/masteries)
+# [_Maîtrises_]({{ site.baseurl }}/pc-abilities/masteries)
 
-# Sous-onglet [_Jets de compétences_]({{ site.baseurl }}/pc-abilities/skills)
+# [_Jets de compétences_]({{ site.baseurl }}/pc-abilities/skills)
 
-# Sous-onglet [_Buffs / Debuffs_]({{ site.baseurl }}/pc-abilities/buffs)
+# [_Buffs / Debuffs_]({{ site.baseurl }}/pc-abilities/buffs)
 
-# Sous-onglet [_Import_]({{ site.baseurl }}/pc-abilities/import)
+# [_Import_]({{ site.baseurl }}/pc-abilities/import)
 
 # Jets en ligne (Inline-Rolls)
 

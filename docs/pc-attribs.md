@@ -149,13 +149,13 @@ Si on clique sur l'icone de d6, la fiche effectue un test de chance (cf page 206
 
 Cette zone résume les différentes RD et résistances aux DM indiquées dans le sous-onglet _Résistances_. Elle s'affiche dans le chat quand le nombre de PV diminue pour rappeler au joueur de réduire les dommages reçus.
 
-# Sous-onglet [_Attaques_]({{ site.baseurl }}/pc-attribs/attacks)
+# [_Attaques_]({{ site.baseurl }}/pc-attribs/attacks)
 
-# Sous-onglet [_Options_]({{ site.baseurl }}/pc-attribs/options)
+# [_Options_]({{ site.baseurl }}/pc-attribs/options)
 
-# Sous-onglet [_En main_]({{ site.baseurl }}/pc-attribs/inhand)
+# [_En main_]({{ site.baseurl }}/pc-attribs/inhand)
 
-# Sous-onglet _Résistances_
+# _Résistances_
 
 Ce sous-onglet permet de lister les réductions et résistances aux dommages dont bénéficie le personnage.
 
