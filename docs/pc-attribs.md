@@ -16,7 +16,11 @@ Ce bouton peut être épinglé dans la barre d'action de Roll20 par glisser-dép
 
 ## Verrouillage
 
-Une icone cadenas ouvert / fermé permet de verrouiller la fiche de personnage. En mode _verrouillé_, le champ _Points de Vigueur Maximum_ n'est pas modifiable, afin d'éviter une mauvaise manipulation.
+Une icone de cadenas (ouvert / fermé) permet de verrouiller la fiche de personnage. En mode _verrouillé_, le champ _Points de Vigueur Maximum_ n'est pas modifiable, afin d'éviter une mauvaise manipulation.
+
+## Jet secret
+
+Une icone de chat permet d'activer la fonctionnalité _Jet secret au MJ_. Cette fonctionnalité ne fonctionne pas avec le moteur _Legacy_ de Roll20. Contrairement à la fonction _Chuchoter_, seul le MJ reçoit le résultat du jet dans le chat, le joueur à l'origine du jet ne voit rien dans le chat. Par défaut, seul le prochain jet est envoyé secrètement au MJ, mais une option de configuration permet de laisser la fonction active, le joueur devant alors la désactiver manuellement.
 
 # Caractéristiques
 
