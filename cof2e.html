@@ -1,8 +1,8 @@
 <div class="cofmain">
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.17.1">
+  <input type="hidden" name="attr_verfdp" value="1.18.0">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.17.1">
+  <input type="hidden" name="attr_version" value="1.18.0">
   <!-- Mode debug -->
   <input type="hidden" name="attr_debug_mode" value="0">
   <!-- Edit locked -->
@@ -378,6 +378,12 @@
         <button type="action" name="act_pc_config-btn" class="main-tab tab-btn pc-config-btn">CONFIGURATION</button>
         <button type="action" name="act_pc_script-btn" class="main-tab tab-btn pc-script-btn">SCRIPT</button>
         <button type="action" name="act_pc_version-btn" class="main-tab tab-btn pc-version-btn">VERSION</button>
+        <div class="float-right">
+          <input type="hidden" class="secret-switch" name="attr_secret" value="0">
+          <button type="action" class="flat-btn img-btn img-btn-lg secret-switch" name="act_secret-btn" title="Envoyer un jet secret au MJ">
+            <span class="img-btn img-btn-lg">q</span>
+          </button>
+        </div>
       </div>
 
       <!-- Fiche PJ, Onglet Caracs -->
@@ -5629,9 +5635,27 @@
                   <option value="" selected>Publics</option>
                   <option value="/w gm ">Chuchotés au MJ</option>
                 </select>
-                <input type="checkbox" name="attr_token_dsp" title="@{token_dsp}" value=" {{token=[x](@{token_url}) }} ">
-                <span>Avec token</span>
+                <div title="@{token_dsp}">
+                  <input type="checkbox" name="attr_token_dsp" value=" {{token=[x](@{token_url}) }} ">
+                  <span>Avec token</span>
+                </div>
               </li>
+              <li title="@{cfg_secret_once} Seul le prochain jet est envoyé en secret au MJ">
+                <input type="checkbox" name="attr_cfg_secret_once" value="1" checked>
+                <span>Un seul jet secret</span>
+              </li>
+              <li title="@{cfg_cible} Cliquer sur le token cible de l'attaque">
+                <input type="checkbox" name="attr_cfg_cible" value="1">
+                <span>Attaques ciblées</span>
+              </li>
+              <li title="@{cfg_optact} Réinitialiser les options tactiques après une attaque">
+                <input type="checkbox" name="attr_cfg_optact" value="1">
+                <span>Options tactiques par attaque</span>
+              </li>
+            </ul>
+            
+            <h4>Automatisations</h4>
+            <ul>
               <li class="config-check">
                 <input type="checkbox" name="attr_cfg_pvmax_auto" value="1">
                 <span>Calcul automatique des PV max.</span>
@@ -5640,16 +5664,8 @@
                 <input type="checkbox" name="attr_cfg_pts_capas" value="1">
                 <span>Contrôle des points de capacités</span>
               </li>
-              <li class="config-check">
-                <input type="checkbox" name="attr_cfg_cible" value="1">
-                <span>Attaques ciblées</span>
-              </li>
-              <li class="config-check">
-                <input type="checkbox" name="attr_cfg_optact" value="1">
-                <span title="Réinitialiser les options tactiques après une attaque">Options tactiques par attaque</span>
-              </li>
             </ul>
-
+            
             <h4>Affichage</h4>
             <ul>
               <li class="config-check">
@@ -6413,6 +6429,17 @@
           <div class="sheet-col">
 
             <ul>
+
+              <li>
+                <details>
+                  <strong>Version 1.18.0</strong> (2026-08)
+                </details>
+                <summary>
+                  <ul>
+                    <li>Ajout des jets secrets au MJ</li>
+                  </ul>
+                </summary>
+              </li>
 
               <li>
                 <details>
@@ -8944,7 +8971,7 @@
 
 /**
  * COF2e Sheet Worker
- * v1.17.1
+ * v1.18.0
  */
 
 const SWData = {
@@ -11917,8 +11944,8 @@ class Repeating {
  */
 function buildChatMsg(msg, options) {
   options = { ...SWData.RT_OPTIONS, ...options };
-  let { title = "", template = "default", whisper = "@{togm}" } = options;
-  if (whisper.charAt(0) !== "@" && whisper !== "") 
+  let { title = "", template = "default", whisper = "@{togm}", secret } = options;
+  if (whisper.charAt(0) !== "@" && whisper !== "")
     whisper = "/w \"" + whisper + "\" ";
   let chatMsg;
   if (Array.isArray(msg)) {
@@ -11926,11 +11953,14 @@ function buildChatMsg(msg, options) {
   } else {
     chatMsg = "{{" + msg + "}}";
   }
+  secret = secret ? "/s " : "";
+  if (secret === "/s ")
+    whisper = "";
   chatMsg += " @{token_dsp}";
   if (template !== "")
-    return `${whisper}&{template:${template}} ${title ? (template === "default" ? `{{name=${title} }}` : `{{${title} }}`) : "" } ${chatMsg}`;
+    return `${whisper}${secret}&{template:${template}} ${title ? (template === "default" ? `{{name=${title} }}` : `{{${title} }}`) : "" } ${chatMsg}`;
   else
-    return `${whisper}${msg}`;
+    return `${whisper}${secret}${msg}`;
 }
 
 /**
@@ -11976,13 +12006,22 @@ async function sendChatCmdAsync(chatCmd) {
  * @param {string|string[]} msg - Message to send
  * @param {MsgOptions} options - Options for the message
  */
-function sendChatMsg(msg, options) {
+async function sendChatMsg(msg, options) {
   options = { ...SWData.RT_OPTIONS, ...options };
+  
+  const values = await getAttrsAsync([ "secret", "cfg_secret_once" ]);
+  options.secret = boolval(values.secret);
+  const secretOnce = boolval(values.cfg_secret_once);
+  
   const chatCmd = buildChatMsg(msg, options);
   startRoll(chatCmd, roll => {
 
     const updates = new Map();
     const computed = {};
+
+    if (options.secret && secretOnce) {
+      updates.set("secret", 0);
+    }
 
     let save = 1;
     if (roll.results.save) 
@@ -12815,6 +12854,15 @@ on("clicked:lock-btn", function() {
   getAttrs([ "locked" ], function(values) {
     setAttrs({ locked: 1 - intval(values.locked) });
   })
+});
+
+/**
+ * Switch secret message
+ */
+on("clicked:secret-btn", function() {
+  getAttrs([ "secret" ], function(values) {
+    setAttrs({ secret: 1 - intval(values.secret) });
+  });
 });
 
 /**

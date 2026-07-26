@@ -10,6 +10,11 @@ v1.17.1 [Screenshot](cof2e.png)
 
 ## Notes de version
 
+### Version _1.18.0_ (2026-08)
+
+- Fiche de PJ:
+  - Ajout des jets secrets au MJ (commande `/s`)
+
 ### Version _1.17.1_ (2026-07-19)
 
 - Fiche de PJ:

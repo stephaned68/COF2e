@@ -1,4 +1,4 @@
-/* COF2e v1.17.1 */
+/* COF2e v1.18.0 */
 
 @import url('https://fonts.googleapis.com/css?family=Merriweather+Sans&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Material+Icons&display=swap');
@@ -1052,6 +1052,7 @@ input[value="0"].spell-concentration-show ~ button.spell-concentration {
   display: none;
 }
 
+button.secret-switch,
 button.attack-maneuvers,
 button.spell-concentration {
   width: 2.5rem;
@@ -1059,11 +1060,13 @@ button.spell-concentration {
   border-radius: 50%;
 }
 
+button.secret-switch span,
 button.attack-maneuvers span,
 button.spell-concentration span {
   font-weight: bolder;
 }
 
+.cof-pc input[value="1"].secret-switch ~ button.secret-switch,
 .pc-main-tab input[value="1"].attack-maneuvers ~ button.attack-maneuvers,
 .pc-abilities-tab input[value="1"].spell-concentration ~ button.spell-concentration {
   background-color: orange;
