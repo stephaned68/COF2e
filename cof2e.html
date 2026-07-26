@@ -5635,10 +5635,8 @@
                   <option value="" selected>Publics</option>
                   <option value="/w gm ">Chuchotés au MJ</option>
                 </select>
-                <div title="@{token_dsp}">
-                  <input type="checkbox" name="attr_token_dsp" value=" {{token=[x](@{token_url}) }} ">
-                  <span>Avec token</span>
-                </div>
+                <input type="checkbox" name="attr_token_dsp" value=" {{token=[x](@{token_url}) }} ">
+                <span title="@{token_dsp}">Avec token</span>
               </li>
               <li title="@{cfg_secret_once} Seul le prochain jet est envoyé en secret au MJ">
                 <input type="checkbox" name="attr_cfg_secret_once" value="1" checked>
