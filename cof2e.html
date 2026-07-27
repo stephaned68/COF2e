@@ -15,6 +15,7 @@
   <!-- Jets -->
   <input type="hidden" name="attr_devol" value="d4">
   <input type="hidden" name="attr_last_rolls" value="">
+  <input type="hidden" name="attr_last_msg" value="">
   <input type="hidden" name="attr_last_maneuver" value="">
   <input type="hidden" name="attr_usure_check" value="">
   <input type="hidden" name="attr_next_roll" value="">
@@ -1323,6 +1324,10 @@
           <div class="opt-tact d-inline p2">
 
             <div class="d-flex d-flex-between align-self-center">
+              <button type="action" name="act_multibuff-btn" class="img-btn flat-btn" title="Activer/désactiver un buff temporaire par nom">
+                <span class="img-btn">Q</span>
+              </button>
+              
               <select class="select-lg" name="attr_tactique" title="@{attr_tactique} Options tactiques">
                 <option value="0">Aucune</option>
                 <option value="1">Assurée +5,DM/2</option>
@@ -6435,6 +6440,8 @@
                 <summary>
                   <ul>
                     <li>Ajout des jets secrets au MJ</li>
+                    <li>Ajout du bouton d'activation des buffs dans l'onglet Attaques</li>
+                    <li>Amélioration des boutons Chance (affichage des DM en cas de dépense après une attaque ratée)</li>
                   </ul>
                 </summary>
               </li>
@@ -12027,12 +12034,13 @@ async function sendChatMsg(msg, options) {
     let last_rolls = "";
     if (roll.results.roll)
       last_rolls += roll.results.roll.result;
-      
     if (roll.results.broll)
       last_rolls += "|" + roll.results.broll.result;
 
-    if (last_rolls !== "" && save)
+    if (last_rolls !== "" && save) {
       updates.set("last_rolls", last_rolls);
+      updates.set("last_msg", JSON.stringify(msg));
+    }
 
     let rolled = 0;
     let rollD20 = 0;
@@ -14904,7 +14912,7 @@ on("change:casque_eqp", function() {
  * On Luck apply button click
  */
 on("clicked:luck_apply-btn", function() {
-  getAttrs([ "pc", "last_rolls", "cfg_pc_var", "cfg_shadow" ], function(values) {
+  getAttrs([ "pc", "last_rolls", "last_msg", "cfg_pc_var", "cfg_shadow" ], function(values) {
     const shadow = boolval(values.cfg_shadow);
     const pcLabel = `Point de ${ shadow ? "Choc" : "Chance" }`;
     const pcMin = shadow ? -5 : 0;
@@ -14922,20 +14930,30 @@ on("clicked:luck_apply-btn", function() {
       return;
     }
 
-    const luck = shadow ? "1d12" : boolval(values.cfg_pc_var) ? "1d10" : "10";
-    pc -= 1;
+    const luck = shadow ? "1d12[Ombre]" : (boolval(values.cfg_pc_var) ? "1d10" : "10") + "[Chance]";
     const [ last_roll, last_broll ] = strval(values.last_rolls).split("|");
-    let roll = "[[" + luck + (last_roll !== "" ? ` + ${last_roll} ` : "" ) + "]]";
-    if (last_broll)
-      roll += " | [[" + luck + ` + ${last_broll} ` + "]]";
-    const chatMsg = rollTemplate({
-      lsub,
-      rsub,
-      roll,
-      text: `${pc} ${pcLabel} restants`,
-      save: "[[0]]"
+    
+    const chatMsg = objval(values.last_msg).map(prop => {
+      let [ name, value ] = prop.split("=");
+
+      if (name === "roll" && value !== "")
+        value = "[[" + luck + (last_roll !== "" ? ` + ${last_roll} ` : "" ) + "]]";
+      if (name === "broll" && value !== "")
+        value = "[[" + luck + (last_broll !== "" ? ` + ${last_broll} ` : "" ) + "]]";
+      
+      if ([ "chance", "round", "tohit", "target", "targetname" ].includes(name))
+        value = "";
+      
+      if (name === "text")
+        value += (value !== "" ? "\n" : "") + `${pc} ${pcLabel} restants`
+      
+      return `${name}=${value}`;
     });
+    chatMsg.push("save=[[0]]");
+    
     sendChatMsg(chatMsg);
+
+    pc -= 1;
     setAttrs({ pc });
   });
 });
