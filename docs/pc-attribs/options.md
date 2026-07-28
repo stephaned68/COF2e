@@ -34,7 +34,7 @@ Vous pouvez indiquer dans le champ de DM une _Roll Query_ Roll20 afin que la fic
 
 `?{Sournoise ?|Non,0|Oui,2d4°}`
 
-NB : Pour ne pas avoir à actualiser le nombre de d4° quand le voleur atteint le rang 4 dans une voie de profil, vous pouvez commencer par créer un attribut personnalisé `dm-sournoise` (cf. onglet [Configuration]({{ site.baseurl }}/pc-config)) dont la valeur est calculée à partir de l'attribut standard `voies_rang4`, et va donc suivre l'évolution des rangs acquis dans les voies. Puis indiquez `@{dm-sournoise}` dans le champ de DM (ou `?{Sournoise ?|Non,0|Oui,@{dm-sournoise}}` pour poser la question).
+NB : Pour ne pas avoir à actualiser le nombre de d4° quand le voleur atteint le rang 4 dans une voie de profil, vous pouvez commencer par créer un attribut personnalisé `dm-sournoise` (cf. onglet [Configuration]({{ site.baseurl }}/pc-config)) dont la valeur est calculée à partir de l'attribut standard `voies_rang4`, et va donc suivre l'évolution des rangs acquis dans les voies. Puis indiquez `@{dm-sournoise}` dans le champ de DM, ou `?{Sournoise ?|Non,0|Oui,@{dm-sournoise}}` pour que la fiche pose la question.
 
 #### Dans le mille
 
@@ -45,7 +45,7 @@ Pour créer l'option _Dans le mille_, indiquez :
 
 Cochez la case d'activation. A chaque fois que le rôdeur effectue une attaque, la fiche demandera le type d'action utilisée, effectuera le jet d'attaque avec un dé malus, et lancera les dés de DM supplémentaires selon le choix effectué.
 
-Vous pouvez aussi créer deux options distinctes `Dans le mille (A)` et `Dans le mille (L)` avec les dés de DM supplémentaires correspondants et activer l'une ou l'autre.
+Vous pouvez aussi créer deux options distinctes `Dans le mille (A)` et `Dans le mille (L)` avec les dés de DM supplémentaires correspondants, et activer l'une ou l'autre.
 
 #### Frappe du justicier
 

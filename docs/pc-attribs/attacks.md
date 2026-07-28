@@ -95,9 +95,9 @@ Si l'option _Options tactiques favorites_ est active, la liste déroulante des o
 
 Il est ainsi possible d'activer ou de désactiver des options personnalisées directement depuis le sous-onglet _Attaques_.
 
-La même icone _Interrupteur_ que celle disponible dans le sous-onglet _Buffs_ est également disponible pour permettre l'activation et désactivation rapide de plusieurs buffs.
+La même icone _Interrupteur_ que celle disponible dans le sous-onglet _Buffs_ est disponible pour permettre l'activation et désactivation rapide de plusieurs buffs.
 
-Une option spéciale _Def -5_ est disponible pour indiquer si la cible subit un état préjudiciable qui modifie sa DEF.
+Une icone _Bouclier_ est disponible pour indiquer si la cible de la prochaine attaque subit un état préjudiciable qui réduit sa DEF de -5.
 
 ---
 
