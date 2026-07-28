@@ -1337,10 +1337,15 @@
                 <span class="img-btn">Q</span>
               </button>
 
-              <div class="fav-tact align-self-center" title="Cible aveuglée, étourdie, renversée ou surprise">
+              <input type="hidden" class="vulnerable-def" name="attr_modsit_def" value="0">
+              <button type="action" name="act_vulnerable-btn" class="img-btn flat-btn vulnerable-def" title="Cible sans défense (aveuglée, étourdie, renversée ou surprise)">
+                <span class="img-btn-cust">e</span>
+              </button>
+
+              <!--<div class="fav-tact align-self-center" title="Cible sans défense (aveuglée, étourdie, renversée ou surprise)">
                 &nbsp;<input type="checkbox" name="attr_modsit_def" value="5">
                 &nbsp;<span>Def -5</span>
-              </div>
+              </div>-->
 
               <input type="hidden" class="fav-tact" name="attr_favtact1" value="0">
               <div class="fav-tact align-self-center">
@@ -1683,9 +1688,9 @@
 
               <h4>Autres conditions</h4>
               
-              <div class="d-flex" title="DEF -5">
+              <div class="d-flex" title="Cible aveuglée, étourdie, renversée ou surprise (DEF -5)">
                 <input type="checkbox" name="attr_modsit_def" value="5">
-                <span>&nbsp;Cible aveuglée, étourdie, renversée ou surprise</span>
+                <span>&nbsp;Cible sans défense</span>
               </div>
 
               <div class="d-flex">
@@ -14930,6 +14935,7 @@ on("clicked:luck_apply-btn", function() {
       sendChatMsg(chatMsg);
       return;
     }
+    pc -= 1;
 
     const luck = shadow ? "1d12[Ombre]" : (boolval(values.cfg_pc_var) ? "1d10" : "10") + "[Chance]";
     const [ last_roll, last_broll ] = strval(values.last_rolls).split("|");
@@ -14946,7 +14952,7 @@ on("clicked:luck_apply-btn", function() {
         value = "";
       
       if (name === "text")
-        value += (value !== "" ? "\n" : "") + `${pc} ${pcLabel} restants`
+        value += (value !== "" ? "\n" : "") + `[[${pc}]] ${pcLabel} restants`;
       
       return `${name}=${value}`;
     });
@@ -14954,7 +14960,6 @@ on("clicked:luck_apply-btn", function() {
     
     sendChatMsg(chatMsg);
 
-    pc -= 1;
     setAttrs({ pc });
   });
 });
@@ -16166,6 +16171,8 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
       rollEffect = effect.join(" ").trim();
     }
 
+    const reset = new Map();
+
     // Roll attack !
     const atkProps = {
       lsub: atkTitle.replace("/", " /\n"),
@@ -16241,9 +16248,10 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
         atkProps.opposed = "[[1]]";
       } else {
         atkProps.tohit = SWData.settings.tokens.target.def;
-        if (modDef !== 0)
-          atkProps.tohit = atkProps.tohit.replace("]]", "") + `-${modDef}[Cible sans défense] ]]`;
-
+        if (modDef !== 0) {
+          atkProps.tohit = atkProps.tohit.replace("]]", "") + ` - ${modDef}[Cible sans défense] ]]`;
+          reset.set("modsit_def", 0);
+        }
       }
       atkProps.target = SWData.settings.tokens.target.name;
       atkProps.targetname = `[[0[${atkProps.target}] ]]`;
@@ -16263,26 +16271,18 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
     sendChatMsg(chatMsg, rollOptions);
     
     dualWield = dualWield.replace(atkButton, "");
-    let updates = { deux_armes: dualWield };
+    reset.set("deux_armes", dualWield);
     if (dualWield === "" && !roundButton && tactics > 0)
-      updates = { ...updates, tactique: "0" };
-    setAttrs(updates);
+      reset.set("tactique", "0"); //updates = { ...updates, tactique: "0" };
+
     if (tactRound) {
-      const reset = new Map();
       tacticIds.map(id => rptAttr("tactic", "tact-on", id)).forEach(attr => {
         reset.set(attr, 0);
       });
-      if (reset.size > 0)
-        setAttrs(Object.fromEntries(reset));
     }
 
-    if (useAmmo && resourceId !== "" && resourceNbr > 0) {
-      const resVal = rptAttr("ressources", "res-val", resourceId);
-      getAttrs([ resVal ], function(values) {
-        const munitions = Math.max(0, intval(values[resVal]) - resourceNbr);
-        setAttrs({ [resVal]: munitions });
-      });
-    }
+    if (reset.size > 0)
+      setAttrs(Object.fromEntries(reset));
 
     const ongoingPrms = ongoingAttrs().map(attr => strval(values[rptOngoing + attr]));
     if(ongoingPrms.some(v => v !== "")) {
@@ -16291,6 +16291,14 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
       const timeSpan = (ogTime !== "") ? insertRolls(" " + ogTime + " ").trim() : "";
       const ongoing_actmod = effectName + "~" + timeSpan + "~" + new Date().toISOString();
       setAttrs({ ongoing_actmod });
+    }
+
+    if (useAmmo && resourceId !== "" && resourceNbr > 0) {
+      const resVal = rptAttr("ressources", "res-val", resourceId);
+      getAttrs([ resVal ], function(values) {
+        const munitions = Math.max(0, intval(values[resVal]) - resourceNbr);
+        setAttrs({ [resVal]: munitions });
+      });
     }
 
   });
@@ -16302,7 +16310,8 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
 on("clicked:round-btn", function () {
   setAttrs({ 
     tactique: 0,
-    def_action: ""
+    def_action: "",
+    modsit_def: 0
   });
 });
 
@@ -16320,6 +16329,16 @@ on("change:tactique", function() {
       "Action (L), +[PER] DM",
     ])[tactics];
     setAttrs({ tactdesc });
+  });
+});
+
+/**
+ * Swap defenseless (DEF -5) target
+ */
+on("clicked:vulnerable-btn", function() {
+  getAttrs([ "modsit_def" ], function(values) {
+    const modsit_def = intval(values.modsit_def) === 0 ? 5 : 0;
+    setAttrs({ modsit_def });
   });
 });
 
