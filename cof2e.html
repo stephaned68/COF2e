@@ -7055,7 +7055,7 @@
               <h4 class="d-inline">Capacités favorites :&nbsp;</h4>
 
               <input type="hidden" class="fav-ability" name="attr_favability1" value="0">
-              <div class="d-inline">
+              <div class="fav-ability d-inline">
                 <button type="action" class="flat-btn img-btn" name="act_fav_ability1-btn" title="%{fav_ability1-btn}">
                   <input type="hidden" name="attr_favability1_id">
                   <input type="hidden" name="attr_favability1_name">
@@ -7066,7 +7066,7 @@
               </div>
 
               <input type="hidden" class="fav-ability" name="attr_favability2" value="0">
-              <div class="d-inline">
+              <div class="fav-ability d-inline">
                 <span class="p2">|</span>
                 <button type="action" class="flat-btn img-btn" name="act_fav_ability2-btn" title="%{fav_ability2-btn}">
                   <input type="hidden" name="attr_favability2_id">
@@ -7078,7 +7078,7 @@
               </div>
 
               <input type="hidden" class="fav-ability" name="attr_favability3" value="0">
-              <div class="d-inline">
+              <div class="fav-ability d-inline">
                 <span class="p2">|</span>
                 <button type="action" class="flat-btn img-btn" name="act_fav_ability3-btn" title="%{fav_ability3-btn}">
                   <input type="hidden" name="attr_favability3_id">
@@ -7090,7 +7090,7 @@
               </div>
 
               <input type="hidden" class="fav-ability" name="attr_favability4" value="0">
-              <div class="d-inline">
+              <div class="fav-ability d-inline">
                 <span class="p2">|</span>
                 <button type="action" class="flat-btn img-btn" name="act_fav_ability4-btn" title="%{fav_ability3-btn}">
                   <input type="hidden" name="attr_favability4_id">
@@ -7102,7 +7102,7 @@
               </div>
 
               <input type="hidden" class="fav-ability" name="attr_favability5" value="0">
-              <div class="d-inline">
+              <div class="fav-ability d-inline">
                 <span class="p2">|</span>
                 <button type="action" class="flat-btn img-btn" name="act_fav_ability5-btn" title="%{fav_ability3-btn}">
                   <input type="hidden" name="attr_favability5_id">
@@ -7450,7 +7450,7 @@
                 </button>
               </h4>
               <h4>
-                <input type="hidden" name="attr_npcrolluse_label">
+                <input type="hidden" name="attr_npcrolluse_label" value="UTILISATIONS">
                 <span name="attr_npcrolluse_label"></span>
                 <input type="hidden" class="has-script" name="attr_script_show" value="0">
                 <button type="action" class="flat-btn img-btn reset-npcuses" name="act_reset_npcuses-btn" title="%{reset_npcuses-btn} Ré-initialiser l'usage des capacités">
@@ -7845,6 +7845,26 @@
               </ul>
             </details>
 
+            <h4>Boss</h4>
+            <div class="npc-configs m2">
+              <div class="align-self-center">
+                +<input type="number" name="attr_boss_rang">
+                &nbsp;Rangs de
+              </div>
+              <div class="d-flex align-self-center">
+                <select class="select-lg" name="attr_boss_type">
+                  <option value="">Choisir</option>
+                  <option value="boss">Boss</option>
+                  <option value="berserker">Boss berserker</option>
+                  <option value="resistant">Boss résistant</option>
+                </select>
+                <input type="hidden" class="npc-boss" name="attr_boss" value="0">
+                <button type="action" class="img-btn flat-btn npc-boss" name="act_boss" title="Ajouter/Retirer des rangs de boss">
+                  <span class="img-btn-cust img-btn-lg">r</span>
+                </button>
+              </div>
+            </div>
+
           </div>
 
           <div class="sheet-col">
@@ -8153,6 +8173,17 @@
           <div class="sheet-col">
 
             <ul>
+
+              <li>
+                <details>
+                  <summary>
+                    <strong>Version 1.18.0</strong> (2026-08)
+                  </summary>
+                  <ul>
+                    <li>Ajout des rangs de boss (Bestiaire)</li>
+                  </ul>
+                </details>
+              </li>
 
               <li>
                 <details>
@@ -12851,9 +12882,7 @@ on("change:sheet_type", function(eventInfo) {
     });
 
     if (isNPC(sheetType)) {
-      let updates = { atkcac: 0, atkmag: 0 };
-      if (isPC(eventInfo.previousValue))
-        updates = { ...updates, pc: 0, pc_max: 0 };
+      let updates = { atkcac: 0, atktir: 0, atkmag: 0, pc: 0, pc_max: 0 };
       logAndSet(updates, logTitle(eventInfo));
     }
 
@@ -17563,7 +17592,7 @@ on("clicked:reset_npcuses-btn", async function() {
     ...rollIds.map(id => rptAttr(rptRolls, "npcroll-freq", id)),
     ...rollIds.map(id => rptAttr(rptRolls, "npcroll-max", id)),
   ];
-  getAttrs(allUses, function (values) {
+  getAttrs([ "boss", "boss_rang", "pc_max", ...allUses ], function (values) {
     const updates = new Map();
     rollIds.forEach(id => {
       const freq = strval(values[rptAttr(rptRolls, "npcroll-freq", id)]);
@@ -17574,6 +17603,10 @@ on("clicked:reset_npcuses-btn", async function() {
       if (daily && freq.toLowerCase() === "jour")
         updates.set(uses, maxUses);
     });
+    
+    if (boolval(values.boss) && intval(values.boss_rang) > 0 && intval(values.pc_max) > 0)
+      updates.set("pc", intval(values.pc_max));
+
     if (updates.size > 0)
       setAttrs(Object.fromEntries(updates));
   });
@@ -21685,6 +21718,122 @@ on("change:atkbase_pnj change:atkcac_pnj change:atktir_pnj change:atkmag_pnj", a
       updates[rptAttr("npcarmes", "arme-atkbase", rowId)] = atkBase;
     });
     setAttrs({ atkcac, atktir, atkmag, ...updates });
+  });
+});
+
+/**
+ * Apply boss ranks
+ */
+on("clicked:boss", function () {
+  const npcAtks = [ "cac", "tir", "mag" ].map(a => `atk${a}_pnj`);
+  const baseAttrs = [
+    "character_name", "niveau",
+    "def", "pv", "pv_max", "pc", "pc_max",
+    ...npcAtks
+  ];
+  getAttrs([ 
+    ...baseAttrs,
+    "boss", "boss_rang", "boss_type", "boss_base"
+  ], function(values) {
+    const type = strval(values.boss_type);
+    if (type === "")
+      return;
+    
+    const isBoss = !boolval(values.boss);
+    const boss = intval(values.boss_rang);
+    if (isBoss && boss <= 0)
+      return;
+
+    if (!isBoss) {
+      const base = objval(values.boss_base);
+      setAttrs({ ...base, boss: 0 });
+      return;
+    }
+
+    const updates = new Map();
+    updates.set("boss", 1)
+
+    const base = baseAttrs.reduce((all, attr) => {
+      all[attr] = values[attr];
+      return all;
+    }, {});
+    updates.set("boss_base", JSON.stringify(base));
+
+    let niveau = intval(values.niveau) + boss;
+    let def = intval(values.def);
+    let pv_max = intval(values.pv_max);
+    let pc_max = intval(values.pc_max);
+    let atkBonus = 0;
+    let dm = "";
+    switch(type) {
+      case "boss":
+        def += (niveau < 10 ? 2 : 1) * boss;
+        atkBonus = (niveau < 10 ? 2 : 1) * boss;
+        pv_max += 20 * boss;
+        pc_max += boss;
+        dm = `+${ boss * 2} DM`;
+        break;
+      case "berserker":
+        atkBonus = (niveau < 10 ? 4 : 2) * boss;
+        pc_max += boss;
+        dm = `+${ boss * 2}d4° DM`;
+        break;
+      case "resistant":
+        def += (niveau < 10 ? 4 : 2) * boss;
+        pv_max += 30 * boss;
+        pc_max += 2 * boss;
+        break;
+    }
+
+    const display = [];
+    display.push(`title=${ strval(values.character_name) }`)
+    display.push(`subtitle=${boss} rangs de boss${ ({ 
+      boss: "",
+      berserker: " berserker",
+      resistant: " résistant" 
+    })[type] }`);
+
+    updates.set("niveau", niveau);
+    display.push(`NC=${niveau}`);
+    
+    updates.set("def", def);
+    display.push(`DEF=${def}`);
+    
+    updates.set("pv_max", pv_max);
+    updates.set("pv", pv_max);
+    display.push(`PV=${pv_max}`);
+    
+    updates.set("pc_max", pc_max);
+    updates.set("pc", pc_max);
+    if (pc_max > 0)
+      display.push(`PC=${pc_max}`);
+    
+    if (atkBonus > 0) {
+      npcAtks.forEach(attr => {
+        updates.set(attr, intval(values[attr]) + atkBonus);
+        const atk = ({
+          atkcac_pnj: "contact",
+          atktir_pnj: "distance",
+          atkmag_pnj: "magique",
+        })[attr];
+        display.push(`Attaque ${atk}=+${ updates.get(attr) }`);
+      });
+    }
+
+    if (dm !== "")
+      display.push(`DM=${ dm } à répartir entre toutes les attaques`);
+
+    let desc = "";
+    if (boss > 5)
+      desc += ", plus de 5 rangs" ;
+    if (boss > intval(base.niveau))
+      desc += ", plus que le NC de base";
+    if (desc !== "")
+      display.push("desc=ATTENTION" + desc);
+
+    sendChatMsg(display, { template: "custom", whisper: "gm" });
+
+    setAttrs(Object.fromEntries(updates));
   });
 });
 
