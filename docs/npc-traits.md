@@ -116,7 +116,7 @@ Un clic sur le bouton d20 envoie un message dans le chat Roll20 avec le nom et l
 
 Le bouton d20 de la capacité peut être épinglé dans la barre d'actions de Roll20 par glisser-déposer.
 
-Un bouton permet de ré-initialiser le nombre d'utilisation des capacités. Vous choisissez entre les capacités par combat uniquement ou aussi les capacités par jour, et le nombre d'utilisations restantes repasse au maximum.
+Un bouton permet de ré-initialiser le nombre d'utilisation des capacités. Vous choisissez entre les capacités par combat uniquement ou aussi les capacités par jour, et le nombre d'utilisations restantes repasse au maximum. Si le PNJ est un boss (cf onglet _Configuration_) et qu'il dispose de PC, il les récupère en cas de ré-initialisation des capacités par jour.
 
 # Sous-onglet _Notes_
 

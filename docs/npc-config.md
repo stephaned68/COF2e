@@ -31,6 +31,18 @@ Cette section permet de gérer certaines créatures dont le score Défense peut 
 - Base : Il s'agit de la valeur de base de la Défense.
 - Supérieure : Il s'agit de la valeur supérieure de la Défense dont la créature peut éventuellement bénéficier via une de ses capacités
 
+## Boss
+
+Cette section permet de modifier les scores et attributs de la créature en ajoutant des rangs de boss.
+
+Indiquez :
+- le nombre de rangs de boss
+- le type de boss (_normal_, _berserker_, _résistant_)
+
+Cliquez sur l'icone _Flamme_ pour appliquer les rangs de boss à la créature. Un message de chat est chuchoté au MJ avec les valeurs résultantes. 
+
+Cliquez de nouveau sur l'icone pour rétablir à leur valeur d'origine les attributs augmentés par les rangs de boss (`DEF`, `PV`, scores d'attaque).
+
 ## Compétences
 
 Cette section permet de configurer des bonus de compétences pour le PNJ.
