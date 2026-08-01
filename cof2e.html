@@ -17604,8 +17604,9 @@ on("clicked:reset_npcuses-btn", async function() {
         updates.set(uses, maxUses);
     });
     
-    if (boolval(values.boss) && intval(values.boss_rang) > 0 && intval(values.pc_max) > 0)
-      updates.set("pc", intval(values.pc_max));
+    const pcMax = intval(values.pc_max);
+    if (boolval(values.boss) && intval(values.boss_rang) > 0 && pcMax > 0)
+      updates.set("pc", pcMax);
 
     if (updates.size > 0)
       setAttrs(Object.fromEntries(updates));
