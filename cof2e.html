@@ -324,7 +324,7 @@
           <strong>Niveau</strong>
         </div>
         <div class="d-flex d-flex-middle">
-          <input type="number" name="attr_niveau" title="@{niveau}" value="0">
+          <input type="number" class="two-digits" name="attr_niveau" title="@{niveau}" value="0">
         </div>
         <div class="d-flex d-flex-middle">
           <strong>Type</strong>
@@ -7155,7 +7155,7 @@
                   <input type="text" name="attr_arme-nom" title="@{arme-nom}" placeholder="Arme/attaque" value="">
                 </div>
                 <div class="d-flex d-flex-middle bordered">
-                  <span class="align-self-center">Att*&nbsp;:&nbsp;</span>
+                  <span class="align-self-center">Multi.*&nbsp;:&nbsp;</span>
                   <input type="number" name="attr_arme-multi" title="@{arme-multi} Attaques multiples" value="1">&nbsp;
                   <select class="select-md" name="attr_arme-roll" title="@{arme-roll} Type de jet">
                     <option value="1d20" selected>Normal</option>
@@ -7845,25 +7845,53 @@
               </ul>
             </details>
 
-            <h4>Boss</h4>
-            <div class="npc-configs m2">
-              <div class="align-self-center">
-                +<input type="number" name="attr_boss_rang">
-                &nbsp;Rangs de
-              </div>
-              <div class="d-flex align-self-center">
-                <select class="select-lg" name="attr_boss_type">
-                  <option value="">Choisir</option>
-                  <option value="boss">Boss</option>
-                  <option value="berserker">Boss berserker</option>
-                  <option value="resistant">Boss résistant</option>
-                </select>
-                <input type="hidden" class="npc-boss" name="attr_boss" value="0">
-                <button type="action" class="img-btn flat-btn npc-boss" name="act_boss" title="Ajouter/Retirer des rangs de boss">
-                  <span class="img-btn-cust img-btn-lg">r</span>
-                </button>
-              </div>
-            </div>
+            <details>
+              <summary>
+                <h4>Boss / Filtre</h4>
+              </summary>
+              <ul>
+                <li>
+                  <input type="hidden" name="attr_boss_base" value="">
+                  <div class="npc-configs m2">
+                    <div class="align-self-center">
+                      +<input type="number" class="two-digits" name="attr_boss_rang">
+                      &nbsp;Rangs de
+                    </div>
+                    <div class="d-flex align-self-center">
+                      <select class="select-lg" name="attr_boss_type">
+                        <option value="">Choisir</option>
+                        <option value="boss">Boss</option>
+                        <option value="berserker">Boss berserker</option>
+                        <option value="resistant">Boss résistant</option>
+                      </select>
+                      <input type="hidden" class="npc-boss" name="attr_boss" value="0">
+                      <button type="action" class="img-btn flat-btn npc-boss" name="act_boss" title="Ajouter/Retirer des rangs de boss">
+                        <span class="img-btn-cust img-btn-lg">r</span>
+                      </button>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <input type="hidden" name="attr_narratif_base" value="">
+                  <div class="npc-configs m2">
+                    <div class="align-self-center">
+                      Filtre narratif
+                    </div>
+                    <div class="d-flex align-self-center">
+                      <select class="select-md" name="attr_narratif_type">
+                        <option value="">Choisir</option>
+                        <option value="sbire" title="Péripétie">Sbire</option>
+                        <option value="nemesis" title="Climax">Nemesis</option>
+                      </select>
+                      <input type="hidden" class="npc-narratif" name="attr_narratif" value="0">
+                      <button type="action" class="img-btn flat-btn npc-narratif" name="act_narratif" title="Appliquer un filtre narratif">
+                        <span class="img-btn-cust img-btn-lg">r</span>
+                      </button>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </details>
 
           </div>
 
@@ -16795,7 +16823,7 @@ function actionAbility(path, rank) {
 
     const allTags = getAllTags(values);
 
-    const nbUsed = intval(values[used]) - (hasMODScript(values) ? 1 : 0);
+    const nbUsed = intval(values[used]) - (!hasMODScript(values) ? 1 : 0);
     const maxUses = intval(values[uses]);
     const usage = strval(values[freq]);
 
@@ -20865,13 +20893,16 @@ function displayCheckup() {
       .filter(ability => boolval(values[ability]))
       .filter(ability => values[`${ability}_use_max`] > 0)
       .map(ability => {
-        const uses = intval(values[`${ability}_use_max`]) - intval(values[`${ability}_use`]);
+        const uses = intval(values[`${ability}_use`]);
+        const remaining = uses > 0
+        ? `Reste ${uses} utilisation${ uses > 1 ? "s" : "" }`
+        : "Plus d'utilisation";
         const freq = strval(values[`${ability}_freq`]);
         const name = strval(values[abilityInfo(ability).rankName]);
-        return `${name}=Reste ${uses} utilisations (par ${freq})`;
+        return `${name}=${remaining} (par ${freq})`;
       });
       if (usage.length > 0)
-        chatMsg.push(usage);
+        chatMsg.push(...usage);
 
       allBuffs.filter(b => strval(values[b]) !== "").forEach(buffList => {
         let target = buffList.split("_")[0];
@@ -21202,6 +21233,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     "character_name", "niveau", "sheet_type", "mook", "compagnon", "pc", "pc_max",
     "atkgroup", "nbgroup", "pnj_tact",
     "atkbase_pnj", "atkcac", "atktir", "atkmag",
+    "narratif", "narratif_type",
     ...specials,
     ...attackAttrs,
   ], function (values) {
@@ -21267,6 +21299,12 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     }
 
     const extraDM = [];
+
+    if (boolval(values.narratif)) {
+      const narrative = strval(values.narratif_type);
+      const narrativeDM = intval(values.niveau) * (narrative === "sbire" ? 1 : -1);
+      extraDM.push(` + ([[${narrativeDM}[${ capitalize(narrative) }]]])`);
+    }
 
     let tactBonus = "";
     let tactDM = "";
@@ -21728,7 +21766,7 @@ on("change:atkbase_pnj change:atkcac_pnj change:atktir_pnj change:atkmag_pnj", a
 on("clicked:boss", function () {
   const npcAtks = [ "cac", "tir", "mag" ].map(a => `atk${a}_pnj`);
   const baseAttrs = [
-    "character_name", "niveau",
+    "character_name", "niveau", "vol",
     "def", "pv", "pv_max", "pc", "pc_max",
     ...npcAtks
   ];
@@ -21741,9 +21779,12 @@ on("clicked:boss", function () {
       return;
     
     const isBoss = !boolval(values.boss);
-    const boss = intval(values.boss_rang);
+    const boss = numval(values.boss_rang);      
     if (isBoss && boss <= 0)
       return;
+    if (boss - intval(boss) !== 0)
+      if (boss - intval(boss) !== 0.5)
+        return;
 
     if (!isBoss) {
       const base = objval(values.boss_base);
@@ -21761,6 +21802,7 @@ on("clicked:boss", function () {
     updates.set("boss_base", JSON.stringify(base));
 
     let niveau = intval(values.niveau) + boss;
+    let vol = intval(values.vol) + boss;
     let def = intval(values.def);
     let pv_max = intval(values.pv_max);
     let pc_max = intval(values.pc_max);
@@ -21772,12 +21814,12 @@ on("clicked:boss", function () {
         atkBonus = (niveau < 10 ? 2 : 1) * boss;
         pv_max += 20 * boss;
         pc_max += boss;
-        dm = `+${ boss * 2} DM`;
+        dm = `+${ intval(boss * 2) } DM`;
         break;
       case "berserker":
         atkBonus = (niveau < 10 ? 4 : 2) * boss;
         pc_max += boss;
-        dm = `+${ boss * 2}d4° DM`;
+        dm = `+${ invtal(boss * 2) }d4° DM`;
         break;
       case "resistant":
         def += (niveau < 10 ? 4 : 2) * boss;
@@ -21785,9 +21827,15 @@ on("clicked:boss", function () {
         pc_max += 2 * boss;
         break;
     }
+    
+    vol = intval(vol);
+    def = intval(def);
+    atkBonus = intval(atkBonus);
+    pv_max = intval(pv_max);
+    pc_max = intval(pc_max);
 
     const display = [];
-    display.push(`title=${ strval(values.character_name) }`)
+    display.push(`title=${ strval(values.character_name) }`);
     display.push(`subtitle=${boss} rangs de boss${ ({ 
       boss: "",
       berserker: " berserker",
@@ -21796,6 +21844,9 @@ on("clicked:boss", function () {
 
     updates.set("niveau", niveau);
     display.push(`NC=${niveau}`);
+    
+    updates.set("vol", vol);
+    display.push(`VOL=${vol}`);
     
     updates.set("def", def);
     display.push(`DEF=${def}`);
@@ -21835,6 +21886,45 @@ on("clicked:boss", function () {
     sendChatMsg(display, { template: "custom", whisper: "gm" });
 
     setAttrs(Object.fromEntries(updates));
+  });
+});
+
+/**
+ * Apply narrative filter
+ */
+on("clicked:narratif", function () {
+  getAttrs([
+    "character_name", "niveau", "pv_max",
+    "narratif", "narratif_type", "narratif_base"
+  ], function(values) {
+    const type = strval(values.narratif_type);
+    if (type === "")
+      return;
+
+    const narratif = !boolval(values.narratif);
+    if (!narratif) {
+      const base = objval(values.narratif_base);
+      setAttrs({ ...base, narratif: 0 });
+      return;
+    }
+    
+    let pv_max = intval(values.pv_max);
+    const mult = type === "sbire" ? -5 : +5;
+    const narratif_base = JSON.stringify({ pv_max });
+    pv_max += mult * intval(values.niveau);
+    setAttrs({ 
+      narratif: 1,
+      narratif_base,
+      pv_max,
+      pv: pv_max
+    });
+
+    const display = [
+      `title=${ strval(values.character_name) }`,
+      `subtitle=${ capitalize(type) }`,
+      `PV=${pv_max}`
+    ];
+    sendChatMsg(display, { template: "custom", whisper: "gm" });
   });
 });
 

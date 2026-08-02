@@ -51,6 +51,7 @@ select:hover {
   text-align: right;
 }
 
+.cofmain .heading input[type="number"].two-digits,
 .cofmain .cofsheet input[type="number"].two-digits {
   width: 4rem;
   text-align: right;
@@ -1061,7 +1062,8 @@ button.secret-switch,
 button.attack-maneuvers,
 button.vulnerable-def,
 button.spell-concentration,
-button.npc-boss {
+button.npc-boss,
+button.npc-narratif {
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;
@@ -1071,7 +1073,8 @@ button.secret-switch span,
 button.attack-maneuvers span,
 button.vulnerable-def span,
 button.spell-concentration span,
-button.npc-boss span {
+button.npc-boss span,
+button.npc-narratif span {
   font-weight: bolder;
 }
 
@@ -1079,7 +1082,8 @@ button.npc-boss span {
 .pc-main-tab input[value="1"].attack-maneuvers ~ button.attack-maneuvers,
 .pc-attacks-subtab input[value="5"].vulnerable-def ~ button.vulnerable-def,
 .pc-abilities-tab input[value="1"].spell-concentration ~ button.spell-concentration,
-.npc-config-tab input[value="1"].npc-boss + button.npc-boss {
+.npc-config-tab input[value="1"].npc-boss + button.npc-boss,
+.npc-config-tab input[value="1"].npc-narratif + button.npc-narratif {
   background-color: orange;
 }
 
