@@ -31,17 +31,21 @@ Cette section permet de gérer certaines créatures dont le score Défense peut 
 - Base : Il s'agit de la valeur de base de la Défense.
 - Supérieure : Il s'agit de la valeur supérieure de la Défense dont la créature peut éventuellement bénéficier via une de ses capacités
 
-## Boss
+## Boss / Filtre
 
-Cette section permet de modifier les scores et attributs de la créature en ajoutant des rangs de boss.
+Cette section permet de modifier les scores et attributs de la créature en ajoutant des rangs de boss ou en appliquant un filtre narratif.
 
 Indiquez :
-- le nombre de rangs de boss
-- le type de boss (_normal_, _berserker_, _résistant_)
+- le nombre de rangs de boss et le type de boss (_normal_, _berserker_, _résistant_)
 
-Cliquez sur l'icone _Flamme_ pour appliquer les rangs de boss à la créature. Un message de chat est chuchoté au MJ avec les valeurs résultantes. 
+ou
 
-Cliquez de nouveau sur l'icone pour rétablir à leur valeur d'origine les attributs augmentés par les rangs de boss (`DEF`, `PV`, scores d'attaque).
+- le type de filtre narratif à appliquer
+
+Cliquez sur l'icone _Flamme_ pour appliquer les rangs de boss ou le filtre narratif à la créature. Un message de chat est chuchoté au MJ avec les valeurs résultantes. 
+
+Cliquez de nouveau sur l'icone pour rétablir à leur valeur d'origine les attributs augmentés par les rangs de boss ou le filtre narratif (`DEF`, `PV`, scores d'attaque).
+
 
 ## Compétences
 
