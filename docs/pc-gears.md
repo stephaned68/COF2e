@@ -63,6 +63,8 @@ Les codes et valeurs correspondantes que vous pouvez indiquer sont :
   - `affutee` : pour réduire de 1 le seuil de critique et ajouter 1d4° DM en cas de coup critique
   - `element` : nom d'élément/substance pour ajouter une ligne de 1d4° DM élémentaires (2d4° si le nom de l'élément est suivi d'un espace et du mot `intense`)
   - `fleau` : nom d'un type de créature pour que Roll20 demande confirmation lors de l'attaque et qu'une ligne de 1d4° DM soit ajoutée si la créature ciblée est du même type
+- Pour les autres types d'objet :
+  - `bonus` : valeur du bonus de compétence, suivi d'un espace et du ou des noms des compétences concernées. Séparez les compétences par une virgule `,` le cas échéant. La fiche applique le bonus spécifié aux jets de capacités (sous-onglet _Jets_) ou de compétences (sous-onglet _Compétence_) correspondants.
 
 ## Equipement lié à la défense
 
