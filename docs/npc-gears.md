@@ -43,6 +43,10 @@ Cette section n'apparait que si le script **COFantasy2** est installé dans la p
 
 Elle est identique à celle présente sur la fiche de PJ.
 
+# Equipement divers
+
+Cette zone de saisie libre permet d'enregistrer des détails supplémentaires sur le matériel du PNJ.
+
 ---
 
 [Retour]({{ site.baseurl }}/npc-main)
