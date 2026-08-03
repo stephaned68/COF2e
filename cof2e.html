@@ -5402,6 +5402,7 @@
 
             <div class="bordered">
               
+              <input type="hidden" name="attr_skill_bonuses" value="">
               <input type="hidden" class="has-script" name="attr_script_show" value="0">
 
               <fieldset class="repeating_equipement">
@@ -17745,6 +17746,7 @@ on("clicked:repeating_rolls:roll-btn", function() {
       "cfg_shadow", "pc",
       "allcaracs_desc", "allcaracs_buff", 
       "help_roll_all", "roll_carac", "roll_modifier",
+      "skill_bonuses",
       ...fearConditionsAttrs(),
       ...luckButtonAttrs(),
       ...statsAttrs,
@@ -17863,6 +17865,13 @@ on("clicked:repeating_rolls:roll-btn", function() {
       // + Bonus
       if (bonus !== 0)
         rollCmd += ` + (${bonus})[Bonus]`;
+      // + Gear skill bonuses
+      const skillBonuses = objval(values.skill_bonuses, []);
+      skillBonuses.forEach(sb => {
+        if (sb.skill.split(",").some(s => cleanText(s) === cleanText(rollName)))
+          if (sb.bonus !== "")
+            rollCmd += sb.bonus;
+      });
       // + Modificateur
       if (rollModifier) {
         rollCmd += " + (?{Modificateur ?|0}[Modificateur])";
@@ -17961,7 +17970,8 @@ SWData.PC.SKILLS.forEach(skill => {
       "allcaracs_desc", "allcaracs_buff",
       "help_roll_all", "roll_modifier",
       ...fearConditionsAttrs(),
-      ...luckButtonAttrs()
+      ...luckButtonAttrs(),
+      "skill_bonuses"
     ], function (values) {
       const [ carac, bonus, def ] = Object.keys(values);
       let caracBonus = strval(values[carac]);
@@ -18052,6 +18062,13 @@ SWData.PC.SKILLS.forEach(skill => {
         rollCmd += " + (?{Modificateur ?|0}[Modificateur])";
 
       rollCmd += allRollsBuff(values, "caracs");
+
+      const skillBonuses = objval(values.skill_bonuses, []);
+      skillBonuses.forEach(sb => {
+        if (sb.skill.split(",").some(s => cleanText(s) === skill.name))
+          if (sb.bonus !== "")
+            rollCmd += sb.bonus;
+      });
 
       const helpAllRolls = strval(values.help_roll_all);
       if (helpAllRolls !== "")
@@ -18276,7 +18293,10 @@ on("clicked:multibuff-btn", function () {
       rowIds
       .filter(id => boolval(values[rptAttr(section, "buff-temp", id)]))
       .forEach(id => {
-        const buff = strval(values[rptAttr(section, "buff-nom", id)]);
+        const onoff = boolval(values[rptAttr(section, "buff-on", id)])
+        ? SWData.emojis.green
+        : SWData.emojis.red;
+        const buff = strval(values[rptAttr(section, "buff-nom", id)]) + " " + onoff;
         const { ids } = multiBuffs.get(cleanText(buff)) || { ids: [] };
         ids.push(id);
         multiBuffs.set(cleanText(buff), { name: buff, ids });
@@ -18682,7 +18702,8 @@ on("clicked:helpgear-btn", async function() {
     "Type ?",
     "Armes",
     "Défense",
-    "Armes magiques"
+    "Armes magiques",
+    "Autres"
   ]);
   if (selected === 0)
     return;
@@ -18714,6 +18735,7 @@ on("clicked:helpgear-btn", async function() {
     selected === 3 ? "affutee:=Arme affûtée" : "",
     selected === 3 ? "element:=Nom de l'élément (+' intense')" : "",
     selected === 3 ? "fleau:=Nom du type de créature" : "",
+    selected === 4 ? "bonus:=Bonus jets/compétences" : "",
     "desc=Une propriété par ligne" + button
   ].filter(t => t !== ""), {
     template: "custom",
@@ -18832,6 +18854,15 @@ function isShield(name, props) {
  */
 function isHelmet(props) {
   return (intval(getProp(props, "casque")) !== 0);
+}
+
+/**
+ * Detect if equipment gives bonus
+ * @param {string} props - equipment properties
+ * @returns {boolean}
+ */
+function hasBonus(props) {
+  return (getProp(props, "bonus") !== "");
 }
 
 /**
@@ -19100,16 +19131,17 @@ on("change:repeating_equipement:equip-on", function(eventInfo) {
     "main_autre"
   ];
   processAllGear([ "on", "nom", "props" ], function(gearIds, allGears) {
-    getAttrs([ 
-      `${section}_equip-on`, 
-      `${section}_equip-nom`, 
-      `${section}_equip-props`, 
-      `${section}_equip-atkid`, 
+    getAttrs([
+      `${section}_equip-on`,
+      `${section}_equip-nom`,
+      `${section}_equip-props`,
+      `${section}_equip-atkid`,
       ...allGears,
       ...hands,
       "armor_gearid",
       "shield_gearid",
       "helmet_gearid",
+      "skill_bonuses"
     ], function (values) {
       const equiped = intval(values[`${section}_equip-on`]);
       const name = strval(values[`${section}_equip-nom`]);
@@ -19118,6 +19150,29 @@ on("change:repeating_equipement:equip-on", function(eventInfo) {
       const armor = isArmor(name, props);
       const shield = isShield(name, props);
       const helmet = isHelmet(props);
+      const bonus = hasBonus(props);
+      
+      if (bonus) {
+        const [ mod, skill ] = getProp(props, "bonus").split(" ");
+        if (intval(mod) === 0)
+          return;
+
+        const skillBonuses = objval(values.skill_bonuses, []);
+        if (!skillBonuses.find(sb => sb.skill === skill))
+          skillBonuses.push({ skill, bonus: "" });
+        skillBonuses.forEach(sb => {
+          if (sb.skill !== skill)
+            return;
+          if (!equiped) {
+            sb.bonus = "";
+          } else {
+            sb.bonus = ` +${mod}[${name}]`;
+          }
+        });
+        setAttrs({ skill_bonuses: JSON.stringify(skillBonuses) });
+        return;
+      }
+
       if (!armor && !shield && !helmet && atkId === "")
         return;
 
@@ -19223,13 +19278,14 @@ on("change:repeating_equipement:equip-on", function(eventInfo) {
 /**
  * Delete equiped defense gear
  */
-on("remove:repeating_equipement", function (eventInfo) {
+on("remove:repeating_equipement", async function (eventInfo) {
   const rowId = eventInfo.sourceAttribute + "_";
   const equiped = boolval(eventInfo.removedInfo[rowId + "equip-on"]);
   if (!equiped)
     return;
   const name = strval(eventInfo.removedInfo[rowId + "equip-nom"]);
   const props = strval(eventInfo.removedInfo[rowId + "equip-props"]);
+
   const defense = [];
   if (isArmor(name, props))
     defense.push(...[ "armure", "armure_eqp", "armure_malus" ]);
@@ -19239,6 +19295,16 @@ on("remove:repeating_equipement", function (eventInfo) {
     defense.push(...[ "casque", "casque_eqp" ]);
   if (defense.length > 0)
     setAttrs(Object.fromEntries(defense.map(a => [ a, 0])));
+
+  const bonus = hasBonus(props);
+  if (bonus) {
+    const [ skill ] = getProp(props, "bonus").split(" ").splice(1);
+    const { skill_bonuses } = await getAttrsAsync([ "skill_bonuses" ]);
+    const skillBonuses = objval(skill_bonuses, []).filter(sb => {
+      return sb.skill !== skill;
+    });
+    setAttrs({ skill_bonuses: JSON.stringify(skillBonuses) });
+  }
 });
 
 /**
