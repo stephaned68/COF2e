@@ -4,6 +4,8 @@
 
 Consultez la [documentation](https://stephaned68.github.io/COF2e/)
 
+Testez la version beta sur [Roll20](https://app.roll20.net/join/20677494/PzCI6Q)
+
 ## Version courante
 
 v1.17.1 [Screenshot](cof2e.png)
