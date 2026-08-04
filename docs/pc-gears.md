@@ -97,6 +97,7 @@ Dans cette section, vous pouvez renseigner une liste de ressources et de consomm
 Pour chaque élément de la liste, vous indiquez :
 - Le nom de la ressource,
 - Le nombre actuellement en possession du PJ,
+- Une description longue optionnelle de la ressource,
 - Une liste optionnelle de propriétés permettant de préciser la nature de la ressource.
 
 Un bouton permet de décompter un consommable et éventuellement d'envoyer un message dans le chat Roll20 selon le type de consommable.
@@ -106,6 +107,8 @@ Si vous spécifiez une propriété `type: munitions`, la fiche recherche dans le
 Spécifiez la propriété `type: soins` pour une potion de soins. Quand vous cliquez sur le bouton _Consommable_, un message de chat indiquant le nombre de PV récupérés s'affiche. Par défaut, il s'agit d'une potion de soins standard permettant de récupérer 1d4° PV. Vous pouvez si besoin indiquer une formule de dés différente à la suite du mot `soins`. _Ex :_ : pour paramétrer les Elixirs de guérison du Forgesort, indiquez `type: soins [2d4°+INT]`.
 
 Spécifiez la propriété `type: mana` pour une potion de mana. Quand vous cliquez sur le bouton _Consommable_, un message de chat indiquant le nombre de PM récupérés s'affiche.
+
+Spécifiez la propriété `type: parchemin` pour un parchemin de sort. Indiquez la description du sort dans la description longue. Quand vous cliquez sur le bouton _Consommable_, la description du sort s'affiche dans le chat, avec les paramètres et jets de dés éventuels substitués. Si le nombre disponible tombe à 0, le parchemin est supprimé de la liste.
 
 # Potions
 
