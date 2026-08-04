@@ -14548,6 +14548,7 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
             dr -= 1;
           break;
       }
+      const lostPV = pvMax - pv;
       const dRecup = `${ (type === recoveryTypes.FAST || drMax === 0) ? "d" : "" }${values.drecup}`;
       const level = intval(values.niveau);
       const addLevel = boolval(values.cfg_use_drniv);
@@ -14595,7 +14596,6 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
           resetAbilities = combat.concat(daily);
       } else {
         rsub += " *" + ([ "Rapide", "Complète", "", "Auberge" ][type - 1]) + "*";
-        const lostPV = pvMax - pv;
         if (type === recoveryTypes.ALL) {
           recup = `[[${ lostPV }]]`;
         } else {
@@ -14631,9 +14631,13 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
         if (rolls.length > 1)
           chatMsg = { ...chatMsg, broll: `[[${ rolls[1] } + ${effort} + @{vol}[VOL] ]]` };
       } else {
-        const healdesc = (type === recoveryTypes.MANA || type === recoveryTypes.PCMANA)
+        let healdesc = (type === recoveryTypes.MANA || type === recoveryTypes.PCMANA)
         ? "PM"
         : "PV";
+        if (healdesc === "PV" && lostPV === 0) {
+          recup = "";
+          healdesc = "";
+        }
         chatMsg = { ...chatMsg, heal: recup, healdesc };
       }
       const chatCmd = buildChatMsg(rollTemplate(chatMsg));
