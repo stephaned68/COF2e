@@ -17,6 +17,11 @@ v1.17.1 [Screenshot](cof2e.png)
   - Ajout du bouton d'activation des buffs dans l'onglet Attaques
   - Amélioration des boutons Chance (affichage des DM en cas de dépense après une attaque ratée)
   - Ajout de la condition spéciale _sans défense_ (cible avec DEF -5)
+  - Ajout de la propriété `bonus` aux équipements (bonus de compétence)
+  - Ajout de la propriété `type: parchemin` aux ressources
+
+- Fiche de PNJ:
+  - Ajout des rangs de boss & filtres narratifs (Bestiaire)
 
 ### Version _1.17.1_ (2026-07-19)
 
