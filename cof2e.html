@@ -5465,15 +5465,19 @@
   
                   <div class="d-flex">
                     <input type="text" name="attr_res-desc" title="@{res-desc}" placeholder="Nom de la ressource" value="">
-                    Nombre :
+                    &nbsp;
                     <input type="number" class="two-digits" name="attr_res-val" title="@{res-val}" value="1">
                     <button type="action" class="flat-btn img-btn" name="act_resconso-btn" title="%{repeating_ressources_ID_resconso-btn} Utiliser un consommable">
                       <span class="img-btn">-</span>
                     </button>
                   </div>
+
+                  <div class="d-flex">
+                    <textarea class="one-row" name="attr_res-desclong" title="@{res-desclong}" placeholder="Description longue (parchemin)"></textarea>
+                  </div>
   
                   <div class="d-flex">
-                    <textarea class="one-row" name="attr_res-props" title="@{res-props} Propriétés&#10;type: munitions&#10;type: soins [formule si différent de 1d4°]" placeholder="Propriétés nom: valeur"></textarea>
+                    <textarea class="one-row" name="attr_res-props" title="@{res-props} Propriétés&#10;type: munitions&#10;type: soins [formule si différent de 1d4°]&#10;type: mana&#10;type: parchemin" placeholder="Propriétés nom: valeur"></textarea>
                   </div>
   
                 </fieldset>
@@ -5663,19 +5667,7 @@
                 <span>Options tactiques par attaque</span>
               </li>
             </ul>
-            
-            <h4>Automatisations</h4>
-            <ul>
-              <li class="config-check">
-                <input type="checkbox" name="attr_cfg_pvmax_auto" value="1">
-                <span>Calcul automatique des PV max.</span>
-              </li>
-              <li class="config-check">
-                <input type="checkbox" name="attr_cfg_pts_capas" value="1">
-                <span>Contrôle des points de capacités</span>
-              </li>
-            </ul>
-            
+                        
             <h4>Affichage</h4>
             <ul>
               <li class="config-check">
@@ -5869,6 +5861,18 @@
           </div>
 
           <div class="sheet-col">
+
+            <h4>Automatisations</h4>
+            <ul>
+              <li class="config-check">
+                <input type="checkbox" name="attr_cfg_pvmax_auto" value="1">
+                <span>Calcul automatique des PV max.</span>
+              </li>
+              <li class="config-check">
+                <input type="checkbox" name="attr_cfg_pts_capas" value="1">
+                <span>Contrôle des points de capacités</span>
+              </li>
+            </ul>
 
             <details>
               <summary>
@@ -6450,6 +6454,8 @@
                     <li>Ajout du bouton d'activation des buffs dans l'onglet Attaques</li>
                     <li>Amélioration des boutons Chance (affichage des DM en cas de dépense après une attaque ratée)</li>
                     <li>Ajout de la condition spéciale <em>sans défense</em> (cible avec DEF -5)</li>
+                    <li>Ajout de la propriété <em>bonus</em> aux équipements (bonus de compétence)</li>
+                    <li>Ajout de la propriété <em>type: parchemin</em> aux ressources</li>
                   </ul>
                 </summary>
               </li>
@@ -8218,7 +8224,7 @@
                     <strong>Version 1.18.0</strong> (2026-08)
                   </summary>
                   <ul>
-                    <li>Ajout des rangs de boss (Bestiaire)</li>
+                    <li>Ajout des rangs de boss & filtres narratifs (Bestiaire)</li>
                   </ul>
                 </details>
               </li>
@@ -11914,7 +11920,7 @@ function rptInfo(fullRepeatName) {
 function removeRepeatingAll(sectionName) {
   getSectionIDs(sectionName, function (rowIds) {
     rowIds.forEach(rowId => {
-      removeRepeatingRow(`repeating_${sectionName}_${rowId}`);
+      removeRepeatingRow(rptAttr(sectionName, "", rowId));
     });
   });
 }
@@ -11972,6 +11978,8 @@ class Repeating {
     const repeat = [ "repeating", strval(section), strval(name) ];
     if (strval(id) !== "")
       repeat.splice(2, 0, id);
+    if (!name)
+      repeat.pop();
     return repeat.join("_");
   }
   /**
@@ -19348,7 +19356,7 @@ on(changeEvent([
 
     if (eventInfo.sourceAttribute.endsWith("equip-atk") && !hasAttack) {
       if (attackId) {
-        removeRepeatingRow(`repeating_armes_${attackId}`);
+        removeRepeatingRow(rptAttr("armes", "", attackId));
         setAttrs({ [rptAttr("equipement", "equip-atkid")]: "" });
       }
       return;
@@ -19608,9 +19616,11 @@ on("change:repeating_ressources:res-val", function(eventInfo) {
 /**
  * On click of consumable button
  */
-on("clicked:repeating_ressources:resconso-btn", function () {
+on("clicked:repeating_ressources:resconso-btn", function (eventInfo) {
   const section = "ressources";
-  getAttrs(rptAttrs(section, [ "res-desc", "res-val", "res-props" ]), function (values) {
+  const resAttrs = [ "res-desc", "res-desclong", "res-val", "res-props" ];
+  const resId = rptInfo(strval(eventInfo.triggerName).split(":")[1]).rowId;
+  getAttrs(rptAttrs(section, resAttrs), function (values) {
     const updates = new Map();
     const value = intval(values[rptAttr(section, "res-val")]);
     if (value === 0)
@@ -19621,8 +19631,10 @@ on("clicked:repeating_ressources:resconso-btn", function () {
     let healdesc = "";
     let mana = "[[0]]";
     const rsub = capitalize(strval(values[rptAttr(section, "res-desc")]));
+    
     const props = strval(values[rptAttr(section, "res-props")]);
     const type = strval(getProp(props, "type"));
+
     // heal PV
     if (type.toLowerCase().startsWith("soins")) {
       let [ ...roll ] = type.trim().split(" ").slice(1);
@@ -19654,7 +19666,31 @@ on("clicked:repeating_ressources:resconso-btn", function () {
       sendChatMsg(chatMsg);
     }
 
-    setAttrs(Object.fromEntries(updates));
+    if (type.toLowerCase().startsWith("parchemin")) {
+      let text = strval(values[rptAttr(section, "res-desclong")]);
+      if (text !== "") {
+        text = insertRolls(text);
+        let parchemin = "";
+        if (!rsub.toLowerCase().startsWith("parchemin") && remaining > 0)
+          parchemin = ` parchemin${ remaining > 1 ? "s" : "" } de`;
+        if (parchemin !== "")
+          text += `\nReste ${remaining}${parchemin} ${ rsub.toLowerCase() }`;
+        const chatMsg = rollTemplate({
+          lsub: "Parchemin",
+          rsub,
+          text
+        });
+        sendChatMsg(chatMsg);
+
+        if (remaining === 0 && resId !== "") {
+          removeRepeatingRow(rptAttr("ressources", "", resId));
+          updates.clear();
+        }
+      }
+    }
+
+    if (updates.size > 0)
+      setAttrs(Object.fromEntries(updates));
   });
 });
 
@@ -22926,7 +22962,7 @@ async function migrateSheetToV1_14(sheetType, curVer = { major: 1, minor: 13, pa
       updates.set(rowId + "on", numval(values[rptAttr("buffs", "buff-on", id)]));
       updates.set(rowId + "name", strval(values[rptAttr("buffs", "buff-nom", id)]));
       updates.set(rowId + "dmdiv", strval(values[rptAttr("buffs", "buff-value", id)]));
-      removeRepeatingRow("repeating_buffs_" + id);
+      removeRepeatingRow(rptAttr("buffs", "", id));
       migration = migrateLog(migration, "1.14.0", `Buff DM ${ updates.get(rowId + "name") } = Option tactique`);
     });
     if (migration !== strval(values.migration))
