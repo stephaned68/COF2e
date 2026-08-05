@@ -7495,6 +7495,7 @@
                     &nbsp;
                     <input type="text" list="npcroll-freqs" name="attr_npcroll-freq" title="@{npcroll-freq} Fréquence d'utilisation" placeholder="Par ..." value="">
                     <datalist id="npcroll-freqs">
+                      <option value="initiative"></option>
                       <option value="combat"></option>
                       <option value="jour"></option>
                     </datalist>
@@ -7764,7 +7765,7 @@
                 <h4>Règles optionnelles (COMBAT)</h4>
               </summary>
               <ul>
-  
+
                 <li class="config-check" title="Atlas & règles optionnelles, p. 161">
                   <input type="checkbox" name="attr_cfg_crit_diff" value="1">
                   <span>Critiques différenciés&nbsp;</span>
@@ -8225,6 +8226,8 @@
                   </summary>
                   <ul>
                     <li>Ajout des rangs de boss & filtres narratifs (Bestiaire)</li>
+                    <li>Ajout de la zone de texte libre <em>Equipement divers</em></li>
+                    <li>Prise en charge des capacités <em>par initiative</em></li>
                   </ul>
                 </details>
               </li>
@@ -11627,6 +11630,14 @@ function splitOnSpace(s) {
 }
 
 /**
+ * Return ISO datetime
+ * @returns {string}
+ */
+function getDateTime() {
+  return new Date().toISOString();
+}
+
+/**
  * Return stat short name
  * @param {string} stat - stat name
  * @returns {string}
@@ -14007,15 +14018,15 @@ SWData.PC.STATS.forEach(stat => {
  * Used by PC & NPC sheet
  */
 on("clicked:init-btn", function () {
-  getAttrs([ 
-    "sheet_type",
+  getAttrs([
+    "sheet_type", "character_name",
     "cfg_init_mod",
     "per", "agi",
     "casque_eqp",
     "casque",
     "pnj_tactique",
     "pnj_tactique_tip"
-  ], function(values) {
+  ], async function(values) {
     let initMod = "";
     if (boolval(values.cfg_init_mod))
       initMod = ` + [[(@{per}+@{agi})/10]][Distinct]`;
@@ -14043,6 +14054,21 @@ on("clicked:init-btn", function () {
       });
       sendChatMsg(chatMsg, { whisper: "gm" });
     }
+    
+    if (npcSheet) {
+      const rollIds = await getSectionIDsAsync("npcrolls");
+      const freqs = await getAttrsAsync(rollIds.map(id => rptAttr("npcrolls", "npcroll-freq", id)));
+      const rolls = Object.keys(freqs).filter(freq => cleanText(freqs[freq]) === "initiative");
+      if (rolls.length > 0) {
+        const charName = strval(values.character_name);
+        const rollBtns = rolls
+        .map(roll => rptAttr("npcrolls", "npcroll-btn", rptInfo(roll).rowId))
+        .map(rollBtn => `%{${charName}|${rollBtn}}`)
+        .join("~");
+        setAttrs({ next_roll: `${rollBtns}~${ getDateTime() }` });
+      }
+    }
+
   });
 });
 
@@ -15069,7 +15095,7 @@ on("clicked:help_other-btn", function() {
     const helpBonus = helpRoll < 10 ? 0 : helpRoll >= 20 ? 4 : 2;
     if (helpBonus === 0)
       return;
-    const help_roll = `${helpBonus}~${ strval(values.character_name) }~${ new Date().toISOString() }`; // make it unique with datetime
+    const help_roll = `${helpBonus}~${ strval(values.character_name) }~${ getDateTime() }`; // make it unique with datetime
     const chatCmd = chatSetAttr({ silent: true, select: "--charid @{target|character_id}" }, { help_roll });
     sendChatCmd(chatCmd);
   });
@@ -16369,7 +16395,7 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
       const [ ogEff, ogName, ogTime ] = ongoingPrms;
       const effectName = (ogName !== "") ? ogName : name + " " + ogEff;
       const timeSpan = (ogTime !== "") ? insertRolls(" " + ogTime + " ").trim() : "";
-      const ongoing_actmod = effectName + "~" + timeSpan + "~" + new Date().toISOString();
+      const ongoing_actmod = effectName + "~" + timeSpan + "~" + getDateTime();
       setAttrs({ ongoing_actmod });
     }
 
@@ -16689,7 +16715,7 @@ on("clicked:deux_armes-btn", function () {
     sendChatCmd(`%{${charName}|${ rptAttr("armes", "atkdual1-btn", rowId) }}`);
     [ rowId ] = strval(values.main_autre).split("~").slice(1);
     setAttrs({ 
-      next_roll: `%{${charName}|${ rptAttr("armes", "atkdual2-btn", rowId) }}` + "~" + new Date().toISOString(),
+      next_roll: `%{${charName}|${ rptAttr("armes", "atkdual2-btn", rowId) }}` + "~" + getDateTime(),
       deux_armes: "atkdual1-btn" + "atkdual2-btn"
     });
   });
@@ -16759,9 +16785,14 @@ function paramByRank(description, path, values, abilityProps) {
  */
 on("change:next_roll", function () {
   getAttrs([ "next_roll" ], function(values) {
-    const [ chatCmd ] = strval(values.next_roll).split("~");
-    if (chatCmd)
-      sendChatCmd(chatCmd);
+    const chatCmds = strval(values.next_roll).split("~");
+    if (chatCmds.length > 1) {
+      chatCmds.pop();
+      chatCmds.forEach(chatCmd => {
+        if (chatCmd)
+          sendChatCmd(chatCmd);
+      })
+    }
   });
 });
 
@@ -16953,7 +16984,7 @@ function actionAbility(path, rank) {
       let timeSpan = strval(getProp(abilityProps, "etendu-duree"));
       if (timeSpan !== "")
         timeSpan = insertRolls(" " + timeSpan + " ").trim();
-      const ongoing_actmod = effectName + "~" + timeSpan + "~" + new Date().toISOString();
+      const ongoing_actmod = effectName + "~" + timeSpan + "~" + getDateTime();
       updates.set("ongoing_actmod", ongoing_actmod);
     }
 

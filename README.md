@@ -24,6 +24,8 @@ v1.17.1 [Screenshot](cof2e.png)
 
 - Fiche de PNJ:
   - Ajout des rangs de boss & filtres narratifs (Bestiaire)
+  - Ajout de la zone _Equipement divers_
+  - Prise en charge des capacités _par initiative_
 
 ### Version _1.17.1_ (2026-07-19)
 
