@@ -394,6 +394,11 @@ div.path div.block-title {
   font-size: medium;
 }
 
+.summary-content {
+  display: inline-flex;
+  width: calc(100% - 20px);
+}
+
 .visible {
   display: block;
 }
@@ -473,6 +478,7 @@ div.path div.block-title {
 .cofmain input[value="0"].has-script + span.has-script,
 .cofmain input[value="0"].has-script .weapon span.has-script,
 .cofmain input[value="0"].has-script + div.ammos,
+.cofmain input[value="0"].has-script + div.potions,
 .cofmain input[value="0"].has-psionic + .has-psionic,
 .cofmain input[value="0"].opt-tact + div.opt-tact,
 .cofmain input[value="0"].fav-tact + div.fav-tact,
@@ -508,6 +514,7 @@ div.path div.block-title {
 .cofmain input[value="1"].locked ~ button.unlocked,
 .cofmain input[value="1"].locked + input.locked,
 .cofmain input[value="0"].locked ~ button.locked,
+.cofmain input[value="0"].spellbook ~ button.spellbook,
 .cofmain input[value="0"].locked ~ span.locked {
   display: none;
 }
@@ -1107,15 +1114,20 @@ button.npc-narratif span {
 
 .abilities .rank .rank-summary {
   display: inline-flex;
+  width: calc(100% - 20px);
   vertical-align: middle;
   gap: 5px;
 }
 
 .abilities .rank .rank-summary .rank-title {
-  width: 21rem;
+  flex-grow: 1;
   overflow-x: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.abilities .rank .rank-summary button {
+  margin-left: auto;
 }
 
 .abilities .rank textarea {

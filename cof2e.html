@@ -5454,6 +5454,11 @@
             <div class="resources">
               <div class="block-title block-header">
                 Ressources
+                <input type="hidden" class="spellbook" name="attr_spell_book" value="0">
+                <button type="action" name="act_spellbook-btn" class="img-btn flat-btn spellbook" title="%{spellbook-btn} Choisir un sort du grimoire">
+                  <span class="img-btn img-btn-lg">N</span>
+                </button>
+                <input type="hidden" name="attr_spell_book_data" value="">
                 <button type="action" name="act_helpres-btn" class="img-btn flat-btn" title="Aide ressources">
                   <span class="img-btn img-btn-lg">i</span>
                 </button>
@@ -5463,23 +5468,28 @@
                 
                 <fieldset class="repeating_ressources">
   
-                  <div class="d-flex">
-                    <input type="text" name="attr_res-desc" title="@{res-desc}" placeholder="Nom de la ressource" value="">
-                    &nbsp;
-                    <input type="number" class="two-digits" name="attr_res-val" title="@{res-val}" value="1">
-                    <button type="action" class="flat-btn img-btn" name="act_resconso-btn" title="%{repeating_ressources_ID_resconso-btn} Utiliser un consommable">
-                      <span class="img-btn">-</span>
-                    </button>
-                  </div>
+                  <details>
+                    <summary>
+                      <div class="summary-content">
+                        <input type="text" name="attr_res-desc" title="@{res-desc}" placeholder="Nom de la ressource" value="">
+                        &nbsp;
+                        <input type="number" class="two-digits" name="attr_res-val" title="@{res-val}" value="1">
+                        <button type="action" class="flat-btn img-btn" name="act_resconso-btn" title="%{repeating_ressources_ID_resconso-btn} Utiliser un consommable">
+                          <span class="img-btn">-</span>
+                        </button>
+                      </div>
+                    </summary>
 
-                  <div class="d-flex">
-                    <textarea class="one-row" name="attr_res-desclong" title="@{res-desclong}" placeholder="Description longue (parchemin)"></textarea>
-                  </div>
-  
-                  <div class="d-flex">
-                    <textarea class="one-row" name="attr_res-props" title="@{res-props} Propriétés&#10;type: munitions&#10;type: soins [formule si différent de 1d4°]&#10;type: mana&#10;type: parchemin" placeholder="Propriétés nom: valeur"></textarea>
-                  </div>
-  
+                    <div class="d-flex">
+                      <textarea class="one-row" name="attr_res-desclong" title="@{res-desclong}" placeholder="Description longue (parchemin)"></textarea>
+                    </div>
+    
+                    <div class="d-flex">
+                      <textarea class="one-row" name="attr_res-props" title="@{res-props} Propriétés&#10;type: munitions&#10;type: soins [formule si différent de 1d4°]&#10;type: mana&#10;type: parchemin" placeholder="Propriétés nom: valeur"></textarea>
+                    </div>
+
+                  </details>
+
                 </fieldset>
   
               </div>
@@ -14673,7 +14683,8 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
           [ "dr", Math.max(dr, 0) ]
         ]);
         if (type !== recoveryTypes.PUSH && type !== recoveryTypes.MANA) {
-          pv += roll.results.heal.result;
+          if (roll.results.heal)
+            pv += roll.results.heal.result;
           updates.set("pv", Math.min(pv, pvMax));
           updates.set("PVIG", Math.min(pv, pvMax));
           updates.set("temp_dm", tempDM);
@@ -17686,7 +17697,7 @@ on("clicked:reset_npcuses-btn", async function() {
     });
     
     const pcMax = intval(values.pc_max);
-    if (boolval(values.boss) && intval(values.boss_rang) > 0 && pcMax > 0)
+    if (daily && pcMax > 0)
       updates.set("pc", pcMax);
 
     if (updates.size > 0)
@@ -18813,6 +18824,24 @@ on("clicked:helpgear_wpn-btn clicked:helpgear_def-btn", function(eventInfo) {
 });
 
 /**
+ * Select spell from spellbook
+ */
+on("clicked:spellbook-btn", function () {
+  getAttrs([ "character_name", "spell_book_data" ], async function(values) {
+    const bookIds = strval(values.spell_book_data).split(",");
+    const names = await getAttrsAsync(bookIds.map(id => rptAttr("ressources", "res-desc", id)));
+    let spell = 0;
+    if (Object.keys(names).length > 1) {
+      const { selected } = await askAsync([ "Sort ?", "Choisir...", ...Object.values(names) ]);
+      if (selected < 2)
+        return;
+      spell = selected - 2;
+    }
+    sendChatCmd(`%{${ strval(values.character_name) }|${ rptAttr("ressources", "resconso-btn", bookIds[spell]) }}`);
+  });
+});
+
+/**
  * On click on the resource props help button
  */
 on("clicked:helpres-btn", function() {
@@ -18822,6 +18851,9 @@ on("clicked:helpres-btn", function() {
     "type: munition=Pour décompter une munition par le nom de la ressource",
     "type: soins=Potion de soins *standard* (1d4° PV)",
     "type: soins NdX=Potion de soins (NdX PV)",
+    "type: mana=Potion de mana (1d8 PM)",
+    "type: parchemin=Parchemin de sort",
+    "type: grimoire=Sort d'un grimoire",
     "desc=Une propriété par ligne"
   ].filter(t => t !== ""), {
     template: "custom",
@@ -19586,17 +19618,17 @@ on("change:repeating_ressources:res-props", function(eventInfo) {
       "cfg_use_ammo",
       `${rptResources}_res-desc`,
       `${rptResources}_res-props`,
-      ...allAttacks 
+      ...allAttacks
     ], function(values) {
       const useAmmo = boolval(values.cfg_use_ammo);
       if (!useAmmo)
         return;
 
-      const desc = strval(values[`${rptResources}_res-desc`]);
       const props = strval(values[`${rptResources}_res-props`]);
       if (getProp(props, "type")?.toLowerCase() !== "munitions")
         return;
-
+      
+      const desc = strval(values[`${rptResources}_res-desc`]);
       const thrownIds = allAttacks
       .filter(a => a.endsWith("arme-atktype"))
       .filter(a => values[a] === "trait")
@@ -19611,6 +19643,27 @@ on("change:repeating_ressources:res-props", function(eventInfo) {
         setAttrs(updates);
     });
   })
+});
+
+/**
+ * On set resource = spellbook
+ */
+on("sheet:opened change:repeating_ressources:res-props", async function(eventInfo) {
+  if (
+    strval(eventInfo.triggerName) !== "sheet:opened" &&
+    !cleanText(strval(eventInfo.previousValue)).includes("grimoire") &&
+    !cleanText(strval(eventInfo.newValue)).includes("grimoire")
+  ) return;
+
+  const resIds = await getSectionIDsOrderedAsync("ressources");
+  const ressources = await getAttrsAsync(resIds.map(id => rptAttr("ressources", "res-props", id)));
+  const spellBook = Object.keys(ressources).filter(k => {
+    return strval(getProp(ressources[k], "type")).startsWith("grimoire");
+  });
+  setAttrs({ 
+    spell_book: (spellBook.length > 0 ? 1 : 0),
+    spell_book_data: spellBook.map(a => rptInfo(a).rowId).join(",")
+  });
 });
 
 /**
@@ -19655,7 +19708,7 @@ on("clicked:repeating_ressources:resconso-btn", function (eventInfo) {
   const section = "ressources";
   const resAttrs = [ "res-desc", "res-desclong", "res-val", "res-props" ];
   const resId = rptInfo(strval(eventInfo.triggerName).split(":")[1]).rowId;
-  getAttrs(rptAttrs(section, resAttrs), function (values) {
+  getAttrs([ ...rptAttrs(section, resAttrs), "pm", "pm_max" ], function (values) {
     const updates = new Map();
     const value = intval(values[rptAttr(section, "res-val")]);
     if (value === 0)
@@ -19665,13 +19718,14 @@ on("clicked:repeating_ressources:resconso-btn", function (eventInfo) {
     let heal = "";
     let healdesc = "";
     let mana = "[[0]]";
-    const rsub = capitalize(strval(values[rptAttr(section, "res-desc")]));
+    let rsub = capitalize(strval(values[rptAttr(section, "res-desc")]));
     
+    const description = strval(values[rptAttr(section, "res-desclong")]);
     const props = strval(values[rptAttr(section, "res-props")]);
-    const type = strval(getProp(props, "type"));
+    const type = strval(getProp(props, "type")).toLowerCase();
 
     // heal PV
-    if (type.toLowerCase().startsWith("soins")) {
+    if (type.startsWith("soins")) {
       let [ ...roll ] = type.trim().split(" ").slice(1);
       if (roll.length === 0)
         roll.push("1d4°");
@@ -19680,44 +19734,71 @@ on("clicked:repeating_ressources:resconso-btn", function (eventInfo) {
         heal = heal.replace("@{cha}", "{0d0+@{cha},0d0+@{con}}kh1");
       }
       healdesc = "PV";
-      text = `Reste ${remaining} ${ rsub.toLowerCase() }`;
     }
     // heal PM
-    if (type.toLowerCase().startsWith("mana")) {
+    if (type.startsWith("mana")) {
       heal = "[[1d8]]";
       healdesc = "PM";
       mana = "[[1]]";
     }
     
     if (heal !== "") {
+      let text = `Reste ${remaining} ${ rsub.toLowerCase() }`;
+      if (description !== "")
+        text = description + "\n" + text;
       const chatMsg = rollTemplate({
         lsub: "Consommable",
         rsub,
         heal,
         healdesc,
         mana,
-        text: `Reste ${remaining} ${ rsub.toLowerCase() }`
+        text
       });
       sendChatMsg(chatMsg);
     }
 
-    if (type.toLowerCase().startsWith("parchemin")) {
-      let text = strval(values[rptAttr(section, "res-desclong")]);
+    if (type.startsWith("parchemin") || type.startsWith("grimoire")) {
+      let text = description;
       if (text !== "") {
         text = insertRolls(text);
-        let parchemin = "";
-        if (!rsub.toLowerCase().startsWith("parchemin") && remaining > 0)
-          parchemin = ` parchemin${ remaining > 1 ? "s" : "" } de`;
-        if (parchemin !== "")
-          text += `\nReste ${remaining}${parchemin} ${ rsub.toLowerCase() }`;
+        let alert = "";
+        let alertPM = "";
+        let alertclass = "";
+        let limited = "";
+        if (type.startsWith("parchemin"))
+          if (!rsub.toLowerCase().startsWith("parchemin") && remaining > 0)
+            alert = ` parchemin${ remaining > 1 ? "s" : "" } de`;
+        if (type.startsWith("grimoire")) {
+          alert = ` utilisation${ remaining > 1 ? "s" : "" } de`;
+          rsub = rsub.replace(/ \(L|l\)/, "");
+          limited = " (L)";
+          let pm = intval(values.pm);
+          if (pm > 0 && intval(values.pm_max) > 0) {
+            updates.set("pm", --pm);
+          } else {
+            alertPM = "\n" + [
+              "Pas assez de Mana",
+              "Brûlure de Mana : [[1d@{drecup}]] PV perdus"
+            ].join("\n");
+            alertclass = "fumble";
+          }
+        }
+        if (alert !== "") {
+          alert = `Reste ${remaining}${alert} ${ capitalize(rsub) }${alertPM}`;
+          if (alertclass === "")
+            alertclass = remaining > 0 ? "secondary" : "fumble";
+        }
+        
         const chatMsg = rollTemplate({
-          lsub: "Parchemin",
-          rsub,
-          text
+          lsub: capitalize(type),
+          rsub: rsub + limited,
+          text,
+          alert,
+          alertclass
         });
         sendChatMsg(chatMsg);
 
-        if (remaining === 0 && resId !== "") {
+        if (type.startsWith("parchemin") && remaining === 0 && resId !== "") {
           removeRepeatingRow(rptAttr("ressources", "", resId));
           updates.clear();
         }
