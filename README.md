@@ -20,7 +20,8 @@ v1.17.1 [Screenshot](cof2e.png)
   - Amélioration des boutons Chance (affichage des DM en cas de dépense après une attaque ratée)
   - Ajout de la condition spéciale _sans défense_ (cible avec DEF -5)
   - Ajout de la propriété `bonus` aux équipements (bonus de compétence)
-  - Ajout de la propriété `type: parchemin` aux ressources
+  - Ajout des propriétés `type: parchemin` et `type: grimoire` aux ressources
+  - Ajout du modificateur d'attaque `crit` pour les coups critiques
 
 - Fiche de PNJ:
   - Ajout des rangs de boss & filtres narratifs (Bestiaire)
