@@ -120,11 +120,11 @@ Spécifiez la propriété `type: parchemin` pour un parchemin de sort. Indiquez 
 
 ## Grimoire
 
-Spécifiez la propriété `type: grimoire` pour un sort inscrit dans un grimoire de pouvoir. Indiquez la description du sort dans la description longue. 
+Spécifiez la propriété `type: grimoire` pour un sort inscrit dans un grimoire de pouvoir. Insérez la description du sort dans la description longue. Vous pouvez aussi indiquer `type: grimoire N` si un sort est inscrit N fois dans le grimoire, sinon la fiche considère qu'il n'est inscrit qu'une fois.
 
 Quand vous cliquez sur le bouton _Consommable_, la description du sort s'affiche dans le chat, avec les paramètres et jets de dés éventuels substitués. La fiche décrémente un point de mana ou indique le nombre de PV à sacrifier si le personnage n'a plus de PM et souhaite utiliser la Brulûre de Mana.
 
-Si la liste des ressources contient plusieurs éléments de type `grimoire`, une icone _Journal_ apparaît et permet de choisir le sort à lancer.
+Si la liste des ressources contient plusieurs éléments de type `grimoire`, une icone _Journal_ apparaît et permet de choisir le sort à lancer. Si tous les sorts du grimoire ont été utilisés, un message est chuchoté dans le chat Roll20 avec un bouton pour recharger les utilisations disponibles. Ce rechargement se produit également lorsque le personnage bénéficie d'une récupération complète.
 
 # Potions
 
