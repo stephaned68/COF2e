@@ -6,6 +6,7 @@
   - Public : Tous les joueurs voient les jets du PJ dans le chat.
   - Chuchotés au MJ : Seul le joueur et le MJ voient les jets (uniquement le MJ pour une fiche de PNJ non partagées aux joueurs).
   - Avec token : Le token par défaut du personnage apparaît dans tous les messages envoyés dans le chat par la fiche.
+- Jets secrets autorisés : Cette option active par défaut permet d'indiquer si la commande de chat `/s` peut être utilisée. Elle ne doit être désactivée que si la partie a été créée avec le moteur _Legacy_ de Roll20.
 - Un seul jet secret : Cette option active par défaut permet que la fiche ne fasse que le prochain jet en secret au MJ. Si elle est désactivée, le joueur devra cliquer de nouveau sur le bouton _Jet secret_ pour repasser en jet public.
 - Attaques ciblées : Cette option permet de demander au joueur de pointer sur la map la cible d'un jet d'attaque, de comparer le résultat avec la Défense du PJ ou du PNJ lié à ce token, et afficher si l'attaque est un succès ou un échec.
 - Options tactiques par round : Cette option permet que la fiche désactive les options tactiques activées par le joueur après chaque attaque. Elle est inutile si l'option _Bouton Fin de tour_ est active (cf. ci-dessous).

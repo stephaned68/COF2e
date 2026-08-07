@@ -48,15 +48,16 @@ Des paramètres optionnels peuvent être ajoutés :
   - `zone` : l'attaque est un sort de zone
   - `magie X` suivi de la valeur X du bonus au jet pour toucher et aux DM
   - `magieAtt X` suivi de la valeur X du bonus magique au jet pour toucher
-  - `magieDmg X` suivi de la valeur du bonus magique aux DM (peut être un jet de dé)
+  - `magieDmg X` suivi de la valeur du bonus magique aux DM (peut être un jet de dés)
   - `affutee` : réduire de 1 le seuil de critique et ajouter 1d4° DM en cas de coup critique
-  - `element xxx [intense]` suivi d'un nom d'élément/substance xxx : ajouter une ligne de 1d4° DM élémentaires (2d4° si le nom de l'élément est suivi d'un espace et du mot `intense`)
-  - `fleau xxx` suivi du nom d'un type de créature xxx : Roll20 demande confirmation lors de l'attaque et une ligne de 1d4° DM est ajoutée si la créature ciblée est du même type
+  - `element xxxxx [intense]` suivi d'un nom d'élément/substance xxxxx : ajouter une ligne de 1d4° DM élémentaires (2d4° si le nom de l'élément est suivi d'un espace et du mot `intense`)
+  - `fleau xxxxx` suivi du nom d'un type de créature xxxxx : Roll20 demande confirmation lors de l'attaque et une ligne de 1d4° DM est ajoutée si la créature ciblée est du même type
   - `manoeuvres` : l'attaque propose de choisir une des manoeuvres possibles (cf règles page 217) et d'appliquer le modificateur correspondant au jet pour toucher. La description des effets de la manoeuvre sont chuchotés dans le chat Roll20.
   - `aoe X` suivi de la valeur X du rayon d'effet
   - `save XXX DD` suivi du nom d'une caractéristique XXX (ex: `AGI`) et de la difficulté DD du jet, séparés des espaces. La fiche ajoute une ligne dans le chat indiquant le test à faire et sa difficulté pour réduire les DM de moitié. La difficulté peut être calculée à partir d'une formule entre `[]` (_ex: `[10+INT]`_). De plus, un message est murmuré au MJ et comporte un bouton qui permet de sélectionner le token d'un PNJ et de faire le test de caractéristique.
   - `save XXX DD 0` suivi du nom d'une caractéristique XXX, de la difficulté DD d'un jet et de `0`, séparés par des espaces. L'effet est le même que ci-dessus, mais les DM sont affichés à 0.
   - `multi` : l'attaque permet d'atteindre plusieurs cibles avec un seul jet pour toucher, la fiche ne doit pas demander de cliquer sur la cible si l'option de configuration _Attaques ciblées_ est active.
+  - `crit X xxxxx` suivi d'une valeur X de DM (peut être un jet de dés) et d'un intitulé xxxxx. La fiche ajoute une ligne supplémentaire de DM en cas de coup critique.
 
 - Options d'attaques avec arguments :
   
