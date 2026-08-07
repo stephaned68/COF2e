@@ -5460,6 +5460,7 @@
                   <span class="img-btn img-btn-lg">N</span>
                 </button>
                 <input type="hidden" name="attr_spell_book_data" value="">
+                <button type="action" class="hidden" name="act_reset_spellbook-btn">
                 <button type="action" name="act_helpres-btn" class="img-btn flat-btn" title="Aide ressources">
                   <span class="img-btn img-btn-lg">i</span>
                 </button>
@@ -14851,6 +14852,11 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
         recovery(recup);
         break;
     }
+    if (
+      recup === recoveryTypes.FULL ||
+      recup === recoveryTypes.ALL ||
+      recup === recoveryTypes.EGOFULL
+    ) sendChatCmd("%{" + charName + "|reset_spellbook-btn}");
     
   });
 });
@@ -18841,17 +18847,62 @@ on("clicked:helpgear_wpn-btn clicked:helpgear_def-btn", function(eventInfo) {
  * Select spell from spellbook
  */
 on("clicked:spellbook-btn", function () {
+  const section = "ressources";
   getAttrs([ "character_name", "spell_book_data" ], async function(values) {
+    const charName = strval(values.character_name);
     const bookIds = strval(values.spell_book_data).split(",");
-    const names = await getAttrsAsync(bookIds.map(id => rptAttr("ressources", "res-desc", id)));
+    const data = await getAttrsAsync([
+      ...bookIds.map(id => rptAttr(section, "res-desc", id)),
+      ...bookIds.map(id => rptAttr(section, "res-val", id))
+    ]);
+    const names = bookIds
+    .filter(id => data[rptAttr(section, "res-val", id)] > 0)
+    .map(id => data[rptAttr(section, "res-desc", id)]);
+    if (names.length === 0) {
+      const resetBtn = `[Recharger](~${charName}|reset_spellbook-btn${ menuButton() })`;
+      sendChatCmd(`/w "${charName}" Plus d'utilisations disponibles des sorts du grimoire ${resetBtn}`);
+      return;
+    }
     let spell = 0;
-    if (Object.keys(names).length > 1) {
-      const { selected } = await askAsync([ "Sort ?", "Choisir...", ...Object.values(names) ]);
+    if (names.length > 1) {
+      const { selected } = await askAsync([ "Sort ?", "Choisir...", names ]);
       if (selected < 2)
         return;
       spell = selected - 2;
     }
-    sendChatCmd(`%{${ strval(values.character_name) }|${ rptAttr("ressources", "resconso-btn", bookIds[spell]) }}`);
+    sendChatCmd(`%{${charName}|${ rptAttr(section, "resconso-btn", bookIds[spell]) }}`);
+  });
+});
+
+/**
+ * Reset spellbook usages
+ */
+on("clicked:reset_spellbook-btn", function () {
+  const section = "ressources";
+  getAttrs([ "character_name", "spell_book_data" ], async function(values) {
+    const charName = strval(values.character_name);
+    const bookIds = strval(values.spell_book_data).split(",");
+    if (bookIds.length === 0)
+      return;
+    const data = await getAttrsAsync([
+      ...bookIds.map(id => rptAttr(section, "res-desc", id)),
+      ...bookIds.map(id => rptAttr(section, "res-props", id))
+    ]);
+    const updates = new Map();
+    const display = [];
+    bookIds.forEach(id => {
+      const props = strval(data[rptAttr(section, "res-props", id)]);
+      let [ type, nb ] = strval(getProp(props, "type")).toLowerCase().split(" ");
+      if (type !== "grimoire")
+        return
+      nb = intval(nb, 1);
+      display.push(`${ strval(data[rptAttr(section, "res-desc", id)]) }=x ${nb}`);
+      updates.set(rptAttr(section, "res-val", id), nb);
+    });
+    if (updates.size > 0) {
+      sendChatMsg([ "title=Grimoire", "subtitle=Recharge", ...display ], { template: "custom" });
+      setAttrs(Object.fromEntries(updates));
+    }
   });
 });
 
