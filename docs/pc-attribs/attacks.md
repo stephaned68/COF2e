@@ -17,7 +17,7 @@ Pour chacune, vous indiquez :
 Si la fiche reconnaît le nom de l'arme, elle assigne automatiquement ces paramètres. De plus, elle vérifie les armes maîtrisées par le profil du personnage, et ajoute le modificateur d'attaque `deMalus` si le profil ne sait pas manier ce type d'arme, et murmure un message d'avertissement dans le chat Roll20.
 
 Des paramètres optionnels peuvent être ajoutés :
-- Un effet spécial ou une description affichée dans le chat Roll20. Ce texte peut comporter des commandes de chat Roll20. Les références aux attributs du personnage peuvent être reconnues et remplacées par leurs valeurs effectives si vous les insérez entre `[...]`.
+- Un effet spécial ou une description affichée dans le chat Roll20. Ce texte est transformé par insertion de jets en ligne s'il y a lieu.
 - Un effet prolongé propre à cette attaque (par exemple, des DM ou un état préjudiciable sur plusieurs rounds). Vous pouvez indiquer jusqu'à 4 paramètres textuels dont les 3 derniers sont optionnels :
   - l'effet prolongé. Il peut contenir une formule de dé pour des DM
   - le nom de l'effet, si vous souhaitez qu'il soit différent du nom de l'attaque
@@ -58,15 +58,13 @@ Des paramètres optionnels peuvent être ajoutés :
   - `save XXX DD 0` suivi du nom d'une caractéristique XXX, de la difficulté DD d'un jet et de `0`, séparés par des espaces. L'effet est le même que ci-dessus, mais les DM sont affichés à 0.
   - `multi` : l'attaque permet d'atteindre plusieurs cibles avec un seul jet pour toucher, la fiche ne doit pas demander de cliquer sur la cible si l'option de configuration _Attaques ciblées_ est active.
   - `crit X xxxxx` suivi d'une valeur X de DM (peut être un jet de dés) et d'un intitulé xxxxx. La fiche ajoute une ligne supplémentaire de DM en cas de coup critique.
+  - `seuil X xxxxx` suivi d'une valeur X et d'un intitulé xxxxx. Cet intitulé s'affiche si le jet de D20 atteint ou dépasse la valeur cible X. Ce texte est transformé par insertion de jets en ligne s'il y a lieu.
 
 - Options d'attaques avec arguments :
   
   Ce paramètre est principalement utilisé par le script **COFantasy2**.
-  
-  Vous pouvez toutefois y indiquer les options suivantes reconnues par la fiche :
-  
+  Vous pouvez toutefois y indiquer l'option suivante reconnue directement par la fiche :
   - `fx: ` suivi du nom d'un FX Roll20 et d'un nombre facultatif de répétition
-  - `effet: X` suivi d'un espace et d'un texte à afficher si le jet de D20 atteint ou dépasse la valeur cible X
 
 - Pour les armes de type _En main_, vous pouvez spécifier une liste de prédicats si l'arme est portée. Ce paramètre est utilisé par le script **COFantasy2**.
 - Pour les armes de type _Trait_, vous pouvez spécifier le nom de la munition (utile si le suivi simplifié des munitions est activé dans la configuration) ainsi que le nombre dépensé par chaque attaque. La fiche crée automatiquement dans l'onglet _Equipement_ une ressource avec une propriété `type: munitions` si nécessaire, et la lie à l'attaque. Il faut ensuite modifier la quantité de munitions possédées, la ressource étant créée avec une valeur de 1.
