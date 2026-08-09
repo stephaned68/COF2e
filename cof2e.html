@@ -18861,21 +18861,18 @@ on("clicked:spellbook-btn", function () {
       ...bookIds.map(id => rptAttr(section, "res-desc", id)),
       ...bookIds.map(id => rptAttr(section, "res-val", id))
     ]);
-    const names = bookIds
-    .filter(id => data[rptAttr(section, "res-val", id)] > 0)
-    .map(id => data[rptAttr(section, "res-desc", id)]);
-    if (names.length === 0) {
+    const names = bookIds.map(id => {
+      return `${ data[rptAttr(section, "res-val", id)] } x ${ data[rptAttr(section, "res-desc", id)] }`;
+    });
+    if (names.every(n => n.startsWith("0 "))) {
       const resetBtn = `[Recharger](~${charName}|reset_spellbook-btn${ menuButton() })`;
       sendChatCmd(`/w "${charName}" Plus d'utilisations disponibles des sorts du grimoire ${resetBtn}`);
       return;
     }
-    let spell = 0;
-    if (names.length > 1) {
-      const { selected } = await askAsync([ "Sort ?", "Choisir...", names ]);
-      if (selected < 2)
-        return;
-      spell = selected - 2;
-    }
+    const { selected } = await askAsync([ "Sort ?", "Choisir...", ...names ]);
+    if (selected < 2)
+      return;
+    const spell = selected - 2;
     sendChatCmd(`%{${charName}|${ rptAttr(section, "resconso-btn", bookIds[spell]) }}`);
   });
 });
