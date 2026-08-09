@@ -22,6 +22,7 @@ v1.17.1 [Screenshot](cof2e.png)
   - Ajout de la propriété `bonus` aux équipements (bonus de compétence)
   - Ajout des propriétés `type: parchemin` et `type: grimoire` aux ressources
   - Ajout du modificateur d'attaque `crit` pour les coups critiques
+  - Ajout du modificateur d'attaque `seuil` pour les effets à partir d'un seuil au D20
 
 - Fiche de PNJ:
   - Ajout des rangs de boss & filtres narratifs (Bestiaire)

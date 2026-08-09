@@ -6474,6 +6474,7 @@
                     <li>Ajout de la propriété <em>bonus</em> aux équipements (bonus de compétence)</li>
                     <li>Ajout des propriétés <em>type: parchemin</em> et <em>type: grimoire</em> aux ressources</li>
                     <li>Ajout du modificateur d'attaque <em>crit</em> pour les coups critiques</li>
+                    <li>Ajout du modificateur d'attaque <em>seuil</em> pour les effets à partir d'un seuil au D20</li>
                   </ul>
                 </summary>
               </li>
@@ -16302,10 +16303,10 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
 
     // Check special effect on die roll
     let rollEffect = "";
-    if (!hasMODScript(values) && hasProp(options, "effet")) {
-      const [ tn, ...effect ] = splitOnSpace(getProp(options, "effet"));
+    if (hasAtkMod(modifiers, "seuil")) {
+      const [ tn, ...effect ] = splitOnSpace(getAtkMod(modifiers, "seuil"));
       rollOptions.rollTN = intval(tn.trim());
-      rollEffect = effect.join(" ").trim();
+      rollEffect = insertRolls(capitalize(effect.join(" ").trim()));
     }
 
     const reset = new Map();
@@ -16319,6 +16320,7 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
       rollf: "[[0]]",
       brollf: "[[0]]",
       rolleffect: rollEffect,
+      brolleffect: "",
       hasdm: "[[1]]",
       dm: dmroll,
       dmdesc,
@@ -16345,8 +16347,11 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
       halfdm: "[[-1]]"
     };
 
-    if (roll.startsWith("1d20") && bRoll)
+    if (roll.startsWith("1d20") && bRoll) {
       atkProps.broll = attack;
+      if (rollEffect !== "")
+        atkProps.brolleffect = rollEffect;
+    }
 
     if(extraDM.length > 0)
       atkProps.dmextra = extraDM.join("\n");
@@ -18414,7 +18419,8 @@ on("clicked:multibuff-btn", function () {
 on("clicked:helprops-btn", function() {
   const props = [
     { name: "fx",         text: "Animation",        url: "animation-fx" },
-    { name: "pm",         text: "Pts Mana",         url: "points-de-mana-pm" },
+    { name: "pm",         text: "Pts de Mana",      url: "points-de-mana-pm" },
+    { name: "pe",         text: "Pts d'Ego",        url: "points-dego-pe" },
     { name: "selonRang",  text: "Effet selon rang", url: "effet-selon-le-rang-selonrang" },
     { name: "epic",       text: "Capacité épique",  url: "capacit-pique-epic" },
     { name: "buff",       text: "Buff selon rang",  url: "buff-selon-rang-buff" },
