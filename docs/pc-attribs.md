@@ -2,7 +2,11 @@
 
 - Vous pouvez indiquer pour votre PJ un nom "connu" mais aussi son vrai nom dans le champ Alias. En cliquant sur le label Alias, ce dernier vient remplacer son nom connu. Un message de notification s'affiche dans le chat Roll20.
 - Lorsque vous sélectionnez une famille, une liste des profils correspondants est disponible. Si un profil est indiqué, vous devez l'effacer pour voir de nouveau la liste. Vous pouvez indiquer votre profil primaire suivi de / et d'un second profil si votre PJ dispose d'un profil hybride.
-- Lorsque vous spécifiez un peuple, la fiche vérifie si ce peuple dispose d'un sens spécial (_Lumière des étoiles_ ou _Vision dans le noir_) et le charge automatiquement ainsi que sa portée.
+- Lorsque vous spécifiez un peuple, la fiche vérifie si ce peuple dispose d'un sens spécial (_Lumière des étoiles_ ou _Vision dans le noir_) et le charge automatiquement ainsi que sa portée. Elle charge aussi la liste des capacités de la voie de peuple dans la voie n°1.
+
+## Premier niveau
+
+Quand une nouvelle fiche de PJ est créée, le niveau est initialisé à 0. Si vous sélectionnez votre famille et votre profil, puis que vous passez le niveau à 1, la fiche de personnage vous propose un assistant dans le chat Roll20 afin de sélectionner la voie n°2 et la voie n°3 où vous allez acquérir les premiers rangs de capacités. Cliquez sur les boutons _Voie 2_ et _Voie 3_ correspondant à la voie de profil souhaitée. Puis cliquez sur le bouton _Autres voies_ pour que la fiche complète les voies 4, 5 et 6. Seuls les noms des voies et des capacités sont chargées. Voir la fonction d'import dans l'onglet _Configuration_ pour récupérer le texte des voies depuis le PDF des règles ou le site DRS.
 
 ## Persomancien
 
