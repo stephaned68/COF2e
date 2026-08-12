@@ -296,6 +296,11 @@ button.flat-btn {
   font-weight: bold;
 }
 
+.cofmain .attacks button[type="roll"].img-btn {
+  font-size: 13px;
+  font-weight: normal;
+}
+
 .cofmain .rank-summary button[type="roll"].img-btn {
   padding: 0;
   margin-left: 10px;

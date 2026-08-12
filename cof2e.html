@@ -360,14 +360,26 @@
   <div class="cofsheet">
     <input type="hidden" class="cof-type-toggle" name="attr_sheet_type" value="pc"/>
 
-    <button type="action" class="hidden" name="act_pc_actions-btn"></button>
-    <button type="action" class="hidden" name="act_pc_menus-btn"></button>
+    <button type="action" class="hidden" name="act_pc_actions-btn" />
+    <button type="action" class="hidden" name="act_pc_menus-btn" />
     
-    <button type="action" class="hidden" name="act_npc_actions-btn"></button>
-    <button type="action" class="hidden" name="act_npc_menus-btn"></button>
+    <button type="action" class="hidden" name="act_npc_actions-btn" />
+    <button type="action" class="hidden" name="act_npc_menus-btn" />
     
-    <button type="action" class="hidden" name="act_help_other-btn"></button>
-       
+    <button type="action" class="hidden" name="act_help_other-btn" />
+
+    <button type="action" class="hidden" name="act_path2ix0-btn" />
+    <button type="action" class="hidden" name="act_path2ix1-btn" />
+    <button type="action" class="hidden" name="act_path2ix2-btn" />
+    <button type="action" class="hidden" name="act_path2ix3-btn" />
+    <button type="action" class="hidden" name="act_path2ix4-btn" />
+    <button type="action" class="hidden" name="act_path3ix0-btn" />
+    <button type="action" class="hidden" name="act_path3ix1-btn" />
+    <button type="action" class="hidden" name="act_path3ix2-btn" />
+    <button type="action" class="hidden" name="act_path3ix3-btn" />
+    <button type="action" class="hidden" name="act_path3ix4-btn" />
+    <button type="action" class="hidden" name="act_path_ini-btn" />
+
     <!-- Fiche PJ -->
     <div class="cof-pc">
       <input type="hidden" class="tabs-toggle" name="attr_pc_tab" value="main" />
@@ -773,7 +785,9 @@
             <!-- Init -->
             <div class="attack">
               <div class="block-title">
-                <button class="block-title" type="action" name="act_init-btn" title="%{init-btn}">
+                <input type="hidden" name="attr_init-btn" value="">
+                <button type="action" class="hidden" name="act_init-btn"/>
+                <button class="block-title img-btn flat-btn" type="roll" name="roll_init" title="%{init-btn}" value="@{init-btn}">
                   <span class="d20-btn">t</span>
                   INITIATIVE
                 </button>
@@ -6475,6 +6489,7 @@
                     <li>Ajout des propriétés <em>type: parchemin</em> et <em>type: grimoire</em> aux ressources</li>
                     <li>Ajout du modificateur d'attaque <em>crit</em> pour les coups critiques</li>
                     <li>Ajout du modificateur d'attaque <em>seuil</em> pour les effets à partir d'un seuil au D20</li>
+                    <li>Ajout d'une aide à la sélection des deux premières voies au niveau 1</li>
                   </ul>
                 </summary>
               </li>
@@ -10721,7 +10736,7 @@ const SWData = {
   ],
   PVPATH: [
     { pv: 4, name: "artilleur", profile: "arquebusier",
-      abilities: [ "mecanismes", "arme a repetition", "tir de barrage", "canon double", "couleuvrine" ] 
+      abilities: [ "mecanismes", "arme a repetition", "tir de barrage", "canon double", "couleuvrine" ]
     },
     { pv: 4, name: "explosifs", profile: "arquebusier",
       abilities: [ "tir de grenaille", "demolition", "poudre puissante", "piege explosif", "boulet explosif" ]
@@ -11490,7 +11505,7 @@ function capitalizeAll(s, forceLower = true) {
  * @returns {string}
  */
 function toKebabCase(s) {
-    return s.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
+  return s.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
 }
 
 /**
@@ -11632,20 +11647,20 @@ function stripNonPrintable(text, stripSurrogatesAndFormats) {
 
 /**
  * Replace multiple space & tab occurences with one
- * @param {string} s - string to process
+ * @param {string} str - string to process
  * @returns {string}
  */
-function singleSpace(s) {
-  return s.replace(/\s\s+/g, " ");
+function singleSpace(str) {
+  return str.replace(/\s\s+/g, " ");
 }
 
 /**
  * Split string on space
- * @param {string} s - string to process
+ * @param {string} str - string to process
  * @returns {string[]}
  */
-function splitOnSpace(s) {
-  return singleSpace(s).split(" ");
+function splitOnSpace(str) {
+  return singleSpace(str).split(" ");
 }
 
 /**
@@ -12044,7 +12059,8 @@ class Repeating {
  * @typedef MsgOptions
  * @property {string}   title           - Title of the message
  * @property {string}   template        - Name of roll template
- * @property {string}   whisper         - Target for whispered message 
+ * @property {string}   whisper         - Target for whispered message
+ * @property {boolean}  secret          - Send a secret message
  * @property {number}   rollTN          - Target number for special roll effect
  * @property {boolean}  critical        - Use critical effect
  * @property {integer}  crit            - Critical value threshold
@@ -12358,12 +12374,13 @@ function getRollData(rollInfo, name) {
 /**
  * Add numeric attributes values
  * @param {object} values - getAttrs object with numeric values
+ * @param {number} [initial=0] - initial value of sum
  * @returns - {number}
  */
-function addValues(values) {
+function addValues(values, initial = 0) {
   return Object.keys(values).reduce((sum, attr) => {
     return sum + intval(values[attr]);
-  }, 0);
+  }, initial);
 }
 
 /**
@@ -12455,7 +12472,7 @@ function hasMODScript(values) {
  * @param {Object} [props={}] - properties name/value pairs
  * @returns {string}
  */
-function tokenMod(charId, props = {}) {  
+function tokenMod(charId, props = {}) {
   const tokenmod = `!token-mod {{ --current-page --ignore-selected --ids ${charId}`;
   const tokenProps = Object.keys(props).map(prop => `${prop}|${props[prop]}`).join(" ");
   return tokenmod + (tokenProps !== "" ? " --set " : "") + tokenProps + " }}";
@@ -12499,7 +12516,7 @@ function addCustomTurn(options) {
     if (optk === "name")
       return result += ` --${options[optk]}`;
     else
-      return result += ` --${toKebabCase(optk)}`;
+      return result += ` --${ toKebabCase(optk) }`;
   }, `!act ${options.formula}`);
   return actCmd;
 }
@@ -13372,6 +13389,88 @@ on(changeEvent([
 });
 
 /**
+ * Display paths at 1st level
+ */
+on("change:niveau", function(eventInfo) {
+  if (intval(eventInfo.previousValue) !== 0 && intval(eventInfo.newValue) !== 1)
+    return;
+
+  getAttrs([ "character_name", "profil" ], function(values) {
+    const charName = strval(values.character_name);
+    const profile = strval(values.profil);
+    const paths = SWData.PVPATH.filter(p => p.profile === cleanText(profile));
+    if (!paths)
+      return;
+
+    const chatMsg = paths.map((path, ix) => {
+      const btns = SWData.settings.profilePaths.map(p => {
+        return `[ Voie ${p} ](~${charName}|path${p}ix${ix}-btn${ menuButton() })`
+      }).join("");
+      return "**" + capitalize(path.name) + "**=" + btns;
+    });
+    sendChatMsg([ 
+      "title=Voies initiales",
+      "subtitle=Choisir les deux voies au niveau 1", 
+      ...chatMsg,
+      `desc=[ Autres voies ](~${charName}|path_ini-btn${ menuButtonOutline() })`
+    ], { template: "custom", whisper: charName });
+  });
+});
+
+/**
+ * Select 1st level paths
+ */
+SWData.settings.profilePaths.forEach(iniPath => {
+  seq(5, 0).forEach(pathIx => {
+    on(`clicked:path${iniPath}ix${pathIx}-btn`, function() {
+      getAttrs([ "profil" ], function(values) {
+        const profile = strval(values.profil);
+        let paths = SWData.PVPATH.filter(p => p.profile === cleanText(profile));
+        if (!paths)
+          return;
+
+        const updates = new Map();
+        updates.set(abilityInfo({ path: iniPath }).pathName, capitalize(paths[pathIx].name));
+        const clear = new Map();
+        clear.set(abilityInfo({ path: iniPath }).pathName, "");
+        seq(5).forEach(rank => clear.set(abilityInfo({ path: iniPath, rank }).rankName, ""));
+        setAttrs(Object.fromEntries(clear), {}, () => setAttrs(Object.fromEntries(updates)));
+      });
+    });
+  });
+});
+
+/**
+ * Fill-in the other initial paths
+ */
+on("clicked:path_ini-btn", function() {
+  getAttrs([
+    ...SWData.settings.profilePaths.map(path => abilityInfo({ path }).pathName),
+    "profil"
+  ], function(values) {
+    const profile = strval(values.profil);
+    let paths = SWData.PVPATH.filter(p => p.profile === cleanText(profile));
+    if (!paths)
+      return;
+
+    const iniPaths = [ 
+      cleanText(Object.values(values)[0]),
+      cleanText(Object.values(values)[1])
+    ];
+    paths = paths.filter(path => !iniPaths.includes(path.name));
+    const clear = new Map();
+    const updates = new Map();
+    seq(6).filter(p => !SWData.settings.level1Paths.includes(p)).forEach((path, ix) => {
+      const pathName = abilityInfo({ path }).pathName;
+      clear.set(pathName, "");
+      seq(5).forEach(rank => clear.set(abilityInfo({ path, rank }).rankName, ""));
+      updates.set(pathName, capitalize(paths[ix].name));
+    });
+    setAttrs(Object.fromEntries(clear), {}, () => setAttrs(Object.fromEntries(updates)));
+  });
+});
+
+/**
  * Change character name to true name
  */
 on("clicked:alias-toggle", function() {
@@ -13601,6 +13700,8 @@ function updatePVMax(eventInfo, changed = "") {
  * On max PV config, niveau, CON, pv_buff change
  */
 on("change:cfg_pvmax_auto change:niveau change:con change:pv_buff", updatePVMax);
+
+
 
 /**
  * Compute load limit
@@ -23532,6 +23633,7 @@ on("sheet:opened change:character_name", function() {
       "checkup",
       "caract_menu",
       "caract_select",
+      "init",
       "main_princ",
       "main_autre",
       "deux_armes",
