@@ -20,6 +20,8 @@ Les propriétés indiquées pour l'équipement ne modifient pas les différents 
 
 Si le script ChatSetAttr est installé dans la partie et que l'option de configuration correspondante est active, un bouton est ajouté dans ce message de chat afin qu'un joueur puisse cliquer et ajouter cet objet à l'inventaire de son personnage.
 
+Si ce script n'est pas installé, un message est envoyé dans le chat avec un texte à copier et à coller dans le champ _Description longue_ d'une ligne d'équipement crée manuellement.
+
 # Ressources
 
 Dans cette section, vous pouvez renseigner une liste de ressources et de consommables.

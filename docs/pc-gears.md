@@ -20,7 +20,9 @@ Une icone "bulle" permet d'afficher dans le chat Roll20 un message descriptif de
 
 ### Fonctions _Loot_
 
-Si le script ChatSetAttr est installé dans la partie et que l'option de configuration correspondante est active, un bouton est ajouté dans ce message de chat afin qu'un joueur puisse cliquer et ajouter cet objet à l'inventaire de son personnage.
+Si le script **ChatSetAttr** est installé dans la partie et que l'option de configuration correspondante est active, un bouton est ajouté dans ce message de chat afin qu'un joueur puisse cliquer et ajouter cet objet à l'inventaire de son personnage.
+
+Si ce script n'est pas installé, il est possible de coller un texte émis dans le chat depuis la fiche d'un PNJ ou d'un autre PJ, et le coller dans le champ _Description longue_ d'une ligne d'équipement crée manuellement. La fiche analyse le contenu de ce texte et assigne le nom, le détail et les propriétés de l'équipement.
 
 ## Propriétés d'équipement
 
