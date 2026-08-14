@@ -24,11 +24,13 @@ v1.17.1 [Screenshot](cof2e.png)
   - Ajout du modificateur d'attaque `crit` pour les coups critiques
   - Ajout du modificateur d'attaque `seuil` pour les effets à partir d'un seuil au D20
   - Ajout d'une aide à la sélection des deux premières voies au niveau 1
+  - Fonction *LOOT* sans le script MOD ChatSetAttr
 
 - Fiche de PNJ:
   - Ajout des rangs de boss & filtres narratifs (Bestiaire)
   - Ajout de la zone _Equipement divers_
   - Prise en charge des capacités _par initiative_
+  - Fonction *LOOT* sans le script MOD ChatSetAttr
 
 ### Version _1.17.1_ (2026-07-19)
 

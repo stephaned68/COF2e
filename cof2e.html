@@ -6490,6 +6490,7 @@
                     <li>Ajout du modificateur d'attaque <em>crit</em> pour les coups critiques</li>
                     <li>Ajout du modificateur d'attaque <em>seuil</em> pour les effets à partir d'un seuil au D20</li>
                     <li>Ajout d'une aide à la sélection des deux premières voies au niveau 1</li>
+                    <li>Fonction LOOT sans le script MOD ChatSetAttr</li>
                   </ul>
                 </summary>
               </li>
@@ -8262,6 +8263,7 @@
                     <li>Ajout des rangs de boss & filtres narratifs (Bestiaire)</li>
                     <li>Ajout de la zone de texte libre <em>Equipement divers</em></li>
                     <li>Prise en charge des capacités <em>par initiative</em></li>
+                    <li>Fonction LOOT sans le script MOD ChatSetAttr</li>
                   </ul>
                 </details>
               </li>
@@ -19310,6 +19312,7 @@ on("clicked:repeating_equipement:equipshow-btn", function () {
         chatMsg.push(`Prop ${code}: =${value} `);
       });
     }
+    let paste = "";
     if (boolval(values.chatsetattr)) {
       const attrs = rptAttrs(
         "equipement",
@@ -19331,8 +19334,36 @@ on("clicked:repeating_equipement:equipshow-btn", function () {
         "border-radius": "5px;"
       });
       chatMsg.push(`Objet=[Equiper](${setattrCmd}${button})`);
+    } else {
+      paste = `LOOT|nom=${name}|detail=${detail}|props=${ props.split("\n").join("~") }`;
+      paste = `Coller le texte suivant dans le détail d'une ligne d'équipement : **${paste}**`;
     }
     sendChatMsg(chatMsg, { template: "custom", whisper: "" });
+    if (paste !== "")
+      sendChatCmd(paste);
+  });
+});
+
+/**
+ * Parse LOOT text pasted from chat into details
+ */
+on("change:repeating_equipement:equip-detail", function () {
+  const equipDetail = rptAttr("equipement", "equip-detail");
+  getAttrs([ equipDetail ], function (values) {
+    const detail = strval(values[equipDetail]).split("|");
+    if (strval(detail[0]) !== "LOOT")
+      return;
+    const updates = new Map();
+    detail.forEach(line => {
+      let [ attr, value ] = line.split("=");
+      if (attr === "props")
+        value = value.split("~").filter(p => strval(p) !== "").join("\n");
+      if (value !== "")
+        updates.set(rptAttr("equipement", "equip-" + attr), value);
+    });
+    
+    if (updates.size > 0)
+      setAttrs(Object.fromEntries(updates), { silent: true });
   });
 });
 
