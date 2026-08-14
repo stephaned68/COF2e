@@ -19309,7 +19309,7 @@ on("clicked:repeating_equipement:equipshow-btn", function () {
     if (props !== "") {
       props.split("\n").filter(prop => strval(prop) !== "").forEach(prop => {
         const [ code, value ] = strval(prop).split(":");
-        chatMsg.push(`Prop ${code}: =${value} `);
+        chatMsg.push(`**${code}:** =${value} `);
       });
     }
     let paste = "";
@@ -19335,7 +19335,7 @@ on("clicked:repeating_equipement:equipshow-btn", function () {
       });
       chatMsg.push(`Objet=[Equiper](${setattrCmd}${button})`);
     } else {
-      paste = `LOOT|nom=${name}|detail=${detail}|props=${ props.split("\n").join("~") }`;
+      paste = `LOOT|${name}|${detail}|${ props.split("\n").join("~") }`;
       paste = `Coller le texte suivant dans le détail d'une ligne d'équipement : **${paste}**`;
     }
     sendChatMsg(chatMsg, { template: "custom", whisper: "" });
@@ -19350,17 +19350,19 @@ on("clicked:repeating_equipement:equipshow-btn", function () {
 on("change:repeating_equipement:equip-detail", function () {
   const equipDetail = rptAttr("equipement", "equip-detail");
   getAttrs([ equipDetail ], function (values) {
-    const detail = strval(values[equipDetail]).split("|");
-    if (strval(detail[0]) !== "LOOT")
+    let [ loot, nom, detail, props ] = strval(values[equipDetail]).split("|");
+    if (loot !== "LOOT")
       return;
     const updates = new Map();
-    detail.forEach(line => {
-      let [ attr, value ] = line.split("=");
-      if (attr === "props")
-        value = value.split("~").filter(p => strval(p) !== "").join("\n");
-      if (value !== "")
-        updates.set(rptAttr("equipement", "equip-" + attr), value);
-    });
+
+    if (strval(nom) !== "")
+      updates.set(rptAttr("equipement", "equip-nom"), nom);
+    if (strval(detail) !== "")
+      updates.set(rptAttr("equipement", "equip-detail"), detail);
+    if (strval(props) !== "") {
+      props = props.split("~").filter(p => strval(p) !== "").join("\n");
+      updates.set(rptAttr("equipement", "equip-props"), props);
+    }
     
     if (updates.size > 0)
       setAttrs(Object.fromEntries(updates), { silent: true });
@@ -19398,7 +19400,7 @@ on("change:repeating_equipement:equip-modprops", function() {
       if (!prop.includes("="))
         return prop;
       const [ name, value ] = prop.split("=");
-      return name + ":" + value;
+      return name + ": " + value;
     }).join("\n");
     setAttrs({ [props.replace("-mod", "-")]: updated });
   });
