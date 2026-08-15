@@ -19335,7 +19335,7 @@ on("clicked:repeating_equipement:equipshow-btn", function () {
       });
       chatMsg.push(`Objet=[Equiper](${setattrCmd}${button})`);
     } else {
-      paste = `LOOT|${name}|${detail}|${ props.split("\n").join("~") }`;
+      paste = `EQUIPER|{ "nom": "${name}", "detail": "${detail}", "props": "${ props.split("\n").join("~") }" }`;
       paste = `Coller le texte suivant dans le détail d'une ligne d'équipement : **${paste}**`;
     }
     sendChatMsg(chatMsg, { template: "custom", whisper: "" });
@@ -19350,19 +19350,17 @@ on("clicked:repeating_equipement:equipshow-btn", function () {
 on("change:repeating_equipement:equip-detail", function () {
   const equipDetail = rptAttr("equipement", "equip-detail");
   getAttrs([ equipDetail ], function (values) {
-    let [ loot, nom, detail, props ] = strval(values[equipDetail]).split("|");
-    if (loot !== "LOOT")
+    const [ equip, json ] = strval(values[equipDetail]).split("|");
+    if (equip !== "EQUIPER")
       return;
-    const updates = new Map();
 
-    if (strval(nom) !== "")
-      updates.set(rptAttr("equipement", "equip-nom"), nom);
-    if (strval(detail) !== "")
-      updates.set(rptAttr("equipement", "equip-detail"), detail);
-    if (strval(props) !== "") {
-      props = props.split("~").filter(p => strval(p) !== "").join("\n");
-      updates.set(rptAttr("equipement", "equip-props"), props);
-    }
+    const data = objval(json, { name: "", detail: "", props: "" });
+    const updates = new Map();
+    Object.keys(data).forEach(k => {
+      if (k === "props")
+        data[k] = data[k].split("~").filter(p => strval(p) !== "").join("\n");  
+      updates.set(rptAttr("equipement", "equip-" + k), data[k]);
+    });
     
     if (updates.size > 0)
       setAttrs(Object.fromEntries(updates), { silent: true });
