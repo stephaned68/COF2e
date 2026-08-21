@@ -492,7 +492,8 @@ div.path div.block-title {
 .cofmain input[value="0"].fav-ability + div.fav-ability,
 .cofmain input[value=""].immu-dm + span.immu-dm,
 .cofmain input[value="0"].mounted + .mounted,
-.cofmain input[value="0"].high-fan + .high-fan {
+.cofmain input[value="0"].high-fan + .high-fan,
+.cofmain li.peuple-mod:has(input[value="0"].peuple-mod) {
   display: none;
 }
 
@@ -1584,10 +1585,6 @@ textarea.migration {
   text-align: center;
 }
 
-.sheet-rolltemplate-cof2 .sheet-rt-text span > a.userscript-chat-button:hover {
-  color: orange;
-}
-
 .sheet-rolltemplate-cof2 .sheet-rt-tags {
   background-color: #6f5b41;
   color: whitesmoke;
@@ -1780,6 +1777,12 @@ textarea.migration {
 .sheet-rolltemplate-custom .sheet-desc {
   text-align: center;
   background-color: var(--header-bg-color);
+}
+
+.message a.userscript-chat-button:hover,
+.sheet-rolltemplate-cof2 a.userscript-chat-button:hover,
+.sheet-rolltemplate-custom a.userscript-chat-button:hover {
+  opacity: 0.7;
 }
 
 /* ROLL TEMPLATES - Dark Mode */

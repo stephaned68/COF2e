@@ -3,9 +3,7 @@
   <input type="hidden" name="attr_verfdp" value="1.18.0">
   <!-- Version courante fiche -->
   <input type="hidden" name="attr_version" value="1.18.0">
-  <!-- Mode debug -->
-  <input type="hidden" name="attr_debug_mode" value="0">
-  <!-- Edit locked -->
+    <!-- Edit locked -->
   <input type="hidden" name="attr_locked" value="0">
 
   <!-- Token -->
@@ -5708,11 +5706,7 @@
               <li class="config-check">
                 <input type="checkbox" name="attr_voies_789" value="1">
                 <span>Voies 7-8-9</span>
-              </li><!--
-              <li class="config-check" title="Voir les paramètres des capacités en mode affichage">
-                <input type="checkbox" name="attr_use_params" value="1" checked>
-                <span>Voir les paramètres de capacités</span>
-              </li>-->
+              </li>
               <li class="config-check" title="Système de compétences (Atlas & règles optionnelles, p. 223)">
                 <input type="checkbox" name="attr_use_skills" value="1">
                 <span>Compétences</span>
@@ -5904,6 +5898,63 @@
                 <span>Contrôle des points de capacités</span>
               </li>
             </ul>
+
+            <details>
+              <summary>
+                <h4>Modificateurs de peuple</h4>
+              </summary>
+              <ul class="pc-configs">
+                <li class="peuple-mod">
+                  <input type="hidden" class="peuple-mod" name="attr_agimod_peuple" value="1">
+                  <input type="number" name="attr_peuple_agi" min="-2" max="2" value="0">
+                  <span>AGI</span>
+                  <input type="hidden" name="attr_peuple_agimod">
+                  <span name="attr_peuple_agimod"></span>
+                </li>
+                <li class="peuple-mod">
+                  <input type="hidden" class="peuple-mod" name="attr_conmod_peuple" value="1">
+                  <input type="number" name="attr_peuple_con" min="-2" max="2" value="0">                  
+                  <span>CON</span>
+                  <input type="hidden" name="attr_peuple_conmod">
+                  <span name="attr_peuple_conmod"></span>
+                </li>
+                <li class="peuple-mod">
+                  <input type="hidden" class="peuple-mod" name="attr_formod_peuple" value="1">
+                  <input type="number" name="attr_peuple_for" min="-2" max="2" value="0">
+                  <span>FOR</span>
+                  <input type="hidden" name="attr_peuple_formod">
+                  <span name="attr_peuple_formod"></span>
+                </li>
+                <li class="peuple-mod">
+                  <input type="hidden" class="peuple-mod" name="attr_permod_peuple" value="1">
+                  <input type="number" name="attr_peuple_per" min="-2" max="2" value="0">                  
+                  <span>PER</span>
+                  <input type="hidden" name="attr_peuple_permod">
+                  <span name="attr_peuple_permod"></span>
+                </li>
+                <li class="peuple-mod">
+                  <input type="hidden" class="peuple-mod" name="attr_chamod_peuple" value="1">
+                  <input type="number" name="attr_peuple_cha" min="-2" max="2" value="0">
+                  <span>CHA</span>
+                  <input type="hidden" name="attr_peuple_chamod">
+                  <span name="attr_peuple_chamod"></span>
+                </li>
+                <li class="peuple-mod">
+                  <input type="hidden" class="peuple-mod" name="attr_intmod_peuple" value="1">
+                  <input type="number" name="attr_peuple_int" min="-2" max="2" value="0">
+                  <span>INT</span>
+                  <input type="hidden" name="attr_peuple_intmod">
+                  <span name="attr_peuple_intmod"></span>
+                </li>
+                <li class="peuple-mod">
+                  <input type="hidden" class="peuple-mod" name="attr_volmod_peuple" value="1">
+                  <input type="number" name="attr_peuple_vol" min="-2" max="2" value="0">                  
+                  <span>VOL</span>
+                  <input type="hidden" name="attr_peuple_volmod">
+                  <span name="attr_peuple_volmod"></span>
+                </li>
+              </ul>
+            </details>
 
             <details>
               <summary>
@@ -6120,7 +6171,6 @@
           <div class="sheet-col">
 
             <div class="float-right">
-              <input type="checkbox" name="attr_debug_mode" value="1" title="Mode Debug">&nbsp;
               <button type="action" class="flat-btn img-btn" name="act_def_config-btn" title="Importer la configuration&#10;Valider la configuration par défaut (fiche PJBase)">
                 <span class="img-btn">x</span>
               </button>
@@ -6489,8 +6539,9 @@
                     <li>Ajout des propriétés <em>type: parchemin</em> et <em>type: grimoire</em> aux ressources</li>
                     <li>Ajout du modificateur d'attaque <em>crit</em> pour les coups critiques</li>
                     <li>Ajout du modificateur d'attaque <em>seuil</em> pour les effets à partir d'un seuil au D20</li>
-                    <li>Ajout d'une aide à la sélection des deux premières voies au niveau 1</li>
                     <li>Fonction LOOT sans le script MOD ChatSetAttr</li>
+                    <li>Ajout d'une aide à la sélection des deux premières voies au niveau 1</li>
+                    <li>Ajout d'une aide à la sélection des modificateurs de peuples</li>
                   </ul>
                 </summary>
               </li>
@@ -7950,7 +8001,6 @@
           <div class="sheet-col">
             
             <div class="float-right">
-              <input type="checkbox" name="attr_debug_mode" value="1" title="Mode Debug">&nbsp;
               <button type="action" class="flat-btn img-btn" name="act_def_config-btn" title="Importer la configuration&#10;Valider la configuration par défaut (fiche PNJBase)">
                 <span class="img-btn">x</span>
               </button>
@@ -9102,7 +9152,6 @@
 
 const SWData = {
   settings: {
-    debugMode: false,
     hiddenClass: "hidden",
     visibleClass: "visible",
     peoplePath: 1,
@@ -9179,6 +9228,7 @@ const SWData = {
     "actions":  "&#128262;",        // bright
     "skills":   "&#128170;",        // flexed biceps
     "heal":     "&#129505;",        // red heart
+    "luck":     "&#127808",         // 4 leaf clover
     "recovery": {
       "fast":   "&#127861;",        // tea
       "full":   "&#128719;",        // bed
@@ -11064,150 +11114,265 @@ const SWData = {
   HERITAGE: [
     {
       name: [ "ame forgee", "ame-forgee" ],
+      caracs: [
+        { change: "con", mod: 1 },
+        { change: "cha,int", mod: -1 },
+      ],
       abilities: [ "metallique", "choc electrique", "infiltration", "rayon ardent", "machine de guerre" ],
       skills: "athletisme,sciences",
       companion: true
     },
     {
       name: [ "cambion" ],
+      caracs: [
+        { change: "con,vol", mod: 1 },
+        { change: "cha", mod: -1 },
+      ],
       abilities: [ "ami des ombres", "enfant des tenebres", "resistances", "la belle et la bete", "forge par les tenebres" ],
       skills: "discretion,tromperie",
       companion: true
     },
     {
       name: [ "demi elfe", "demi-elfe", "demie elfe", "demie-elfe" ],
+      caracs: [
+        { change: "per,cha", mod: 1 },
+        { change: "con,for", mod: -1 },
+      ],
       abilities: [ "heritages", "nomade", "capacite d'apprentissage", "sang feerique", "empathie fantastique" ],
       skills: "divertissement,empathie",
       companion: true
     },
     {
       name: [ "demi ogre", "demi-ogre", "demie ogre", "demie-ogre", "demie ogresse", "demie-ogresse" ],
+      caracs: [
+        { change: "agi", mod: -1 },
+        { change: "con", mod: 1 },
+        { change: "for", mod: 2 },
+        { change: "cha", mod: -1 },
+        { change: "int", mod: -1 },
+        { change: "vol", mod: -1 },
+      ],
       abilities: [ "reaction violente", "violence ciblee", "vorace", "toujours plus lourd", "monumental" ],
       skills: "athletisme,intimidation",
       companion: true
     },
     {
       name: [ "demi orc", "demi-orc", "demie orque", "demie-orque" ],
+      caracs: [
+        { change: "con,for", mod: 1 },
+        { change: "cha,int", mod: -1 },
+      ],
       abilities: [ "impressionnant", "talent pour la violence", "critique brutal", "attaque sanglante", "colosse" ],
       skills: "athletisme,intimidation",
       companion: false
     },
     {
       name: [ "drakonide", "drakeide", "sangdragon", "sang-dragon" ],
+      caracs: [
+        { change: "for", mod: 1 },
+        { change: "vol", mod: 1 },
+        { change: "agi", mod: -1 },
+        { change: "per", mod: -1 },
+      ],
       abilities: [ "sang dragon", "souffle", "ecailles robustes", "fureur drakonide / ailes puissantes", "heritage draconique" ],
       skills: "connaissance,vigilance",
       companion: true
     },
     {
       name: [ "elfe haut", "haut elfe", "haut-elfe" ],
+      caracs: [
+        { change: "cha,int", mod: 1 },
+        { change: "for", mod: -1 },
+      ],
       abilities: [ "lumiere interieure", "force d'ame", "talent pour la magie", "immortel", "superiorite elfique" ],
       skills: "connaissance,divertissement",
       companion: false
     },
     {
       name: [ "elfe pale" ],
+      caracs: [
+        { change: "per,vol", mod: 1 },
+        { change: "for", mod: -1 },
+      ],
       abilities: [ "natif de la foret sombre", "resistance au poison", "fleau des morts", "provoquer la chance", "superiorite elfique" ],
       skills: "discretion,survie",
       companion: true
     },
     {
       name: [ "elfe des profondeurs", "elfe noir", "drow" ],
+      caracs: [
+        { change: "agi,vol", mod: 1 },
+        { change: "for", mod: -1 },
+      ],
       abilities: [ "enfant des tenebres", "lames et sorcellerie", "combat a deux armes", "maitrise des arbaletes", "superiorite elfique" ],
       skills: "discretion,escalade",
       companion: true
     },
     {
       name: [ "elfe sylvain", "elfe sylvaine", "elfe sylvestre", "elfe des bois" ],
+      caracs: [
+        { change: "agi,per", mod: 1 },
+        { change: "for", mod: -1 },
+      ],
       abilities: [ "lumiere des etoiles", "enfant de la foret", "archer emerite", "fleche sanglante", "superiorite elfique" ],
       skills: "discretion,survie",
       companion: false
     },
     {
       name: [ "farfadet" ],
+      caracs: [
+        { change: "agi", mod: 1 },
+        { change: "per", mod: 1 },
+        { change: "con", mod: -1 },
+        { change: "for", mod: -2 },
+      ],
       abilities: [ "ne d'un chou", "langage des animaux", "invisibilite", "monture feerique", "seigneur feerique" ],
       skills: "acrobatie,tromperie",
       companion: true
     },
     {
       name: [ "fee" ],
+      caracs: [
+        { change: "agi", mod: 1 },
+        { change: "cha", mod: 1 },
+        { change: "con", mod: -1 },
+        { change: "for", mod: -2 },
+      ],
       abilities: [ "nee d'une fleur", "pirouette", "poudre de fee", "fee reveree", "lady fee" ],
       skills: "acrobatie,tromperie",
       companion: true
     },
     {
       name: [ "felis", "felys" ],
+      caracs: [
+        { change: "agi,per", mod: 1 },
+        { change: "for,int", mod: -1 },
+      ],
       abilities: [ "ame feline", "armes naturelles", "vif et discret", "metamorphose feline", "nature feline" ],
       skills: "acrobatie,vigilance",
       companion: true
     },
     {
       name: [ "frouin" ],
+      caracs: [
+        { change: "agi,per", mod: 1 },
+        { change: "con", mod: 1 },
+        { change: "for", mod: -1 },
+        { change: "cha", mod: -1 },
+      ],
       abilities: [ "avarie", "minus", "parano", "attaque simultanee", "champion de la survie" ],
       skills: "discretion,empathie",
       companion: true
     },
     {
       name: [ "gnome" ],
+      caracs: [
+        { change: "per,int", mod: 1 },
+        { change: "for", mod: -1 },
+      ],
       abilities: [ "don etrange", "petit pote", "insignifiant", "merveille technologique", "bonne nature" ],
       skills: "occultisme,sciences",
       companion: false
     },
     {
       name: [ "gobelin", "gobeline" ],
+      caracs: [
+        { change: "agi", mod: 1 },
+        { change: "per", mod: 1 },
+        { change: "for", mod: -1 },
+        { change: "vol", mod: -1 },
+      ],
       abilities: [ "vivacite gobeline", "attaque groupee", "kafouiller", "worg", "vif et alerte" ],
       skills: "acrobatie,renseignement",
       companion: true
     },
     {
       name: [ "halfelin", "halfeline" ],
+      caracs: [
+        { change: "agi,vol", mod: 1 },
+        { change: "for", mod: -1 },
+      ],
       abilities: [ "petite taille", "resistance legendaire", "bon pour le moral", "petit veinard", "vif et bien nourri" ],
       skills: "discretion,effraction",
       companion: false
     },
     {
       name: [ "humain", "humaine" ],
+      caracs: [],
       abilities: [ "diversite", "instinct de survie", "touche-a-tout", "loup parmi les loups", "polyvalence" ],
       skills: "artisanat",
       companion: false
     },
     {
       name: [ "kobold" ],
+      caracs: [
+        { change: "agi", mod: 1 },
+        { change: "per", mod: 1 },
+        { change: "con", mod: -1 },
+        { change: "for", mod: -1 },
+      ],
       abilities: [ "ruse kobold", "chetif", "piege improvise", "attaque vicieuse", "ruse instinctive" ],
       skills: "discretion,tromperie",
       companion: true
     },
     {
       name: [ "minotaure" ],
+      caracs: [
+        { change: "for", mod: 2 },
+        { change: "vol", mod: 1 },
+        { change: "cha", mod: -2 },
+        { change: "int", mod: -2 },
+      ],
       abilities: [ "coup de corne", "charge puissante", "frenesie", "encorner", "colosse" ],
       skills: "intimidation,survie",
       companion: true
     },
     {
       name: [ "nain", "naine" ],
+      caracs: [
+        { change: "con,vol", mod: 1 },
+        { change: "agi", mod: -1 },
+      ],
       abilities: [ "habitant des tunnels", "haches et marteaux", "resistance a la magie", "fils du roc", "tenacite" ],
       skills: "artisanat,vigilance",
       companion: false
     },
     {
       name: [ "nephilim" ],
+      caracs: [
+        { change: "con,cha", mod: 1 },
+        { change: "per", mod: -1 },
+      ],
       abilities: [ "photosensible", "enfant de la lumiere", "resistances", "la plume et l'acier", "forge par la lumiere" ],
       skills: "connaissance,religion",
       companion: true
     },
     {
       name: [ "ophidien", "ophidienne" ],
+      caracs: [
+        { change: "int,vol", mod: 1 },
+        { change: "con", mod: -1 },
+      ],
       abilities: [ "sang des anciens", "regard hypnotique", "crachat", "mutation serpentine", "forme de serpent" ],
       skills: "occultisme,tromperie",
       companion: true
     },
     {
       name: [ "satyre", "faune" ],
+      caracs: [
+        { change: "per,cha", mod: 1 },
+        { change: "int,vol", mod: -1 },
+      ],
       abilities: [ "bonne nature", "encorner et ruer", "compagnon de voyage", "magie sauvage", "ascendance naturelle" ],
       skills: "divertissement,survie",
       companion: true
     },
     {
       name: [ "wolfer" ],
+      caracs: [
+        { change: "per,vol", mod: 1 },
+        { change: "int", mod: -1 },
+      ],
       abilities: [ "chasseur ne", "griffes et crocs", "loi de la meute", "forme de loup", "esprit du loup" ],
       skills: "survie,vigilance",
       companion: true
@@ -11515,23 +11680,19 @@ function toKebabCase(s) {
  * @param {any}     data - data to log
  * @param {object}  options - console display options
  * @param {string}  options.title - title of logged data
- * @param {boolean} options.debug - display only if debug_mode attribute enabled
  * @param {string}  options.color - color name for log line
  * @param {string}  options.style - CSS style for log line
  * @param {string}  options.headerStyle - CSS style for log title
 */
 function clog(data, options = {}) {
-  let { 
+  let {
     title = "",
-    debug = true,
     textColor = "orange",
     backColor = "",
     style = "font-size:12px; font-weight:normal;",
-    headerStyle = "font-size:13px; font-weight:bold;"
+    headerStyle = "font-size:13px; font-weight:bold;",
+    ...options
   } = options;
-
-  if (debug && !SWData.settings.debugMode)
-    return;
 
   title = strval(title);
   if (title !== "")
@@ -11555,25 +11716,6 @@ function clog(data, options = {}) {
       console.log(output, textStyle);
     }
   }
-}
-
-/**
- * Return title for event log
- * @param {object} eventInfo - Roll20 eventInfo object
- * @returns {string}
- */
-function logTitle(eventInfo) {
-  return `CHANGE:${ strval(eventInfo.triggerName) }`;
-}
-
-/**
- * Log and set attributes data
- * @param {object} data - attributes name/value pairs
- * @param {string} [title=""] - title for the JS console log
- */
-function logAndSet(data, title = "") {
-  clog(data, { title, textColor: "white", backColor: "brown" });
-  setAttrs(data);
 }
 
 /**
@@ -12267,7 +12409,7 @@ async function sendChatMsg(msg, options) {
       updates.set("last_target", getRollData(roll, "targetname"));
 
     if (updates.size > 0)
-      logAndSet(Object.fromEntries(updates), "SENDCHATMSG");
+      setAttrs(Object.fromEntries(updates));
 
     finishRoll(roll.rollId, computed);
   });
@@ -12481,8 +12623,18 @@ function tokenMod(charId, props = {}) {
 }
 
 /**
+ * @typedef chatSetAttrOptions
+ * @property {boolean}  silent    chatsetattr --silent option
+ * @property {boolean}  mute      chatsetattr --mute option
+ * @property {string}   select    selection mode (--sel)
+ * @property {string}   from      chat message from: name (--fb-from)
+ * @property {string}   header    chat message header (--fb-header)
+ * @property {string}   content   chat message content (--fb-content)
+ */
+
+/**
  * Build ChatSetAttr command
- * @param { { silent: boolean, mute: boolean, select: string, from: string, header: string, content: string } } options - !setattr options
+ * @param {chatSetAttrOptions} options - !setattr options
  * @param {Object} attrs - attributes name/value pairs
  * @returns {string}
  */
@@ -12502,8 +12654,16 @@ function chatSetAttr(options, attrs = {}) {
 }
 
 /**
+ * @typedef {Object} addCustomTurnOptions
+ * @property {number}         formula   formula for item change each turn
+ * @property {string|number}  initial   initial value of custom turn
+ * @property {number}         index     insertion point of custom turn
+ * @property {string}         name      name of custom turn to add
+ */
+
+/**
  * Build addCustomTurn command
- * @param { { formula: number, initial: string|number, name: string } } options - !act options
+ * @param {addCustomTurnOptions} options - !act options
  * @returns {string}
  */
 function addCustomTurn(options) {
@@ -12978,7 +13138,7 @@ on("change:sheet_type", function(eventInfo) {
 
     if (isNPC(sheetType)) {
       let updates = { atkcac: 0, atktir: 0, atkmag: 0, pc: 0, pc_max: 0 };
-      logAndSet(updates, logTitle(eventInfo));
+      setAttrs(updates);
     }
 
   });
@@ -13163,7 +13323,7 @@ on("change:famille", function(eventInfo) {
     updates.set("voie2pv", voies123pv);
     updates.set("voie3pv", voies123pv);
 
-    logAndSet(Object.fromEntries(updates), logTitle(eventInfo));
+    setAttrs(Object.fromEntries(updates));
   });
 });
 
@@ -13227,7 +13387,7 @@ on("change:profil change:peuple", function(eventInfo) {
     }
         
     if (updates.size > 0)
-      logAndSet(Object.fromEntries(updates), logTitle(eventInfo));
+      setAttrs(Object.fromEntries(updates));
   });
 });
 
@@ -13242,6 +13402,11 @@ on("change:peuple", function(eventInfo) {
     const people = strval(values.peuple);
     const useCompanion = strval(values.cfg_comp_ppl);
     
+    SWData.PC.STATS.forEach(stat => {
+      updates.set(`peuple_${ shorten(stat) }`, 0);
+      updates.set(`${ shorten(stat) }mod_peuple`, 1);
+      updates.set(`peuple_${ shorten(stat) }mod`, "");
+    });
     if (people.trim() === "") {
       updates.set(abilityInfo({ path }).pathName, "");
       // reset abilities
@@ -13255,8 +13420,8 @@ on("change:peuple", function(eventInfo) {
         updates.set(abilityInfo({ path, rank }).rankUse, "");
         updates.set(abilityInfo({ path, rank }).rankUseFreq, "");
         updates.set(abilityInfo({ path, rank }).rankUseMax, "");
-        logAndSet(Object.fromEntries(updates), logTitle(eventInfo));
       });
+      setAttrs(Object.fromEntries(updates), null, () => rebuildBuffLists());
       return;
     }
 
@@ -13266,6 +13431,21 @@ on("change:peuple", function(eventInfo) {
     if (!useCompanion && peopleInfo.companion)
       return;
     
+    let nomods = SWData.PC.STATS.map(stat => shorten(stat));
+    peopleInfo.caracs.forEach(carac => {
+      const sign = carac.mod > 0 ? "+" : "";
+      if (carac.change.includes(",")) {
+        carac.change.split(",").forEach(stat => {
+          updates.set(`peuple_${stat}mod`, ` (${sign}${carac.mod})`)
+          nomods = nomods.filter(nomod => nomod !== stat);
+        });
+      } else {
+        updates.set(`peuple_${carac.change}`, carac.mod);
+        nomods = nomods.filter(nomod => nomod !== carac.change);
+      }
+    });
+    nomods.forEach(nomod => updates.set(`${nomod}mod_peuple`, 0));
+
     updates.set(abilityInfo({ path }).pathName, people);
     rankNames.forEach((rank, ix) => {
       if (strval(values[rank]) === "")
@@ -13276,7 +13456,7 @@ on("change:peuple", function(eventInfo) {
     if (sens)
       updates.set("sens", sens);
 
-    logAndSet(Object.fromEntries(updates), logTitle(eventInfo));
+    setAttrs(Object.fromEntries(updates));
   });
 });
 
@@ -13386,7 +13566,7 @@ on(changeEvent([
       updateAttrs.set("atkmag_base", epicBase);
       updateAttrs.set("def_base", epicBase + heroicDef);
     }
-    logAndSet(Object.fromEntries(updateAttrs), logTitle(eventInfo));
+    setAttrs(Object.fromEntries(updateAttrs));
   });
 });
 
@@ -13509,10 +13689,10 @@ SWData.PC.STATS.forEach(stat => {
       const base = intval(values[`${short}_base`]);
       const buff = intval(values[`${short}_buff`]);
       const tbuff = intval(values[`t${short}_buff`]);
-      logAndSet({
+      setAttrs({
         [short]: base + buff,
         [`${short}_test`]: base + buff + tbuff
-      }, logTitle(eventInfo));
+      });
     });
   });
 });
@@ -13530,7 +13710,7 @@ function updateInit(eventInfo) {
     values[car] *= intval(values.cfg_init_agi);
     delete values.cfg_init_agi;
     const init = addValues(values);
-    logAndSet({ init }, logTitle(eventInfo));
+    setAttrs({ init });
   });
 }
 
@@ -13556,7 +13736,7 @@ SWData.PC.COMBAT.attacks.forEach(attk => {
         return;
       delete values.sheet_type;
       const score = addValues(values);
-      logAndSet({ [attack]: score }, logTitle(eventInfo));
+      setAttrs({ [attack]: score });
     });
   });
 });
@@ -13571,7 +13751,7 @@ function updateDRMax(eventInfo) {
     if (boolval(values.drmax_force))
       return;
     const dr_max = intval(values.dr_base) + intval(values.con) + intval(values.dr_buff);
-    logAndSet({ dr_max }, logTitle(eventInfo));
+    setAttrs({ dr_max });
   });
 }
 
@@ -13694,7 +13874,7 @@ function updatePVMax(eventInfo, changed = "") {
     if (level === 1 && pv === 0)
       pv = pvMax;
 
-    logAndSet({ pv, pv_max: pvMax }, logTitle(eventInfo));
+    setAttrs({ pv, pv_max: pvMax });
   });
 }
 
@@ -13721,7 +13901,7 @@ function updateLoadLimit(eventInfo) {
   getAttrs([ "sheet_type", "for" ], function(values) {
     if (isNPC(values.sheet_type))
       return;
-    logAndSet({ limite_enc: loadLimit(intval(values.for)) }, logTitle(eventInfo));
+    setAttrs({ limite_enc: loadLimit(intval(values.for)) });
   });
 }
 
@@ -13774,7 +13954,7 @@ function updatePMMax(eventInfo) {
     const epicMana = spellPM > 0 && hasAbilityName("mana epique", values) ? 5 : 0;
     if (spellPM > 0) 
       pm_max += base + spellPM + epicMana;
-    logAndSet({ pm_max }, logTitle(eventInfo));
+    setAttrs({ pm_max });
   });
 }
 
@@ -13822,7 +14002,7 @@ function updatePEMax(eventInfo) {
     let base = intval(values.vol);
 
     const pe_max = spellPE > 0 ? base + spellPE + intval(values.pe_buff) : 0;
-    logAndSet({ pe_max }, logTitle(eventInfo));
+    setAttrs({ pe_max });
   });
 }
 
@@ -13859,7 +14039,7 @@ function updatePCMax(eventInfo) {
     const doublePC = boolval(values.cfg_pc_var) ? 2 : 1;
     delete values.cfg_pc_var;
     const pc_max = addValues(values) * doublePC;
-    logAndSet({ pc_max, double_pc: doublePC === 2 ? " x 2" : "" }, logTitle(eventInfo));
+    setAttrs({ pc_max, double_pc: doublePC === 2 ? " x 2" : "" });
   });
 }
 
@@ -13895,8 +14075,9 @@ function addLuckButton(values) {
     return "";
   const charName = strval(values.character_name);
   const color = strval(values.couleur_pj);
-  const pcLabel = boolval(values.cfg_shadow) ? "Choc" : "Chance";
-  return `[${pcLabel}](~${charName}|luck_apply-btn${menuButton(color, { size: "1.3em" }, { class: "chat-button" })}) (Reste ${pc} PC)`;
+  const pcLabel = boolval(values.cfg_shadow) ? "Choc" : SWData.emojis.luck;
+  const button = boolval(values.cfg_shadow) ? menuButton : menuButtonOutline;
+  return `[${pcLabel}](~${charName}|luck_apply-btn${button(color, { size: "1.3em" }, { class: "chat-button" }, { title: "Dépenser un PC" })}) (Reste ${pc} PC)`;
 }
 
 /**
@@ -13923,7 +14104,7 @@ on("change:pc", function(eventInfo) {
     const pc = intval(values.pc);
     const pcMin = Math.max(pc, shadow ? -5 : 0);
     if (pcMin > pc)
-      logAndSet({ pc: pcMin }, logTitle(eventInfo));
+      setAttrs({ pc: pcMin });
   });
 });
 
@@ -13956,7 +14137,7 @@ SWData.PC.STATS.forEach(stat => {
       const [ dType ] = Object.keys(values);
       const weakened = intval(values.condition_affaibli);
       const roll = dieRoll(values[dType], weakened);
-      logAndSet({ [`${short}_dsup`]: roll }, logTitle(eventInfo));
+      setAttrs({ [`${short}_dsup`]: roll });
     });
   });
   
@@ -14281,7 +14462,7 @@ on("change:vitesse", function (eventInfo) {
     vitesse_def = worker || aquatic ? vitesse_def : vitesse;
     const vitesse_cases = Math.ceil(vitesse / 1.5);
     const vitesse_pas = vitesse_cases * 5;
-    logAndSet({ vitesse_def, vitesse_pas, vitesse_cases }, logTitle(eventInfo));
+    setAttrs({ vitesse_def, vitesse_pas, vitesse_cases });
   });
 });
 
@@ -14659,12 +14840,10 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
     }
 
     /**
-     * @typedef {number} recoveryTypes
+     * @enum {number} Types of recovery
+     * @readonly
      */
-    /**
-     * @enum {recoveryTypes}
-     */
-    const recoveryTypes = {
+    const recoveryTypes = Object.freeze({
       FAST:     1,  // rapide
       FULL:     2,  // complète
       PUSH:     3,  // se dépasser
@@ -14673,7 +14852,7 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
       PCMANA:   6,  // 1 PC = tous PM (prêtre & druide)
       EGOFAST:  7,  // ego, rapide
       EGOFULL:  8   // ego, complète
-    }
+    });
     /**
      * Perform recovery or push/effort
      * @param {recoveryTypes} type - recovery type
@@ -15083,7 +15262,7 @@ function updateDef(eventInfo) {
     values.def_car_max = 0;
     values.def_car_bonus = def_car_bonus;
     def = addValues(values);
-    logAndSet({ def, def_car, def_car_bonus }, logTitle(eventInfo));
+    setAttrs({ def, def_car, def_car_bonus });
   });
 }
 
@@ -15983,7 +16162,7 @@ on(clickedEvent([ "attack-btn", "atkdual1-btn", "atkdual2-btn" ], "armes"), asyn
     const atk = strval(values[section + "atk"]);
     const atkdiv = intval(values[section + "atkdiv"]);
     const name = capitalize(strval(values[section + "nom"], getAttackName(atk)), false);
-    const atkMod = ` *${ displayMod(intval(values[atk]) + intval(values.atkdiv)) }*`;
+    const atkMod = atk !== "0" ? ` *${ displayMod(intval(values[atk]) + intval(values.atkdiv)) }*` : "";
     const portee = strval(values[section + "portee"]);
     let range = (portee !== "") ? ` *(${ rangeWithUnits(portee) })*` : "";
     let crit = intval(values[section + "crit"], 20);
@@ -18317,10 +18496,14 @@ function rebuildBuffLists() {
         .forEach(a => allBuffs.push(a));
     });
     const sacrifices = getSacrificeAttrs();
+    const peopleMods = getPeopleModAttrs();
+
     getAttrs([ 
       "def_car_max",
+      "peuple",
       ...allBuffs,
-      ...sacrifices
+      ...sacrifices,
+      ...peopleMods
     ], function(values) {
       const defCarMax = intval(values.def_car_max);
       rowIds.forEach(id => {
@@ -18346,6 +18529,7 @@ function rebuildBuffLists() {
           buffs[attribute] = buffList;
         }
       });
+      
       sacrifices.forEach(attr => {
         if (!boolval(values[attr]))
           return;
@@ -18354,6 +18538,18 @@ function rebuildBuffLists() {
         const buffList = buffs[attribute] + `Sacrifice ${ upperShort(stat) } : -1; `;
         buffs[attribute] = buffList;
       });
+
+      const people = strval(values.peuple).trim();
+      peopleMods.forEach(attr => {
+        const peopleMod = intval(values[attr]);
+        if (peopleMod === 0)
+          return;
+        const stat = attr.split("_")[1];
+        const attribute = `${stat}_buff_list`;
+        const buffList = buffs[attribute] + `${ upperShort(stat) } ${people} : ${ peopleMod }; `;
+        buffs[attribute] = buffList;
+      });
+
       setAttrs(buffs);
     });
   });
@@ -19356,10 +19552,10 @@ on("change:repeating_equipement:equip-detail", function () {
 
     const data = objval(json, { name: "", detail: "", props: "" });
     const updates = new Map();
-    Object.keys(data).forEach(k => {
-      if (k === "props")
-        data[k] = data[k].split("~").filter(p => strval(p) !== "").join("\n");  
-      updates.set(rptAttr("equipement", "equip-" + k), data[k]);
+    Object.keys(data).forEach(key => {
+      if (key === "props")
+        data[key] = data[key].split("~").filter(prop => strval(prop) !== "").join("\n");  
+      updates.set(rptAttr("equipement", "equip-" + key), data[key]);
     });
     
     if (updates.size > 0)
@@ -20311,6 +20507,54 @@ on(changeEvent(SWData.settings.companion), function() {
 });
 
 /**
+ * Return list of people mods attributes
+ * @returns {string[]}
+ */
+function getPeopleModAttrs() {
+  return SWData.PC.STATS.map(stat => `peuple_${ shorten(stat) }`);
+}
+
+/**
+ * On changing people bonus
+ */
+SWData.PC.STATS.forEach(stat => {
+  on(`change:peuple_${ shorten(stat) }`, function() {
+    const selects = SWData.PC.STATS.map(stat => `peuple_${ shorten(stat) }sel`);
+    getAttrs([
+      "character_name",
+      "peuple",
+      ...getPeopleModAttrs(),
+      ...selects
+    ], function (values) {
+      const people = strval(values.peuple)
+      if (people === "")
+        return;
+      const peopleInfo = SWData.HERITAGE.find(p => p.name.includes(cleanText(people)));
+      if (!peopleInfo)
+        return;
+      if (selects.every(attr => strval(values[attr]) === ""))
+        return;
+
+      const charName = strval(values.character_name);
+      const chatMsg = [];
+      peopleInfo.caracs
+      .filter(carac => carac.change.includes(","))
+      .forEach(carac => {
+        const mods = carac.change.split(",").map(stat => intval(values[`peuple_${ shorten(stat) }`]));
+        if (mods.every(mod => mod !== 0))
+          chatMsg.push(`Choisir **${ carac.change.split(",").map(stat => upperShort(stat)).join("** ou **") }** pour appliquer le modificateur de ${ carac.mod }`);
+      });
+      if (chatMsg.length > 0) {
+        sendChatCmd(`/w "${charName}" ${ chatMsg.join("\n") }`);
+        return;
+      }
+
+      rebuildBuffLists();
+    });
+  });
+});
+
+/**
  * Rebuild custom attributes 
  */
 function rebuildCustom() {
@@ -20560,15 +20804,6 @@ on("clicked:import_json-btn", function () {
 });
 
 /**
- * On change of debug mode state
- */
-on("change:debug_mode", function() {
-  getAttrs([ "debug_mode" ], function(values) {
-    setDebugMode(values.debug_mode);
-  });
-});
-
-/**
  * On help doc button click
  */
 on("clicked:helpdoc-btn", function() {
@@ -20658,11 +20893,12 @@ function menuButton(color, font = {}, extraCSS = {}, attributes = {}) {
   
   const buttonTitle = (attributes.title) ? ` title=\"${attributes.title}\"` : "";
 
-  let buttonClass = "";
+  let buttonClass = "chat-button";
   if (extraCSS.class) {
-    buttonClass = ` class=\"${extraCSS.class}\"`;
+    buttonClass += " " + extraCSS.class;
     delete extraCSS.class;
   }
+  buttonClass = ` class=\"${buttonClass}\"`;
   
   const props = Object.keys(extraCSS).map(prop => `${prop}: ${ extraCSS[prop] }`);
   return `\"${buttonTitle}${buttonClass} style=\"` + [
@@ -20971,9 +21207,17 @@ on("clicked:rolls_menu-btn", function () {
  */
 on("clicked:skills_menu-btn", function () {
   const skillMods = SWData.PC.SKILLS.map((skill) => `${ skill.name }_bonus`);
-  getAttrs([ "character_name", ...skillMods ], function (values) {
+  const customSkills = nameSeq(4, "custom#_skillname");
+  getAttrs([ "character_name", ...skillMods, ...customSkills ], function (values) {
     const charName = strval(values.character_name);
-    const skillSelect = SWData.PC.SKILLS.map((skill, ix) => {
+    const skillSelect = SWData.PC.SKILLS
+    .filter(skill => {
+      // filter custom skills if not set
+      if (skill.name.startsWith("custom"))
+        return strval(values[skill.name]) !== "";
+      return true;
+    })
+    .map((skill, ix) => {
       const emoji = skill.emoji || SWData.emojis.skills;
       const skillLabel = getSkillName(skill);
       const skillStat = Array.isArray(skill.ability) ? "" : " " + skill.ability.toUpperCase();
@@ -22978,24 +23222,11 @@ on("clicked:npc_menus-btn", function () {
 // ====================
 
 /**
- * Set/Unset Debug Mode
- * @param {string} debugMode - value of debug_mode attribute
- * @param {function():void} [callback=null] - debug callback
+ * Migrate attribute's old COF1 value to new COF2 value
+ * @param {string} attr - attribute name
+ * @param {string} oldVal - old value
+ * @returns {string}
  */
-function setDebugMode(debugMode, callback = null) {
-  SWData.settings.debugMode = boolval(debugMode);
-  clog(
-    ` Running sheetworker... ${ SWData.settings.debugMode ? "DEBUG" : "PROD" } `,
-    { 
-      debug: false,
-      textColor: "white",
-      backColor: "brown"
-    }
-  );
-  if (SWData.settings.debugMode && callback)
-    callback();
-}
-
 function migrateCOF1Value(attr, oldVal) {
   let newVal = oldVal;
 
@@ -23528,7 +23759,7 @@ function parseSemVer(version) {
 on("sheet:opened", function() {
   getAttrs([
     "version", "verfdp",
-    "debug_mode", "scriptVersion", "scriptVersion_max",
+    "scriptVersion", "scriptVersion_max",
     "character_token",
     "sheet_type", "profil", "famille",
     "pc_subtab1",
@@ -23539,8 +23770,6 @@ on("sheet:opened", function() {
     ...nameSeq(9, abilityInfo().pathRank), // "rang_voie#"),
     ...nameSeq(9, abilityInfo().pathName), // "voie#nom"),
   ], function (values) {
-
-    setDebugMode(values.debug_mode);
     
     const sheetType = strval(values.sheet_type);
     
