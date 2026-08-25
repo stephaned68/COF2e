@@ -5154,7 +5154,6 @@
           <input type="hidden" name="attr_atkmag_buff_list" value="">
           <input type="hidden" name="attr_init_buff_list" value="">
           <input type="hidden" name="attr_def_buff_list" value="">
-          <!-- <input type="hidden" name="attr_dm_buff_list" value=""> -->
           <input type="hidden" name="attr_pv_buff_list" value="">
           <input type="hidden" name="attr_dr_buff_list" value="">
           <input type="hidden" name="attr_pm_buff_list" value="">
@@ -5473,6 +5472,8 @@
                 </button>
                 <input type="hidden" name="attr_spell_book_data" value="">
                 <button type="action" class="hidden" name="act_reset_spellbook-btn">
+                <button type="action" class="hidden" name="act_reset_resources_cbt-btn">
+                <button type="action" class="hidden" name="act_reset_resources_day-btn">
                 <button type="action" name="act_helpres-btn" class="img-btn flat-btn" title="Aide ressources">
                   <span class="img-btn img-btn-lg">i</span>
                 </button>
@@ -6536,7 +6537,7 @@
                     <li>Amélioration des boutons Chance (affichage des DM en cas de dépense après une attaque ratée)</li>
                     <li>Ajout de la condition spéciale <em>sans défense</em> (cible avec DEF -5)</li>
                     <li>Ajout de la propriété <em>bonus</em> aux équipements (bonus de compétence)</li>
-                    <li>Ajout des propriétés <em>type: parchemin</em> et <em>type: grimoire</em> aux ressources</li>
+                    <li>Ajout des propriétés <em>type: parchemin</em>, <em>type: grimoire</em>, <em>type: combat</em>, <em>type: jour</em> aux ressources</li>
                     <li>Ajout du modificateur d'attaque <em>crit</em> pour les coups critiques</li>
                     <li>Ajout du modificateur d'attaque <em>seuil</em> pour les effets à partir d'un seuil au D20</li>
                     <li>Fonction LOOT sans le script MOD ChatSetAttr</li>
@@ -11730,7 +11731,7 @@ function getRandom(max) {
 /**
  * Get a dice expression result
  * @param {string} dice - dice expression
- * @returns {number}
+ * @returns {Promise<number>}
  */
 async function roll(dice) {
   const roll = await startRoll(`! {{dice=[[${dice}]] }}`);
@@ -12480,10 +12481,10 @@ function askCommand(askParams) {
 function ask(askParams, callback) {
   const { ask, choices } = askCommand(askParams);
   startRoll(ask, question => {
-      const query = question.results.ask.result;
-      if(query && callback)
-          callback(query, choices);
-      finishRoll(question.rollId);
+    const query = question.results.ask.result;
+    if(query && callback)
+      callback(query, choices);
+    finishRoll(question.rollId);
   });
 };
 
@@ -15138,7 +15139,15 @@ on(clickedEvent([ "recovery_fast-btn", "recovery_full-btn", "effort-btn" ]), fun
       recup === recoveryTypes.FULL ||
       recup === recoveryTypes.ALL ||
       recup === recoveryTypes.EGOFULL
-    ) sendChatCmd("%{" + charName + "|reset_spellbook-btn}");
+    ) {
+      sendChatCmd("%{" + charName + "|reset_spellbook-btn}");
+      sendChatCmd("%{" + charName + "|reset_resources_day-btn}");
+    } 
+    if (
+      recup === recoveryTypes.FAST || 
+      recup === recoveryTypes.EGOFAST
+    )
+      sendChatCmd("%{" + charName + "|reset_resources_cbt-btn}");
     
   });
 });
@@ -18498,32 +18507,32 @@ function rebuildBuffLists() {
     const peopleMods = getPeopleModAttrs();
 
     getAttrs([ 
-      "def_car_max",
       "peuple",
+      "def_car_max",
       ...allBuffs,
       ...sacrifices,
       ...peopleMods
     ], function(values) {
       const defCarMax = intval(values.def_car_max);
+
       rowIds.forEach(id => {
         const rowId = rptAttr(section, "buff-", id);
-        
         const agiMax = intval(values[`${rowId}agimax`]);
         if (defCarMax > 0 && agiMax > defCarMax)
           return;
 
         const enabled = intval(values[`${rowId}on`]);
-        const name = strval(values[`${rowId}nom`]).replaceAll(":", "|");
+        let name = strval(values[`${rowId}nom`]).replaceAll(":", "|");
         const attrib = strval(values[`${rowId}attrib`]);
-        const value = strval(values[`${rowId}value`]);
+        let value = strval(values[`${rowId}value`]);
         if (attrib === "*car" || attrib === "*atk") {
           const allbuff = attrib === "*car" ? "allcaracs_" : "allattacks_";
           const buffValue = enabled ? intval(value) : 0;
           setAttrs({ [allbuff + "desc"]: name, [allbuff + "buff"]: buffValue });
           return;
         }
-        const attribute = `${attrib}_buff_list`;
         if (enabled === 1 && name !== "" && value !== "") {
+          const attribute = `${attrib}_buff_list`;
           const buffList = buffs[attribute] + `${name} : ${value}; `;
           buffs[attribute] = buffList;
         }
@@ -18580,17 +18589,18 @@ on(changeEvent(getSacrificeAttrs()), function (eventInfo) {
 
 /**
  * Parse an attribute's list of buffs (stored in xxx_buff_list)
- * @param {string} attribute - attribute name 
+ * @param {string} attribute - attribute name
  */
 function parseBuffList(attribute) {
-  getAttrs([ 
-    `${attribute}_buff_list`,
+  const buffs = `${attribute}_buff_list`;
+  getAttrs([
+    buffs,
     ...SWData.PC.BUFFS.From,
     "noms_voies",
-    "buffs_voies"
-  ], function(values) {
-    const [ buff ] = Object.keys(values);
-    const buffList = strval(values[buff]).split("; ");
+    "buffs_voies",
+    "devol"
+  ], async function(values) {
+    const buffList = strval(values[buffs]).split("; ");
     const allRanks = getPathRanks(values.rangs_voies);
     let pathBuffs;
     let pathBuffList = [];
@@ -18601,10 +18611,13 @@ function parseBuffList(attribute) {
       console.error(`${e.message} @ parseBuffList(${attribute})`);
     };
     let buffTotal = 0;
+    const rolls = [];
+    const chatMsgs = [];
     buffList.forEach(buff => {
       buff = buff.trim();
       if (buff === "")
         return;
+
       let value = 0;
       let expression = strval(buff.split(":")[1]).trim();
       if (pathBuffs && pathBuffList.includes(expression)) {
@@ -18629,12 +18642,30 @@ function parseBuffList(attribute) {
             if (bonus)
               value += intval(bonus);
           } else {
-            value = intval(expression);
+            let diceExp = insertRolls(expression);
+            if (diceExp.match(/^[+-]?\[\[/) && diceExp.trim().endsWith("]]")) {
+              diceExp = diceExp.split("[[")[1].split("]]")[0];
+              diceExp = expandDEvol(diceExp, strval(values.devol));
+              rolls.push(roll(diceExp));
+              chatMsgs.push(`**${ attribute.toUpperCase() }** ${buff} : *${diceExp}*`);
+              value = 0;
+            } else {
+              value = intval(expression);
+            }
           }
         }
       }
       buffTotal += value;
     });
+
+    if (rolls.length > 0) {
+      const results = await Promise.all(rolls);
+      if (Array.isArray(results))
+        buffTotal += results.reduce((all, roll) => all + roll, 0);
+      chatMsgs.forEach((chatMsg, ix) => {
+        sendChatCmd(`/w GM ${chatMsg} = **${results[ix]}**`);
+      });
+    }
     setAttrs({ [`${attribute}_buff`]: buffTotal });
   });
 }
@@ -18661,7 +18692,7 @@ function rebuildBuffValues() {
 SWData.PC.BUFFS.From.forEach(attribute => {
   on(`change:${attribute}`, function () {
     rebuildBuffValues();
-  })
+  });
 });
 
 /**
@@ -19181,7 +19212,6 @@ on("clicked:spellbook-btn", function () {
 on("clicked:reset_spellbook-btn", function () {
   const section = "ressources";
   getAttrs([ "character_name", "spell_book_data" ], async function(values) {
-    const charName = strval(values.character_name);
     const bookIds = strval(values.spell_book_data).split(",");
     if (bookIds.length === 0)
       return;
@@ -19202,6 +19232,36 @@ on("clicked:reset_spellbook-btn", function () {
     });
     if (updates.size > 0) {
       sendChatMsg([ "title=Grimoire", "subtitle=Recharge", ...display ], { template: "custom" });
+      setAttrs(Object.fromEntries(updates));
+    }
+  });
+});
+
+on(clickedEvent([ "cbt", "day" ].map(b => `reset_resources_${b}-btn`)), async function (eventInfo) {
+  const button = strval(eventInfo.triggerName).split("-")[0].split("_")[2];
+  const type = ({ "cbt": "combat", "day": "jour" })[button];
+  if (!type)
+    return;
+
+  const section = "ressources";
+  const resIds = await getSectionIDsAsync(section);
+  getAttrs([
+    ...resIds.map(id => rptAttr(section, "res-desc", id)),
+    ...resIds.map(id => rptAttr(section, "res-props", id))
+  ], function(values) {
+    const updates = new Map();
+    const display = [];
+    resIds.forEach(id => {
+      const props = strval(values[rptAttr(section, "res-props", id)]);
+      let [ resType, nb ] = strval(getProp(props, "type")).toLowerCase().split(" ");
+      if (type === "combat" && resType !== type)
+        return;
+      nb = intval(nb, 1);
+      display.push(`${ strval(values[rptAttr(section, "res-desc", id)]) }=x ${nb}`);
+      updates.set(rptAttr(section, "res-val", id), nb);
+    });
+    if (updates.size > 0) {
+      sendChatMsg([ "title=Ressources", "subtitle=Recharge / " + type, ...display ], { template: "custom" });
       setAttrs(Object.fromEntries(updates));
     }
   });
@@ -20115,7 +20175,7 @@ on("clicked:repeating_ressources:resconso-btn", function (eventInfo) {
     let mana = "[[0]]";
     let rsub = capitalize(strval(values[rptAttr(section, "res-desc")]));
     
-    const description = strval(values[rptAttr(section, "res-desclong")]);
+    let description = strval(values[rptAttr(section, "res-desclong")]);
     const props = strval(values[rptAttr(section, "res-props")]);
     const type = strval(getProp(props, "type")).toLowerCase();
 
@@ -20139,8 +20199,10 @@ on("clicked:repeating_ressources:resconso-btn", function (eventInfo) {
     
     if (heal !== "") {
       let text = `Reste ${remaining} ${ rsub.toLowerCase() }`;
-      if (description !== "")
+      if (description !== "") {
         text = description + "\n" + text;
+        description = "";
+      }
       const chatMsg = rollTemplate({
         lsub: "Consommable",
         rsub,
@@ -20154,6 +20216,7 @@ on("clicked:repeating_ressources:resconso-btn", function (eventInfo) {
 
     if (type.startsWith("parchemin") || type.startsWith("grimoire")) {
       let text = description;
+      description = "";
       if (text !== "") {
         text = insertRolls(text);
         let alert = "";
@@ -20195,6 +20258,15 @@ on("clicked:repeating_ressources:resconso-btn", function (eventInfo) {
           updates.clear();
         }
       }
+    }
+
+    if ([ "combat", "jour" ].some(freq => type.startsWith(freq)) && description !== "") {
+      const chatMsg = rollTemplate({
+          lsub: "Ressource",
+          rsub,
+          text: insertRolls(description)
+      });
+      sendChatMsg(chatMsg);
     }
 
     if (updates.size > 0)
