@@ -102,7 +102,7 @@ Pour chaque élément de la liste, vous indiquez :
 - Une description longue optionnelle de la ressource,
 - Une liste optionnelle de propriétés permettant de préciser la nature de la ressource.
 
-Un bouton permet de décompter un consommable et éventuellement d'envoyer un message dans le chat Roll20 selon le type de consommable.
+Un bouton permet de décompter une ressource et éventuellement d'envoyer un message dans le chat Roll20 selon le type de ressource.
 
 ## Munitions 
 
@@ -127,6 +127,18 @@ Spécifiez la propriété `type: grimoire` pour un sort inscrit dans un grimoire
 Quand vous cliquez sur le bouton _Consommable_, la description du sort s'affiche dans le chat, avec les paramètres et jets de dés éventuels substitués. La fiche décrémente un point de mana ou indique le nombre de PV à sacrifier si le personnage n'a plus de PM et souhaite utiliser la Brulûre de Mana.
 
 Si la liste des ressources contient plusieurs éléments de type `grimoire`, une icone _Journal_ apparaît et permet de choisir le sort à lancer. Si tous les sorts du grimoire ont été utilisés, un message est chuchoté dans le chat Roll20 avec un bouton pour recharger les utilisations disponibles. Ce rechargement se produit également lorsque le personnage bénéficie d'une récupération complète.
+
+## Ressource par combat
+
+Spécifiez la propriété `type: combat N` pour une ressource qui peut être utilisée `N` fois par combat. Insérez dans la description longue l'effet obtenu en cas de consommation de la ressource. Cet effet s'affiche dans le chat, avec les paramètres et jets de dés éventuels substitués, quand vous cliquez sur le bouton _Consommable_.
+
+Le nombre de ressources de ce type est réinitialisé lorsque le personnage bénéficie d'une récupération rapide ou complète.
+
+## Ressource par jour
+
+Spécifiez la propriété `type: jour N` pour une ressource qui peut être utilisée `N` fois par jour. Insérez dans la description longue l'effet obtenu en cas de consommation de la ressource. Cet effet s'affiche dans le chat, avec les paramètres et jets de dés éventuels substitués, quand vous cliquez sur le bouton _Consommable_.
+
+Le nombre de ressources de ce type est réinitialisé lorsque le personnage bénéficie d'une récupération complète.
 
 # Potions
 
