@@ -2,7 +2,10 @@
 
 - Vous pouvez indiquer pour votre PJ un nom "connu" mais aussi son vrai nom dans le champ Alias. En cliquant sur le label Alias, ce dernier vient remplacer son nom connu. Un message de notification s'affiche dans le chat Roll20.
 - Lorsque vous sélectionnez une famille, une liste des profils correspondants est disponible. Si un profil est indiqué, vous devez l'effacer pour voir de nouveau la liste. Vous pouvez indiquer votre profil primaire suivi de / et d'un second profil si votre PJ dispose d'un profil hybride.
-- Lorsque vous spécifiez un peuple, la fiche vérifie si ce peuple dispose d'un sens spécial (_Lumière des étoiles_ ou _Vision dans le noir_) et le charge automatiquement ainsi que sa portée. Elle charge aussi la liste des capacités de la voie de peuple dans la voie n°1.
+- Lorsque vous choisissez un peuple connu, la fiche charge les traits correspondants :
+  - Un éventuel sens spécial (_Lumière des étoiles_ ou _Vision dans le noir_) et sa portée,
+  - La catégorie de taille (_petite_, _moyenne_, etc...)
+  - La liste des capacités de la voie de peuple dans la voie n°1.
 
 ## Premier niveau
 
