@@ -200,6 +200,15 @@
     <!-- Identité -->
     <div class="bordered border-rounded identity">
       <input type="hidden" class="cof-head-toggle" name="attr_sheet_type" value="pc"/> 
+      <datalist id="size-list">
+        <option>Minuscule</option>
+        <option>Très petite</option>
+        <option>Petite</option>
+        <option>Moyenne</option>
+        <option>Grande</option>
+        <option>Enorme</option>
+        <option>Colossale</option>
+      </datalist>
 
       <!-- Identité PJ -->
       <div class="identity-pc">
@@ -236,8 +245,9 @@
 
         <div class="identity-row">
           <div><strong>Peuple</strong></div>
-          <div>
+          <div class="d-flex">
             <input type="text" name="attr_peuple" title="@{peuple}" value="">
+            <input type="text" name="attr_cataille" list="size-list" title="@{cataille}" value="">
           </div>
           <div><strong>Taille</strong></div>
           <div>
@@ -302,15 +312,6 @@
           <div><strong>Taille</strong></div>
           <div>
             <input type="text" name="attr_taille" list="size-list" title="@{taille}" value="">
-            <datalist id="size-list">
-              <option>Minuscule</option>
-              <option>Très petite</option>
-              <option>Petite</option>
-              <option>Moyenne</option>
-              <option>Grande</option>
-              <option>Enorme</option>
-              <option>Colossale</option>
-            </datalist>
           </div>
         </div>
 
@@ -6263,39 +6264,41 @@
           </div>
 
         </div>
-        
-        <!-- 
-          
-        <hr>
+               
+        <input type="hidden" class="import-json" name="attr_json_data" value="0">
+        <div class="import-json">
 
-        <details>
+          <hr>
 
-          <summary>Importer profil & équipement</summary>
+          <details>
 
-          <div class="sheet-2colrow">
+            <summary>Importer un personnage</summary>
 
-            <div class="sheet-col">
-              <textarea class="statblock" name="attr_json_profile"></textarea>
+            <div class="sheet-2colrow">
+
+              <div class="sheet-col">
+                <textarea class="statblock" name="attr_json_character" placeholder="Coller ici le contenu du fichier JSON avec l'option &quot;Coller en texte brut&quot;"></textarea>
+              </div>
+
+              <div class="sheet-col">
+                <button type="action" class="flat-btn img-btn" name="act_cof2_tools-btn" title="Accéder à l'application">
+                  <span class="img-btn">c</span>&nbsp;COF2 Campaign Tools
+                </button>
+                <br>
+                Depuis <em>Mes personnages</em>, choisissez <em>Exporter en JSON</em> et insérez le code dans le champ ci-contre
+                <br>
+                <button type="action" class="flat-btn img-btn" name="act_import_json-btn" title="Importer le personnage">
+                  <span class="img-btn">W</span>&nbsp;Importer
+                </button>
+                <input type="checkbox" name="attr_reset_gears" value="1">
+                <span>Réinitialiser la liste d'équipement</span>
+              </div>
+
             </div>
 
-            <div class="sheet-col">
-              <button type="action" class="flat-btn img-btn" name="act_comob_export-btn" title="Exporter le profil">
-                <span class="img-btn">c</span>&nbsp;Export Chroniques Mobiles
-              </button>
-              <br>
-              Composez votre profil avec l'application Export Chroniques Mobiles et insérez le code JSON dans le champ ci-contre
-              <br>
-              <button type="action" class="flat-btn img-btn" name="act_import_json-btn" title="Importer le profil">
-                <span class="img-btn">W</span>&nbsp;Importer
-              </button>
-              <input type="checkbox" name="attr_reset_gears" value="1">
-              <span>Réinitialiser les listes armes & équipement</span>
-            </div>
+          </details>
 
-          </div>
-
-        </details>
-        -->
+        </div>
 
       </div>
 
@@ -6543,6 +6546,8 @@
                     <li>Fonction LOOT sans le script MOD ChatSetAttr</li>
                     <li>Ajout d'une aide à la sélection des deux premières voies au niveau 1</li>
                     <li>Ajout d'une aide à la sélection des modificateurs de peuples</li>
+                    <li>Ajout de la catégorie de taille du peuple</li>
+                    <li>Prise en compte de la petite taille pour le maniement des armes</li>
                   </ul>
                 </summary>
               </li>
@@ -8070,7 +8075,7 @@
           <summary>Importer un statblock</summary>
           <div class="npc-2colrow">
             <div>
-              <textarea name="attr_statblock" class="stat-block" placeholder="Coller ici un statblock copié depuis le PDF ou le DRS avec l'option &quot;Coller en texte brut&quot;"></textarea>
+              <textarea class="statblock" name="attr_statblock" placeholder="Coller ici un statblock copié depuis le PDF ou le DRS avec l'option &quot;Coller en texte brut&quot;"></textarea>
             </div>
             <div>
               <button type="action" name="act_importsb-btn" class="flat-btn img-btn" title="Importer le statblock">
@@ -9158,6 +9163,7 @@ const SWData = {
     peoplePath: 1,
     profilePaths: [ 2, 3 ],
     level1Paths: [ 1, 2, 3 ],
+    prestigePaths: [ 7, 8 ],
     minLevels: [ 1, 2, 3, 5, 7, 9, 11, 13 ],
     npcFavorites: 5,
     highFan: [ 
@@ -9814,21 +9820,21 @@ const SWData = {
         { 
           name: "Repousser°",
           mod: "-",
-          effect: `La cible recule de [FOR attaquant + 3] mètres et l’attaquant occupe le terrain libéré.
+          effect: `La cible recule de [FOR attaquant + 3] mètres et l'attaquant occupe le terrain libéré.
           Si la cible est acculée (mur, précipice, adversaire), elle perd autant en DEF pour 1 round.
-          Cette action peut être précédée d’un déplacement de 10 m en direction de la cible.`
+          Cette action peut être précédée d'un déplacement de 10 m en direction de la cible.`
         },
         {
           name: "Bloquer°",
           mod: "-5",
           effect: `La cible est immobilisée pendant 1 round (dé malus en attaque et pas de déplacement).
-          Contre une créature de NC inférieur au niveau de l’attaquant, ce dernier peut maintenir sa prise à chaque round qui suit en emportant un test opposé de FOR (action limitée, modifiée en cas de différence de taille).`
+          Contre une créature de NC inférieur au niveau de l'attaquant, ce dernier peut maintenir sa prise à chaque round qui suit en emportant un test opposé de FOR (action limitée, modifiée en cas de différence de taille).`
         },
         {
           name: "Désarmer°",
           mod: "-5",
           effect: `La cible laisse tomber son arme au sol. 
-          Elle peut la ramasser avant tout le monde en sacrifiant son prochain tour (elle n’agira pas).`
+          Elle peut la ramasser avant tout le monde en sacrifiant son prochain tour (elle n'agira pas).`
         },
         {
           name: "Aveugler",
@@ -9838,20 +9844,20 @@ const SWData = {
         {
           name: "Renverser°",
           mod: "-5",
-          effect: `La cible est renversée (‑5 en DEF et action d’attaque pour se relever). 
-          Cette action peut être précédée d’un déplacement de 10 m en direction de la cible.`
+          effect: `La cible est renversée (‑5 en DEF et action d'attaque pour se relever). 
+          Cette action peut être précédée d'un déplacement de 10 m en direction de la cible.`
         },
         {
           name: "Renverser° (quad.:-10)",
           mod: "-10",
-          effect: `La cible est renversée (‑5 en DEF et action d’attaque pour se relever). 
-          Cette action peut être précédée d’un déplacement de 10 m en direction de la cible.`
+          effect: `La cible est renversée (‑5 en DEF et action d'attaque pour se relever). 
+          Cette action peut être précédée d'un déplacement de 10 m en direction de la cible.`
         },
         {
           name: "Etourdir°",
           mod: "-10",
-          effect: `La cible est étourdie pendant 1 round (pas d’action et ‑5 en DEF). 
-          Si cette manoeuvre est réussie contre une cible surprise de NC inférieur au niveau de l’attaquant, elle doit réussir un test de CON difficulté 10 (15 si l’attaquant utilise une arme contondante) ou être assommée (inconsciente) pour [[1d6]] min.`
+          effect: `La cible est étourdie pendant 1 round (pas d'action et ‑5 en DEF). 
+          Si cette manoeuvre est réussie contre une cible surprise de NC inférieur au niveau de l'attaquant, elle doit réussir un test de CON difficulté 10 (15 si l'attaquant utilise une arme contondante) ou être assommée (inconsciente) pour [[1d6]] min.`
         },
       ]
     },
@@ -10788,333 +10794,647 @@ const SWData = {
     },
   ],
   PVPATH: [
-    { pv: 4, name: "artilleur", profile: "arquebusier",
-      abilities: [ "mecanismes", "arme a repetition", "tir de barrage", "canon double", "couleuvrine" ]
+    { pv: 4, name: "artilleur", title: "Artilleur", profile: "arquebusier",
+      abilities: [ "mecanismes", "arme a repetition", "tir de barrage", "canon double", "couleuvrine" ],
+      titles: [ "Mécanismes", "Arme à répétition", "Tir de barrage", "Canon double", "Couleuvrine" ]
     },
-    { pv: 4, name: "explosifs", profile: "arquebusier",
-      abilities: [ "tir de grenaille", "demolition", "poudre puissante", "piege explosif", "boulet explosif" ]
+    { pv: 4, name: "explosifs", title: "Explosifs", profile: "arquebusier",
+      abilities: [ "tir de grenaille", "demolition", "poudre puissante", "piege explosif", "boulet explosif" ],
+      titles: [ "Tir de grenaille", "Démolition", "Poudre puissante", "Piège explosif", "Boulet explosif" ]
      },
-    { pv: 4, name: "mercenaire", profile: "arquebusier",
-      abilities: [ "pilier de bar", "mort ou vif", "combattant aguerri", "constitution heroique", "combat de masse" ]
+    { pv: 4, name: "mercenaire", title: "Mercenaire", profile: "arquebusier",
+      abilities: [ "pilier de bar", "mort ou vif", "combattant aguerri", "constitution heroique", "combat de masse" ],
+      titles: [ "Pilier de bar", "Mort ou vif", "Combattant aguerri", "Constitution héroïque", "Combat de masse" ]
      },
-    { pv: 4, name: "pistolero", profile: "arquebusier",
-      abilities: [ "plus vite que son ombre", "ajuster le tir", "tir double", "agilite heroique", "as de la gachette" ]
+    { pv: 4, name: "pistolero", title: "Pistolero", profile: "arquebusier",
+      abilities: [ "plus vite que son ombre", "ajuster le tir", "tir double", "agilite heroique", "as de la gachette" ],
+      titles: [ "Plus vite que son ombre", "Ajuster le tir", "Tir double", "Agilité héroïque", "As de la gâchette" ]
      },
-    { pv: 4, name: "precision", profile: "arquebusier",
-      abilities: [ "joli coup", "defaut dans la cuirasse", "tir precis", "tireur d'elite", "tir fatal" ]
+    { pv: 4, name: "precision", title: "Précision", profile: "arquebusier",
+      abilities: [ "joli coup", "defaut dans la cuirasse", "tir precis", "tireur d'elite", "tir fatal" ],
+      titles: [ "Joli coup", "Défaut dans la cuirasse", "Tir précis", "Tireur d'élite", "Tir fatal" ]
      },
-    { pv: 4, name: "escrime", profile: "barde",
-      abilities: [ "precision", "feinte", "intelligence du combat", "attaque flamboyante", "botte mortelle" ]
+    { pv: 4, name: "escrime", title: "Escrime", profile: "barde",
+      abilities: [ "precision", "feinte", "intelligence du combat", "attaque flamboyante", "botte mortelle" ],
+      titles: [ "Précision", "Feinte", "Intelligence du combat", "Attaque flamboyante", "Botte mortelle" ]
      }, 
-    { pv: 4, name: "musicien", profile: "barde",
-      abilities: [ "chant des heros", "chant de reconfort", "attaque sonore", "zone de silence", "danse irresistible" ]
+    { pv: 4, name: "musicien", title: "Musicien", profile: "barde",
+      abilities: [ "chant des heros", "chant de reconfort", "attaque sonore", "zone de silence", "danse irresistible" ],
+      titles: [ "Chant des héros", "Chant de réconfort", "Attaque sonore", "Zone de silence", "Danse irrésistible" ]
      },
-    { pv: 4, name: "saltimbanque", profile: "barde",
-      abilities: [ "acrobate", "grace feline", "lanceur de couteau", "liberte d'action", "esquive acrobatique" ]
+    { pv: 4, name: "saltimbanque", title: "Saltimbanque", profile: "barde",
+      abilities: [ "acrobate", "grace feline", "lanceur de couteau", "liberte d'action", "esquive acrobatique" ],
+      titles: [ "Acrobate", "Grâce féline", "Lanceur de couteau", "Liberté d'action", "Esquive acrobatique" ]
      },
-    { pv: 4, name: "seduction", profile: "barde",
-      abilities: [ "charmant", "dentelle et rapiere", "baratineur de genie", "charisme heroique", "suggestion" ]
+    { pv: 4, name: "seduction", title: "Séduction", profile: "barde",
+      abilities: [ "charmant", "dentelle et rapiere", "baratineur de genie", "charisme heroique", "suggestion" ],
+      titles: [ "Charmant", "Dentelle et rapière", "Baratineur de génie", "Charisme héroïque", "Suggestion" ]
      },
-    { pv: 4, name: "vagabond", profile: "barde",
-      abilities: [ "rumeurs et legendes", "eclectique", "attirail", "comprehension des langues", "deguisement" ]
-     },
-    {
-      pv: 4, name: "baroudeur", profile: "caravanier",
-      abilities: [ "infatigable", "reflexes du heros", "techniques exotiques", "art de la survie", "talent personnel" ]
-     },
-    {
-      pv: 4, name: "diplomate", profile: "caravanier",
-      abilities: [ "us et coutumes", "polyglotte", "felure", "charisme heroique", "rien d'impossible" ]
+    { pv: 4, name: "vagabond", title: "Vagabond", profile: "barde",
+      abilities: [ "rumeurs et legendes", "eclectique", "attirail", "comprehension des langues", "deguisement" ],
+      titles: [ "Rumeurs et légendes", "Éclectique", "Attirail", "Compréhension des langues", "Déguisement" ]
      },
     {
-      pv: 4, name: "explorateur", profile: "caravanier",
-      abilities: [ "sur terre", "en mer", "par monts et par vaux", "maitre de la survie", "dans le ciel" ]
+      pv: 4, name: "baroudeur", title: "Baroudeur", profile: "caravanier",
+      abilities: [ "infatigable", "reflexes du heros", "techniques exotiques", "art de la survie", "talent personnel" ],
+      titles: [ "Infatigable", "Réflexes du héros", "Techniques exotiques", "Art de la survie", "Talent personnel" ]
      },
     {
-      pv: 4, name: "garde personnel", profile: "caravanier",
-      abilities: [ "garde", "garde rapprochee", "capacite de garde", "dernier recours", "lien magique" ]
+      pv: 4, name: "diplomate", title: "Diplomate", profile: "caravanier",
+      abilities: [ "us et coutumes", "polyglotte", "felure", "charisme heroique", "rien d'impossible" ],
+      titles: [ "Us et coutumes", "Polyglotte", "Fêlure", "Charisme héroïque", "Rien d'impossible" ]
      },
     {
-      pv: 4, name: "marchand", profile: "caravanier",
-      abilities: [ "deux pour le prix d'un", "en reserve", "outils de qualite", "signe exterieur de richesse", "caravane sur pattes" ]
-     },
-    { pv: 4, name: "archer", profile: "rodeur",
-      abilities: [ "archer emerite", "tir chirurgical", "dans le mille", "tir rapide", "fleche de mort" ]
-     },
-    { pv: 4, name: "compagnon animal", profile: "rodeur",
-      abilities: [ "le loup", "travail d'equipe", "lien empathique", "loup alpha", "tactique de meute" ]
-     },
-    { pv: 4, name: "survie", profile: "rodeur",
-      abilities: [ "survie", "nature nourriciere", "grand pas", "constitution heroique", "increvable" ]
-     },
-    { pv: 4, name: "traqueur", profile: "rodeur",
-      abilities: [ "eclaireur", "attaque eclair", "chasseur emerite", "perception heroique", "repli" ]
-     },
-    { pv: 4, name: "combat a deux armes", profile: "rodeur",
-      abilities: [ "attaque a suivre", "parade croisee", "droite - gauche", "combattant heroique", "double peine" ]
-     },
-    { pv: 4, name: "assassin", profile: "voleur",
-      abilities: [ "discretion", "attaque sournoise", "attaque par surprise", "disparition", "ouverture mortelle" ]
-     },
-    { pv: 4, name: "aventurier", profile: "voleur",
-      abilities: [ "baratin", "provocation", "souplesse du felin", "charisme heroique", "attaque paralysante" ]
-     },
-    { pv: 4, name: "deplacement", profile: "voleur",
-      abilities: [ "agile", "reflexes felins", "acrobaties", "agilite heroique", "esquive de la magie" ]
-     },
-    { pv: 4, name: "roublard", profile: "voleur",
-      abilities: [ "doigts agiles", "aux aguets", "feindre la mort", "expert en criminalite", "maitre du poison" ]
-     },
-    { pv: 4, name: "spadassin", profile: "voleur",
-      abilities: [ "attaque en finesse", "esquive fatale", "frappe chirurgicale", "ambidextrie", "botte secrete" ]
-     },
-    { pv: 5, name: "brute", profile: "barbare",
-      abilities: [ "argument de taille", "tour de force", "attaque brutale", "force heroique", "briseur d'os" ]
-     },
-    { pv: 5, name: "pagne", profile: "barbare",
-      abilities: [ "vigueur", "peau de pierre", "tatouages", "constitution heroique", "peau d'acier" ]
-     },
-    { pv: 5, name: "pourfendeur", profile: "barbare",
-      abilities: [ "reflexes eclair", "charge", "enchainement", "dechainement d'acier", "attaque tourbillon" ]
-     },
-    { pv: 5, name: "primitif", profile: "barbare",
-      abilities: [ "proche de la nature", "armure de vent", "vigilance", "resistance a la magie", "vitalite debordante" ]
-     },
-    { pv: 5, name: "rage", profile: "barbare",
-      abilities: [ "cri de guerre", "defier la mort", "rage du berserk", "meme pas mal", "furie du berserk" ]
-     },
-    { pv: 5, name: "cavalier", profile: "chevalier",
-      abilities: [ "fidele monture", "cavalier emerite", "charge", "monture magique", "monture fantastique" ]
-     },
-    { pv: 5, name: "guerre", profile: "chevalier",
-      abilities: [ "armure sur mesure", "encaisser un coup", "frappe du justicier", "force heroique", "mon armure est une arme" ]
-     },
-    { pv: 5, name: "preux", profile: "chevalier",
-      abilities: [ "ignorer la douleur", "piqures d'insectes", "laissez-le moi", "charisme heroique", "seul contre tous" ]
-     },
-    { pv: 5, name: "meneur d'homme", profile: "chevalier",
-      abilities: [ "sans peur", "intercepter", "exemplaire", "charge fantastique", "ordre de bataille" ]
-     },
-    { pv: 5, name: "noblesse", profile: "chevalier",
-      abilities: [ "eduquer", "ecuyer", "autorite naturelle", "massacrer la pietaille", "formation d'elite" ]
-     },
-    { pv: 5, name: "bouclier", profile: "guerrier",
-      abilities: [ "proteger un allie", "parer un coup", "defense au bouclier", "absorber un sort", "renvoi de sort" ]
-     },
-    { pv: 5, name: "combat", profile: "guerrier",
-      abilities: [ "vivacite", "manoeuvre", "attaque puissante", "double attaque", "attaque circulaire" ]
-     },
-    { pv: 5, name: "maitre d'armes", profile: "guerrier",
-      abilities: [ "arme de predilection", "science du critique", "specialisation", "attaque parfaite", "riposte" ]
-     },
-    { pv: 5, name: "resistance", profile: "guerrier",
-      abilities: [ "robustesse", "resilient", "armure lourde", "constitution heroique", "dur a cuire" ]
-     },
-    { pv: 5, name: "soldat", profile: "guerrier",
-      abilities: [ "teigneux", "prouesse", "piqure de rappel", "force heroique", "rempart" ]
+      pv: 4, name: "explorateur", title: "Explorateur", profile: "caravanier",
+      abilities: [ "sur terre", "en mer", "par monts et par vaux", "maitre de la survie", "dans le ciel" ],
+      titles: [ "Sur terre", "En mer", "Par monts et par vaux", "Maître de la survie", "Dans le ciel" ]
      },
     {
-      pv: 5, name: "arc et cheval", profile: "parangon",
-      abilities: [ "equitation martiale", "tir en mouvement", "tir expert", "perception heroique", "tirs successifs" ]
+      pv: 4, name: "garde personnel", title: "Garde personnel", profile: "caravanier",
+      abilities: [ "garde", "garde rapprochee", "capacite de garde", "dernier recours", "lien magique" ],
+      titles: [ "Garde", "Garde rapprochée", "Capacité de garde", "Dernier recours", "Lien magique" ]
      },
     {
-      pv: 5, name: "honneur", profile: "parangon",
-      abilities: [ "chef ne", "duel", "honorable", "volonte heroique", "surmonter la douleur" ]
+      pv: 4, name: "marchand", title: "Marchand", profile: "caravanier",
+      abilities: [ "deux pour le prix d'un", "en reserve", "outils de qualite", "signe exterieur de richesse", "caravane sur pattes" ],
+      titles: [ "Deux pour le prix d'un", "En réserve", "Outils de qualité", "Signe extérieur de richesse", "Caravane sur pattes" ]
+     },
+    { pv: 4, name: "archer", title: "Archer", profile: "rodeur",
+      abilities: [ "archer emerite", "tir chirurgical", "dans le mille", "tir rapide", "fleche de mort" ],
+      titles: [ "Archer émérite", "Tir chirurgical", "Dans le mille", "Tir rapide", "Flèche de mort" ]
+     },
+    { pv: 4, name: "compagnon animal", title: "Compagnon animal", profile: "rodeur",
+      abilities: [ "le loup", "travail d'equipe", "lien empathique", "loup alpha", "tactique de meute" ],
+      titles: [ "Le loup", "Travail d'équipe", "Lien empathique", "Loup alpha", "Tactique de meute" ]
+     },
+    { pv: 4, name: "survie", title: "Survie", profile: "rodeur",
+      abilities: [ "survie", "nature nourriciere", "grand pas", "constitution heroique", "increvable" ],
+      titles: [ "Survie", "Nature nourricière", "Grand pas", "Constitution héroïque", "Increvable" ]
+     },
+    { pv: 4, name: "traqueur", title: "Traqueur", profile: "rodeur",
+      abilities: [ "eclaireur", "attaque eclair", "chasseur emerite", "perception heroique", "repli" ],
+      titles: [ "Éclaireur", "Attaque éclair", "Chasseur émérite", "Perception héroïque", "Repli" ]
+     },
+    { pv: 4, name: "combat a deux armes", title: "Combat à deux armes", profile: "rodeur",
+      abilities: [ "attaque a suivre", "parade croisee", "droite - gauche", "combattant heroique", "double peine" ],
+      titles: [ "Attaque à suivre", "Parade croisée", "Droite - gauche", "Combattant héroïque", "Double peine" ]
+     },
+    { pv: 4, name: "assassin", title: "Assassin", profile: "voleur",
+      abilities: [ "discretion", "attaque sournoise", "attaque par surprise", "disparition", "ouverture mortelle" ],
+      titles: [ "Discrétion", "Attaque sournoise", "Attaque par surprise", "Disparition", "Ouverture mortelle" ]
+     },
+    { pv: 4, name: "aventurier", title: "Aventurier", profile: "voleur",
+      abilities: [ "baratin", "provocation", "souplesse du felin", "charisme heroique", "attaque paralysante" ],
+      titles: [ "Baratin", "Provocation", "Souplesse du félin", "Charisme héroïque", "Attaque paralysante" ]
+     },
+    { pv: 4, name: "deplacement", title: "Déplacement", profile: "voleur",
+      abilities: [ "agile", "reflexes felins", "acrobaties", "agilite heroique", "esquive de la magie" ],
+      titles: [ "Agile", "Réflexes félins", "Acrobaties", "Agilité héroïque", "Esquive de la magie" ]
+     },
+    { pv: 4, name: "roublard", title: "Roublard", profile: "voleur",
+      abilities: [ "doigts agiles", "aux aguets", "feindre la mort", "expert en criminalite", "maitre du poison" ],
+      titles: [ "Doigts agiles", "Aux aguets", "Feindre la mort", "Expert en criminalité", "Maître du poison" ]
+     },
+    { pv: 4, name: "spadassin", title: "Spadassin", profile: "voleur",
+      abilities: [ "attaque en finesse", "esquive fatale", "frappe chirurgicale", "ambidextrie", "botte secrete" ],
+      titles: [ "Attaque en finesse", "Esquive fatale", "Frappe chirurgicale", "Ambidextrie", "Botte secrète" ]
+     },
+    { pv: 5, name: "brute", title: "Brute", profile: "barbare",
+      abilities: [ "argument de taille", "tour de force", "attaque brutale", "force heroique", "briseur d'os" ],
+      titles: [ "Argument de taille", "Tour de force", "Attaque brutale", "Force héroïque", "Briseur d'os" ]
+     },
+    { pv: 5, name: "pagne", title: "Pagne", profile: "barbare",
+      abilities: [ "vigueur", "peau de pierre", "tatouages", "constitution heroique", "peau d'acier" ],
+      titles: [ "Vigueur", "Peau de pierre", "Tatouages", "Constitution héroïque", "Peau d'acier" ]
+     },
+    { pv: 5, name: "pourfendeur", title: "Pourfendeur", profile: "barbare",
+      abilities: [ "reflexes eclair", "charge", "enchainement", "dechainement d'acier", "attaque tourbillon" ],
+      titles: [ "Réflexes éclair", "Charge", "Enchaînement", "Déchaînement d'acier", "Attaque tourbillon" ]
+     },
+    { pv: 5, name: "primitif", title: "Primitif", profile: "barbare",
+      abilities: [ "proche de la nature", "armure de vent", "vigilance", "resistance a la magie", "vitalite debordante" ],
+      titles: [ "Proche de la nature", "Armure de vent", "Vigilance", "Résistance à la magie", "Vitalité débordante" ]
+     },
+    { pv: 5, name: "rage", title: "Rage", profile: "barbare",
+      abilities: [ "cri de guerre", "defier la mort", "rage du berserk", "meme pas mal", "furie du berserk" ],
+      titles: [ "Cri de guerre", "Défier la mort", "Rage du berserk", "Même pas mal", "Furie du berserk" ]
+     },
+    { pv: 5, name: "cavalier", title: "Cavalier", profile: "chevalier",
+      abilities: [ "fidele monture", "cavalier emerite", "charge", "monture magique", "monture fantastique" ],
+      titles: [ "Fidèle monture", "Cavalier émérite", "Charge", "Monture magique", "Monture fantastique" ]
+     },
+    { pv: 5, name: "guerre", title: "Guerre", profile: "chevalier",
+      abilities: [ "armure sur mesure", "encaisser un coup", "frappe du justicier", "force heroique", "mon armure est une arme" ],
+      titles: [ "Armure sur mesure", "Encaisser un coup", "Frappe du justicier", "Force héroïque", "Mon armure est une arme" ]
+     },
+    { pv: 5, name: "preux", title: "Preux", profile: "chevalier",
+      abilities: [ "ignorer la douleur", "piqures d'insectes", "laissez-le moi", "charisme heroique", "seul contre tous" ],
+      titles: [ "Ignorer la douleur", "Piqûres d'insectes", "Laissez-le moi", "Charisme héroïque", "Seul contre tous" ]
+     },
+    { pv: 5, name: "meneur d'homme", title: "Meneur d'homme", profile: "chevalier",
+      abilities: [ "sans peur", "intercepter", "exemplaire", "charge fantastique", "ordre de bataille" ],
+      titles: [ "Sans peur", "Intercepter", "Exemplaire", "Charge fantastique", "Ordre de bataille" ]
+     },
+    { pv: 5, name: "noblesse", title: "Noblesse", profile: "chevalier",
+      abilities: [ "eduquer", "ecuyer", "autorite naturelle", "massacrer la pietaille", "formation d'elite" ],
+      titles: [ "Éduquer", "Écuyer", "Autorité naturelle", "Massacrer la piétaille", "Formation d'élite" ]
+     },
+    { pv: 5, name: "bouclier", title: "Bouclier", profile: "guerrier",
+      abilities: [ "proteger un allie", "parer un coup", "defense au bouclier", "absorber un sort", "renvoi de sort" ],
+      titles: [ "Protéger un allié", "Parer un coup", "Défense au bouclier", "Absorber un sort", "Renvoi de sort" ]
+     },
+    { pv: 5, name: "combat", title: "Combat", profile: "guerrier",
+      abilities: [ "vivacite", "manoeuvre", "attaque puissante", "double attaque", "attaque circulaire" ],
+      titles: [ "Vivacité", "Manœuvre", "Attaque puissante", "Double attaque", "Attaque circulaire" ]
+     },
+    { pv: 5, name: "maitre d'armes", title: "Maître d'armes", profile: "guerrier",
+      abilities: [ "arme de predilection", "science du critique", "specialisation", "attaque parfaite", "riposte" ],
+      titles: [ "Arme de prédilection", "Science du critique", "Spécialisation", "Attaque parfaite", "Riposte" ]
+     },
+    { pv: 5, name: "resistance", title: "Résistance", profile: "guerrier",
+      abilities: [ "robustesse", "resilient", "armure lourde", "constitution heroique", "dur a cuire" ],
+      titles: [ "Robustesse", "Résilient", "Armure lourde", "Constitution héroïque", "Dur à cuire" ]
+     },
+    { pv: 5, name: "soldat", title: "Soldat", profile: "guerrier",
+      abilities: [ "teigneux", "prouesse", "piqure de rappel", "force heroique", "rempart" ],
+      titles: [ "Teigneux", "Prouesse", "Piqûre de rappel", "Force héroïque", "Rempart" ]
      },
     {
-      pv: 5, name: "maitrise interieure", profile: "parangon",
-      abilities: [ "esprit vide", "main vide", "cri", "technique mortelle", "puissance du cri" ]
+      pv: 5, name: "arc et cheval", title: "Arc et cheval", profile: "parangon",
+      abilities: [ "equitation martiale", "tir en mouvement", "tir expert", "perception heroique", "tirs successifs" ],
+      titles: [ "Équitation martiale", "Tir en mouvement", "Tir expert", "Perception héroïque", "Tirs successifs" ]
      },
     {
-      pv: 5, name: "sabre", profile: "parangon",
-      abilities: [ "technique du sabre", "frappe du vide", "lames jumelles", "agilite heroique", "deluge de lames" ]
+      pv: 5, name: "honneur", title: "Honneur", profile: "parangon",
+      abilities: [ "chef ne", "duel", "honorable", "volonte heroique", "surmonter la douleur" ],
+      titles: [ "Chef né", "Duel", "Honorable", "Volonté héroïque", "Surmonter la douleur" ]
      },
     {
-      pv: 5, name: "traditions", profile: "parangon",
-      abilities: [ "esprit eclaire", "force de la repetition", "lame de lignee", "instant present", "tradition familiale" ]
-     },
-    { pv: 3, name: "mage", profile: "ensorceleur,forgesort,magicien,sorcier",
-      abilities: [ "occultisme", "maitrise de la magie", "tour de magie", "esprit superieur", "tempete de mana" ]
-     },
-    { pv: 3, name: "air", profile: "ensorceleur",
-      abilities: [ "murmures dans le vent", "sous tensiion", "telekinesie", "foudre", "forme etheree" ]
-     },
-    { pv: 3, name: "divination", profile: "ensorceleur",
-      abilities: [ "divination", "detection de l'invisible", "clairvoyance", "perception heroique", "prescience" ]
-     },
-    { pv: 3, name: "envouteur", profile: "ensorceleur",
-      abilities: [ "injonction", "sommeil", "confusion", "amitie", "domination" ]
-     },
-    { pv: 3, name: "illusions", profile: "ensorceleur",
-      abilities: [ "mirage", "image decalee", "sort illusoire", "imitation", "execution mentale" ]
-     },
-    { pv: 3, name: "invocation", profile: "ensorceleur",
-      abilities: [ "choc", "serviteur invisible", "arme de mana", "porte dimensionnelle", "mur de mana" ]
-     },
-    { pv: 3, name: "artefacts", profile: "forgesort",
-      abilities: [ "baton de mage", "ouverture - fermeture", "sac sans fond", "frappe des arcanes", "artefact etrange" ]
-     },
-    { pv: 3, name: "elixirs", profile: "forgesort",
-      abilities: [ "fortifiant", "feu gregeois", "elixir de guerison", "elixirs mineurs", "elixirs majeurs" ]
-     },
-    { pv: 3, name: "metal", profile: "forgesort",
-      abilities: [ "morsure de la forge", "metal brulant", "magnetisme", "metal hurlant", "endurant" ]
-     },
-    { pv: 3, name: "golem", profile: "forgesort",
-      abilities: [ "grosse tete", "golem", "protecteur", "statuette", "golem superieur" ]
-     },
-    { pv: 3, name: "runes", profile: "forgesort",
-      abilities: [ "runes de defense", "rune de puissance", "rune de protection", "rune d'energie", "rune de garde" ]
-     },
-    { pv: 3, name: "arcanes exhumes", profile: "ensorceleur,forgesort,magicien,sorcier",
-      abilities: [ "message magique", "toiles", "sphere de tenebres", "chien de garde", "nuage empoisonne" ]
-     },
-    { pv: 3, name: "arcanes oublies", profile: "ensorceleur,forgesort,magicien,sorcier",
-      abilities: [ "ventriloquie", "bouclier de mana", "corde magique", "retrecissement", "zone de magie nulle" ]
-     },
-    { pv: 3, name: "arcanes perdus", profile: "ensorceleur,forgesort,magicien,sorcier",
-      abilities: [ "disque de transport", "fuite rapide", "agrandissement", "inversion de la gravite", "metamorphose" ]
-     },
-    { pv: 3, name: "magie des arcanes", profile: "magicien",
-      abilities: [ "projectile de mana", "levitation", "forme gazeuse", "acceleration", "desintegration" ]
-     },
-    { pv: 3, name: "magie destructrice", profile: "magicien",
-      abilities: [ "arc de feu", "saper les forces", "fleche de feu", "explosion de feu", "appel de la foudre" ]
-     },
-    { pv: 3, name: "magie elementaire", profile: "magicien",
-      abilities: [ "asphyxie", "maitrise des elements", "arme elementaire", "respiration aquatique", "armure de pierre" ]
-     },
-    { pv: 3, name: "magie protectrice", profile: "magicien",
-      abilities: [ "armure de mana", "chute ralentie", "dephasage", "cercle de protection", "interruption du temps" ]
-     },
-    { pv: 3, name: "magie universelle", profile: "magicien",
-      abilities: [ "lumiere", "familier", "invisibilite", "vol", "teleportation" ]
+      pv: 5, name: "maitrise interieure", title: "Maîtrise intérieure", profile: "parangon",
+      abilities: [ "esprit vide", "main vide", "cri", "technique mortelle", "puissance du cri" ],
+      titles: [ "Esprit vide", "Main vide", "Cri", "Technique mortelle", "Puissance du cri" ]
      },
     {
-      pv: 4, name: "bois", profile: "primaliste",
-      abilities: [ "pluie d'echardes", "bois durci", "cheval de bois", "explosion du bois", "figurine en bois" ]
+      pv: 5, name: "sabre", title: "Sabre", profile: "parangon",
+      abilities: [ "technique du sabre", "frappe du vide", "lames jumelles", "agilite heroique", "deluge de lames" ],
+      titles: [ "Technique du sabre", "Frappe du vide", "Lames jumelles", "Agilité héroïque", "Déluge de lames" ]
      },
     {
-      pv: 4, name: "brumes", profile: "primaliste",
-      abilities: [ "temperation", "manteau de brume", "armure de brume", "volonte heroique", "nuage personnel" ]
+      pv: 5, name: "traditions", title: "Traditions", profile: "parangon",
+      abilities: [ "esprit eclaire", "force de la repetition", "lame de lignee", "instant present", "tradition familiale" ],
+      titles: [ "Esprit éclairé", "Force de la répétition", "Lame de lignée", "Instant présent", "Tradition familiale" ]
+     },
+    { pv: 3, name: "mage", title: "Mage", profile: "ensorceleur,forgesort,magicien,sorcier",
+      abilities: [ "occultisme", "maitrise de la magie", "tour de magie", "esprit superieur", "tempete de mana" ],
+      titles: [ "Occultisme", "Maîtrise de la magie", "Tour de magie", "Esprit supérieur", "Tempête de mana" ]
+     },
+    { pv: 3, name: "air", title: "Air", profile: "ensorceleur",
+      abilities: [ "murmures dans le vent", "sous tension", "telekinesie", "foudre", "forme etheree" ],
+      titles: [ "Murmures dans le vent", "Sous tension", "Télékinésie", "Foudre", "Forme éthérée" ]
+     },
+    { pv: 3, name: "divination", title: "Divination", profile: "ensorceleur",
+      abilities: [ "divination", "detection de l'invisible", "clairvoyance", "perception heroique", "prescience" ],
+      titles: [ "Divination", "Détection de l'invisible", "Clairvoyance", "Perception héroïque", "Prescience" ]
+     },
+    { pv: 3, name: "envouteur", title: "Envoûteur", profile: "ensorceleur",
+      abilities: [ "injonction", "sommeil", "confusion", "amitie", "domination" ],
+      titles: [ "Injonction", "Sommeil", "Confusion", "Amitié", "Domination" ]
+     },
+    { pv: 3, name: "illusions", title: "Illusions", profile: "ensorceleur",
+      abilities: [ "mirage", "image decalee", "sort illusoire", "imitation", "execution mentale" ],
+      titles: [ "Mirage", "Image décalée", "Sort illusoire", "Imitation", "Exécution mentale" ]
+     },
+    { pv: 3, name: "invocation", title: "Invocation", profile: "ensorceleur",
+      abilities: [ "choc", "serviteur invisible", "arme de mana", "porte dimensionnelle", "mur de mana" ],
+      titles: [ "Choc", "Serviteur invisible", "Arme de mana", "Porte dimensionnelle", "Mur de mana" ]
+     },
+    { pv: 3, name: "artefacts", title: "Artéfacts", profile: "forgesort",
+      abilities: [ "baton de mage", "ouverture - fermeture", "sac sans fond", "frappe des arcanes", "artefact etrange" ],
+      titles: [ "Bâton de mage", "Ouverture - fermeture", "Sac sans fond", "Frappe des arcanes", "Artefact étrange" ]
+     },
+    { pv: 3, name: "elixirs", title: "Élixirs", profile: "forgesort",
+      abilities: [ "fortifiant", "feu gregeois", "elixir de guerison", "elixirs mineurs", "elixirs majeurs" ],
+      titles: [ "Fortifiant", "Feu grégeois", "Élixir de guérison", "Élixirs mineurs", "Élixirs majeurs" ]
+     },
+    { pv: 3, name: "metal", title: "Métal", profile: "forgesort",
+      abilities: [ "morsure de la forge", "metal brulant", "magnetisme", "metal hurlant", "endurant" ],
+      titles: [ "Morsure de la forge", "Métal brûlant", "Magnétisme", "Métal hurlant", "Endurant" ]
+     },
+    { pv: 3, name: "golem", title: "Golem", profile: "forgesort",
+      abilities: [ "grosse tete", "golem", "protecteur", "statuette", "golem superieur" ],
+      titles: [ "Grosse tête", "Golem", "Protecteur", "Statuette", "Golem supérieur" ]
+     },
+    { pv: 3, name: "runes", title: "Runes", profile: "forgesort",
+      abilities: [ "runes de defense", "rune de puissance", "rune de protection", "rune d'energie", "rune de garde" ],
+      titles: [ "Runes de défense", "Rune de puissance", "Rune de protection", "Rune d'énergie", "Rune de garde" ]
+     },
+    { pv: 3, name: "arcanes exhumes", title: "Arcanes exhumés", profile: "ensorceleur,forgesort,magicien,sorcier",
+      abilities: [ "message magique", "toiles", "sphere de tenebres", "chien de garde", "nuage empoisonne" ],
+      titles: [ "Message magique", "Toiles", "Sphère de ténèbres", "Chien de garde", "Nuage empoisonné" ]
+     },
+    { pv: 3, name: "arcanes oublies", title: "Arcanes oubliés", profile: "ensorceleur,forgesort,magicien,sorcier",
+      abilities: [ "ventriloquie", "bouclier de mana", "corde magique", "retrecissement", "zone de magie nulle" ],
+      titles: [ "Ventriloquie", "Bouclier de mana", "Corde magique", "Rétrécissement", "Zone de magie nulle" ]
+     },
+    { pv: 3, name: "arcanes perdus", title: "Arcanes perdus", profile: "ensorceleur,forgesort,magicien,sorcier",
+      abilities: [ "disque de transport", "fuite rapide", "agrandissement", "inversion de la gravite", "metamorphose" ],
+      titles: [ "Disque de transport", "Fuite rapide", "Agrandissement", "Inversion de la gravité", "Métamorphose" ]
+     },
+    { pv: 3, name: "magie des arcanes", title: "Magie des arcanes", profile: "magicien",
+      abilities: [ "projectile de mana", "levitation", "forme gazeuse", "acceleration", "desintegration" ],
+      titles: [ "Projectile de mana", "Lévitation", "Forme gazeuse", "Accélération", "Désintégration" ]
+     },
+    { pv: 3, name: "magie destructrice", title: "Magie destructrice", profile: "magicien",
+      abilities: [ "arc de feu", "saper les forces", "fleche de feu", "explosion de feu", "appel de la foudre" ],
+      titles: [ "Arc de feu", "Saper les forces", "Flèche de feu", "Explosion de feu", "Appel de la foudre" ]
+     },
+    { pv: 3, name: "magie elementaire", title: "Magie élémentaire", profile: "magicien",
+      abilities: [ "asphyxie", "maitrise des elements", "arme elementaire", "respiration aquatique", "armure de pierre" ],
+      titles: [ "Asphyxie", "Maîtrise des éléments", "Arme élémentaire", "Respiration aquatique", "Armure de pierre" ]
+     },
+    { pv: 3, name: "magie protectrice", title: "Magie protectrice", profile: "magicien",
+      abilities: [ "armure de mana", "chute ralentie", "dephasage", "cercle de protection", "interruption du temps" ],
+      titles: [ "Armure de mana", "Chute ralentie", "Déphasage", "Cercle de protection", "Interruption du temps" ]
+     },
+    { pv: 3, name: "magie universelle", title: "Magie universelle", profile: "magicien",
+      abilities: [ "lumiere", "familier", "invisibilite", "vol", "teleportation" ],
+      titles: [ "Lumière", "Familier", "Invisibilité", "Vol", "Téléportation" ]
      },
     {
-      pv: 4, name: "rivieres", profile: "primaliste",
-      abilities: [ "traversee", "source claire", "lance liquide", "fluide", "crue devastatrice" ]
+      pv: 4, name: "bois", title: "Bois", profile: "primaliste",
+      abilities: [ "pluie d'echardes", "bois durci", "cheval de bois", "explosion du bois", "figurine en bois" ],
+      titles: [ "Pluie d'échardes", "Bois durci", "Cheval de bois", "Explosion du bois", "Figurine en bois" ]
      },
     {
-      pv: 4, name: "sol", profile: "primaliste",
-      abilities: [ "sens de la terre", "pilier magique", "sables mouvants", "passage par le sol", "champ mortel" ]
+      pv: 4, name: "brumes", title: "Brumes", profile: "primaliste",
+      abilities: [ "temperation", "manteau de brume", "armure de brume", "volonte heroique", "nuage personnel" ],
+      titles: [ "Températion", "Manteau de brume", "Armure de brume", "Volonté héroïque", "Nuage personnel" ]
      },
     {
-      pv: 4, name: "torche", profile: "primaliste",
-      abilities: [ "torche", "feu de camp", "torche puissante", "boutefeu", "passage par le feu" ]
-     },
-    { pv: 3, name: "demon", profile: "sorcier",
-      abilities: [ "malediction", "beaute de la succube", "pacte demoniaque", "aspect du demon", "invocation d'un demon" ]
-     },
-    { pv: 3, name: "mort", profile: "sorcier",
-      abilities: [ "siphon des ames", "masque mortuaire", "baiser du vampire", "peur", "briser les coeurs" ]
-     },
-    { pv: 3, name: "outre-tombe", profile: "sorcier",
-      abilities: [ "un pied dans la tombe", "armure d'os", "animation des morts", "ensevelissement", "armee des morts" ]
-     },
-    { pv: 3, name: "sang", profile: "sorcier",
-      abilities: [ "saignements", "sang mordant", "exsangue", "rituel de sang", "lien de sang" ]
-     },
-    { pv: 3, name: "sombre magie", profile: "sorcier",
-      abilities: [ "tenebres", "reptation", "strangulation", "manteau d'ombre", "pacte tenebreux" ]
-     },
-    { pv: 3, name: "arcanes obscurs", profile: "sorcier",
-      abilities: [ "contact vampirique", "tentation du demon", "epidemie", "aura maudite", "extinction de masse" ]
+      pv: 4, name: "rivieres", title: "Rivières", profile: "primaliste",
+      abilities: [ "traversee", "source claire", "lance liquide", "fluide", "crue devastatrice" ],
+      titles: [ "Traversée", "Source claire", "Lance liquide", "Fluide", "Crue dévastatrice" ]
      },
     {
-      pv: 4, name: "esprit animal", profile: "chamane",
-      abilities: [ "esprit du loup", "esprit du serpe", "esprit de l'ours", "esprit de l'aigle", "esprit du poisson" ]
+      pv: 4, name: "sol", title: "Sol", profile: "primaliste",
+      abilities: [ "sens de la terre", "pilier magique", "sables mouvants", "passage par le sol", "champ mortel" ],
+      titles: [ "Sens de la terre", "Pilier magique", "Sables mouvants", "Passage par le sol", "Champ mortel" ]
      },
     {
-      pv: 4, name: "esprits des choses", profile: "chamane",
-      abilities: [ "dialogue avec les objets", "pierre vivante", "arme vivante", "siphon de magie", "esprit du lieu" ]
+      pv: 4, name: "torche", title: "Torche", profile: "primaliste",
+      abilities: [ "torche", "feu de camp", "torche puissante", "boutefeu", "passage par le feu" ],
+      titles: [ "Torche", "Feu de camp", "Torche puissante", "Boutefeu", "Passage par le feu" ]
+     },
+    { pv: 3, name: "demon", title: "Démon", profile: "sorcier",
+      abilities: [ "malediction", "beaute de la succube", "pacte demoniaque", "aspect du demon", "invocation d'un demon" ],
+      titles: [ "Malédiction", "Beauté de la succube", "Pacte démoniaque", "Aspect du démon", "Invocation d'un démon" ]
+     },
+    { pv: 3, name: "mort", title: "Mort", profile: "sorcier",
+      abilities: [ "siphon des ames", "masque mortuaire", "baiser du vampire", "peur", "briser les coeurs" ],
+      titles: [ "Siphon des âmes", "Masque mortuaire", "Baiser du vampire", "Peur", "Briser les cœurs" ]
+     },
+    { pv: 3, name: "outre-tombe", title: "Outre-tombe", profile: "sorcier",
+      abilities: [ "un pied dans la tombe", "armure d'os", "animation des morts", "ensevelissement", "armee des morts" ],
+      titles: [ "Un pied dans la tombe", "Armure d'os", "Animation des morts", "Ensevelissement", "Armée des morts" ]
+     },
+    { pv: 3, name: "sang", title: "Sang", profile: "sorcier",
+      abilities: [ "saignements", "sang mordant", "exsangue", "rituel de sang", "lien de sang" ],
+      titles: [ "Saignements", "Sang mordant", "Exsangue", "Rituel de sang", "Lien de sang" ]
+     },
+    { pv: 3, name: "sombre magie", title: "Sombre magie", profile: "sorcier",
+      abilities: [ "tenebres", "reptation", "strangulation", "manteau d'ombre", "pacte tenebreux" ],
+      titles: [ "Ténèbres", "Reptation", "Strangulation", "Manteau d'ombre", "Pacte ténébreux" ]
+     },
+    { pv: 3, name: "arcanes obscurs", title: "Arcanes obscurs", profile: "sorcier",
+      abilities: [ "contact vampirique", "tentation du demon", "epidemie", "aura maudite", "extinction de masse" ],
+      titles: [ "Contact vampirique", "Tentation du démon", "Épidémie", "Aura maudite", "Extinction de masse" ]
      },
     {
-      pv: 4, name: "esprits malefiques", profile: "chamane",
-      abilities: [ "esprits predateurs", "esprits de cauchemars", "metal corrompu", "esprits hurlants", "esprit insecte" ]
+      pv: 4, name: "esprit animal", title: "Esprit animal", profile: "chamane",
+      abilities: [ "esprit du loup", "esprit du serpe", "esprit de l'ours", "esprit de l'aigle", "esprit du poisson" ],
+      titles: [ "Esprit du loup", "Esprit du serpe", "Esprit de l'ours", "Esprit de l'aigle", "Esprit du poisson" ]
      },
     {
-      pv: 4, name: "esprit vital", profile: "chamane",
-      abilities: [ "esprits des ancetres", "esprit du foyer", "esprit protecteur", "perception heroique", "esprit lie" ]
+      pv: 4, name: "esprits des choses", title: "Esprits des choses", profile: "chamane",
+      abilities: [ "dialogue avec les objets", "pierre vivante", "arme vivante", "siphon de magie", "esprit du lieu" ],
+      titles: [ "Dialogue avec les objets", "Pierre vivante", "Arme vivante", "Siphon de magie", "Esprit du lieu" ]
      },
     {
-      pv: 4, name: "forme d'esprit", profile: "chamane",
-      abilities: [ "esprit de veille", "esprit de repos", "arpenteur de reves", "perception des esprits", "esprit vagabond" ]
+      pv: 4, name: "esprits malefiques", title: "Esprits maléfiques", profile: "chamane",
+      abilities: [ "esprits predateurs", "esprits de cauchemars", "metal corrompu", "esprits hurlants", "esprit insecte" ],
+      titles: [ "Esprits prédateurs", "Esprits de cauchemars", "Métal corrompu", "Esprits hurlants", "Esprit insecte" ]
      },
-    { pv: 4, name: "animaux", profile: "druide",
-      abilities: [ "langage des animaux", "petit compagnon", "nuee d'insectes", "masque du predateur", "forme animale" ]
+    {
+      pv: 4, name: "esprit vital", title: "Esprit vital", profile: "chamane",
+      abilities: [ "esprits des ancetres", "esprit du foyer", "esprit protecteur", "perception heroique", "esprit lie" ],
+      titles: [ "Esprits des ancêtres", "Esprit du foyer", "Esprit protecteur", "Perception héroïque", "Esprit lié" ]
      },
-    { pv: 4, name: "fauve", profile: "druide",
-      abilities: [ "vitesse du felin", "panthere", "attaque bondissante", "grand felin", "les sept vies du chat" ]
+    {
+      pv: 4, name: "forme d'esprit", title: "Forme d'esprit", profile: "chamane",
+      abilities: [ "esprit de veille", "esprit de repos", "arpenteur de reves", "perception des esprits", "esprit vagabond" ],
+      titles: [ "Esprit de veille", "Esprit de repos", "Arpenteur de rêves", "Perception des esprits", "Esprit vagabond" ]
      },
-    { pv: 4, name: "nature", profile: "druide",
-      abilities: [ "maitre de la survie", "terrains difficiles", "baton de druide", "constitution heroique", "resistant" ]
+    { pv: 4, name: "animaux", title: "Animaux", profile: "druide",
+      abilities: [ "langage des animaux", "petit compagnon", "nuee d'insectes", "masque du predateur", "forme animale" ],
+      titles: [ "Langage des animaux", "Petit compagnon", "Nuée d'insectes", "Masque du prédateur", "Forme animale" ]
      },
-    { pv: 4, name: "protecteur", profile: "druide",
-      abilities: [ "baies magiques", "foret vivante", "regeneration", "perception heroique", "forme d'arbre" ]
+    { pv: 4, name: "fauve", title: "Fauve", profile: "druide",
+      abilities: [ "vitesse du felin", "panthere", "attaque bondissante", "grand felin", "les sept vies du chat" ],
+      titles: [ "Vitesse du félin", "Panthère", "Attaque bondissante", "Grand félin", "Les sept vies du chat" ]
      },
-    { pv: 4, name: "vegetaux", profile: "druide",
-      abilities: [ "peau d'ecorce", "prison vegetale", "fleche vivante", "animation d'un arbre", "porte vegetale" ]
+    { pv: 4, name: "nature", title: "Nature", profile: "druide",
+      abilities: [ "maitre de la survie", "terrains difficiles", "baton de druide", "constitution heroique", "resistant" ],
+      titles: [ "Maître de la survie", "Terrains difficiles", "Bâton de druide", "Constitution héroïque", "Résistant" ]
      },
-    { pv: 4, name: "energie vitale", profile: "moine",
-      abilities: [ "mains d'energie", "projection du ki", "invulnerable", "pression mortelle", "ascetisme" ]
+    { pv: 4, name: "protecteur", title: "Protecteur", profile: "druide",
+      abilities: [ "baies magiques", "foret vivante", "regeneration", "perception heroique", "forme d'arbre" ],
+      titles: [ "Baies magiques", "Forêt vivante", "Régénération", "Perception héroïque", "Forme d'arbre" ]
      },
-    { pv: 4, name: "maitrise", profile: "moine",
-      abilities: [ "agilite du singe", "griffes du tigre", "morsure du serpent", "fureur du dragon", "moment de perfection" ]
+    { pv: 4, name: "vegetaux", title: "Végétaux", profile: "druide",
+      abilities: [ "peau d'ecorce", "prison vegetale", "fleche vivante", "animation d'un arbre", "porte vegetale" ],
+      titles: [ "Peau d'écorce", "Prison végétale", "Flèche vivante", "Animation d'un arbre", "Porte végétale" ]
      },
-    { pv: 4, name: "meditation", profile: "moine",
-      abilities: [ "pacifisme", "transe de guerison", "matrise du ki", "volonte heroique", "projection mentale" ]
+    { pv: 4, name: "energie vitale", title: "Énergie vitale", profile: "moine",
+      abilities: [ "mains d'energie", "projection du ki", "invulnerable", "pression mortelle", "ascetisme" ],
+      titles: [ "Mains d'énergie", "Projection du ki", "Invulnérable", "Pression mortelle", "Ascétisme" ]
      },
-    { pv: 4, name: "poing", profile: "moine",
-      abilities: [ "poings de fer", "peau de fer", "parade de projectiles", "deluge de coups", "puissance du ki" ]
+    { pv: 4, name: "maitrise", title: "Maîtrise", profile: "moine",
+      abilities: [ "agilite du singe", "griffes du tigre", "morsure du serpent", "fureur du dragon", "moment de perfection" ],
+      titles: [ "Agilité du singe", "Griffes du tigre", "Morsure du serpent", "Fureur du dragon", "Moment de perfection" ]
      },
-    { pv: 4, name: "vent", profile: "moine",
-      abilities: [ "pas du vent", "course du vent", "course des airs", "agilite heroique", "passe-muraille" ]
+    { pv: 4, name: "meditation", title: "Méditation", profile: "moine",
+      abilities: [ "pacifisme", "transe de guerison", "matrise du ki", "volonte heroique", "projection mentale" ],
+      titles: [ "Pacifisme", "Transe de guérison", "Maîtrise du ki", "Volonté héroïque", "Projection mentale" ]
      },
-    { pv: 4, name: "foi", profile: "pretre",
-      abilities: [ "predicateur", "miracle mineur", "arme de lumiere", "ailes celestes", "foudres divines" ]
+    { pv: 4, name: "poing", title: "Poing", profile: "moine",
+      abilities: [ "poings de fer", "peau de fer", "parade de projectiles", "deluge de coups", "puissance du ki" ],
+      titles: [ "Poings de fer", "Peau de fer", "Parade de projectiles", "Déluge de coups", "Puissance du ki" ]
      },
-    { pv: 4, name: "guerre sainte", profile: "pretre",
-      abilities: [ "arme benie", "bouclier de la foi", "chatiment divin", "marteau de la foi", "mot de pouvoir" ]
+    { pv: 4, name: "vent", title: "Vent", profile: "moine",
+      abilities: [ "pas du vent", "course du vent", "course des airs", "agilite heroique", "passe-muraille" ],
+      titles: [ "Pas du vent", "Course du vent", "Course des airs", "Agilité héroïque", "Passe-muraille" ]
      },
-    { pv: 4, name: "priere", profile: "pretre",
-      abilities: [ "benediction", "sanctuaire", "destruction du mal", "volonte heroique", "intervention divine" ]
+    { pv: 4, name: "foi", title: "Foi", profile: "pretre",
+      abilities: [ "predicateur", "miracle mineur", "arme de lumiere", "ailes celestes", "foudres divines" ],
+      titles: [ "Prédicateur", "Miracle mineur", "Arme de lumière", "Ailes célestes", "Foudres divines" ]
      },
-    { pv: 4, name: "soins", profile: "pretre",
-      abilities: [ "recuperation mineure", "vigueur divine", "recuperation majeure", "phenix", "retablissement" ]
+    { pv: 4, name: "guerre sainte", title: "Guerre sainte", profile: "pretre",
+      abilities: [ "arme benie", "bouclier de la foi", "chatiment divin", "marteau de la foi", "mot de pouvoir" ],
+      titles: [ "Arme bénie", "Bouclier de la foi", "Châtiment divin", "Marteau de la foi", "Mot de pouvoir" ]
      },
-    { pv: 4, name: "spiritualite", profile: "pretre",
-      abilities: [ "vetements sacres", "augure", "delivrance", "charisme heroique", "marche des plans" ]
+    { pv: 4, name: "priere", title: "Prière", profile: "pretre",
+      abilities: [ "benediction", "sanctuaire", "destruction du mal", "volonte heroique", "intervention divine" ],
+      titles: [ "Bénédiction", "Sanctuaire", "Destruction du mal", "Volonté héroïque", "Intervention divine" ]
      },
-    { pv: 4, name: "corruption", profile: "pretre",
-      abilities: [ "blessure mineure", "poison", "blessure majeure", "vengeance", "epidemie" ]
+    { pv: 4, name: "soins", title: "Soins", profile: "pretre",
+      abilities: [ "recuperation mineure", "vigueur divine", "recuperation majeure", "phenix", "retablissement" ],
+      titles: [ "Récupération mineure", "Vigueur divine", "Récupération majeure", "Phénix", "Rétablissement" ]
      },
-    { pv: 4, name: "attaque mentale", profile: "psionique",
-      abilities: [ "attaque mentale", "bouclier psi", "attaque etourdissante", "volonte heroique", "vague psionique" ]
+    { pv: 4, name: "spiritualite", title: "Spiritualité", profile: "pretre",
+      abilities: [ "vetements sacres", "augure", "delivrance", "charisme heroique", "marche des plans" ],
+      titles: [ "Vêtements sacrés", "Augure", "Délivrance", "Charisme héroïque", "Marche des plans" ]
      },
-    { pv: 4, name: "controle corporel", profile: "psionique",
-      abilities: [ "proprioception", "transe de regeneration", "controle du metabolisme", "constitution heroique", "acceleration" ]
+    { pv: 4, name: "corruption", title: "Corruption", profile: "pretre",
+      abilities: [ "blessure mineure", "poison", "blessure majeure", "vengeance", "epidemie" ],
+      titles: [ "Blessure mineure", "Poison", "Blessure majeure", "Vengeance", "Épidémie" ]
      },
-    { pv: 4, name: "empathie", profile: "psionique",
-      abilities: [ "perception extra-sensorielle", "defense intuitive", "perception du passe", "perception heroique", "vision lointaine" ]
+    { pv: 4, name: "attaque mentale", title: "Attaque mentale", profile: "psionique",
+      abilities: [ "attaque mentale", "bouclier psi", "attaque etourdissante", "volonte heroique", "vague psionique" ],
+      titles: [ "Attaque mentale", "Bouclier psi", "Attaque étourdissante", "Volonté héroïque", "Vague psionique" ]
      },
-    { pv: 4, name: "telekinesie", profile: "psionique",
-      abilities: [ "manipulation a distance", "champ de protection", "onde de choc", "psychoportation", "puissance de l'esprit" ]
+    { pv: 4, name: "controle corporel", title: "Contrôle corporel", profile: "psionique",
+      abilities: [ "proprioception", "transe de regeneration", "controle du metabolisme", "constitution heroique", "acceleration" ],
+      titles: [ "Proprioception", "Transe de régénération", "Contrôle du métabolisme", "Constitution héroïque", "Accélération" ]
      },
-    { pv: 4, name: "telepathie", profile: "psionique",
-      abilities: [ "telepathie", "cameleon mental", "suggestion", "imposture mentale", "domination psy" ]
-     }
+    { pv: 4, name: "empathie", title: "Empathie", profile: "psionique",
+      abilities: [ "perception extra-sensorielle", "defense intuitive", "perception du passe", "perception heroique", "vision lointaine" ],
+      titles: [ "Perception extra-sensorielle", "Défense intuitive", "Perception du passé", "Perception héroïque", "Vision lointaine" ]
+     },
+    { pv: 4, name: "telekinesie", title: "Télékinésie", profile: "psionique",
+      abilities: [ "manipulation a distance", "champ de protection", "onde de choc", "psychoportation", "puissance de l'esprit" ],
+      titles: [ "Manipulation à distance", "Champ de protection", "Onde de choc", "Psychoportation", "Puissance de l'esprit" ]
+     },
+    { pv: 4, name: "telepathie", title: "Télépathie", profile: "psionique",
+      abilities: [ "telepathie", "cameleon mental", "suggestion", "imposture mentale", "domination psy" ],
+      titles: [ "Télépathie", "Caméléon mental", "Suggestion", "Imposture mentale", "Domination psy" ]
+     },
+    { pv: 0, name: "expert", title: "Expert", profile: "prestige",
+      abilities: [ "capacite de neophyte", "capacite d'initie", "capacite de professionnel", "capacite d'expert", "capacite de maitre" ],
+      titles: [ "Capacité de néophyte", "Capaciét d'initié", "Capacité de professionnel", "Capacité d'expert", "Capacité de maître" ]
+    },
+    { pv: 0, name: "familier fantastique", title: "Familier fantastique", profile: "prestige",
+      abilities: [ "familier fantastique", "pouvoir mineur", "resistance", "inseparables", "pouvoir superieur" ],
+      titles: [ "Familier fantastique", "Pouvoir mineur", "Résistance", "Inséparables", "Pouvoir supérieur" ]
+    },
+    { pv: 0, name: "lycanthrope", title: "Lycanthrope", profile: "prestige",
+      abilities: [ "forme hybride", "transformation en loup", "eventration", "resistance surnaturelle", "forme puissante" ],
+      titles: [ "Forme hybride", "Transformation en loup", "Eventration", "Résistance surnaturelle", "Forme puissante" ]
+    },
+    { pv: 0, name: "sang-dragon", title: "Sang-Dragon", profile: "prestige",
+      abilities: [ "ascendance draconique", "griffes du dragon", "souffle du dragon", "ailes de dragon", "ecailles de dragon" ],
+      titles: [ "Ascendance draconique", "Griffes du dragon", "Souffle du dragon", "Ailes de dragon", "Ecailles de dragon" ]
+    },
+    { pv: 0, name: "specialiste", title: "Spécialiste", profile: "prestige",
+      abilities: [ "expertise", "capacite fabuleuse", "caracteristique fabuleuse", "capacite superieure", "capacite signature" ],
+      titles: [ "Expertise", "Capacité fabuleuse", "Caractéristique fabuleuse", "Capacité supérieure", "Capacité signature" ]
+    },
+    { pv: 4, name: "archer arcanique", title: "Archer arcanique", profile: "prestige-aventuriers",
+      abilities: [ "fleche magique", "fleche intangible", "fleche chercheuse", "fleche elementaire", "fleche tueuse" ],
+      titles: [ "Flèche magique", "Flèche intangible", "Flèche chercheuse", "Flèche élémentaire", "Flèche tueuse" ]
+    },
+    { pv: 4, name: "casse-cou", title: "Casse-cou", profile: "prestige-aventuriers",
+      abilities: [ "au pied du mur", "mouche du coche", "l'amour du risque", "poussee d'adrenaline", "attaque kamikaze" ],
+      titles: [ "Au pied du mur", "Mouche du coche", "L'amour du risque", "Poussée d'adrénaline", "Attaque kamikaze" ]
+    },
+    { pv: 4, name: "chasseur de prime", title: "Chasseur de prime", profile: "prestige-aventuriers",
+      abilities: [ "marque du chasseur", "assommer", "traqueur infatigable", "attaque invalidante", "instinct du traqueur" ],
+      titles: [ "Marque du chasseur", "Assommer", "Traqueur infatigable", "Attaque invalidante", "Instinct du Traqueur" ]
+    },
+    { pv: 4, name: "duelliste", title: "Duelliste", profile: "prestige-aventuriers",
+      abilities: [ "vive attaque", "defi", "juste toi et moi", "duel mental", "botte mortelle" ],
+      titles: [ "Vive attaque", "Défi", "Juste toi et moi", "Duel mental", "Botte mortelle" ]
+    },
+    { pv: 4, name: "espion", title: "Espion", profile: "prestige-aventuriers",
+      abilities: [ "secrets d'alcoves", "a la garde", "memoire eidetique", "cameleon", "reseau" ],
+      titles: [ "Secrets d'alcôves", "À la garde", "Mémoire eidétique", "Caméléon", "Réseau" ]
+    },
+    { pv: 4, name: "flibustier", title: "Flibustier", profile: "prestige-aventuriers",
+      abilities: [ "pied marin", "coup de crosse", "a l'abordage", "sabre au poing", "pas de quartier" ],
+      titles: [ "Pied marin", "Coup de crosse", "À l'abordage", "Sabre au poing", "Pas de quartier" ]
+    },
+    { pv: 4, name: "heros", title: "Héros", profile: "prestige-aventuriers",
+      abilities: [ "destin heroique", "homme/femme de la situation", "heros celebre", "tenacite", "meneur d'hommes" ],
+      titles: [ "Destin héroïque", "Homme/femme de la situation", "Héros célèbre", "Ténacité", "Meneur d'hommes" ]
+    },
+    { pv: 4, name: "maitre des poisons", title: "Maître des poisons", profile: "prestige-aventuriers",
+      abilities: [ "connaissance du poison", "poison rapide", "poison affaiblissant", "resistance au poison", "poisons virulents" ],
+      titles: [ "Connaissance du poison", "Poison rapide", "Poison affaiblissant", "Résistance au poison", "Poisons virulents" ]
+    },
+    { pv: 4, name: "ombres", title: "Ombres", profile: "prestige-aventuriers",
+      abilities: [ "vision des ombres", "cameleon", "ombre mouvante", "cape d'ombre", "passe-muraille" ],
+      titles: [ "Vision des ombres", "Caméléon", "Ombre mouvante", "Cape d'ombre", "Passe-muraille" ]
+    },
+    { pv: 4, name: "pacte feerique", title: "Pacte féérique", profile: "prestige-aventuriers",
+      abilities: [ "amitie avec les animaux", "invisibilite", "compagnon feerique", "pas brumeux", "pays des songes" ],
+      titles: [ "Amitié avec les animaux", "Invisibilité", "Compagnon féérique", "Pas brumeux", "Pays des songes" ]
+    },
+    { pv: 4, name: "touche a tout", title: "Touche à tout", profile: "prestige-aventuriers",
+      abilities: [ "domaine de l'aventure", "domaine de la guerre", "domaine du mystique", "domaine de la magie", "ultra polyvalent" ],
+      titles: [ "Domaine de l'aventure", "Domaine de la guerre", "Domaine du mystique", "Domaine de la magie", "Ultra polyvalent" ]
+    },
+    { pv: 4, name: "tueur a gages", title: "Tueur à gages", profile: "prestige-aventuriers",
+      abilities: [ "faire taire", "brise genou", "ne me tourne pas le dos", "egorger", "un simple regard" ],
+      titles: [ "Faire taire", "Brise genou", "Ne me tourne pas le dos", "Égorger", "Un simple regard" ]
+    },
+    { pv: 4, name: "arme liee", title: "Arme liée", profile: "prestige-combattants",
+      abilities: [ "fidele", "alliee loyale", "arme dansante", "aura elementaire", "milles lames" ],
+      titles: [ "Fidèle", "Alliée loyale", "Arme dansante", "Aura élémentaire", "Milles lames" ]
+    },
+    { pv: 4, name: "armes a deux mains", title: "Armes à deux mains", profile: "prestige-combattants",
+      abilities: [ "frappe massive", "gros monstre, grosse arme", "tenir a distance", "critique destructeur", "decapitation" ],
+      titles: [ "Frappe massive", "Gros monstre, grosse arme", "Tenir à distance", "Critique destructeur", "Décapitation" ]
+    },
+    { pv: 4, name: "chevalier dragon", title: "Chevalier dragon", profile: "prestige-combattants",
+      abilities: [ "ordre du chevalier dragon", "resistance au feu", "epee de feu", "monture puissante", "souffle enflamme" ],
+      titles: [ "Ordre du chevalier dragon", "Résistance au feu", "Épée de feu", "Monture puissante", "Souffle enflammé" ]
+    },
+    { pv: 4, name: "colosse", title: "Colosse", profile: "prestige-combattants",
+      abilities: [ "stature de geant", "resistance colossale", "force du titan", "poigne de fer", "attaque monumentale" ],
+      titles: [ "Stature de géant", "Résistance colossale", "Force du titan", "Poigne de fer", "Attaque monumentale" ]
+    },
+    { pv: 4, name: "combat du mal", title: "Combat du mal", profile: "prestige-combattants",
+      abilities: [ "juste courroux", "epee de lumiere", "sentir la corruption", "frappe suppressive", "resister a la corruption" ],
+      titles: [ "Juste courroux", "Épée de lumière", "Sentir la corruption", "Frappe suppressive", "Résister à la corruption" ]
+    },
+    { pv: 4, name: "combattant des tunnels", title: "Combattant des tunnels", profile: "prestige-combattants",
+      abilities: [ "infravision", "combat confine", "briseur de hordes", "tueur de nuees", "briseur de voute" ],
+      titles: [ "Infravision", "Combat confiné", "Briseur de hordes", "Tueur de nuées", "Briseur de voûte" ]
+    },
+    { pv: 4, name: "danseur de guerre", title: "Danseur de guerre", profile: "prestige-combattants",
+      abilities: [ "vent des lames", "pirouettes", "attaque en mouvement", "danse des lames", "volte-face" ],
+      titles: [ "Vent des lames", "Pirouettes", "Attaque en mouvement", "Danse des lames", "Volte-face" ]
+    },
+    { pv: 4, name: "ecorcheur", title: "Ecorcheur", profile: "prestige-combattants",
+      abilities: [ "armes dentelees", "armure a pointes", "blessures affreuses", "hemorragie interne", "impitoyable" ],
+      titles: [ "Armes dentelées", "Armure à pointes", "Blessures affreuses", "Hémorragie interne", "Impitoyable" ]
+    },
+    { pv: 4, name: "guerrier-mage", title: "Guerrier-mage", profile: "prestige-combattants",
+      abilities: [ "magie en armure", "rituel de combat", "deflexion arcanique", "magie de combat", "frappe des arcanes" ],
+      titles: [ "Magie en armure", "Rituel de combat", "Déflexion arcanique", "Magie de combat", "Frappe des arcanes" ]
+    },
+    { pv: 4, name: "ours", title: "Ours", profile: "prestige-combattants",
+      abilities: [ "caractere d'ours", "hibernation", "metamorphose", "etreinte de l'ours", "metamorphose superieure" ],
+      titles: [ "Caractère d'ours", "Hibernation", "Métamorphose", "Étreinte de l'ours", "Métamorphose supérieure" ]
+    },
+    { pv: 4, name: "porteur de bouclier", title: "Porteur de bouclier", profile: "prestige-combattants",
+      abilities: [ "parade au bouclier", "attaque au bouclier", "bousculade", "devier les coups", "lancer de bouclier" ],
+      titles: [ "Parade au bouclier", "Attaque au bouclier", "Bousculade", "Dévier les coups", "Lancer de bouclier" ]
+    },
+    { pv: 4, name: "tueur de geants", title: "Tueur de géants", profile: "prestige-combattants",
+      abilities: [ "profil bas", "ventre mou", "reduire la distance", "pieds d'argile", "tueur de geants" ],
+      titles: [ "Profil bas", "Ventre mou", "Réduire la distance", "Pieds d'argile", "Tueur de géants" ]
+    },
+    { pv: 3, name: "archimage", title: "Archimage", profile: "prestige-mages",
+      abilities: [ "sceptre defensif", "baton magique", "paralysie", "barriere magique", "metamorphose d'autrui" ],
+      titles: [ "Sceptre défensif", "Bâton magique", "Paralysie", "Barrière magique", "Métamorphose d'autrui" ]
+    },
+    { pv: 3, name: "couleurs", title: "Couleurs", profile: "prestige-mages",
+      abilities: [ "arc-en-ciel", "mur arc-en-ciel", "pont arc-en-ciel", "explosion multicolore", "sphere multicolore" ],
+      titles: [ "Arc-en-ciel", "Mur arc-en-ciel", "Pont arc-en-ciel", "Explosion multicolore", "Sphère multicolore" ]
+    },
+    { pv: 3, name: "cristaux", title: "Cristaux", profile: "prestige-mages",
+      abilities: [ "premier cristal", "second cristal", "troisieme cristal", "quatrieme cristal", "cinquieme cristal" ],
+      titles: [ "Premier cristal", "Second cristal", "Troisième cristal", "Quatrième cristal", "Cinquième cristal" ]
+    },
+    { pv: 3, name: "elementaliste", title: "Élémentaliste", profile: "prestige-mages",
+      abilities: [ "element de predilection", "resistance elementaire", "invocation d'elementaire", "element puissant", "metamorphose elementaire" ],
+      titles: [ "Élément de prédilection", "Résistance élémentaire", "Invocation d'élémentaire", "Élément puissant", "Métamorphose élémentaire" ]
+    },
+    { pv: 3, name: "gel", title: "Gel", profile: "prestige-mages",
+      abilities: [ "verglas", "coeur de glace", "souffle glacial", "presence glaciale", "cryogenisation" ],
+      titles: [ "Verglas", "Coeur de glace", "Souffle glacial", "Présence glaciale", "Cryogénisation" ]
+    },
+    { pv: 3, name: "invocation", title: "Invocation", profile: "prestige-mages",
+      abilities: [ "monture fantome", "manoir d'outre-monde", "navire fantome", "chasseur aile", "portail magique" ],
+      titles: [ "Monture fantôme", "Manoir d'outre-monde", "Navire fantôme", "Chasseur ailé", "Portail magique" ]
+    },
+    { pv: 3, name: "mage de guerre", title: "Mage de guerre", profile: "prestige-mages",
+      abilities: [ "coup au but", "explosion differee", "aura du chef de guerre", "epargner les allies", "vague de feu" ],
+      titles: [ "Coup au but", "Explosion différée", "Aura du chef de guerre", "Épargner les alliés", "Vague de feu" ]
+    },
+    { pv: 3, name: "magie de l'esprit", title: "Magie de l'esprit", profile: "prestige-mages",
+      abilities: [ "esprit impenetrable", "lire les pensees", "prison mentale", "attaque mentale", "controle mental" ],
+      titles: [ "Esprit impénétrable", "Lire les pensées", "Prison mentale", "Attaque mentale", "Contrôle mental" ]
+    },
+    { pv: 3, name: "magie des mots", title: "Magie des mots", profile: "prestige-mages",
+      abilities: [ "chant fascinant", "poids des mots", "cri de la banshee", "mot de mana", "souhait" ],
+      titles: [ "Chant fascinant", "Poids des mots", "Cri de la banshee", "Mot de mana", "Souhait" ]
+    },
+    { pv: 3, name: "magie du temps", title: "Magie du temps", profile: "prestige-mages",
+      abilities: [ "fuite en avant", "lenteur", "decalage", "enkystement lointain", "arret du temps" ],
+      titles: [ "Fuite en avant", "Lenteur", "Décalage", "Enkystement lointain", "Arrêt du temps" ]
+    },
+    { pv: 3, name: "maitre des sorts", title: "Maître des sorts", profile: "prestige-mages",
+      abilities: [ "connaissance des arcanes inferieures", "connaissance des arcanes mineures", "connaissance des arcanes superieures", "connaissance des arcanes majeures", "connaissance des arcanes supremes" ],
+      titles: [ "Connaissance des arcanes inférieures", "Connaissance des arcanes mineures", "Connaissance des arcanes supérieures", "Connaissance des arcanes majeures", "Connaissance des arcanes suprêmes" ]
+    },
+    { pv: 3, name: "vision", title: "Vision", profile: "prestige-mages",
+      abilities: [ "cecite", "oeil magique", "motif hypnotique", "vision de la verite", "invisibilite superieure" ],
+      titles: [ "Cécité", "OEil magique", "Motif hypnotique", "Vision de la vérité", "Invisibilité supérieure" ]
+    },
+    { pv: 4, name: "armure sacree", title: "Armure sacrée", profile: "prestige-mystiques",
+      abilities: [ "armure de bronze", "pouvoir unique", "armure d'argent", "pouvoir puissant", "armure d'or" ],
+      titles: [ "Armure de bronze", "Pouvoir unique", "Armure d'argent", "Pouvoir puissant", "Armure d'or" ]
+    },
+    { pv: 4, name: "changeforme", title: "Changeforme", profile: "prestige-mystiques",
+      abilities: [ "forme de voyage", "transformation en animal", "transformation puissante", "grande forme animale", "forme animale enorme" ],
+      titles: [ "Forme de voyage", "Transformation en animal", "Transformation puissante", "Grande forme animale", "Forme animale énorme" ]
+    },
+    { pv: 4, name: "combat mystique", title: "Combat mystique", profile: "prestige-mystiques",
+      abilities: [ "attaque etourdissante", "frappe concentree", "pression nerveuse", "paume mortelle", "main du tout puissant" ],
+      titles: [ "Attaque étourdissante", "Frappe concentrée", "Pression nerveuse", "Paume mortelle", "Main du tout puissant" ]
+    },
+    { pv: 4, name: "elementaire de l'air", title: "Élémentaire de l'air", profile: "prestige-mystiques",
+      abilities: [ "bourrasque", "chevaucher les nuees", "mur de vent", "cyclone", "forme elementaire d'air" ],
+      titles: [ "Bourrasque", "Chevaucher les nuées", "Mur de vent", "Cyclone", "Forme élémentaire d'air" ]
+    },
+    { pv: 4, name: "elementaire de l'eau", title: "Élémentaire de l'eau", profile: "prestige-mystiques",
+      abilities: [ "brouillard", "mur acide", "armure d'eau", "ecartement des eaux", "forme elementaire d'eau" ],
+      titles: [ "Brouillard", "Mur acide", "Armure d'eau", "Écartement des eaux", "Forme élémentaire d'eau" ]
+    },
+    { pv: 4, name: "elementaire du feu", title: "Élémentaire du feu", profile: "prestige-mystiques",
+      abilities: [ "mur de feu", "tornade de feu", "insensible au feu", "immolation", "forme elementaire de feu" ],
+      titles: [ "Mur de feu", "Tornade de feu", "Insensible au feu", "Immolation", "Forme élémentaire de feu" ]
+    },
+    { pv: 4, name: "elementaire de la terre", title: "Élémentaire de la terre", profile: "prestige-mystiques",
+      abilities: [ "mur de pierre", "litomorphose", "petrification", "seisme", "forme elementaire de terre" ],
+      titles: [ "Mur de pierre", "Litomorphose", "Pétrification", "Séisme", "Forme élémentaire de terre" ]
+    },
+    { pv: 4, name: "guerisseur", title: "Guérisseur", profile: "prestige-mystiques",
+      abilities: [ "premiers soins", "soins rapides", "rappel a la vie", "zone de vie", "resurrection" ],
+      titles: [ "Premiers soins", "Soins rapides", "Rappel à la vie", "Zone de vie", "Résurrection" ]
+    },
+    { pv: 4, name: "maitre de la nature", title: "Maître de la nature", profile: "prestige-mystiques",
+      abilities: [ "amitie animale", "seigneur de la nature", "invisibilite aux animaux", "monture geante", "magie druidique innee" ],
+      titles: [ "Amitié animale", "Seigneur de la nature", "Invisibilité aux animaux", "Monture géante", "Magie druidique innée" ]
+    },
+    { pv: 4, name: "saisons", title: "Saisons", profile: "prestige-mystiques",
+      abilities: [ "vigueur du printemps", "flamme de l'ete", "tourbillon d'automne", "frimas de l'hiver", "controle climatique" ],
+      titles: [ "Vigueur du printemps", "Flamme de l'été", "Tourbillon d'automne", "Frimas de l'hiver", "Contrôle climatique" ]
+    },
+    { pv: 4, name: "templier", title: "Templier", profile: "prestige-mystiques",
+      abilities: [ "resistance au mal", "quete", "resistance au mal superieure", "chatiment du mal", "forme d'ange" ],
+      titles: [ "Résistance au mal", "Quête", "Résistance au mal supérieure", "Châtiment du mal", "Forme d'Ange" ]
+    },
+    { pv: 4, name: "vermines", title: "Vermines", profile: "prestige-mystiques",
+      abilities: [ "maitre vermine", "nuees de criquets", "compagnon vermine", "affinite au poison", "vermine superieure" ],
+      titles: [ "Maître vermine", "Nuées de criquets", "Compagnon vermine", "Affinité au poison", "Vermine supérieure" ]
+    }
   ],
   HERITAGE: [
     {
       name: [ "ame forgee", "ame-forgee" ],
+      size: "Moyenne",
       caracs: [
         { change: "con", mod: 1 },
         { change: "cha,int", mod: -1 },
@@ -11125,6 +11445,7 @@ const SWData = {
     },
     {
       name: [ "cambion" ],
+      size: "Moyenne",
       caracs: [
         { change: "con,vol", mod: 1 },
         { change: "cha", mod: -1 },
@@ -11135,6 +11456,7 @@ const SWData = {
     },
     {
       name: [ "demi elfe", "demi-elfe", "demie elfe", "demie-elfe" ],
+      size: "Moyenne",
       caracs: [
         { change: "per,cha", mod: 1 },
         { change: "con,for", mod: -1 },
@@ -11145,6 +11467,7 @@ const SWData = {
     },
     {
       name: [ "demi ogre", "demi-ogre", "demie ogre", "demie-ogre", "demie ogresse", "demie-ogresse" ],
+      size: "Grande",
       caracs: [
         { change: "agi", mod: -1 },
         { change: "con", mod: 1 },
@@ -11159,6 +11482,7 @@ const SWData = {
     },
     {
       name: [ "demi orc", "demi-orc", "demie orque", "demie-orque" ],
+      size: "Moyenne",
       caracs: [
         { change: "con,for", mod: 1 },
         { change: "cha,int", mod: -1 },
@@ -11169,6 +11493,7 @@ const SWData = {
     },
     {
       name: [ "drakonide", "drakeide", "sangdragon", "sang-dragon" ],
+      size: "Moyenne",
       caracs: [
         { change: "for", mod: 1 },
         { change: "vol", mod: 1 },
@@ -11181,6 +11506,7 @@ const SWData = {
     },
     {
       name: [ "elfe haut", "haut elfe", "haut-elfe" ],
+      size: "Moyenne",
       caracs: [
         { change: "cha,int", mod: 1 },
         { change: "for", mod: -1 },
@@ -11191,6 +11517,7 @@ const SWData = {
     },
     {
       name: [ "elfe pale" ],
+      size: "Moyenne",
       caracs: [
         { change: "per,vol", mod: 1 },
         { change: "for", mod: -1 },
@@ -11201,6 +11528,7 @@ const SWData = {
     },
     {
       name: [ "elfe des profondeurs", "elfe noir", "drow" ],
+      size: "Moyenne",
       caracs: [
         { change: "agi,vol", mod: 1 },
         { change: "for", mod: -1 },
@@ -11211,6 +11539,7 @@ const SWData = {
     },
     {
       name: [ "elfe sylvain", "elfe sylvaine", "elfe sylvestre", "elfe des bois" ],
+      size: "Moyenne",
       caracs: [
         { change: "agi,per", mod: 1 },
         { change: "for", mod: -1 },
@@ -11221,6 +11550,7 @@ const SWData = {
     },
     {
       name: [ "farfadet" ],
+      size: "Très petite",
       caracs: [
         { change: "agi", mod: 1 },
         { change: "per", mod: 1 },
@@ -11233,6 +11563,7 @@ const SWData = {
     },
     {
       name: [ "fee" ],
+      size: "Très petite",
       caracs: [
         { change: "agi", mod: 1 },
         { change: "cha", mod: 1 },
@@ -11245,6 +11576,7 @@ const SWData = {
     },
     {
       name: [ "felis", "felys" ],
+      size: "Moyenne",
       caracs: [
         { change: "agi,per", mod: 1 },
         { change: "for,int", mod: -1 },
@@ -11255,6 +11587,7 @@ const SWData = {
     },
     {
       name: [ "frouin" ],
+      size: "Petite",
       caracs: [
         { change: "agi,per", mod: 1 },
         { change: "con", mod: 1 },
@@ -11267,6 +11600,7 @@ const SWData = {
     },
     {
       name: [ "gnome" ],
+      size: "Moyenne",
       caracs: [
         { change: "per,int", mod: 1 },
         { change: "for", mod: -1 },
@@ -11277,6 +11611,7 @@ const SWData = {
     },
     {
       name: [ "gobelin", "gobeline" ],
+      size: "Petite",
       caracs: [
         { change: "agi", mod: 1 },
         { change: "per", mod: 1 },
@@ -11289,6 +11624,7 @@ const SWData = {
     },
     {
       name: [ "halfelin", "halfeline" ],
+      size: "Petite",
       caracs: [
         { change: "agi,vol", mod: 1 },
         { change: "for", mod: -1 },
@@ -11299,6 +11635,7 @@ const SWData = {
     },
     {
       name: [ "humain", "humaine" ],
+      size: "Moyenne",
       caracs: [],
       abilities: [ "diversite", "instinct de survie", "touche-a-tout", "loup parmi les loups", "polyvalence" ],
       skills: "artisanat",
@@ -11306,6 +11643,7 @@ const SWData = {
     },
     {
       name: [ "kobold" ],
+      size: "Petite",
       caracs: [
         { change: "agi", mod: 1 },
         { change: "per", mod: 1 },
@@ -11318,6 +11656,7 @@ const SWData = {
     },
     {
       name: [ "minotaure" ],
+      size: "Grande",
       caracs: [
         { change: "for", mod: 2 },
         { change: "vol", mod: 1 },
@@ -11330,6 +11669,7 @@ const SWData = {
     },
     {
       name: [ "nain", "naine" ],
+      size: "Moyenne",
       caracs: [
         { change: "con,vol", mod: 1 },
         { change: "agi", mod: -1 },
@@ -11340,6 +11680,7 @@ const SWData = {
     },
     {
       name: [ "nephilim" ],
+      size: "Moyenne",
       caracs: [
         { change: "con,cha", mod: 1 },
         { change: "per", mod: -1 },
@@ -11350,6 +11691,7 @@ const SWData = {
     },
     {
       name: [ "ophidien", "ophidienne" ],
+      size: "Moyenne",
       caracs: [
         { change: "int,vol", mod: 1 },
         { change: "con", mod: -1 },
@@ -11360,6 +11702,7 @@ const SWData = {
     },
     {
       name: [ "satyre", "faune" ],
+      size: "Moyenne",
       caracs: [
         { change: "per,cha", mod: 1 },
         { change: "int,vol", mod: -1 },
@@ -11370,6 +11713,7 @@ const SWData = {
     },
     {
       name: [ "wolfer" ],
+      size: "Moyenne",
       caracs: [
         { change: "per,vol", mod: 1 },
         { change: "int", mod: -1 },
@@ -11451,7 +11795,7 @@ const SWData = {
         "*Coup terrible* aux membres inférieurs : le sang gicle à gros bouillons, +[[8]] DM, la cible est *invalide*, *hémorragie* [[2]].",
         "*Éventration* : la cible doit ramasser ses entrailles dans un flot de sang. +[[10]] DM, *hémorragie* [[3]], *étourdie* [[1]] round.",
         "*Coup à la gorge* : la cible est muette et saigne à gros bouillon, *hémorragie* [[5]], +[[15]] DM.",
-        "*Membre tranché* : le membre est inutilisable pour le reste du combat (tranché dans le cas d’un PNJ).",
+        "*Membre tranché* : le membre est inutilisable pour le reste du combat (tranché dans le cas d'un PNJ).",
         "*Décapitation* : *CON diff. 15* ou la cible perd la tête dans une gerbe de sang. Gore !",
       ],
       perforants: [
@@ -13354,6 +13698,8 @@ on("change:profil change:peuple", function(eventInfo) {
     
     const updates = new Map();
 
+    updates.set("cataille", strval(heritage.size, "Moyenne"));
+
     if (boolval(values.cfg_atk_diff) && intval(values.niveau) < 2) {
       Object.keys(profile.atks).forEach(atk => {
         updates.set(`atk${atk}_base`, profile.atks[atk]);
@@ -13394,7 +13740,7 @@ on("change:profil change:peuple", function(eventInfo) {
 /**
  * On change of heritage, set/reset abilities
  */
-on("change:peuple", function(eventInfo) {
+on("change:peuple", function() {
   const path = SWData.settings.peoplePath;
   const rankNames = seq(5).map(rank => abilityInfo({ path, rank }).rankName);
   getAttrs([ "peuple", "cfg_comp_ppl", ...rankNames ], function(values) {
@@ -13577,7 +13923,12 @@ on("change:niveau", function(eventInfo) {
   if (intval(eventInfo.previousValue) !== 0 && intval(eventInfo.newValue) !== 1)
     return;
 
-  getAttrs([ "character_name", "profil" ], function(values) {
+  getAttrs([ "character_name", "profil", "json_import" ], function(values) {
+    if (boolval(values.json_import)) {
+      setAttrs({ json_import: "0" });
+      return;
+    }
+
     const charName = strval(values.character_name);
     const profile = strval(values.profil);
     const paths = SWData.PVPATH.filter(p => p.profile === cleanText(profile));
@@ -13588,7 +13939,7 @@ on("change:niveau", function(eventInfo) {
       const btns = SWData.settings.profilePaths.map(p => {
         return `[ Voie ${p} ](~${charName}|path${p}ix${ix}-btn${ menuButton() })`
       }).join("");
-      return "**" + capitalize(path.name) + "**=" + btns;
+      return "**" + capitalize(path.title) + "**=" + btns;
     });
     sendChatMsg([ 
       "title=Voies initiales",
@@ -13612,7 +13963,7 @@ SWData.settings.profilePaths.forEach(iniPath => {
           return;
 
         const updates = new Map();
-        updates.set(abilityInfo({ path: iniPath }).pathName, capitalize(paths[pathIx].name));
+        updates.set(abilityInfo({ path: iniPath }).pathName, capitalize(paths[pathIx].title));
         const clear = new Map();
         clear.set(abilityInfo({ path: iniPath }).pathName, "");
         seq(5).forEach(rank => clear.set(abilityInfo({ path: iniPath, rank }).rankName, ""));
@@ -13646,7 +13997,8 @@ on("clicked:path_ini-btn", function() {
       const pathName = abilityInfo({ path }).pathName;
       clear.set(pathName, "");
       seq(5).forEach(rank => clear.set(abilityInfo({ path, rank }).rankName, ""));
-      updates.set(pathName, capitalize(paths[ix].name));
+      if (paths[ix].title)
+        updates.set(pathName, paths[ix].title);
     });
     setAttrs(Object.fromEntries(clear), {}, () => setAttrs(Object.fromEntries(updates)));
   });
@@ -13882,8 +14234,6 @@ function updatePVMax(eventInfo, changed = "") {
  * On max PV config, niveau, CON, pv_buff change
  */
 on("change:cfg_pvmax_auto change:niveau change:con change:pv_buff", updatePVMax);
-
-
 
 /**
  * Compute load limit
@@ -15734,9 +16084,9 @@ on("change:repeating_armes:arme-nom clicked:renum_atk-btn", function(eventInfo) 
     const labels = rowIds.map(id => rptAttr(rptAtk, "arme-label", id));
     const names = rowIds.map(id => rptAttr(rptAtk, "arme-nom", id));
     getAttrs([
-      "scriptVersion", "character_name",
-      "profil", "max_attack_label",
-      "maitrises_armes",
+      "scriptVersion", "character_name", "cataille",
+      "profil", "maitrises_armes",
+      "max_attack_label",
       rptAttr(rptAtk, "arme-new"),
       ...rptAttrs(rptAtk, [ "arme-nom", "arme-gearid" ]),
       ...labels,
@@ -15786,13 +16136,17 @@ on("change:repeating_armes:arme-nom clicked:renum_atk-btn", function(eventInfo) 
       if (gearId === "") {
 
         // if not linked to inventory, detect weapon name
-        const atkName = cleanText(strval(values[rptAttr(rptAtk, "arme-nom")]));
+        const atkName = strval(values[rptAttr(rptAtk, "arme-nom")]);
+        const atkFind = cleanText(atkName);
         const weapon = SWData.GEARS.find(gear => {
-          if (atkName.includes(cleanText(gear.name)))
+          const gearName = cleanText(gear.name); 
+          if (atkFind === gearName)
+            return true;
+          if (!atkFind.startsWith(gearName) && atkFind.includes(gearName))
             return true;
           if (gear.altname !== "") {
             for (const altn of gear.altname.split(",")) {
-              if (atkName.includes(altn))
+              if (atkFind.includes(altn))
                 return true;
             }
           }
@@ -15821,6 +16175,19 @@ on("change:repeating_armes:arme-nom clicked:renum_atk-btn", function(eventInfo) 
             if (name === "type-dm")
               updates.set(rptAttr(rptAtk, "arme-dmtype"), value);
           });
+          if (cleanText(values.cataille) === "petite") {
+            const hands = smallSizeWeapon(dm1m, dm2m);
+            if (hands === 1) {
+              if (dm2m = "1d12")
+                dm2m = "";
+            } else if (hands === 2) {
+              dm2m = dm1m;
+              dm1m = "";
+            } else {
+              sendChatMsg(`${charName} est de taille **${ strval(values.cataille) }** et ne peut pas manier **${atkName}**`, { whisper: "gm", template: "" });
+              return;
+            }
+          }
           if (dm1m !== "" && dm2m !== "")
             dm = dm1m + "/" + dm2m;
           else
@@ -17002,8 +17369,8 @@ on("change:main_princ change:main_autre", function(eventInfo) {
  */
 on("change:main_princ change:main_autre", function() {
   getAttrs([ "main_princ", "main_autre" ], async function(values) {
-    const mainHand = strval(strval(values.main_princ).split("~")[1]);
-    const offHand = strval(strval(values.main_autre).split("~")[1]);
+    const mainHand = strval(values.main_princ.split("~")[1]);
+    const offHand = strval(values.main_autre.split("~")[1]);
     let dual_wield = 0;
     if (mainHand !== "" && offHand !== "") {
       const offDM = await getAttrsAsync([ rptAttr("armes", "arme-dm", offHand) ]);
@@ -17663,7 +18030,7 @@ function checkAbilityPoints(changed = "") {
  * @returns {string}
  */
 function simplePathName(fullPathName, cleanup = true) {
-  let simplePathName = fullPathName.toLowerCase().replace(/voie[ ]+(du|des|de la|de l'|de l’)/, "");
+  let simplePathName = fullPathName.toLowerCase().replace(/voie[ ]+(du|des|de la|de l'|de l')/, "");
   if (cleanup)
     simplePathName = cleanText(simplePathName);
   return simplePathName.trim();
@@ -17700,17 +18067,17 @@ function updatePathInfos(path) {
       return;
     }
 
-    const pathPV = SWData.PVPATH.find(p => inStr(name, p.name));
+    const pathPV = SWData.PVPATH.find(p => cleanText(name, false) === p.name);
     if (!pathPV)
       return;
 
-    updates.set(abilityInfo({ path, rank: 0}).pathPV, pathPV.pv);
-    updates.set(abilityInfo({ path, rank: 0}).pathProfile, pathPV.profile);
+    updates.set(abilityInfo({ path }).pathPV, pathPV.pv);
+    updates.set(abilityInfo({ path }).pathProfile, pathPV.profile?.replace("prestige-"), "");
     if (pathPV.profile === "psionique")
       updates.set("psionic", 1);
     rankNames.forEach((rank, ix) => {
       if (strval(values[rank]) === "")
-        updates.set(abilityInfo({ path, rank: ix + 1 }).rankName, capitalize(pathPV.abilities[ix]));
+        updates.set(abilityInfo({ path, rank: ix + 1 }).rankName, pathPV.titles[ix]);
     });
     
     setAttrs(Object.fromEntries(updates));
@@ -18663,7 +19030,7 @@ function parseBuffList(attribute) {
       if (Array.isArray(results))
         buffTotal += results.reduce((all, roll) => all + roll, 0);
       chatMsgs.forEach((chatMsg, ix) => {
-        sendChatCmd(`/w GM ${chatMsg} = **${results[ix]}**`);
+        sendChatMsg(`${chatMsg} = **${results[ix]}**`, { whisper: "gm", template: "" });
       });
     }
     setAttrs({ [`${attribute}_buff`]: buffTotal });
@@ -19623,18 +19990,50 @@ on("change:repeating_equipement:equip-detail", function () {
 });
 
 /**
+ * Return hands required for small size character
+ * @param {string} dm1m - One-handed DM die
+ * @param {string} dm2m - Two-handed DM die
+ * @returns {number}
+ * @description Returns 1 or 2 hands, 0 if not allowed
+ */
+function smallSizeWeapon(dm1m, dm2m) {
+  let hands;
+  if ([ "1d8", "1d10" ].includes(dm1m))
+    hands = 2;
+  if ([ "1d3", "1d4", "1d6" ].includes(dm1m))
+    hands = 1;
+  if ([ "1d12", "2d6", "2d8" ].includes(dm2m))
+    hands = 0;
+  return hands;
+}
+
+/**
  * Retrieve props from name
  */
 on("change:repeating_equipement:equip-nom", function() {
   const section = "equipement";
   const gearAttrs = rptAttrs(section, [ "equip-nom", "equip-props" ]);
-  getAttrs(gearAttrs, function(values) {
+  getAttrs([ "character_name", "cataille", ...gearAttrs ], function(values) {
     let name = strval(values[rptAttr(section, "equip-nom")]);
     const hasProps = strval(values[rptAttr(section, "equip-props")]);
     if (name !== "" && hasProps === "") {
-      const props = getGearProps(name);
+      let props = getGearProps(name);
       if (props.length > 0) {
-        setAttrs({ [rptAttr(section, "equip-props")]: props.join("\n") }, { silent: true });
+        if (isWeapon(props.join("\n")) && cleanText(values.cataille) === "petite") {
+          const dm1m = strval(getProp(props.join("\n"), "dm-1m"));
+          const dm2m = strval(getProp(props.join("\n"), "dm-2m"));
+          if (smallSizeWeapon(dm1m, dm2m) === 2) {
+            props = props
+            .filter(prop => !prop.startsWith("dm-2m"))
+            .map(prop => prop.replace("dm-1m", "dm-2m"));
+          }
+          if (smallSizeWeapon(dm1m, dm2m) === 0) {
+            sendChatMsg(`${ strval(values.character_name) } est de taille **${ strval(values.cataille) }** et ne peut pas manier **${name}** !`, { template: "", whisper: "gm" });
+            props = [];
+          }
+        }
+        if (props.length > 0)
+          setAttrs({ [rptAttr(section, "equip-props")]: props.join("\n") }, { silent: true });
       }
     }
   })
@@ -20177,10 +20576,10 @@ on("clicked:repeating_ressources:resconso-btn", function (eventInfo) {
     
     let description = strval(values[rptAttr(section, "res-desclong")]);
     const props = strval(values[rptAttr(section, "res-props")]);
-    const type = strval(getProp(props, "type")).toLowerCase();
+    const type = strval(getProp(props, "type"));
 
     // heal PV
-    if (type.startsWith("soins")) {
+    if (type.toLowerCase().startsWith("soins")) {
       let [ ...roll ] = type.trim().split(" ").slice(1);
       if (roll.length === 0)
         roll.push("1d4°");
@@ -20191,7 +20590,7 @@ on("clicked:repeating_ressources:resconso-btn", function (eventInfo) {
       healdesc = "PV";
     }
     // heal PM
-    if (type.startsWith("mana")) {
+    if (type.toLowerCase().startsWith("mana")) {
       heal = "[[1d8]]";
       healdesc = "PM";
       mana = "[[1]]";
@@ -20214,7 +20613,10 @@ on("clicked:repeating_ressources:resconso-btn", function (eventInfo) {
       sendChatMsg(chatMsg);
     }
 
-    if (type.startsWith("parchemin") || type.startsWith("grimoire")) {
+    if (
+      type.toLowerCase().startsWith("parchemin") || 
+      type.toLowerCase().startsWith("grimoire")
+    ) {
       let text = description;
       description = "";
       if (text !== "") {
@@ -20260,7 +20662,10 @@ on("clicked:repeating_ressources:resconso-btn", function (eventInfo) {
       }
     }
 
-    if ([ "combat", "jour" ].some(freq => type.startsWith(freq)) && description !== "") {
+    if (
+      [ "combat", "jour" ].some(freq => type.toLowerCase().startsWith(freq)) && 
+      description !== ""
+    ) {
       const chatMsg = rollTemplate({
           lsub: "Ressource",
           rsub,
@@ -20838,39 +21243,250 @@ function importGears(gearData, attributes) {
 }
 
 /**
- * Click on button to display link to COMob Export in chat
+ * Load Map of attribute names & values from imported JSON
+ * @param {object} data - parsed JSON data
+ * @returns {Map}
  */
-on("clicked:comob_export-btn", function () {
-  sendChatMsg("[Export Chroniques Mobiles](https://comob-data.rpgapps.net)", { template: "" });
+function importCOF2CampaignTools(data) {
+
+  const attributes = new Map();
+
+  const character = Object.freeze(data.character);
+  
+  /**
+   * Process slug references
+   * @param {string} text - text to process
+   * @returns {string}
+   */
+  const unSlugify = (text) => capitalize(text.replaceAll("-", " "));
+
+  /**
+   * Return text with in-line rolls substituted
+   * @param {string} text - notes from CampaignTools app
+   * @returns {string}
+   */
+  const notesWithRefs = (text) => {
+    matchRegExp(text, /\{([0-1]*[dD][0-6]+)\}/gm).forEach(result => {
+      const [ matching, matched ] = result;
+      text = text.replace(matching, "[" + matched + "]");
+    });
+    text = insertRolls(text);
+    return text;
+  }
+
+  // General info
+  attributes.set("character_name", character.name);
+  attributes.set("niveau", character.level);
+  attributes.set("profil", capitalize(character.classId));
+  const profile = getProfileData(attributes.get("profil"));
+  attributes.set("famille", strval(profile.family));
+  attributes.set("peuple", unSlugify(character.ancestryId));
+  if (character.identity) {
+    attributes.set("genre", strval(character.identity.sex).at(0)?.toUpperCase());
+    attributes.set("age", strval(character.identity.age));
+    let taille = (numval(character.identity.height) / 100).toFixed(2);
+    taille = taille !== "0" ? taille.replace(".", "m") : "";
+    attributes.set("taille", (taille !== "" && !taille.includes("m") ? taille + "m" : taille));
+    const poids = numval(character.identity.weight);
+    attributes.set("poids", (poids > 0 ? `${poids} kg` : ""));
+    const biographie = strval(character.identity.description);
+    attributes.set("biographie", notesWithRefs(biographie));
+  }
+  attributes.set("notes", strval(notesWithRefs(character.notes)));
+  
+  const pathPV = ({
+    Aventuriers: 4,
+    Combattants: 5,
+    Mages: 3,
+    Mystiques: 4
+  })[attributes.get("famille")];
+
+  // Reset paths & ranks
+  seq(9).forEach(path => {
+    seq(5).forEach(rank => {
+      if (path > 3 || rank > 1)
+        attributes.set(abilityInfo({ path, rank }).rankOwned, 0);
+    });
+    attributes.set(abilityInfo({ path }).pathName, "");
+  });
+
+  // Ancestry/People name
+  attributes.set(
+    abilityInfo({ path: SWData.settings.peoplePath }).pathName,
+    unSlugify(character.ancestryPathId)
+  );
+  attributes.set(abilityInfo({ path: SWData.settings.peoplePath }).pathPV, pathPV);
+
+  // Stats values with ancestry modifiers
+  SWData.PC.STATS.forEach(stat => {
+    stat = upperShort(stat);
+    attributes.set(stat.toLowerCase() + "_base", intval(character.baseAbilities[stat]));
+    const pplMod = intval(character.abilities[stat]) - intval(character.baseAbilities[stat]);
+    if (pplMod !== 0)
+      attributes.set(`peuple_${ stat.toLowerCase() }`, pplMod);
+  });
+
+  const PRESTIGE = "prestige-";
+
+  let level1Rank2;
+  character.levelUpHistory.forEach(levelUp => {
+    if (levelUp.level === 1)
+      level1Rank2 = levelUp.chosenFeatureIds.find(rank => rank.endsWith("-r2"));
+  });
+
+  // Paths & Ranks
+  const paths = new Map();
+  character.featureIds.forEach(slug => {
+    const feature = slug.split("-");
+    const rank = numval(feature.pop().at(-1));
+    slug = feature.join("-");
+    if (feature[0].toLowerCase() === PRESTIGE.split("-")[0])
+      feature.splice(0, 1);
+    paths.set(slug, { name: capitalize(feature.join(" ")), rank });
+  });
+
+  let pathNum = SWData.settings.profilePaths[0] - 1;
+  let prestNum = SWData.settings.prestigePaths[0] - 1;
+  const pathNums = new Map();
+  paths.entries().forEach(([ key, data ]) => {
+    if (key === character.ancestryPathId) {
+      for (const owned of seq(data.rank)) {
+        attributes.set(abilityInfo({
+          path: SWData.settings.peoplePath,
+          rank: owned
+        }).rankOwned,1);
+      }
+      return;
+    }
+    if (key === character.ancestryId) {
+      if (character.ancestryId === character.ancestryPathId) {
+        for (const owned of seq(data.rank)) {
+          attributes.set(abilityInfo({
+            path: SWData.settings.peoplePath,
+            rank: owned
+          }).rankOwned, 1);
+        }
+      }
+      return;
+    }
+    if (!pathNums.has(key)) {
+      if (key.startsWith(PRESTIGE))
+        pathNums.set(key, ++prestNum);
+      else
+        pathNums.set(key, ++pathNum);
+    }
+    const pathId = pathNums.get(key);
+    const foundPath = SWData.PVPATH.find(pathInfo => {
+      let searchProfile;
+      if (key.startsWith(PRESTIGE))
+        searchProfile = PRESTIGE + cleanText(attributes.get("famille"));
+      else
+        searchProfile = cleanText(attributes.get("profil"));
+      return (
+        pathInfo.profile === searchProfile &&
+        pathInfo.name === cleanText(data.name)
+      );
+    });
+    const title = strval(foundPath?.title, strval(data.name));
+    attributes.set(abilityInfo({ path: pathId }).pathName, title);
+    attributes.set(abilityInfo({ path: pathId }).pathPV, pathPV);
+    attributes.set(abilityInfo({ path: pathId }).pathProfile, strval(foundPath?.profile).replace("prestige-",""));
+    if (key.startsWith(PRESTIGE)) {
+      const br = key === PRESTIGE + "familier-fantastique" ? 2 : 3;
+      attributes.set(abilityInfo({ path: pathId }).rankBase, br + 1);
+      data.rank -= br;
+    }
+    for (let owned of seq(data.rank)) {
+      attributes.set(abilityInfo({ path: pathId, rank: owned }).rankOwned, 1);
+      if (owned === 2 && level1Rank2 && level1Rank2 === key + "-r2")
+        attributes.set(abilityInfo({ path: pathId, rank: owned }).rankProps, "initial: ");
+    }
+  });
+
+  // Equipment
+  const section = "equipement";
+  character.equipment.forEach(gear => {
+    let { itemId, name, custom, quantity } = gear;
+    name = custom ? strval(name) : unSlugify(strval(itemId));
+    const rowId = generateRowID();
+    attributes.set(rptAttr(section, "equip-nom", rowId), name);
+    attributes.set(rptAttr(section, "equip-qte", rowId), Math.max(1, quantity));
+  });
+
+  //
+  if (character.purse) {
+    [ "pc", "pa", "po", "pp" ].forEach(coin => {
+      const coins = ({
+        pc: "copper",
+        pa: "silver",
+        po: "gold",
+        pp: "platinum"
+      })[coin];
+      attributes.set(`tresor_${coin}`, intval(character.purse[coins]));
+    });
+  }
+
+  return attributes;
+}
+
+/**
+ * Click on button to display link to COF2 Campaign Tools in chat
+ */
+on("clicked:cof2_tools-btn", function () {
+  sendChatMsg("[COF2 Campaign Tools](https://cof2-campaign-tool.vercel.app/)", { template: "" });
+});
+
+/**
+ * Parse character JSON data 
+ * @param {object} data - Roll20 getAttrs values object
+ * @returns {object}
+ */
+function getCharacterData(data) {
+  const jsonData = strval(data).trim();
+  if (jsonData === "")
+    return null;
+
+  return objval(jsonData, null);
+}
+
+/**
+ * On paste of JSON data, check validity
+ */
+on("change:json_character", function() {
+  getAttrs([ "json_character" ], function (values) {
+    if (strval(values.json_character) === "")
+      return;
+    const characterData = getCharacterData(values.json_character);
+    if (characterData)
+      return;
+
+    setAttrs({ json_character: "" });
+    sendChatMsg("Données JSON invalides", { template: "", whisper: "gm" });
+  });
 });
 
 /**
  * On import JSON data button click
  */
 on("clicked:import_json-btn", function () {
-  getAttrs([ "json_profile", "reset_gears" ], function (values) {
-    const jsonData = strval(values.json_profile).trim();
-    if (jsonData === "")
+  getAttrs([ "json_character", "reset_gears" ], function (values) {
+    const characterData = getCharacterData(values.json_character);
+    if (!characterData)
       return;
 
-    let attributes = new Map();
+    let attributes;
+    
+    if (strval(characterData.kind) === "cof2-character-export")
+      attributes = importCOF2CampaignTools(characterData);
 
-    const profileData = objval(jsonData);
-
-    if (profileData.character)
-      attributes = importProfile(profileData.character, attributes);
-
-    if (profileData.gears) {
-      const resetGears = intval(values.reset_gears);
-      if (resetGears === 1)
-        removeRepeatingAll("equipement");
-      attributes = importGears(profileData.gears, attributes);
-    }
-
-    if (attributes.size > 0) {
-      attributes.set("json_profile", "");
-      setAttrs(Object.fromEntries(attributes));
-    }
+    if (boolval(values.reset_gears))
+      removeRepeatingAll("equipement");
+    
+    attributes.set("json_character", "");
+    attributes.set("json_import", "1");
+    setAttrs(Object.fromEntries(attributes), null, () => {
+      sendChatCmd(`%{${ attributes.get("character_name") }|path_ini-btn}`);
+    });
   });
 });
 
@@ -20962,7 +21578,12 @@ function menuButton(color, font = {}, extraCSS = {}, attributes = {}) {
     delete extraCSS.margin;
   }
   
-  const buttonTitle = (attributes.title) ? ` title=\"${attributes.title}\"` : "";
+  attributes.title = strval(attributes.title)
+  .replaceAll("(", "&#40;")
+  .replaceAll(")", "&#41;")
+  .replaceAll("[", "&#91;")
+  .replaceAll("]", "&#93;");
+  const buttonTitle = (attributes.title !== "") ? ` title=\"${attributes.title}\"` : "";
 
   let buttonClass = "chat-button";
   if (extraCSS.class) {
@@ -21509,7 +22130,7 @@ on("clicked:pc_actions-btn clicked:npc_actions-btn", async function(eventInfo) {
     .map(id => {
       const onHand = numval(values[rptAttr(resRpt, "res-val", id)]);
       const resBtn = rptAttr(resRpt, "resconso-btn", id);
-      const title = onHand + " " + values[rptAttr(resRpt, "res-desc", id)];
+      const title = onHand + " " + strval(values[rptAttr(resRpt, "res-desc", id)]);
       return `[${ SWData.emojis.heal }](~${charName}|${resBtn}${ button({}, { title }) })`;
     }).join("&nbsp;");
 

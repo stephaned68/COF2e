@@ -493,6 +493,7 @@ div.path div.block-title {
 .cofmain input[value=""].immu-dm + span.immu-dm,
 .cofmain input[value="0"].mounted + .mounted,
 .cofmain input[value="0"].high-fan + .high-fan,
+.cofmain input[value="0"].import-json + .import-json,
 .cofmain li.peuple-mod:has(input[value="0"].peuple-mod) {
   display: none;
 }
@@ -1445,8 +1446,13 @@ textarea.import-result {
   resize: none;
 }
 
-textarea.migration {
+textarea.migration,
+textarea.statblock {
   font-family: monospace;
+  font-weight: 800;
+}
+
+textarea.migration {
   border: none; 
   background-color: transparent;
   resize: none;
