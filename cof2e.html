@@ -135,7 +135,7 @@
     <div>
       <img
         class="logo"
-        title="Version 1.18.0 - 08/2026"
+        title="Version 1.18.0 - 20/09/2026"
         src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/ChroniquesOublieesFantasy2/cof2e_logo.jpg"
       />
       <div class="d-flex m2">
@@ -6277,7 +6277,7 @@
             <div class="sheet-2colrow">
 
               <div class="sheet-col">
-                <textarea class="statblock" name="attr_json_character" placeholder="Coller ici le contenu du fichier JSON avec l'option &quot;Coller en texte brut&quot;"></textarea>
+                <textarea class="statblock" name="attr_json_character" placeholder="Coller ici le contenu du fichier JSON ou du presse-papier avec l'option &quot;Coller en texte brut&quot;"></textarea>
               </div>
 
               <div class="sheet-col">
@@ -6285,13 +6285,13 @@
                   <span class="img-btn">c</span>&nbsp;COF2 Campaign Tools
                 </button>
                 <br>
-                Depuis <em>Mes personnages</em>, choisissez <em>Exporter en JSON</em> et insérez le code dans le champ ci-contre
+                Depuis <em>Mes personnages</em>, choisissez <em>Copier le JSON</em> et faites <em>Coller en texte brut</em> dans le champ ci-contre
                 <br>
                 <button type="action" class="flat-btn img-btn" name="act_import_json-btn" title="Importer le personnage">
                   <span class="img-btn">W</span>&nbsp;Importer
                 </button>
                 <input type="checkbox" name="attr_reset_gears" value="1">
-                <span>Réinitialiser la liste d'équipement</span>
+                <span title="Ne sert que pour un personnage de niveau 1">Réinitialiser la liste d'équipement</span>
               </div>
 
             </div>
@@ -6531,9 +6531,9 @@
 
               <li>
                 <details>
-                  <strong>Version 1.18.0</strong> (2026-08)
-                </details>
-                <summary>
+                  <summary>
+                    <strong>Version 1.18.0</strong> (2026-09-20)
+                  </summary>
                   <ul>
                     <li>Ajout des jets secrets au MJ</li>
                     <li>Ajout du bouton d'activation des buffs dans l'onglet Attaques</li>
@@ -6549,7 +6549,7 @@
                     <li>Ajout de la catégorie de taille du peuple</li>
                     <li>Prise en compte de la petite taille pour le maniement des armes</li>
                   </ul>
-                </summary>
+                </details>
               </li>
 
               <li>
@@ -7131,7 +7131,7 @@
               <h4 class="img-btn">Description</h4>
             </button>
             <input type="checkbox" name="attr_desc_anonyme" title="Description anonymisée" value="1">
-            <textarea name="attr_pnj_desc" class="x-large" title="@{pnj_desc}"></textarea>  
+            <textarea name="attr_pnj_desc" class="x-large" title="@{pnj_desc}"></textarea>
           </div>
   
         </div>
@@ -8313,7 +8313,7 @@
               <li>
                 <details>
                   <summary>
-                    <strong>Version 1.18.0</strong> (2026-08)
+                    <strong>Version 1.18.0</strong> (2026-09)
                   </summary>
                   <ul>
                     <li>Ajout des rangs de boss & filtres narratifs (Bestiaire)</li>
@@ -9156,7 +9156,7 @@
  * v1.18.0
  */
 
-const SWData = {
+const SWData = Object.freeze({
   settings: {
     hiddenClass: "hidden",
     visibleClass: "visible",
@@ -9166,7 +9166,7 @@ const SWData = {
     prestigePaths: [ 7, 8 ],
     minLevels: [ 1, 2, 3, 5, 7, 9, 11, 13 ],
     npcFavorites: 5,
-    highFan: [ 
+    highFan: [
       "cfg_use_epic",
       "cfg_use_drniv",
       "cfg_use_fullrec",
@@ -9301,7 +9301,7 @@ const SWData = {
           companion: false,
           pv: 4,
           atks: { cac: 2, tir: 1, mag: 2 },
-          skills: "acrobaties,artisanat,athletisme,commerce,connaissances,divertissement,empathie,equitation,intimidation,natation, persuasion, religion, renseignement,tromperie",
+          skills: "acrobaties,artisanat,athletisme,commerce,connaissances,divertissement,empathie,equitation,intimidation,natation,persuasion,religion,renseignement,tromperie",
           weapons: [ "cac-1m" ],
           def: { max: 3, shield: 0 },
           gear : [
@@ -11440,6 +11440,7 @@ const SWData = {
         { change: "cha,int", mod: -1 },
       ],
       abilities: [ "metallique", "choc electrique", "infiltration", "rayon ardent", "machine de guerre" ],
+      titles: [ "Métallique", "Choc électrique", "Infiltration", "Rayon ardent", "Machine de guerre" ],
       skills: "athletisme,sciences",
       companion: true
     },
@@ -11451,6 +11452,7 @@ const SWData = {
         { change: "cha", mod: -1 },
       ],
       abilities: [ "ami des ombres", "enfant des tenebres", "resistances", "la belle et la bete", "forge par les tenebres" ],
+      titles: [ "Ami des ombres", "Enfant des ténèbres", "Résistances", "La belle et la bête", "Forgé par les ténèbres" ],
       skills: "discretion,tromperie",
       companion: true
     },
@@ -11462,6 +11464,7 @@ const SWData = {
         { change: "con,for", mod: -1 },
       ],
       abilities: [ "heritages", "nomade", "capacite d'apprentissage", "sang feerique", "empathie fantastique" ],
+      titles: [ "Héritages", "Nomade", "Capacité d'apprentissage", "Sang féérique", "Empathie fantastique" ],
       skills: "divertissement,empathie",
       companion: true
     },
@@ -11477,6 +11480,7 @@ const SWData = {
         { change: "vol", mod: -1 },
       ],
       abilities: [ "reaction violente", "violence ciblee", "vorace", "toujours plus lourd", "monumental" ],
+      titles: [ "Réaction violente", "Violence ciblée", "Vorace", "Toujours plus lourd", "Monumental" ],
       skills: "athletisme,intimidation",
       companion: true
     },
@@ -11488,6 +11492,7 @@ const SWData = {
         { change: "cha,int", mod: -1 },
       ],
       abilities: [ "impressionnant", "talent pour la violence", "critique brutal", "attaque sanglante", "colosse" ],
+      titles: [ "Impressionnant", "Talent pour la violence", "Critique brutal", "Attaque sanglante", "Colosse" ],
       skills: "athletisme,intimidation",
       companion: false
     },
@@ -11501,6 +11506,7 @@ const SWData = {
         { change: "per", mod: -1 },
       ],
       abilities: [ "sang dragon", "souffle", "ecailles robustes", "fureur drakonide / ailes puissantes", "heritage draconique" ],
+      titles: [ "Sang dragon", "Souffle", "Ecailles robustes", "Fureur drakonide / ailes puissantes", "Héritage draconique" ],
       skills: "connaissance,vigilance",
       companion: true
     },
@@ -11512,6 +11518,7 @@ const SWData = {
         { change: "for", mod: -1 },
       ],
       abilities: [ "lumiere interieure", "force d'ame", "talent pour la magie", "immortel", "superiorite elfique" ],
+      titles: [ "Lumière intérieure", "Force d'âme", "Talent pour la magie", "Immortel", "Supériorité elfique" ],
       skills: "connaissance,divertissement",
       companion: false
     },
@@ -11523,6 +11530,7 @@ const SWData = {
         { change: "for", mod: -1 },
       ],
       abilities: [ "natif de la foret sombre", "resistance au poison", "fleau des morts", "provoquer la chance", "superiorite elfique" ],
+      titles: [ "Natif de la forêt sombre", "Résistance au poison", "Fléau des morts", "Provoquer la chance", "Supériorité elfique" ],
       skills: "discretion,survie",
       companion: true
     },
@@ -11534,6 +11542,7 @@ const SWData = {
         { change: "for", mod: -1 },
       ],
       abilities: [ "enfant des tenebres", "lames et sorcellerie", "combat a deux armes", "maitrise des arbaletes", "superiorite elfique" ],
+      titles: [ "Enfant des ténèbres", "Lames et sorcellerie", "Combat à deux armes", "Maîtrise des arbalètes", "Supériorité elfique" ],
       skills: "discretion,escalade",
       companion: true
     },
@@ -11545,6 +11554,7 @@ const SWData = {
         { change: "for", mod: -1 },
       ],
       abilities: [ "lumiere des etoiles", "enfant de la foret", "archer emerite", "fleche sanglante", "superiorite elfique" ],
+      titles: [ "Lumière des étoiles", "Enfant de la forêt", "Archer émérite", "Flèche sanglante", "Supériorité elfique" ],
       skills: "discretion,survie",
       companion: false
     },
@@ -11558,6 +11568,7 @@ const SWData = {
         { change: "for", mod: -2 },
       ],
       abilities: [ "ne d'un chou", "langage des animaux", "invisibilite", "monture feerique", "seigneur feerique" ],
+      titles: [ "Né d'un chou", "Langage des animaux", "Invisibilité", "Monture féérique", "Seigneur féérique" ],
       skills: "acrobatie,tromperie",
       companion: true
     },
@@ -11571,6 +11582,7 @@ const SWData = {
         { change: "for", mod: -2 },
       ],
       abilities: [ "nee d'une fleur", "pirouette", "poudre de fee", "fee reveree", "lady fee" ],
+      titles: [ "Née d'une fleur", "Pirouette", "Poudre de fée", "Fée révérée", "Lady fée" ],
       skills: "acrobatie,tromperie",
       companion: true
     },
@@ -11582,6 +11594,7 @@ const SWData = {
         { change: "for,int", mod: -1 },
       ],
       abilities: [ "ame feline", "armes naturelles", "vif et discret", "metamorphose feline", "nature feline" ],
+      titles: [ "Âme féline", "Armes naturelles", "Vif et discret", "Métamorphose féline", "Nature féline" ],
       skills: "acrobatie,vigilance",
       companion: true
     },
@@ -11595,6 +11608,7 @@ const SWData = {
         { change: "cha", mod: -1 },
       ],
       abilities: [ "avarie", "minus", "parano", "attaque simultanee", "champion de la survie" ],
+      titles: [ "Avarié", "Minus", "Parano", "Attaque simultanée", "Champion de la survie" ],
       skills: "discretion,empathie",
       companion: true
     },
@@ -11606,6 +11620,7 @@ const SWData = {
         { change: "for", mod: -1 },
       ],
       abilities: [ "don etrange", "petit pote", "insignifiant", "merveille technologique", "bonne nature" ],
+      titles: [ "Don étrange", "Petit pote", "Insignifiant", "Merveille technologique", "Bonne nature" ],
       skills: "occultisme,sciences",
       companion: false
     },
@@ -11619,6 +11634,7 @@ const SWData = {
         { change: "vol", mod: -1 },
       ],
       abilities: [ "vivacite gobeline", "attaque groupee", "kafouiller", "worg", "vif et alerte" ],
+      titles: [ "Vivacité gobeline", "Attaque groupée", "Kafouiller", "Worg", "Vif et alerte" ],
       skills: "acrobatie,renseignement",
       companion: true
     },
@@ -11630,6 +11646,7 @@ const SWData = {
         { change: "for", mod: -1 },
       ],
       abilities: [ "petite taille", "resistance legendaire", "bon pour le moral", "petit veinard", "vif et bien nourri" ],
+      titles: [ "Petite taille", "Résistance légendaire", "Bon pour le moral", "Petit veinard", "Vif et bien nourri" ],
       skills: "discretion,effraction",
       companion: false
     },
@@ -11638,6 +11655,7 @@ const SWData = {
       size: "Moyenne",
       caracs: [],
       abilities: [ "diversite", "instinct de survie", "touche-a-tout", "loup parmi les loups", "polyvalence" ],
+      titles: [ "Diversité", "Instinct de survie", "Touche-à-tout", "Loup parmi les loups", "Polyvalence" ],
       skills: "artisanat",
       companion: false
     },
@@ -11651,6 +11669,7 @@ const SWData = {
         { change: "for", mod: -1 },
       ],
       abilities: [ "ruse kobold", "chetif", "piege improvise", "attaque vicieuse", "ruse instinctive" ],
+      titles: [ "Ruse kobold", "Chétif", "Piège improvisé", "Attaque vicieuse", "Ruse instinctive" ],
       skills: "discretion,tromperie",
       companion: true
     },
@@ -11664,6 +11683,7 @@ const SWData = {
         { change: "int", mod: -2 },
       ],
       abilities: [ "coup de corne", "charge puissante", "frenesie", "encorner", "colosse" ],
+      titles: [ "Coup de corne", "Charge puissante", "Frénésie", "Encorner", "Colosse" ],
       skills: "intimidation,survie",
       companion: true
     },
@@ -11675,6 +11695,7 @@ const SWData = {
         { change: "agi", mod: -1 },
       ],
       abilities: [ "habitant des tunnels", "haches et marteaux", "resistance a la magie", "fils du roc", "tenacite" ],
+      titles: [ "Habitant des tunnels", "Haches et marteaux", "Résistance à la magie", "Fils du roc", "Ténacité" ],
       skills: "artisanat,vigilance",
       companion: false
     },
@@ -11686,6 +11707,7 @@ const SWData = {
         { change: "per", mod: -1 },
       ],
       abilities: [ "photosensible", "enfant de la lumiere", "resistances", "la plume et l'acier", "forge par la lumiere" ],
+      titles: [ "Photosensible", "Enfant de la lumière", "Résistances", "La plume et l'acier", "Forgé par la lumière" ],
       skills: "connaissance,religion",
       companion: true
     },
@@ -11697,6 +11719,7 @@ const SWData = {
         { change: "con", mod: -1 },
       ],
       abilities: [ "sang des anciens", "regard hypnotique", "crachat", "mutation serpentine", "forme de serpent" ],
+      titles: [ "Sang des anciens", "Regard hypnotique", "Crachat", "Mutation serpentine", "Forme de serpent" ],
       skills: "occultisme,tromperie",
       companion: true
     },
@@ -11708,6 +11731,7 @@ const SWData = {
         { change: "int,vol", mod: -1 },
       ],
       abilities: [ "bonne nature", "encorner et ruer", "compagnon de voyage", "magie sauvage", "ascendance naturelle" ],
+      titles: [ "Bonne nature", "Encorner et ruer", "Compagnon de voyage", "Magie sauvage", "Ascendance naturelle" ],
       skills: "divertissement,survie",
       companion: true
     },
@@ -11719,6 +11743,7 @@ const SWData = {
         { change: "int", mod: -1 },
       ],
       abilities: [ "chasseur ne", "griffes et crocs", "loi de la meute", "forme de loup", "esprit du loup" ],
+      titles: [ "Chasseur né", "Griffes et crocs", "Loi de la meute", "Forme de loup", "Esprit du loup" ],
       skills: "survie,vigilance",
       companion: true
     },
@@ -11844,7 +11869,7 @@ const SWData = {
       ]
     }
   }
-}
+});
 
 // =================
 // UTILITY FUNCTIONS
@@ -12175,6 +12200,19 @@ function shorten(stat) {
  */
 function upperShort(stat) {
   return shorten(stat).toUpperCase();
+}
+
+/**
+ * Pick stat name from attribute reference
+ * @param {string} attr - @{x...x} attribute reference
+ * @returns {string}
+ */
+function pickStat(attr) {
+  const match = attr.match("@\{(" + SWData.PC.STATS.map(stat => shorten(stat)).join("|") + ")\}");
+  if (match)
+    return match[1];
+  else
+    return "";
 }
 
 /**
@@ -13795,7 +13833,7 @@ on("change:peuple", function() {
     updates.set(abilityInfo({ path }).pathName, people);
     rankNames.forEach((rank, ix) => {
       if (strval(values[rank]) === "")
-        updates.set(abilityInfo({ path, rank: ix + 1 }).rankName, capitalize(peopleInfo.abilities[ix]));
+        updates.set(abilityInfo({ path, rank: ix + 1 }).rankName, peopleInfo.titles[ix]);
     });
 
     const sens = SWData.SENS[people.replaceAll("-", "").replaceAll(" ", "").trim().toLowerCase()];
@@ -13923,7 +13961,9 @@ on("change:niveau", function(eventInfo) {
   if (intval(eventInfo.previousValue) !== 0 && intval(eventInfo.newValue) !== 1)
     return;
 
-  getAttrs([ "character_name", "profil", "json_import" ], function(values) {
+  getAttrs([ "character_name", "sheet_type", "profil", "json_import" ], function(values) {
+    if (isNPC(strval(values.sheet_type)))
+      return;
     if (boolval(values.json_import)) {
       setAttrs({ json_import: "0" });
       return;
@@ -13982,6 +14022,8 @@ on("clicked:path_ini-btn", function() {
     "profil"
   ], function(values) {
     const profile = strval(values.profil);
+    if (profile !== mainProfile(profile))
+      return; // profil hybride
     let paths = SWData.PVPATH.filter(p => p.profile === cleanText(profile));
     if (!paths)
       return;
@@ -15994,6 +16036,7 @@ function findPathByName(name, names) {
  * @param {string}    text - text to process
  * @param {object}    options - options
  * @param {string[]}  options.pathNames - list of path names
+ * @param {number}    options.pathNum - current path number
  * @param {boolean}   options.isNPC - processing NPC abilities 
  * @param {string}    options.companionOf - name of PC the NPC is a companion of (ends with |)
  * @param {number}    options.maxD4e - max value of evolutive die
@@ -16006,14 +16049,19 @@ function insertRolls(text, options = {}) {
   if (text.match(/\[\[.+\]\]/))
     return text;
 
-  let { pathNames = [], isNPC = false, companionOf = "", maxD4e = 0 } = options;
+  let { pathNames = [], pathNum = 0, isNPC = false, companionOf = "", maxD4e = 0 } = options;
   if (isNPC && companionOf !== "")
     companionOf += "|";
   const devol = `@{${ isNPC ? companionOf : "" }devol}`;
   
   // Search for " [#d4° + XXX] " (or dE or d4e or d4E)
-  matchRegExp(text, /([ ]*)\[([1-9])d(4°|E|4e|4E)[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL|rang voie [1-9])(.*?)\]([ ]*)/gm).forEach(result => {
+  matchRegExp(
+    text,
+    /([ ]*)\[([1-9])d(4°|E|4e|4E)[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL|rang voie [1-9]|rang)(.*?)\]([ ]*)/gm
+  ).forEach(result => {
     let [ matched, sb, dice, , stat, , sa ] = result;
+    if (stat === "rang" && pathNum !== 0)
+      stat = `rang_voie${pathNum}`;
     if (stat.startsWith("rang "))
       stat = `rang_voie${ findPathByName(stat, pathNames) }`;
     let d4e = "";
@@ -16026,7 +16074,10 @@ function insertRolls(text, options = {}) {
   });
 
   // Search for "... #d4° ..." (or dE or d4e or d4E)
-  matchRegExp(text, /([ ]*)([1-9])d(4°|E|4e|4E)([ ]*)/gm).forEach(result => {
+  matchRegExp(
+    text,
+    /([ ]*)([1-9])d(4°|E|4e|4E)([ ]*)/gm
+  ).forEach(result => {
     const [ matched, sb, dice, , sa ] = result;
     let d4e = "";
     if (maxD4e !== 0)
@@ -16038,22 +16089,33 @@ function insertRolls(text, options = {}) {
   });
 
   // Search for " [# + XXX] "
-  matchRegExp(text, /([ ]*)\[([0-9]+)[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL|rang voie [1-9])(.*)\]([ ]*)/gm).forEach(result => {
+  matchRegExp(
+    text,
+    /([ ]*)\[([0-9]+)[ ]*\+[ ]*(AGI|CON|FOR|PER|CHA|INT|VOL|rang voie [1-9]|rang)(.*)\]([ ]*)/gm
+  ).forEach(result => {
     let [ matched, sb, value, stat, , sa ] = result;
-    if (stat.startsWith("rang ")) {
+    if (stat === "rang" && pathNum !== 0)
+      stat = `rang_voie${pathNum}`;
+    if (stat.startsWith("rang "))
       stat = `rang_voie${ findPathByName(stat, pathNames) }`;
-    }
     const replace = `${sb}[[${value} + @{${stat.toLowerCase()}}]]${sa}`;
     text = text.replace(matched, replace);
   });
 
   // Search for " [XXX] " or " [XXX*] "
-  matchRegExp(text, /([ ]+)\[(AGI|CON|FOR|PER|CHA|INT|VOL|NIV|NIVEAU|NC|NOM)(.*?)\]([ ]+)/gm).forEach(result => {
+  matchRegExp(
+    text,
+    /([ ]+)\[(AGI|CON|FOR|PER|CHA|INT|VOL|NIV|NIVEAU|NC|NOM|rang voie [1-9]|rang)(.*?)\]([ ]+)/gm
+  ).forEach(result => {
     let [ matched, sb, ability, special, sa ] = result;
     if (ability === "NIV" || ability === "NC")
       ability = "niveau";
     if (ability === "NOM")
       ability = "character_name";
+    if (ability === "rang" && pathNum !== 0)
+      ability = `rang_voie${pathNum}`;
+    if (ability.startsWith("rang "))
+      ability = `rang_voie${ findPathByName(ability, pathNames) }`;
     if (special === "*")
       special = companionOf;
     const replace = `${sb}[[@{${special.trim()}${ability.toLowerCase()}}]]${sa}`;
@@ -16061,7 +16123,10 @@ function insertRolls(text, options = {}) {
   });
 
   // Search for "... #d# +/- X..."
-  matchRegExp(text, /([0-9]+d[0-9]+)([ ]*[\+\-]*[ ]*[0-9]*)?/gm).forEach(result => {
+  matchRegExp(
+    text,
+    /([0-9]+d[0-9]+)([ ]*[\+\-]*[ ]*[0-9]*)?/gm
+  ).forEach(result => {
     const [ matched, dice, mod ] = result;
     const replace = `[[${dice}${ strval(mod).trim() }]] `;
     text = text.replace(matched, replace);
@@ -17682,7 +17747,7 @@ function actionAbility(path, rank) {
     }
 
     // build text
-    let text = insertRolls(description, { maxD4e });
+    let text = insertRolls(description, { pathNum: path, maxD4e });
     if (alert !== "" && alertCSS === "")
       text += "\n" + alert
     
@@ -18737,13 +18802,15 @@ SWData.PC.SKILLS.forEach(skill => {
       if (useCarac !== "") {
         caracBonus = "@{" + useCarac + "}";
         caracSup = strval(values[`${useCarac}_sup`]);
+      } else if (caracBonus !== "0" && caracBonus !== "?") {
+        caracSup = strval(values[`${ pickStat(caracBonus) }_sup`]);
       }
       let short = "";
       if (caracBonus !== "0" && caracBonus !== "?")
-        short = caracBonus.slice(2,5).toUpperCase() + " + ";
+        short = pickStat(caracBonus).toUpperCase() + " + ";
       const skillBonus = intval(values[bonus]);
       const skillDef = strval(values[def]);
-      const skillTotal = ` *(+${ intval(values[caracBonus.slice(2, 5)]) + skillBonus })*`;
+      const skillTotal = ` *(+${ intval(values[pickStat(caracBonus)]) + skillBonus })*`;
 
       let rollCmd = "";
       switch (caracSup) {
@@ -18795,7 +18862,7 @@ SWData.PC.SKILLS.forEach(skill => {
       if (caracBonus === "?") {
         caracBonus = statRollQuery(skill.ability);
       } else {
-        carTip = `[${ caracBonus.substring(2,2+3).toUpperCase() }]`;
+        carTip = `[${ pickStat(caracBonus).toUpperCase() }]`;
       }
       rollCmd += ` + (${caracBonus})${carTip}`
 
@@ -19160,7 +19227,7 @@ on("clicked:helpbuff-btn", function() {
  * @param {number} [base=1] - base rank number
  * @returns {Map<string,string|number>} Map object of attributes to update
  */
-function importJsonDRS(data, path, base) {
+function importPathJsonDRS(data, path, base) {
   const updates = new Map();
   // TODO
   return updates;
@@ -19173,7 +19240,7 @@ function importJsonDRS(data, path, base) {
  * @param {number} [base=1] - base rank number
  * @returns {Map<string,string|number>} Map object of attributes to update
  */
-function importFromDRS(text, path, base = 1) {
+function importPathFromDRS(text, path, base = 1) {
   const updates = new Map();
 
   let ability = `voie${path}notes`;
@@ -19230,7 +19297,7 @@ function importFromDRS(text, path, base = 1) {
  * @param {number} [base=1] - base rank number
  * @returns {Map<string,string|number>} Map object of attributes to update
  */
-function importFromPDF(text, path, base = 1) {
+function importPathFromPDF(text, path, base = 1) {
   const updates = new Map();
 
   let ability = `voie${path}notes`;
@@ -19292,11 +19359,11 @@ seq(9).forEach(path => {
       let updates;
       try {
         const data = JSON.parse(text);
-        updates = importJsonDRS(data, path, base);
+        updates = importPathJsonDRS(data, path, base);
       } catch (error) {
         updates = boolval(values.from_drs)
-        ? importFromDRS(text, path, base)
-        : importFromPDF(text, path, base); 
+        ? importPathFromDRS(text, path, base)
+        : importPathFromPDF(text, path, base); 
       }
   
       if (updates.size > 0) {
@@ -19647,6 +19714,8 @@ on("clicked:helpres-btn", function() {
     "type: mana=Potion de mana (1d8 PM)",
     "type: parchemin=Parchemin de sort",
     "type: grimoire=Sort d'un grimoire",
+    "type: combat N=Utilisations par combat",
+    "type: jour N=Utilisations par jour",
     "desc=Une propriété par ligne"
   ].filter(t => t !== ""), {
     template: "custom",
@@ -20614,7 +20683,7 @@ on("clicked:repeating_ressources:resconso-btn", function (eventInfo) {
     }
 
     if (
-      type.toLowerCase().startsWith("parchemin") || 
+      type.toLowerCase().startsWith("parchemin") ||
       type.toLowerCase().startsWith("grimoire")
     ) {
       let text = description;
@@ -20775,8 +20844,10 @@ on("clicked:appearance-btn clicked:description-btn", function() {
     const text = isPC(values.sheet_type)
     ? strval(values.apparence)
     : strval(values.pnj_desc);
-    const anonymous = boolval(values.desc_anonyme);
-    sendChatMsg(rollTemplate({ text }, { title: !anonymous }), { whisper: "" } );
+    if (text !== "") {
+      const anonymous = boolval(values.desc_anonyme);
+      sendChatMsg(rollTemplate({ text }, { title: !anonymous }), { whisper: "" } );
+    }
     
     let avatar = strval(values.character_avatar);
     if (!avatar)
@@ -21285,7 +21356,7 @@ function importCOF2CampaignTools(data) {
     attributes.set("genre", strval(character.identity.sex).at(0)?.toUpperCase());
     attributes.set("age", strval(character.identity.age));
     let taille = (numval(character.identity.height) / 100).toFixed(2);
-    taille = taille !== "0" ? taille.replace(".", "m") : "";
+    taille = taille !== "0.00" ? taille.replace(".", "m") : "";
     attributes.set("taille", (taille !== "" && !taille.includes("m") ? taille + "m" : taille));
     const poids = numval(character.identity.weight);
     attributes.set("poids", (poids > 0 ? `${poids} kg` : ""));
@@ -21381,12 +21452,19 @@ function importCOF2CampaignTools(data) {
       if (key.startsWith(PRESTIGE))
         searchProfile = PRESTIGE + cleanText(attributes.get("famille"));
       else
-        searchProfile = cleanText(attributes.get("profil"));
+        searchProfile = ""; //cleanText(attributes.get("profil"));
       return (
-        pathInfo.profile === searchProfile &&
+        (searchProfile === "" || pathInfo.profile === searchProfile) &&
         pathInfo.name === cleanText(data.name)
       );
     });
+    const profil = attributes.get("profil");
+    if (foundPath?.profile !== mainProfile(profil).toLowerCase()) {
+      const hybrid = foundPath.profile;
+      if (!profil.toLowerCase().includes(hybrid))
+        attributes.set("profil", profil + "/" + capitalize(hybrid));
+    }
+    
     const title = strval(foundPath?.title, strval(data.name));
     attributes.set(abilityInfo({ path: pathId }).pathName, title);
     attributes.set(abilityInfo({ path: pathId }).pathPV, pathPV);
@@ -21413,7 +21491,7 @@ function importCOF2CampaignTools(data) {
     attributes.set(rptAttr(section, "equip-qte", rowId), Math.max(1, quantity));
   });
 
-  //
+  // Treasure
   if (character.purse) {
     [ "pc", "pa", "po", "pp" ].forEach(coin => {
       const coins = ({
@@ -21485,7 +21563,17 @@ on("clicked:import_json-btn", function () {
     attributes.set("json_character", "");
     attributes.set("json_import", "1");
     setAttrs(Object.fromEntries(attributes), null, () => {
+      // fill reamining paths
       sendChatCmd(`%{${ attributes.get("character_name") }|path_ini-btn}`);
+      // set PV, DR, PC & PM to max
+      getAttrs([ "pv_max", "dr_max", "pc_max", "pm_max" ], function (values) {
+        const updates = Object.keys(values).reduce((result, attr) => {
+          result.set(attr.split("_")[0], intval(values[attr]));
+          return result;
+        }, new Map());
+        updates.set("json_import", "0");
+        setAttrs(Object.fromEntries(updates));
+      })
     });
   });
 });
@@ -22660,12 +22748,6 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
 
     const extraDM = [];
 
-    if (boolval(values.narratif)) {
-      const narrative = strval(values.narratif_type);
-      const narrativeDM = intval(values.niveau) * (narrative === "sbire" ? 1 : -1);
-      extraDM.push(` + ([[${narrativeDM}[${ capitalize(narrative) }]]])`);
-    }
-
     let tactBonus = "";
     let tactDM = "";
     const tactic = intval(values.pnj_tact);
@@ -22705,7 +22787,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
       specRoll = intval(values[`cspec${specMove}_` + "roll"]);
       specNext = boolval(values[`cspec${specMove}_next`]);
       specName = strval(values[`cspec${specMove}_nom`]);
-      const rollMatching = specName.match(/[ ]*jet:([0-9]*)[ ]*/);
+      const rollMatching = specName.match(/[ ]*(jet|btn):([0-9]*)[ ]*/);
       if (rollMatching) {
         const rollMatched = rollMatching[0];
         specName = specName.replace(rollMatched, "").trim();
@@ -22781,16 +22863,25 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
         dmOpt += "r";
     }
 
+    let narrativeDM = "";
+    if (boolval(values.narratif)) {
+      const narrative = strval(values.narratif_type);
+      narrativeDM = intval(values.niveau) * (narrative === "sbire" ? 1 : -1);
+      narrativeDM = ` + [[${narrativeDM}]][${ capitalize(narrative) }]`;
+    }
+
     let dmroll = "";
     if (dm !== "") {
       dm = dm.replace("dE", "d4°");
       dm = dm.toLowerCase().replace("d4°", `@{${companionOf}devol}`);
-      dmroll = `[[${dm}${dmOpt}]][DM] + ${dmdiv}[Divers]${specDM}`;
+      dmroll = `[[${dm}${dmOpt}]][DM] + ${dmdiv}[Divers]${specDM}${narrativeDM}`;
       if (tactic === 1)
         dmroll = `[[floor((${dmroll})/2)]]`;
       else
         dmroll = "[[" + dmroll + " ]]";
     }
+
+
 
     let special = strval(values[section + "special"]);
     special = insertRolls(special, { isNPC: true, companionOf });
@@ -22798,15 +22889,12 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     const specRolls = [];
 
     atkMods.forEach(atkMod => {
-      let displayButton = false;
-      let matched = atkMod.match(/jet:([0-9]+)/i);
-      if (!matched) {
-        matched = atkMod.match(/btn:([0-9]+)/i);
-        if (!matched)
-          return;
-        displayButton = true;
-      }
-      const index = intval(matched.slice(1)[0]) - 1;
+      let matched = atkMod.match(/(jet|btn):([0-9]+)/i);
+      if (!matched)
+        return;
+      matched = matched.slice(1);
+      const displayButton = matched[0] === "btn";
+      const index = intval(matched[1]) - 1;
       if (index < 0)
         return;
       let specRollName = "@{" + rptAttr("npcrolls", "npcroll-name", "$" + index) + "}";
@@ -23360,7 +23448,7 @@ SWData.COMPANIONS.forEach(attr => {
 on("change:statblock", function() {
   getAttrs([ "statblock" ], function(values) {
     let text = strval(values.statblock);
-    if (text === "")
+    if (text === "" || text.trim().at(0) === "{")
       return;
     const stripped = [];
     text.split("\n").forEach(l => stripped.push(stripNonPrintable(l)));
@@ -23519,6 +23607,97 @@ function jsonFromDRS(data) {
   return npcAttrs;
 }
 
+/**
+ * Parse ability uses
+ * @param {string} desc - ability description
+ * @returns {{ max: number, freq: string }|null}
+ */
+function getUses(desc) {
+  const match = desc.toLowerCase().match(/(une|deux|trois)[ ]+fois[ ]+par[ ]+(combat|jour)/);
+  if (match) {
+    const [ nb, freq ] = match.slice(1);
+    const uses = [ "une", "deux", "trois" ].findIndex(n => n === nb);
+    if (uses > -1 && freq)
+      return { max: uses + 1, freq };
+  }
+  return null;
+}
+
+/**
+ * Parse statblock data from COF2 Campaign Tools JSON blob
+ * @param {object} data - parsed JSON blob
+ * @returns {Map<string,string|number>} Map object of attributes to update
+ */
+function importCOF2CampaignToolsNPC(npcData) {
+  const npcAttrs = new Map();
+
+  // general infos
+  npcAttrs.set("character_name", strval(npcData.name));
+  const stats = npcData.stats;
+  npcAttrs.set("niveau", numval(stats.nc));
+  npcAttrs.set("pnj_desc", strval(stats.description));
+
+  // stats
+  Object.keys(stats.abilities).forEach(stat => {
+    npcAttrs.set(stat.toLowerCase(), numval(stats.abilities[stat]));
+  });
+  stats.bonusDieAbilities.forEach(stat => {
+    npcAttrs.set(`${ stat.toLowerCase() }_sup`, "S");
+  });
+
+  // other attributes
+  const pv = intval(stats.hitPoints);
+  npcAttrs.set("pv_max", pv);
+  npcAttrs.set("pv", pv);
+  npcAttrs.set("init", intval(stats.initiative));
+  npcAttrs.set("def", intval(stats.defense));
+
+  // attacks
+  stats.attacks.forEach(attack => {
+    const { name, attackCount, bonus, damage } = attack;
+    const rowId = rptAttr("npcarmes", "arme-", generateRowID());
+    npcAttrs.set(rowId + "nom", strval(name));
+    if (Number.isInteger(attackCount))
+      npcAttrs.set(rowId + "multi", Math.max(1, attackCount));
+    npcAttrs.set(rowId + "atk", intval(bonus));
+    npcAttrs.set(rowId + "dm", strval(damage));
+  });
+
+  // abilities
+  stats.specialAbilities.forEach(ability => {
+    const { name, text: desc } = ability;
+    const rowId = rptAttr("npcrolls", "npcroll-", generateRowID());
+    npcAttrs.set(rowId + "name", strval(name));
+    npcAttrs.set(rowId + "desc", strval(desc));
+    const uses = getUses(desc);
+    if (uses) {
+      const { max, freq } = uses;
+      if (max > -1 && freq) {
+        npcAttrs.set(rowId + "max", max);
+        npcAttrs.set(rowId + "freq", freq);
+      }
+    }
+  });
+  
+  return npcAttrs;
+}
+
+/**
+ * Detect type of JSON statblock pasted in
+ * @param {object} data - parsed JSON
+ * @returns {Map<string,string|number>|null} Map object of attributes to update
+ */
+function jsonStatblock(data) {
+  if (strval(data.kind) === "cof2-npc-export")
+    return importCOF2CampaignToolsNPC(data.npc);
+  return null;
+}
+
+/**
+ * Parse statblock data from DRS text
+ * @param {string} statblock - text pasted from DRS
+ * @returns {Map<string,string|number>} Map object of attributes to update
+ */
 function statBlockFromDRS(statblock) {
   
   let npcAttrs = new Map();
@@ -23695,12 +23874,11 @@ function statBlockFromDRS(statblock) {
     const rowId = rptAttr("npcrolls", "npcroll-", generateRowID());
     npcAttrs.set(rowId + "name", ability.name);
     npcAttrs.set(rowId + "desc", ability.desc);
-    const submatch = ability.desc.toLowerCase().match(/(une|deux|trois)[ ]+fois[ ]+par[ ]+(combat|jour)/);
-    if (submatch) {
-      const [ nb, freq ] = submatch.slice(1);
-      const uses = [ "une", "deux", "trois" ].findIndex(n => n === nb);
-      if (uses > -1 && freq) {
-        npcAttrs.set(rowId + "max", uses + 1);
+    const uses = getUses(desc);
+    if (uses) {
+      const { max, freq } = uses;
+      if (max > -1 && freq) {
+        npcAttrs.set(rowId + "max", max);
         npcAttrs.set(rowId + "freq", freq);
       }
     }
@@ -23874,7 +24052,7 @@ on("clicked:importsb-btn", function() {
 
     try {
       const data = JSON.parse(statblock);
-      updates = jsonFromDRS(data);
+      updates = jsonStatblock(data);
     } catch (error) {
       updates = boolval(values.from_drs)
       ? statBlockFromDRS(statblock)
@@ -24977,7 +25155,7 @@ on("mancerfinish:finish", function(mancerData) {
     if (voie === "")
       return;
     const path = ix +1;
-    const attrs = importFromPDF(voie, path);
+    const attrs = importPathFromPDF(voie, path);
     attrs.forEach((value, attr) => {
       updates[attr] = value;
     });
