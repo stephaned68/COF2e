@@ -100,6 +100,8 @@ Pour chaque coup, vous devez indiquer :
 
 La sélection d'un coup spécial applique les bonus spécifiés à toutes les attaques effectuées ensuite sauf si la case _Prochaine attaque_ est cochée.
 
+Si vous indiquez `jet:N` ou `btn:N` dans le nom d'un coup spécial, le message d'attaque comporte une ligne _Spécial_ avec le nom de la Nième capacité (`jet:N`), voire un bouton (`btn:N`) qui permet de faire un jet de cette capacité.
+
 Vous pouvez également activer l'une des options tactiques (attaque assurée, précise ou violente) en cochant la case correspondante. Elles sont mutuellement exclusives.
 
 ## Affichage des capacités favorites

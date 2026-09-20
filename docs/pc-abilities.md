@@ -108,8 +108,8 @@ Avant d'être envoyé dans le chat, les descriptions des capacités sont analys�
 - `[NOM]` est remplacé par le nom du personnage.
 - `[nombre +/- XXX]`, où `XXX` est une caractéristique, est remplacé par le résultat du calcul.
 - `[rang voie N]` est remplacé par la valeur du rang dans la voie indiquée par N.
-- `Nd4°` est remplacé par un jet du nombre `N` de dés évolutifs. `NdE`, `Nd4E` et `Nd4e` sont aussi reconnus comme spécifications de dés évolutifs.
-- `[Nd4° + XXX]` est remplacé par un jet du nombre `N` de dés évolutifs auquel le score de la caractéristique `XXX` (_AGI_, _CHA_ etc...) est ajouté. `[NdE + XXX]`, `[Nd4e + XXX]` et `[Nd4E + XXX]` sont aussi reconnus comme spécifications de dés évolutifs.
+- `Nd4°` est remplacé par un jet du nombre `N` de dés évolutifs.
+- `[Nd4° + XXX]` est remplacé par un jet du nombre `N` de dés évolutifs auquel le score de la caractéristique `XXX` (_AGI_, _CHA_ etc...) est ajouté.
 - Les formules de dés sont remplacés par le jet correspondant. _Exemple : `1d10`, `2d6+6`, `1d8 + 2`..._
 
 Si vous connaissez le langage de macro de Roll20, vous pouvez indiquer ces inline-rolls vous-même dans le texte de la capacité.
@@ -126,6 +126,14 @@ Si vous connaissez le langage de macro de Roll20, vous pouvez indiquer ces inlin
 
 - Si vous indiquez des formules de dés avec un **D**, la fiche n'effectue **pas** la substitution par des _in-line rolls_. `1d6` est remplacé par `[[1d6]]`, mais pas `1D6`.
 - Si la fiche détecte que vous avez utilisé vous-même des _in-line rolls_ dans le texte (il y a au moins une occurence de `[[...]]`), elle ne fait **aucune** des substitutions décrites ci-dessus. Soit vous laissez le texte tel qu'il apparaît dans les règles avec les syntaxes spéciales implémentées dans la fiche, soit vous les remplacez par le langage de macro de Roll20, mais il n'est pas possible de mixer les deux.
+
+## Dé évolutif
+
+Les dés évolutifs peuvent être indiqués de différentes manières dans les expressions de dés :
+- `d4°`
+- `dE`
+- `d4E`
+- `d4e`
 
 ---
 
