@@ -1,4 +1,4 @@
-/* COF2e v1.18.0 */
+/* COF2e v1.19.0 */
 
 @import url('https://fonts.googleapis.com/css?family=Merriweather+Sans&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Material+Icons&display=swap');
@@ -639,11 +639,13 @@ input[value="1"].is-mook + .npc-configs.is-mook {
 
 input[value="0"].pc-skills-btn ~ button.pc-skills-btn,
 input[value=""].custom-skill + div.custom-skill,
+input[value="0"].craft-skill + div.craft-skill,
 input[value="0"].npc-reminder + input[type="checkbox"].npc-reminder {
   display: none;
 }
 
-input:not([value=""]).custom-skill + div.custom-skill.custom-skill-top {
+input:not([value=""]).custom-skill + div.custom-skill.custom-skill-top,
+input:not([value="0"]).craft-skill + div.craft-skill.craft-skill-top {
   border-top: 1px solid grey;
 }
 

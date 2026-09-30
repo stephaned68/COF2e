@@ -1,8 +1,8 @@
 <div class="cofmain">
   <!-- Nouvelle version fiche -->
-  <input type="hidden" name="attr_verfdp" value="1.18.0">
+  <input type="hidden" name="attr_verfdp" value="1.19.0">
   <!-- Version courante fiche -->
-  <input type="hidden" name="attr_version" value="1.18.0">
+  <input type="hidden" name="attr_version" value="1.19.0">
     <!-- Edit locked -->
   <input type="hidden" name="attr_locked" value="0">
 
@@ -4605,6 +4605,60 @@
                 </div>
               </div>
 
+              <input type="hidden" class="craft-skill" name="attr_cfg_comp_craft" value="">
+              <div class="craft-skill craft-skill-top d-flex d-flex-between">
+                <div>
+                  <input type="checkbox" name="attr_alchimie_prof" value="1">
+                  <button type="action" class="flat-btn img-btn" name="act_skill-alchimie"
+                  title="%{skill-alchimie} Concevoir et fabriquer des objets (forgeron, armurier, cuisinier...)">
+                    <span class="img-btn"></span>Alchimie
+                  </button>
+                </div>
+                <div>
+                  <input type="hidden" name="attr_alchimie_def" value="@{int}">
+                  <select class="select-md" name="attr_alchimie_carac" title="@{alchimie_carac} Bonus de caractéristique">
+                    <option value="0">-</option>
+                    <option value="@{agi}">AGI</option>
+                    <option value="@{con}">CON</option>
+                    <option value="@{for}">FOR</option>
+                    <option value="@{per}">PER</option>
+                    <option value="@{cha}">CHA</option>
+                    <option value="@{int}" selected>INT</option>
+                    <option value="@{vol}">VOL</option>
+                    <option value="?">Demander</option>
+                  </select>
+                  <span>+</span>
+                  <input type="number" class="two-digits" name="attr_alchimie_bonus" value="0">
+                </div>
+              </div>
+
+              <input type="hidden" class="craft-skill" name="attr_cfg_comp_craft" value="">
+              <div class="craft-skill d-flex d-flex-between">
+                <div>
+                  <input type="checkbox" name="attr_faconnage_prof" value="1">
+                  <button type="action" class="flat-btn img-btn" name="act_skill-faconnage"
+                  title="%{skill-faconnage} Concevoir et fabriquer des objets (forgeron, armurier, cuisinier...)">
+                    <span class="img-btn"></span>Façonnage
+                  </button>
+                </div>
+                <div>
+                  <input type="hidden" name="attr_faconnage_def" value="@{agi}">
+                  <select class="select-md" name="attr_faconnage_carac" title="@{faconnage_carac} Bonus de caractéristique">
+                    <option value="0">-</option>
+                    <option value="@{agi}" selected>AGI</option>
+                    <option value="@{con}">CON</option>
+                    <option value="@{for}">FOR</option>
+                    <option value="@{per}">PER</option>
+                    <option value="@{cha}">CHA</option>
+                    <option value="@{int}">INT</option>
+                    <option value="@{vol}">VOL</option>
+                    <option value="?">Demander</option>
+                  </select>
+                  <span>+</span>
+                  <input type="number" class="two-digits" name="attr_faconnage_bonus" value="0">
+                </div>
+              </div>
+
               <input type="hidden" class="custom-skill" name="attr_custom1_skillname" value="">
               <div class="custom-skill custom-skill-top d-flex d-flex-between">
                 <div>
@@ -4960,6 +5014,60 @@
                   <input type="number" class="two-digits" name="attr_vigilance_bonus" value="0">
                 </div>
               </div>
+
+              <input type="hidden" class="craft-skill" name="attr_cfg_comp_craft" value="">
+              <div class="craft-skill craft-skill-top d-flex d-flex-between">
+                <div>
+                  <input type="checkbox" name="attr_forge_prof" value="1">
+                  <button type="action" class="flat-btn img-btn" name="act_skill-forge"
+                  title="%{skill-forge} Concevoir et fabriquer des objets (forgeron, armurier, cuisinier...)">
+                    <span class="img-btn"></span>Forge
+                  </button>
+                </div>
+                <div>
+                  <input type="hidden" name="attr_forge_def" value="@{con}">
+                  <select class="select-md" name="attr_forge_carac" title="@{forge_carac} Bonus de caractéristique">
+                    <option value="0">-</option>
+                    <option value="@{agi}">AGI</option>
+                    <option value="@{con}" selected>CON</option>
+                    <option value="@{for}">FOR</option>
+                    <option value="@{per}">PER</option>
+                    <option value="@{cha}">CHA</option>
+                    <option value="@{int}">INT</option>
+                    <option value="@{vol}">VOL</option>
+                    <option value="?">Demander</option>
+                  </select>
+                  <span>+</span>
+                  <input type="number" class="two-digits" name="attr_forge_bonus" value="0">
+                </div>
+              </div>
+
+              <input type="hidden" class="craft-skill" name="attr_cfg_comp_craft" value="">
+              <div class="craft-skill d-flex d-flex-between">
+                <div>
+                  <input type="checkbox" name="attr_lapidage_prof" value="1">
+                  <button type="action" class="flat-btn img-btn" name="act_skill-lapidage"
+                  title="%{skill-lapidage} Concevoir et fabriquer des objets (forgeron, armurier, cuisinier...)">
+                    <span class="img-btn"></span>Lapidage
+                  </button>
+                </div>
+                <div>
+                  <input type="hidden" name="attr_lapidage_def" value="@{per}">
+                  <select class="select-md" name="attr_lapidage_carac" title="@{lapidage_carac} Bonus de caractéristique">
+                    <option value="0">-</option>
+                    <option value="@{agi}">AGI</option>
+                    <option value="@{con}">CON</option>
+                    <option value="@{for}">FOR</option>
+                    <option value="@{per}" selected>PER</option>
+                    <option value="@{cha}">CHA</option>
+                    <option value="@{int}">INT</option>
+                    <option value="@{vol}">VOL</option>
+                    <option value="?">Demander</option>
+                  </select>
+                  <span>+</span>
+                  <input type="number" class="two-digits" name="attr_lapidage_bonus" value="0">
+                </div>
+              </div>              
 
               <input type="hidden" class="custom-skill" name="attr_custom2_skillname" value="">
               <div class="custom-skill custom-skill-top d-flex d-flex-between">
@@ -5881,6 +5989,10 @@
                 <li class="config-check">
                   <input type="checkbox" name="attr_cfg_comp_prof" value="1">
                   <span>Autoriser les profils</span>
+                </li>
+                <li class="config-check">
+                  <input type="checkbox" name="attr_cfg_comp_craft" value="1">
+                  <span>Artisanat</span>
                 </li>
               </ul>
             </details>
@@ -9153,7 +9265,7 @@
 
 /**
  * COF2e Sheet Worker
- * v1.18.0
+ * v1.19.0
  */
 
 const SWData = Object.freeze({
@@ -9226,7 +9338,8 @@ const SWData = Object.freeze({
     malus: "2d20kl1",
     normal: "1d20",
     bonus: "2d20kh1",
-    suphero: "{2d20kh1, 0d0+10}kh1"
+    min10: ", 0d0 + 10",
+    suphero: "{2d20kh1, 0d0 + 10}kh1"
   },
   emojis: {
     "atkcac":   "&#9876;&#65039;",  // crossed-swords
@@ -10063,67 +10176,99 @@ const SWData = Object.freeze({
         name: "acrobaties",
         label: "",
         ability: "agi",
-        emoji: "&#129336;"
+        emoji: "&#129336;",
+        craft: false
+      },
+      {
+        name: "alchimie",
+        label: "",
+        ability: "int",
+        emoji: "&#129516;",
+        craft: true
       },
       {
         name: "artisanat",
         label: "",
         ability: "int",
-        emoji: "&#128296;"
+        emoji: "&#128296;",
+        craft: false
       },
       {
         name: "athletisme",
         label: "Athlétisme",
         ability: [ "agi", "con", "for" ],
-        emoji: "&#127939;"
+        emoji: "&#127939;",
+        craft: false
       },
       {
         name: "commerce",
         label: "",
         ability: "cha",
-        emoji: "&#128176;"
+        emoji: "&#128176;",
+        craft: false
       },
       {
         name: "connaissance",
         label: "",
         ability: "int",
-        emoji: "&#129504;"
+        emoji: "&#129504;",
+        craft: false
       },
       {
         name: "discretion",
         label: "Discrétion",
         ability: "agi",
-        emoji: "&#128100;"
+        emoji: "&#128100;",
+        craft: false
       },
       {
         name: "divertissement",
         label: "",
         ability: "cha",
-        emoji: "&#129337;"
+        emoji: "&#129337;",
+        craft: false
       },
       {
         name: "equitation",
         label: "",
         ability: [ "agi", "cha" ],
-        emoji: "&#128014;"
+        emoji: "&#128014;",
+        craft: false
       },
       {
         name: "escalade",
         label: "",
         ability: "agi",
-        emoji: "&#129495;"
+        emoji: "&#129495;",
+        craft: false
       },
       {
         name: "effraction",
         label: "",
         ability: "agi",
-        emoji: "&#128275;"
+        emoji: "&#128275;",
+        craft: false
       },
       {
         name: "empathie",
         label: "",
         ability: "per",
-        emoji: "&#128149;"
+        emoji: "&#128149;",
+        craft: false
+      },
+      {
+        name: "faconnage",
+        label: "",
+        ability: "agi",
+        emoji: "&#129717;",
+        craft: true
+      },
+      {
+        name: "forge",
+        label: "",
+        ability: "con",
+        emoji: "&#128296;",
+        craft: true
       },
       {
         name: "intimidation",
@@ -10132,64 +10277,81 @@ const SWData = Object.freeze({
         emoji: "&#128162;"
       },
       {
+        name: "lapidage",
+        label: "",
+        ability: "per",
+        emoji: "&#128142;",
+        craft: true
+      },
+      {
         name: "medecine",
         label: "Médecine",
         ability: "per",
-        emoji: "&#128150;"
+        emoji: "&#128150;",
+        craft: false
       },
       {
         name: "natation",
         label: "",
         ability: "con",
-        emoji: "&#127754;"
+        emoji: "&#127754;",
+        craft: false
       },
       {
         name: "occultisme",
         label: "",
         ability: "int",
-        emoji: "&#128302;"
+        emoji: "&#128302;",
+        craft: false
       },
       {
         name: "persuasion",
         label: "",
         ability: "cha",
-        emoji: "&#128483;"
+        emoji: "&#128483;",
+        craft: false
       },
       {
         name: "religion",
         label: "",
         ability: "int",
-        emoji: "&#128327;"
+        emoji: "&#128255;",
+        craft: false
       },
       {
         name: "renseignement",
         label: "",
         ability: "cha",
-        emoji: "&#128269;"
+        emoji: "&#128269;",
+        craft: false
       },
       {
         name: "sciences",
         label: "",
         ability: "int",
-        emoji: "&#129514;"
+        emoji: "&#129514;",
+        craft: false
       },
       {
         name: "tromperie",
         label: "",
         ability: "cha",
-        emoji: "&#127917;"
+        emoji: "&#127917;",
+        craft: false
       },
       {
         name: "survie",
         label: "",
         ability: "per",
-        emoji: "&#128293;"
+        emoji: "&#128293;",
+        craft: false
       },
       {
         name: "vigilance",
         label: "",
         ability: "per",
-        emoji: "&#128065;"
+        emoji: "&#128065;",
+        craft: false
       },
       {
         name: "custom1",
@@ -12934,7 +13096,7 @@ function dieRoll(type, weakened = 0, cfcs = {}) {
       roll = (weakened === 1) ? rollCfCs("1d20", cfcs) : rollCfCs("2d20kh1", cfcs);
       break;
     case "H":
-      roll = (weakened === 1) ? rollCfCs("2d20kh1", cfcs) : "{" + rollCfCs("2d20kh1", cfcs) + ", 0d0 + 10}kh1";
+      roll = (weakened === 1) ? rollCfCs("2d20kh1", cfcs) : "{" + rollCfCs("2d20kh1", cfcs) + SWData.D20.min10 + "}kh1";
       break;
     default:
       roll = (weakened === 1) ? rollCfCs("2d20kl1", cfcs) : rollCfCs("1d20", cfcs);
@@ -12969,7 +13131,7 @@ function d20Roll(base, d20Roll, cfcs = {}) {
         return rollCfCs(SWData.D20.normal, cfcs);
       break;
     case SWData.D20.suphero:
-    case "{" + rollCfCs(SWData.D20.bonus) +", 0d0 + 10}kh1":
+    case "{" + rollCfCs(SWData.D20.bonus) + SWData.D20.min10 + "}kh1":
       if (d20Roll === SWData.D20.malus)
         return rollCfCs(SWData.D20.bonus, cfcs);
       break;
@@ -14518,6 +14680,19 @@ function allRollsBuff(values, type) {
 }
 
 /**
+ * Return D20 roll with optional modifier
+ * @param {string} roll - roll expression
+ * @param {string} rollMod - roll modifier
+ * @returns {string}
+ */
+function rollWithMod(roll, rollMod) {
+  if (roll.includes(SWData.D20.min10))
+    return roll.replace(SWData.D20.min10, rollMod + SWData.D20.min10);
+  else
+    return roll + rollMod;
+}
+
+/**
  * Stats rolls
  */
 SWData.PC.STATS.forEach(stat => {
@@ -14544,9 +14719,9 @@ SWData.PC.STATS.forEach(stat => {
       "casque", "casque_eqp"
     ];
     getAttrs([
-      `${short}_dsup`, short, `${short}_test`,
+      `${short}_dsup`, short, `${short}_test`, `${short}_rollmod`,
       "sheet_type",
-      "cfg_shadow", "pc", 
+      "cfg_shadow", "pc",
       "notif_fx",
       "chatsetattr", "help_roll_all",
       "condition_affaibli",
@@ -14571,8 +14746,11 @@ SWData.PC.STATS.forEach(stat => {
       const shadow = shadowValue(values);
       
       // Roll ability
-      const [ kroll, mod, test ] = Object.keys(values);
-      const roll = d20Roll(strval(values[kroll]), strval(values.d20roll));
+      const [ kroll, mod, test, rollmod ] = Object.keys(values);
+      let roll = rollWithMod(
+        d20Roll(strval(values[kroll]), strval(values.d20roll)),
+        strval(values[rollmod])
+      );
       const npcSheet = isNPC(values.sheet_type);
       const statMod = ` *(${ displayMod(values[npcSheet ? mod : test]) })*`;
       
@@ -14623,13 +14801,14 @@ SWData.PC.STATS.forEach(stat => {
     });
     const skillMods = SWData.PC.SKILLS.map(skill => `${ skill.name }_bonus`);
     getAttrs([ 
-      "character_name", "use_skills",
+      "character_name", "use_skills", "cfg_comp_craft",
       ...abilityRolls,
       ...skillMods,
       ...nameSeq(4, "custom#_skillname"),
       ...nameSeq(4, `custom#_${short}`),
     ], function(values) {
       const charName = strval(values.character_name);
+      const crafting = boolval(values.cfg_comp_craft);
       const actions = [ {
         action: `%{${charName}|${short}${modifier}-btn}`,
         carac: ""
@@ -14654,6 +14833,12 @@ SWData.PC.STATS.forEach(stat => {
             return skill.ability.includes(short);
           else
             return skill.ability === short;
+        })
+        .filter(skill => {
+          if (!crafting && skill.craft)
+            return false;
+          else
+            return true;
         })
         .filter(skill => intval(values[`${ skill.name }_bonus`]) > 0)
         .forEach(skill => {
@@ -18535,6 +18720,7 @@ on("clicked:repeating_rolls:roll-btn", function() {
   const section = "rolls";
   const statsAttrs = SWData.PC.STATS.map(stat => `${ shorten(stat) }_test`);
   const statsRolls = SWData.PC.STATS.map(stat => `${ shorten(stat) }_sup`);
+  const statsRollMods = SWData.PC.STATS.map(stat => `${ shorten(stat) }_rollmod`);
   const rollAttrs = rptAttrs(section, [
     "nom",
     "cmd",
@@ -18561,6 +18747,7 @@ on("clicked:repeating_rolls:roll-btn", function() {
       ...luckButtonAttrs(),
       ...statsAttrs,
       ...statsRolls,
+      ...statsRollMods,
       ...rollAttrs,
       ...abilityAttrs
     ], function (values) {
@@ -18595,7 +18782,7 @@ on("clicked:repeating_rolls:roll-btn", function() {
     const allTags = getAllTags(values);
 
     if (type === SWData.D20.normal) {
-      const caracSup = carac !== "?" ? values[`${ carac.substring(2).split("_")[0] }_sup`] : "";
+      const caracSup = carac !== "?" ? values[`${ carac.substring(2, 2 + 3) }_sup`] : "";
       switch (caracSup) {
         case "S":
           type = SWData.D20.bonus;
@@ -18641,7 +18828,13 @@ on("clicked:repeating_rolls:roll-btn", function() {
       mark = "rang ";
     else
       mark = "+";
-    const rollBonus = carac !== "?" ? ` *(${mark}${ intval(values[carac.slice(2, 2 + 3 + 5)]) + (ranks[rankInPath - 1] || 0) + bonus })*` : "";
+    const rollBonus = carac !== "?" 
+    ? ` *(${mark}${ intval(values[carac.substring(2, 2 + 3 + 5)]) + (ranks[rankInPath - 1] || 0) + bonus })*`
+    : "";
+
+    const statRollMod = carac !== "?"
+    ? strval(values[`${ carac.substring(2, 2 + 3) }_rollmod`])
+    : "";
 
     const rollModifier = boolval(values.roll_modifier);
 
@@ -18657,14 +18850,14 @@ on("clicked:repeating_rolls:roll-btn", function() {
       } else {
         type = rollCfCs(type);
       }
-      rollCmd = `${type}[Dés]`;
+      rollCmd = `${ rollWithMod(type, statRollMod) }[Dés]`;
       const helpAllRolls = strval(values.help_roll_all);
       // + Carac
       if (carac !== "") {
         if (carac === "?") {
           carac = statRollQuery();
         } else {
-          carTip = `[${ carac.substring(2, 2+3).toUpperCase() }]`;
+          carTip = `[${ carac.substring(2, 2 + 3).toUpperCase() }]`;
         }
         rollCmd += ` + (${carac})${carTip}`;
       }
@@ -18762,6 +18955,7 @@ SWData.PC.SKILLS.forEach(skill => {
     let skillName = getSkillName(skill);
     const statsAttrs = SWData.PC.STATS.map(stat => shorten(stat));
     const statsRolls = SWData.PC.STATS.map(stat => `${ shorten(stat) }_sup`);
+    const statsRollMods = SWData.PC.STATS.map(stat => `${ shorten(stat) }_rollmod`);
     const skillAttrs = [ "carac", "bonus", "def" ].map(a => `${skill.name}_${a}`);
     const customNames = nameSeq(4, "custom#_skillname");
     const customCaracs = nameSeq(4, "custom#").reduce((all, custom) => {
@@ -18772,6 +18966,7 @@ SWData.PC.SKILLS.forEach(skill => {
       ...skillAttrs,
       ...statsAttrs,
       ...statsRolls,
+      ...statsRollMods,
       ...customNames,
       ...customCaracs,
       "condition_affaibli",
@@ -18811,6 +19006,9 @@ SWData.PC.SKILLS.forEach(skill => {
       const skillBonus = intval(values[bonus]);
       const skillDef = strval(values[def]);
       const skillTotal = ` *(+${ intval(values[pickStat(caracBonus)]) + skillBonus })*`;
+      const statRollMod = short !== ""
+      ? strval(values[`${ pickStat(caracBonus) }_rollmod`])
+      : "";
 
       let rollCmd = "";
       switch (caracSup) {
@@ -18856,6 +19054,7 @@ SWData.PC.SKILLS.forEach(skill => {
       if (rollCmd === SWData.D20.normal)
         rollCmd = d20Roll(rollCfCs(rollCmd), strval(values.d20roll));
 
+      rollCmd = rollWithMod(rollCmd, statRollMod);
       rollCmd += "[Dés]"
 
       let carTip = "";
@@ -21104,24 +21303,43 @@ SWData.PC.STATS.forEach(stat => {
 /**
  * Rebuild custom attributes 
  */
-function rebuildCustom() {
+function rebuildCustom(eventInfo) {
   getAttrs([ "custom", "devol" ], function (values) {
-    const rows = strval(values.custom)
-      .split("\n")
+
+    /**
+     * Parse custom attributes field
+     * @param {string} text - custom field value
+     * @returns {string[]}
+     */
+    const parse = (text) => {
+      return strval(text).split("\n")
       .map(r => strval(r).trim())
       .filter(r => r !== "" && !r.startsWith("//"));
-    if (rows.length === 0)
-      return;
+    }
     
-    const devol = strval(values.devol);
     const updates = new Map();
-    rows.forEach(row => {
-      const { name, value } = parseNameValue(row);
-      if (!name)
-        return;
-      updates.set(name.replace(" ", "-"), expandDEvol(replaceDevol(value), devol));
-    });
 
+    const rows = parse(values.custom)
+    if (rows.length > 0) {      
+      const devol = strval(values.devol);
+      rows.forEach(row => {
+        const { name, value } = parseNameValue(row);
+        if (!name)
+          return;
+        updates.set(name.replace(" ", "-"), expandDEvol(replaceDevol(value), devol));
+      });
+    }
+
+    const deletedAttrs = parse(strval(eventInfo.previousValue))
+    .reduce((deleted, prior) => {
+      const { name } = parseNameValue(prior);
+      if (name && !updates.has(name))
+        deleted.push(name);
+      return deleted;
+    }, []);
+    if (deletedAttrs.length > 0)
+      sendChatCmd(`/w GM Supprimer **${ deletedAttrs.join(", ") }** dans l'onglet *Attributs & Capacités* du personnage`);
+    
     if (updates.size > 0)
       setAttrs(Object.fromEntries(updates));
   });
