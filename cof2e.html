@@ -199,7 +199,7 @@
 
     <!-- Identité -->
     <div class="bordered border-rounded identity">
-      <input type="hidden" class="cof-head-toggle" name="attr_sheet_type" value="pc"/> 
+      <input type="hidden" class="cof-head-toggle" name="attr_sheet_type" value=""/> 
       <datalist id="size-list">
         <option>Minuscule</option>
         <option>Très petite</option>
@@ -6212,8 +6212,59 @@
 
             <details>
               <summary>
+                <h4>Options des jets de carac.</h4>
+              </summary>
+              <ul class="pc-configs">
+                <li>
+                  <div class="pc-configs rollmod">
+                    <span>AGI</span>
+                    <input type="text" name="attr_agi_rollmod" title="@{agi_rollmod}" placeholder="Ex: ro" value="">
+                  </div>
+                </li>
+                <li>
+                  <div class="pc-configs rollmod">
+                    <span>CON</span>
+                    <input type="text" name="attr_con_rollmod" title="@{con_rollmod}" placeholder="Ex: ro" value="">
+                  </div>
+                </li>
+                <li>
+                  <div class="pc-configs rollmod">
+                    <span>FOR</span>
+                    <input type="text" name="attr_for_rollmod" title="@{for_rollmod}" placeholder="Ex: ro" value="">
+                  </div>
+                </li>
+                <li>
+                  <div class="pc-configs rollmod">
+                    <span>PER</span>
+                    <input type="text" name="attr_per_rollmod" title="@{per_rollmod}" placeholder="Ex: ro" value="">
+                  </div>
+                </li>
+                <li>
+                  <div class="pc-configs rollmod">
+                    <span>CHA</span>
+                    <input type="text" name="attr_cha_rollmod" title="@{cha_rollmod}" placeholder="Ex: ro" value="">
+                  </div>
+                </li>
+                <li>
+                  <div class="pc-configs rollmod">
+                    <span>INT</span>
+                    <input type="text" name="attr_int_rollmod" title="@{int_rollmod}" placeholder="Ex: ro" value="">
+                  </div>
+                </li>
+                <li>
+                  <div class="pc-configs rollmod">
+                    <span>VOL</span>
+                    <input type="text" name="attr_vol_rollmod" title="@{vol_rollmod}" placeholder="Ex: ro" value="">
+                  </div>
+                </li>
+              </ul>
+            </details>
+
+            <details>
+              <summary>
                 <h4>Attributs personnalisés</h4>
               </summary>
+              <input type="hidden" name="attr_custom_save">
               <textarea 
                 name="attr_custom"
                 placeholder="nom_attribut: valeur"
@@ -13228,24 +13279,6 @@ function addCustomTurn(options) {
 }
 
 /**
- * Show a div area via Roll20 jQuery
- * @param {string} div - Name of div area to show
- */
-function showArea(div) {
-  $20(`.${div}`).removeClass(SWData.settings.hiddenClass);
-  $20(`.${div}`).addClass(SWData.settings.visibleClass);
-}
-
-/**
- * Hide a div area via Roll20 jQuery
- * @param {string} div - Name of div area to hide
- */
-function hideArea(div) {
-  $20(`.${div}`).removeClass(SWData.settings.visibleClass);
-  $20(`.${div}`).addClass(SWData.settings.hiddenClass);
-}
-
-/**
  * Send an /fx command to Roll20 chat
  * @param {string} fxValue - FX parameter "name {target} {count}[,name {target} {count}]"
  * @returns {void}
@@ -13666,25 +13699,22 @@ function expandDEvol(dm, devol) {
 /**
  * Change identity heading
  */
-on("change:sheet_type", function(eventInfo) {
+on("change:sheet_type", function() {
   getAttrs([ "sheet_type" ], function(values) {
     const sheetType = strval(values.sheet_type);
     if (!sheetType)
       return;
 
-    Object.values(SWData.SHEET_TYPE).forEach(type => {
-      if (type === sheetType) {
-        showArea(`identity-${type}`);
-      } else {
-        hideArea(`identity-${type}`);
-      }
-    });
-
     if (isNPC(sheetType)) {
-      let updates = { atkcac: 0, atktir: 0, atkmag: 0, pc: 0, pc_max: 0 };
+      let updates = { 
+        atkcac: 0, 
+        atktir: 0, 
+        atkmag: 0, 
+        pc: 0, 
+        pc_max: 0
+      };
       setAttrs(updates);
     }
-
   });
 });
 
@@ -14083,9 +14113,13 @@ on(changeEvent([
     let updateAttrs = new Map();
 
     // reset PC
+    if (eventInfo.newValue === undefined || eventInfo.previousValue === undefined)
+      console.log("[EVENTINFO] Cannot reset PC", eventInfo);
     if (
-      strval(eventInfo.sourceAttribute) === "niveau" &&
-      intval(eventInfo.newValue) === intval(eventInfo.previousValue) + 1
+      strval(eventInfo.sourceAttribute) === "niveau"
+      && eventInfo.newValue !== undefined
+      && eventInfo.previousValue !== undefined
+      && intval(eventInfo.newValue) === intval(eventInfo.previousValue) + 1
     ) {
       const pcMax = intval(values.pc_max);
       if (intval(values.pc) < pcMax)
@@ -14120,7 +14154,11 @@ on(changeEvent([
  * Display paths at 1st level
  */
 on("change:niveau", function(eventInfo) {
-  if (intval(eventInfo.previousValue) !== 0 && intval(eventInfo.newValue) !== 1)
+  if (eventInfo.previousValue === undefined || eventInfo.newValue === undefined) {
+    console.log("[EVENTINFO] Cannot display level 1 paths helper", eventInfo);
+    return;
+  }
+  if (intval(eventInfo.previousValue) !== 0 || intval(eventInfo.newValue) !== 1)
     return;
 
   getAttrs([ "character_name", "sheet_type", "profil", "json_import" ], function(values) {
@@ -15235,7 +15273,7 @@ on("clicked:vigloss-btn clicked:vigheal-btn", function (eventInfo) {
 /**
  * ON PV value change, update separate attribute
  */
-on("change:pv", function() {
+on("change:pv", function(eventInfo) {
   getAttrs([ "pv", "current_pv" ], function(values) {
     if (intval(values.pv) !== intval(values.current_pv))
       setAttrs({ current_pv: intval(values.pv) });
@@ -15269,7 +15307,7 @@ on("change:pv change:pvig", function (eventInfo) {
       : "transparent";
     }
     if (tokenmod && markerDead !== "") {
-      let deadOrAlive = wounds.condition_inconscient === 1 ? "+" : "-";
+      const deadOrAlive = wounds.condition_inconscient === 1 ? "+" : "-";
       tokenProps.statusmarkers = `${deadOrAlive}${markerDead}`;
     }
     if (Object.keys(tokenProps).length > 0)
@@ -15277,7 +15315,7 @@ on("change:pv change:pvig", function (eventInfo) {
     if (npcSheet)
       return;
   
-    setAttrs({ pvstatus: wounds.pvstatus });
+    setAttrs({ pvstatus: wounds.pvstatus }, { silent: true });
   });
 });
 
@@ -17436,11 +17474,13 @@ on("change:optact change:optact_nb " + repeatEvents("tactic", true), async funct
 /**
  * Enable / Disable tactics above attacks
  */
-on(changeEvent(nameSeq(5, "favtact#_on")), function(eventInfo) {
-  const checked = intval(eventInfo.newValue);
-  const optId = strval(eventInfo.sourceAttribute).split("_")[0] + "_id";
-  getAttrs([ optId ], function(values) {
-    setAttrs({ [rptAttr("tactic", "tact-on", values[optId] )]: checked });
+on(changeEvent(nameSeq(5, "favtact#_on")), async function(eventInfo) {
+  const favId = strval(eventInfo.sourceAttribute).split("_")[0] + "_id";
+  const values = await getAttrsAsync([ favId ]);
+  const rptTact = rptAttr("tactic", "tact-on", values[favId]);
+  getAttrs([ rptTact ], function(values) {
+    const checked = 1 - intval(values[rptTact]);
+    setAttrs({ [rptTact]: checked });
   });
 });
 
@@ -17567,14 +17607,24 @@ on("change:main_princ change:main_autre", function(eventInfo) {
     hands[1]
   ];
 
-  const offWeaponGear = getWeaponGearAttr(eventInfo.previousValue);
-  if (offWeaponGear !== "")
-    attrs.push(offWeaponGear);
-  
-  const onWeaponGear = getWeaponGearAttr(eventInfo.newValue);
-  if (onWeaponGear !== "")
-    attrs.push(onWeaponGear);
-  
+  let offWeaponGear = "";
+  if (eventInfo.previousValue !== undefined) {
+    offWeaponGear = getWeaponGearAttr(eventInfo.previousValue);
+    if (offWeaponGear !== "")
+      attrs.push(offWeaponGear);
+  } else {
+    console.log("[EVENTINFO] Cannot change off hand object", eventInfo);
+  }
+
+  let onWeaponGear = "";
+  if (eventInfo.newValue !== undefined) {
+    onWeaponGear = getWeaponGearAttr(eventInfo.newValue);
+    if (onWeaponGear !== "")
+      attrs.push(onWeaponGear);
+  } else {
+    console.log("[EVENTINFO] Cannot change main hand object", eventInfo);
+  }
+
   getAttrs(attrs, function(values) {
     const inHand = strval(values[attribute]);
     const hasShield = boolval(values.bouclier_eqp);
@@ -20007,7 +20057,7 @@ function isHelmet(props) {
  * @returns {boolean}
  */
 function hasBonus(props) {
-  return (getProp(props, "bonus") !== "");
+  return (getProp(props, "bonus") && getProp(props, "bonus") !== "");
 }
 
 /**
@@ -20359,7 +20409,7 @@ on("change:repeating_equipement:equip-on", function(eventInfo) {
       const bonus = hasBonus(props);
       
       if (bonus) {
-        const [ mod, skill ] = getProp(props, "bonus").split(" ");
+        const [ mod, skill ] = strval(getProp(props, "bonus")).split(" ");
         if (intval(mod) === 0)
           return;
 
@@ -20771,10 +20821,12 @@ on("change:repeating_ressources:res-props", function(eventInfo) {
  * On set resource = spellbook
  */
 on("sheet:opened change:repeating_ressources:res-props", async function(eventInfo) {
+  if (eventInfo.newValue === undefined || eventInfo.previousValue === undefined)
+    console.log("[EVENTINFO] Cannot handle spellbook resource", eventInfo);
   if (
-    strval(eventInfo.triggerName) !== "sheet:opened" &&
-    !cleanText(strval(eventInfo.previousValue)).includes("grimoire") &&
-    !cleanText(strval(eventInfo.newValue)).includes("grimoire")
+    strval(eventInfo.triggerName) !== "sheet:opened"
+    && !cleanText(strval(eventInfo.previousValue)).includes("grimoire")
+    && !cleanText(strval(eventInfo.newValue)).includes("grimoire")
   ) return;
 
   const resIds = await getSectionIDsOrderedAsync("ressources");
@@ -21303,8 +21355,8 @@ SWData.PC.STATS.forEach(stat => {
 /**
  * Rebuild custom attributes 
  */
-function rebuildCustom(eventInfo) {
-  getAttrs([ "custom", "devol" ], function (values) {
+function rebuildCustom() {
+  getAttrs([ "custom", "custom_save", "devol" ], function (values) {
 
     /**
      * Parse custom attributes field
@@ -21319,7 +21371,8 @@ function rebuildCustom(eventInfo) {
     
     const updates = new Map();
 
-    const rows = parse(values.custom)
+    const custom = strval(values.custom);
+    const rows = parse(custom);
     if (rows.length > 0) {      
       const devol = strval(values.devol);
       rows.forEach(row => {
@@ -21330,7 +21383,7 @@ function rebuildCustom(eventInfo) {
       });
     }
 
-    const deletedAttrs = parse(strval(eventInfo.previousValue))
+    const deletedAttrs = parse(strval(values.custom_save))
     .reduce((deleted, prior) => {
       const { name } = parseNameValue(prior);
       if (name && !updates.has(name))
@@ -21340,8 +21393,8 @@ function rebuildCustom(eventInfo) {
     if (deletedAttrs.length > 0)
       sendChatCmd(`/w GM Supprimer **${ deletedAttrs.join(", ") }** dans l'onglet *Attributs & Capacités* du personnage`);
     
-    if (updates.size > 0)
-      setAttrs(Object.fromEntries(updates));
+    updates.set("custom_save", custom);
+    setAttrs(Object.fromEntries(updates));
   });
 }
 
@@ -21379,6 +21432,7 @@ function toolTipAttrs() {
     "token_tooltip_on",
     "pense_bete",
     "rrdm",
+    "immudm",
     "pnj_tactique_tip",
     "pnj_tactique",
     "pnj_notes_tip",
@@ -21407,8 +21461,10 @@ on("sheet:opened " + eventList("change", toolTipAttrs(), " "), function() {
       : "";
       if (isNPC(sheetType)) {
         const rd = strval(values.rrdm);
+        const immune = strval(values.immudm);
         reminder = [
           (rd !== "" ? "RD " : "") + rd,
+          (immune !== "" ? "Immunité " : "") + immune,
           npcTacticTip ? strval(values.pnj_tactique) : "",
           npcNotesTip ? strval(values.notes) : "",
         ].join("\n");
