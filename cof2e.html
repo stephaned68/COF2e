@@ -199,7 +199,6 @@
 
     <!-- Identité -->
     <div class="bordered border-rounded identity">
-      <input type="hidden" class="cof-head-toggle" name="attr_sheet_type" value=""/> 
       <datalist id="size-list">
         <option>Minuscule</option>
         <option>Très petite</option>
@@ -209,6 +208,8 @@
         <option>Enorme</option>
         <option>Colossale</option>
       </datalist>
+
+      <input type="hidden" class="cof-head-toggle" name="attr_sheet_type" value="pc"/> 
 
       <!-- Identité PJ -->
       <div class="identity-pc">
@@ -5609,6 +5610,7 @@
                     </div>
     
                     <div class="d-flex">
+                      <input type="hidden" name="attr_res-modprops" value="">
                       <textarea class="one-row" name="attr_res-props" title="@{res-props} Propriétés&#10;type: munitions&#10;type: soins [formule si différent de 1d4°]&#10;type: mana&#10;type: parchemin" placeholder="Propriétés nom: valeur"></textarea>
                     </div>
 
@@ -5973,6 +5975,22 @@
                 <li class="config-check" title="Atlas & règles optionnelles, p. 209">
                   <input type="checkbox" name="attr_cfg_shadow" value="1">
                   <span>Lutte contre l'Ombre</span>
+                </li>
+              </ul>
+            </details>
+
+            <details>
+              <summary>
+                <h4>Décor de campagne</h4>
+              </summary>
+              <ul>
+                <li class="config-check">
+                  <span>Langues</span>
+                  <select class="select-lg" name="attr_cfg_lang" title="@{cfg_lang}" value="osgild">
+                    <option value="">Choisir...</option>
+                    <option value="osgild" selected>Terres d'Osgild</option>
+                    <option value="golarion">Golarion</option>
+                  </select>
                 </li>
               </ul>
             </details>
@@ -7751,6 +7769,7 @@
                     <input type="text" list="npcroll-freqs" name="attr_npcroll-freq" title="@{npcroll-freq} Fréquence d'utilisation" placeholder="Par ..." value="">
                     <datalist id="npcroll-freqs">
                       <option value="initiative"></option>
+                      <option value="tour"></option>
                       <option value="combat"></option>
                       <option value="jour"></option>
                     </datalist>
@@ -7902,8 +7921,15 @@
                     <button type="action" class="flat-btn img-btn" name="act_resconso-btn" title="%{repeating_ressources_ID_resconso-btn} Utiliser un consommable">
                       <span class="img-btn">-</span>
                     </button>
+                    <button type="action" class="flat-btn img-btn" name="act_restrs-btn" title="%{repeating_ressources_ID_restrs-btn} Transférer un consommable">
+                      <span class="img-btn">;</span>
+                    </button>
                   </div>
   
+                  <div class="d-flex">
+                    <textarea class="one-row" name="attr_res-desclong" title="@{res-desclong}" placeholder="Description longue (parchemin)"></textarea>
+                  </div>
+
                   <div class="d-flex">
                     <textarea class="one-row" name="attr_res-props" title="@{res-props} Propriétés&#10;type: munitions&#10;type: soins [formule si différent de 1d4°]" placeholder="Propriétés nom: valeur"></textarea>
                   </div>
@@ -11161,8 +11187,8 @@ const SWData = Object.freeze({
       titles: [ "Vivacité", "Manœuvre", "Attaque puissante", "Double attaque", "Attaque circulaire" ]
      },
     { pv: 5, name: "maitre d'armes", title: "Maître d'armes", profile: "guerrier",
-      abilities: [ "arme de predilection", "science du critique", "specialisation", "attaque parfaite", "riposte" ],
-      titles: [ "Arme de prédilection", "Science du critique", "Spécialisation", "Attaque parfaite", "Riposte" ]
+      abilities: [ "armes de predilection", "science du critique", "specialisation", "attaque parfaite", "riposte" ],
+      titles: [ "Armes de prédilection", "Science du critique", "Spécialisation", "Attaque parfaite", "Riposte" ]
      },
     { pv: 5, name: "resistance", title: "Résistance", profile: "guerrier",
       abilities: [ "robustesse", "resilient", "armure lourde", "constitution heroique", "dur a cuire" ],
@@ -17774,7 +17800,7 @@ function paramByRank(description, path, values, abilityProps) {
 }
 
 /**
- * Send an additional roll to chat
+ * Send additional rolls to chat
  */
 on("change:next_roll", function () {
   getAttrs([ "next_roll" ], function(values) {
@@ -18724,6 +18750,7 @@ function abilityUsages(path = 0) {
 
       const useMax = [ "une", "deux", "trois" ].indexOf(use.toLowerCase()) + 1;
       if (useMax > 0) {
+        updateAbilities.set(abilityInfo(ability).rankUse, useMax);
         updateAbilities.set(abilityInfo(ability).rankUseMax, useMax);
         updateAbilities.set(abilityInfo(ability).rankUseFreq, freq);
       }
@@ -19617,6 +19644,7 @@ seq(9).forEach(path => {
   
       if (updates.size > 0) {
         updates.set("voie_pdf", "");
+        updates.set("from_drs", 0);
         setAttrs(Object.fromEntries(updates), {}, () => {
           abilityUsages(path);
         });
@@ -20237,7 +20265,7 @@ on("clicked:repeating_equipement:equipshow-btn", function () {
     const detail = strval(values[rptAttr(section, "equip-detail")]);
     const props = strval(values[rptAttr(section, "equip-props")]);
     if (detail === "" && props === "")
-      return
+      return;
 
     const chatMsg = [
       "title=Equipement",
@@ -20773,6 +20801,69 @@ on("clicked:profequip-btn", function() {
 });
 
 /**
+ * Set props for known / standard resources
+ */
+on("change:repeating_ressources:res-desc", function() {
+  const desc = rptAttr("ressources", "res-desc");
+  const props = rptAttr("ressources", "res-props");
+  getAttrs([ desc, props ], function(values) {
+    const updates = new Map();
+    const resDesc = singleSpace(cleanText(strval(values[desc])));
+    switch (resDesc) {
+      case "potion de soin":
+      case "potion de soins":
+      case "potions de soin":
+      case "potions de soins":
+        updates.set(props, "type: soins");
+        break;
+      case "potion de recuperation mineure":
+      case "potions de recuperation mineure":
+      case "potion de soin mineure":
+      case "potion de soins mineure":
+      case "potion de soins mineurs":
+      case "potions de soins mineurs":
+      case "potions de soins mineures":
+        updates.set(props, "type: soins [1d4°+CHA]");
+        break;
+      case "potion de recuperation majeure":
+      case "potions de recuperation majeure":
+      case "potion de soin majeure":
+      case "potion de soins majeure":
+      case "potion de soins majeurs":
+      case "potions de soins majeurs":
+      case "potions de soins majeures":
+        updates.set(props, "type: soins [3d4°+CHA]");
+        break;
+      case "potion de mana":
+      case "potions de mana":
+        updates.set(props, "type: mana");
+        break;
+    }
+    if (updates.size > 0)
+      setAttrs(Object.fromEntries(updates));
+  });
+})
+
+/**
+ * Re-format resource props to LF-delimited list of 'name: value' pairs
+ */
+on("change:repeating_ressources:res-modprops", function() {
+  const props = rptAttr("ressources", "res-modprops");
+  getAttrs([ props ], function(values) {
+    let updated = strval(values[props]);
+    if (updated.includes("~"))
+      updated = updated.split("~").join("\n");
+    updated = updated.split("\n").map(prop => {
+      if (!prop.includes("="))
+        return prop;
+      const [ name, value ] = prop.split("=");
+      return name + ": " + value;
+    }).join("\n");
+    setAttrs({ [props.replace("-mod", "-")]: updated });
+  });
+});
+
+/**
  * On set resource = ammo
  */
 on("change:repeating_ressources:res-props", function(eventInfo) {
@@ -20821,8 +20912,9 @@ on("change:repeating_ressources:res-props", function(eventInfo) {
  * On set resource = spellbook
  */
 on("sheet:opened change:repeating_ressources:res-props", async function(eventInfo) {
-  if (eventInfo.newValue === undefined || eventInfo.previousValue === undefined)
-    console.log("[EVENTINFO] Cannot handle spellbook resource", eventInfo);
+  if (eventInfo.triggerName !== "sheet:opened")
+    if (eventInfo.newValue === undefined || eventInfo.previousValue === undefined)
+      console.log("[EVENTINFO] Cannot handle spellbook resource", eventInfo);
   if (
     strval(eventInfo.triggerName) !== "sheet:opened"
     && !cleanText(strval(eventInfo.previousValue)).includes("grimoire")
@@ -20996,6 +21088,66 @@ on("clicked:repeating_ressources:resconso-btn", function (eventInfo) {
 
     if (updates.size > 0)
       setAttrs(Object.fromEntries(updates));
+  });
+});
+
+/**
+ * On click of transfer resource button
+ */
+on("clicked:repeating_ressources:restrs-btn", function () {
+  const section = "ressources";
+  const resAttrs = [ "desc", "desclong", "props" ].map(a => rptAttr(section, `res-${a}`));
+  getAttrs([ ...resAttrs, "chatsetattr" ], async function(values) {
+    const desc = strval(values[rptAttr(section, "res-desc")]);
+    const desclong = strval(values[rptAttr(section, "res-desclong")]);
+    const props = strval(values[rptAttr(section, "res-props")]);
+    if (desc === "" && props === "")
+      return;
+    if (!boolval(values.chatsetattr))
+      return;
+
+    const rollCmd = "!" 
+    + " {{charname=[[0[@{target|character_name}]]] }}" 
+    + " {{number=[[?{Nombre?}]] }}";
+    const roll = await startRoll(rollCmd);
+    finishRoll(roll.rollId);
+    const targetName = getRollData(roll, "charname");
+    const targetNumber = Math.max(1, intval(roll.results?.number.result));
+    
+    const chatMsg = [
+      "title=Consommable",
+      `subtitle=${targetNumber} x ${desc}`,
+      `desc=Pour ${targetName}`
+    ];
+    if (props !== "") {
+      props.split("\n").filter(prop => strval(prop) !== "").forEach(prop => {
+        const [ code, value ] = strval(prop).split(":");
+        chatMsg.push(`**${code}:** =${value} `);
+      });
+    }
+
+    const attrs = rptAttrs(
+      "ressources",
+      [ "desc", "desclong", "modprops", "val" ].map(a => `res-${a}`),
+      "-CREATE"
+    );
+    const chatSetAttrs = { [attrs[0]]: desc };
+    if (desclong !== "")
+      chatSetAttrs[attrs[1]] = desclong;
+    if (props !== "")
+      chatSetAttrs[attrs[2]] = props.replaceAll(":","=").replaceAll("\n", "~");
+    chatSetAttrs[attrs[3]] = targetNumber;
+    const setattrCmd = chatSetAttr({
+      header: "Consommable ajouté",
+      content: "*" + desc + "*"
+    }, chatSetAttrs);
+    const button = menuButton("default", { size: "1.1em" }, { 
+      class: "chat-button",
+      padding: "0px 5px;",
+      "border-radius": "5px;"
+    });
+    chatMsg.push(`Consommable=[Equiper](${setattrCmd}${button})`);
+    sendChatMsg(chatMsg, { template: "custom", whisper: "" });
   });
 });
 
@@ -21305,6 +21457,40 @@ on(changeEvent(SWData.settings.companion), function() {
 });
 
 /**
+ * On changing campaign setting
+ */
+on("change:cfg_lang", function() {
+  const languages = ({
+    osgild: Object.fromEntries(
+      new Map(
+        SWData.PC.LANGUAGES.map(lang => [ lang, "" ])
+      )
+    ),
+    golarion: {
+      commun: "",
+      sylvestre: "Elfique, Sylvestre",
+      runique: "Gnome, Nain, Géant, Terreux",
+      noirparler: "Nécril, Gob, Orc, Gnoll",
+      draconique: "",
+      abyssal: "Abyssal, Igné, Infernal",
+      celestien: "Céleste, Aérien",
+      argotien: "Sakvroth, Druidique",
+      profond: "Commun des profondeurs",
+      aquarien: "Aqueux",
+    }
+  });
+  getAttrs([ "cfg_lang" ], function(values) {
+    const updates = new Map();
+    SWData.PC.LANGUAGES.forEach(language => {
+      updates.set(`nom_${language}`, strval(languages[strval(values.cfg_lang)][language]));
+    });
+    setAttrs(Object.fromEntries(updates));
+    if (strval(values.cfg_lang) === "osgild")
+      sendChatCmd("/w GM Fermer et réouvrir la fiche pour voir les langues dans l'onglet Capacités > Maîtrises");
+  });
+});
+
+/**
  * Return list of people mods attributes
  * @returns {string[]}
  */
@@ -21590,9 +21776,10 @@ function importGears(gearData, attributes) {
 /**
  * Load Map of attribute names & values from imported JSON
  * @param {object} data - parsed JSON data
+ * @param {Map} languageNames - Map of std languages to actual names
  * @returns {Map}
  */
-function importCOF2CampaignTools(data) {
+function importCOF2CampaignTools(data, languageNames) {
 
   const attributes = new Map();
 
@@ -21636,6 +21823,26 @@ function importCOF2CampaignTools(data) {
     attributes.set("poids", (poids > 0 ? `${poids} kg` : ""));
     const biographie = strval(character.identity.description);
     attributes.set("biographie", notesWithRefs(biographie));
+    if (character.identity.ideals?.length > 0)
+      attributes.set("ideal", character.identity.ideals.join(", "));
+    if (character.identity.flaws?.length > 0)
+      attributes.set("travers", character.identity.flaws.join(", "));
+    if (character.identity.languages?.length > 0) {
+      const customizedLanguages = SWData.PC.LANGUAGES.map(language => {
+        if (languageNames.has(language))
+          return languageNames.get(language);
+        return language;
+      });
+      character.identity.languages.forEach(language => {
+        language = language.toLowerCase();
+        if (customizedLanguages.includes(language)) {
+          const custom = [ ...languageNames ].find(([ , value ]) => value === language);
+          if (custom !== undefined)
+            language = custom[0];
+          attributes.set(`lang_${ language }`, 1);
+        }
+      });
+    }
   }
   attributes.set("notes", strval(notesWithRefs(character.notes)));
   
@@ -21821,15 +22028,22 @@ on("change:json_character", function() {
  * On import JSON data button click
  */
 on("clicked:import_json-btn", function () {
-  getAttrs([ "json_character", "reset_gears" ], function (values) {
+  const languages = SWData.PC.LANGUAGES.map(language => "nom_" + language);
+  getAttrs([ "json_character", "reset_gears", ...languages ], function (values) {
     const characterData = getCharacterData(values.json_character);
     if (!characterData)
       return;
 
+    const languageNames = languages.reduce((names, language) => {
+      if (strval(values[language]) !== "")
+        names.set(language.replace("nom_", ""), strval(values[language]).toLowerCase());
+      return names;
+    }, new Map());
+
     let attributes;
     
     if (strval(characterData.kind) === "cof2-character-export")
-      attributes = importCOF2CampaignTools(characterData);
+      attributes = importCOF2CampaignTools(characterData, languageNames);
 
     if (boolval(values.reset_gears))
       removeRepeatingAll("equipement");
@@ -22921,7 +23135,8 @@ on("change:repeating_npcarmes:arme-nom clicked:renum_npcatk-btn", function(event
 /**
  * Roll an NPC attack in chat
  */
-on("clicked:repeating_npcarmes:npcatk-btn", function() {
+on("clicked:repeating_npcarmes:npcatk-btn", async function() {
+
   const section = "repeating_npcarmes_arme-";
   const attackAttrs = rptAttrs("npcarmes", [
     "nom",
@@ -22949,6 +23164,10 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     ...cspec.map(cs => `cspec${cs}_bonus`),
     ...cspec.map(cs => `cspec${cs}_dm`),
   ];
+
+  const rollIds = await getSectionIDsAsync("npcrolls");
+  const rollFreqs = rollIds.map(id => rptAttr("npcrolls", "npcroll-freq", id));
+
   getAttrs([
     "cfg_1attack_roll", "cfg_cible", "cfg_lowfan",
     "cfg_crit_diff", "cfg_tbl_crit", "cfg_tbl_critdie", "cfg_tbl_fumble",
@@ -22958,6 +23177,7 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     "narratif", "narratif_type",
     ...specials,
     ...attackAttrs,
+    ...rollFreqs
   ], function (values) {
     const useOneRoll = boolval(values.cfg_1attack_roll);
     const useCritDiff = intval(values.cfg_crit_diff);
@@ -23155,8 +23375,6 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
         dmroll = "[[" + dmroll + " ]]";
     }
 
-
-
     let special = strval(values[section + "special"]);
     special = insertRolls(special, { isNPC: true, companionOf });
 
@@ -23320,6 +23538,13 @@ on("clicked:repeating_npcarmes:npcatk-btn", function() {
     if (specRolls.length > 0)
       sendChatCmd(specRolls.join(" "));
 
+    // Abilities by round
+    const byRound = rollFreqs
+    .filter(freq => [ "tour", "round" ].includes(cleanText(values[freq]))
+    .map(freq => `%{${charName}|${ rptAttr("npcrolls", "npcroll-btn", rptInfo(freq).rowId) }}`));
+    if (byRound.length > 0)
+      setAttrs({ next_roll: [ ...byRound, getDateTime() ].join("~") })
+  
     // Reset attributes
     if (resetValues.size > 0)
       setAttrs(Object.fromEntries(resetValues));
@@ -23902,7 +24127,7 @@ function getUses(desc) {
  * @param {object} data - parsed JSON blob
  * @returns {Map<string,string|number>} Map object of attributes to update
  */
-function importCOF2CampaignToolsNPC(npcData) {
+function importCOF2CampaignToolsNPC(npcData, languageNames) {
   const npcAttrs = new Map();
 
   // general infos
