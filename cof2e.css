@@ -591,9 +591,6 @@ input[value="1"].is-mook + .npc-configs.is-mook {
 }
 
 /* Sheet types */
-.identity-pc,
-.identity-npc,
-.identity-gm,
 .cof-pc,
 .cof-npc,
 .weapon-opt,
@@ -604,11 +601,17 @@ input[value="1"].is-mook + .npc-configs.is-mook {
 }
 
 .cof-head-toggle[value="pc"] ~ div.identity-pc,
-.cof-head-toggle[value="npc"] ~ div.identity-npc,
-.cof-head-toggle[value="gm"] ~ div.identity-npc,
+.cof-head-toggle[value="npc"] ~ div.identity-npc {
+  display: block;
+}
+
+.cof-head-toggle[value="pc"] ~ div.identity-npc,
+.cof-head-toggle[value="npc"] ~ div.identity-pc {
+  display: none;
+}
+
 .cof-type-toggle[value="pc"] ~ div.cof-pc,
 .cof-type-toggle[value="npc"] ~ div.cof-npc,
-.cof-type-toggle[value="gm"] ~ div.cof-gm,
 .cof-wopt-toggle[value="1"] ~ div.weapon-opt,
 .cof-wopt-toggle[value="1"] ~ div.weapon-effects,
 .cof-inhand-toggle[value="1"] ~ div.weapon-hands,

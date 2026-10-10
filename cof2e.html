@@ -199,7 +199,6 @@
 
     <!-- Identité -->
     <div class="bordered border-rounded identity">
-      <input type="hidden" class="cof-head-toggle" name="attr_sheet_type" value=""/> 
       <datalist id="size-list">
         <option>Minuscule</option>
         <option>Très petite</option>
@@ -209,6 +208,8 @@
         <option>Enorme</option>
         <option>Colossale</option>
       </datalist>
+
+      <input type="hidden" class="cof-head-toggle" name="attr_sheet_type" value="pc"/> 
 
       <!-- Identité PJ -->
       <div class="identity-pc">
@@ -18724,6 +18725,7 @@ function abilityUsages(path = 0) {
 
       const useMax = [ "une", "deux", "trois" ].indexOf(use.toLowerCase()) + 1;
       if (useMax > 0) {
+        updateAbilities.set(abilityInfo(ability).rankUse, useMax);
         updateAbilities.set(abilityInfo(ability).rankUseMax, useMax);
         updateAbilities.set(abilityInfo(ability).rankUseFreq, freq);
       }
@@ -19617,6 +19619,7 @@ seq(9).forEach(path => {
   
       if (updates.size > 0) {
         updates.set("voie_pdf", "");
+        updates.set("from_drs", 0);
         setAttrs(Object.fromEntries(updates), {}, () => {
           abilityUsages(path);
         });
@@ -21590,9 +21593,10 @@ function importGears(gearData, attributes) {
 /**
  * Load Map of attribute names & values from imported JSON
  * @param {object} data - parsed JSON data
+ * @param {Map} languageNames - Map of std languages to actual names
  * @returns {Map}
  */
-function importCOF2CampaignTools(data) {
+function importCOF2CampaignTools(data, languageNames) {
 
   const attributes = new Map();
 
@@ -21636,6 +21640,26 @@ function importCOF2CampaignTools(data) {
     attributes.set("poids", (poids > 0 ? `${poids} kg` : ""));
     const biographie = strval(character.identity.description);
     attributes.set("biographie", notesWithRefs(biographie));
+    if (character.identity.ideals?.length > 0)
+      attributes.set("ideal", character.identity.ideals.join(", "));
+    if (character.identity.flaws?.length > 0)
+      attributes.set("travers", character.identity.flaws.join(", "));
+    if (character.identity.languages?.length > 0) {
+      const customizedLanguages = SWData.PC.LANGUAGES.map(language => {
+        if (languageNames.has(language))
+          return languageNames.get(language);
+        return language;
+      });
+      character.identity.languages.forEach(language => {
+        language = language.toLowerCase();
+        if (customizedLanguages.includes(language)) {
+          const custom = [ ...languageNames ].find(([ , value ]) => value === language);
+          if (custom !== undefined)
+            language = custom[0];
+          attributes.set(`lang_${ language }`, 1);
+        }
+      });
+    }
   }
   attributes.set("notes", strval(notesWithRefs(character.notes)));
   
@@ -21821,15 +21845,22 @@ on("change:json_character", function() {
  * On import JSON data button click
  */
 on("clicked:import_json-btn", function () {
-  getAttrs([ "json_character", "reset_gears" ], function (values) {
+  const languages = SWData.PC.LANGUAGES.map(language => "nom_" + language);
+  getAttrs([ "json_character", "reset_gears", ...languages ], function (values) {
     const characterData = getCharacterData(values.json_character);
     if (!characterData)
       return;
 
+    const languageNames = languages.reduce((names, language) => {
+      if (strval(values[language]) !== "")
+        names.set(language.replace("nom_", ""), strval(values[language]).toLowerCase());
+      return names;
+    }, new Map());
+
     let attributes;
     
     if (strval(characterData.kind) === "cof2-character-export")
-      attributes = importCOF2CampaignTools(characterData);
+      attributes = importCOF2CampaignTools(characterData, languageNames);
 
     if (boolval(values.reset_gears))
       removeRepeatingAll("equipement");
@@ -23902,7 +23933,7 @@ function getUses(desc) {
  * @param {object} data - parsed JSON blob
  * @returns {Map<string,string|number>} Map object of attributes to update
  */
-function importCOF2CampaignToolsNPC(npcData) {
+function importCOF2CampaignToolsNPC(npcData, languageNames) {
   const npcAttrs = new Map();
 
   // general infos
