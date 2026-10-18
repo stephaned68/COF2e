@@ -18398,7 +18398,7 @@ function updatePathInfos(path) {
       return;
 
     updates.set(abilityInfo({ path }).pathPV, pathPV.pv);
-    updates.set(abilityInfo({ path }).pathProfile, pathPV.profile?.replace("prestige-"), "");
+    updates.set(abilityInfo({ path }).pathProfile, pathPV.profile?.replace("prestige-", ""));
     if (pathPV.profile === "psionique")
       updates.set("psionic", 1);
     rankNames.forEach((rank, ix) => {
