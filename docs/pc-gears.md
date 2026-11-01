@@ -11,16 +11,18 @@ Pour chaque élément de l'inventaire, vous indiquez :
 - Si l'équipement est actuellement porté (case à cocher).
 
 Une section dépliante permet d'ajouter plus de détail :
-- Un description plus longue de l'équipement.
+- Un description longue de l'équipement.
 - Une liste de propriétés (cf ci-dessous).
 - Si cet équipement correspond à une arme pour laquelle un ligne d'attaque doit être ajoutée sur l'onglet [attributs](({{ site.baseurl }}/pc-attribs)).
 - Une liste de prédicats si l'équipement est porté.
 
-Une icone "bulle" permet d'afficher dans le chat Roll20 un message descriptif de l'objet avec la liste éventuelle de ses propriétés. Ce message est **toujours** public même si la fiche est configurée pour chuchoter les messages au MJ.
+Une icone "bulle" permet d'afficher dans le chat Roll20 un message avec la description longue quand l'objet est utilisé.
+
+Une icone "engrenage" permet d'afficher dans le chat Roll20 un message avec la liste éventuelle des propriétés de l'objet. Ce message est **toujours** public même si la fiche est configurée pour chuchoter les messages au MJ.
 
 ### Fonctions _Loot_
 
-Si le script **ChatSetAttr** est installé dans la partie et que l'option de configuration correspondante est active, un bouton est ajouté dans ce message de chat afin qu'un joueur puisse cliquer et ajouter cet objet à l'inventaire de son personnage.
+Si le script **ChatSetAttr** est installé dans la partie et que l'option de configuration correspondante est active, un bouton est ajouté dans ce message de chat produit par l'icone engrenage afin qu'un joueur puisse cliquer et ajouter cet objet à l'inventaire de son personnage.
 
 Si ce script n'est pas installé, il est possible de coller un texte émis dans le chat depuis la fiche d'un PNJ ou d'un autre PJ, et le coller dans le champ _Description longue_ d'une ligne d'équipement crée manuellement. La fiche analyse le contenu de ce texte et assigne le nom, le détail et les propriétés de l'équipement.
 

@@ -20,8 +20,8 @@ Pour chaque voie, vous indiquez :
 - Le nom de la voie,
 - Le nombre de PV correspondant à la famille de profil pour cette voie (ce nombre est normalement inséré automatiquement si le nom de la voie est reconnu)
 - Pour chacun des 5 rangs :
-  - Le nom de la capacité,
-  - S'il s'agit d'un sort (pour le calcul des PM maximum du PJ),
+  - Le nom de la capacité (ce nom est inséré automatiquement si le nom de la voie est reconnu),
+  - S'il s'agit d'un sort (cette case est cochée automatiquement si le nom de la capacité est reconnu),
   - La description de la capacité,
   - Le nombre d'utilisations maximum s'il y a lieu,
   - La fréquence à laquelle ce nombre d'utilisations se renouvelle (une liste avec combat / jour / aventure est proposée, mais il est possible de saisir librement une autre valeur),

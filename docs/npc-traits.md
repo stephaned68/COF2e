@@ -102,11 +102,13 @@ La sélection d'un coup spécial applique les bonus spécifiés à toutes les at
 
 Si vous indiquez `jet:N` ou `btn:N` dans le nom d'un coup spécial, le message d'attaque comporte une ligne _Spécial_ avec le nom de la Nième capacité (`jet:N`), voire un bouton (`btn:N`) qui permet de faire un jet de cette capacité.
 
+Vous pouvez indiquer `/2` dans le bonus aux DM du coup spécial, pour indiquer que ce coup produit la moitié des DM normaux de l'attaque (ex : coup de queue d'un dragon).
+
 Vous pouvez également activer l'une des options tactiques (attaque assurée, précise ou violente) en cochant la case correspondante. Elles sont mutuellement exclusives.
 
 ## Affichage des capacités favorites
 
-Si l'option _Capacités favorites_ est active, jusqu'à 5 capacités sont affichées au-dessus de la liste des attaques sous forme de textes cliquables. Si le PNJ en possède plus de 5, la fiche affiche de préférence celle(s) dont le nom se termine par `*` (capaciéts favorites), sinon ce sont les 5 premières par ordre d'affichage dans le sous-onglet _Capacités_.
+Si l'option _Capacités favorites_ est active, jusqu'à 5 capacités sont affichées au-dessus de la liste des attaques sous forme de textes cliquables. Si le PNJ en possède plus de 5, la fiche affiche de préférence celle(s) dont le nom se termine par `*` (capacités favorites), sinon ce sont les 5 premières par ordre d'affichage dans le sous-onglet _Capacités_.
 
 Il est ainsi possible de lancer des jets de capacités directement depuis le sous-onglet _Attaques_.
 

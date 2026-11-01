@@ -12,13 +12,15 @@ Une section dépliante permet d'ajouter plus de détail :
 - Un description plus longue de l'équipement,
 - Une liste de propriétés. Voir [Equipement PJ](({{ site.baseurl }}/pc-gears)) pour plus de détail.
 
-Une icone "bulle" permet d'afficher dans le chat Roll20 un message descriptif de l'objet avec la liste éventuelle de ses propriétés. Ce message est **toujours** public même si la fiche du PNJ est configurée pour chuchoter les messages au MJ.
+Une icone "bulle" permet d'afficher dans le chat Roll20 un message quand l'objet est utilisé.
+
+Une icone "engrenage" permet d'afficher dans le chat Roll20 un message avec la liste éventuelle des propriétés de l'objet. Ce message est **toujours** public même si la fiche du PNJ est configurée pour chuchoter les messages au MJ.
 
 Les propriétés indiquées pour l'équipement ne modifient pas les différents scores du PNJ qui sont données dans le statblock. Elles sont toutefois copiées dans la fiche d'un personnage en cas de _loot_.
 
 ## Fonctions _Loot_
 
-Si le script ChatSetAttr est installé dans la partie et que l'option de configuration correspondante est active, un bouton est ajouté dans ce message de chat afin qu'un joueur puisse cliquer et ajouter cet objet à l'inventaire de son personnage.
+Si le script `ChatSetAttr` est installé dans la partie et que l'option de configuration correspondante est active, un bouton est ajouté dans le message de chat produit par l'icone engrenage afin qu'un joueur puisse cliquer et ajouter cet objet à l'inventaire de son personnage.
 
 Si ce script n'est pas installé, un message est envoyé dans le chat avec un texte à copier et à coller dans le champ _Description longue_ d'une ligne d'équipement crée manuellement.
 
@@ -31,7 +33,9 @@ Pour chaque élément de la liste, vous indiquez :
 - Le nombre actuellement en possession du PNJ,
 - Une liste optionnelle de propriétés permettant de préciser la nature de la ressource.
 
-Un bouton permet de décompter une resource et éventuellement d'envoyer un message dans le chat Roll20 selon le type de consommable.
+Une icone permet de décompter une resource et éventuellement d'envoyer un message dans le chat Roll20 selon le type de consommable.
+
+Une autre icone permet de transférer une ressource vers un autre personnage. Il nécessite la présence du script MOD `ChatSetAttr` dans la partie. La fiche demande de cliquer sur le token cible du transfert ainsi que d'indiquer le nombre de ressources transférées.
 
 Si vous spécifiez une propriété `type: soins`, et que vous cliquez sur le bouton _Consommable_, un message de chat indiquant le nombre de PV récupérés s'affiche. Par défaut, il s'agit d'une potion de soins standard permettant de récupérer 1d4° PV. Vous pouvez si besoin indiquer une formule de dés différente à la suite du mot `soins`. _Ex :_ : pour paramétrer les Elixirs de guérison du Forgesort, indiquez `type: soins [2d4°+INT]`.
 

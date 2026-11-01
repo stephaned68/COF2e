@@ -81,7 +81,7 @@ _Exemple : Loup (rôdeur)_
 
 ## Importer un statblock
 
-Cette section dépliable permet d'importer les données techniques du PNJ en copiant un statblock depuis un document PDF ou depuis le DRS officiel de Black Book Editions. Le bouton `Importer` analyse le texte collé dans le champ de texte, et en extrait les données utilisables.
+Cette section dépliable permet d'importer les données techniques du PNJ en copiant un statblock depuis un document PDF ou depuis le DRS officiel de Black Book Editions. Le bouton `Importer` analyse le texte collé dans le champ de texte, en extrait les données utilisables et remplit la fiche.
 
 # Menus et macros
 
@@ -96,10 +96,6 @@ Les macros à configurer sont les suivantes :
 
 
 ## Autres fonctions
-
-Plusieurs outils sont disponibles dans la partie supérieure droite de cet onglet.
-
-Une case permet d'activer le mode `debug`. Une fois cochée, un grand nombre d'événements se produisant dans la fiche inscrivent des informations techniques de débogage dans la console de développement du navigateur.
 
 Une icone _Outils_ permet de copier les options de configuration et de script par défaut depuis une fiche de personnage nommée `PNJBase`. Après avoir créé et configuré cette fiche, le MJ de la partie doit également cliquer sur cette icone pour que tous les attributs traités soient créés avec une valeur dans l'onglet _Attributes & Abilities_, sans quoi la copie à partir d'autres fiches échouera.
 
