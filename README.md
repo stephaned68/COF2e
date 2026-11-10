@@ -12,6 +12,24 @@ v1.18.0 [Screenshot](cof2e.png)
 
 ## Notes de version
 
+### Version _1.19.0_ (prochaine)
+
+- Fiche de PJ:
+  - Ajout d'options de dés aux jets de caractéristiques
+  - Ajout des compétences d'artisanat du Compagnon du joueur
+  - Ajout d'une option de configuration des langues (Osgild/Golarion)
+  - Reconnaissance des noms des potions dans les ressources
+  - Reconnaissance des noms des capacités de sort
+  - Ajout des modificateurs d'attaque `predilection` et `specialisation`
+  - Ajout d'un bouton pour utiliser un objet
+
+- Fiche de PNJ:
+  - Ajout d'un bouton de transfert d'une ressource à un PJ
+  - Ajout d'une fréquence _par tour_ aux capacités
+  - Prise en compte des PC à l'import d'un statblock
+  - Prise en compte de `/2` aux DM des coups spéciaux
+  - Ajout d'un bouton pour utiliser un objet
+
 ### Version _1.18.0_ (2026-09-20)
 
 - Fiche de PJ:
