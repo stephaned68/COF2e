@@ -6720,10 +6720,10 @@
                     <li>Ajout d'options de dés aux jets de caractéristiques</li>
                     <li>Ajout des compétences d'artisanat du Compagnon du joueur</li>
                     <li>Ajout d'une option de configuration des langues (Osgild/Golarion)</li>
-                    <li>Ajout de la reconnaissance des types de potions en ressources</li>
-                    <li>Ajout de la reconnaissance des capacités de sort</li>
+                    <li>Reconnaissance des noms des potions dans les ressources</li>
+                    <li>Reconnaissance des noms des capacités de sort</li>
                     <li>Ajout des modificateurs d'attaque <em>predilection</em> et <em>specialisation</em></li>
-                    <li>Ajout d'un bouton pour l'utilisation d'un objet</li>
+                    <li>Ajout d'un bouton pour utiliser un objet</li>
                   </ul>
                 </details>
               </li>
@@ -8530,7 +8530,7 @@
                     <li>Ajout d'une fréquence <em>par tour</em> aux capacités</li>
                     <li>Prise en compte des PC à l'import d'un statblock</li>
                     <li>Prise en compte de <em>/2</em> aux DM des coups spéciaux</li>
-                    <li>Ajout d'un bouton pour l'utilisation d'un objet</li>
+                    <li>Ajout d'un bouton pour utiliser un objet</li>
                   </ul>
                 </details>
               </li>
@@ -8538,7 +8538,7 @@
               <li>
                 <details name="version">
                   <summary>
-                    <strong>Version 1.18.0</strong> (2026-09)
+                    <strong>Version 1.18.0</strong> (2026-09-20)
                   </summary>
                   <ul>
                     <li>Ajout des rangs de boss & filtres narratifs (Bestiaire)</li>
@@ -14284,7 +14284,7 @@ on("change:famille", function(eventInfo) {
 /**
  * On change of profile or heritage, check skill proficiencies
  */
-on("change:profil change:peuple", function(eventInfo) {
+on("change:profil change:peuple", function() {
   getAttrs([ 
     "profil", "famille", "niveau", "peuple",
     "cfg_atk_diff", "use_skills"
@@ -14308,7 +14308,7 @@ on("change:profil change:peuple", function(eventInfo) {
     
     const updates = new Map();
 
-    updates.set("cataille", strval(heritage.size, "Moyenne"));
+    updates.set("cataille", strval(heritage?.size, "Moyenne"));
 
     if (boolval(values.cfg_atk_diff) && intval(values.niveau) < 2) {
       Object.keys(profile.atks).forEach(atk => {
@@ -21923,12 +21923,12 @@ function getPeopleModAttrs() {
  */
 SWData.PC.STATS.forEach(stat => {
   on(`change:peuple_${ shorten(stat) }`, function() {
-    const selects = SWData.PC.STATS.map(stat => `peuple_${ shorten(stat) }sel`);
+    //const selects = SWData.PC.STATS.map(stat => `peuple_${ shorten(stat) }sel`);
     getAttrs([
       "character_name",
       "peuple",
       ...getPeopleModAttrs(),
-      ...selects
+      //...selects
     ], function (values) {
       const people = strval(values.peuple)
       if (people === "")
@@ -21936,8 +21936,8 @@ SWData.PC.STATS.forEach(stat => {
       const peopleInfo = SWData.HERITAGE.find(p => p.name.includes(cleanText(people)));
       if (!peopleInfo)
         return;
-      if (selects.every(attr => strval(values[attr]) === ""))
-        return;
+      /*if (selects.every(attr => strval(values[attr]) === ""))
+        return;*/
 
       const charName = strval(values.character_name);
       const chatMsg = [];
@@ -22199,7 +22199,7 @@ function importGears(gearData, attributes) {
  * @param {Map} languageNames - Map of std languages to actual names
  * @returns {Map}
  */
-function importCOF2CampaignTools(data, languageNames) {
+function importCOF2Beyond(data, languageNames) {
 
   const attributes = new Map();
 
@@ -22214,7 +22214,7 @@ function importCOF2CampaignTools(data, languageNames) {
 
   /**
    * Return text with in-line rolls substituted
-   * @param {string} text - notes from CampaignTools app
+   * @param {string} text - notes from COF2Beyond app
    * @returns {string}
    */
   const notesWithRefs = (text) => {
@@ -22409,10 +22409,10 @@ function importCOF2CampaignTools(data, languageNames) {
 }
 
 /**
- * Click on button to display link to COF2 Campaign Tools in chat
+ * Click on button to display link to COF2 Beyond in chat
  */
 on("clicked:cof2_tools-btn", function () {
-  sendChatMsg("[COF2 Campaign Tools](https://cof2-campaign-tool.vercel.app/)", { template: "" });
+  sendChatMsg("[COF2 Beyond](https://cof2-campaign-tool.vercel.app/)", { template: "" });
 });
 
 /**
@@ -22463,7 +22463,7 @@ on("clicked:import_json-btn", function () {
     let attributes;
     
     if (strval(characterData.kind) === "cof2-character-export")
-      attributes = importCOF2CampaignTools(characterData, languageNames);
+      attributes = importCOF2Beyond(characterData, languageNames);
 
     if (boolval(values.reset_gears))
       removeRepeatingAll("equipement");
@@ -24556,11 +24556,11 @@ function getUses(desc) {
 }
 
 /**
- * Parse statblock data from COF2 Campaign Tools JSON blob
+ * Parse statblock data from COF2 Beyond JSON blob
  * @param {object} data - parsed JSON blob
  * @returns {Map<string,string|number>} Map object of attributes to update
  */
-function importCOF2CampaignToolsNPC(npcData, languageNames) {
+function importCOF2BeyondNPC(npcData, languageNames) {
   const npcAttrs = new Map();
 
   // general infos
@@ -24621,7 +24621,7 @@ function importCOF2CampaignToolsNPC(npcData, languageNames) {
  */
 function jsonStatblock(data) {
   if (strval(data.kind) === "cof2-npc-export")
-    return importCOF2CampaignToolsNPC(data.npc);
+    return importCOF2BeyondNPC(data.npc);
   return null;
 }
 
